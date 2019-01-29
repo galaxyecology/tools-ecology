@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/bgruening/tools-ecology.svg?branch=master)](https://travis-ci.org/bgruening/tools-ecology)
+
 GalaxyE Community
 =================
 
