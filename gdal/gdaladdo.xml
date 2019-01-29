@@ -1,0 +1,71 @@
+<tool id="gdaladdo" name="GDAL addo" version="0.1.0">
+    <description>builds or rebuilds overview images</description>
+
+    <macros>
+        <import>gdal_macros.xml</import>
+    </macros>   
+    <expand macro="gdal_requirements" />
+
+    <command detect_errors="exit_code"><![CDATA[
+        gdaladdo '$input1'
+            -q
+            -ro
+            #if '$levels'==''
+                -clean 
+            #else
+                '$levels'
+                --config COMPRESS_OVERVIEW DEFLATE
+                && cp '$input1''.ovr' 'output_ovr'
+            #end if
+    ]]></command>
+    
+    <inputs>
+        <param type="data" name="input1" format="data" label="Gdal supported input file" help="http://www.gdal.org/formats_list.html"/>    
+        <param name="levels" type="text" label="levels" help="A list of integral overview levels to build. eg : 2 4 8 16" value=""/>        
+    </inputs>
+    
+    <outputs>
+        <data format="tiff" name="output" from_work_dir="output_ovr" label="${input1.name}.ovr"/>
+    </outputs>
+    
+    <tests> 
+        <test> <!-- gdaladdo '/tmp/tmpTvLDdw/files/000/dataset_1.dat' -ro 2 4 8 16  -->
+            <param name="input1" value="stere.tif"/>
+            <param name="levels" value="2 4 8 16" />
+            <output name="output" file="stere.tif.ovr"/>
+        </test>
+    </tests>
+    
+    <help><![CDATA[
+==========================
+Gdaladdo
+==========================
+**What it does**
+
+The gdaladdo utility can be used to build or rebuild overview images for most supported file formats with one of several downsampling algorithms. 
+
+|
+
+**How to use it**        
+
+Select a raster file from history and chose levels to build.
+
+|
+
+**Option**
+
+*-levels*
+
+    A list of integral overview levels to build. Ignored with -clean option. Starting with GDAL 2.3, levels are no longer required to build overviews. In which case, appropriate overview power-of-two factors will be selected until the smallest overview is smaller than the value of the -minsize switch.
+
+|
+
+**Sources**
+
+http://www.gdal.org
+
+http://www.gdal.org/gdaladdo.html
+
+Raster Processing Tutorial : https://trac.osgeo.org/gdal/wiki/UserDocs/RasterProcTutorial
+    ]]></help>
+</tool>

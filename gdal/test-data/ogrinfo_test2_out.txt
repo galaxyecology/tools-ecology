@@ -1,0 +1,449 @@
+INFO: Open of `/tmp/tmppHpwlr/files/000/dataset_3.dat'
+      using driver `netCDF' successful.
+Metadata:
+  NC_GLOBAL#institution=Puertos del Estado (PdE) - Mercator-Ocean (MO) 
+  NC_GLOBAL#julian_day_unit=Hours since 2002-02-15
+  NC_GLOBAL#latitude_max=51
+  NC_GLOBAL#latitude_min=43
+  NC_GLOBAL#longitude_max=2.499999046325684
+  NC_GLOBAL#longitude_min=-6.000000476837158
+  NC_GLOBAL#references=http://marine.copernicus.eu
+  NC_GLOBAL#source=CMEMS IBI-MFC
+  NC_GLOBAL#time_max=112464
+  NC_GLOBAL#time_min=7272
+  NC_GLOBAL#title=CMEMS IBI REANALYSIS: MONTHLY BIOGEOCHEMICAL PRODUCTS (REGULAR GRID) 
+  NC_GLOBAL#z_max=0.5057600140571594
+  NC_GLOBAL#z_min=0.5057600140571594
+
+Layer name: dataset_3
+Geometry: None
+Feature Count: 142
+Layer SRS WKT:
+(unknown)
+time: Integer (0.0)
+OGRFeature(dataset_3):4
+  time (Integer) = 9432
+
+OGRFeature(dataset_3):5
+  time (Integer) = 10176
+
+OGRFeature(dataset_3):6
+  time (Integer) = 10896
+
+OGRFeature(dataset_3):7
+  time (Integer) = 11640
+
+OGRFeature(dataset_3):8
+  time (Integer) = 12360
+
+OGRFeature(dataset_3):9
+  time (Integer) = 13104
+
+OGRFeature(dataset_3):10
+  time (Integer) = 13848
+
+OGRFeature(dataset_3):11
+  time (Integer) = 14568
+
+OGRFeature(dataset_3):12
+  time (Integer) = 15312
+
+OGRFeature(dataset_3):13
+  time (Integer) = 16032
+
+OGRFeature(dataset_3):14
+  time (Integer) = 16776
+
+OGRFeature(dataset_3):15
+  time (Integer) = 17520
+
+OGRFeature(dataset_3):16
+  time (Integer) = 18216
+
+OGRFeature(dataset_3):17
+  time (Integer) = 18960
+
+OGRFeature(dataset_3):18
+  time (Integer) = 19680
+
+OGRFeature(dataset_3):19
+  time (Integer) = 20424
+
+OGRFeature(dataset_3):20
+  time (Integer) = 21144
+
+OGRFeature(dataset_3):21
+  time (Integer) = 21888
+
+OGRFeature(dataset_3):22
+  time (Integer) = 22632
+
+OGRFeature(dataset_3):23
+  time (Integer) = 23352
+
+OGRFeature(dataset_3):24
+  time (Integer) = 24096
+
+OGRFeature(dataset_3):25
+  time (Integer) = 24816
+
+OGRFeature(dataset_3):26
+  time (Integer) = 25560
+
+OGRFeature(dataset_3):27
+  time (Integer) = 26304
+
+OGRFeature(dataset_3):28
+  time (Integer) = 26976
+
+OGRFeature(dataset_3):29
+  time (Integer) = 27720
+
+OGRFeature(dataset_3):30
+  time (Integer) = 28440
+
+OGRFeature(dataset_3):31
+  time (Integer) = 29184
+
+OGRFeature(dataset_3):32
+  time (Integer) = 29904
+
+OGRFeature(dataset_3):33
+  time (Integer) = 30648
+
+OGRFeature(dataset_3):34
+  time (Integer) = 31392
+
+OGRFeature(dataset_3):35
+  time (Integer) = 32112
+
+OGRFeature(dataset_3):36
+  time (Integer) = 32856
+
+OGRFeature(dataset_3):37
+  time (Integer) = 33576
+
+OGRFeature(dataset_3):38
+  time (Integer) = 34320
+
+OGRFeature(dataset_3):39
+  time (Integer) = 35064
+
+OGRFeature(dataset_3):40
+  time (Integer) = 35736
+
+OGRFeature(dataset_3):41
+  time (Integer) = 36480
+
+OGRFeature(dataset_3):42
+  time (Integer) = 37200
+
+OGRFeature(dataset_3):43
+  time (Integer) = 37944
+
+OGRFeature(dataset_3):44
+  time (Integer) = 38664
+
+OGRFeature(dataset_3):45
+  time (Integer) = 39408
+
+OGRFeature(dataset_3):46
+  time (Integer) = 40152
+
+OGRFeature(dataset_3):47
+  time (Integer) = 40872
+
+OGRFeature(dataset_3):48
+  time (Integer) = 41616
+
+OGRFeature(dataset_3):49
+  time (Integer) = 42336
+
+OGRFeature(dataset_3):50
+  time (Integer) = 43080
+
+OGRFeature(dataset_3):51
+  time (Integer) = 43824
+
+OGRFeature(dataset_3):52
+  time (Integer) = 44496
+
+OGRFeature(dataset_3):53
+  time (Integer) = 45240
+
+OGRFeature(dataset_3):54
+  time (Integer) = 45960
+
+OGRFeature(dataset_3):55
+  time (Integer) = 46704
+
+OGRFeature(dataset_3):56
+  time (Integer) = 47424
+
+OGRFeature(dataset_3):57
+  time (Integer) = 48168
+
+OGRFeature(dataset_3):58
+  time (Integer) = 48912
+
+OGRFeature(dataset_3):59
+  time (Integer) = 49632
+
+OGRFeature(dataset_3):60
+  time (Integer) = 50376
+
+OGRFeature(dataset_3):61
+  time (Integer) = 51096
+
+OGRFeature(dataset_3):62
+  time (Integer) = 51840
+
+OGRFeature(dataset_3):63
+  time (Integer) = 52584
+
+OGRFeature(dataset_3):64
+  time (Integer) = 53280
+
+OGRFeature(dataset_3):65
+  time (Integer) = 54024
+
+OGRFeature(dataset_3):66
+  time (Integer) = 54744
+
+OGRFeature(dataset_3):67
+  time (Integer) = 55488
+
+OGRFeature(dataset_3):68
+  time (Integer) = 56208
+
+OGRFeature(dataset_3):69
+  time (Integer) = 56952
+
+OGRFeature(dataset_3):70
+  time (Integer) = 57696
+
+OGRFeature(dataset_3):71
+  time (Integer) = 58416
+
+OGRFeature(dataset_3):72
+  time (Integer) = 59160
+
+OGRFeature(dataset_3):73
+  time (Integer) = 59880
+
+OGRFeature(dataset_3):74
+  time (Integer) = 60624
+
+OGRFeature(dataset_3):75
+  time (Integer) = 61368
+
+OGRFeature(dataset_3):76
+  time (Integer) = 62040
+
+OGRFeature(dataset_3):77
+  time (Integer) = 62784
+
+OGRFeature(dataset_3):78
+  time (Integer) = 63504
+
+OGRFeature(dataset_3):79
+  time (Integer) = 64248
+
+OGRFeature(dataset_3):80
+  time (Integer) = 64968
+
+OGRFeature(dataset_3):81
+  time (Integer) = 65712
+
+OGRFeature(dataset_3):82
+  time (Integer) = 66456
+
+OGRFeature(dataset_3):83
+  time (Integer) = 67176
+
+OGRFeature(dataset_3):84
+  time (Integer) = 67920
+
+OGRFeature(dataset_3):85
+  time (Integer) = 68640
+
+OGRFeature(dataset_3):86
+  time (Integer) = 69384
+
+OGRFeature(dataset_3):87
+  time (Integer) = 70128
+
+OGRFeature(dataset_3):88
+  time (Integer) = 70800
+
+OGRFeature(dataset_3):89
+  time (Integer) = 71544
+
+OGRFeature(dataset_3):90
+  time (Integer) = 72264
+
+OGRFeature(dataset_3):91
+  time (Integer) = 73008
+
+OGRFeature(dataset_3):92
+  time (Integer) = 73728
+
+OGRFeature(dataset_3):93
+  time (Integer) = 74472
+
+OGRFeature(dataset_3):94
+  time (Integer) = 75216
+
+OGRFeature(dataset_3):95
+  time (Integer) = 75936
+
+OGRFeature(dataset_3):96
+  time (Integer) = 76680
+
+OGRFeature(dataset_3):97
+  time (Integer) = 77400
+
+OGRFeature(dataset_3):98
+  time (Integer) = 78144
+
+OGRFeature(dataset_3):99
+  time (Integer) = 78888
+
+OGRFeature(dataset_3):100
+  time (Integer) = 79560
+
+OGRFeature(dataset_3):101
+  time (Integer) = 80304
+
+OGRFeature(dataset_3):102
+  time (Integer) = 81024
+
+OGRFeature(dataset_3):103
+  time (Integer) = 81768
+
+OGRFeature(dataset_3):104
+  time (Integer) = 82488
+
+OGRFeature(dataset_3):105
+  time (Integer) = 83232
+
+OGRFeature(dataset_3):106
+  time (Integer) = 83976
+
+OGRFeature(dataset_3):107
+  time (Integer) = 84696
+
+OGRFeature(dataset_3):108
+  time (Integer) = 85440
+
+OGRFeature(dataset_3):109
+  time (Integer) = 86160
+
+OGRFeature(dataset_3):110
+  time (Integer) = 86904
+
+OGRFeature(dataset_3):111
+  time (Integer) = 87648
+
+OGRFeature(dataset_3):112
+  time (Integer) = 88344
+
+OGRFeature(dataset_3):113
+  time (Integer) = 89088
+
+OGRFeature(dataset_3):114
+  time (Integer) = 89808
+
+OGRFeature(dataset_3):115
+  time (Integer) = 90552
+
+OGRFeature(dataset_3):116
+  time (Integer) = 91272
+
+OGRFeature(dataset_3):117
+  time (Integer) = 92016
+
+OGRFeature(dataset_3):118
+  time (Integer) = 92760
+
+OGRFeature(dataset_3):119
+  time (Integer) = 93480
+
+OGRFeature(dataset_3):120
+  time (Integer) = 94224
+
+OGRFeature(dataset_3):121
+  time (Integer) = 94944
+
+OGRFeature(dataset_3):122
+  time (Integer) = 95688
+
+OGRFeature(dataset_3):123
+  time (Integer) = 96432
+
+OGRFeature(dataset_3):124
+  time (Integer) = 97104
+
+OGRFeature(dataset_3):125
+  time (Integer) = 97848
+
+OGRFeature(dataset_3):126
+  time (Integer) = 98568
+
+OGRFeature(dataset_3):127
+  time (Integer) = 99312
+
+OGRFeature(dataset_3):128
+  time (Integer) = 100032
+
+OGRFeature(dataset_3):129
+  time (Integer) = 100776
+
+OGRFeature(dataset_3):130
+  time (Integer) = 101520
+
+OGRFeature(dataset_3):131
+  time (Integer) = 102240
+
+OGRFeature(dataset_3):132
+  time (Integer) = 102984
+
+OGRFeature(dataset_3):133
+  time (Integer) = 103704
+
+OGRFeature(dataset_3):134
+  time (Integer) = 104448
+
+OGRFeature(dataset_3):135
+  time (Integer) = 105192
+
+OGRFeature(dataset_3):136
+  time (Integer) = 105864
+
+OGRFeature(dataset_3):137
+  time (Integer) = 106608
+
+OGRFeature(dataset_3):138
+  time (Integer) = 107328
+
+OGRFeature(dataset_3):139
+  time (Integer) = 108072
+
+OGRFeature(dataset_3):140
+  time (Integer) = 108792
+
+OGRFeature(dataset_3):141
+  time (Integer) = 109536
+
+OGRFeature(dataset_3):142
+  time (Integer) = 110280
+
+OGRFeature(dataset_3):143
+  time (Integer) = 111000
+
+OGRFeature(dataset_3):144
+  time (Integer) = 111744
+
+OGRFeature(dataset_3):145
+  time (Integer) = 112464
+
