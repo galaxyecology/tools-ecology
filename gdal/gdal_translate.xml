@@ -142,7 +142,7 @@
                     </param>
                     <when value="outsize_x">
                         <param name="outsize_percent" type="boolean" truevalue="%" falsevalue="" checked="true" label="Use percentage"/>
-			<param name="outx" label="xsize" type="integer" value="100" min="0"/>
+                        <param name="outx" label="xsize" type="integer" value="100" min="0"/>
                     </when>
                     <when value="outsize_y">
                         <param name="outsize_percent" type="boolean" truevalue="%" falsevalue="" checked="true" label="Use percentage"/>
