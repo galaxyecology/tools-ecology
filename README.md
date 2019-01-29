@@ -17,7 +17,7 @@ Commits that have [ci skip] anywhere in the commit messages are ignored by Travi
 Support
 -------
 
-Issues regarding specific [GalaxyE repositories][https://github.com/galaxyecology/tools-ecology/issues] are addressed by opening a ticket in the issue tracker of that repository.
+Issues regarding specific [GalaxyE repositories](https://github.com/galaxyecology/tools-ecology/issues) are addressed by opening a ticket in the issue tracker of that repository.
 
 
 Other repositories with Galaxy tools:
