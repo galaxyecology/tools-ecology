@@ -1,4 +1,4 @@
-<tool id="gdalwarp" name="GDAL Warp" version="0.1.0">
+<tool id="gdalwarp" name="GDAL Warp" version="@VERSION@">
     <description>image reprojection and warping utility</description>
 
     <macros>
@@ -114,7 +114,7 @@
                     </when>
                 </conditional>
                 <expand macro="gdal_param_r"/>
-                <expand macro="gdal_param_te"/>		
+                <expand macro="gdal_param_te"/>
             </when>
         </conditional>
     </inputs>

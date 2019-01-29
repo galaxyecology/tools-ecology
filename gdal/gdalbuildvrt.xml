@@ -1,4 +1,4 @@
-<tool id="gdalbuildvrt" name="GDAL Build VRT" version="0.1.0">
+<tool id="gdalbuildvrt" name="GDAL Build VRT" version="@VERSION@">
     <description>builds a VRT from a list of datasets</description>
 
     <macros>
@@ -88,8 +88,8 @@
                 <param name="addalpha" type="boolean" truevalue="-addalpha" falsevalue="" checked="false" label="-addalpha"/>
                 <param name="hidenodata" type="boolean" truevalue="-hidenodata" falsevalue="" checked="false" label="-hidenodata"/>
                 <expand macro="gdal_param_separate"/>
-		<param name="allow_projection_difference" type="boolean" truevalue="-allow_projection_difference" falsevalue="" checked="false" label="-allow_projection_difference" />
-		<expand macro="gdal_param_a_srs"/>
+                <param name="allow_projection_difference" type="boolean" truevalue="-allow_projection_difference" falsevalue="" checked="false" label="-allow_projection_difference" />
+                <expand macro="gdal_param_a_srs"/>
 <!--
                 <expand macro="gdal_param_oo"/>
 -->

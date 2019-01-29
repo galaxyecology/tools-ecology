@@ -1,11 +1,13 @@
 <macros>
+
+    <token name="@VERSION@">2.1.0</token>
     
     <xml name="gdal_requirements">
         <requirements>
             <requirement type="package" version="2.1.0">gdal</requirement>
             <requirement type="package" version="3.5.0">geos</requirement>
-            <requirement type="package" version="1.5.90">libjpeg-turbo</requirement>	    
-        </requirements>	
+            <requirement type="package" version="1.5.90">libjpeg-turbo</requirement>    
+        </requirements>
     </xml>
 
 
@@ -27,7 +29,7 @@
             </param>
             <when value="no_te">
             </when>
-	    <when value="te">
+            <when value="te">
                 <param name="xmin" type="float" label="xmin" value="0" min="0"/>
                 <param name="ymin" type="float" label="ymin" value="0" min="0"/>
                 <param name="xmax" type="float" label="xmax" value="0" min="0"/>
@@ -105,35 +107,35 @@
     
     <xml name="gdal_param_norat">
         <param name="norat" type="boolean" truevalue="-norat" falsevalue="" checked="false" label="-norat" help="Suppress printing of raster attribute table."/>
-   </xml>
+    </xml>
 
 
-  <xml name="gdal_param_of">
-      <param name="of" type="text" label="Output format -of" value="Gtiff" help="Select the output format. The default is GeoTIFF (GTiff). Use the short format name. http://www.gdal.org/formats_list.html"/>
-  </xml>
-
-
-  <xml name="gdal_param_co">
-      <param name="co" type="text" label="-co NAME=VALUE" help="e.g : COMPRESS=JPEG" value="" />
-  </xml>   
-
-
-  <xml name="gdal_param_ot">
-      <param name="ot" type="select" label="-ot Datatype">
-          <option value="byte">Byte</option>
-          <option value="int16">Int16</option>
-          <option value="uint16">UInt16</option>
-          <option value="uint32">UInt32</option>
-          <option value="int32">Int32</option>
-          <option value="float32">Float32</option>
-          <option value="float64">Float64</option>
-          <option value="cint16">CInt16</option>
-          <option value="cint32">CInt32</option>
-          <option value="cfloat32">CFloat32</option>
-          <option value="cfloat64">CFloat64</option>
-          <option value="" selected="true">Select a datatype for the output bands (default)</option>
-      </param>
-  </xml>
+    <xml name="gdal_param_of">
+        <param name="of" type="text" label="Output format -of" value="Gtiff" help="Select the output format. The default is GeoTIFF (GTiff). Use the short format name. http://www.gdal.org/formats_list.html"/>
+    </xml>
+  
+  
+    <xml name="gdal_param_co">
+        <param name="co" type="text" label="-co NAME=VALUE" help="e.g : COMPRESS=JPEG" value="" />
+    </xml>   
+  
+  
+    <xml name="gdal_param_ot">
+        <param name="ot" type="select" label="-ot Datatype">
+            <option value="byte">Byte</option>
+            <option value="int16">Int16</option>
+            <option value="uint16">UInt16</option>
+            <option value="uint32">UInt32</option>
+            <option value="int32">Int32</option>
+            <option value="float32">Float32</option>
+            <option value="float64">Float64</option>
+            <option value="cint16">CInt16</option>
+            <option value="cint32">CInt32</option>
+            <option value="cfloat32">CFloat32</option>
+            <option value="cfloat64">CFloat64</option>
+            <option value="" selected="true">Select a datatype for the output bands (default)</option>
+        </param>
+    </xml>
 
 
 <!-- need to upgrade gdal version to use

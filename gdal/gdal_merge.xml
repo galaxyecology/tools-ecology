@@ -1,4 +1,4 @@
-<tool id="gdal_merge" name="GDAL Merge" version="0.1.0">
+<tool id="gdal_merge" name="GDAL Merge" version="@VERSION@">
     <description>mosaics a set of images</description>
     <macros>
         <import>gdal_macros.xml</import>
@@ -63,7 +63,7 @@
         <expand macro="gdal_param_of"/>
         <conditional name="settings">    
             <expand macro="gdal_advanced_params_select"/>
-	    <when value="advanced">
+            <when value="advanced">
                 <expand macro="gdal_param_co"/> 
                 <expand macro="gdal_param_ot"/> 
                 <conditional name="condi_ps">

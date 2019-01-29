@@ -1,4 +1,4 @@
-<tool id="gdalinfo" name="GDAL Informations" version="0.1.0">
+<tool id="gdalinfo" name="GDAL Informations" version="@VERSION@">
     <description>lists information about a raster dataset</description>
 
     <macros>
@@ -45,8 +45,8 @@
             <option value="subd_n" selected="True">No</option>
         </param>
         <conditional name="settings">
-            <expand macro="gdal_advanced_params_select"/>	
-	    <when value="advanced">
+            <expand macro="gdal_advanced_params_select"/>
+            <when value="advanced">
                 <param name="mm" type="boolean" truevalue="-mm" falsevalue="" checked="false" label="-mm" help="Force computation of the actual min/max values for each band in the dataset."/>
                 <expand macro="gdal_param_stats"/>                    
                 <param name="approx_stats" type="boolean" truevalue="-approx_stats" falsevalue="" checked="false" label="-approx_stats" help="Read and display image statistics. Force computation if no statistics are stored in an image. However, they may be computed based on overviews or a subset of all tiles. Useful if you are in a hurry and don't want precise stats."/>
@@ -58,7 +58,7 @@
                 <param name="checksum" type="boolean" truevalue="-checksum" falsevalue="" checked="false" label="-checksum" help="Force computation of the checksum for each band in the dataset."/>
                 <param name="listmdd" type="boolean" truevalue="-listmdd" falsevalue="" checked="false" label="-listmdd" help="List all metadata domains available for the dataset."/>
                 <param name="proj4" type="boolean" truevalue="-proj4" falsevalue="" checked="false" label="-proj4" help="Report a PROJ.4 string corresponding to the file's coordinate system."/> 
-		<param name="mdd" type="text" label="-mdd DOMAIN" help="Report metadata for the specified domain. Starting with GDAL 1.11, 'all' can be used to report metadata in all domains." value="all">
+                <param name="mdd" type="text" label="-mdd DOMAIN" help="Report metadata for the specified domain. Starting with GDAL 1.11, 'all' can be used to report metadata in all domains." value="all">
                     <validator type="expression" message="mdd option can't be an empty value">value.strip()</validator>
                 </param>    
             </when>

@@ -1,4 +1,4 @@
-<tool id="gdaladdo" name="GDAL addo" version="0.1.0">
+<tool id="gdaladdo" name="GDAL addo" version="@VERSION@">
     <description>builds or rebuilds overview images</description>
 
     <macros>
