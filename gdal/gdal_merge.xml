@@ -77,17 +77,17 @@
                 </conditional>        
                 <expand macro="gdal_param_tap"/> 
                 <conditional name="condi_ul_lr">
-                    <param name="ul_lr" type="select" label="-ul_lr ulx uly lrx lry" >
+                    <param name="ul_lr" type="select" argument="-ul_lr ulx uly lrx lry" label="The extents of the output file. If not specified the aggregate extents of all input files will be used" >
                         <option value="no_ul_lr" selected="true">Don't use the -ul_lr option</option>
                         <option value="ul_lr">Use the -ul_lr option</option>
                     </param>
                     <when value="no_ul_lr">
                     </when>
                     <when value="ul_lr">
-                        <param name="ulx" type="integer" label="ulx" value="0" min="0"/>
-                        <param name="uly" type="integer" label="uly" value="0" min="0"/>
-                        <param name="lrx" type="integer" label="lrx" value="0" min="0"/>
-                        <param name="lry" type="integer" label="lry" value="0" min="0"/>
+                        <param name="ulx" type="integer" label="The ulx extents of the output file" value="0" min="0"/>
+                        <param name="uly" type="integer" label="The uly extents of the output file" value="0" min="0"/>
+                        <param name="lrx" type="integer" label="The lrx extents of the output file" value="0" min="0"/>
+                        <param name="lry" type="integer" label="The lry extents of the output file" value="0" min="0"/>
                     </when>
                 </conditional>        
                 <param name="v" type="boolean" truevalue="-v" falsevalue="" checked="false" argument="-v" label="Generate verbose output of mosaicing operations as they are done" />
