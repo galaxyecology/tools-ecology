@@ -90,12 +90,12 @@
                         <param name="lry" type="integer" label="lry" value="0" min="0"/>
                     </when>
                 </conditional>        
-                <param name="v" type="boolean" truevalue="-v" falsevalue="" checked="false" label="-v" />
+                <param name="v" type="boolean" truevalue="-v" falsevalue="" checked="false" argument="-v" label="Generate verbose output of mosaicing operations as they are done" />
                 <expand macro="gdal_param_separate"/>
-                <param name="pct" type="boolean" truevalue="-pct" falsevalue="" checked="false" label="-pct" />
-                <param name="n" type="text" label="-n nodata_value" value="nodata_value" />
-                <param name="a_nodata" type="text" label="-a_nodata" value="output_nodata_value" />
-                <param name="init" type="text" label="-init values(s)" value="" />
+                <param name="pct" type="boolean" truevalue="-pct" falsevalue="" checked="false" argument="-pct" label="Grab a pseudo-color table from the first input image, and use it for the output. Merging pseudo-colored images this way assumes that all input files use the same color table" />
+                <param name="n" type="text" argument="-n nodata_value" label="Ignore pixels from files being merged in with this pixel value" value="nodata_value" />
+                <param name="a_nodata" type="text" argument="-a_nodata" label="Assign a specified nodata value to output bands" value="output_nodata_value" />
+                <param name="init" type="text" argument="-init values(s)" label="Pre-initialize the output image bands with these values. However, it is not marked as the nodata value in the output file. If only one value is given, the same value is used in all the bands" value="" />
             </when>
         </conditional>
     </inputs>
