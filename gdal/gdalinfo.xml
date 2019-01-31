@@ -35,7 +35,7 @@
             #end if
     ]]></command>
     <inputs>
-        <param type="data" name="input1" format="data" label="Gdal supported input file" help="http://www.gdal.org/formats_list.html"/>
+        <param type="data" name="input1" label="Gdal supported input file" format="gtiff,shapefile,geojson,gml,kml,txt,tabular" help="choose between GTiff,Shapefile,GeoJSON,GML,KML"/>
         <param name="format" type="select" label="Output format" display="radio" multiple="False">
             <option value="default" selected="true">Text</option>
             <option value="json">Json</option>
