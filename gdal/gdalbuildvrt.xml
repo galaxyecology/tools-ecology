@@ -10,7 +10,7 @@
     gdalbuildvrt 
         '$output'
         -q 
-        #for $i, $s in enumerate( $series )
+        #for $s in $series
             '${s.input}'
         #end for
         
