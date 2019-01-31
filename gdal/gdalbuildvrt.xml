@@ -62,7 +62,7 @@
     ]]></command>
     <inputs>      
         <repeat name="series" title="Input file">
-            <param type="data" name="input" format="data" label="Gdal supported input file" help="http://www.gdal.org/formats_list.html"/>
+            <param type="data" name="input" format="gtiff,txt,tabular,jpeg,png,netcdf,R" help="Formats currently supported are : GTiff,JPEG,PNG,R and netCDF" label="Gdal supported input file" />
         </repeat>
         <conditional name="settings">    
             <expand macro="gdal_advanced_params_select"/>
