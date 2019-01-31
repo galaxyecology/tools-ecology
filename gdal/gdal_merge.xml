@@ -7,7 +7,7 @@
     <command detect_errors="exit_code"><![CDATA[
         gdal_merge.py
             -q        
-            #for $i, $s in enumerate( $series )
+            #for $s in $series 
                 '${s.input}'
             #end for
             
