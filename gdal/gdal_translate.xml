@@ -233,7 +233,7 @@
         
         <test> <!-- gdal_translate "/tmp/tmpt_qdGu/files/000/dataset_1.dat" "/tmp/tmpt_qdGu/files/000/dataset_2.dat"    -b 1 -b 2   -r cubic  -outsize ysize 75             -of png -->
             <param name="input1" value="stere.tif"/>
-            <param name="of" value="png" />
+            <param name="of" value="PNG" />
             <param name="advanced" value="advanced"/>
             <param name="b" value="-b 1 -b 2"/>
             <param name="resample" value="resampling"/>
@@ -246,7 +246,7 @@
         
         <test> <!-- gdal_translate "/tmp/tmpki1Dk8/files/000/dataset_1.dat" "/tmp/tmpki1Dk8/files/000/dataset_4.dat"       -outsize xsize 100%     -a_ullr -180 90 180 -90          -a_srs 'WGS84'  -of gtiff -->
             <param name="input1" value="world.png"/>
-            <param name="of" value="gtiff" />
+            <param name="of" value="GTiff" />
             <param name="advanced" value="advanced"/>
             <param name="a_ullr" value="a_ullr"/>
             <param name="ulx" value="-180"/>

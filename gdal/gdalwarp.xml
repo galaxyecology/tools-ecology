@@ -126,7 +126,7 @@
     <tests>
         <test>
             <param name="input" value="stere.tif"/>
-            <param name="of" value="Gtiff" />
+            <param name="of" value="GTiff" />
             <param name="t_srs" value="EPSG:2154" />
             <param name="advanced" value="simple"/>
             <output name="output" file="stere_warp1.tiff"/>
