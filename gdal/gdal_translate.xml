@@ -80,12 +80,12 @@
     ]]></command>
     <inputs>
         <conditional name="typeinput">
-            <param type="select" name="input" display="radio" label="Gdal supported input file" help="choose between GTiff,Shapefile,GeoJSON,GML,KML">
+            <param type="select" name="input" display="radio" label="Gdal raster supported input file" help="choose between GTiff,VRT or others">
                 <option value="dataset">Data file</option>
                 <option value="subdataset">Subdataset</option>
             </param>
             <when value="dataset">
-                <param type="data" label="Input data" format="gtiff,shapefile,geojson,gml,kml,txt,tabular" help="choose between GTiff,Shapefile,GeoJSON,GML,KML" name="input1"/>
+                <param type="data" label="Input data" format="gtiff,vrt" help="choose between GTiff,VRT or others" name="input1"/>
             </when>    
             <when value="subdataset">
                 <param type="data" label="Tabular of subdatasets" name="subdata_tab"/>
