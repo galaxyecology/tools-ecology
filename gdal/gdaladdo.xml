@@ -20,7 +20,7 @@
     ]]></command>
     
     <inputs>
-        <param type="data" name="input1" label="Gdal supported input file" format="gtiff,tiff,netcdf,VRT" help="Formats currently supported are : GTiff, netCDF and VRT"/>    
+        <param type="data" name="input1" label="Gdal supported raster input file" format="gtiff,vrt" help="choose between GTiff,VRT or others"/>    
         <param name="levels" type="text" label="levels" help="A list of integral overview levels to build. eg : 2 4 8 16" value=""/>        
     </inputs>
     

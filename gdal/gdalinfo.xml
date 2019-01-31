@@ -35,7 +35,7 @@
             #end if
     ]]></command>
     <inputs>
-        <param type="data" name="input1" label="Gdal supported input file" format="gtiff,tiff,netcdf,VRT" help="Formats currently supported are : GTiff, netCDF and VRT"/>
+        <param type="data" name="input1" label="Gdal supported raster input file" format="gtiff,vrt" help="choose between GTiff,VRT or others"/>
         <param name="format" type="select" label="Output format" display="radio" multiple="False">
             <option value="default" selected="true">Text</option>
             <option value="json">Json</option>
