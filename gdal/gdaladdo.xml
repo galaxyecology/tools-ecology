@@ -20,7 +20,7 @@
     ]]></command>
     
     <inputs>
-        <param type="data" name="input1" label="Gdal supported input file" format="gtiff,shapefile,geojson,gml,kml,txt,tabular" help="choose between GTiff,Shapefile,GeoJSON,GML,KML"/>    
+        <param type="data" name="input1" label="Gdal supported input file" format="gtiff,txt,tabular,jpeg,png,netcdf,R" help="choose between GTiff,Shapefile,GeoJSON,GML,KML"/>    
         <param name="levels" type="text" label="levels" help="A list of integral overview levels to build. eg : 2 4 8 16" value=""/>        
     </inputs>
     
