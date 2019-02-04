@@ -1,0 +1,76 @@
+<tool id="ogr2ogr" name="OGR2ogr" version="@VERSIONOGR@">
+    <description>converts simple features data between file formats</description>
+    <macros>
+        <import>gdal_macros.xml</import>
+    </macros> 
+    <requirements>
+        <requirement type="package" version="2.4.0">gdal</requirement>
+        <requirement type="package" version="3.7.1">geos</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        ogr2ogr -f $f '$output' '$input'
+
+    ]]></command>
+    
+    <inputs>
+        <param type="data" name="input" format="data" label="Gdal supported input file" help="http://www.gdal.org/ogr_formats.html"/>
+        <param type="select" name="f" label="Conversion format" value="" help="Select the format to convert your input file. Currently supported : Shapefile, GeoJSON, GML, KML and WFS.">
+            <option value="ESRI Shapefile ">ESRI Shapefile </option>
+            <option value="GeoJSON">GEOJSON</option>
+            <option value="GML">GML</option>
+            <option value="KML">KML</option>
+            <option value="WFS">WFS</option>
+        </param>
+    </inputs>
+    
+    <outputs>
+        <data name="output" auto_format="true" label="${on_string}.${f}"/> 
+    </outputs>
+    
+    <tests>
+        <test> <!-- ogr2ogr -f KML custom.geo.kml custom.geo.json -->
+            <param name="input" value="custom.geo.json"/>
+            <param name="f" value="KML"/>
+            <output name="output" file="testout_ogr2ogr.kml" lines_diff="1"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+========
+Ogrinfo
+========
+
+**What it does**
+
+The Ogrinfo program lists various information about an OGR supported vector dataset.
+
+|
+
+**How to use it**
+
+Select from history a suported vector file. 
+
+|
+
+**Other options, advanced usage**
+
+*-sql statement*
+
+    Execute the indicated SQL statement and return the result. Your input is renamed Shapefile. 
+
+|
+
+*-so*
+
+    Summary Only: suppress listing of features, show only the summary information like projection, schema, feature count and extents.
+
+|
+
+**Sources**
+
+http://www.gdal.org
+
+http://www.gdal.org/ogr_utilities.html
+
+http://download.osgeo.org/gdal/workshop/foss4ge2015/workshop_gdal.pdf
+    ]]></help>
+</tool>
