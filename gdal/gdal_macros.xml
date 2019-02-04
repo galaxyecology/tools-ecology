@@ -1,6 +1,7 @@
 <macros>
 
     <token name="@VERSION@">2.1.0</token>
+    <token name="@VERSIONOGR@">2.4.0</token>
     
     <xml name="gdal_requirements">
         <requirements>
