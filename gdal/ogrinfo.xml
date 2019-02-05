@@ -71,7 +71,7 @@
             <param name="input1" value="ogrinfo_test.nc"/>
             <param name="advanced" value="advanced"/>
             <param name="sql" value="sql"/>
-            <param name="sql_statement" value="SELECT * FROM dataset_30 WHERE time > 9000"/>
+            <param name="sql_statement" value="SELECT * FROM dataset_3 WHERE time > 9000"/>
             <param name="so" value=""/>
             <output name="output">
                 <assert_contents>
