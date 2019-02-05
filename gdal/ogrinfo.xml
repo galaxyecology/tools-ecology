@@ -54,7 +54,18 @@
         <test>
             <param name="input1" value="ogrinfo_test.nc"/>
             <param name="advanced" value="simple"/>
+            <output name="output">
+                <assert_contents>
+                    <has_text text="  NC_GLOBAL#institution=Puertos del Estado (PdE) - Mercator-Ocean (MO)"/>
+                    <has_text text="  NC_GLOBAL#longitude_max=2.499999046325684"/>
+                    <has_text text="Feature Count: 145"/>
+                </assert_contents>
+            </output>
+
+<!-- test ok if "planemo test ogrinfo" can fail if "planemo test" because of the input dataset name present in the output file change.
             <output name="output" file="ogrinfo_test1_out.txt" lines_diff="6"/>
+-->
+
         </test>
         <test>
             <param name="input1" value="ogrinfo_test.nc"/>
@@ -62,7 +73,18 @@
             <param name="sql" value="sql"/>
             <param name="sql_statement" value="SELECT * FROM dataset_3 WHERE time > 9000"/>
             <param name="so" value=""/>
+            <output name="output">
+                <assert_contents>
+                    <has_text text="  NC_GLOBAL#institution=Puertos del Estado (PdE) - Mercator-Ocean (MO)"/>
+                    <has_text text="  NC_GLOBAL#longitude_max=2.499999046325684"/>
+                    <has_text text="Feature Count: 142"/>
+                </assert_contents>
+            </output> 
+
+<!--
             <output name="output" file="ogrinfo_test2_out.txt" lines_diff="2"/>
+-->
+
         </test>
    </tests>
     <help><![CDATA[
