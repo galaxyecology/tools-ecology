@@ -1,0 +1,2568 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document id="root_doc">
+<Schema name="dataset_1" id="dataset_1">
+	<SimpleField name="scalerank" type="int"></SimpleField>
+	<SimpleField name="featurecla" type="string"></SimpleField>
+	<SimpleField name="labelrank" type="int"></SimpleField>
+	<SimpleField name="sovereignt" type="string"></SimpleField>
+	<SimpleField name="sov_a3" type="string"></SimpleField>
+	<SimpleField name="adm0_dif" type="int"></SimpleField>
+	<SimpleField name="level" type="int"></SimpleField>
+	<SimpleField name="type" type="string"></SimpleField>
+	<SimpleField name="admin" type="string"></SimpleField>
+	<SimpleField name="adm0_a3" type="string"></SimpleField>
+	<SimpleField name="geou_dif" type="int"></SimpleField>
+	<SimpleField name="geounit" type="string"></SimpleField>
+	<SimpleField name="gu_a3" type="string"></SimpleField>
+	<SimpleField name="su_dif" type="int"></SimpleField>
+	<SimpleField name="subunit" type="string"></SimpleField>
+	<SimpleField name="su_a3" type="string"></SimpleField>
+	<SimpleField name="brk_diff" type="int"></SimpleField>
+	<SimpleField name="name_long" type="string"></SimpleField>
+	<SimpleField name="brk_a3" type="string"></SimpleField>
+	<SimpleField name="brk_name" type="string"></SimpleField>
+	<SimpleField name="brk_group" type="string"></SimpleField>
+	<SimpleField name="abbrev" type="string"></SimpleField>
+	<SimpleField name="postal" type="string"></SimpleField>
+	<SimpleField name="formal_en" type="string"></SimpleField>
+	<SimpleField name="formal_fr" type="string"></SimpleField>
+	<SimpleField name="note_adm0" type="string"></SimpleField>
+	<SimpleField name="note_brk" type="string"></SimpleField>
+	<SimpleField name="name_sort" type="string"></SimpleField>
+	<SimpleField name="name_alt" type="string"></SimpleField>
+	<SimpleField name="mapcolor7" type="int"></SimpleField>
+	<SimpleField name="mapcolor8" type="int"></SimpleField>
+	<SimpleField name="mapcolor9" type="int"></SimpleField>
+	<SimpleField name="mapcolor13" type="int"></SimpleField>
+	<SimpleField name="pop_est" type="int"></SimpleField>
+	<SimpleField name="gdp_md_est" type="int"></SimpleField>
+	<SimpleField name="pop_year" type="int"></SimpleField>
+	<SimpleField name="lastcensus" type="int"></SimpleField>
+	<SimpleField name="gdp_year" type="int"></SimpleField>
+	<SimpleField name="economy" type="string"></SimpleField>
+	<SimpleField name="income_grp" type="string"></SimpleField>
+	<SimpleField name="wikipedia" type="int"></SimpleField>
+	<SimpleField name="fips_10" type="string"></SimpleField>
+	<SimpleField name="iso_a2" type="string"></SimpleField>
+	<SimpleField name="iso_a3" type="string"></SimpleField>
+	<SimpleField name="iso_n3" type="string"></SimpleField>
+	<SimpleField name="un_a3" type="string"></SimpleField>
+	<SimpleField name="wb_a2" type="string"></SimpleField>
+	<SimpleField name="wb_a3" type="string"></SimpleField>
+	<SimpleField name="woe_id" type="int"></SimpleField>
+	<SimpleField name="adm0_a3_is" type="string"></SimpleField>
+	<SimpleField name="adm0_a3_us" type="string"></SimpleField>
+	<SimpleField name="adm0_a3_un" type="int"></SimpleField>
+	<SimpleField name="adm0_a3_wb" type="int"></SimpleField>
+	<SimpleField name="continent" type="string"></SimpleField>
+	<SimpleField name="region_un" type="string"></SimpleField>
+	<SimpleField name="subregion" type="string"></SimpleField>
+	<SimpleField name="region_wb" type="string"></SimpleField>
+	<SimpleField name="name_len" type="int"></SimpleField>
+	<SimpleField name="long_len" type="int"></SimpleField>
+	<SimpleField name="abbrev_len" type="int"></SimpleField>
+	<SimpleField name="tiny" type="int"></SimpleField>
+	<SimpleField name="homepart" type="int"></SimpleField>
+	<SimpleField name="filename" type="string"></SimpleField>
+</Schema>
+<Folder><name>dataset_1</name>
+  <Placemark>
+	<name>Albania</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">6</SimpleData>
+		<SimpleData name="sovereignt">Albania</SimpleData>
+		<SimpleData name="sov_a3">ALB</SimpleData>
+		<SimpleData name="adm0_dif">0</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Sovereign country</SimpleData>
+		<SimpleData name="admin">Albania</SimpleData>
+		<SimpleData name="adm0_a3">ALB</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Albania</SimpleData>
+		<SimpleData name="gu_a3">ALB</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Albania</SimpleData>
+		<SimpleData name="su_a3">ALB</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Albania</SimpleData>
+		<SimpleData name="brk_a3">ALB</SimpleData>
+		<SimpleData name="brk_name">Albania</SimpleData>
+		<SimpleData name="abbrev">Alb.</SimpleData>
+		<SimpleData name="postal">AL</SimpleData>
+		<SimpleData name="formal_en">Republic of Albania</SimpleData>
+		<SimpleData name="name_sort">Albania</SimpleData>
+		<SimpleData name="mapcolor7">1</SimpleData>
+		<SimpleData name="mapcolor8">4</SimpleData>
+		<SimpleData name="mapcolor9">1</SimpleData>
+		<SimpleData name="mapcolor13">6</SimpleData>
+		<SimpleData name="pop_est">3639453</SimpleData>
+		<SimpleData name="gdp_md_est">21810</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">2001</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">6. Developing region</SimpleData>
+		<SimpleData name="income_grp">4. Lower middle income</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">AL</SimpleData>
+		<SimpleData name="iso_a3">ALB</SimpleData>
+		<SimpleData name="iso_n3">008</SimpleData>
+		<SimpleData name="un_a3">008</SimpleData>
+		<SimpleData name="wb_a2">AL</SimpleData>
+		<SimpleData name="wb_a3">ALB</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">ALB</SimpleData>
+		<SimpleData name="adm0_a3_us">ALB</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Southern Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">7</SimpleData>
+		<SimpleData name="long_len">7</SimpleData>
+		<SimpleData name="abbrev_len">4</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">ALB.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>20.5902474301049,41.8554041611336 20.4631750830992,41.5150890162753 20.6051819190374,41.0862263046852 21.0200403174764,40.8427269557259 20.9999898617472,40.580003973954 20.6749967790636,40.434999904943 20.6150004411728,40.1100068222594 20.1500159034105,39.624997666984 19.9800004411701,39.6949933945234 19.9600016618732,39.915005805006 19.4060819841367,40.2507734238225 19.3190588721571,40.7272301295536 19.4035498389543,41.4095657415355 19.5400272966371,41.7199860703128 19.371768833095,41.8775475123707 19.3044861182508,42.1957451442078 19.7380513851796,42.6882473821656 19.8016133968987,42.5000934921908 20.0707,42.58863 20.2837545101819,42.3202595078151 20.52295,42.21787 20.5902474301049,41.8554041611336</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+  <Placemark>
+	<name>Bosnia and Herz.</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">5</SimpleData>
+		<SimpleData name="sovereignt">Bosnia and Herzegovina</SimpleData>
+		<SimpleData name="sov_a3">BIH</SimpleData>
+		<SimpleData name="adm0_dif">0</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Sovereign country</SimpleData>
+		<SimpleData name="admin">Bosnia and Herzegovina</SimpleData>
+		<SimpleData name="adm0_a3">BIH</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Bosnia and Herzegovina</SimpleData>
+		<SimpleData name="gu_a3">BIH</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Bosnia and Herzegovina</SimpleData>
+		<SimpleData name="su_a3">BIH</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Bosnia and Herzegovina</SimpleData>
+		<SimpleData name="brk_a3">BIH</SimpleData>
+		<SimpleData name="brk_name">Bosnia and Herz.</SimpleData>
+		<SimpleData name="abbrev">B.H.</SimpleData>
+		<SimpleData name="postal">BiH</SimpleData>
+		<SimpleData name="formal_en">Bosnia and Herzegovina</SimpleData>
+		<SimpleData name="name_sort">Bosnia and Herzegovina</SimpleData>
+		<SimpleData name="mapcolor7">1</SimpleData>
+		<SimpleData name="mapcolor8">1</SimpleData>
+		<SimpleData name="mapcolor9">1</SimpleData>
+		<SimpleData name="mapcolor13">2</SimpleData>
+		<SimpleData name="pop_est">4613414</SimpleData>
+		<SimpleData name="gdp_md_est">29700</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">1991</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">6. Developing region</SimpleData>
+		<SimpleData name="income_grp">3. Upper middle income</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">BA</SimpleData>
+		<SimpleData name="iso_a3">BIH</SimpleData>
+		<SimpleData name="iso_n3">070</SimpleData>
+		<SimpleData name="un_a3">070</SimpleData>
+		<SimpleData name="wb_a2">BA</SimpleData>
+		<SimpleData name="wb_a3">BIH</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">BIH</SimpleData>
+		<SimpleData name="adm0_a3_us">BIH</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Southern Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">16</SimpleData>
+		<SimpleData name="long_len">22</SimpleData>
+		<SimpleData name="abbrev_len">4</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">BIH.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>19.0054862810101,44.8602336696092 19.36803,44.863 19.11761,44.42307 19.59976,44.03847 19.454,43.5681 19.21852,43.52384 19.03165,43.43253 18.70648,43.20011 18.56,42.65 17.674921502359,43.0285625270236 17.2973734880345,43.4463406438874 16.9161564470173,43.6677224798257 16.4564429053489,44.0412397324313 16.2396602718845,44.3511432968857 15.750026075919,44.8187116562626 15.9593673031334,45.2337767604309 16.3181567725359,45.0041266953259 16.5349394060002,45.2116075709777 17.002146030351,45.2337767604309 17.8617834815264,45.0677403834771 18.5532141455917,45.0815896673314 19.0054862810101,44.8602336696092</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+  <Placemark>
+	<name>Belarus</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">4</SimpleData>
+		<SimpleData name="sovereignt">Belarus</SimpleData>
+		<SimpleData name="sov_a3">BLR</SimpleData>
+		<SimpleData name="adm0_dif">0</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Sovereign country</SimpleData>
+		<SimpleData name="admin">Belarus</SimpleData>
+		<SimpleData name="adm0_a3">BLR</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Belarus</SimpleData>
+		<SimpleData name="gu_a3">BLR</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Belarus</SimpleData>
+		<SimpleData name="su_a3">BLR</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Belarus</SimpleData>
+		<SimpleData name="brk_a3">BLR</SimpleData>
+		<SimpleData name="brk_name">Belarus</SimpleData>
+		<SimpleData name="abbrev">Bela.</SimpleData>
+		<SimpleData name="postal">BY</SimpleData>
+		<SimpleData name="formal_en">Republic of Belarus</SimpleData>
+		<SimpleData name="name_sort">Belarus</SimpleData>
+		<SimpleData name="mapcolor7">1</SimpleData>
+		<SimpleData name="mapcolor8">1</SimpleData>
+		<SimpleData name="mapcolor9">5</SimpleData>
+		<SimpleData name="mapcolor13">11</SimpleData>
+		<SimpleData name="pop_est">9648533</SimpleData>
+		<SimpleData name="gdp_md_est">114100</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">2009</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">6. Developing region</SimpleData>
+		<SimpleData name="income_grp">3. Upper middle income</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">BY</SimpleData>
+		<SimpleData name="iso_a3">BLR</SimpleData>
+		<SimpleData name="iso_n3">112</SimpleData>
+		<SimpleData name="un_a3">112</SimpleData>
+		<SimpleData name="wb_a2">BY</SimpleData>
+		<SimpleData name="wb_a3">BLR</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">BLR</SimpleData>
+		<SimpleData name="adm0_a3_us">BLR</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Eastern Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">7</SimpleData>
+		<SimpleData name="long_len">7</SimpleData>
+		<SimpleData name="abbrev_len">5</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">BLR.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>23.4841276384498,53.9124976670411 24.450683628037,53.9057022161948 25.536353794057,54.2824234076025 25.7684326514798,54.8469625921751 26.5882792497904,55.1671756048717 26.4943314958838,55.6151069199776 27.1024597510945,55.7833137070877 28.176709425578,56.1691299505788 29.2295133806603,55.9183442246664 29.3715718930307,55.6700906439362 29.8962943865224,55.7894632025304 30.87390913262,55.5509764675034 30.9718359718131,55.081547756564 30.7575338070987,54.8117709417843 31.3844722836637,54.1570563828624 31.7914241879622,53.9746385768721 31.7312728207745,53.794029446012 32.4055985857512,53.618045355842 32.693643019346,53.3514208034321 32.3045194841882,53.1327261419729 31.4976436703829,53.1674268662569 31.305200636528,53.0739958766732 31.5400183448623,52.7420523138464 31.7859981625716,52.1016779648855 30.927549269339,52.0423534206144 30.6194543800148,51.8228060980224 30.5551172218115,51.3195034857157 30.1573637224609,51.4161384141015 29.2549381853479,51.3682343613669 28.9928353207635,51.6020443792715 28.6176127458922,51.4277139349348 28.2416150245366,51.5722270778391 27.4540661964084,51.5923033717845 26.3379586117686,51.8322887233479 25.327787713327,51.9106560329186 24.5531063168395,51.8884610052492 24.0050777523842,51.6174439560945 23.5270707536844,51.5784540879302 23.5080021501687,52.0236465521247 23.1994938493862,52.4869774440537 23.7991988461334,52.6910993516066 23.8049349301178,53.0897313503061 23.527535841575,53.4701215684066 23.4841276384498,53.9124976670411</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+  <Placemark>
+	<name>Bulgaria</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">4</SimpleData>
+		<SimpleData name="sovereignt">Bulgaria</SimpleData>
+		<SimpleData name="sov_a3">BGR</SimpleData>
+		<SimpleData name="adm0_dif">0</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Sovereign country</SimpleData>
+		<SimpleData name="admin">Bulgaria</SimpleData>
+		<SimpleData name="adm0_a3">BGR</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Bulgaria</SimpleData>
+		<SimpleData name="gu_a3">BGR</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Bulgaria</SimpleData>
+		<SimpleData name="su_a3">BGR</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Bulgaria</SimpleData>
+		<SimpleData name="brk_a3">BGR</SimpleData>
+		<SimpleData name="brk_name">Bulgaria</SimpleData>
+		<SimpleData name="abbrev">Bulg.</SimpleData>
+		<SimpleData name="postal">BG</SimpleData>
+		<SimpleData name="formal_en">Republic of Bulgaria</SimpleData>
+		<SimpleData name="name_sort">Bulgaria</SimpleData>
+		<SimpleData name="mapcolor7">4</SimpleData>
+		<SimpleData name="mapcolor8">5</SimpleData>
+		<SimpleData name="mapcolor9">1</SimpleData>
+		<SimpleData name="mapcolor13">8</SimpleData>
+		<SimpleData name="pop_est">7204687</SimpleData>
+		<SimpleData name="gdp_md_est">93750</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">2011</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">2. Developed region: nonG7</SimpleData>
+		<SimpleData name="income_grp">3. Upper middle income</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">BG</SimpleData>
+		<SimpleData name="iso_a3">BGR</SimpleData>
+		<SimpleData name="iso_n3">100</SimpleData>
+		<SimpleData name="un_a3">100</SimpleData>
+		<SimpleData name="wb_a2">BG</SimpleData>
+		<SimpleData name="wb_a3">BGR</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">BGR</SimpleData>
+		<SimpleData name="adm0_a3_us">BGR</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Eastern Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">8</SimpleData>
+		<SimpleData name="long_len">8</SimpleData>
+		<SimpleData name="abbrev_len">5</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">BGR.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>22.657149692483,44.2349230006613 22.9448323910518,43.8237853053471 23.3323022803763,43.8970108099047 24.1006791521242,43.7410513372479 25.5692716814269,43.6884447291747 26.0651587256997,43.9434937607513 27.2423995297409,44.1759860296324 27.9701070492751,43.8124681666752 28.558081495892,43.7074616562581 28.0390950863847,43.2931716985742 27.673897739378,42.5778923610062 27.9967204119054,42.0073587102878 27.1357393734905,42.1414848903013 26.1170418637208,41.8269046087246 26.1061381365072,41.3288988307278 25.1972013689254,41.2344859889305 24.492644891058,41.583896185872 23.6920736019923,41.3090809189438 22.9523771501665,41.3379938828111 22.8813737321974,41.9992971868503 22.3805257504246,42.3202595078151 22.5450118344096,42.461362006188 22.4365946794613,42.5803211533239 22.6048014665713,42.8985187851611 22.9860185075885,43.211161200527 22.5001566911803,43.642814439461 22.4104464047216,44.0080634628999 22.657149692483,44.2349230006613</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+  <Placemark>
+	<name>Austria</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">4</SimpleData>
+		<SimpleData name="sovereignt">Austria</SimpleData>
+		<SimpleData name="sov_a3">AUT</SimpleData>
+		<SimpleData name="adm0_dif">0</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Sovereign country</SimpleData>
+		<SimpleData name="admin">Austria</SimpleData>
+		<SimpleData name="adm0_a3">AUT</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Austria</SimpleData>
+		<SimpleData name="gu_a3">AUT</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Austria</SimpleData>
+		<SimpleData name="su_a3">AUT</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Austria</SimpleData>
+		<SimpleData name="brk_a3">AUT</SimpleData>
+		<SimpleData name="brk_name">Austria</SimpleData>
+		<SimpleData name="abbrev">Aust.</SimpleData>
+		<SimpleData name="postal">A</SimpleData>
+		<SimpleData name="formal_en">Republic of Austria</SimpleData>
+		<SimpleData name="name_sort">Austria</SimpleData>
+		<SimpleData name="mapcolor7">3</SimpleData>
+		<SimpleData name="mapcolor8">1</SimpleData>
+		<SimpleData name="mapcolor9">3</SimpleData>
+		<SimpleData name="mapcolor13">4</SimpleData>
+		<SimpleData name="pop_est">8210281</SimpleData>
+		<SimpleData name="gdp_md_est">329500</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">2011</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">2. Developed region: nonG7</SimpleData>
+		<SimpleData name="income_grp">1. High income: OECD</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">AT</SimpleData>
+		<SimpleData name="iso_a3">AUT</SimpleData>
+		<SimpleData name="iso_n3">040</SimpleData>
+		<SimpleData name="un_a3">040</SimpleData>
+		<SimpleData name="wb_a2">AT</SimpleData>
+		<SimpleData name="wb_a3">AUT</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">AUT</SimpleData>
+		<SimpleData name="adm0_a3_us">AUT</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Western Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">7</SimpleData>
+		<SimpleData name="long_len">7</SimpleData>
+		<SimpleData name="abbrev_len">5</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">AUT.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>16.979666782304,48.1234970159763 16.9037541032673,47.7148656276283 16.3405843441504,47.7129019232012 16.5342676123804,47.4961709661691 16.2022982113374,46.852385972677 16.0116638526127,46.6836107448117 15.137091912505,46.658702704447 14.6324715511748,46.4318173284695 13.8064754574215,46.5093061386912 12.3764852230408,46.7675591090699 12.1530880062431,47.1153931748265 11.1648279150933,46.9415794948127 11.0485559424365,46.7513585475463 10.4427014502466,46.8935462509974 9.93244835779666,46.920728054383 9.47996951664902,47.1028099635634 9.63293175623298,47.34760122333 9.59422610844635,47.5250580918203 9.89606814946319,47.5801968450757 10.4020837744652,47.3024876979392 10.5445040218616,47.5663992376538 11.4264140153547,47.523766181013 12.1413574561128,47.7030834010658 12.6207597184845,47.6723876002844 12.9326269873659,47.467645575544 13.0258512712205,47.6375835231358 12.8841028174439,48.2891458196879 13.243357374737,48.4161148138291 13.5959456722644,48.8771719427371 14.3388977393247,48.5553052842072 14.9014473812541,48.9644017604458 15.253415561594,49.0390742051076 16.0296472510502,48.7338990342079 16.4992826677188,48.7858080104451 16.9602881201946,48.5969823268506 16.879982944413,48.4700133327095 16.979666782304,48.1234970159763</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+  <Placemark>
+	<name>Belgium</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">2</SimpleData>
+		<SimpleData name="sovereignt">Belgium</SimpleData>
+		<SimpleData name="sov_a3">BEL</SimpleData>
+		<SimpleData name="adm0_dif">0</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Sovereign country</SimpleData>
+		<SimpleData name="admin">Belgium</SimpleData>
+		<SimpleData name="adm0_a3">BEL</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Belgium</SimpleData>
+		<SimpleData name="gu_a3">BEL</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Belgium</SimpleData>
+		<SimpleData name="su_a3">BEL</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Belgium</SimpleData>
+		<SimpleData name="brk_a3">BEL</SimpleData>
+		<SimpleData name="brk_name">Belgium</SimpleData>
+		<SimpleData name="abbrev">Belg.</SimpleData>
+		<SimpleData name="postal">B</SimpleData>
+		<SimpleData name="formal_en">Kingdom of Belgium</SimpleData>
+		<SimpleData name="name_sort">Belgium</SimpleData>
+		<SimpleData name="mapcolor7">3</SimpleData>
+		<SimpleData name="mapcolor8">2</SimpleData>
+		<SimpleData name="mapcolor9">1</SimpleData>
+		<SimpleData name="mapcolor13">8</SimpleData>
+		<SimpleData name="pop_est">10414336</SimpleData>
+		<SimpleData name="gdp_md_est">389300</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">2011</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">2. Developed region: nonG7</SimpleData>
+		<SimpleData name="income_grp">1. High income: OECD</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">BE</SimpleData>
+		<SimpleData name="iso_a3">BEL</SimpleData>
+		<SimpleData name="iso_n3">056</SimpleData>
+		<SimpleData name="un_a3">056</SimpleData>
+		<SimpleData name="wb_a2">BE</SimpleData>
+		<SimpleData name="wb_a3">BEL</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">BEL</SimpleData>
+		<SimpleData name="adm0_a3_us">BEL</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Western Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">7</SimpleData>
+		<SimpleData name="long_len">7</SimpleData>
+		<SimpleData name="abbrev_len">5</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">BEL.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>3.31497114422854,51.3457809515361 4.04707116050753,51.2672586126686 4.97399132652691,51.4750237086981 5.60697594567,51.0372984889698 6.15665815595878,50.8037210150106 6.04307335778111,50.1280516627942 5.78241743330091,50.0903278672212 5.67405195478483,49.5294835475575 4.79922163251581,49.9853730332364 4.28602298342508,49.9074966497726 3.58818444175569,50.3789924180036 3.1232515804258,50.7803632676146 2.65842207196027,50.7968480495157 2.51357303224614,51.1485061712618 3.31497114422854,51.3457809515361</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+  <Placemark>
+	<name>Switzerland</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">4</SimpleData>
+		<SimpleData name="sovereignt">Switzerland</SimpleData>
+		<SimpleData name="sov_a3">CHE</SimpleData>
+		<SimpleData name="adm0_dif">0</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Sovereign country</SimpleData>
+		<SimpleData name="admin">Switzerland</SimpleData>
+		<SimpleData name="adm0_a3">CHE</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Switzerland</SimpleData>
+		<SimpleData name="gu_a3">CHE</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Switzerland</SimpleData>
+		<SimpleData name="su_a3">CHE</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Switzerland</SimpleData>
+		<SimpleData name="brk_a3">CHE</SimpleData>
+		<SimpleData name="brk_name">Switzerland</SimpleData>
+		<SimpleData name="abbrev">Switz.</SimpleData>
+		<SimpleData name="postal">CH</SimpleData>
+		<SimpleData name="formal_en">Swiss Confederation</SimpleData>
+		<SimpleData name="name_sort">Switzerland</SimpleData>
+		<SimpleData name="mapcolor7">5</SimpleData>
+		<SimpleData name="mapcolor8">2</SimpleData>
+		<SimpleData name="mapcolor9">7</SimpleData>
+		<SimpleData name="mapcolor13">3</SimpleData>
+		<SimpleData name="pop_est">7604467</SimpleData>
+		<SimpleData name="gdp_md_est">316700</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">2010</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">2. Developed region: nonG7</SimpleData>
+		<SimpleData name="income_grp">1. High income: OECD</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">CH</SimpleData>
+		<SimpleData name="iso_a3">CHE</SimpleData>
+		<SimpleData name="iso_n3">756</SimpleData>
+		<SimpleData name="un_a3">756</SimpleData>
+		<SimpleData name="wb_a2">CH</SimpleData>
+		<SimpleData name="wb_a3">CHE</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">CHE</SimpleData>
+		<SimpleData name="adm0_a3_us">CHE</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Western Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">11</SimpleData>
+		<SimpleData name="long_len">11</SimpleData>
+		<SimpleData name="abbrev_len">6</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">CHE.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>9.59422610844635,47.5250580918203 9.63293175623298,47.34760122333 9.47996951664902,47.1028099635634 9.93244835779666,46.920728054383 10.4427014502466,46.8935462509974 10.3633781266786,46.4835712754099 9.92283654139038,46.3148994004092 9.18288170740306,46.440214748717 8.96630577966781,46.0369318711112 8.48995242680132,46.0051508652517 8.31662967289438,46.1636424830909 7.75599205895983,45.8244900579593 7.27385094567666,45.7769477402508 6.8435929704145,45.9911465521006 6.50009972497042,46.4296727565294 6.02260949059354,46.2729898138205 6.037388950229,46.7257787135619 6.76871382002361,47.2877082383037 6.73657107913806,47.5418012558828 7.19220218265551,47.449765529971 7.46675906742223,47.6205819769118 8.31730146651415,47.6135798203363 8.52261193200976,47.8308275416913 9.59422610844635,47.5250580918203</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+  <Placemark>
+	<name>Czech Rep.</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">5</SimpleData>
+		<SimpleData name="sovereignt">Czech Republic</SimpleData>
+		<SimpleData name="sov_a3">CZE</SimpleData>
+		<SimpleData name="adm0_dif">0</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Sovereign country</SimpleData>
+		<SimpleData name="admin">Czech Republic</SimpleData>
+		<SimpleData name="adm0_a3">CZE</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Czech Republic</SimpleData>
+		<SimpleData name="gu_a3">CZE</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Czech Republic</SimpleData>
+		<SimpleData name="su_a3">CZE</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Czech Republic</SimpleData>
+		<SimpleData name="brk_a3">CZE</SimpleData>
+		<SimpleData name="brk_name">Czech Rep.</SimpleData>
+		<SimpleData name="abbrev">Cz. Rep.</SimpleData>
+		<SimpleData name="postal">CZ</SimpleData>
+		<SimpleData name="formal_en">Czech Republic</SimpleData>
+		<SimpleData name="name_sort">Czech Republic</SimpleData>
+		<SimpleData name="mapcolor7">1</SimpleData>
+		<SimpleData name="mapcolor8">1</SimpleData>
+		<SimpleData name="mapcolor9">2</SimpleData>
+		<SimpleData name="mapcolor13">6</SimpleData>
+		<SimpleData name="pop_est">10211904</SimpleData>
+		<SimpleData name="gdp_md_est">265200</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">2011</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">2. Developed region: nonG7</SimpleData>
+		<SimpleData name="income_grp">1. High income: OECD</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">CZ</SimpleData>
+		<SimpleData name="iso_a3">CZE</SimpleData>
+		<SimpleData name="iso_n3">203</SimpleData>
+		<SimpleData name="un_a3">203</SimpleData>
+		<SimpleData name="wb_a2">CZ</SimpleData>
+		<SimpleData name="wb_a3">CZE</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">CZE</SimpleData>
+		<SimpleData name="adm0_a3_us">CZE</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Eastern Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">10</SimpleData>
+		<SimpleData name="long_len">14</SimpleData>
+		<SimpleData name="abbrev_len">8</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">CZE.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>16.9602881201946,48.5969823268506 16.4992826677188,48.7858080104451 16.0296472510502,48.7338990342079 15.253415561594,49.0390742051076 14.9014473812541,48.9644017604458 14.3388977393247,48.5553052842072 13.5959456722644,48.8771719427371 13.0313289730434,49.3070681829732 12.5210242041612,49.5474152695627 12.4151908708274,49.9691207952806 12.2401111182226,50.2663377956073 12.9668367855432,50.4840764430691 13.3381319515603,50.7332343613644 14.0562276546882,50.9269176295943 14.3070133806006,51.1172677679414 14.5707182145861,51.0023393825243 15.0169958838587,51.1066740993216 15.4909721208397,50.7847299261432 16.2386267432386,50.6977326523798 16.1762532894623,50.4226073268579 16.7194759457144,50.2157465683935 16.8687691586057,50.473973700556 17.5545670915511,50.3621459010764 17.649445021239,50.04903839782 18.3929138526222,49.9886286484708 18.8531441586136,49.4962297633776 18.5549711442895,49.4950153672188 18.3999935238462,49.31500051533 18.170498488038,49.2715147975564 18.1049727718919,49.0439834661753 17.9135115902505,48.9964928248991 17.8864848161618,48.9034752467737 17.5450069515771,48.8000190293254 17.1019848975389,48.8169688991171 16.9602881201946,48.5969823268506</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+  <Placemark>
+	<name>Germany</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">2</SimpleData>
+		<SimpleData name="sovereignt">Germany</SimpleData>
+		<SimpleData name="sov_a3">DEU</SimpleData>
+		<SimpleData name="adm0_dif">0</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Sovereign country</SimpleData>
+		<SimpleData name="admin">Germany</SimpleData>
+		<SimpleData name="adm0_a3">DEU</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Germany</SimpleData>
+		<SimpleData name="gu_a3">DEU</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Germany</SimpleData>
+		<SimpleData name="su_a3">DEU</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Germany</SimpleData>
+		<SimpleData name="brk_a3">DEU</SimpleData>
+		<SimpleData name="brk_name">Germany</SimpleData>
+		<SimpleData name="abbrev">Ger.</SimpleData>
+		<SimpleData name="postal">D</SimpleData>
+		<SimpleData name="formal_en">Federal Republic of Germany</SimpleData>
+		<SimpleData name="name_sort">Germany</SimpleData>
+		<SimpleData name="mapcolor7">2</SimpleData>
+		<SimpleData name="mapcolor8">5</SimpleData>
+		<SimpleData name="mapcolor9">5</SimpleData>
+		<SimpleData name="mapcolor13">1</SimpleData>
+		<SimpleData name="pop_est">82329758</SimpleData>
+		<SimpleData name="gdp_md_est">2918000</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">2011</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">1. Developed region: G7</SimpleData>
+		<SimpleData name="income_grp">1. High income: OECD</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">DE</SimpleData>
+		<SimpleData name="iso_a3">DEU</SimpleData>
+		<SimpleData name="iso_n3">276</SimpleData>
+		<SimpleData name="un_a3">276</SimpleData>
+		<SimpleData name="wb_a2">DE</SimpleData>
+		<SimpleData name="wb_a3">DEU</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">DEU</SimpleData>
+		<SimpleData name="adm0_a3_us">DEU</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Western Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">7</SimpleData>
+		<SimpleData name="long_len">7</SimpleData>
+		<SimpleData name="abbrev_len">4</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">DEU.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>9.92190636560923,54.983104153048 9.9395797054529,54.5966419541533 10.9501123389205,54.3636070827332 10.9394669938684,54.0086933457526 11.9562524756433,54.1964855007012 12.5184403825467,54.470370591848 13.6474670752595,54.0755109727059 14.1196863135426,53.757029120491 14.3533154639342,53.2481712917131 14.0745211117194,52.9812625189253 14.4375997250022,52.6248501654083 14.6850264828157,52.0899474147552 14.6070984229196,51.74518809672 15.0169958838588,51.1066740993217 14.5707182145861,51.0023393825244 14.3070133806007,51.1172677679414 14.0562276546883,50.9269176295943 13.3381319515604,50.7332343613643 12.9668367855433,50.4840764430692 12.2401111182227,50.2663377956072 12.4151908708275,49.9691207952806 12.5210242041613,49.5474152695627 13.0313289730435,49.3070681829732 13.5959456722646,48.8771719427372 13.2433573747371,48.416114813829 12.8841028174439,48.2891458196879 13.0258512712205,47.637583523136 12.9326269873661,47.467645575544 12.6207597184845,47.6723876002844 12.1413574561129,47.7030834010658 11.4264140153549,47.5237661810131 10.5445040218616,47.5663992376538 10.4020837744653,47.3024876979392 9.89606814946319,47.5801968450757 9.59422610844638,47.5250580918202 8.5226119320098,47.8308275416913 8.3173014665141,47.6135798203363 7.46675906742229,47.6205819769119 7.59367638513106,48.3330191107037 8.09927859867486,49.0177835150034 6.65822960778371,49.2019583196916 6.18632042809418,49.4638028021145 6.24275109215699,49.9022256536787 6.04307335778111,50.1280516627942 6.15665815595878,50.8037210150106 5.98865807457781,51.8516157090251 6.58939659997083,51.8520291204834 6.84286950036238,52.2284402532975 7.0920532568739,53.1440432806449 6.90513960127413,53.4821621771306 7.10042483890527,53.6939321966627 7.93623945479396,53.7482958034338 8.12170617028949,53.5277924668443 8.80073449060467,54.0207856309089 8.57211795414537,54.3956464707541 8.52622928227021,54.9627436387252 9.28204878097114,54.8308653835163 9.92190636560923,54.983104153048</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+  <Placemark>
+	<name>Denmark</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">4</SimpleData>
+		<SimpleData name="sovereignt">Denmark</SimpleData>
+		<SimpleData name="sov_a3">DN1</SimpleData>
+		<SimpleData name="adm0_dif">1</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Country</SimpleData>
+		<SimpleData name="admin">Denmark</SimpleData>
+		<SimpleData name="adm0_a3">DNK</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Denmark</SimpleData>
+		<SimpleData name="gu_a3">DNK</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Denmark</SimpleData>
+		<SimpleData name="su_a3">DNK</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Denmark</SimpleData>
+		<SimpleData name="brk_a3">DNK</SimpleData>
+		<SimpleData name="brk_name">Denmark</SimpleData>
+		<SimpleData name="abbrev">Den.</SimpleData>
+		<SimpleData name="postal">DK</SimpleData>
+		<SimpleData name="formal_en">Kingdom of Denmark</SimpleData>
+		<SimpleData name="name_sort">Denmark</SimpleData>
+		<SimpleData name="mapcolor7">4</SimpleData>
+		<SimpleData name="mapcolor8">1</SimpleData>
+		<SimpleData name="mapcolor9">3</SimpleData>
+		<SimpleData name="mapcolor13">12</SimpleData>
+		<SimpleData name="pop_est">5500510</SimpleData>
+		<SimpleData name="gdp_md_est">203600</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">2011</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">2. Developed region: nonG7</SimpleData>
+		<SimpleData name="income_grp">1. High income: OECD</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">DK</SimpleData>
+		<SimpleData name="iso_a3">DNK</SimpleData>
+		<SimpleData name="iso_n3">208</SimpleData>
+		<SimpleData name="un_a3">208</SimpleData>
+		<SimpleData name="wb_a2">DK</SimpleData>
+		<SimpleData name="wb_a3">DNK</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">DNK</SimpleData>
+		<SimpleData name="adm0_a3_us">DNK</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Northern Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">7</SimpleData>
+		<SimpleData name="long_len">7</SimpleData>
+		<SimpleData name="abbrev_len">4</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">DNK.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>12.6900061377556,55.6099909531808 12.0899910824147,54.8000145534379 11.0435433285042,55.3648637966043 10.9039136084516,55.7799547389887 12.3709041683533,56.1114073757088 12.6900061377556,55.6099909531808</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>10.9121818376184,56.4586213242779 10.66780398931,56.0813833685472 10.369992710012,56.1900072292247 9.64998497888931,55.4699994981021 9.92190636560917,54.9831041530481 9.28204878097114,54.8308653835162 8.52622928227024,54.962743638725 8.12031090661759,55.5177226833236 8.08997684086225,56.5400117051376 8.25658165857126,56.8099693874303 8.54343753422339,57.1100027533169 9.42446902836761,57.1720661484995 9.77555870935856,57.4479407822897 10.5800057308462,57.7300165879549 10.5461059912627,57.2157327337862 10.2500000342302,56.8900161810505 10.369992710012,56.6099815944608 10.9121818376184,56.4586213242779</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>
+  </Placemark>
+  <Placemark>
+	<name>Estonia</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">6</SimpleData>
+		<SimpleData name="sovereignt">Estonia</SimpleData>
+		<SimpleData name="sov_a3">EST</SimpleData>
+		<SimpleData name="adm0_dif">0</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Sovereign country</SimpleData>
+		<SimpleData name="admin">Estonia</SimpleData>
+		<SimpleData name="adm0_a3">EST</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Estonia</SimpleData>
+		<SimpleData name="gu_a3">EST</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Estonia</SimpleData>
+		<SimpleData name="su_a3">EST</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Estonia</SimpleData>
+		<SimpleData name="brk_a3">EST</SimpleData>
+		<SimpleData name="brk_name">Estonia</SimpleData>
+		<SimpleData name="abbrev">Est.</SimpleData>
+		<SimpleData name="postal">EST</SimpleData>
+		<SimpleData name="formal_en">Republic of Estonia</SimpleData>
+		<SimpleData name="name_sort">Estonia</SimpleData>
+		<SimpleData name="mapcolor7">3</SimpleData>
+		<SimpleData name="mapcolor8">2</SimpleData>
+		<SimpleData name="mapcolor9">1</SimpleData>
+		<SimpleData name="mapcolor13">10</SimpleData>
+		<SimpleData name="pop_est">1299371</SimpleData>
+		<SimpleData name="gdp_md_est">27410</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">2000</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">2. Developed region: nonG7</SimpleData>
+		<SimpleData name="income_grp">1. High income: OECD</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">EE</SimpleData>
+		<SimpleData name="iso_a3">EST</SimpleData>
+		<SimpleData name="iso_n3">233</SimpleData>
+		<SimpleData name="un_a3">233</SimpleData>
+		<SimpleData name="wb_a2">EE</SimpleData>
+		<SimpleData name="wb_a3">EST</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">EST</SimpleData>
+		<SimpleData name="adm0_a3_us">EST</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Northern Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">7</SimpleData>
+		<SimpleData name="long_len">7</SimpleData>
+		<SimpleData name="abbrev_len">4</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">EST.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>24.3128625831146,57.793423570377 24.4289278500422,58.3834133978533 24.0611983578532,58.2573745794934 23.4265600928767,58.6127534043646 23.3397953630586,59.1872403021534 24.6042143083762,59.465853786855 25.8641890805166,59.6110903998113 26.9491357764845,59.4458033311258 27.9811141293532,59.4753880886129 28.1316992530517,59.3008251003309 27.4201664568249,58.7245812038442 27.7166858253157,57.7918991156244 27.2881848487515,57.4745283067038 26.4635323422378,57.4763886582663 25.6028096859844,57.8475287949866 25.1645935401493,57.9701569688152 24.3128625831146,57.793423570377</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+  <Placemark>
+	<name>Spain</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">2</SimpleData>
+		<SimpleData name="sovereignt">Spain</SimpleData>
+		<SimpleData name="sov_a3">ESP</SimpleData>
+		<SimpleData name="adm0_dif">0</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Sovereign country</SimpleData>
+		<SimpleData name="admin">Spain</SimpleData>
+		<SimpleData name="adm0_a3">ESP</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Spain</SimpleData>
+		<SimpleData name="gu_a3">ESP</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Spain</SimpleData>
+		<SimpleData name="su_a3">ESP</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Spain</SimpleData>
+		<SimpleData name="brk_a3">ESP</SimpleData>
+		<SimpleData name="brk_name">Spain</SimpleData>
+		<SimpleData name="abbrev">Sp.</SimpleData>
+		<SimpleData name="postal">E</SimpleData>
+		<SimpleData name="formal_en">Kingdom of Spain</SimpleData>
+		<SimpleData name="name_sort">Spain</SimpleData>
+		<SimpleData name="mapcolor7">4</SimpleData>
+		<SimpleData name="mapcolor8">5</SimpleData>
+		<SimpleData name="mapcolor9">5</SimpleData>
+		<SimpleData name="mapcolor13">5</SimpleData>
+		<SimpleData name="pop_est">40525002</SimpleData>
+		<SimpleData name="gdp_md_est">1403000</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">2001</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">2. Developed region: nonG7</SimpleData>
+		<SimpleData name="income_grp">1. High income: OECD</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">ES</SimpleData>
+		<SimpleData name="iso_a3">ESP</SimpleData>
+		<SimpleData name="iso_n3">724</SimpleData>
+		<SimpleData name="un_a3">724</SimpleData>
+		<SimpleData name="wb_a2">ES</SimpleData>
+		<SimpleData name="wb_a3">ESP</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">ESP</SimpleData>
+		<SimpleData name="adm0_a3_us">ESP</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Southern Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">5</SimpleData>
+		<SimpleData name="long_len">5</SimpleData>
+		<SimpleData name="abbrev_len">3</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">ESP.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>-9.03481767418025,41.8805705836597 -8.98443315269567,42.5927751735063 -9.39288367353065,43.0266246608127 -7.97818966310831,43.748337714201 -6.75449174643676,43.5679094508539 -5.4118863590616,43.5742398138097 -4.34784277995578,43.403449205085 -3.51753170410609,43.4559007838613 -1.90135128417776,43.4228020289783 -1.50277096191053,43.0340143906304 0.338046909190581,42.5795460068395 0.701590610363894,42.7957343613326 1.82679324708715,42.3433847112657 2.98599897625846,42.4730150416699 3.03948408368055,41.8921202662769 2.09184166831219,41.2260885686831 0.810524529635188,41.0147319606093 0.721331007499401,40.6783183863892 0.106691521819869,40.123933620762 -0.278711310212941,39.3099781357327 0.111290724293838,38.738514309233 -0.467123582349103,38.2923658310412 -0.683389451490598,37.6423538274578 -1.43838212727485,37.4430636663242 -2.14645260253812,36.6741441920373 -3.41578080892339,36.6588996445112 -4.36890092611472,36.6778390569462 -4.99521928549221,36.3247081568796 -5.37715979656146,35.9468500839615 -5.8664322575009,36.0298165960061 -6.23669389487218,36.3676771103303 -6.5201908024254,36.9429133163873 -7.45372555177809,37.0977875839661 -7.53710547528102,37.4289043238762 -7.16650794109986,37.8038943548022 -7.0292811751488,38.0757640650898 -7.37409216961632,38.3730585800649 -7.09803666831313,39.0300727402238 -7.49863237143972,39.6295710312418 -7.06659155926353,39.7118915878828 -7.02641313315659,40.1845242376242 -6.86401994467939,40.3308718938748 -6.85112667482255,41.1110826686175 -6.38908769370092,41.3818154973947 -6.66860551596766,41.8833869492196 -7.25130896649082,41.918346055665 -7.4225129866738,41.7920746933598 -8.01317460776991,41.7908861354171 -8.26385698081779,42.2804686549503 -8.67194576662672,42.134689439455 -9.03481767418025,41.8805705836597</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+  <Placemark>
+	<name>France</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">2</SimpleData>
+		<SimpleData name="sovereignt">France</SimpleData>
+		<SimpleData name="sov_a3">FR1</SimpleData>
+		<SimpleData name="adm0_dif">1</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Country</SimpleData>
+		<SimpleData name="admin">France</SimpleData>
+		<SimpleData name="adm0_a3">FRA</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">France</SimpleData>
+		<SimpleData name="gu_a3">FRA</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">France</SimpleData>
+		<SimpleData name="su_a3">FRA</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">France</SimpleData>
+		<SimpleData name="brk_a3">FRA</SimpleData>
+		<SimpleData name="brk_name">France</SimpleData>
+		<SimpleData name="abbrev">Fr.</SimpleData>
+		<SimpleData name="postal">F</SimpleData>
+		<SimpleData name="formal_en">French Republic</SimpleData>
+		<SimpleData name="name_sort">France</SimpleData>
+		<SimpleData name="mapcolor7">7</SimpleData>
+		<SimpleData name="mapcolor8">5</SimpleData>
+		<SimpleData name="mapcolor9">9</SimpleData>
+		<SimpleData name="mapcolor13">11</SimpleData>
+		<SimpleData name="pop_est">64057792</SimpleData>
+		<SimpleData name="gdp_md_est">2128000</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">-99</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">1. Developed region: G7</SimpleData>
+		<SimpleData name="income_grp">1. High income: OECD</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">FR</SimpleData>
+		<SimpleData name="iso_a3">FRA</SimpleData>
+		<SimpleData name="iso_n3">250</SimpleData>
+		<SimpleData name="un_a3">250</SimpleData>
+		<SimpleData name="wb_a2">FR</SimpleData>
+		<SimpleData name="wb_a3">FRA</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">FRA</SimpleData>
+		<SimpleData name="adm0_a3_us">FRA</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Western Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">6</SimpleData>
+		<SimpleData name="long_len">6</SimpleData>
+		<SimpleData name="abbrev_len">3</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">FRA.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>-52.5564247300184,2.50470530843705 -52.939657151895,2.12485769287562 -53.4184651352953,2.05338918701604 -53.5548392401135,2.33489655192597 -53.7785206772889,2.37670278565005 -54.0880625067173,2.10555654541463 -54.5247541977998,2.31184886312378 -54.2712296209758,2.73874787028694 -54.1842840236447,3.19417226807523 -54.0115038722768,3.62256989177486 -54.3995422023565,4.21261139568348 -54.4786329819792,4.89675568279564 -53.9580446030709,5.75654816326781 -53.6184529282648,5.6465290389184 -52.8821412827541,5.4098509790216 -51.8233428615259,4.56576813396615 -51.6577974106789,4.15623240805303 -52.249337531124,3.24109446859629 -52.5564247300184,2.50470530843705</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>9.56001631026913,42.1524919703796 9.22975223149177,41.3800068222644 8.77572309737536,41.5836119654944 8.54421268070783,42.2565166285831 8.74600914880759,42.628121853194 9.3900008480289,43.0099848496147 9.56001631026913,42.1524919703796</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>3.58818444175572,50.3789924180036 4.28602298342514,49.9074966497726 4.79922163251575,49.9853730332363 5.67405195478489,49.5294835475574 5.89775923017638,49.4426671413072 6.18632042809421,49.4638028021145 6.65822960778354,49.2019583196915 8.09927859867477,49.0177835150034 7.59367638513106,48.3330191107037 7.46675906742223,47.6205819769119 7.19220218265554,47.449765529971 6.73657107913809,47.5418012558829 6.76871382002363,47.2877082383037 6.03738895022897,46.7257787135619 6.02260949059357,46.2729898138205 6.50009972497045,46.4296727565294 6.84359297041456,45.9911465521007 6.80235517744566,45.7085798203287 7.09665245934784,45.3330988632959 6.74995527510171,45.0285179713676 7.00756229007666,44.2547667506614 7.54959638838616,44.1279011093848 7.43518476729184,43.6938449163492 6.52924523278307,43.1288923203184 4.5569625179314,43.3996509873116 3.10041059735272,43.0752005071671 2.98599897625849,42.4730150416699 1.82679324708718,42.3433847112657 0.701590610363922,42.7957343613326 0.338046909190581,42.5795460068396 -1.50277096191047,43.0340143906305 -1.90135128417773,43.4228020289783 -1.38422522623296,44.0226103785902 -1.19379757323736,46.0149177109549 -2.22572424967379,47.0643626979382 -2.96327612955957,47.570326646508 -4.49155493815948,47.9549543320564 -4.59234981934475,48.6841604681269 -3.29581397135774,48.9016924098596 -1.61651078938493,48.6444212916946 -1.93349402506325,49.7763418646158 -0.98946895995536,49.3473758001609 1.33876102052275,50.1271731634453 1.6390010921385,50.9466063502975 2.51357303224617,51.1485061712619 2.65842207196033,50.7968480495157 3.12325158042572,50.7803632676145 3.58818444175572,50.3789924180036</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>
+  </Placemark>
+  <Placemark>
+	<name>United Kingdom</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">2</SimpleData>
+		<SimpleData name="sovereignt">United Kingdom</SimpleData>
+		<SimpleData name="sov_a3">GB1</SimpleData>
+		<SimpleData name="adm0_dif">1</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Country</SimpleData>
+		<SimpleData name="admin">United Kingdom</SimpleData>
+		<SimpleData name="adm0_a3">GBR</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">United Kingdom</SimpleData>
+		<SimpleData name="gu_a3">GBR</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">United Kingdom</SimpleData>
+		<SimpleData name="su_a3">GBR</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">United Kingdom</SimpleData>
+		<SimpleData name="brk_a3">GBR</SimpleData>
+		<SimpleData name="brk_name">United Kingdom</SimpleData>
+		<SimpleData name="abbrev">U.K.</SimpleData>
+		<SimpleData name="postal">GB</SimpleData>
+		<SimpleData name="formal_en">United Kingdom of Great Britain and Northern Ireland</SimpleData>
+		<SimpleData name="name_sort">United Kingdom</SimpleData>
+		<SimpleData name="mapcolor7">6</SimpleData>
+		<SimpleData name="mapcolor8">6</SimpleData>
+		<SimpleData name="mapcolor9">6</SimpleData>
+		<SimpleData name="mapcolor13">3</SimpleData>
+		<SimpleData name="pop_est">62262000</SimpleData>
+		<SimpleData name="gdp_md_est">1977704</SimpleData>
+		<SimpleData name="pop_year">0</SimpleData>
+		<SimpleData name="lastcensus">2011</SimpleData>
+		<SimpleData name="gdp_year">2009</SimpleData>
+		<SimpleData name="economy">1. Developed region: G7</SimpleData>
+		<SimpleData name="income_grp">1. High income: OECD</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">GB</SimpleData>
+		<SimpleData name="iso_a3">GBR</SimpleData>
+		<SimpleData name="iso_n3">826</SimpleData>
+		<SimpleData name="un_a3">826</SimpleData>
+		<SimpleData name="wb_a2">GB</SimpleData>
+		<SimpleData name="wb_a3">GBR</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">GBR</SimpleData>
+		<SimpleData name="adm0_a3_us">GBR</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Northern Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">14</SimpleData>
+		<SimpleData name="long_len">14</SimpleData>
+		<SimpleData name="abbrev_len">4</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">GBR.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>-5.6619486149219,54.5546031764839 -6.19788489422098,53.8675650091633 -6.953730231138,54.0737022975756 -7.57216793459108,54.059956366586 -7.36603064617878,54.5958409694527 -7.57216793459108,55.1316222194549 -6.73384701173615,55.1728600124238 -5.6619486149219,54.5546031764839</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>-3.00500484863528,58.6350001084663 -4.07382849772802,57.5530248073552 -3.05500179687766,57.6900190293609 -1.95928056477692,57.6847997096995 -2.2199881656893,56.8700174017535 -3.11900305827112,55.9737930365155 -2.08500932454302,55.9099984808513 -2.00567567967386,55.8049028503502 -1.11499101399221,54.6249864772654 -0.4304849918542,54.4643761257022 0.184981316742039,53.325014146531 0.469976840831777,52.929999498092 1.68153079591474,52.739520168664 1.55998782716438,52.099998480836 1.05056155763091,51.8067605657957 1.4498653499503,51.289427802122 0.550333693045502,50.7657388372759 -0.78751746255864,50.7749889186562 -2.48999752441438,50.5000186224312 -2.95627397298404,50.696879991247 -3.61744808594233,50.2283556178727 -4.54250790039924,50.3418370631857 -5.24502315919113,49.9599999049811 -5.7765669417453,50.1596776393568 -4.30998979330184,51.2100011256892 -3.41485063314212,51.4260086126692 -3.42271946710832,51.4268481674061 -4.98436723471087,51.593466091511 -5.26729570150888,51.9914004583746 -4.22234656413485,52.3013556992614 -4.77001339356411,52.8400049912556 -4.57999915202692,53.4950037705552 -3.09383067378866,53.4045474006697 -3.09207963704711,53.4044408229635 -2.94500851074434,53.9849997015467 -3.61470082543303,54.6009367732926 -3.63000545898933,54.615012925833 -4.844169073903,54.7909711777868 -5.08252661784923,55.0616006536994 -4.71911210775664,55.5084726019435 -5.04798092286211,55.7839855007075 -5.58639767091114,55.3111461452368 -5.64499874513018,56.2750149603448 -6.14998084148635,56.7850096706335 -5.78682471355529,57.8188483750646 -5.00999874512758,58.6300133327501 -4.21149451335356,58.5508450384792 -3.00500484863528,58.6350001084663</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>
+  </Placemark>
+  <Placemark>
+	<name>Finland</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">3</SimpleData>
+		<SimpleData name="sovereignt">Finland</SimpleData>
+		<SimpleData name="sov_a3">FI1</SimpleData>
+		<SimpleData name="adm0_dif">1</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Country</SimpleData>
+		<SimpleData name="admin">Finland</SimpleData>
+		<SimpleData name="adm0_a3">FIN</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Finland</SimpleData>
+		<SimpleData name="gu_a3">FIN</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Finland</SimpleData>
+		<SimpleData name="su_a3">FIN</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Finland</SimpleData>
+		<SimpleData name="brk_a3">FIN</SimpleData>
+		<SimpleData name="brk_name">Finland</SimpleData>
+		<SimpleData name="abbrev">Fin.</SimpleData>
+		<SimpleData name="postal">FIN</SimpleData>
+		<SimpleData name="formal_en">Republic of Finland</SimpleData>
+		<SimpleData name="name_sort">Finland</SimpleData>
+		<SimpleData name="mapcolor7">4</SimpleData>
+		<SimpleData name="mapcolor8">1</SimpleData>
+		<SimpleData name="mapcolor9">4</SimpleData>
+		<SimpleData name="mapcolor13">6</SimpleData>
+		<SimpleData name="pop_est">5250275</SimpleData>
+		<SimpleData name="gdp_md_est">193500</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">2010</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">2. Developed region: nonG7</SimpleData>
+		<SimpleData name="income_grp">1. High income: OECD</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">FI</SimpleData>
+		<SimpleData name="iso_a3">FIN</SimpleData>
+		<SimpleData name="iso_n3">246</SimpleData>
+		<SimpleData name="un_a3">246</SimpleData>
+		<SimpleData name="wb_a2">FI</SimpleData>
+		<SimpleData name="wb_a3">FIN</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">FIN</SimpleData>
+		<SimpleData name="adm0_a3_us">FIN</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Northern Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">7</SimpleData>
+		<SimpleData name="long_len">7</SimpleData>
+		<SimpleData name="abbrev_len">4</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">FIN.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>28.5919295590432,69.0647769232867 28.4459436378187,68.364612942164 29.9774263852206,67.6982970241927 29.0545886573523,66.9442862006219 30.21765,65.80598 29.544429559047,64.9486715765905 30.4446846860037,64.2044534369391 30.0358724301427,63.5528136257386 31.5160921567111,62.8676874864129 31.1399910824909,62.3576927761244 30.2111072120444,61.7800277777497 28.0699975928953,60.5035165472758 26.255172967237,60.4239606797625 24.4966239763445,60.0573163926517 22.8696948584995,59.8463731960362 22.2907637875336,60.3919212917415 21.3222440935193,60.7201699896595 21.5448661638327,61.7053294948718 21.0592110531537,62.6073932969587 21.5360294939108,63.1897350124559 22.442744174904,63.8178103705313 24.7305115088975,64.9023436550408 25.3980676612439,65.1114265000937 25.2940430030404,65.5343464219705 23.9033785336338,66.0069273952796 23.5658797543356,66.3960509304374 23.5394730974344,67.9360086127353 21.9785347836261,68.6168456081807 20.6455928890895,69.1062472602009 21.2449361508107,69.3704430202931 22.3562378272474,68.8417414415149 23.6620495948308,68.8912474636505 24.7356791521267,68.6495567898215 25.6892126807764,69.092113755969 26.1796220232262,69.8252989773261 27.7322921078679,70.1641930202963 29.015572950972,69.766491197378 28.5919295590432,69.0647769232867</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+  <Placemark>
+	<name>Greece</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">3</SimpleData>
+		<SimpleData name="sovereignt">Greece</SimpleData>
+		<SimpleData name="sov_a3">GRC</SimpleData>
+		<SimpleData name="adm0_dif">0</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Sovereign country</SimpleData>
+		<SimpleData name="admin">Greece</SimpleData>
+		<SimpleData name="adm0_a3">GRC</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Greece</SimpleData>
+		<SimpleData name="gu_a3">GRC</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Greece</SimpleData>
+		<SimpleData name="su_a3">GRC</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Greece</SimpleData>
+		<SimpleData name="brk_a3">GRC</SimpleData>
+		<SimpleData name="brk_name">Greece</SimpleData>
+		<SimpleData name="abbrev">Greece</SimpleData>
+		<SimpleData name="postal">GR</SimpleData>
+		<SimpleData name="formal_en">Hellenic Republic</SimpleData>
+		<SimpleData name="name_sort">Greece</SimpleData>
+		<SimpleData name="mapcolor7">2</SimpleData>
+		<SimpleData name="mapcolor8">2</SimpleData>
+		<SimpleData name="mapcolor9">2</SimpleData>
+		<SimpleData name="mapcolor13">9</SimpleData>
+		<SimpleData name="pop_est">10737428</SimpleData>
+		<SimpleData name="gdp_md_est">343000</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">2011</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">2. Developed region: nonG7</SimpleData>
+		<SimpleData name="income_grp">1. High income: OECD</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">GR</SimpleData>
+		<SimpleData name="iso_a3">GRC</SimpleData>
+		<SimpleData name="iso_n3">300</SimpleData>
+		<SimpleData name="un_a3">300</SimpleData>
+		<SimpleData name="wb_a2">GR</SimpleData>
+		<SimpleData name="wb_a3">GRC</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">GRC</SimpleData>
+		<SimpleData name="adm0_a3_us">GRC</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Southern Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">6</SimpleData>
+		<SimpleData name="long_len">6</SimpleData>
+		<SimpleData name="abbrev_len">6</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">GRC.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>23.699980096133,35.7050043808355 24.2466650733487,35.3680223658602 25.0250154965289,35.424995632462 25.7692077979642,35.3540180527091 25.7450232276516,35.1799976669662 26.2900028826017,35.2999903427479 26.1649975928877,35.0049954290098 24.7249821306423,34.9199876978896 24.7350073585069,35.0849905461976 23.5149784685281,35.279991563451 23.699980096133,35.7050043808355</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>26.6041955909363,41.5621145696611 26.2946020850758,40.9362612981743 26.0569421729655,40.8241234401008 25.4476770362442,40.8525454778615 24.9258484229609,40.9470616725232 23.7148112322008,40.6871292180951 24.4079988949641,40.1249929876241 23.8999678891026,39.9620055201756 23.3429993018608,39.9609978297458 22.813987664489,40.4760051539666 22.6262988624048,40.2565611842392 22.8497477556348,39.6593108180258 23.3500272966526,39.1900112981673 22.9730993995155,38.9709032252497 23.530016310325,38.5100011256385 24.0250248552489,38.2199929876165 24.0400110206136,37.6550145533694 23.1150028825892,37.9200112981622 23.4099719581111,37.4099907496574 22.7749719581086,37.3050100774566 23.1542252946986,36.4225058049921 22.4900281104511,36.4100001083775 21.6700264828437,36.8449864771942 21.2950106137016,37.6449893255047 21.1200342139613,38.3103233912627 20.7300321794546,38.7699852564988 20.2177120297129,39.3402346868396 20.1500159034105,39.624997666984 20.6150004411728,40.1100068222594 20.6749967790636,40.4349999049431 20.9999898617473,40.580003973954 21.0200403174764,40.8427269557259 21.674160597427,40.931274522458 22.0553776384443,41.1498658310527 22.597308383889,41.1304871689432 22.76177,41.3048 22.9523771501666,41.3379938828112 23.6920736019925,41.3090809189439 24.492644891058,41.583896185872 25.1972013689255,41.2344859889307 26.1061381365072,41.3288988307278 26.1170418637209,41.8269046087247 26.6041955909363,41.5621145696611</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>
+  </Placemark>
+  <Placemark>
+	<name>Croatia</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">6</SimpleData>
+		<SimpleData name="sovereignt">Croatia</SimpleData>
+		<SimpleData name="sov_a3">HRV</SimpleData>
+		<SimpleData name="adm0_dif">0</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Sovereign country</SimpleData>
+		<SimpleData name="admin">Croatia</SimpleData>
+		<SimpleData name="adm0_a3">HRV</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Croatia</SimpleData>
+		<SimpleData name="gu_a3">HRV</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Croatia</SimpleData>
+		<SimpleData name="su_a3">HRV</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Croatia</SimpleData>
+		<SimpleData name="brk_a3">HRV</SimpleData>
+		<SimpleData name="brk_name">Croatia</SimpleData>
+		<SimpleData name="abbrev">Cro.</SimpleData>
+		<SimpleData name="postal">HR</SimpleData>
+		<SimpleData name="formal_en">Republic of Croatia</SimpleData>
+		<SimpleData name="name_sort">Croatia</SimpleData>
+		<SimpleData name="mapcolor7">5</SimpleData>
+		<SimpleData name="mapcolor8">4</SimpleData>
+		<SimpleData name="mapcolor9">5</SimpleData>
+		<SimpleData name="mapcolor13">1</SimpleData>
+		<SimpleData name="pop_est">4489409</SimpleData>
+		<SimpleData name="gdp_md_est">82390</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">2011</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">2. Developed region: nonG7</SimpleData>
+		<SimpleData name="income_grp">2. High income: nonOECD</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">HR</SimpleData>
+		<SimpleData name="iso_a3">HRV</SimpleData>
+		<SimpleData name="iso_n3">191</SimpleData>
+		<SimpleData name="un_a3">191</SimpleData>
+		<SimpleData name="wb_a2">HR</SimpleData>
+		<SimpleData name="wb_a3">HRV</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">HRV</SimpleData>
+		<SimpleData name="adm0_a3_us">HRV</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Southern Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">7</SimpleData>
+		<SimpleData name="long_len">7</SimpleData>
+		<SimpleData name="abbrev_len">4</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">HRV.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>18.82983808765,45.9088776718918 19.0727689958542,45.5215111354321 19.3904757015846,45.2365156113424 19.0054862810101,44.8602336696092 18.5532141455917,45.0815896673314 17.8617834815264,45.0677403834771 17.002146030351,45.2337767604309 16.5349394060002,45.2116075709777 16.3181567725359,45.0041266953259 15.9593673031334,45.2337767604309 15.750026075919,44.8187116562626 16.2396602718845,44.3511432968857 16.4564429053489,44.0412397324313 16.9161564470173,43.6677224798257 17.2973734880345,43.4463406438874 17.674921502359,43.0285625270236 18.56,42.65 18.4500163103048,42.4799913600293 17.5099703304833,42.8499946152392 16.9300057308716,43.2099984808004 16.0153845557377,43.5072154811272 15.1744539730521,44.2431912298279 15.3762504411518,44.3179153509221 14.9203092790405,44.7384839951295 14.9016024105509,45.0760602890761 14.25874759284,45.2337767604309 13.952254672917,44.8021235214969 13.6569755388012,45.136935126316 13.6794031104158,45.484149074885 13.7150598486973,45.5003237981924 14.4119682145855,45.4661656764474 14.5951094906279,45.6349409043128 14.935243767973,45.4716950547028 15.3276745947974,45.4523163925933 15.3239538916724,45.7317825384277 15.6715295752676,45.8341535507979 15.7687329444086,46.2381082220235 16.5648083838649,46.5037509222198 16.8825150895954,46.3806318222844 17.6300663591296,45.9517691106941 18.4560624528829,45.7594811061361 18.82983808765,45.9088776718918</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+  <Placemark>
+	<name>Hungary</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">5</SimpleData>
+		<SimpleData name="sovereignt">Hungary</SimpleData>
+		<SimpleData name="sov_a3">HUN</SimpleData>
+		<SimpleData name="adm0_dif">0</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Sovereign country</SimpleData>
+		<SimpleData name="admin">Hungary</SimpleData>
+		<SimpleData name="adm0_a3">HUN</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Hungary</SimpleData>
+		<SimpleData name="gu_a3">HUN</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Hungary</SimpleData>
+		<SimpleData name="su_a3">HUN</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Hungary</SimpleData>
+		<SimpleData name="brk_a3">HUN</SimpleData>
+		<SimpleData name="brk_name">Hungary</SimpleData>
+		<SimpleData name="abbrev">Hun.</SimpleData>
+		<SimpleData name="postal">HU</SimpleData>
+		<SimpleData name="formal_en">Republic of Hungary</SimpleData>
+		<SimpleData name="name_sort">Hungary</SimpleData>
+		<SimpleData name="mapcolor7">4</SimpleData>
+		<SimpleData name="mapcolor8">6</SimpleData>
+		<SimpleData name="mapcolor9">1</SimpleData>
+		<SimpleData name="mapcolor13">5</SimpleData>
+		<SimpleData name="pop_est">9905596</SimpleData>
+		<SimpleData name="gdp_md_est">196600</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">2001</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">2. Developed region: nonG7</SimpleData>
+		<SimpleData name="income_grp">1. High income: OECD</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">HU</SimpleData>
+		<SimpleData name="iso_a3">HUN</SimpleData>
+		<SimpleData name="iso_n3">348</SimpleData>
+		<SimpleData name="un_a3">348</SimpleData>
+		<SimpleData name="wb_a2">HU</SimpleData>
+		<SimpleData name="wb_a3">HUN</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">HUN</SimpleData>
+		<SimpleData name="adm0_a3_us">HUN</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Eastern Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">7</SimpleData>
+		<SimpleData name="long_len">7</SimpleData>
+		<SimpleData name="abbrev_len">4</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">HUN.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>16.2022982113374,46.852385972677 16.5342676123804,47.4961709661691 16.3405843441504,47.7129019232012 16.9037541032673,47.7148656276283 16.979666782304,48.1234970159763 17.4884729346498,47.8674661321862 17.85713260262,47.7584288600504 18.6965128923369,47.8809536810144 18.7770247738477,48.0817682969006 19.1743648617399,48.1113788926039 19.6613635596585,48.2666148952087 19.7694706560131,48.2026911484636 20.2390543962493,48.3275672470969 20.4735620459899,48.5628500433218 20.8012939795849,48.6238540716424 21.8722363624017,48.31997081155 22.0856083513349,48.4222643092718 22.6408199398788,48.1502395696874 22.7105314470405,47.8821939153894 22.0997676937828,47.6724392767167 21.6265149268539,46.9942377793182 21.0219523454712,46.3160879583519 20.2201924984628,46.1274689804866 19.5960445492416,46.1717298447445 18.82983808765,45.9088776718919 18.4560624528829,45.7594811061361 17.6300663591296,45.9517691106942 16.8825150895953,46.3806318222844 16.5648083838649,46.5037509222198 16.3705049984474,46.8413272161665 16.2022982113374,46.852385972677</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+  <Placemark>
+	<name>Italy</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">2</SimpleData>
+		<SimpleData name="sovereignt">Italy</SimpleData>
+		<SimpleData name="sov_a3">ITA</SimpleData>
+		<SimpleData name="adm0_dif">0</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Sovereign country</SimpleData>
+		<SimpleData name="admin">Italy</SimpleData>
+		<SimpleData name="adm0_a3">ITA</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Italy</SimpleData>
+		<SimpleData name="gu_a3">ITA</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Italy</SimpleData>
+		<SimpleData name="su_a3">ITA</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Italy</SimpleData>
+		<SimpleData name="brk_a3">ITA</SimpleData>
+		<SimpleData name="brk_name">Italy</SimpleData>
+		<SimpleData name="abbrev">Italy</SimpleData>
+		<SimpleData name="postal">I</SimpleData>
+		<SimpleData name="formal_en">Italian Republic</SimpleData>
+		<SimpleData name="name_sort">Italy</SimpleData>
+		<SimpleData name="mapcolor7">6</SimpleData>
+		<SimpleData name="mapcolor8">7</SimpleData>
+		<SimpleData name="mapcolor9">8</SimpleData>
+		<SimpleData name="mapcolor13">7</SimpleData>
+		<SimpleData name="pop_est">58126212</SimpleData>
+		<SimpleData name="gdp_md_est">1823000</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">2012</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">1. Developed region: G7</SimpleData>
+		<SimpleData name="income_grp">1. High income: OECD</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">IT</SimpleData>
+		<SimpleData name="iso_a3">ITA</SimpleData>
+		<SimpleData name="iso_n3">380</SimpleData>
+		<SimpleData name="un_a3">380</SimpleData>
+		<SimpleData name="wb_a2">IT</SimpleData>
+		<SimpleData name="wb_a3">ITA</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">ITA</SimpleData>
+		<SimpleData name="adm0_a3_us">ITA</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Southern Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">5</SimpleData>
+		<SimpleData name="long_len">5</SimpleData>
+		<SimpleData name="abbrev_len">5</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">ITA.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>15.5203760108138,38.2311550969915 15.1602429541717,37.4440455185378 15.309897902089,37.1342194687318 15.0999882341194,36.6199872909954 14.335228712632,36.9966309677548 13.8267326188799,37.1045313583802 12.4310038591088,37.6129499374838 12.5709436377551,38.1263811305197 13.7411564470046,38.0349655217954 14.7612492204462,38.1438736028505 15.5203760108138,38.2311550969915</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>9.21001183435627,41.2099913600242 9.80997521326498,40.5000088567661 9.66951867029567,39.1773764104718 9.21481774255949,39.2404733343001 8.80693566247973,38.9066177434785 8.42830244307711,39.1718470322166 8.38825320805094,40.3783108587188 8.15999840661766,40.9500072291638 8.70999067550011,40.8999844427052 9.21001183435627,41.2099913600242</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>12.3764852230408,46.7675591090699 13.8064754574216,46.5093061386912 13.6981099789055,46.0167780625174 13.9376302425783,45.5910159368647 13.1416064795543,45.7366917994954 12.3285811703063,45.3817780625148 12.3838749528586,44.8853742539191 12.2614534847592,44.600482082694 12.5892370947865,44.0913658717545 13.5269059587225,43.5877273626379 14.029820997787,42.7610077988325 15.142569614328,41.9551396754569 15.9261910336019,41.9613150091157 16.1698970882904,41.7402949082034 15.8893457373778,41.5410822617182 16.7850016618606,41.1796056178366 17.5191687354312,40.8771434596322 18.3766874528826,40.3556249049427 18.4802470231954,40.1688662786398 18.2933850440281,39.8107744410732 17.7383801612133,40.2776710068303 16.8695959815223,40.4422346054639 16.4487431169373,39.7954007024665 17.1714896989715,39.4246998154207 17.0528406104293,38.9028712021373 16.6350883317818,38.8435724960824 16.1009607276131,37.9858987493342 15.6840869483145,37.908849188787 15.6879626807363,38.2145928004419 15.8919812354247,38.7509424911992 16.1093323096443,38.9645470240777 15.7188135108146,39.5440723740149 15.4136125016988,40.0483568385352 14.9984957210982,40.1729487167909 14.7032682634148,40.6045502792926 14.0606718278653,40.7863479680954 13.6279850602854,41.1882872584617 12.8880819027304,41.2530895045556 12.1066825700449,41.7045348170574 11.1919063656142,42.3554253199897 10.5119478695178,42.9314625107472 10.200028924204,43.9200068222746 9.70248823409781,44.0362787949313 8.88894616052687,44.3663361679795 8.42856082523858,44.2312281357524 7.8507666357832,43.7671479355552 7.43518476729184,43.6938449163492 7.54959638838616,44.1279011093848 7.00756229007666,44.2547667506614 6.74995527510171,45.0285179713676 7.09665245934784,45.3330988632959 6.80235517744566,45.7085798203287 6.84359297041456,45.9911465521007 7.27385094567668,45.7769477402508 7.75599205895983,45.8244900579593 8.31662967289438,46.1636424830909 8.4899524268013,46.0051508652517 8.96630577966783,46.0369318711112 9.18288170740311,46.440214748717 9.92283654139035,46.3148994004092 10.3633781266787,46.4835712754098 10.4427014502466,46.8935462509974 11.0485559424365,46.7513585475464 11.1648279150933,46.9415794948127 12.1530880062431,47.1153931748264 12.3764852230408,46.7675591090699</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>
+  </Placemark>
+  <Placemark>
+	<name>Iceland</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">3</SimpleData>
+		<SimpleData name="sovereignt">Iceland</SimpleData>
+		<SimpleData name="sov_a3">ISL</SimpleData>
+		<SimpleData name="adm0_dif">0</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Sovereign country</SimpleData>
+		<SimpleData name="admin">Iceland</SimpleData>
+		<SimpleData name="adm0_a3">ISL</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Iceland</SimpleData>
+		<SimpleData name="gu_a3">ISL</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Iceland</SimpleData>
+		<SimpleData name="su_a3">ISL</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Iceland</SimpleData>
+		<SimpleData name="brk_a3">ISL</SimpleData>
+		<SimpleData name="brk_name">Iceland</SimpleData>
+		<SimpleData name="abbrev">Iceland</SimpleData>
+		<SimpleData name="postal">IS</SimpleData>
+		<SimpleData name="formal_en">Republic of Iceland</SimpleData>
+		<SimpleData name="name_sort">Iceland</SimpleData>
+		<SimpleData name="mapcolor7">1</SimpleData>
+		<SimpleData name="mapcolor8">4</SimpleData>
+		<SimpleData name="mapcolor9">4</SimpleData>
+		<SimpleData name="mapcolor13">9</SimpleData>
+		<SimpleData name="pop_est">306694</SimpleData>
+		<SimpleData name="gdp_md_est">12710</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">-99</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">2. Developed region: nonG7</SimpleData>
+		<SimpleData name="income_grp">1. High income: OECD</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">IS</SimpleData>
+		<SimpleData name="iso_a3">ISL</SimpleData>
+		<SimpleData name="iso_n3">352</SimpleData>
+		<SimpleData name="un_a3">352</SimpleData>
+		<SimpleData name="wb_a2">IS</SimpleData>
+		<SimpleData name="wb_a3">ISL</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">ISL</SimpleData>
+		<SimpleData name="adm0_a3_us">ISL</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Northern Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">7</SimpleData>
+		<SimpleData name="long_len">7</SimpleData>
+		<SimpleData name="abbrev_len">7</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">ISL.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>-14.5086954411292,66.4558922390314 -14.7396374170416,65.8087482774403 -13.6097322249798,65.1266710476199 -14.9098337467949,64.3640819362887 -17.7944380355434,63.6787490912338 -18.656245896875,63.4963829616758 -19.9727546859428,63.6436349554915 -22.7629719711102,63.9601789414954 -21.7784842595177,64.4021157904555 -23.9550439112191,64.8911298692335 -22.1844026351704,65.0849681667603 -22.2274232650533,65.3785936550427 -24.3261840479393,65.6111892767885 -23.6505146957231,66.2625190293952 -22.1349224512509,66.4104686550469 -20.5762837386795,65.7321121283514 -19.0568416000016,66.2766008571948 -17.7986238265591,65.9938532579098 -16.1678189762921,66.5267923041359 -14.5086954411292,66.4558922390314</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+  <Placemark>
+	<name>Ireland</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">3</SimpleData>
+		<SimpleData name="sovereignt">Ireland</SimpleData>
+		<SimpleData name="sov_a3">IRL</SimpleData>
+		<SimpleData name="adm0_dif">0</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Sovereign country</SimpleData>
+		<SimpleData name="admin">Ireland</SimpleData>
+		<SimpleData name="adm0_a3">IRL</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Ireland</SimpleData>
+		<SimpleData name="gu_a3">IRL</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Ireland</SimpleData>
+		<SimpleData name="su_a3">IRL</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Ireland</SimpleData>
+		<SimpleData name="brk_a3">IRL</SimpleData>
+		<SimpleData name="brk_name">Ireland</SimpleData>
+		<SimpleData name="abbrev">Ire.</SimpleData>
+		<SimpleData name="postal">IRL</SimpleData>
+		<SimpleData name="formal_en">Ireland</SimpleData>
+		<SimpleData name="name_sort">Ireland</SimpleData>
+		<SimpleData name="mapcolor7">2</SimpleData>
+		<SimpleData name="mapcolor8">3</SimpleData>
+		<SimpleData name="mapcolor9">2</SimpleData>
+		<SimpleData name="mapcolor13">2</SimpleData>
+		<SimpleData name="pop_est">4203200</SimpleData>
+		<SimpleData name="gdp_md_est">188400</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">2011</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">2. Developed region: nonG7</SimpleData>
+		<SimpleData name="income_grp">1. High income: OECD</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">IE</SimpleData>
+		<SimpleData name="iso_a3">IRL</SimpleData>
+		<SimpleData name="iso_n3">372</SimpleData>
+		<SimpleData name="un_a3">372</SimpleData>
+		<SimpleData name="wb_a2">IE</SimpleData>
+		<SimpleData name="wb_a3">IRL</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">IRL</SimpleData>
+		<SimpleData name="adm0_a3_us">IRL</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Northern Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">7</SimpleData>
+		<SimpleData name="long_len">7</SimpleData>
+		<SimpleData name="abbrev_len">4</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">IRL.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>-6.19788489422099,53.8675650091634 -6.03298539877761,53.1531641709444 -6.78885657391085,52.2601179062923 -8.56161658368356,51.6693012558994 -9.97708574059027,51.8204548203531 -9.16628251793078,52.8646288112427 -9.68852454267245,53.8813626165853 -8.32798743329201,54.6645189479686 -7.57216793459106,55.1316222194549 -7.36603064617878,54.5958409694527 -7.57216793459106,54.059956366586 -6.95373023113807,54.0737022975756 -6.19788489422099,53.8675650091634</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+  <Placemark>
+	<name>Lithuania</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">5</SimpleData>
+		<SimpleData name="sovereignt">Lithuania</SimpleData>
+		<SimpleData name="sov_a3">LTU</SimpleData>
+		<SimpleData name="adm0_dif">0</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Sovereign country</SimpleData>
+		<SimpleData name="admin">Lithuania</SimpleData>
+		<SimpleData name="adm0_a3">LTU</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Lithuania</SimpleData>
+		<SimpleData name="gu_a3">LTU</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Lithuania</SimpleData>
+		<SimpleData name="su_a3">LTU</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Lithuania</SimpleData>
+		<SimpleData name="brk_a3">LTU</SimpleData>
+		<SimpleData name="brk_name">Lithuania</SimpleData>
+		<SimpleData name="abbrev">Lith.</SimpleData>
+		<SimpleData name="postal">LT</SimpleData>
+		<SimpleData name="formal_en">Republic of Lithuania</SimpleData>
+		<SimpleData name="name_sort">Lithuania</SimpleData>
+		<SimpleData name="mapcolor7">6</SimpleData>
+		<SimpleData name="mapcolor8">3</SimpleData>
+		<SimpleData name="mapcolor9">3</SimpleData>
+		<SimpleData name="mapcolor13">9</SimpleData>
+		<SimpleData name="pop_est">3555179</SimpleData>
+		<SimpleData name="gdp_md_est">63330</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">2011</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">2. Developed region: nonG7</SimpleData>
+		<SimpleData name="income_grp">3. Upper middle income</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">LT</SimpleData>
+		<SimpleData name="iso_a3">LTU</SimpleData>
+		<SimpleData name="iso_n3">440</SimpleData>
+		<SimpleData name="un_a3">440</SimpleData>
+		<SimpleData name="wb_a2">LT</SimpleData>
+		<SimpleData name="wb_a3">LTU</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">LTU</SimpleData>
+		<SimpleData name="adm0_a3_us">LTU</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Northern Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">9</SimpleData>
+		<SimpleData name="long_len">9</SimpleData>
+		<SimpleData name="abbrev_len">5</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">LTU.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>22.7310986670927,54.3275369329933 22.6510518734725,54.5827409938667 22.7577637061553,54.8565744085814 22.3157235043306,55.0152985703659 21.2684489275035,55.1904816758353 21.0558004086224,56.0310763617111 22.2011568539395,56.3378018255795 23.87826378754,56.2736713731053 24.8606844418408,56.3725283880796 25.0009342790809,56.1645307481048 25.5330465023903,56.100296942766 26.4943314958838,55.6151069199776 26.5882792497904,55.1671756048717 25.7684326514798,54.8469625921751 25.536353794057,54.2824234076025 24.450683628037,53.9057022161948 23.4841276384498,53.9124976670411 23.2439872575895,54.2205667181491 22.7310986670927,54.3275369329933</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+  <Placemark>
+	<name>Luxembourg</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">6</SimpleData>
+		<SimpleData name="sovereignt">Luxembourg</SimpleData>
+		<SimpleData name="sov_a3">LUX</SimpleData>
+		<SimpleData name="adm0_dif">0</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Sovereign country</SimpleData>
+		<SimpleData name="admin">Luxembourg</SimpleData>
+		<SimpleData name="adm0_a3">LUX</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Luxembourg</SimpleData>
+		<SimpleData name="gu_a3">LUX</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Luxembourg</SimpleData>
+		<SimpleData name="su_a3">LUX</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Luxembourg</SimpleData>
+		<SimpleData name="brk_a3">LUX</SimpleData>
+		<SimpleData name="brk_name">Luxembourg</SimpleData>
+		<SimpleData name="abbrev">Lux.</SimpleData>
+		<SimpleData name="postal">L</SimpleData>
+		<SimpleData name="formal_en">Grand Duchy of Luxembourg</SimpleData>
+		<SimpleData name="name_sort">Luxembourg</SimpleData>
+		<SimpleData name="mapcolor7">1</SimpleData>
+		<SimpleData name="mapcolor8">7</SimpleData>
+		<SimpleData name="mapcolor9">3</SimpleData>
+		<SimpleData name="mapcolor13">7</SimpleData>
+		<SimpleData name="pop_est">491775</SimpleData>
+		<SimpleData name="gdp_md_est">39370</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">2011</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">2. Developed region: nonG7</SimpleData>
+		<SimpleData name="income_grp">1. High income: OECD</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">LU</SimpleData>
+		<SimpleData name="iso_a3">LUX</SimpleData>
+		<SimpleData name="iso_n3">442</SimpleData>
+		<SimpleData name="un_a3">442</SimpleData>
+		<SimpleData name="wb_a2">LU</SimpleData>
+		<SimpleData name="wb_a3">LUX</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">LUX</SimpleData>
+		<SimpleData name="adm0_a3_us">LUX</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Western Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">10</SimpleData>
+		<SimpleData name="long_len">10</SimpleData>
+		<SimpleData name="abbrev_len">4</SimpleData>
+		<SimpleData name="tiny">5</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">LUX.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>6.04307335778111,50.1280516627942 6.24275109215699,49.9022256536787 6.18632042809418,49.4638028021145 5.8977592301764,49.442667141307 5.67405195478483,49.5294835475575 5.78241743330091,50.0903278672212 6.04307335778111,50.1280516627942</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+  <Placemark>
+	<name>Latvia</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">5</SimpleData>
+		<SimpleData name="sovereignt">Latvia</SimpleData>
+		<SimpleData name="sov_a3">LVA</SimpleData>
+		<SimpleData name="adm0_dif">0</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Sovereign country</SimpleData>
+		<SimpleData name="admin">Latvia</SimpleData>
+		<SimpleData name="adm0_a3">LVA</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Latvia</SimpleData>
+		<SimpleData name="gu_a3">LVA</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Latvia</SimpleData>
+		<SimpleData name="su_a3">LVA</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Latvia</SimpleData>
+		<SimpleData name="brk_a3">LVA</SimpleData>
+		<SimpleData name="brk_name">Latvia</SimpleData>
+		<SimpleData name="abbrev">Lat.</SimpleData>
+		<SimpleData name="postal">LV</SimpleData>
+		<SimpleData name="formal_en">Republic of Latvia</SimpleData>
+		<SimpleData name="name_sort">Latvia</SimpleData>
+		<SimpleData name="mapcolor7">4</SimpleData>
+		<SimpleData name="mapcolor8">7</SimpleData>
+		<SimpleData name="mapcolor9">6</SimpleData>
+		<SimpleData name="mapcolor13">13</SimpleData>
+		<SimpleData name="pop_est">2231503</SimpleData>
+		<SimpleData name="gdp_md_est">38860</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">2011</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">2. Developed region: nonG7</SimpleData>
+		<SimpleData name="income_grp">3. Upper middle income</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">LV</SimpleData>
+		<SimpleData name="iso_a3">LVA</SimpleData>
+		<SimpleData name="iso_n3">428</SimpleData>
+		<SimpleData name="un_a3">428</SimpleData>
+		<SimpleData name="wb_a2">LV</SimpleData>
+		<SimpleData name="wb_a3">LVA</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">LVA</SimpleData>
+		<SimpleData name="adm0_a3_us">LVA</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Northern Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">6</SimpleData>
+		<SimpleData name="long_len">6</SimpleData>
+		<SimpleData name="abbrev_len">4</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">LVA.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>21.0558004086224,56.0310763617111 21.090423618258,56.7838727891229 21.5818664893537,57.4118706325499 22.5243412614929,57.7533743353508 23.3184529965221,57.0062364772749 24.1207296078534,57.0256926540328 24.3128625831146,57.793423570377 25.1645935401493,57.9701569688152 25.6028096859844,57.8475287949866 26.4635323422378,57.4763886582663 27.2881848487515,57.4745283067038 27.7700159034409,57.2442581244112 27.8552820167225,56.7593264837843 28.176709425578,56.1691299505788 27.1024597510945,55.7833137070877 26.4943314958838,55.6151069199776 25.5330465023903,56.100296942766 25.0009342790809,56.1645307481048 24.8606844418408,56.3725283880796 23.87826378754,56.2736713731053 22.2011568539395,56.3378018255795 21.0558004086224,56.0310763617111</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+  <Placemark>
+	<name>Moldova</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">6</SimpleData>
+		<SimpleData name="sovereignt">Moldova</SimpleData>
+		<SimpleData name="sov_a3">MDA</SimpleData>
+		<SimpleData name="adm0_dif">0</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Sovereign country</SimpleData>
+		<SimpleData name="admin">Moldova</SimpleData>
+		<SimpleData name="adm0_a3">MDA</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Moldova</SimpleData>
+		<SimpleData name="gu_a3">MDA</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Moldova</SimpleData>
+		<SimpleData name="su_a3">MDA</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Moldova</SimpleData>
+		<SimpleData name="brk_a3">MDA</SimpleData>
+		<SimpleData name="brk_name">Moldova</SimpleData>
+		<SimpleData name="abbrev">Mda.</SimpleData>
+		<SimpleData name="postal">MD</SimpleData>
+		<SimpleData name="formal_en">Republic of Moldova</SimpleData>
+		<SimpleData name="name_sort">Moldova</SimpleData>
+		<SimpleData name="mapcolor7">3</SimpleData>
+		<SimpleData name="mapcolor8">5</SimpleData>
+		<SimpleData name="mapcolor9">4</SimpleData>
+		<SimpleData name="mapcolor13">12</SimpleData>
+		<SimpleData name="pop_est">4320748</SimpleData>
+		<SimpleData name="gdp_md_est">10670</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">2004</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">6. Developing region</SimpleData>
+		<SimpleData name="income_grp">4. Lower middle income</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">MD</SimpleData>
+		<SimpleData name="iso_a3">MDA</SimpleData>
+		<SimpleData name="iso_n3">498</SimpleData>
+		<SimpleData name="un_a3">498</SimpleData>
+		<SimpleData name="wb_a2">MD</SimpleData>
+		<SimpleData name="wb_a3">MDA</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">MDA</SimpleData>
+		<SimpleData name="adm0_a3_us">MDA</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Eastern Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">7</SimpleData>
+		<SimpleData name="long_len">7</SimpleData>
+		<SimpleData name="abbrev_len">4</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">MDA.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>26.6193367855978,48.2207262233335 26.8578235206248,48.3682107610945 27.5225374691952,48.4671194525011 28.2595467465418,48.1555622422134 28.6708911475852,48.1181485052341 29.122698195113,47.8490951605065 29.0508679542273,47.5102269557525 29.4151351254527,47.3466452093326 29.5596741065731,46.9285828720913 29.9088517595693,46.6743606634315 29.8382100766263,46.5253258327017 30.0246586443354,46.423936672545 29.7599719581364,46.3499876979354 29.1706539242799,46.3792623968287 29.0721069678993,46.5176777207225 28.8629724464141,46.4378893092638 28.9337174822216,46.2588304713725 28.6599874203716,45.9399868841316 28.4852694027928,45.5969070501459 28.233553501099,45.4882831894684 28.0544429867754,45.9445860866056 28.1600179379477,46.3715626084172 28.128030226359,46.8104763860883 27.5511662126848,47.4051170924708 27.2338729184127,47.8267709417564 26.9241760596876,48.123264472031 26.6193367855978,48.2207262233335</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+  <Placemark>
+	<name>Montenegro</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">6</SimpleData>
+		<SimpleData name="sovereignt">Montenegro</SimpleData>
+		<SimpleData name="sov_a3">MNE</SimpleData>
+		<SimpleData name="adm0_dif">0</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Sovereign country</SimpleData>
+		<SimpleData name="admin">Montenegro</SimpleData>
+		<SimpleData name="adm0_a3">MNE</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Montenegro</SimpleData>
+		<SimpleData name="gu_a3">MNE</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Montenegro</SimpleData>
+		<SimpleData name="su_a3">MNE</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Montenegro</SimpleData>
+		<SimpleData name="brk_a3">MNE</SimpleData>
+		<SimpleData name="brk_name">Montenegro</SimpleData>
+		<SimpleData name="abbrev">Mont.</SimpleData>
+		<SimpleData name="postal">ME</SimpleData>
+		<SimpleData name="formal_en">Montenegro</SimpleData>
+		<SimpleData name="name_sort">Montenegro</SimpleData>
+		<SimpleData name="mapcolor7">4</SimpleData>
+		<SimpleData name="mapcolor8">1</SimpleData>
+		<SimpleData name="mapcolor9">4</SimpleData>
+		<SimpleData name="mapcolor13">5</SimpleData>
+		<SimpleData name="pop_est">672180</SimpleData>
+		<SimpleData name="gdp_md_est">6816</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">2011</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">6. Developing region</SimpleData>
+		<SimpleData name="income_grp">3. Upper middle income</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">ME</SimpleData>
+		<SimpleData name="iso_a3">MNE</SimpleData>
+		<SimpleData name="iso_n3">499</SimpleData>
+		<SimpleData name="un_a3">499</SimpleData>
+		<SimpleData name="wb_a2">ME</SimpleData>
+		<SimpleData name="wb_a3">MNE</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">MNE</SimpleData>
+		<SimpleData name="adm0_a3_us">MNE</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Southern Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">10</SimpleData>
+		<SimpleData name="long_len">10</SimpleData>
+		<SimpleData name="abbrev_len">5</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">MNE.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>19.8016133968987,42.5000934921908 19.7380513851796,42.6882473821656 19.30449,42.19574 19.37177,41.87755 19.16246,41.95502 18.88214,42.28151 18.45,42.48 18.56,42.65 18.70648,43.20011 19.03165,43.43253 19.21852,43.52384 19.48389,43.35229 19.63,43.2137799702705 19.95857,43.10604 20.3398,42.89852 20.25758,42.81275 20.0707,42.58863 19.8016133968987,42.5000934921908</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+  <Placemark>
+	<name>Kosovo</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">6</SimpleData>
+		<SimpleData name="sovereignt">Kosovo</SimpleData>
+		<SimpleData name="sov_a3">KOS</SimpleData>
+		<SimpleData name="adm0_dif">0</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Sovereign country</SimpleData>
+		<SimpleData name="admin">Kosovo</SimpleData>
+		<SimpleData name="adm0_a3">KOS</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Kosovo</SimpleData>
+		<SimpleData name="gu_a3">KOS</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Kosovo</SimpleData>
+		<SimpleData name="su_a3">KOS</SimpleData>
+		<SimpleData name="brk_diff">1</SimpleData>
+		<SimpleData name="name_long">Kosovo</SimpleData>
+		<SimpleData name="brk_a3">B57</SimpleData>
+		<SimpleData name="brk_name">Kosovo</SimpleData>
+		<SimpleData name="abbrev">Kos.</SimpleData>
+		<SimpleData name="postal">KO</SimpleData>
+		<SimpleData name="formal_en">Republic of Kosovo</SimpleData>
+		<SimpleData name="note_brk">Self admin.; Claimed by Serbia</SimpleData>
+		<SimpleData name="name_sort">Kosovo</SimpleData>
+		<SimpleData name="mapcolor7">2</SimpleData>
+		<SimpleData name="mapcolor8">2</SimpleData>
+		<SimpleData name="mapcolor9">3</SimpleData>
+		<SimpleData name="mapcolor13">11</SimpleData>
+		<SimpleData name="pop_est">1804838</SimpleData>
+		<SimpleData name="gdp_md_est">5352</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">1981</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">6. Developing region</SimpleData>
+		<SimpleData name="income_grp">4. Lower middle income</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">-99</SimpleData>
+		<SimpleData name="iso_a3">-99</SimpleData>
+		<SimpleData name="iso_n3">-99</SimpleData>
+		<SimpleData name="un_a3">-099</SimpleData>
+		<SimpleData name="wb_a2">KV</SimpleData>
+		<SimpleData name="wb_a3">KSV</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">SRB</SimpleData>
+		<SimpleData name="adm0_a3_us">KOS</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Southern Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">6</SimpleData>
+		<SimpleData name="long_len">6</SimpleData>
+		<SimpleData name="abbrev_len">4</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">KOS.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>20.76216,42.05186 20.71731,41.84711 20.59023,41.85541 20.52295,42.21787 20.28374,42.32025 20.0707,42.58863 20.25758,42.81275 20.49679,42.88469 20.63508,43.21671 20.81448,43.27205 20.95651,43.13094 21.143395,43.068685 21.27421,42.90959 21.43866,42.86255 21.63302,42.67717 21.77505,42.6827 21.66292,42.43922 21.54332,42.32025 21.5766359894021,42.2452243970619 21.3527,42.2068 20.76216,42.05186</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+  <Placemark>
+	<name>Netherlands</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">5</SimpleData>
+		<SimpleData name="sovereignt">Netherlands</SimpleData>
+		<SimpleData name="sov_a3">NL1</SimpleData>
+		<SimpleData name="adm0_dif">1</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Country</SimpleData>
+		<SimpleData name="admin">Netherlands</SimpleData>
+		<SimpleData name="adm0_a3">NLD</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Netherlands</SimpleData>
+		<SimpleData name="gu_a3">NLD</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Netherlands</SimpleData>
+		<SimpleData name="su_a3">NLD</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Netherlands</SimpleData>
+		<SimpleData name="brk_a3">NLD</SimpleData>
+		<SimpleData name="brk_name">Netherlands</SimpleData>
+		<SimpleData name="abbrev">Neth.</SimpleData>
+		<SimpleData name="postal">NL</SimpleData>
+		<SimpleData name="formal_en">Kingdom of the Netherlands</SimpleData>
+		<SimpleData name="name_sort">Netherlands</SimpleData>
+		<SimpleData name="mapcolor7">4</SimpleData>
+		<SimpleData name="mapcolor8">2</SimpleData>
+		<SimpleData name="mapcolor9">2</SimpleData>
+		<SimpleData name="mapcolor13">9</SimpleData>
+		<SimpleData name="pop_est">16715999</SimpleData>
+		<SimpleData name="gdp_md_est">672000</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">2011</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">2. Developed region: nonG7</SimpleData>
+		<SimpleData name="income_grp">1. High income: OECD</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">NL</SimpleData>
+		<SimpleData name="iso_a3">NLD</SimpleData>
+		<SimpleData name="iso_n3">528</SimpleData>
+		<SimpleData name="un_a3">528</SimpleData>
+		<SimpleData name="wb_a2">NL</SimpleData>
+		<SimpleData name="wb_a3">NLD</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">NLD</SimpleData>
+		<SimpleData name="adm0_a3_us">NLD</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Western Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">11</SimpleData>
+		<SimpleData name="long_len">11</SimpleData>
+		<SimpleData name="abbrev_len">5</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">NLD.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>6.07418257002092,53.5104033473781 6.90513960127413,53.4821621771306 7.0920532568739,53.1440432806449 6.84286950036238,52.2284402532975 6.58939659997083,51.8520291204834 5.98865807457781,51.8516157090251 6.15665815595878,50.8037210150106 5.60697594567,51.0372984889698 4.97399132652691,51.4750237086981 4.04707116050753,51.2672586126686 3.31497114422854,51.3457551133199 3.83028852704314,51.620544542032 4.70599734866119,53.0917984075978 6.07418257002092,53.5104033473781</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+  <Placemark>
+	<name>Macedonia</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">6</SimpleData>
+		<SimpleData name="sovereignt">Macedonia</SimpleData>
+		<SimpleData name="sov_a3">MKD</SimpleData>
+		<SimpleData name="adm0_dif">0</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Sovereign country</SimpleData>
+		<SimpleData name="admin">Macedonia</SimpleData>
+		<SimpleData name="adm0_a3">MKD</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Macedonia</SimpleData>
+		<SimpleData name="gu_a3">MKD</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Macedonia</SimpleData>
+		<SimpleData name="su_a3">MKD</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Macedonia</SimpleData>
+		<SimpleData name="brk_a3">MKD</SimpleData>
+		<SimpleData name="brk_name">Macedonia</SimpleData>
+		<SimpleData name="abbrev">Mkd.</SimpleData>
+		<SimpleData name="postal">MK</SimpleData>
+		<SimpleData name="formal_en">Former Yugoslav Republic of Macedonia</SimpleData>
+		<SimpleData name="name_sort">Macedonia, FYR</SimpleData>
+		<SimpleData name="mapcolor7">5</SimpleData>
+		<SimpleData name="mapcolor8">3</SimpleData>
+		<SimpleData name="mapcolor9">7</SimpleData>
+		<SimpleData name="mapcolor13">3</SimpleData>
+		<SimpleData name="pop_est">2066718</SimpleData>
+		<SimpleData name="gdp_md_est">18780</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">2010</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">6. Developing region</SimpleData>
+		<SimpleData name="income_grp">3. Upper middle income</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">MK</SimpleData>
+		<SimpleData name="iso_a3">MKD</SimpleData>
+		<SimpleData name="iso_n3">807</SimpleData>
+		<SimpleData name="un_a3">807</SimpleData>
+		<SimpleData name="wb_a2">MK</SimpleData>
+		<SimpleData name="wb_a3">MKD</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">MKD</SimpleData>
+		<SimpleData name="adm0_a3_us">MKD</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Southern Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">9</SimpleData>
+		<SimpleData name="long_len">9</SimpleData>
+		<SimpleData name="abbrev_len">4</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">MKD.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>20.59023,41.85541 20.71731,41.84711 20.76216,42.05186 21.3527,42.2068 21.5766359894021,42.2452243970619 21.91708,42.30364 22.3805257504247,42.3202595078151 22.8813737321973,41.9992971868504 22.9523771501665,41.3379938828112 22.76177,41.3048 22.597308383889,41.1304871689432 22.0553776384443,41.1498658310527 21.674160597427,40.9312745224579 21.0200403174764,40.8427269557259 20.60518,41.08622 20.46315,41.51509 20.59023,41.85541</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+  <Placemark>
+	<name>Poland</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">3</SimpleData>
+		<SimpleData name="sovereignt">Poland</SimpleData>
+		<SimpleData name="sov_a3">POL</SimpleData>
+		<SimpleData name="adm0_dif">0</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Sovereign country</SimpleData>
+		<SimpleData name="admin">Poland</SimpleData>
+		<SimpleData name="adm0_a3">POL</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Poland</SimpleData>
+		<SimpleData name="gu_a3">POL</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Poland</SimpleData>
+		<SimpleData name="su_a3">POL</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Poland</SimpleData>
+		<SimpleData name="brk_a3">POL</SimpleData>
+		<SimpleData name="brk_name">Poland</SimpleData>
+		<SimpleData name="abbrev">Pol.</SimpleData>
+		<SimpleData name="postal">PL</SimpleData>
+		<SimpleData name="formal_en">Republic of Poland</SimpleData>
+		<SimpleData name="name_sort">Poland</SimpleData>
+		<SimpleData name="mapcolor7">3</SimpleData>
+		<SimpleData name="mapcolor8">7</SimpleData>
+		<SimpleData name="mapcolor9">1</SimpleData>
+		<SimpleData name="mapcolor13">2</SimpleData>
+		<SimpleData name="pop_est">38482919</SimpleData>
+		<SimpleData name="gdp_md_est">667900</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">2011</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">2. Developed region: nonG7</SimpleData>
+		<SimpleData name="income_grp">1. High income: OECD</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">PL</SimpleData>
+		<SimpleData name="iso_a3">POL</SimpleData>
+		<SimpleData name="iso_n3">616</SimpleData>
+		<SimpleData name="un_a3">616</SimpleData>
+		<SimpleData name="wb_a2">PL</SimpleData>
+		<SimpleData name="wb_a3">POL</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">POL</SimpleData>
+		<SimpleData name="adm0_a3_us">POL</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Eastern Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">6</SimpleData>
+		<SimpleData name="long_len">6</SimpleData>
+		<SimpleData name="abbrev_len">4</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">POL.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>15.0169958838587,51.1066740993216 14.6070984229195,51.74518809672 14.6850264828157,52.0899474147552 14.4375997250022,52.6248501654084 14.0745211117195,52.9812625189254 14.3533154639341,53.248171291713 14.1196863135426,53.757029120491 14.8029004248735,54.0507062852057 16.3634770036557,54.5131586777857 17.6228316586087,54.8515359564329 18.6208585954616,54.6826056992708 18.6962545101755,54.4387187770693 19.6606400896064,54.4260838893739 20.8922445004186,54.3125249294125 22.7310986670927,54.3275369329933 23.2439872575895,54.2205667181491 23.4841276384498,53.9124976670411 23.527535841575,53.4701215684066 23.8049349301178,53.0897313503061 23.7991988461334,52.6910993516066 23.1994938493862,52.4869774440537 23.5080021501687,52.0236465521247 23.5270707536844,51.5784540879302 24.0299857927489,50.7054066025752 23.9227571957433,50.4248810898788 23.4265084164444,50.3085057643574 22.5184501482116,49.4767735866197 22.7764188982126,49.0273953314096 22.5581376482118,49.0857380234671 21.6078080583642,49.4701073268541 20.8879553565384,49.3287722845358 20.4158394711198,49.4314533554998 19.8250228207269,49.2171253525692 19.3207125179905,49.5715740016592 18.9095748226763,49.4358458522446 18.8531441586136,49.4962297633776 18.3929138526222,49.9886286484708 17.649445021239,50.04903839782 17.5545670915511,50.3621459010764 16.8687691586057,50.473973700556 16.7194759457144,50.2157465683935 16.1762532894623,50.4226073268579 16.2386267432386,50.6977326523798 15.4909721208397,50.7847299261432 15.0169958838587,51.1066740993216</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+  <Placemark>
+	<name>Romania</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">3</SimpleData>
+		<SimpleData name="sovereignt">Romania</SimpleData>
+		<SimpleData name="sov_a3">ROU</SimpleData>
+		<SimpleData name="adm0_dif">0</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Sovereign country</SimpleData>
+		<SimpleData name="admin">Romania</SimpleData>
+		<SimpleData name="adm0_a3">ROU</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Romania</SimpleData>
+		<SimpleData name="gu_a3">ROU</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Romania</SimpleData>
+		<SimpleData name="su_a3">ROU</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Romania</SimpleData>
+		<SimpleData name="brk_a3">ROU</SimpleData>
+		<SimpleData name="brk_name">Romania</SimpleData>
+		<SimpleData name="abbrev">Rom.</SimpleData>
+		<SimpleData name="postal">RO</SimpleData>
+		<SimpleData name="formal_en">Romania</SimpleData>
+		<SimpleData name="name_sort">Romania</SimpleData>
+		<SimpleData name="mapcolor7">1</SimpleData>
+		<SimpleData name="mapcolor8">4</SimpleData>
+		<SimpleData name="mapcolor9">3</SimpleData>
+		<SimpleData name="mapcolor13">13</SimpleData>
+		<SimpleData name="pop_est">22215421</SimpleData>
+		<SimpleData name="gdp_md_est">271400</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">2011</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">2. Developed region: nonG7</SimpleData>
+		<SimpleData name="income_grp">3. Upper middle income</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">RO</SimpleData>
+		<SimpleData name="iso_a3">ROU</SimpleData>
+		<SimpleData name="iso_n3">642</SimpleData>
+		<SimpleData name="un_a3">642</SimpleData>
+		<SimpleData name="wb_a2">RO</SimpleData>
+		<SimpleData name="wb_a3">ROM</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">ROU</SimpleData>
+		<SimpleData name="adm0_a3_us">ROU</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Eastern Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">7</SimpleData>
+		<SimpleData name="long_len">7</SimpleData>
+		<SimpleData name="abbrev_len">4</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">ROU.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>22.7105314470405,47.8821939153894 23.1422363624068,48.0963410508069 23.7609582862374,47.9855984564055 24.4020561052504,47.9818777532804 24.8663171729606,47.7375257431883 25.207743361113,47.8910564235275 25.9459411964024,47.9871487493742 26.1974503923669,48.2208812526303 26.6193367855978,48.2207262233335 26.9241760596876,48.123264472031 27.2338729184127,47.8267709417564 27.5511662126848,47.4051170924708 28.128030226359,46.8104763860883 28.1600179379477,46.3715626084172 28.0544429867754,45.9445860866056 28.233553501099,45.4882831894684 28.6797794939394,45.3040308701317 29.1497249692017,45.4649254420724 29.6032890154274,45.2933080104311 29.6265434099588,45.0353909368624 29.1416117693318,44.820210272799 28.8378577003202,44.9138738063281 28.558081495892,43.7074616562581 27.9701070492751,43.8124681666752 27.2423995297409,44.1759860296324 26.0651587256997,43.9434937607513 25.5692716814269,43.6884447291747 24.1006791521242,43.7410513372479 23.3323022803763,43.8970108099047 22.9448323910518,43.8237853053471 22.657149692483,44.2349230006613 22.4740084164406,44.4092276067818 22.7057255388374,44.578002834647 22.4590222510759,44.7025171982543 22.1450879249028,44.4784223496206 21.5620227393536,44.7689472519655 21.4835262387022,45.1811701523578 20.8743127784134,45.4163754339342 20.76217492034,45.7345730657714 20.2201924984628,46.1274689804866 21.0219523454712,46.3160879583519 21.6265149268539,46.9942377793182 22.0997676937828,47.6724392767167 22.7105314470405,47.8821939153894</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+  <Placemark>
+	<name>Russia</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">2</SimpleData>
+		<SimpleData name="sovereignt">Russia</SimpleData>
+		<SimpleData name="sov_a3">RUS</SimpleData>
+		<SimpleData name="adm0_dif">0</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Sovereign country</SimpleData>
+		<SimpleData name="admin">Russia</SimpleData>
+		<SimpleData name="adm0_a3">RUS</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Russia</SimpleData>
+		<SimpleData name="gu_a3">RUS</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Russia</SimpleData>
+		<SimpleData name="su_a3">RUS</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Russian Federation</SimpleData>
+		<SimpleData name="brk_a3">RUS</SimpleData>
+		<SimpleData name="brk_name">Russia</SimpleData>
+		<SimpleData name="abbrev">Rus.</SimpleData>
+		<SimpleData name="postal">RUS</SimpleData>
+		<SimpleData name="formal_en">Russian Federation</SimpleData>
+		<SimpleData name="name_sort">Russian Federation</SimpleData>
+		<SimpleData name="mapcolor7">2</SimpleData>
+		<SimpleData name="mapcolor8">5</SimpleData>
+		<SimpleData name="mapcolor9">7</SimpleData>
+		<SimpleData name="mapcolor13">7</SimpleData>
+		<SimpleData name="pop_est">140041247</SimpleData>
+		<SimpleData name="gdp_md_est">2266000</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">2010</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">3. Emerging region: BRIC</SimpleData>
+		<SimpleData name="income_grp">3. Upper middle income</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">RU</SimpleData>
+		<SimpleData name="iso_a3">RUS</SimpleData>
+		<SimpleData name="iso_n3">643</SimpleData>
+		<SimpleData name="un_a3">643</SimpleData>
+		<SimpleData name="wb_a2">RU</SimpleData>
+		<SimpleData name="wb_a3">RUS</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">RUS</SimpleData>
+		<SimpleData name="adm0_a3_us">RUS</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Eastern Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">6</SimpleData>
+		<SimpleData name="long_len">18</SimpleData>
+		<SimpleData name="abbrev_len">4</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">RUS.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>143.648007440363,50.7476004095415 144.654147577086,48.9763906927376 143.173927850517,49.3065514186504 142.55866824765,47.8615750189049 143.533492466404,46.8367280136925 143.505277134373,46.1379076198095 142.747700636974,46.7407648789266 142.092030064055,45.9667552760588 141.906925083585,46.8059288600465 142.018442824471,47.7801329616129 141.904444614835,48.8591885442996 142.135800002206,49.6151630722975 142.179983351815,50.9523424342819 141.59407596249,51.9354348822025 141.682546014574,53.3019664577288 142.606934035411,53.7621450872879 142.209748976815,54.2254759792169 142.654786411713,54.3658808457539 142.914615513277,53.7045775417147 143.260847609632,52.740760403039 143.235267775648,51.7566602646887 143.648007440363,50.7476004095415</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>22.7310986670927,54.3275369329933 20.8922445004187,54.3125249294126 19.6606400896064,54.426083889374 19.8884814795813,54.8661603867715 21.2684489275035,55.1904816758353 22.3157235043306,55.0152985703659 22.7577637061553,54.8565744085814 22.6510518734726,54.5827409938667 22.7310986670927,54.3275369329933</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>-175.01425,66.58435 -174.33983,66.33556 -174.57182,67.06219 -171.85731,66.91308 -169.89958,65.97724 -170.89107,65.54139 -172.53025,65.43791 -172.555,64.46079 -172.95533,64.25269 -173.89184,64.2826 -174.65392,64.63125 -175.98353,64.92288 -176.20716,65.35667 -177.22266,65.52024 -178.35993,65.39052 -178.90332,65.74044 -178.68611,66.11211 -179.88377,65.87456 -179.43268,65.40411 -180.0,64.9797087021984 -180.0,68.9636363636364 -177.55,68.2 -174.92825,67.20589 -175.01425,66.58435</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>180.0,70.8321992085467 178.903425,70.78114 178.7253,71.0988 180.0,71.5157143364283 180.0,70.8321992085467</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>-178.69378,70.89302 -180.0,70.8321992085467 -180.0,71.5157143364283 -179.871875,71.55762 -179.02433,71.55553 -177.577945,71.26948 -177.663575,71.13277 -178.69378,70.89302</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>143.60385,73.21244 142.08763,73.20544 140.038155,73.31692 139.86312,73.36983 140.81171,73.76506 142.06207,73.85758 143.48283,73.47525 143.60385,73.21244</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>150.73167,75.08406 149.575925,74.68892 147.977465,74.778355 146.11919,75.17298 146.358485,75.49682 148.22223,75.345845 150.73167,75.08406</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>145.086285,75.562625 144.3,74.82 140.61381,74.84768 138.95544,74.61148 136.97439,75.26167 137.51176,75.94917 138.831075,76.13676 141.471615,76.09289 145.086285,75.562625</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>57.5356925799924,70.7204639757022 56.9449792824639,70.6327432318867 53.6773751157842,70.7626577826685 53.4120166359654,71.2066616889202 51.6018945656457,71.4747590196505 51.4557536151242,72.0148810899651 52.4782751808836,72.229441636841 52.4441687355709,72.7747313503849 54.4276135597977,73.6275475124976 53.5082898293252,73.7498139513002 55.9024589374077,74.6274864773453 55.6319328143597,75.0814122585972 57.8686438332489,75.6093903673232 61.1700443866475,76.2518834500081 64.4983683612702,76.4390554877693 66.2109770038551,76.8097822130312 68.1570597675348,76.9396967638129 68.8522111347251,76.5448113064546 68.1805725442277,76.2336416694091 64.637326287703,75.7377546251362 61.5835075214148,75.2608845079468 58.4770821470534,74.3090563015628 56.986785516188,73.3330435248662 55.419335971911,72.371267605266 55.6228377622763,71.5405947943903 57.5356925799924,70.7204639757022</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>106.97013,76.97419 107.24,76.48 108.1538,76.72335 111.07726,76.71 113.33151,76.22224 114.13417,75.84764 113.88539,75.32779 112.77918,75.03186 110.15125,74.47673 109.4,74.18 110.64,74.04 112.11919,73.78774 113.01954,73.97693 113.52958,73.33505 113.96881,73.59488 115.56782,73.75285 118.77633,73.58772 119.02,73.12 123.20066,72.97122 123.25777,73.73503 125.38,73.56 126.97644,73.56549 128.59126,73.03871 129.05157,72.39872 128.46,71.98 129.71599,71.19304 131.28858,70.78699 132.2535,71.8363 133.85766,71.38642 135.56193,71.65525 137.49755,71.34763 138.23409,71.62803 139.86983,71.48783 139.14791,72.41619 140.46817,72.84941 149.5,72.2 150.35118,71.60643 152.9689,70.84222 157.00688,71.03141 158.99779,70.86672 159.83031,70.45324 159.70866,69.72198 160.94053,69.43728 162.27907,69.64204 164.05248,69.66823 165.94037,69.47199 167.83567,69.58269 169.57763,68.6938 170.81688,69.01363 170.0082,69.65276 170.45345,70.09703 173.64391,69.81743 175.72403,69.87725 178.6,69.4 180.0,68.9636363636366 180.0,64.9797087021985 179.99281,64.97433 178.7072,64.53493 177.41128,64.60821 178.313,64.07593 178.90825,63.25197 179.37034,62.98262 179.48636,62.56894 179.22825,62.3041 177.3643,62.5219 174.56929,61.76915 173.68013,61.65261 172.15,60.95 170.6985,60.33618 170.33085,59.88177 168.90046,60.57355 166.29498,59.78855 165.84,60.16 164.87674,59.7316 163.53929,59.86871 163.21711,59.21101 162.01733,58.24328 162.05297,57.83912 163.19191,57.61503 163.05794,56.15924 162.12958,56.12219 161.70146,55.28568 162.11749,54.85514 160.36877,54.34433 160.02173,53.20257 158.53094,52.95868 158.23118,51.94269 156.78979,51.01105 156.42,51.7 155.99182,53.15895 155.43366,55.38103 155.91442,56.76792 156.75815,57.3647 156.81035,57.83204 158.36433,58.05575 160.15064,59.31477 161.87204,60.343 163.66969,61.1409 164.47355,62.55061 163.25842,62.46627 162.65791,61.6425 160.12148,60.54423 159.30232,61.77396 156.72068,61.43442 154.21806,59.75818 155.04375,59.14495 152.81185,58.88385 151.26573,58.78089 151.33815,59.50396 149.78371,59.65573 148.54481,59.16448 145.48722,59.33637 142.19782,59.03998 138.95848,57.08805 135.12619,54.72959 136.70171,54.60355 137.19342,53.97732 138.1647,53.75501 138.80463,54.25455 139.90151,54.18968 141.34531,53.08957 141.37923,52.23877 140.59742,51.23967 140.51308,50.04553 140.06193,48.44671 138.55472,46.99965 138.21971,46.30795 136.86232,45.1435 135.51535,43.989 134.86939,43.39821 133.53687,42.81147 132.90627,42.79849 132.27807,43.28456 130.93587,42.55274 130.78,42.22 130.64,42.395 130.63386640841,42.9030146347706 131.144687941615,42.9299897324269 131.288555129116,44.1115196803483 131.02519,44.96796 131.88345421766,45.3211616074365 133.09712,45.14409 133.769643996313,46.1169269882992 134.11235,47.21248 134.50081,47.57845 135.026311476787,48.4782298854439 133.373595819228,48.1834416774348 132.50669,47.78896 130.98726,47.79013 130.582293328983,48.7296874049762 129.397817824421,49.4406000840156 127.6574,49.76027 127.287455682485,50.7397972682654 126.939156528838,51.3538941514059 126.564399041857,51.7842554795327 125.946348911646,52.792798570357 125.06821129771,53.1610448268689 123.57147,53.4588 122.245747918793,53.4317259792137 121.00308475147,53.2514010687312 120.177088657717,52.7538862168412 120.725789015792,52.5162263047309 120.7382,51.96411 120.18208,51.64355 119.27939,50.58292 119.288460728026,50.142882798862 117.879244419426,49.510983384797 116.678800897286,49.8885313991214 115.485695428531,49.8051773138347 114.96210981655,50.1402473008151 114.362456496235,50.2483027207375 112.897739699354,49.543565375357 111.581230910287,49.3779682480777 110.662010532679,49.1301280788059 109.402449171997,49.2929605169577 108.475167270951,49.2825477158507 107.868175897251,49.7937051458659 106.888804152455,50.2742959661803 105.886591424587,50.4060191920922 104.62158,50.27532 103.67654544476,50.0899661321951 102.25589,50.51056 102.06521,51.25991 100.889480421963,51.5168557806384 99.9817322123236,51.6340062526439 98.8614905131005,52.0473660345467 97.8257397806745,51.0109951849333 98.2317615091917,50.4224006211287 97.25976,49.72605 95.81402,49.97746 94.8159493346988,50.0134333359709 94.1475663594356,50.4805366074572 93.10421,50.49529 92.2347115417197,50.8021707220418 90.7136674336408,50.3318118353211 88.8055668476956,49.4705207383125 87.7512642760769,49.2971979844056 87.3599703307627,49.2149807806292 86.8293567239897,49.8266747096681 85.5412699726825,49.6928585882482 85.1155595234621,50.1173029648776 84.416377394553,50.3113996445658 83.9351147806189,50.8892455104536 83.3830037780125,51.0691828476939 81.9459855488399,50.8121959499063 80.5684468932355,51.3883364935284 80.0355595234417,50.8647508815472 77.8009155618443,53.4044149847475 76.5251794778548,54.1770034857271 76.8911002949135,54.4905244004419 74.38482,53.54685 73.4256787454205,53.4898102891098 73.5085160663844,54.0356167669766 72.2241500182022,54.3766553818868 71.1801310566095,54.1332852240083 70.8652665546552,55.1697335882701 69.0681669452729,55.3852501491435 68.1691003762589,54.9703917507044 65.66687,54.60125 65.178533563096,54.3542278102721 61.4366,54.00625 60.9780664406832,53.6649933945791 61.6999861998006,52.9799964463343 60.7399931171145,52.7199864772577 60.9272685077403,52.447548326215 59.9675338072156,51.9604204372157 61.5880033710241,51.2726587998432 61.337424350841,50.7990701361043 59.9328072447156,50.8421941188518 59.6422823423706,50.5454422064157 58.36332,51.06364 56.77798,51.04355 55.71694,50.62171 54.5328784523762,51.0262397324594 52.3287235858311,51.7186522487381 50.7666483905122,51.6927623561599 48.702381626181,50.6051284857128 48.5778414243576,49.8747596299156 47.5494804217494,50.4546983913111 46.7515963071628,49.3560057643537 47.0436715024766,49.1520388860976 46.4664457537763,48.3941523301049 47.31524,47.71585 48.05725,47.74377 48.6947335142019,47.0756281601779 48.59325,46.56104 49.10116,46.39933 48.64541,45.80629 47.67591,45.64149 46.68201,44.6092 47.59094,43.66016 47.49252,42.98658 48.58437,41.80888 47.987283156126,41.4058192001944 47.8156657244847,41.1514161240213 47.3733154640664,41.2197323675111 46.6860705910167,41.8271371526699 46.4049507993489,41.8606751572274 45.7764,42.09244 45.4702791684859,42.50278066667 44.5376229184821,42.7119927028037 43.93121,42.55496 43.75599,42.74083 42.3944,43.2203 40.92219,43.38215 40.0769649594799,43.5531041530025 39.9550085792711,43.4349976669993 38.68,44.28 37.53912,44.65721 36.67546,45.24469 37.40317,45.40451 38.23295,46.24087 37.67372,46.63657 39.14767,47.04475 39.1212,47.26336 38.2235380388995,47.102189846376 38.2551123390298,47.546400458357 38.77057,47.82562 39.738277622239,47.8989370794521 39.89562,48.23241 39.67465,48.78382 40.0807890154695,49.3074299179994 40.06904,49.60105 38.5949882342136,49.9264619004237 38.0106311378571,49.9156615260747 37.3934595069952,50.3839533555037 36.6261678403254,50.2255909287451 35.3561161638881,50.5771973740592 35.37791,50.77394 35.0221830584179,51.2075723333715 34.2248157081544,51.2559931504289 34.1419783871906,51.5664134792062 34.3917305844572,51.7688817409259 33.7526998227359,52.3350745713317 32.7157605323672,52.2384654811622 32.4120581397878,52.2886949733498 32.15944,52.06125 31.78597,52.10168 31.5400183448623,52.7420523138464 31.305200636528,53.0739958766733 31.49764,53.16743 32.3045194841884,53.1327261419728 32.6936430193461,53.3514208034321 32.4055985857512,53.618045355842 31.7312728207746,53.794029446012 31.7914241879624,53.9746385768722 31.3844722836638,54.1570563828624 30.7575338070988,54.8117709417844 30.9718359718132,55.0815477565641 30.8739091326201,55.5509764675035 29.8962943865224,55.7894632025305 29.3715718930308,55.6700906439363 29.2295133806604,55.9183442246664 28.1767094255779,56.1691299505788 27.8552820167225,56.7593264837844 27.770015903441,57.2442581244112 27.2881848487517,57.4745283067039 27.7166858253158,57.7918991156245 27.42015,58.72457 28.1316992530519,59.300825100331 27.98112,59.47537 29.1177,60.02805 28.07,60.50352 30.2111072120447,61.7800277777497 31.139991082491,62.3576927761244 31.5160921567113,62.8676874864129 30.0358724301428,63.5528136257386 30.4446846860037,64.2044534369391 29.544429559047,64.9486715765906 30.21765,65.80598 29.0545886573524,66.944286200622 29.9774263852207,67.6982970241928 28.4459436378188,68.364612942164 28.5919295590434,69.0647769232867 29.39955,69.15692 31.10108,69.55811 32.13272,69.90595 33.77547,69.30142 36.51396,69.06342 40.29234,67.9324 41.05987,67.45713 41.12595,66.79158 40.01583,66.26618 38.38295,65.99953 33.91871,66.75961 33.18444,66.63253 34.81477,65.90015 34.8785742530788,65.4362128770482 34.94391,64.41437 36.23129,64.10945 37.01273,63.84983 37.14197,64.33471 36.5395790350898,64.76446 37.17604,65.14322 39.59345,64.52079 40.4356,64.76446 39.7626,65.49682 42.09309,66.47623 43.01604,66.41858 43.94975,66.06908 44.53226,66.75634 43.69839,67.35245 44.18795,67.95051 43.45282,68.57079 46.25,68.25 46.82134,67.68997 45.55517,67.56652 45.56202,67.01005 46.34915,66.66767 47.89416,66.88455 48.13876,67.52238 50.22766,67.99867 53.71743,68.85738 54.47171,68.80815 53.48582,68.20131 54.72628,68.09702 55.44268,68.43866 57.31702,68.46628 58.802,68.88082 59.94142,68.27844 61.07784,68.94069 60.03,69.52 60.55,69.85 63.504,69.54739 64.888115,69.234835 68.51216,68.09233 69.18068,68.61563 68.16444,69.14436 68.13522,69.35649 66.93008,69.45461 67.25976,69.92873 66.72492,70.70889 66.69466,71.02897 68.54006,71.9345 69.19636,72.84336 69.94,73.04 72.58754,72.77629 72.79603,72.22006 71.84811,71.40898 72.47011,71.09019 72.79188,70.39114 72.5647,69.02085 73.66787,68.4079 73.2387,67.7404 71.28,66.32 72.42301,66.17267 72.82077,66.53267 73.92099,66.78946 74.18651,67.28429 75.052,67.76047 74.46926,68.32899 74.93584,68.98918 73.84236,69.07146 73.60187,69.62763 74.3998,70.63175 73.1011,71.44717 74.89082,72.12119 74.65926,72.83227 75.15801,72.85497 75.68351,72.30056 75.28898,71.33556 76.35911,71.15287 75.90313,71.87401 77.57665,72.26717 79.65202,72.32011 81.5,71.75 80.61071,72.58285 80.51109,73.6482 82.25,73.85 84.65526,73.80591 86.8223,73.93688 86.00956,74.45967 87.16682,75.11643 88.31571,75.14393 90.26,75.64 92.90058,75.77333 93.23421,76.0472 95.86,76.14 96.67821,75.91548 98.92254,76.44689 100.75967,76.43028 101.03532,76.86189 101.99084,77.28754 104.3516,77.69792 106.06664,77.37389 104.705,77.1274 106.97013,76.97419</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>105.07547,78.30689 99.43814,77.921 101.2649,79.23399 102.08635,79.34641 102.837815,79.28129 105.37243,78.71334 105.07547,78.30689</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>51.1361865578313,80.5472801785409 49.7936845233207,80.4154277615482 48.8944112485775,80.3395667589437 48.7549365578218,80.1754682482008 47.5861190122442,80.0101811795153 46.5028259621097,80.2472468126544 47.0724552752629,80.5594241401295 44.8469580421811,80.5898098823172 46.7991386248712,80.7719176297136 48.3184774106847,80.78400991487 48.5228060239667,80.5145689969002 49.0971895688909,80.7539859077084 50.0397676938946,80.9188854031518 51.5229329771037,80.6997256538019 51.1361865578313,80.5472801785409</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>99.93976,78.88094 97.75794,78.7562 94.97259,79.044745 93.31288,79.4265 92.5454,80.14379 91.18107,80.34146 93.77766,81.0246 95.940895,81.2504 97.88385,80.746975 100.186655,79.780135 99.93976,78.88094</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>
+  </Placemark>
+  <Placemark>
+	<name>Portugal</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">2</SimpleData>
+		<SimpleData name="sovereignt">Portugal</SimpleData>
+		<SimpleData name="sov_a3">PRT</SimpleData>
+		<SimpleData name="adm0_dif">0</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Sovereign country</SimpleData>
+		<SimpleData name="admin">Portugal</SimpleData>
+		<SimpleData name="adm0_a3">PRT</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Portugal</SimpleData>
+		<SimpleData name="gu_a3">PRT</SimpleData>
+		<SimpleData name="su_dif">1</SimpleData>
+		<SimpleData name="subunit">Portugal</SimpleData>
+		<SimpleData name="su_a3">PR1</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Portugal</SimpleData>
+		<SimpleData name="brk_a3">PR1</SimpleData>
+		<SimpleData name="brk_name">Portugal</SimpleData>
+		<SimpleData name="abbrev">Port.</SimpleData>
+		<SimpleData name="postal">P</SimpleData>
+		<SimpleData name="formal_en">Portuguese Republic</SimpleData>
+		<SimpleData name="name_sort">Portugal</SimpleData>
+		<SimpleData name="mapcolor7">1</SimpleData>
+		<SimpleData name="mapcolor8">7</SimpleData>
+		<SimpleData name="mapcolor9">1</SimpleData>
+		<SimpleData name="mapcolor13">4</SimpleData>
+		<SimpleData name="pop_est">10707924</SimpleData>
+		<SimpleData name="gdp_md_est">208627</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">2011</SimpleData>
+		<SimpleData name="gdp_year">0</SimpleData>
+		<SimpleData name="economy">2. Developed region: nonG7</SimpleData>
+		<SimpleData name="income_grp">1. High income: OECD</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">PT</SimpleData>
+		<SimpleData name="iso_a3">PRT</SimpleData>
+		<SimpleData name="iso_n3">620</SimpleData>
+		<SimpleData name="un_a3">620</SimpleData>
+		<SimpleData name="wb_a2">PT</SimpleData>
+		<SimpleData name="wb_a3">PRT</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">PRT</SimpleData>
+		<SimpleData name="adm0_a3_us">PRT</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Southern Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">8</SimpleData>
+		<SimpleData name="long_len">8</SimpleData>
+		<SimpleData name="abbrev_len">5</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">PRT.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>-9.03481767418025,41.8805705836597 -8.67194576662672,42.134689439455 -8.26385698081779,42.2804686549503 -8.01317460776991,41.7908861354171 -7.4225129866738,41.7920746933598 -7.25130896649082,41.918346055665 -6.66860551596766,41.8833869492196 -6.38908769370092,41.3818154973947 -6.85112667482255,41.1110826686175 -6.86401994467939,40.3308718938748 -7.02641313315659,40.1845242376242 -7.06659155926353,39.7118915878828 -7.49863237143972,39.6295710312418 -7.09803666831313,39.0300727402238 -7.37409216961632,38.3730585800649 -7.0292811751488,38.0757640650898 -7.16650794109986,37.8038943548022 -7.53710547528102,37.4289043238762 -7.45372555177809,37.0977875839661 -7.85561316571199,36.8382685409963 -8.38281612795369,36.9788801132625 -8.89885698082033,36.8688093124808 -8.74610144696555,37.6513455266766 -8.83999752443988,38.2662433945176 -9.28746375165522,38.3584858261586 -9.52657060386971,38.7374291041549 -9.44698889814023,39.3920661484284 -9.04830522300843,39.7550930852788 -8.97735348147168,40.1593061386658 -8.7686840478771,40.7606389430302 -8.79085323733031,41.1843340113913 -8.99078935386757,41.5434593776036 -9.03481767418025,41.8805705836597</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+  <Placemark>
+	<name>Norway</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">3</SimpleData>
+		<SimpleData name="sovereignt">Norway</SimpleData>
+		<SimpleData name="sov_a3">NOR</SimpleData>
+		<SimpleData name="adm0_dif">0</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Sovereign country</SimpleData>
+		<SimpleData name="admin">Norway</SimpleData>
+		<SimpleData name="adm0_a3">NOR</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Norway</SimpleData>
+		<SimpleData name="gu_a3">NOR</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Norway</SimpleData>
+		<SimpleData name="su_a3">NOR</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Norway</SimpleData>
+		<SimpleData name="brk_a3">NOR</SimpleData>
+		<SimpleData name="brk_name">Norway</SimpleData>
+		<SimpleData name="abbrev">Nor.</SimpleData>
+		<SimpleData name="postal">N</SimpleData>
+		<SimpleData name="formal_en">Kingdom of Norway</SimpleData>
+		<SimpleData name="name_sort">Norway</SimpleData>
+		<SimpleData name="mapcolor7">5</SimpleData>
+		<SimpleData name="mapcolor8">3</SimpleData>
+		<SimpleData name="mapcolor9">8</SimpleData>
+		<SimpleData name="mapcolor13">12</SimpleData>
+		<SimpleData name="pop_est">4676305</SimpleData>
+		<SimpleData name="gdp_md_est">276400</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">2001</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">2. Developed region: nonG7</SimpleData>
+		<SimpleData name="income_grp">1. High income: OECD</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">NO</SimpleData>
+		<SimpleData name="iso_a3">NOR</SimpleData>
+		<SimpleData name="iso_n3">578</SimpleData>
+		<SimpleData name="un_a3">578</SimpleData>
+		<SimpleData name="wb_a2">NO</SimpleData>
+		<SimpleData name="wb_a3">NOR</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">NOR</SimpleData>
+		<SimpleData name="adm0_a3_us">NOR</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Northern Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">6</SimpleData>
+		<SimpleData name="long_len">6</SimpleData>
+		<SimpleData name="abbrev_len">4</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">NOR.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>28.1655473162029,71.1854743516805 31.2934184099655,70.4537877468599 30.0054350115228,70.1862588568849 31.1010787289751,69.5580801459449 29.3995805193329,69.1569160020631 28.5919295590432,69.0647769232867 29.015572950972,69.766491197378 27.7322921078679,70.1641930202963 26.1796220232263,69.8252989773262 25.6892126807764,69.092113755969 24.7356791521267,68.6495567898214 23.6620495948308,68.8912474636505 22.3562378272474,68.8417414415149 21.2449361508107,69.3704430202931 20.6455928890896,69.1062472602008 20.0252689958579,69.0651386583127 19.8785596045813,68.4071943223726 17.9938684424644,68.5673912624773 17.7291817562653,68.0105518663162 16.7688786149855,68.0139366726314 16.1087121924568,67.3024555528369 15.1084114925831,66.1938668890954 13.5556897315091,64.7870276963815 13.9199052263022,64.4454206407161 13.5719161312488,64.0491140814697 12.5799353369739,64.0662189805583 11.9305692887942,63.128317572677 11.9920642432215,61.8003624538566 12.6311466813752,61.2935716823701 12.3003658382749,60.1179328477301 11.4682719255112,59.432393296946 11.0273686051969,58.8561494004594 10.3565568376161,59.4698070339254 8.38200035974364,58.3132884792333 7.0487484066133,58.0788841823573 5.66583540205042,58.5881554225937 5.30823449059073,59.6632319199938 4.99207807782901,61.9709980332843 5.91290042483789,62.6144729681827 8.55341108565577,63.4540082871965 10.5277091813668,64.4860383164975 12.3583467953064,65.8797258571932 14.7611458675816,67.8106415879951 16.435927361729,68.5632054714617 19.1840283545785,69.8174441596178 21.3784163754206,70.2551693793461 23.0237423031616,70.2020718451663 24.5465434099385,71.0304967312372 26.3700496762218,70.9862617051954 28.1655473162029,71.1854743516805</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>24.72412,77.85385 22.49032,77.44493 20.72601,77.67704 21.41611,77.93504 20.8119,78.25463 22.88426,78.45494 23.28134,78.07954 24.72412,77.85385</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>18.25183,79.70175 21.54383,78.95611 19.02737,78.5626 18.47172,77.82669 17.59441,77.63796 17.1182,76.80941 15.91315,76.77045 13.76259,77.38035 14.66956,77.73565 13.1706,78.02493 11.22231,78.8693 10.44453,79.65239 13.17077,80.01046 13.71852,79.66039 15.14282,79.67431 15.52255,80.01608 16.99085,80.05086 18.25183,79.70175</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>25.4476253598119,80.4073403998945 27.4075057309135,80.0564057482005 25.9246505062982,79.5178339708546 23.0244657732136,79.4000117052291 20.0751884294519,79.5668232286673 19.8972664730709,79.8423619656475 18.4622636247579,79.8598802761944 17.3680151709775,80.318896186027 20.4559920590107,80.5981556261322 21.9079447771154,80.3576793484621 22.9192525570674,80.6571442735935 25.4476253598119,80.4073403998945</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>
+  </Placemark>
+  <Placemark>
+	<name>Serbia</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">5</SimpleData>
+		<SimpleData name="sovereignt">Republic of Serbia</SimpleData>
+		<SimpleData name="sov_a3">SRB</SimpleData>
+		<SimpleData name="adm0_dif">0</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Sovereign country</SimpleData>
+		<SimpleData name="admin">Republic of Serbia</SimpleData>
+		<SimpleData name="adm0_a3">SRB</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Republic of Serbia</SimpleData>
+		<SimpleData name="gu_a3">SRB</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Republic of Serbia</SimpleData>
+		<SimpleData name="su_a3">SRB</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Serbia</SimpleData>
+		<SimpleData name="brk_a3">SRB</SimpleData>
+		<SimpleData name="brk_name">Serbia</SimpleData>
+		<SimpleData name="abbrev">Serb.</SimpleData>
+		<SimpleData name="postal">RS</SimpleData>
+		<SimpleData name="formal_en">Republic of Serbia</SimpleData>
+		<SimpleData name="name_sort">Serbia</SimpleData>
+		<SimpleData name="mapcolor7">3</SimpleData>
+		<SimpleData name="mapcolor8">3</SimpleData>
+		<SimpleData name="mapcolor9">2</SimpleData>
+		<SimpleData name="mapcolor13">10</SimpleData>
+		<SimpleData name="pop_est">7379339</SimpleData>
+		<SimpleData name="gdp_md_est">80340</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">2011</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">6. Developing region</SimpleData>
+		<SimpleData name="income_grp">3. Upper middle income</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">RS</SimpleData>
+		<SimpleData name="iso_a3">SRB</SimpleData>
+		<SimpleData name="iso_n3">688</SimpleData>
+		<SimpleData name="un_a3">688</SimpleData>
+		<SimpleData name="wb_a2">YF</SimpleData>
+		<SimpleData name="wb_a3">SRB</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">SRB</SimpleData>
+		<SimpleData name="adm0_a3_us">SRB</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Southern Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">6</SimpleData>
+		<SimpleData name="long_len">6</SimpleData>
+		<SimpleData name="abbrev_len">5</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">SRB.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>20.8743127784134,45.4163754339343 21.4835262387022,45.1811701523579 21.5620227393537,44.7689472519656 22.1450879249029,44.4784223496206 22.459022251076,44.7025171982544 22.7057255388374,44.578002834647 22.4740084164407,44.4092276067818 22.6571496924831,44.2349230006614 22.4104464047216,44.0080634629001 22.5001566911802,43.642814439461 22.9860185075885,43.2111612005271 22.6048014665714,42.8985187851611 22.4365946794614,42.5803211533239 22.5450118344096,42.461362006188 22.3805257504247,42.3202595078151 21.91708,42.30364 21.5766359894021,42.2452243970619 21.54332,42.32025 21.66292,42.43922 21.77505,42.6827 21.63302,42.67717 21.43866,42.86255 21.27421,42.90959 21.143395,43.068685 20.95651,43.13094 20.81448,43.27205 20.63508,43.21671 20.49679,42.88469 20.25758,42.81275 20.3398,42.89852 19.95857,43.10604 19.63,43.2137799702705 19.48389,43.35229 19.21852,43.52384 19.454,43.5681 19.59976,44.03847 19.11761,44.42307 19.36803,44.863 19.00548,44.86023 19.3904757015846,45.2365156113424 19.0727689958542,45.5215111354321 18.82982,45.90888 19.5960445492416,46.1717298447446 20.2201924984629,46.1274689804866 20.76217492034,45.7345730657715 20.8743127784134,45.4163754339343</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+  <Placemark>
+	<name>Slovakia</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">6</SimpleData>
+		<SimpleData name="sovereignt">Slovakia</SimpleData>
+		<SimpleData name="sov_a3">SVK</SimpleData>
+		<SimpleData name="adm0_dif">0</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Sovereign country</SimpleData>
+		<SimpleData name="admin">Slovakia</SimpleData>
+		<SimpleData name="adm0_a3">SVK</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Slovakia</SimpleData>
+		<SimpleData name="gu_a3">SVK</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Slovakia</SimpleData>
+		<SimpleData name="su_a3">SVK</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Slovakia</SimpleData>
+		<SimpleData name="brk_a3">SVK</SimpleData>
+		<SimpleData name="brk_name">Slovakia</SimpleData>
+		<SimpleData name="abbrev">Svk.</SimpleData>
+		<SimpleData name="postal">SK</SimpleData>
+		<SimpleData name="formal_en">Slovak Republic</SimpleData>
+		<SimpleData name="name_sort">Slovak Republic</SimpleData>
+		<SimpleData name="mapcolor7">2</SimpleData>
+		<SimpleData name="mapcolor8">4</SimpleData>
+		<SimpleData name="mapcolor9">4</SimpleData>
+		<SimpleData name="mapcolor13">9</SimpleData>
+		<SimpleData name="pop_est">5463046</SimpleData>
+		<SimpleData name="gdp_md_est">119500</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">2011</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">2. Developed region: nonG7</SimpleData>
+		<SimpleData name="income_grp">1. High income: OECD</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">SK</SimpleData>
+		<SimpleData name="iso_a3">SVK</SimpleData>
+		<SimpleData name="iso_n3">703</SimpleData>
+		<SimpleData name="un_a3">703</SimpleData>
+		<SimpleData name="wb_a2">SK</SimpleData>
+		<SimpleData name="wb_a3">SVK</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">SVK</SimpleData>
+		<SimpleData name="adm0_a3_us">SVK</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Eastern Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">8</SimpleData>
+		<SimpleData name="long_len">8</SimpleData>
+		<SimpleData name="abbrev_len">4</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">SVK.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>18.8531441586136,49.4962297633776 18.9095748226763,49.4358458522446 19.3207125179905,49.5715740016592 19.8250228207269,49.2171253525692 20.4158394711198,49.4314533554998 20.8879553565384,49.3287722845358 21.6078080583642,49.4701073268541 22.5581376482118,49.0857380234671 22.2808419125336,48.8253921575807 22.0856083513349,48.4222643092718 21.8722363624017,48.31997081155 20.8012939795849,48.6238540716424 20.4735620459899,48.5628500433218 20.2390543962493,48.3275672470969 19.7694706560131,48.2026911484636 19.6613635596585,48.2666148952087 19.1743648617399,48.1113788926039 18.7770247738477,48.0817682969006 18.6965128923369,47.8809536810144 17.85713260262,47.7584288600504 17.4884729346498,47.8674661321862 16.979666782304,48.1234970159763 16.879982944413,48.4700133327095 16.9602881201946,48.5969823268506 17.1019848975389,48.8169688991171 17.5450069515771,48.8000190293254 17.8864848161618,48.9034752467737 17.9135115902505,48.9964928248991 18.1049727718919,49.0439834661753 18.170498488038,49.2715147975564 18.3999935238462,49.31500051533 18.5549711442895,49.4950153672188 18.8531441586136,49.4962297633776</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+  <Placemark>
+	<name>Slovenia</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">6</SimpleData>
+		<SimpleData name="sovereignt">Slovenia</SimpleData>
+		<SimpleData name="sov_a3">SVN</SimpleData>
+		<SimpleData name="adm0_dif">0</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Sovereign country</SimpleData>
+		<SimpleData name="admin">Slovenia</SimpleData>
+		<SimpleData name="adm0_a3">SVN</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Slovenia</SimpleData>
+		<SimpleData name="gu_a3">SVN</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Slovenia</SimpleData>
+		<SimpleData name="su_a3">SVN</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Slovenia</SimpleData>
+		<SimpleData name="brk_a3">SVN</SimpleData>
+		<SimpleData name="brk_name">Slovenia</SimpleData>
+		<SimpleData name="abbrev">Slo.</SimpleData>
+		<SimpleData name="postal">SLO</SimpleData>
+		<SimpleData name="formal_en">Republic of Slovenia</SimpleData>
+		<SimpleData name="name_sort">Slovenia</SimpleData>
+		<SimpleData name="mapcolor7">2</SimpleData>
+		<SimpleData name="mapcolor8">3</SimpleData>
+		<SimpleData name="mapcolor9">2</SimpleData>
+		<SimpleData name="mapcolor13">12</SimpleData>
+		<SimpleData name="pop_est">2005692</SimpleData>
+		<SimpleData name="gdp_md_est">59340</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">2011</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">2. Developed region: nonG7</SimpleData>
+		<SimpleData name="income_grp">1. High income: OECD</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">SI</SimpleData>
+		<SimpleData name="iso_a3">SVN</SimpleData>
+		<SimpleData name="iso_n3">705</SimpleData>
+		<SimpleData name="un_a3">705</SimpleData>
+		<SimpleData name="wb_a2">SI</SimpleData>
+		<SimpleData name="wb_a3">SVN</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">SVN</SimpleData>
+		<SimpleData name="adm0_a3_us">SVN</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Southern Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">8</SimpleData>
+		<SimpleData name="long_len">8</SimpleData>
+		<SimpleData name="abbrev_len">4</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">SVN.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>13.8064754574215,46.5093061386912 14.6324715511748,46.4318173284695 15.137091912505,46.658702704447 16.0116638526127,46.6836107448117 16.2022982113374,46.852385972677 16.3705049984474,46.8413272161665 16.5648083838649,46.5037509222198 15.7687329444086,46.2381082220234 15.6715295752676,45.8341535507979 15.3239538916724,45.7317825384277 15.3276745947974,45.4523163925932 14.9352437679729,45.4716950547027 14.5951094906278,45.6349409043127 14.4119682145854,45.4661656764475 13.7150598486972,45.5003237981924 13.9376302425783,45.5910159368646 13.6981099789055,46.0167780625174 13.8064754574215,46.5093061386912</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+  <Placemark>
+	<name>Sweden</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">3</SimpleData>
+		<SimpleData name="sovereignt">Sweden</SimpleData>
+		<SimpleData name="sov_a3">SWE</SimpleData>
+		<SimpleData name="adm0_dif">0</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Sovereign country</SimpleData>
+		<SimpleData name="admin">Sweden</SimpleData>
+		<SimpleData name="adm0_a3">SWE</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Sweden</SimpleData>
+		<SimpleData name="gu_a3">SWE</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Sweden</SimpleData>
+		<SimpleData name="su_a3">SWE</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Sweden</SimpleData>
+		<SimpleData name="brk_a3">SWE</SimpleData>
+		<SimpleData name="brk_name">Sweden</SimpleData>
+		<SimpleData name="abbrev">Swe.</SimpleData>
+		<SimpleData name="postal">S</SimpleData>
+		<SimpleData name="formal_en">Kingdom of Sweden</SimpleData>
+		<SimpleData name="name_sort">Sweden</SimpleData>
+		<SimpleData name="mapcolor7">1</SimpleData>
+		<SimpleData name="mapcolor8">4</SimpleData>
+		<SimpleData name="mapcolor9">2</SimpleData>
+		<SimpleData name="mapcolor13">4</SimpleData>
+		<SimpleData name="pop_est">9059651</SimpleData>
+		<SimpleData name="gdp_md_est">344300</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">-99</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">2. Developed region: nonG7</SimpleData>
+		<SimpleData name="income_grp">1. High income: OECD</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">SE</SimpleData>
+		<SimpleData name="iso_a3">SWE</SimpleData>
+		<SimpleData name="iso_n3">752</SimpleData>
+		<SimpleData name="un_a3">752</SimpleData>
+		<SimpleData name="wb_a2">SE</SimpleData>
+		<SimpleData name="wb_a3">SWE</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">SWE</SimpleData>
+		<SimpleData name="adm0_a3_us">SWE</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Northern Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">6</SimpleData>
+		<SimpleData name="long_len">6</SimpleData>
+		<SimpleData name="abbrev_len">4</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">SWE.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>22.1831734555019,65.7237405463202 21.2135168799772,65.0260053575153 21.369631381931,64.4135879584243 19.7788757666902,63.609554348395 17.8477791683752,62.7494001328968 17.1195548845181,61.341165676511 17.8313460629064,60.6365833604274 18.7877217953321,60.0819143744226 17.8692248877763,58.9537661810587 16.8291850114701,58.7198269720734 16.4477095882915,57.0411180690719 15.8797855974038,56.1043018662687 14.6666813493521,56.2008851182222 14.1007210628915,55.4077810736227 12.9429105973921,55.3617373724506 12.625100538797,56.307080186582 11.7879423356687,57.4418171250631 11.0273686051969,58.8561494004594 11.4682719255111,59.432393296946 12.3003658382749,60.11793284773 12.6311466813752,61.2935716823701 11.9920642432216,61.8003624538566 11.9305692887942,63.128317572677 12.5799353369739,64.0662189805583 13.5719161312487,64.0491140814697 13.9199052263022,64.4454206407161 13.5556897315091,64.7870276963815 15.108411492583,66.1938668890955 16.1087121924568,67.3024555528369 16.7688786149855,68.0139366726314 17.7291817562653,68.0105518663163 17.9938684424643,68.5673912624774 19.8785596045813,68.4071943223726 20.0252689958579,69.0651386583127 20.6455928890895,69.1062472602009 21.9785347836261,68.6168456081807 23.5394730974344,67.9360086127353 23.5658797543356,66.3960509304374 23.9033785336338,66.0069273952796 22.1831734555019,65.7237405463202</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+  <Placemark>
+	<name>Ukraine</name>
+	<Style><LineStyle><color>ff0000ff</color></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style>
+	<ExtendedData><SchemaData schemaUrl="#dataset_1">
+		<SimpleData name="scalerank">1</SimpleData>
+		<SimpleData name="featurecla">Admin-0 country</SimpleData>
+		<SimpleData name="labelrank">3</SimpleData>
+		<SimpleData name="sovereignt">Ukraine</SimpleData>
+		<SimpleData name="sov_a3">UKR</SimpleData>
+		<SimpleData name="adm0_dif">0</SimpleData>
+		<SimpleData name="level">2</SimpleData>
+		<SimpleData name="type">Sovereign country</SimpleData>
+		<SimpleData name="admin">Ukraine</SimpleData>
+		<SimpleData name="adm0_a3">UKR</SimpleData>
+		<SimpleData name="geou_dif">0</SimpleData>
+		<SimpleData name="geounit">Ukraine</SimpleData>
+		<SimpleData name="gu_a3">UKR</SimpleData>
+		<SimpleData name="su_dif">0</SimpleData>
+		<SimpleData name="subunit">Ukraine</SimpleData>
+		<SimpleData name="su_a3">UKR</SimpleData>
+		<SimpleData name="brk_diff">0</SimpleData>
+		<SimpleData name="name_long">Ukraine</SimpleData>
+		<SimpleData name="brk_a3">UKR</SimpleData>
+		<SimpleData name="brk_name">Ukraine</SimpleData>
+		<SimpleData name="abbrev">Ukr.</SimpleData>
+		<SimpleData name="postal">UA</SimpleData>
+		<SimpleData name="formal_en">Ukraine</SimpleData>
+		<SimpleData name="name_sort">Ukraine</SimpleData>
+		<SimpleData name="mapcolor7">5</SimpleData>
+		<SimpleData name="mapcolor8">1</SimpleData>
+		<SimpleData name="mapcolor9">6</SimpleData>
+		<SimpleData name="mapcolor13">3</SimpleData>
+		<SimpleData name="pop_est">45700395</SimpleData>
+		<SimpleData name="gdp_md_est">339800</SimpleData>
+		<SimpleData name="pop_year">-99</SimpleData>
+		<SimpleData name="lastcensus">2001</SimpleData>
+		<SimpleData name="gdp_year">-99</SimpleData>
+		<SimpleData name="economy">6. Developing region</SimpleData>
+		<SimpleData name="income_grp">4. Lower middle income</SimpleData>
+		<SimpleData name="wikipedia">-99</SimpleData>
+		<SimpleData name="iso_a2">UA</SimpleData>
+		<SimpleData name="iso_a3">UKR</SimpleData>
+		<SimpleData name="iso_n3">804</SimpleData>
+		<SimpleData name="un_a3">804</SimpleData>
+		<SimpleData name="wb_a2">UA</SimpleData>
+		<SimpleData name="wb_a3">UKR</SimpleData>
+		<SimpleData name="woe_id">-99</SimpleData>
+		<SimpleData name="adm0_a3_is">UKR</SimpleData>
+		<SimpleData name="adm0_a3_us">UKR</SimpleData>
+		<SimpleData name="adm0_a3_un">-99</SimpleData>
+		<SimpleData name="adm0_a3_wb">-99</SimpleData>
+		<SimpleData name="continent">Europe</SimpleData>
+		<SimpleData name="region_un">Europe</SimpleData>
+		<SimpleData name="subregion">Eastern Europe</SimpleData>
+		<SimpleData name="region_wb">Europe &amp; Central Asia</SimpleData>
+		<SimpleData name="name_len">7</SimpleData>
+		<SimpleData name="long_len">7</SimpleData>
+		<SimpleData name="abbrev_len">4</SimpleData>
+		<SimpleData name="tiny">-99</SimpleData>
+		<SimpleData name="homepart">1</SimpleData>
+		<SimpleData name="filename">UKR.geojson</SimpleData>
+	</SchemaData></ExtendedData>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>31.7859981625716,52.1016779648855 32.1594120623127,52.0612669948332 32.4120581397876,52.2886949733497 32.715760532367,52.2384654811621 33.7526998227357,52.3350745713317 34.391730584457,51.7688817409258 34.1419783871904,51.5664134792062 34.2248157081543,51.2559931504289 35.0221830584179,51.2075723333715 35.3779236183151,50.7739553900103 35.3561161638879,50.5771973740591 36.6261678403253,50.2255909287451 37.3934595069951,50.3839533555036 38.0106311378569,49.9156615260746 38.5949882342134,49.9264619004236 40.0690584653391,49.6010554062817 40.0807890154693,49.3074299179993 39.6746639340875,48.7838184678019 39.8956323585676,48.2324050970314 39.7382776222388,47.898937079452 38.7705847511412,47.8256082220298 38.2551123390298,47.5464004583568 38.2235380388994,47.1021898463759 37.42513715999,47.0222205674042 36.7598547706644,46.6987002630409 35.8236845232648,46.6459644638871 34.9623417498239,46.2731965195496 35.020787794746,45.6512189804847 35.5100085792532,45.4099933945462 36.5299979998302,45.4699897324371 36.3347127621992,45.113215643894 35.2399992205281,44.9399962428516 33.8825110206529,44.3614785833441 33.32642093276,44.5648770208449 33.5469242693495,45.0347708196749 32.4541744321055,45.3274661321761 32.6308044776791,45.5191856959789 33.5881620623184,45.8515685084802 33.2985673357547,46.0805984563978 31.7441402524152,46.3333478867374 31.6753072446024,46.7062450221555 30.7487488136091,46.583100084004 30.3776086768889,46.0324101832857 29.6032890154274,45.2933080104311 29.1497249692017,45.4649254420724 28.6797794939394,45.3040308701317 28.233553501099,45.4882831894684 28.4852694027928,45.5969070501459 28.6599874203716,45.9399868841316 28.9337174822216,46.2588304713725 28.8629724464141,46.4378893092638 29.0721069678993,46.5176777207225 29.1706539242799,46.3792623968287 29.7599719581364,46.3499876979354 30.0246586443354,46.423936672545 29.8382100766263,46.5253258327017 29.9088517595693,46.6743606634315 29.5596741065731,46.9285828720913 29.4151351254527,47.3466452093326 29.0508679542273,47.5102269557525 29.122698195113,47.8490951605065 28.6708911475852,48.1181485052341 28.2595467465418,48.1555622422134 27.5225374691952,48.4671194525011 26.8578235206248,48.3682107610945 26.6193367855978,48.2207262233335 26.1974503923669,48.2208812526303 25.9459411964024,47.9871487493742 25.207743361113,47.8910564235275 24.8663171729606,47.7375257431883 24.4020561052504,47.9818777532804 23.7609582862374,47.9855984564055 23.1422363624068,48.0963410508069 22.7105314470405,47.8821939153894 22.6408199398788,48.1502395696874 22.0856083513349,48.4222643092718 22.2808419125336,48.8253921575807 22.5581376482118,49.0857380234671 22.7764188982126,49.0273953314096 22.5184501482116,49.4767735866197 23.4265084164444,50.3085057643574 23.9227571957433,50.4248810898788 24.0299857927489,50.7054066025752 23.5270707536844,51.5784540879302 24.0050777523842,51.6174439560945 24.5531063168395,51.8884610052492 25.327787713327,51.9106560329186 26.3379586117686,51.8322887233479 27.4540661964084,51.5923033717845 28.2416150245366,51.5722270778391 28.6176127458922,51.4277139349348 28.9928353207635,51.6020443792715 29.2549381853479,51.3682343613669 30.1573637224609,51.4161384141015 30.5551172218115,51.3195034857157 30.6194543800148,51.8228060980224 30.927549269339,52.0423534206144 31.7859981625716,52.1016779648855</coordinates></LinearRing></outerBoundaryIs></Polygon>
+  </Placemark>
+</Folder>
+</Document></kml>
