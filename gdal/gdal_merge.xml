@@ -67,7 +67,7 @@
                 <expand macro="gdal_param_co"/> 
                 <expand macro="gdal_param_ot"/> 
                 <conditional name="condi_ps">
-                    <param label="-ps pixelsize_x pixelsize_y" name="pixelsize" type="boolean" truevalue="use_ps" falsevalue="no_ps" checked="false" />
+                    <param label="Fix pixel size to be used" help="-ps pixelsize_x pixelsize_y" name="pixelsize" type="boolean" truevalue="use_ps" falsevalue="no_ps" checked="false" />
                     <when value="use_ps">
                         <param name="pixelsize_x" type="integer" value="0" min="0"/>
                         <param name="pixelsize_y" type="integer" value="0" min="0"/>

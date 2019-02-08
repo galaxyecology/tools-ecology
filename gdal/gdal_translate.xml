@@ -106,14 +106,14 @@
             <expand macro="gdal_advanced_params_select"/>
             <when value="advanced">
                 <expand macro="gdal_param_ot"/>
-                <param name="strict" type="boolean" truevalue="-strict" falsevalue="" checked="false" label="-strict"/>
+                <param name="strict" type="boolean" truevalue="-strict" falsevalue="" checked="false" label="Don't be forgiving of mismatches and lost data" help="-strict"/>
                 <expand macro="gdal_param_b"/>
-                <param name="mask" type="text" label="-mask band" value="" help="e.g : -mask 1"/>
+                <param name="mask" type="text" label="Select an input band band to create output dataset mask band" help="-mask band e.g : -mask 1" value=""/>
                 <expand macro="gdal_param_r"/>
                 <expand macro="gdal_param_stats"/>
                 <expand macro="gdal_param_norat"/>
                 <expand macro="gdal_param_co"/>
-                <param name="mo" type="text" label="-mo META-TAG=VALUE" value="" />
+                <param name="mo" type="text" label="Pass a metadata key and value to set on the output dataset" help="-mo META-TAG=VALUE" value="" />
 
 <!-- commented as the gdalversion need to be upgraded
                 <param name="oo" type="text" label="-oo" value="NAME=VALUE" />
@@ -121,7 +121,7 @@
 -->
 
                 <conditional name="condi_expand">
-                    <param name="expand" type="select" label="-expand gray|rgb|rgba" >
+                    <param name="expand" type="select" label="Expose a dataset with 1 band with a color table" help="-expand gray|rgb|rgba" >
                         <option value="no_expand" selected="true">Don't use the -expand option</option>
                         <option value="expand">Use the -expand option</option>
                     </param>
@@ -136,7 +136,7 @@
                     </when>
                 </conditional>
                 <conditional name="outsize">
-                    <param name="outsize" type="select" label="-outsize" >
+                    <param name="outsize" type="select" label="Set the size of the output file" help="-outsize % or pixel" >
                         <option value="outsize_x" selected="true">xsize</option>
                         <option value="outsize_y">ysize</option>
                     </param>
@@ -150,7 +150,7 @@
                     </when>
                 </conditional>
                 <conditional name="condi_scale">
-                    <param name="scale" type="select" label="-squale" >
+                    <param name="scale" type="select" label="Rescale the input pixels values" help="-squale from the range src_min to src_max to the range dst_min to dst_max" >
                         <option value="no_scale" selected="true">Don't use the -scale option</option>
                         <option value="scale">Use the -scale option</option>
                     </param>
@@ -164,7 +164,7 @@
                     </when>
                 </conditional>
                 <conditional name="condi_srcwin">
-                    <param name="srcwin" type="select" label="-srcwin" >
+                    <param name="srcwin" type="select" label="Selects a subwindow from the source image" help="-srcwin" >
                         <option value="no_srcwin" selected="true">Don't use the -srcwin option</option>
                         <option value="srcwin">Use the -srcwin option</option>
                     </param>
@@ -178,7 +178,7 @@
                     </when>
                 </conditional>
                 <conditional name="condi_a_ullr">
-                    <param name="a_ullr" type="select" label="-a_ullr" >
+                    <param name="a_ullr" type="select" label="Assign/override the georeferenced bounds of the output file" help="-a_ullr ulx uly lrx lry" >
                         <option value="no_a_ullr" selected="true">Don't use the -a_ullr option</option>
                         <option value="a_ullr">Use the -a_ullr option</option>
                     </param>
@@ -196,7 +196,7 @@
                     <option value="-epo">-epo : Error when partially outside</option>
                     <option value="-eco">-eco : Error when completely outside</option>
                 </param>
-                <param name="a_srs" type="text" label="-a_srs" value="" />
+                <param name="a_srs" type="text" label="Override the projection" help="-a_srs" value="" />
 
                 <!--
                 <param name="sds" type="boolean" truevalue="-sds" falsevalue="" checked="false" label="-sds" help="Copy all subdatasets of this file to individual output files. Use with formats like HDF or OGDI that have subdatasets. The output file naming scheme has changed in GDAL 1.11 (e.g. ofile_1.tif, ofile_2.tif)."/>

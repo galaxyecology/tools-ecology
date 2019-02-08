@@ -35,13 +35,13 @@
                     <when value="no_sql">
                     </when>
                     <when value="sql">
-                        <param name="sql_statement" type="text" label="-sql statement" help="eg : SELECT * FROM layer WHERE X>10." value="">
+                        <param name="sql_statement" type="text" label="Execute the indicated SQL"  help="-sql statement eg : SELECT * FROM layer WHERE X>10." value="">
                             <sanitizer sanitize="False"/>
                             <validator type="regex" message="Type a valid SQL query">^(?ims)\s*select\s+.*\s+from\s+.*$</validator>
                         </param>
                     </when>
                 </conditional>
-                <param name="so" label="-so" type="boolean" truevalue="-so" falsevalue="" checked="true"/>
+                <param name="so" label="Summary Only" help="-so" type="boolean" truevalue="-so" falsevalue="" checked="true"/>
             </when>
         </conditional>
     </inputs>

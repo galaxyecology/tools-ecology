@@ -72,7 +72,7 @@
                 <expand macro="gdal_param_tr"/>
                 <expand macro="gdal_param_r"/>
                 <conditional name="condi_resolution">
-                    <param label="-resolution" name="resolution" type="boolean" truevalue="chose_resolution" falsevalue="no_resolution" checked="false"/>
+                    <param label="Control resolution computation" help="-resolution highest|lowest|average|user" name="resolution" type="boolean" truevalue="chose_resolution" falsevalue="no_resolution" checked="false"/>
                     <when value="chose_resolution">
                         <param name="reso" type="select" label="Chose a resolution">
                             <option value="highest" selected="true"/>
@@ -85,16 +85,16 @@
                     </when>
                 </conditional>
                 <expand macro="gdal_param_tap"/>
-                <param name="addalpha" type="boolean" truevalue="-addalpha" falsevalue="" checked="false" label="-addalpha"/>
-                <param name="hidenodata" type="boolean" truevalue="-hidenodata" falsevalue="" checked="false" label="-hidenodata"/>
+                <param name="addalpha" type="boolean" truevalue="-addalpha" falsevalue="" checked="false" label="Adds an alpha mask band to the VRT when the source raster have none" help="-addalpha"/>
+                <param name="hidenodata" type="boolean" truevalue="-hidenodata" falsevalue="" checked="false" label="Makes the VRT band not report the NoData" help="-hidenodata"/>
                 <expand macro="gdal_param_separate"/>
-                <param name="allow_projection_difference" type="boolean" truevalue="-allow_projection_difference" falsevalue="" checked="false" label="-allow_projection_difference" />
+                <param name="allow_projection_difference" type="boolean" truevalue="-allow_projection_difference" falsevalue="" checked="false" label="Allow projection difference" help="-allow_projection_difference" />
                 <expand macro="gdal_param_a_srs"/>
 <!--
                 <expand macro="gdal_param_oo"/>
 -->
-                <param name="tileindex" type="text" label="-tileindex field_name" value=""/>
-                <param name="sb" type="text" label="-sb subdataset" value=""/>
+                <param name="tileindex" type="text" label="Use the specified value as the tile index field" help="-tileindex field_name" value=""/>
+                <param name="sb" type="text" label="Use a subdataset" help="-sb subdataset" value=""/>
             </when>
         </conditional>
     </inputs>

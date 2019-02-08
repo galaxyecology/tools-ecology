@@ -80,29 +80,29 @@
             <expand macro="gdal_advanced_params_select"/>
             <when value="advanced">
                 <expand macro="gdal_param_tr"/>    
-                <param name="to" type="text" label="-to NAME=VALUE" value=""/>
-                <param name="wo" type="text" label="-wo NAME=VALUE" value="" />
-                <param name="order" type="select" label="-order n">
+                <param name="to" type="text" label="Transformer option" help="-to NAME=VALUE" value=""/>
+                <param name="wo" type="text" label="Warp option" help="-wo NAME=VALUE" value="" />
+                <param name="order" type="select" label="Order of polynomial" help="-order n">
                     <option value="no_value" selected="true">Select an order.</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
                 </param>
-                <param name="tps" type="boolean" label="-tps" truevalue="-tps" falsevalue="" checked="false"/>
-                <param name="rpc" type="boolean" label="-rpc" truevalue="-rpc" falsevalue="" checked="false"/>
-                <param name="geoloc" type="boolean" label="-geoloc" truevalue="-geoloc" falsevalue="" checked="false"/>
-                <param name="srcnodata" type="text" label="-srcnodata value" value=""/>
-                <param name="dstalpha" type="boolean" label="-dstalpha" truevalue="-dstalpha" falsevalue="" checked="false"/>
+                <param name="tps" type="boolean" label="Force use of thin plate spline transformer" help="-tps" truevalue="-tps" falsevalue="" checked="false"/>
+                <param name="rpc" type="boolean" label="Force use of RPCs" help="-rpc" truevalue="-rpc" falsevalue="" checked="false"/>
+                <param name="geoloc" type="boolean" label="Force use of Geolocation Arrays." help="-geoloc" truevalue="-geoloc" falsevalue="" checked="false"/>
+                <param name="srcnodata" type="text" label="Set nodata masking values for input bands" help="-srcnodata value" value=""/>
+                <param name="dstalpha" type="boolean" label="Create an output alpha band to identify nodata (unset/transparent) pixels" help="-dstalpha" truevalue="-dstalpha" falsevalue="" checked="false"/>
                 <conditional name="condi_et">
-                    <param name="et" label="-et" type="boolean" truevalue="et" falsevalue="no_et" checked="false"/>
+                    <param name="et" label="Error threshold for transformation approximation" help="-et" type="boolean" truevalue="et" falsevalue="no_et" checked="false"/>
                     <when value="no_et">
                     </when>
                     <when value="et">
-                        <param name="et" type="float" label="-et error threshold" value=""/>
+                        <param name="et" type="float" label="et in pixel units - defaults to 0.125" help="-et error threshold" value=""/>
                     </when>
                 </conditional>
                 <conditional name="condi_refine_gcps">
-                    <param name="refine_gcps" type="select" label="-refine_gcps">
+                    <param name="refine_gcps" type="select" label="Refines the GCPs by automatically eliminating outliers" help="-refine_gcps">
                         <option value="no_refine_gcps" selected="true">Don't use the -refine_gcps option</option>
                         <option value="refine_gcps">Use the -refine_gcps option</option>
                     </param>
