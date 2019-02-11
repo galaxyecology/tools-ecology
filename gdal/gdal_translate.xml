@@ -244,7 +244,6 @@
             <param name="outsize_percent" value=""/>
             <output name="output" file="stere_advanced2.png"/>
         </test>
--->        
         <test>
             <param name="input1" value="world.png"/>
             <param name="of" value="GTiff" />
@@ -257,7 +256,20 @@
             <param name="a_srs" value="WGS84"/>
             <output name="output" file="geoworld.tif"/>
         </test>
-        
+-->        
+        <test>
+            <param name="input1" value="tinyworld.png"/>
+            <param name="of" value="GTiff" />
+            <param name="advanced" value="advanced"/>
+            <param name="a_ullr" value="a_ullr"/>
+            <param name="ulx" value="-180"/>
+            <param name="uly" value="90"/>
+            <param name="lrx" value="180"/>
+            <param name="lry" value="-90"/>
+            <param name="a_srs" value="WGS84"/>
+            <output name="output" file="tinyworld.tif"/>
+        </test>
+       
     </tests>
     
     <help><![CDATA[
