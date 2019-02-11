@@ -11,7 +11,7 @@ remote_repository_url: https://github.com/Alanamosse/Galaxy-E/tree/master/tools/
 type: unrestricted
 
 repositories:
-  gdaladdo:
+  gdal-gdaladdo:
     description: The gdaladdo utility can be used to build or rebuild overview images for most supported file formats with one of several downsampling algorithms.
     include:
       - gdaladdo.xml
@@ -19,7 +19,7 @@ repositories:
       - test-data/stere.tif
       - test-data/stere.tif.ovr
 
-  gdalbuildvrt:
+  gdal-gdalbuildvrt:
     description: This program builds a VRT (Virtual Dataset) that is a mosaic of the list of input GDAL datasets.
     include:
       - gdalbuildvrt.xml
@@ -28,7 +28,7 @@ repositories:
       - test-data/west.dem
       - test-data/dem.vrt
 
-  gdalinfo:
+  gdal-gdalinfo:
     description: The gdalinfo program lists various information about a GDAL supported raster dataset. 
     include:
       - gdalinfo.xml
@@ -37,7 +37,7 @@ repositories:
       - test-data/stere_info.json
       - test-data/stere_advanced_info.txt
   
-  gdal_merge:
+  gdal-gdal_merge:
     description: This utility will automatically mosaic a set of images. All the images must be in the same coordinate system and have a matching number of bands, but they may be overlapping, and at different resolutions. In areas of overlap, the last image will be copied over earlier ones.
     include:
       - gdal_merge.xml
@@ -46,7 +46,7 @@ repositories:
       - test-data/east.dem
       - test-data/mergeddem.tif
 
-  gdal_translate:
+  gdal-gdal_translate:
     description: The gdal_translate utility can be used to convert raster data between different formats, potentially performing some operations like subsettings, resampling, and rescaling pixels in the process.
     include:
       - gdal_translate.xml
@@ -57,7 +57,7 @@ repositories:
       - test-data/world.png
       - test-data/geoworld.tif
 
-  gdalwarp:
+  gdal-gdalwarp:
     description: The gdalwarp utility is an image mosaicing, reprojection and warping utility. The program can reproject to any supported projection, and can also apply GCPs stored with the image if the image is "raw" with control information.
     include:
       - gdalwarp.xml
@@ -70,7 +70,7 @@ repositories:
       - test-data/ortho3.tif 
       - test-data/warpmerged.tif 
 
-  ogrinfo:
+  gdal-ogrinfo:
     description: The ogrinfo program lists various information about an OGR supported data source to stdout (the terminal).
     include:
       - ogrinfo.xml
