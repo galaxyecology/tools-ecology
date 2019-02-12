@@ -10,8 +10,8 @@
     gdalbuildvrt 
         '$output'
         -q 
-        #for $s in $series
-            '${s.input}'
+        #for $i in $input
+            '$i'
         #end for
         
         #if $settings.advanced=='advanced'       
@@ -61,9 +61,7 @@
         
     ]]></command>
     <inputs>      
-        <repeat name="series" title="Input file">
-            <param type="data" name="input" format="gtiff,tiff,netcdf,VRT" help="Formats currently supported are : GTiff, netCDF and VRT" label="Gdal supported input file" />
-        </repeat>
+        <param type="data" name="input" format="gtiff,tiff,netcdf,VRT" help="Formats currently supported are : GTiff, netCDF and VRT" label="Gdal supported input file" multiple="true"/>
         <conditional name="settings">    
             <expand macro="gdal_advanced_params_select"/>
             <when value="advanced">
@@ -105,8 +103,7 @@
     
     <tests>
         <test>
-            <param name="input" value="east.dem"/>
-            <param name="input" value="west.dem"/>
+            <param name="input" value="west.dem,east.dem"/>
             <param name="advanced" value="simple"/>
             <output name="output" file="dem.vrt" lines_diff="4"/>
         </test>    
