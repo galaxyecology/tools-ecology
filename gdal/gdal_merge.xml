@@ -7,8 +7,8 @@
     <command detect_errors="exit_code"><![CDATA[
         gdal_merge.py
             -q        
-            #for $s in $series 
-                '${s.input}'
+            #for $i in $input
+                "$i"
             #end for
             
             -of '$of'
@@ -57,9 +57,7 @@
         ]]></command>
         
     <inputs>
-        <repeat name="series" title="Input file">
-            <param type="data" name="input" format="gtiff,tiff,netcdf,VRT" help="Formats currently supported are : GTiff, netCDF and VRT" label="Gdal supported input file" />
-        </repeat>
+        <param type="data" name="input" format="gtiff,tiff,netcdf,VRT" help="Formats currently supported are : GTiff, netCDF and VRT" label="Gdal supported input file" multiple="true"/>
         <expand macro="gdal_param_of"/>
         <conditional name="settings">    
             <expand macro="gdal_advanced_params_select"/>
@@ -106,8 +104,7 @@
     
     <tests>
         <test>
-            <param name="input" value="west.dem"/>
-            <param name="input" value="east.dem"/>
+            <param name="input" value="west.dem,east.dem"/>
             <param name="advanced" value="simple"/>
             <output name="output" file="mergeddem.tif"/>
         </test>
