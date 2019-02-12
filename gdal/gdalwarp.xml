@@ -10,8 +10,8 @@
     <command detect_errors="exit_code"><![CDATA[
         gdalwarp 
             -q
-            #for $s in $series
-                '${s.input}'
+            #for $i in $input
+                '$i'
             #end for
             
             -of '$of'
@@ -70,9 +70,7 @@
     ]]></command>
     
     <inputs>
-        <repeat name="series" title="Input file">
-            <param type="data" name="input" format="gtiff,tiff,netcdf,VRT" help="Formats currently supported are : GTiff, netCDF and VRT" label="Gdal supported input file" />
-        </repeat>
+        <param type="data" name="input" format="gtiff,tiff,netcdf,VRT" help="Formats currently supported are : GTiff, netCDF and VRT" label="Gdal supported input file" multiple="true" />
         <expand macro="gdal_param_of"/>
         <param name="s_srs" type="text" label="-s_srs Source spatial reference set" value="" help="The coordinate systems that can be passed are anything supported by the OGRSpatialReference."/>
         <param name="t_srs" type="text" label="-t_srs Target spatial reference set" value="" help="The coordinate systems that can be passed are anything supported by the OGRSpatialReference."/>
@@ -133,33 +131,33 @@
         </test>
         
         <test>
-            <param name="input" value="geoworld.tif"/>
+            <param name="input" value="tinyworld.tif"/>
             <param name="t_srs" value="+proj=ortho +datum=WGS84" />
             <param name="advanced" value="simple"/>
-            <output name="output" file="ortho1.tif"/>
+            <output name="output" file="gdalwarp_test2_out.tif"/>
         </test>
         
         <test>
-            <param name="input" value="geoworld.tif"/>
+            <param name="input" value="tinyworld.tif"/>
             <param name="t_srs" value="+proj=ortho +datum=WGS84" />
             <param name="advanced" value="advanced"/>
             <param name="wo" value="SOURCE_EXTRA=125"/>
-            <output name="output" file="ortho2.tif"/>
+            <output name="output" file="gdalwarp_test3_out.tif"/>
         </test>
+
         
         <test>
-            <param name="input" value="geoworld.tif"/>
+            <param name="input" value="tinyworld.tif"/>
             <param name="t_srs" value="+proj=ortho +datum=WGS84" />
             <param name="advanced" value="advanced"/>
             <param name="wo" value="SOURCE_EXTRA=125"/>
             <param name="dstalpha" value="-dstalpha"/>
             <param name="srcnodata" value="11 10 50"/>
-            <output name="output" file="ortho3.tif"/>
+            <output name="output" file="gdalwarp_test4_out.tif"/>
         </test>
         
         <test>
-            <param name="input" value="west.dem"/>
-            <param name="input" value="east.dem"/>
+            <param name="input" value="east.dem,west.dem"/>
             <param name="advanced" value="simple"/>
             <output name="output" file="warpmerged.tif"/>
         </test>     
