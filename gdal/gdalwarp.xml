@@ -1,4 +1,4 @@
-<tool id="gdalwarp" name="GDAL Warp" version="@VERSION@">
+<tool id="gdal-gdalwarp" name="GDAL Warp" version="@VERSION@">
     <description>image reprojection and warping utility</description>
 
     <macros>

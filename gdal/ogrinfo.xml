@@ -1,4 +1,4 @@
-<tool id="ogrinfo" name="OGR Informations" version="@VERSION@">
+<tool id="gdal-ogrinfo" name="OGR Informations" version="@VERSION@">
     <description>lists information about an OGR supported data source</description>
     <macros>
         <import>gdal_macros.xml</import>

@@ -1,4 +1,4 @@
-<tool id="gdalbuildvrt" name="GDAL Build VRT" version="@VERSION@">
+<tool id="gdal-gdalbuildvrt" name="GDAL Build VRT" version="@VERSION@">
     <description>builds a VRT from a list of datasets</description>
 
     <macros>
@@ -98,7 +98,7 @@
     </inputs>
     
     <outputs>
-        <data name="output" auto_format="true" label="${on_string}.vrt"/> <!--label="${input.name}.${of}-->
+        <data name="output" format="xml" label="${on_string}.vrt"/> <!--label="${input.name}.${of}-->
     </outputs>
     
     <tests>

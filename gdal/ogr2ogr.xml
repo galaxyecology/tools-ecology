@@ -1,4 +1,4 @@
-<tool id="ogr2ogr" name="OGR2ogr" version="@VERSIONOGR@">
+<tool id="gdal-ogr2ogr" name="OGR2ogr" version="@VERSIONOGR@">
     <description>converts simple features data between file formats</description>
     <macros>
         <import>gdal_macros.xml</import>

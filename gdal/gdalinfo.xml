@@ -1,4 +1,4 @@
-<tool id="gdalinfo" name="GDAL Informations" version="@VERSION@">
+<tool id="gdal-gdalinfo" name="GDAL Informations" version="@VERSION@">
     <description>lists information about a raster dataset</description>
 
     <macros>

@@ -1,4 +1,4 @@
-<tool id="gdal_translate" name="GDAL Translate" version="@VERSION@">
+<tool id="gdal-gdal_translate" name="GDAL Translate" version="@VERSION@">
     <description>converts raster data between different formats.</description>
 
     <macros>
