@@ -149,6 +149,12 @@
     </xml>
 -->
 
+
+    <xml name="gdal_input_raster_multiple">
+        <param type="data" name="input" format="gtiff,tiff,netcdf,VRT" help="Formats currently supported are : GTiff, netCDF and VRT" label="Gdal supported input file" multiple="true"/>
+    </xml>
+
+
     <xml name="gdal_citation">
         <citations>
             <citation type="bibtex">
