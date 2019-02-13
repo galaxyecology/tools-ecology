@@ -80,7 +80,7 @@
     ]]></command>
     <inputs>
         <conditional name="typeinput">
-            <param type="select" name="input" display="radio" label="Gdal raster supported input file" help="choose between GTiff,VRT or others">
+            <param type="select" name="input" display="select" label="Gdal raster supported input file" help="choose between GTiff,VRT or others">
                 <option value="dataset">Data file</option>
                 <option value="subdataset">Subdataset</option>
             </param>
@@ -128,7 +128,7 @@
                     <when value="no_expand">
                     </when>
                     <when value="expand">
-                        <param name="expand_value" type="select" label="Color table" display="radio" multiple="False">
+                        <param name="expand_value" type="select" label="Color table" display="select" multiple="False">
                             <option value="gray" selected="true">GRAY</option>
                             <option value="rgb">RGB</option>
                             <option value="rgba">RGBA</option>
