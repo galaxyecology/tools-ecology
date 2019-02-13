@@ -36,11 +36,11 @@
     ]]></command>
     <inputs>
         <param type="data" name="input1" label="Gdal supported raster input file" format="tif,netcdf,tiff,vrt" help="choose between GTiff,VRT,netCDF or others"/>
-        <param name="format" type="select" label="Output format" display="select" multiple="False">
+        <param name="format" type="select" label="Output format" multiple="False">
             <option value="default" selected="true">Text</option>
             <option value="json">Json</option>
         </param>
-        <param name="subdataset" type="select" label="Create list of potential subdatasets" display="select" multiple="False">
+        <param name="subdataset" type="select" label="Create list of potential subdatasets" multiple="False">
             <option value="subd_y">Yes</option>
             <option value="subd_n" selected="True">No</option>
         </param>
