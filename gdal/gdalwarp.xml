@@ -70,7 +70,7 @@
     ]]></command>
     
     <inputs>
-        <param type="data" name="input" format="gtiff,tiff,netcdf,VRT" help="Formats currently supported are : GTiff, netCDF and VRT" label="Gdal supported input file" multiple="true" />
+        <expand macro="gdal_input_raster_multiple"/>
         <expand macro="gdal_param_of"/>
         <param name="s_srs" type="text" label="-s_srs Source spatial reference set" value="" help="The coordinate systems that can be passed are anything supported by the OGRSpatialReference."/>
         <param name="t_srs" type="text" label="-t_srs Target spatial reference set" value="" help="The coordinate systems that can be passed are anything supported by the OGRSpatialReference."/>

@@ -61,7 +61,7 @@
         
     ]]></command>
     <inputs>      
-        <param type="data" name="input" format="gtiff,tiff,netcdf,VRT" help="Formats currently supported are : GTiff, netCDF and VRT" label="Gdal supported input file" multiple="true"/>
+        <expand macro="gdal_input_raster_multiple"/>
         <conditional name="settings">    
             <expand macro="gdal_advanced_params_select"/>
             <when value="advanced">
