@@ -126,4 +126,5 @@ http://www.gdal.org/ogr_utilities.html
 
 http://download.osgeo.org/gdal/workshop/foss4ge2015/workshop_gdal.pdf
     ]]></help>
+    <expand macro="gdal_citation"/>
 </tool>

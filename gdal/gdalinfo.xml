@@ -221,4 +221,5 @@ Raster Processing Tutorial : https://trac.osgeo.org/gdal/wiki/UserDocs/RasterPro
 
 
     ]]></help>
+    <expand macro="gdal_citation"/>
 </tool>
