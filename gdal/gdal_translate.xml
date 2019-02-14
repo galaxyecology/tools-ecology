@@ -80,7 +80,7 @@
     ]]></command>
     <inputs>
         <conditional name="typeinput">
-            <param type="select" name="input" label="Gdal raster supported input file" help="choose between GTiff,VRT or others">
+            <param type="select" name="input" label="Gdal raster supported input file" help="Choose between GTiff,VRT or netCDF. To perform a translate on a subdataset use the gdal information option 'create list of potential subdatasets' to have the usable subdatasets in a file. Then select this file and the subdataset you want to use.">
                 <option value="dataset">Data file</option>
                 <option value="subdataset">Subdataset</option>
             </param>
