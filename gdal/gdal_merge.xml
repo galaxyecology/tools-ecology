@@ -99,7 +99,7 @@
     </inputs>
         
     <outputs>
-        <data name="output" auto_format="true"/> <!--label="${input.name}.${of}-->
+        <expand macro="gdal_output_change_format"/>
     </outputs>
     
     <tests>
@@ -108,7 +108,6 @@
             <param name="advanced" value="simple"/>
             <output name="output" file="mergeddem.tif"/>
         </test>
-        
     </tests>
     
     <help><![CDATA[

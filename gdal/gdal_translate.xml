@@ -208,7 +208,7 @@
     </inputs>
     
     <outputs>
-        <data name="output" auto_format="true" label="${on_string}.${of}"/> <!--label="${input.name}.${of}-->
+        <expand macro="gdal_output_change_format"/>  
     </outputs>
     
     
