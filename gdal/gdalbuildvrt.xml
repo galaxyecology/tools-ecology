@@ -54,7 +54,7 @@
             #end if
                 
             #if $settings.sb!=''
-                -sb '$settings.sb'
+                -sd '$settings.sb'
             #end if
                                         
         #end if 
@@ -92,7 +92,7 @@
                 <expand macro="gdal_param_oo"/>
 -->
                 <param name="tileindex" type="text" label="Use the specified value as the tile index field" help="-tileindex field_name" value=""/>
-                <param name="sb" type="text" label="Use a subdataset" help="-sb subdataset" value=""/>
+                <param name="sb" type="text" label="Use a subdataset" help="-sd subdataset" value=""/>
             </when>
         </conditional>
     </inputs>
@@ -186,7 +186,7 @@ Add as much input files you want to use to create the VRT.
 
 |
 
-*-sd subdataset*
+*-sb subdataset*
 
     If the input dataset contains several subdatasets use a subdataset with the specified number (starting from 1). This is an alternative of giving the full subdataset name as an input.
 
