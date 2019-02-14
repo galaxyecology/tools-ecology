@@ -25,17 +25,17 @@
             #if $format.value=='json'
                 -json > '$outputJson';
                 #if $subdataset=='subd_y'
-                    cat '$outputJson' | grep -A 1 "\"SUBDATASET_._NAME\":\".*\"," | cut -d "\"" -f4- | sed 's/..$//' | sed 's/\t//' | sed -e 'N; s/\n/\t/' > '${input1.name}_Subdatasets'
+                    cat '$outputJson' | grep -A 1 "\"SUBDATASET_._NAME\":\".*\"," | cut -d "\"" -f4- | sed 's/..$//' | sed 's/\t//' | sed -e 'N; s/\n/\t/' > Subdatasets.tabular
                 #end if
             #else
                 > '$outputDefault';
                 #if $subdataset=='subd_y'
-                    cat '$outputDefault' | grep -A 1 "SUBDATASET_._NAME=.*:.*$" | cut -d "=" -f 2 | sed 's/\t//' | sed -e 'N; s/\n/\t/' > '${input1.name}_Subdatasets'
+                    cat '$outputDefault' | grep -A 1 "SUBDATASET_._NAME=.*:.*$" | cut -d "=" -f 2 | sed 's/\t//' | sed -e 'N; s/\n/\t/' > Subdatasets.tabular
                 #end if
             #end if
     ]]></command>
     <inputs>
-        <param type="data" name="input1" label="Gdal supported raster input file" format="tif,netcdf,tiff,vrt" help="choose between GTiff,VRT,netCDF or others"/>
+        <param type="data" name="input1" label="Gdal supported raster input file" format="tif,netcdf,tiff,vrt" help="Choose between GTiff,VRT and netCDF."/>
         <param name="format" type="select" label="Output format" multiple="False">
             <option value="default" selected="true">Text</option>
             <option value="json">Json</option>
@@ -72,7 +72,7 @@
         <data name="outputJson" format="json" label="Json formated info file">
             <filter>format == "json"</filter>
         </data>
-        <data name="Subdatasets" format="tabular" from_work_dir="*_Subdatasets" label="Subdatasets from ${input1.name}">
+        <data name="subdatasets" format="tabular" from_work_dir="Subdatasets.tabular" label="Subdatasets from ${input1.name}">
             <filter>subdataset == "subd_y"</filter>
         </data>
     </outputs>
