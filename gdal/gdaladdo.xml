@@ -52,15 +52,9 @@ Select a raster file from history and chose levels to build.
 
 |
 
-**Option**
+**Advanced options and sources**
 
-*-levels*
-
-    A list of integral overview levels to build. Ignored with -clean option. Starting with GDAL 2.3, levels are no longer required to build overviews. In which case, appropriate overview power-of-two factors will be selected until the smallest overview is smaller than the value of the -minsize switch.
-
-|
-
-**Sources**
+To see complete details and help section please check the official gdal sources.
 
 http://www.gdal.org
 

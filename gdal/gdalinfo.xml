@@ -136,82 +136,9 @@ An additional option can list available subdatasets.
 
 |
 
-**Other options, advanced usage**
+**Advanced options and sources**
 
-
-*-mm*
-
-    Force computation of the actual min/max values for each band in the dataset. 
-
-|
-
-*-stats*
-
-    Read and display image statistics. Force computation if no statistics are stored in an image. 
-
-|
-
-*-approx_stats*
-
-    Read and display image statistics. Force computation if no statistics are stored in an image. However, they may be computed based on overviews or a subset of all tiles. Useful if you are in a hurry and don't want precise stats. 
-
-|
-
-*-hist*
-
-    Report histogram information for all bands. 
-
-|
-
-*-nogcp*
-
-    Suppress ground control points list printing. It may be useful for datasets with huge amount of GCPs, such as L1B AVHRR or HDF4 MODIS which contain thousands of them. 
-
-|
-
-*-nomd*
-
-    Suppress metadata printing. Some datasets may contain a lot of metadata strings. 
-
-|
-
-*-norat*
-
-    Suppress printing of raster attribute table. 
-
-|
-
-*-noct*
-
-    Suppress printing of color table. 
-
-|
-
-*-checksum*
-
-    Force computation of the checksum for each band in the dataset. 
-
-|
-
-*-listmdd*
-
-    List all metadata domains available for the dataset. 
-
-|
-
-*-mdd domain*
-
-    Report metadata for the specified domain. Starting with GDAL 1.11, "all" can be used to report metadata in all domains 
-
-|
-
-*-proj4*
-
-    Report a PROJ.4 string corresponding to the file's coordinate system.
-
-|
-
-**Sources**
+To see complete details and help section please check the official gdal sources.
 
 http://www.gdal.org
 

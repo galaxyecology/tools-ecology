@@ -129,75 +129,9 @@ Specifiy output format using short name (http://www.gdal.org/formats_list.html).
 
 |
 
-**Other options, advanced usage**
+**Advanced options and sources**
 
-*-co NAME=VALUE*
-   
-    Creation option for output file. Multiple options can be specified. See format specific documentation for legal creation options for each format 
-
-|
-
-*-ot datatype*
-   
-    Force the output image bands to have a specific type. Use type names (i.e. Byte, Int16,...) 
-
-|
-
-*-ps pixelsize_x pixelsize_y*
-
-    Pixel size to be used for the output file. If not specified the resolution of the first input file will be used.
-
-|
-
-*-tap*
-
-    (target aligned pixels) align the coordinates of the extent of the output file to the values of the -tr, such that the aligned extent includes the minimum extent.
-
-|
-
-*-ul_lr ulx uly lrx lry*
-   
-    The extents of the output file. If not specified the aggregate extents of all input files will be used. 
-
-|
-
-*-v*
-    
-    Generate verbose output of mosaicing operations as they are done. 
-
-|
-
-*-separate*
-    
-    Place each input file into a separate band. 
-
-|
-
-*-pct*
-    
-    Grab a pseudo-color table from the first input image, and use it for the output. Merging pseudo-colored images this way assumes that all input files use the same color table. 
-
-|
-
-*-n nodata_value*
-    
-    Ignore pixels from files being merged in with this pixel value. 
-
-|
-
-*-a_nodata output_nodata_value*
-
-    Assign a specified nodata value to output bands. 
-
-|
-
-*-init "value(s)"*
-
-    Pre-initialize the output image bands with these values. However, it is not marked as the nodata value in the output file. If only one value is given, the same value is used in all the bands.
-
-|
-        
-**Sources**
+To see complete details and help section please check the official gdal sources.
 
 http://www.gdal.org
 
