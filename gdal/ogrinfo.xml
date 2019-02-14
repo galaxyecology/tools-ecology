@@ -9,7 +9,7 @@
             #if $settings.advanced=='advanced'
 
                 #if $settings.condi_sql.sql=='sql':
-                    #if $settings.condi_sql.sql_statement!='':
+                    #if str($settings.condi_sql.sql_statement).strip()!='':
                         -sql '$settings.condi_sql.sql_statement'
                     #end if
                 #end if
@@ -61,11 +61,6 @@
                     <has_text text="Feature Count: 145"/>
                 </assert_contents>
             </output>
-
-<!-- test ok if "planemo test ogrinfo" can fail if "planemo test" because of the input dataset name present in the output file change.
-            <output name="output" file="ogrinfo_test1_out.txt" lines_diff="6"/>
--->
-
         </test>
         <test>
             <param name="input1" value="ogrinfo_test.nc"/>
@@ -80,11 +75,6 @@
                     <has_text text="Feature Count: 142"/>
                 </assert_contents>
             </output> 
-
-<!--
-            <output name="output" file="ogrinfo_test2_out.txt" lines_diff="2"/>
--->
-
         </test>
    </tests>
     <help><![CDATA[

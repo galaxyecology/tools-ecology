@@ -16,11 +16,11 @@
             
             -of '$of'
 
-            #if $s_srs!=''
+            #if str($s_srs).strip()!=''
                 -s_srs '$s_srs'
             #end if
             
-            #if $t_srs!=''
+            #if str($t_srs).strip()!=''
                 -t_srs '$t_srs'
             #end if
             
@@ -58,7 +58,7 @@
                 $settings.rpc
                 $settings.geoloc
                 
-                #if $settings.srcnodata!=''
+                #if str($settings.srcnodata).strip()!=''
                     -srcnodata '$settings.srcnodata'
                 #end if
                 

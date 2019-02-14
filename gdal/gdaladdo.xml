@@ -10,7 +10,7 @@
         gdaladdo '$input1'
             -q
             -ro
-            #if '$levels'==''
+            #if str($levels).strip()==''
                 -clean 
             #else
                 '$levels'

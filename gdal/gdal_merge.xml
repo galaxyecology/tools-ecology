@@ -15,11 +15,11 @@
             
             #if $settings.advanced=='advanced'
                 
-                #if $settings.co!=''
+                #if str($settings.co).strip()!=''
                     -co '$settings.co'
                 #end if
                 
-                #if $settings.ot!=''
+                #if str($settings.ot).strip()!=''
                     -ot '$settings.ot'
                 #end if
                 
@@ -47,7 +47,7 @@
                     -a_nodata '$settings.a_nodata'
                 #end if
                 
-                #if $settings.init!=''
+                #if str($settings.init).strip()!=''
                     -init '$settings.init'
                 #end if
                 

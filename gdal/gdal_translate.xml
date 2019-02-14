@@ -12,17 +12,17 @@
             '$typeinput.input1' '$output'
             #if $settings.advanced=='advanced'
                 
-                #if $settings.ot!=''
+                #if str($settings.ot).strip()!=''
                     -ot $settings.ot
                 #end if
 
                 $settings.strict
                 
-                #if $settings.b!=''
+                #if str($settings.b).strip()!=''
                     $settings.b
                 #end if
                 
-                #if $settings.mask!=''
+                #if str($settings.mask).strip()!=''
                     '$settings.mask'
                 #end if
                 
@@ -57,19 +57,19 @@
                 $settings.stats
                 $settings.norat
                 
-                #if $settings.co!=''
+                #if str($settings.co).strip()!=''
                     -co '$settings.co'
                 #end if
                 
-                #if $settings.mo!=''
+                #if str($settings.mo).strip()!=''
                     -mo '$settings.mo'
                 #end if
                 
-##                #if $settings.oo!=''
+##                #if str($settings.oo).strip()!=''
 ##                    -oo '$settings.oo'
 ##                #end if
                 
-                #if $settings.a_srs!=''
+                #if str($settings.a_srs).strip()!=''
                     -a_srs '$settings.a_srs'
                 #end if
                             
