@@ -20,7 +20,7 @@
     
     <inputs>
         <param type="data" name="input" format="data" label="Gdal supported input file" help="http://www.gdal.org/ogr_formats.html"/>
-        <param type="select" name="f" label="Conversion format" value="" help="Select the format to convert your input file. Currently supported : Shapefile, GeoJSON, GML, KML and WFS.">
+        <param type="select" name="f" label="Conversion format" value="" help="Select the format to convert your input file. Currently supported : Shapefile, GeoJSON, GML, KML and WFS. The shapefiles outputs shp, shx, dbf and prj will populate a datacollection.">
             <option value="ESRI Shapefile">ESRI Shapefile</option> 
             <option value="GeoJSON">GEOJSON</option> 
             <option value="GML">GML</option>
