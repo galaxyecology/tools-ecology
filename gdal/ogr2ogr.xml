@@ -1,4 +1,4 @@
-<tool id="gdal-ogr2ogr" name="OGR2ogr" version="@VERSIONOGR@">
+<tool id="gdal-ogr2ogr" name="OGR2ogr" version="@VERSION@">
     <description>converts simple features data between file formats</description>
     <macros>
         <import>gdal_macros.xml</import>
@@ -8,15 +8,21 @@
         <requirement type="package" version="3.7.1">geos</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
-        ogr2ogr -f $f '$output' '$input'
+        ogr2ogr -f '$f'
+            #if $f=='ESRI Shapefile'
+                'output.shp'
+            #else
+                '$output'
+            #end if
+            '$input'
 
     ]]></command>
     
     <inputs>
         <param type="data" name="input" format="data" label="Gdal supported input file" help="http://www.gdal.org/ogr_formats.html"/>
         <param type="select" name="f" label="Conversion format" value="" help="Select the format to convert your input file. Currently supported : Shapefile, GeoJSON, GML, KML and WFS.">
-            <option value="ESRI Shapefile ">ESRI Shapefile </option>
-            <option value="GeoJSON">GEOJSON</option>
+            <option value="ESRI Shapefile">ESRI Shapefile</option> 
+            <option value="GeoJSON">GEOJSON</option> 
             <option value="GML">GML</option>
             <option value="KML">KML</option>
             <option value="WFS">WFS</option>
@@ -24,7 +30,22 @@
     </inputs>
     
     <outputs>
-        <data name="output" auto_format="true" label="${on_string}.${f}"/> 
+        <data name="output" format="xml" label="${on_string}.${f}">
+            <filter>f != 'ESRI Shapefile'</filter>
+                <change_format>
+                    <when input="f" value="GeoJson" format="json"/> 
+                    <when input="f" value="GML" format="xml"/> 
+                    <when input="f" value="KML" format="xml"/> 
+                    <when input="f" value="WFS" format="txt"/> 
+                </change_format> 
+        </data>
+        <collection name="shapefile" type="list" label="${on_string}.shapefile">
+            <filter>f == 'ESRI Shapefile'</filter>
+                <data name="shp" format="binary" from_work_dir="*.shp"/>
+                <data name="shx" format="binary" from_work_dir="*.shx"/>
+                <data name="dbf" format="binary" from_work_dir="*.dbf"/>
+                <data name="prj" format="txt" from_work_dir="*.prj"/>
+       </collection>
     </outputs>
     
     <tests>
