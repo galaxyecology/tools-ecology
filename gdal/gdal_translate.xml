@@ -136,7 +136,7 @@
                     </when>
                 </conditional>
                 <conditional name="outsize">
-                    <param name="outsize" type="select" label="Set the size of the output file" help="-outsize % or pixel" >
+                    <param name="outsize" type="select" label="Set the size of the output file" help="-outsize in % or pixel. Default is 100%." >
                         <option value="outsize_x" selected="true">xsize</option>
                         <option value="outsize_y">ysize</option>
                     </param>
@@ -164,7 +164,7 @@
                     </when>
                 </conditional>
                 <conditional name="condi_srcwin">
-                    <param name="srcwin" type="select" label="Selects a subwindow from the source image" help="-srcwin" >
+                    <param name="srcwin" type="select" label="Selects a subwindow from the source image" help="-srcwin. Copying based on pixel/line location" >
                         <option value="no_srcwin" selected="true">Don't use the -srcwin option</option>
                         <option value="srcwin">Use the -srcwin option</option>
                     </param>
@@ -178,7 +178,7 @@
                     </when>
                 </conditional>
                 <conditional name="condi_a_ullr">
-                    <param name="a_ullr" type="select" label="Assign/override the georeferenced bounds of the output file" help="-a_ullr ulx uly lrx lry" >
+                    <param name="a_ullr" type="select" label="Assign/override the georeferenced bounds of the output file" help="-a_ullr ulx uly lrx lry. This assigns georeferenced bounds to the output file, ignoring what would have been derived from the source file. So this does not cause reprojection to the specified SRS" >
                         <option value="no_a_ullr" selected="true">Don't use the -a_ullr option</option>
                         <option value="a_ullr">Use the -a_ullr option</option>
                     </param>
@@ -191,12 +191,12 @@
                         <param name="lry" type="integer" label="lry" value="0"/>
                     </when>
                 </conditional>
-                <param name="epoeco" type="select" label="Display error when outside the source raster" display="radio" multiple="False">
+                <param name="epoeco" type="select" label="Display error when outside the source raster" multiple="False">
                     <option value="" selected="true">Default, no error</option>
                     <option value="-epo">-epo : Error when partially outside</option>
                     <option value="-eco">-eco : Error when completely outside</option>
                 </param>
-                <param name="a_srs" type="text" label="Override the projection" help="-a_srs" value="" />
+                <param name="a_srs" type="text" label="Override the projection" help="-a_srs. The srs_def may be any of the usual GDAL/OGR forms, complete WKT, PROJ.4, EPSG:n or a file containing the WKT. No reprojection is done" value="" />
 
                 <!--
                 <param name="sds" type="boolean" truevalue="-sds" falsevalue="" checked="false" label="-sds" help="Copy all subdatasets of this file to individual output files. Use with formats like HDF or OGDI that have subdatasets. The output file naming scheme has changed in GDAL 1.11 (e.g. ofile_1.tif, ofile_2.tif)."/>
@@ -213,50 +213,6 @@
     
     
     <tests>
-<!--
-        <test>
-            <param name="input1" value="stere.tif"/>
-            <param name="of" value="JPEG" />
-            <param name="advanced" value="simple"/>
-            <output name="output" file="stere.jpg"/>
-        </test>
-        
-        <test> 
-            <param name="input1" value="stere.tif"/>
-            <param name="of" value="JPEG" />
-            <param name="advanced" value="advanced"/>
-            <param name="b" value="-b 1"/>
-            <param name="outsize" value="outsize_x"/>
-            <param name="outx" value="75"/>
-            <param name="outsize_percent" value="%"/>
-            <output name="output" file="stere_advanced1.jpg"/>
-        </test>
-        
-        <test>
-            <param name="input1" value="stere.tif"/>
-            <param name="of" value="PNG" />
-            <param name="advanced" value="advanced"/>
-            <param name="b" value="-b 1 -b 2"/>
-            <param name="resample" value="resampling"/>
-            <param name="r" value="cubic"/>
-            <param name="outsize" value="outsize_y"/>
-            <param name="outy" value="75"/>
-            <param name="outsize_percent" value=""/>
-            <output name="output" file="stere_advanced2.png"/>
-        </test>
-        <test>
-            <param name="input1" value="world.png"/>
-            <param name="of" value="GTiff" />
-            <param name="advanced" value="advanced"/>
-            <param name="a_ullr" value="a_ullr"/>
-            <param name="ulx" value="-180"/>
-            <param name="uly" value="90"/>
-            <param name="lrx" value="180"/>
-            <param name="lry" value="-90"/>
-            <param name="a_srs" value="WGS84"/>
-            <output name="output" file="geoworld.tif"/>
-        </test>
--->        
         <test>
             <param name="input1" value="tinyworld.png"/>
             <param name="of" value="GTiff" />
@@ -269,7 +225,6 @@
             <param name="a_srs" value="WGS84"/>
             <output name="output" file="tinyworld.tif"/>
         </test>
-       
     </tests>
     
     <help><![CDATA[
