@@ -51,11 +51,8 @@ repositories:
     include:
       - gdal_translate.xml
       - gdal_macros.xml
-      - test-data/stere.tif
-      - test-data/stere_advanced1.jpg
-      - test-data/stere_advanced2.png
-      - test-data/world.png
-      - test-data/geoworld.tif
+      - test-data/tinyworld.png
+      - test-data/tinyworld.tif
 
   gdal-gdalwarp:
     description: The gdalwarp utility is an image mosaicing, reprojection and warping utility. The program can reproject to any supported projection, and can also apply GCPs stored with the image if the image is "raw" with control information.
@@ -64,10 +61,10 @@ repositories:
       - gdal_macros.xml
       - test-data/stere.tif 
       - test-data/stere_warp1.tiff 
-      - test-data/geoworld.tif 
-      - test-data/ortho1.tif 
-      - test-data/ortho2.tif 
-      - test-data/ortho3.tif 
+      - test-data/tinyworld.tif 
+      - test-data/gdalwarp_test2_out.tif 
+      - test-data/gdalwarp_test3_out.tif 
+      - test-data/gdalwarp_test4_out.tif 
       - test-data/warpmerged.tif 
 
   gdal-ogrinfo:
@@ -76,6 +73,3 @@ repositories:
       - ogrinfo.xml
       - gdal_macros.xml
       - test-data/ogrinfo_test.nc
-      - test-data/ogrinfo_test1_out.txt
-      - test-data/ogrinfo_test2_out.txt
-
