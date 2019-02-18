@@ -68,8 +68,16 @@ repositories:
       - test-data/warpmerged.tif 
 
   gdal-ogrinfo:
-    description: The ogrinfo program lists various information about an OGR supported data source to stdout (the terminal).
+    description: The ogrinfo program lists various information about an OGR supported data source.
     include:
       - ogrinfo.xml
       - gdal_macros.xml
       - test-data/ogrinfo_test.nc
+
+  gdal-ogr2ogr:
+    description: The ogr2ogr program converts simple features data between file formats.
+    include:
+      - ogr2ogr.xml
+      - gdal_macros.xml
+      - test-data/custom.geo.json
+
