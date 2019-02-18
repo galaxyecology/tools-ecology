@@ -72,43 +72,46 @@
     <inputs>
         <expand macro="gdal_input_raster_multiple"/>
         <expand macro="gdal_param_of"/>
-        <param name="s_srs" type="text" label="-s_srs Source spatial reference set" value="" help="The coordinate systems that can be passed are anything supported by the OGRSpatialReference."/>
-        <param name="t_srs" type="text" label="-t_srs Target spatial reference set" value="" help="The coordinate systems that can be passed are anything supported by the OGRSpatialReference."/>
+        <param name="s_srs" type="text" label="Source spatial reference set" value="" help="-s_srs def. The coordinate systems that can be passed are anything supported by the OGRSpatialReference."/>
+        <param name="t_srs" type="text" label="Target spatial reference set" value="" help="-t_srs srs_def. The coordinate systems that can be passed are anything supported by the OGRSpatialReference."/>
         <conditional name="settings">
             <expand macro="gdal_advanced_params_select"/>
             <when value="advanced">
                 <expand macro="gdal_param_tr"/>    
-                <param name="to" type="text" label="Transformer option" help="-to NAME=VALUE" value=""/>
-                <param name="wo" type="text" label="Warp option" help="-wo NAME=VALUE" value="" />
-                <param name="order" type="select" label="Order of polynomial" help="-order n">
+                <param name="to" type="text" label="Transformer option" help="-to NAME=VALUE. Set a transformer option suitable to pass to GDALCreateGenImgProjTransformer2()." value=""/>
+                <param name="wo" type="text" label="Warp option" help="-wo NAME=VALUE. Set a warp option." value="" />
+                <param name="order" type="select" label="Order of polynomial" help="-order n. Order of polynomial used for warping (1 to 3). The default is to select a polynomial order based on the number of GCPs.">
                     <option value="no_value" selected="true">Select an order.</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
                 </param>
-                <param name="tps" type="boolean" label="Force use of thin plate spline transformer" help="-tps" truevalue="-tps" falsevalue="" checked="false"/>
+                <param name="tps" type="boolean" label="Force use of thin plate spline transformer" help="-tps. Based on available GCPs" truevalue="-tps" falsevalue="" checked="false"/>
                 <param name="rpc" type="boolean" label="Force use of RPCs" help="-rpc" truevalue="-rpc" falsevalue="" checked="false"/>
                 <param name="geoloc" type="boolean" label="Force use of Geolocation Arrays." help="-geoloc" truevalue="-geoloc" falsevalue="" checked="false"/>
-                <param name="srcnodata" type="text" label="Set nodata masking values for input bands" help="-srcnodata value" value=""/>
+                <param name="srcnodata" type="text" label="Set nodata masking values for input bands" help="-srcnodata value. Different values can be supplied for each band" value=""/>
                 <param name="dstalpha" type="boolean" label="Create an output alpha band to identify nodata (unset/transparent) pixels" help="-dstalpha" truevalue="-dstalpha" falsevalue="" checked="false"/>
                 <conditional name="condi_et">
-                    <param name="et" label="Error threshold for transformation approximation" help="-et" type="boolean" truevalue="et" falsevalue="no_et" checked="false"/>
+                    <param name="et" label="Error threshold for transformation approximation" help="-et" type="select"> 
+                        <option value="et">Use an error threshold, option -et</option>
+                        <option value="no_et" selected="true">Don't use an error threshold</option>
+                    </param>
                     <when value="no_et">
                     </when>
                     <when value="et">
-                        <param name="et" type="float" label="et in pixel units - defaults to 0.125" help="-et error threshold" value=""/>
+                        <param name="et" type="float" help="-et In pixel units - defaults to 0.125, unless, the RPC_DEM warping option is specified, in which case, an exact transformer, i.e. err_threshold=0, will be used)" label="Error threshold" value=""/>
                     </when>
                 </conditional>
                 <conditional name="condi_refine_gcps">
-                    <param name="refine_gcps" type="select" label="Refines the GCPs by automatically eliminating outliers" help="-refine_gcps">
+                    <param name="refine_gcps" type="select" label="Refines the GCPs by automatically eliminating outliers" help="-refine_gcps. Set tolerence and minimum gcps">
                         <option value="no_refine_gcps" selected="true">Don't use the -refine_gcps option</option>
                         <option value="refine_gcps">Use the -refine_gcps option</option>
                     </param>
                     <when value="no_refine_gcps">
                     </when>
                     <when value="refine_gcps">
-                        <param name="tolerance" type="float" label="tolerance" value="0"/>
-                        <param name="minimum_gcps" type="float" label="minimum_gcps" value="0"/>
+                        <param name="tolerance" type="float" label="tolerance" value="0" help="In pixel units if no projection is available, otherwise it is in SRS units"/>
+                        <param name="minimum_gcps" type="float" label="minimum_gcps" value="0" help="If minimum_gcps is not provided, the minimum GCPs according to the polynomial model is used"/>
                     </when>
                 </conditional>
                 <expand macro="gdal_param_r"/>
