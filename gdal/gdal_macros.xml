@@ -30,10 +30,10 @@
             <when value="no_te">
             </when>
             <when value="te">
-                <param name="xmin" type="float" label="xmin" value="0" min="0"/>
-                <param name="ymin" type="float" label="ymin" value="0" min="0"/>
-                <param name="xmax" type="float" label="xmax" value="0" min="0"/>
-                <param name="ymax" type="float" label="ymax" value="0" min="0"/>
+                <param name="xmin" type="float" label="xmin" value="0" min="0" help="In target SRS by default, or in the SRS specified with -te_srs"/>
+                <param name="ymin" type="float" label="ymin" value="0" min="0" help="In target SRS by default, or in the SRS specified with -te_srs"/>
+                <param name="xmax" type="float" label="xmax" value="0" min="0" help="In target SRS by default, or in the SRS specified with -te_srs"/>
+                <param name="ymax" type="float" label="ymax" value="0" min="0" help="In target SRS by default, or in the SRS specified with -te_srs"/>
             </when>
         </conditional> 
     </xml>
@@ -41,7 +41,10 @@
 
     <xml name="gdal_param_r">
         <conditional name="condi_resample">
-            <param label="Use a resampling method" help="-r resampling algorithm" name="resample" type="boolean" truevalue="resampling" falsevalue="no_resampling" checked="false"/>
+            <param label="Use a resampling method" help="-r resampling algorithm" name="resample" type="select">
+                <option value="no_resampling" selected="true">Don't use a resampling method</option>
+                <option value="resampling">Use a resampling method, option -r</option>
+            </param>
             <when value="resampling">
                 <param name="r" type="select" label="Reseampling algorithm" >
                     <option value="nearest" selected="true"/>
@@ -66,7 +69,7 @@
 
     <xml name="gdal_param_tr">
         <conditional name="condi_tr">
-            <param name="tr" type="select" label="Set the ouput file resolution" help="-tr"> 
+            <param name="tr" type="select" label="Set the ouput file resolution" help="-tr xres yres. Set output file resolution (in target georeferenced units)"> 
                 <option value="no_tr" selected="true">Don't use the -tr option</option>
                 <option value="tr">Use the -tr option</option>
             </param>
@@ -81,22 +84,22 @@
 
 
     <xml name="gdal_param_b">
-        <param name="b" type="text" label="Select an input band band for output" help="-b band -b 1 -b 2 -b 3" value=""/>
+        <param name="b" type="text" label="Select an input band band for output" help="eg : -b band -b 1 -b 2 -b 3. Bands are numbered from 1. Multiple -b switches may be used to select a set of input bands to write to the output file, or to reorder bands." value=""/>
     </xml>
 
 
     <xml name="gdal_param_tap">
-        <param name="tap" label="Align the coordinates" help="-tap Target Aligned Pixel" type="boolean" truevalue="-tap" falsevalue="" checked="false" />
+        <param name="tap" label="Align the coordinates" help="-tap Target Aligned Pixel, align the coordinates of the extent of the output file to the values of the -tr, such that the aligned extent includes the minimum extent" type="boolean" truevalue="-tap" falsevalue="" checked="false" />
     </xml>
 
 
     <xml name="gdal_param_separate">
-        <param name="separate" type="boolean" truevalue="-separate" falsevalue="" checked="false" label="Place each input file into a separate band" help="-separate" />
+        <param name="separate" type="boolean" truevalue="-separate" falsevalue="" checked="false" label="Place each input file into a separate band" help="-separate. In that case, only the first band of each dataset will be placed into a new band. Contrary to the default mode, it is not required that all bands have the same datatype" />
     </xml>
 
 
     <xml name="gdal_param_a_srs">
-        <param name="a_srs" type="text" label="Override the projection for the output file" help="-a_srs srs_def" value="" />
+        <param name="a_srs" type="text" label="Override the projection for the output file" help="-a_srs srs_def. The srs_def may be any of the usual GDAL/OGR forms, complete WKT, PROJ.4, EPSG:n or a file containing the WKT. No reprojection is done" value="" />
     </xml>
 
 
@@ -106,12 +109,12 @@
 
     
     <xml name="gdal_param_norat">
-        <param name="norat" type="boolean" truevalue="-norat" falsevalue="" checked="false" help="-norat" label="Suppress printing of raster attribute table."/>
+        <param name="norat" type="boolean" truevalue="-norat" falsevalue="" checked="false" help="-norat. Do not copy source RAT into destination dataset." label="Suppress printing of raster attribute table."/>
     </xml>
 
 
     <xml name="gdal_param_of">
-        <param name="of" type="select" label="Output format -of" value="Gtiff" help="Select the output format. The default is GeoTIFF (GTiff). A short list of raster formats is currently enable in GalaxyE : GTiff, netCDF, JPEG, R, PNG.">
+        <param name="of" type="select" label="Output format -of" value="Gtiff" help="Select the output format. The default is GeoTIFF (GTiff). A short list of raster formats is currently enable in GalaxyE : GTiff, netCDF and VRT.">
             <option value="GTiff">GTiff</option>
             <option value="netCDF">Network Common Data Format - netCDF</option>
             <option value="VRT">GDAL Virtual - VRT</option>
