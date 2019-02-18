@@ -20,7 +20,7 @@
     ]]></command>
     
     <inputs>
-        <param type="data" name="input1" label="Gdal supported raster input file" format="gtiff,tiff,netcdf,vrt" help="choose between GTiff,VRT,netCDF or others"/>    
+        <param type="data" name="input1" label="Gdal supported raster input file" format="gtiff,tiff" help="Chose a GeoTIFF file"/>    
         <param name="levels" type="text" label="levels" help="A list of integral overview levels to build. eg : 2 4 8 16" value=""/>        
     </inputs>
     
@@ -29,7 +29,7 @@
     </outputs>
     
     <tests> 
-        <test> <!-- gdaladdo '/tmp/tmpTvLDdw/files/000/dataset_1.dat' -ro 2 4 8 16  -->
+        <test> 
             <param name="input1" value="stere.tif"/>
             <param name="levels" value="2 4 8 16" />
             <output name="output" file="stere.tif.ovr"/>
