@@ -106,7 +106,7 @@
     
     <tests>
         <test>
-            <param name="input" value="small_west.dem,small_east.dem"/>
+            <param name="input" value="small_east.dem,small_west.dem"/>
             <param name="advanced" value="simple"/>
             <output name="output" file="small_dem.vrt" lines_diff="4"/>
         </test>    
