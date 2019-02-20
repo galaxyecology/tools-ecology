@@ -23,7 +23,7 @@
     ]]></command>
     
     <inputs>
-        <param type="data" name="input1" format="data" label="Gdal supported input file" help="http://www.gdal.org/ogr_formats.html"/>
+        <param type="data" name="input1" format="xml,txt,netcdf" label="Gdal supported vector input file" help="Currently supported format are GeoJSON GML KML and WFS"/>
         <conditional name="settings">
             <expand macro="gdal_advanced_params_select"/>
             <when value="advanced">
@@ -52,29 +52,17 @@
     
     <tests>
         <test>
-            <param name="input1" value="ogrinfo_test.nc"/>
+            <param name="input1" value="custom.geo.json"/>
             <param name="advanced" value="simple"/>
-            <output name="output">
-                <assert_contents>
-                    <has_text text="  NC_GLOBAL#institution=Puertos del Estado (PdE) - Mercator-Ocean (MO)"/>
-                    <has_text text="  NC_GLOBAL#longitude_max=2.499999046325684"/>
-                    <has_text text="Feature Count: 145"/>
-                </assert_contents>
-            </output>
+            <output name="output" file="ogrinfo_test1_out2.txt" lines_diff="4"/>
         </test>
         <test>
-            <param name="input1" value="ogrinfo_test.nc"/>
+            <param name="input1" value="custom.geo.json"/>
             <param name="advanced" value="advanced"/>
             <param name="sql" value="sql"/>
-            <param name="sql_statement" value="SELECT * FROM dataset_5 WHERE time > 9000"/> <!-- WARNING the FROM here is fixed to pass travis test, the dataset number changes depending of the input -->
-            <param name="so" value=""/>
-            <output name="output">
-                <assert_contents>
-                    <has_text text="  NC_GLOBAL#institution=Puertos del Estado (PdE) - Mercator-Ocean (MO)"/>
-                    <has_text text="  NC_GLOBAL#longitude_max=2.499999046325684"/>
-                    <has_text text="Feature Count: 142"/>
-                </assert_contents>
-            </output> 
+            <param name="sql_statement" value="SELECT * FROM OGRGeoJSON"/> <!-- WARNING the FROM here is fixed to pass travis test, the dataset number changes depending of the input -->
+            <param name="so" value="-so"/>
+            <output name="output" file="ogrinfo_test2_out2.txt" lines_diff="4"/>
         </test>
    </tests>
     <help><![CDATA[
