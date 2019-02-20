@@ -160,9 +160,9 @@
         </test>
         
         <test>
-            <param name="input" value="east.dem,west.dem"/>
+            <param name="input" value="small_east.dem,small_west.dem"/>
             <param name="advanced" value="simple"/>
-            <output name="output" file="warpmerged.tif"/>
+            <output name="output" file="small_warpmerged.tif"/>
         </test>     
         
     </tests>
