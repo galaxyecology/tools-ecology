@@ -24,9 +24,9 @@ repositories:
     include:
       - gdalbuildvrt.xml
       - gdal_macros.xml
-      - test-data/east.dem
-      - test-data/west.dem
-      - test-data/dem.vrt
+      - test-data/small_east.dem
+      - test-data/small_west.dem
+      - test-data/small_dem.vrt
 
   gdal-gdalinfo:
     description: The gdalinfo program lists various information about a GDAL supported raster dataset. 
@@ -42,9 +42,9 @@ repositories:
     include:
       - gdal_merge.xml
       - gdal_macros.xml
-      - test-data/west.dem
-      - test-data/east.dem
-      - test-data/mergeddem.tif
+      - test-data/small_west.dem
+      - test-data/small_east.dem
+      - test-data/small_merged.tif
 
   gdal-gdal_translate:
     description: The gdal_translate utility can be used to convert raster data between different formats, potentially performing some operations like subsettings, resampling, and rescaling pixels in the process.
@@ -65,14 +65,16 @@ repositories:
       - test-data/gdalwarp_test2_out.tif 
       - test-data/gdalwarp_test3_out.tif 
       - test-data/gdalwarp_test4_out.tif 
-      - test-data/warpmerged.tif 
+      - test-data/small_warpmerged.tif 
 
   gdal-ogrinfo:
     description: The ogrinfo program lists various information about an OGR supported data source.
     include:
       - ogrinfo.xml
       - gdal_macros.xml
-      - test-data/ogrinfo_test.nc
+      - test-data/custom.geo.json
+      - test-data/ogrinfo_test1_out2.txt
+      - test-data/ogrinfo_test2_out2.txt
 
   gdal-ogr2ogr:
     description: The ogr2ogr program converts simple features data between file formats.
