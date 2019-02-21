@@ -6,10 +6,8 @@
         <requirements>
             <requirement type="package" version="2.1.0">gdal</requirement>
             <requirement type="package" version="3.5.0">geos</requirement>
-            <requirement type="package" version="1.5.90">libjpeg-turbo</requirement>    
         </requirements>
     </xml>
-
 
     <xml name="gdal_advanced_params_select">
         <param name="advanced" type="select" label="Specify advanced parameters">
@@ -19,7 +17,6 @@
         <when value="simple">
         </when>
     </xml>
-
 
     <xml name="gdal_param_te">
         <conditional name="condi_te">
@@ -37,7 +34,6 @@
             </when>
         </conditional> 
     </xml>
-
 
     <xml name="gdal_param_r">
         <conditional name="condi_resample">
@@ -66,7 +62,6 @@
         </conditional>
     </xml>
 
-
     <xml name="gdal_param_tr">
         <conditional name="condi_tr">
             <param name="tr" type="select" label="Set the ouput file resolution" help="-tr xres yres. Set output file resolution (in target georeferenced units)"> 
@@ -82,36 +77,29 @@
         </conditional>
     </xml>
 
-
     <xml name="gdal_param_b">
         <param name="b" type="text" label="Select an input band band for output" help="eg : -b band -b 1 -b 2 -b 3. Bands are numbered from 1. Multiple -b switches may be used to select a set of input bands to write to the output file, or to reorder bands." value=""/>
     </xml>
-
 
     <xml name="gdal_param_tap">
         <param name="tap" label="Align the coordinates" help="-tap Target Aligned Pixel, align the coordinates of the extent of the output file to the values of the -tr, such that the aligned extent includes the minimum extent" type="boolean" truevalue="-tap" falsevalue="" checked="false" />
     </xml>
 
-
     <xml name="gdal_param_separate">
         <param name="separate" type="boolean" truevalue="-separate" falsevalue="" checked="false" label="Place each input file into a separate band" help="-separate. In that case, only the first band of each dataset will be placed into a new band. Contrary to the default mode, it is not required that all bands have the same datatype" />
     </xml>
-
 
     <xml name="gdal_param_a_srs">
         <param name="a_srs" type="text" label="Override the projection for the output file" help="-a_srs srs_def. The srs_def may be any of the usual GDAL/OGR forms, complete WKT, PROJ.4, EPSG:n or a file containing the WKT. No reprojection is done" value="" />
     </xml>
 
-
     <xml name="gdal_param_stats">
         <param name="stats" type="boolean" truevalue="-stats" falsevalue="" checked="false" label="Force (re)computation of statistics"  help="-stats. Read and display image statistics. Force computation if no statistics are sto.red in an image."/>
     </xml>
-
     
     <xml name="gdal_param_norat">
         <param name="norat" type="boolean" truevalue="-norat" falsevalue="" checked="false" help="-norat. Do not copy source RAT into destination dataset." label="Suppress printing of raster attribute table."/>
     </xml>
-
 
     <xml name="gdal_param_of">
         <param name="of" type="select" label="Output format -of" value="Gtiff" help="Select the output format. The default is GeoTIFF (GTiff). A short list of raster formats is currently enable in GalaxyE : GTiff, netCDF and VRT.">
@@ -120,13 +108,11 @@
             <option value="VRT">GDAL Virtual - VRT</option>
         </param>
     </xml>
-  
-  
+
     <xml name="gdal_param_co">
         <param name="co" type="text" label="Pass a creation option to the output format driver" help="-co NAME=VALUE. eg : COMPRESS=JPEG" value="" />
     </xml>   
-  
-  
+
     <xml name="gdal_param_ot">
         <param name="ot" type="select" label="Datatype of the output bands" help="-ot Datatype">
             <option value="byte">Byte</option>
@@ -144,18 +130,15 @@
         </param>
     </xml>
 
-
 <!-- need to upgrade gdal version to use
     <xml name="gdal_param_oo">
         <param name="oo" type="text" label="-oo NAME=VALUE" value="" />
     </xml>
 -->
 
-
     <xml name="gdal_input_raster_multiple">
         <param type="data" name="input" format="gtiff,tiff,netcdf,VRT,txt,xml" help="Formats currently supported are : GTiff, netCDF and VRT" label="Gdal supported input file" multiple="true"/>
     </xml>
-
 
     <xml name="gdal_output_change_format">
         <data name="output" format="GTiff" label="${on_string}.${of}">
@@ -166,7 +149,6 @@
             </change_format>
         </data>
     </xml>
-
 
     <xml name="gdal_citation">
         <citations>
@@ -181,7 +163,4 @@
             </citation>
         </citations>  
     </xml>
-
-
-
 </macros>
