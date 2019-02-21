@@ -6,8 +6,8 @@ long_description: |
 
 homepage_url: https://www.gdal.org/
 name: gdal
-owner: mnhn65mo
-remote_repository_url: https://github.com/Alanamosse/Galaxy-E/tree/master/tools/gdal
+owner: biodiversiteam 
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/gdal
 type: unrestricted
 
 repositories:
