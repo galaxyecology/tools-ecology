@@ -6,7 +6,7 @@ long_description: |
 
 homepage_url: https://www.gdal.org/
 name: gdal
-owner: biodiversiteam 
+owner: ecology 
 remote_repository_url: https://github.com/galaxyecology/tools-ecology/gdal
 type: unrestricted
 
