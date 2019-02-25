@@ -1,29 +1,24 @@
-<tool id="gdal-gdalwarp" name="GDAL Warp" version="@VERSION@">
+<tool id="gdal_gdalwarp" name="GDAL Warp" version="@VERSION@">
     <description>image reprojection and warping utility</description>
-
     <macros>
         <import>gdal_macros.xml</import>
-    </macros>   
+    </macros>
     <expand macro="gdal_requirements" />
-
-
     <command detect_errors="exit_code"><![CDATA[
         gdalwarp 
             -q
             #for $i in $input
                 '$i'
             #end for
-            
             -of '$of'
-
             #if str($s_srs).strip()!=''
                 -s_srs '$s_srs'
             #end if
-            
+
             #if str($t_srs).strip()!=''
                 -t_srs '$t_srs'
             #end if
-            
+
             #if $settings.advanced=="advanced"
 
                 #if $settings.condi_tr.tr=='tr'

@@ -1,11 +1,9 @@
-<tool id="gdal-gdalinfo" name="GDAL Informations" version="@VERSION@">
+<tool id="gdal_gdalinfo" name="GDAL Informations" version="@VERSION@">
     <description>lists information about a raster dataset</description>
-
     <macros>
         <import>gdal_macros.xml</import>
-    </macros>   
+    </macros>
     <expand macro="gdal_requirements" />
-
     <command detect_errors="exit_code"><![CDATA[
         gdalinfo '$input1'
             #if $settings.advanced=='advanced'

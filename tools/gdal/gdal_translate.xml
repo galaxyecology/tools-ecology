@@ -1,9 +1,8 @@
-<tool id="gdal-gdal_translate" name="GDAL Translate" version="@VERSION@">
+<tool id="gdal_gdal_translate" name="GDAL Translate" version="@VERSION@">
     <description>converts raster data between different formats.</description>
-
     <macros>
         <import>gdal_macros.xml</import>
-    </macros>   
+    </macros>
     <expand macro="gdal_requirements" />
 
     <command detect_errors="exit_code"><![CDATA[

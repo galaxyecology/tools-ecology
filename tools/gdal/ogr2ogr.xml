@@ -1,4 +1,4 @@
-<tool id="gdal-ogr2ogr" name="OGR2ogr" version="@VERSION@">
+<tool id="gdal_ogr2ogr" name="OGR2ogr" version="@VERSION@">
     <description>converts simple features data between file formats</description>
     <macros>
         <import>gdal_macros.xml</import>
@@ -15,12 +15,11 @@
                 '$output'
             #end if
             '$input'
-
     ]]></command>
-    
     <inputs>
         <param type="data" name="input" format="data" label="Gdal supported input file" help="http://www.gdal.org/ogr_formats.html"/>
-        <param type="select" name="f" label="Conversion format" value="" help="Select the format to convert your input file. Currently supported : Shapefile, GeoJSON, GML, KML and WFS. The shapefiles outputs shp, shx, dbf and prj will populate a datacollection.">
+        <param type="select" name="f" label="Conversion format" value=""
+            help="Select the format to convert your input file. Currently supported : Shapefile, GeoJSON, GML, KML and WFS. The shapefiles outputs shp, shx, dbf and prj will populate a datacollection.">
             <option value="ESRI Shapefile">ESRI Shapefile</option> 
             <option value="GeoJSON">GEOJSON</option> 
             <option value="GML">GML</option>
@@ -28,7 +27,6 @@
             <option value="WFS">WFS</option>
         </param>
     </inputs>
-    
     <outputs>
         <data name="output" format="xml" label="${on_string}.${f}">
             <filter>f != 'ESRI Shapefile'</filter>

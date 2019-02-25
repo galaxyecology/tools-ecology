@@ -1,27 +1,21 @@
-<tool id="gdal-ogrinfo" name="OGR Informations" version="@VERSION@">
+<tool id="gdal_ogrinfo" name="OGR Informations" version="@VERSION@">
     <description>lists information about an OGR supported data source</description>
     <macros>
         <import>gdal_macros.xml</import>
-    </macros>   
+    </macros>
     <expand macro="gdal_requirements" />
     <command detect_errors="exit_code"><![CDATA[
         ogrinfo -ro '$input1'  -al 
             #if $settings.advanced=='advanced'
-
                 #if $settings.condi_sql.sql=='sql':
                     #if str($settings.condi_sql.sql_statement).strip()!='':
                         -sql '$settings.condi_sql.sql_statement'
                     #end if
                 #end if
-               
                 $settings.so
-
             #end if
-
         > '$output'
-
     ]]></command>
-    
     <inputs>
         <param type="data" name="input1" format="xml,txt,netcdf" label="Gdal supported vector input file" help="Currently supported format are GeoJSON GML KML and WFS"/>
         <conditional name="settings">
@@ -45,11 +39,9 @@
             </when>
         </conditional>
     </inputs>
-    
     <outputs>
         <data name="output" format="txt" label="OGR Info file on ${on_string}"/>
     </outputs>
-    
     <tests>
         <test>
             <param name="input1" value="custom.geo.json"/>

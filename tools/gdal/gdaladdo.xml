@@ -1,11 +1,9 @@
-<tool id="gdal-gdaladdo" name="GDAL addo" version="@VERSION@">
+<tool id="gdal_gdaladdo" name="GDAL addo" version="@VERSION@">
     <description>builds or rebuilds overview images</description>
-
     <macros>
         <import>gdal_macros.xml</import>
-    </macros>   
+    </macros>
     <expand macro="gdal_requirements" />
-
     <command detect_errors="exit_code"><![CDATA[
         gdaladdo '$input1'
             -q

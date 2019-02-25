@@ -1,11 +1,9 @@
-<tool id="gdal-gdalbuildvrt" name="GDAL Build VRT" version="@VERSION@">
+<tool id="gdal_gdalbuildvrt" name="GDAL Build VRT" version="@VERSION@">
     <description>builds a VRT from a list of datasets</description>
-
     <macros>
         <import>gdal_macros.xml</import>
-    </macros>   
+    </macros>
     <expand macro="gdal_requirements" />
-
     <command detect_errors="exit_code"><![CDATA[
     gdalbuildvrt 
         '$output'

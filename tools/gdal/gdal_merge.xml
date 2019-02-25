@@ -1,8 +1,8 @@
-<tool id="gdal-gdal_merge" name="GDAL Merge" version="@VERSION@">
+<tool id="gdal_gdal_merge" name="GDAL Merge" version="@VERSION@">
     <description>mosaics a set of images</description>
     <macros>
         <import>gdal_macros.xml</import>
-    </macros>   
+    </macros>
     <expand macro="gdal_requirements" />
     <command detect_errors="exit_code"><![CDATA[
         gdal_merge.py
