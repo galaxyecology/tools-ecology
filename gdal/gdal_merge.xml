@@ -1,0 +1,145 @@
+<tool id="gdal-gdal_merge" name="GDAL Merge" version="@VERSION@">
+    <description>mosaics a set of images</description>
+    <macros>
+        <import>gdal_macros.xml</import>
+    </macros>   
+    <expand macro="gdal_requirements" />
+    <command detect_errors="exit_code"><![CDATA[
+        gdal_merge.py
+            -q        
+            #for $i in $input
+                "$i"
+            #end for
+            
+            -of '$of'
+            
+            #if $settings.advanced=='advanced'
+                
+                #if str($settings.co).strip()!=''
+                    -co '$settings.co'
+                #end if
+                
+                #if str($settings.ot).strip()!=''
+                    -ot '$settings.ot'
+                #end if
+                
+                #if $settings.condi_ps.pixelsize=='use_ps'
+                    -ps $settings.condi_ps.pixelsize_x $settings.condi_ps.pixelsize_y
+                #end if
+                
+                $settings.tap
+                
+                #if $settings.condi_ul_lr.ul_lr=='ul_lr'
+                    -ul_lr $settings.condi_ul_lr.ulx $settings.condi_ul_lr.uly $settings.condi_ul_lr.lrx $settings.condi_ul_lr.lry
+                #end if
+                
+                $settings.v
+                
+                $settings.separate
+                
+                $settings.pct
+                
+                #if $settings.n!='nodata_value'
+                    -n '$settings.n'
+                #end if
+                
+                #if $settings.a_nodata!='output_nodata_value'
+                    -a_nodata '$settings.a_nodata'
+                #end if
+                
+                #if str($settings.init).strip()!=''
+                    -init '$settings.init'
+                #end if
+                
+            #end if
+            
+            -o '$output'
+        ]]></command>
+        
+    <inputs>
+        <expand macro="gdal_input_raster_multiple"/>  
+        <expand macro="gdal_param_of"/>
+        <conditional name="settings">    
+            <expand macro="gdal_advanced_params_select"/>
+            <when value="advanced">
+                <expand macro="gdal_param_co"/> 
+                <expand macro="gdal_param_ot"/> 
+                <conditional name="condi_ps">
+                    <param label="Fix pixel size to be used" help="-ps pixelsize_x pixelsize_y. If not specified the resolution of the first input file will be used" name="pixelsize" type="select">
+                        <option value="use_ps">Fix pixel size with the -ps option</option>
+                        <option value="no_ps" selected="true">Don't specify a resolution</option>
+                    </param>
+                    <when value="use_ps">
+                        <param name="pixelsize_x" type="integer" value="0" min="0"/>
+                        <param name="pixelsize_y" type="integer" value="0" min="0"/>
+                    </when>
+                    <when value="no_ps">
+                    </when>
+                </conditional>        
+                <expand macro="gdal_param_tap"/> 
+                <conditional name="condi_ul_lr">
+                    <param name="ul_lr" type="select" argument="-ul_lr ulx uly lrx lry" label="The extents of the output file" help="If not specified the aggregate extents of all input files will be used" >
+                        <option value="no_ul_lr" selected="true">Don't use the -ul_lr option</option>
+                        <option value="ul_lr">Use the -ul_lr option</option>
+                    </param>
+                    <when value="no_ul_lr">
+                    </when>
+                    <when value="ul_lr">
+                        <param name="ulx" type="integer" label="The ulx extents of the output file" value="0" min="0"/>
+                        <param name="uly" type="integer" label="The uly extents of the output file" value="0" min="0"/>
+                        <param name="lrx" type="integer" label="The lrx extents of the output file" value="0" min="0"/>
+                        <param name="lry" type="integer" label="The lry extents of the output file" value="0" min="0"/>
+                    </when>
+                </conditional>        
+                <param name="v" type="boolean" truevalue="-v" falsevalue="" checked="false" help="-v" label="Generate verbose output of mosaicing operations as they are done" />
+                <expand macro="gdal_param_separate"/>
+                <param name="pct" type="boolean" truevalue="-pct" falsevalue="" checked="false" help="-pct. Merging pseudo-colored images this way assumes that all input files use the same color table" label="Grab a pseudo-color table from the first input image" />
+                <param name="n" type="text" argument="-n nodata_value" label="Ignore pixels from files being merged in with this pixel value" value="nodata_value" />
+                <param name="a_nodata" type="text" argument="-a_nodata" label="Assign a specified nodata value to output bands" value="output_nodata_value" />
+                <param name="init" type="text" help="-init values(s). It is not marked as the nodata value in the output file. If only one value is given, the same value is used in all the bands" label="Pre-initialize the output image bands with values" value="" />
+            </when>
+        </conditional>
+    </inputs>
+        
+    <outputs>
+        <expand macro="gdal_output_change_format"/>
+    </outputs>
+    
+    <tests>
+        <test>
+            <param name="input" value="small_west.dem,small_east.dem"/>
+            <param name="advanced" value="simple"/>
+            <output name="output" file="small_merged.tif"/>
+        </test>
+    </tests>
+    
+    <help><![CDATA[
+==========================
+Gdal_merge
+==========================
+**What it does**
+
+This utility will automatically mosaic a set of images. All the images must be in the same coordinate system and have a matching number of bands, but they may be overlapping, and at different resolutions. In areas of overlap, the last image will be copied over earlier ones.
+
+|
+
+**How to use it**
+
+Select as much raster files as you want from history to make the mosaic.
+
+Specifiy output format using short name (http://www.gdal.org/formats_list.html).
+
+|
+
+**Advanced options and sources**
+
+To see complete details and help section please check the official gdal sources.
+
+http://www.gdal.org
+
+http://www.gdal.org/gdal_merge.html
+
+Raster Processing Tutorial : https://trac.osgeo.org/gdal/wiki/UserDocs/RasterProcTutorial
+    ]]></help>
+    <expand macro="gdal_citation"/>
+</tool>

@@ -1,0 +1,200 @@
+<tool id="gdal-gdalwarp" name="GDAL Warp" version="@VERSION@">
+    <description>image reprojection and warping utility</description>
+
+    <macros>
+        <import>gdal_macros.xml</import>
+    </macros>   
+    <expand macro="gdal_requirements" />
+
+
+    <command detect_errors="exit_code"><![CDATA[
+        gdalwarp 
+            -q
+            #for $i in $input
+                '$i'
+            #end for
+            
+            -of '$of'
+
+            #if str($s_srs).strip()!=''
+                -s_srs '$s_srs'
+            #end if
+            
+            #if str($t_srs).strip()!=''
+                -t_srs '$t_srs'
+            #end if
+            
+            #if $settings.advanced=="advanced"
+
+                #if $settings.condi_tr.tr=='tr'
+                    -tr $settings.condi_tr.xres $settings.condi_tr.yres
+                #end if
+    
+                -to '$settings.to'
+                
+                -wo '$settings.wo'
+            
+                #if $settings.order!='no_value'
+                    -order '$settings.order'
+                #end if
+
+                #if $settings.condi_resample.resample=='resampling'
+                    -r $settings.condi_resample.r
+                #end if
+                
+                #if $settings.condi_et.et=='et'
+                    -et $settings.condi_et.et
+                #end if
+            
+                #if $settings.condi_refine_gcps.refine_gcps=='refine_gcps'
+                    -refine_gcps $settings.condi_refine_gcps.tolerance $settings.condi_refine_gcps.minimum_gcps
+                #end if
+            
+                #if $settings.condi_te.te=='te'
+                    -te $settings.condi_te.xmin $settings.condi_te.ymin $settings.condi_te.xmax $settings.condi_te.ymax
+                #end if
+            
+                $settings.tps
+                $settings.rpc
+                $settings.geoloc
+                
+                #if str($settings.srcnodata).strip()!=''
+                    -srcnodata '$settings.srcnodata'
+                #end if
+                
+                $settings.dstalpha
+            #end if
+                        
+        '$output'
+
+    ]]></command>
+    
+    <inputs>
+        <expand macro="gdal_input_raster_multiple"/>
+        <expand macro="gdal_param_of"/>
+        <param name="s_srs" type="text" label="Source spatial reference set" value="" help="-s_srs def. The coordinate systems that can be passed are anything supported by the OGRSpatialReference."/>
+        <param name="t_srs" type="text" label="Target spatial reference set" value="" help="-t_srs srs_def. The coordinate systems that can be passed are anything supported by the OGRSpatialReference."/>
+        <conditional name="settings">
+            <expand macro="gdal_advanced_params_select"/>
+            <when value="advanced">
+                <expand macro="gdal_param_tr"/>    
+                <param name="to" type="text" label="Transformer option" help="-to NAME=VALUE. Set a transformer option suitable to pass to GDALCreateGenImgProjTransformer2()." value=""/>
+                <param name="wo" type="text" label="Warp option" help="-wo NAME=VALUE. Set a warp option." value="" />
+                <param name="order" type="select" label="Order of polynomial" help="-order n. Order of polynomial used for warping (1 to 3). The default is to select a polynomial order based on the number of GCPs.">
+                    <option value="no_value" selected="true">Select an order.</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </param>
+                <param name="tps" type="boolean" label="Force use of thin plate spline transformer" help="-tps. Based on available GCPs" truevalue="-tps" falsevalue="" checked="false"/>
+                <param name="rpc" type="boolean" label="Force use of RPCs" help="-rpc" truevalue="-rpc" falsevalue="" checked="false"/>
+                <param name="geoloc" type="boolean" label="Force use of Geolocation Arrays." help="-geoloc" truevalue="-geoloc" falsevalue="" checked="false"/>
+                <param name="srcnodata" type="text" label="Set nodata masking values for input bands" help="-srcnodata value. Different values can be supplied for each band" value=""/>
+                <param name="dstalpha" type="boolean" label="Create an output alpha band to identify nodata (unset/transparent) pixels" help="-dstalpha" truevalue="-dstalpha" falsevalue="" checked="false"/>
+                <conditional name="condi_et">
+                    <param name="et" label="Error threshold for transformation approximation" help="-et" type="select"> 
+                        <option value="et">Use an error threshold, option -et</option>
+                        <option value="no_et" selected="true">Don't use an error threshold</option>
+                    </param>
+                    <when value="no_et">
+                    </when>
+                    <when value="et">
+                        <param name="et" type="float" help="-et In pixel units - defaults to 0.125, unless, the RPC_DEM warping option is specified, in which case, an exact transformer, i.e. err_threshold=0, will be used)" label="Error threshold" value=""/>
+                    </when>
+                </conditional>
+                <conditional name="condi_refine_gcps">
+                    <param name="refine_gcps" type="select" label="Refines the GCPs by automatically eliminating outliers" help="-refine_gcps. Set tolerence and minimum gcps">
+                        <option value="no_refine_gcps" selected="true">Don't use the -refine_gcps option</option>
+                        <option value="refine_gcps">Use the -refine_gcps option</option>
+                    </param>
+                    <when value="no_refine_gcps">
+                    </when>
+                    <when value="refine_gcps">
+                        <param name="tolerance" type="float" label="tolerance" value="0" help="In pixel units if no projection is available, otherwise it is in SRS units"/>
+                        <param name="minimum_gcps" type="float" label="minimum_gcps" value="0" help="If minimum_gcps is not provided, the minimum GCPs according to the polynomial model is used"/>
+                    </when>
+                </conditional>
+                <expand macro="gdal_param_r"/>
+                <expand macro="gdal_param_te"/>
+            </when>
+        </conditional>
+    </inputs>
+    
+    <outputs>
+        <expand macro="gdal_output_change_format"/>
+    </outputs>
+    
+    <tests>
+        <test>
+            <param name="input" value="stere.tif"/>
+            <param name="of" value="GTiff" />
+            <param name="t_srs" value="EPSG:2154" />
+            <param name="advanced" value="simple"/>
+            <output name="output" file="stere_warp1.tiff"/>
+        </test>
+        
+        <test>
+            <param name="input" value="tinyworld.tif"/>
+            <param name="t_srs" value="+proj=ortho +datum=WGS84" />
+            <param name="advanced" value="simple"/>
+            <output name="output" file="gdalwarp_test2_out.tif"/>
+        </test>
+        
+        <test>
+            <param name="input" value="tinyworld.tif"/>
+            <param name="t_srs" value="+proj=ortho +datum=WGS84" />
+            <param name="advanced" value="advanced"/>
+            <param name="wo" value="SOURCE_EXTRA=125"/>
+            <output name="output" file="gdalwarp_test3_out.tif"/>
+        </test>
+
+        
+        <test>
+            <param name="input" value="tinyworld.tif"/>
+            <param name="t_srs" value="+proj=ortho +datum=WGS84" />
+            <param name="advanced" value="advanced"/>
+            <param name="wo" value="SOURCE_EXTRA=125"/>
+            <param name="dstalpha" value="-dstalpha"/>
+            <param name="srcnodata" value="11 10 50"/>
+            <output name="output" file="gdalwarp_test4_out.tif"/>
+        </test>
+        
+        <test>
+            <param name="input" value="small_east.dem,small_west.dem"/>
+            <param name="advanced" value="simple"/>
+            <output name="output" file="small_warpmerged.tif"/>
+        </test>     
+        
+    </tests>
+    <help><![CDATA[
+==========================
+Gdalwarp
+==========================
+**What it does**
+
+The gdalwarp utility is an image mosaicing, reprojection and warping utility. The program can reproject to any supported projection, and can also apply GCPs stored with the image if the image is "raw" with control information.        
+
+|
+
+**How to use it**
+
+Add as much input files you want to warp.
+
+Specifiy output format using short name (http://www.gdal.org/formats_list.html).
+
+Specify source and target spatial reference set.
+
+|
+
+**Advanced options and sources**
+
+To see complete details and help section please check the official gdal sources.
+
+http://www.gdal.org
+
+http://www.gdal.org/gdalwarp.html
+
+Raster Processing Tutorial : https://trac.osgeo.org/gdal/wiki/UserDocs/RasterProcTutorial
+    ]]></help>
+    <expand macro="gdal_citation"/>
+</tool>

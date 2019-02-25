@@ -1,0 +1,166 @@
+<macros>
+
+    <token name="@VERSION@">2.4.0</token>  
+    
+    <xml name="gdal_requirements">
+        <requirements>
+            <requirement type="package" version="2.1.0">gdal</requirement>
+            <requirement type="package" version="3.5.0">geos</requirement>
+        </requirements>
+    </xml>
+
+    <xml name="gdal_advanced_params_select">
+        <param name="advanced" type="select" label="Specify advanced parameters">
+            <option value="simple" selected="true">No, use program defaults.</option>
+            <option value="advanced">Yes, see full parameter list.</option>
+        </param>        
+        <when value="simple">
+        </when>
+    </xml>
+
+    <xml name="gdal_param_te">
+        <conditional name="condi_te">
+            <param name="te" type="select" label="Georeferenced extents of output file" help="-te xmin ymin xmax ymax">
+                <option value="no_te" selected="true">Don't use the -te option</option>
+                <option value="te">Use the -te option</option>
+            </param>
+            <when value="no_te">
+            </when>
+            <when value="te">
+                <param name="xmin" type="float" label="xmin" value="0" min="0" help="In target SRS by default, or in the SRS specified with -te_srs"/>
+                <param name="ymin" type="float" label="ymin" value="0" min="0" help="In target SRS by default, or in the SRS specified with -te_srs"/>
+                <param name="xmax" type="float" label="xmax" value="0" min="0" help="In target SRS by default, or in the SRS specified with -te_srs"/>
+                <param name="ymax" type="float" label="ymax" value="0" min="0" help="In target SRS by default, or in the SRS specified with -te_srs"/>
+            </when>
+        </conditional> 
+    </xml>
+
+    <xml name="gdal_param_r">
+        <conditional name="condi_resample">
+            <param label="Use a resampling method" help="-r resampling algorithm" name="resample" type="select">
+                <option value="no_resampling" selected="true">Don't use a resampling method</option>
+                <option value="resampling">Use a resampling method, option -r</option>
+            </param>
+            <when value="resampling">
+                <param name="r" type="select" label="Reseampling algorithm" >
+                    <option value="nearest" selected="true"/>
+                    <option value="bilinear"/>
+                    <option value="cubic"/>
+                    <option value="cubicspline"/>
+                    <option value="lanczos"/>
+                    <option value="average"/>
+                    <option value="mode"/>
+                    <option value="max"/>
+                    <option value="min"/>
+                    <option value="med">Median resampling</option>
+                    <option value="q1">First quartile resampling</option>
+                    <option value="q2">Third quartile resampling</option>
+                </param>
+            </when>
+            <when value="no_resampling">
+            </when>
+        </conditional>
+    </xml>
+
+    <xml name="gdal_param_tr">
+        <conditional name="condi_tr">
+            <param name="tr" type="select" label="Set the ouput file resolution" help="-tr xres yres. Set output file resolution (in target georeferenced units)"> 
+                <option value="no_tr" selected="true">Don't use the -tr option</option>
+                <option value="tr">Use the -tr option</option>
+            </param>
+            <when value="no_tr">
+            </when>
+            <when value="tr">
+                <param name="xres" type="float" label="xres" value="0" min="0"/>
+                <param name="yres" type="float" label="yres" value="0" min="0"/>
+            </when>
+        </conditional>
+    </xml>
+
+    <xml name="gdal_param_b">
+        <param name="b" type="text" label="Select an input band band for output" help="eg : -b band -b 1 -b 2 -b 3. Bands are numbered from 1. Multiple -b switches may be used to select a set of input bands to write to the output file, or to reorder bands." value=""/>
+    </xml>
+
+    <xml name="gdal_param_tap">
+        <param name="tap" label="Align the coordinates" help="-tap Target Aligned Pixel, align the coordinates of the extent of the output file to the values of the -tr, such that the aligned extent includes the minimum extent" type="boolean" truevalue="-tap" falsevalue="" checked="false" />
+    </xml>
+
+    <xml name="gdal_param_separate">
+        <param name="separate" type="boolean" truevalue="-separate" falsevalue="" checked="false" label="Place each input file into a separate band" help="-separate. In that case, only the first band of each dataset will be placed into a new band. Contrary to the default mode, it is not required that all bands have the same datatype" />
+    </xml>
+
+    <xml name="gdal_param_a_srs">
+        <param name="a_srs" type="text" label="Override the projection for the output file" help="-a_srs srs_def. The srs_def may be any of the usual GDAL/OGR forms, complete WKT, PROJ.4, EPSG:n or a file containing the WKT. No reprojection is done" value="" />
+    </xml>
+
+    <xml name="gdal_param_stats">
+        <param name="stats" type="boolean" truevalue="-stats" falsevalue="" checked="false" label="Force (re)computation of statistics"  help="-stats. Read and display image statistics. Force computation if no statistics are sto.red in an image."/>
+    </xml>
+    
+    <xml name="gdal_param_norat">
+        <param name="norat" type="boolean" truevalue="-norat" falsevalue="" checked="false" help="-norat. Do not copy source RAT into destination dataset." label="Suppress printing of raster attribute table."/>
+    </xml>
+
+    <xml name="gdal_param_of">
+        <param name="of" type="select" label="Output format -of" value="Gtiff" help="Select the output format. The default is GeoTIFF (GTiff). A short list of raster formats is currently enable in GalaxyE : GTiff, netCDF and VRT.">
+            <option value="GTiff">GTiff</option>
+            <option value="netCDF">Network Common Data Format - netCDF</option>
+            <option value="VRT">GDAL Virtual - VRT</option>
+        </param>
+    </xml>
+
+    <xml name="gdal_param_co">
+        <param name="co" type="text" label="Pass a creation option to the output format driver" help="-co NAME=VALUE. eg : COMPRESS=JPEG" value="" />
+    </xml>   
+
+    <xml name="gdal_param_ot">
+        <param name="ot" type="select" label="Datatype of the output bands" help="-ot Datatype">
+            <option value="byte">Byte</option>
+            <option value="int16">Int16</option>
+            <option value="uint16">UInt16</option>
+            <option value="uint32">UInt32</option>
+            <option value="int32">Int32</option>
+            <option value="float32">Float32</option>
+            <option value="float64">Float64</option>
+            <option value="cint16">CInt16</option>
+            <option value="cint32">CInt32</option>
+            <option value="cfloat32">CFloat32</option>
+            <option value="cfloat64">CFloat64</option>
+            <option value="" selected="true">Select a datatype for the output bands (default)</option>
+        </param>
+    </xml>
+
+<!-- need to upgrade gdal version to use
+    <xml name="gdal_param_oo">
+        <param name="oo" type="text" label="-oo NAME=VALUE" value="" />
+    </xml>
+-->
+
+    <xml name="gdal_input_raster_multiple">
+        <param type="data" name="input" format="gtiff,tiff,netcdf,VRT,txt,xml" help="Formats currently supported are : GTiff, netCDF and VRT" label="Gdal supported input file" multiple="true"/>
+    </xml>
+
+    <xml name="gdal_output_change_format">
+        <data name="output" format="GTiff" label="${on_string}.${of}">
+            <change_format>
+                <when input="of" value="GTiff" format="tiff"/>
+                <when input="of" value="netCDF" format="netcdf"/>
+                <when input="of" value="VRT" format="txt"/>
+            </change_format>
+        </data>
+    </xml>
+
+    <xml name="gdal_citation">
+        <citations>
+            <citation type="bibtex">
+                @Manual{,
+                title = {{GDAL/OGR} Geospatial Data Abstraction software Library},
+                author = {{GDAL/OGR contributors}},
+                organization = {Open Source Geospatial Foundation},
+                year = {2018},
+                url = {http://gdal.org},
+                }
+            </citation>
+        </citations>  
+    </xml>
+</macros>

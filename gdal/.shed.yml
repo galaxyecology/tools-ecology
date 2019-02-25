@@ -1,0 +1,85 @@
+categories:
+    - Ecology 
+description: Geospatial Data Abstraction Library tools are all dedicated to manipulate raster and vector geospatial data formats.
+long_description: |
+    Gdal is a translator library for raster and vector geospatial data formats that is released under an X/MIT style Open Source license by the Open Source Geospatial Foundation. As a library, it presents a single raster abstract data model and single vector abstract data model to the calling application for all supported formats. It also comes with a variety of useful command line utilities for data translation and processing.
+
+homepage_url: https://www.gdal.org/
+name: gdal
+owner: ecology 
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/gdal
+type: unrestricted
+
+repositories:
+  gdal-gdaladdo:
+    description: The gdaladdo utility can be used to build or rebuild overview images for most supported file formats with one of several downsampling algorithms.
+    include:
+      - gdaladdo.xml
+      - gdal_macros.xml
+      - test-data/stere.tif
+      - test-data/stere.tif.ovr
+
+  gdal-gdalbuildvrt:
+    description: This program builds a VRT (Virtual Dataset) that is a mosaic of the list of input GDAL datasets.
+    include:
+      - gdalbuildvrt.xml
+      - gdal_macros.xml
+      - test-data/small_east.dem
+      - test-data/small_west.dem
+      - test-data/small_dem.vrt
+
+  gdal-gdalinfo:
+    description: The gdalinfo program lists various information about a GDAL supported raster dataset. 
+    include:
+      - gdalinfo.xml
+      - gdal_macros.xml
+      - test-data/stere.tif
+      - test-data/stere_info.json
+      - test-data/stere_advanced_info.txt
+  
+  gdal-gdal_merge:
+    description: This utility will automatically mosaic a set of images. All the images must be in the same coordinate system and have a matching number of bands, but they may be overlapping, and at different resolutions. In areas of overlap, the last image will be copied over earlier ones.
+    include:
+      - gdal_merge.xml
+      - gdal_macros.xml
+      - test-data/small_west.dem
+      - test-data/small_east.dem
+      - test-data/small_merged.tif
+
+  gdal-gdal_translate:
+    description: The gdal_translate utility can be used to convert raster data between different formats, potentially performing some operations like subsettings, resampling, and rescaling pixels in the process.
+    include:
+      - gdal_translate.xml
+      - gdal_macros.xml
+      - test-data/tinyworld.png
+      - test-data/tinyworld.tif
+
+  gdal-gdalwarp:
+    description: The gdalwarp utility is an image mosaicing, reprojection and warping utility. The program can reproject to any supported projection, and can also apply GCPs stored with the image if the image is "raw" with control information.
+    include:
+      - gdalwarp.xml
+      - gdal_macros.xml
+      - test-data/stere.tif 
+      - test-data/stere_warp1.tiff 
+      - test-data/tinyworld.tif 
+      - test-data/gdalwarp_test2_out.tif 
+      - test-data/gdalwarp_test3_out.tif 
+      - test-data/gdalwarp_test4_out.tif 
+      - test-data/small_warpmerged.tif 
+
+  gdal-ogrinfo:
+    description: The ogrinfo program lists various information about an OGR supported data source.
+    include:
+      - ogrinfo.xml
+      - gdal_macros.xml
+      - test-data/custom.geo.json
+      - test-data/ogrinfo_test1_out2.txt
+      - test-data/ogrinfo_test2_out2.txt
+
+  gdal-ogr2ogr:
+    description: The ogr2ogr program converts simple features data between file formats.
+    include:
+      - ogr2ogr.xml
+      - gdal_macros.xml
+      - test-data/custom.geo.json
+

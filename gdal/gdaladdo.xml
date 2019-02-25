@@ -1,0 +1,66 @@
+<tool id="gdal-gdaladdo" name="GDAL addo" version="@VERSION@">
+    <description>builds or rebuilds overview images</description>
+
+    <macros>
+        <import>gdal_macros.xml</import>
+    </macros>   
+    <expand macro="gdal_requirements" />
+
+    <command detect_errors="exit_code"><![CDATA[
+        gdaladdo '$input1'
+            -q
+            -ro
+            #if str($levels).strip()==''
+                -clean 
+            #else
+                '$levels'
+                --config COMPRESS_OVERVIEW DEFLATE
+                && cp '$input1''.ovr' 'output_ovr'
+            #end if
+    ]]></command>
+    
+    <inputs>
+        <param type="data" name="input1" label="Gdal supported raster input file" format="gtiff,tiff" help="Chose a GeoTIFF file"/>    
+        <param name="levels" type="text" label="levels" help="A list of integral overview levels to build. eg : 2 4 8 16" value=""/>        
+    </inputs>
+    
+    <outputs>
+        <data format="tiff" name="output" from_work_dir="output_ovr" label="${input1.name}.ovr"/>
+    </outputs>
+    
+    <tests> 
+        <test> 
+            <param name="input1" value="stere.tif"/>
+            <param name="levels" value="2 4 8 16" />
+            <output name="output" file="stere.tif.ovr"/>
+        </test>
+    </tests>
+    
+    <help><![CDATA[
+==========================
+Gdaladdo
+==========================
+**What it does**
+
+The gdaladdo utility can be used to build or rebuild overview images for most supported file formats with one of several downsampling algorithms. 
+
+|
+
+**How to use it**        
+
+Select a raster file from history and chose levels to build.
+
+|
+
+**Advanced options and sources**
+
+To see complete details and help section please check the official gdal sources.
+
+http://www.gdal.org
+
+http://www.gdal.org/gdaladdo.html
+
+Raster Processing Tutorial : https://trac.osgeo.org/gdal/wiki/UserDocs/RasterProcTutorial
+    ]]></help>
+    <expand macro="gdal_citation"/>
+</tool>

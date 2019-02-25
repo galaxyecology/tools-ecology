@@ -1,0 +1,152 @@
+<tool id="gdal-gdalinfo" name="GDAL Informations" version="@VERSION@">
+    <description>lists information about a raster dataset</description>
+
+    <macros>
+        <import>gdal_macros.xml</import>
+    </macros>   
+    <expand macro="gdal_requirements" />
+
+    <command detect_errors="exit_code"><![CDATA[
+        gdalinfo '$input1'
+            #if $settings.advanced=='advanced'
+                $settings.mm
+                $settings.stats
+                $settings.approx_stats
+                $settings.hist
+                $settings.nogcp
+                $settings.nomd
+                $settings.norat
+                $settings.noct
+                $settings.checksum
+                $settings.listmdd
+                $settings.proj4
+                -mdd '$settings.mdd'
+            #end if
+            #if $format.value=='json'
+                -json > '$outputJson';
+                #if $subdataset=='subd_y'
+                    cat '$outputJson' | grep -A 1 "\"SUBDATASET_._NAME\":\".*\"," | cut -d "\"" -f4- | sed 's/..$//' | sed 's/\t//' | sed -e 'N; s/\n/\t/' > Subdatasets.tabular
+                #end if
+            #else
+                > '$outputDefault';
+                #if $subdataset=='subd_y'
+                    cat '$outputDefault' | grep -A 1 "SUBDATASET_._NAME=.*:.*$" | cut -d "=" -f 2 | sed 's/\t//' | sed -e 'N; s/\n/\t/' > Subdatasets.tabular
+                #end if
+            #end if
+    ]]></command>
+    <inputs>
+        <param type="data" name="input1" label="Gdal supported raster input file" format="tif,netcdf,tiff,vrt" help="Currently supported format are GTiff,VRT and netCDF."/>
+        <param name="format" type="select" label="Output format" multiple="False">
+            <option value="default" selected="true">Text</option>
+            <option value="json">Json</option>
+        </param>
+        <param name="subdataset" type="select" label="Create list of potential subdatasets" multiple="False" help="If set to yes, a tabular file will be created with a list of all subdatasets. Use this to later perform actions on custom subdata with gdal tranlsate.">
+            <option value="subd_y">Yes</option>
+            <option value="subd_n" selected="True">No</option>
+        </param>
+        <conditional name="settings">
+            <expand macro="gdal_advanced_params_select"/>
+            <when value="advanced">
+                <param name="mm" type="boolean" truevalue="-mm" falsevalue="" checked="false" help="-mm" label="Force computation of the actual min/max values for each band in the dataset."/>
+                <expand macro="gdal_param_stats"/>                    
+                <param name="approx_stats" type="boolean" truevalue="-approx_stats" falsevalue="" checked="false" help="-approx_stats. However, they may be computed based on overviews or a subset of all tiles. Useful if you are in a hurry and don't want precise stats." label="Read and display image statistics."/>
+                <param name="hist" type="boolean" truevalue="-hist" falsevalue="" checked="false" help="-hist" label="Report histogram information for all bands."/>
+                <param name="nogcp" type="boolean" truevalue="-nogcp" falsevalue="" checked="false" help="-nogcp" label="Suppress ground control points list printing."/>
+                <param name="nomd" type="boolean" truevalue="-nomd" falsevalue="" checked="false" help="-nomd. Some datasets may contain a lot of metadata strings" label="Suppress metadata printing."/>
+                <expand macro="gdal_param_norat"/>
+                <param name="noct" type="boolean" truevalue="-noct" falsevalue="" checked="false" help="-noct" label="Suppress printing of color table."/>
+                <param name="checksum" type="boolean" truevalue="-checksum" falsevalue="" checked="false" help="-checksum" label="Force computation of the checksum for each band in the dataset."/>
+                <param name="listmdd" type="boolean" truevalue="-listmdd" falsevalue="" checked="false" help="-listmdd" label="List all metadata domains available for the dataset."/>
+                <param name="proj4" type="boolean" truevalue="-proj4" falsevalue="" checked="false" help="-proj4 String corresponding to the file's coordinate system" label="Report a PROJ.4 string."/> 
+                <param name="mdd" type="text" help="-mdd DOMAIN" label="Report metadata for the specified domain." value="all">
+                    <validator type="expression" message="mdd option can't be an empty value">value.strip()</validator>
+                </param>    
+            </when>
+        </conditional>
+    </inputs>
+
+    <outputs>
+        <data name="outputDefault" format="txt" label="Default info file">
+            <filter>format == "default"</filter>
+        </data>
+        <data name="outputJson" format="json" label="Json formated info file">
+            <filter>format == "json"</filter>
+        </data>
+        <data name="subdatasets" format="tabular" from_work_dir="Subdatasets.tabular" label="Subdatasets from ${input1.name}">
+            <filter>subdataset == "subd_y"</filter>
+        </data>
+    </outputs>
+
+    <tests>
+        <test>
+            <param name="input1" value="stere.tif"/>
+            <param name="format" value="json" />
+            <param name="subdataset" value="subd_n" />
+            <param name="advanced" value="simple"/>
+            <output name="outputJson" file="stere_info.json" lines_diff="6"/>
+        </test>
+        <test>
+            <param name="input1" value="stere.tif"/>
+            <param name="format" value="default" />
+            <param name="subdataset" value="subd_n" />
+            <param name="advanced" value="advanced"/>
+            <param name="stats" value="-stats"/>
+            <param name="hist" value="-hist"/>
+            <param name="checksum" value="-checksum"/>
+            <param name="mdd" value="all"/>
+            <output name="outputDefault" file="stere_advanced_info.txt" lines_diff="6"/>
+        </test>
+    </tests>
+
+    <help><![CDATA[
+==========================
+Gdalinfo
+==========================
+**What it does**        
+
+The gdalinfo program lists various information about a GDAL supported raster dataset. 
+
+It will report all of the following (if known):
+
+    - The format driver used to access the file.
+    - Raster size (in pixels and lines).
+    - The coordinate system for the file (in OGC WKT).
+    - The geotransform associated with the file (rotational coefficients are currently not reported).
+    - Corner coordinates in georeferenced, and if possible lat/long based on the full geotransform (but not GCPs).
+    - Ground control points.
+    - File wide (including subdatasets) metadata.
+    - Band data types.
+    - Band color interpretations.
+    - Band block size.
+    - Band descriptions.
+    - Band min/max values (internally known and possibly computed).
+    - Band checksum (if computation asked).
+    - Band NODATA value.
+    - Band overview resolutions available.
+    - Band unit type (i.e.. "meters" or "feet" for elevation bands).
+    - Band pseudo-color tables.
+
+|
+
+**How to use it**
+
+Select from history a suported raster file and choose either Json or Text format for result display.
+
+An additional option can list available subdatasets.
+
+|
+
+**Advanced options and sources**
+
+To see complete details and help section please check the official gdal sources.
+
+http://www.gdal.org
+
+http://www.gdal.org/gdalinfo.html
+
+Raster Processing Tutorial : https://trac.osgeo.org/gdal/wiki/UserDocs/RasterProcTutorial
+
+
+    ]]></help>
+    <expand macro="gdal_citation"/>
+</tool>

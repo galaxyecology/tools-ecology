@@ -1,0 +1,96 @@
+<tool id="gdal-ogrinfo" name="OGR Informations" version="@VERSION@">
+    <description>lists information about an OGR supported data source</description>
+    <macros>
+        <import>gdal_macros.xml</import>
+    </macros>   
+    <expand macro="gdal_requirements" />
+    <command detect_errors="exit_code"><![CDATA[
+        ogrinfo -ro '$input1'  -al 
+            #if $settings.advanced=='advanced'
+
+                #if $settings.condi_sql.sql=='sql':
+                    #if str($settings.condi_sql.sql_statement).strip()!='':
+                        -sql '$settings.condi_sql.sql_statement'
+                    #end if
+                #end if
+               
+                $settings.so
+
+            #end if
+
+        > '$output'
+
+    ]]></command>
+    
+    <inputs>
+        <param type="data" name="input1" format="xml,txt,netcdf" label="Gdal supported vector input file" help="Currently supported format are GeoJSON GML KML and WFS"/>
+        <conditional name="settings">
+            <expand macro="gdal_advanced_params_select"/>
+            <when value="advanced">
+                <conditional name="condi_sql">
+                    <param name="sql" type="select" label="Use a sql query on the file" help="-sql. Execute the indicated SQL statement and return the result"> 
+                        <option value="no_sql" selected="true">Don't use the -sql option</option>
+                        <option value="sql">Use the -sql option</option>
+                    </param>
+                    <when value="no_sql">
+                    </when>
+                    <when value="sql">
+                        <param name="sql_statement" type="text" label="Execute the indicated SQL"  help="-sql statement eg : SELECT * FROM layer WHERE X>10." value="">
+                            <sanitizer sanitize="False"/>
+                            <validator type="regex" message="Type a valid SQL query">^(?ims)\s*select\s+.*\s+from\s+.*$</validator>
+                        </param>
+                    </when>
+                </conditional>
+                <param name="so" label="Summary Only" help="-so. Suppress listing of features, show only the summary information like projection, schema, feature count and extents" type="boolean" truevalue="-so" falsevalue="" checked="true"/>
+            </when>
+        </conditional>
+    </inputs>
+    
+    <outputs>
+        <data name="output" format="txt" label="OGR Info file on ${on_string}"/>
+    </outputs>
+    
+    <tests>
+        <test>
+            <param name="input1" value="custom.geo.json"/>
+            <param name="advanced" value="simple"/>
+            <output name="output" file="ogrinfo_test1_out2.txt" lines_diff="4"/>
+        </test>
+        <test>
+            <param name="input1" value="custom.geo.json"/>
+            <param name="advanced" value="advanced"/>
+            <param name="sql" value="sql"/>
+            <param name="sql_statement" value="SELECT * FROM OGRGeoJSON"/> <!-- WARNING the FROM here is fixed to pass travis test, the dataset number changes depending of the input -->
+            <param name="so" value="-so"/>
+            <output name="output" file="ogrinfo_test2_out2.txt" lines_diff="4"/>
+        </test>
+   </tests>
+    <help><![CDATA[
+========
+Ogrinfo
+========
+
+**What it does**
+
+The Ogrinfo program lists various information about an OGR supported vector dataset.
+
+|
+
+**How to use it**
+
+Select from history a suported vector file. 
+
+|
+
+**Advanced options and sources**
+
+To see complete details and help section please check the official gdal sources.
+
+http://www.gdal.org
+
+http://www.gdal.org/ogr_utilities.html
+
+http://download.osgeo.org/gdal/workshop/foss4ge2015/workshop_gdal.pdf
+    ]]></help>
+    <expand macro="gdal_citation"/>
+</tool>

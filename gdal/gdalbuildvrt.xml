@@ -1,0 +1,153 @@
+<tool id="gdal-gdalbuildvrt" name="GDAL Build VRT" version="@VERSION@">
+    <description>builds a VRT from a list of datasets</description>
+
+    <macros>
+        <import>gdal_macros.xml</import>
+    </macros>   
+    <expand macro="gdal_requirements" />
+
+    <command detect_errors="exit_code"><![CDATA[
+    gdalbuildvrt 
+        '$output'
+        -q 
+        #for $i in $input
+            '$i'
+        #end for
+        
+        #if $settings.advanced=='advanced'       
+
+            $settings.b
+            
+            #if $settings.condi_te.te=='te'
+                -te $settings.condi_te.xmin $settings.condi_te.ymin $settings.condi_te.xmax $settings.condi_te.ymax
+            #end if
+                
+            #if $settings.condi_tr.tr=='tr'
+                -tr $settings.condi_tr.xres $settings.condi_tr.yres
+            #end if
+                
+            #if $settings.condi_resample.resample=='resampling'
+                -r $settings.condi_resample.r
+            #end if
+                
+            #if $settings.condi_resolution.resolution=='chose_resolution'
+                -r $settings.condi_resolution.reso
+            #end if
+                
+            #if str($settings.a_srs).strip()!=''
+                -a_srs '$settings.a_srs'
+            #end if
+                
+            $settings.tap
+            $settings.addalpha
+            $settings.hidenodata
+            $settings.separate
+             
+##            #if str($settings.oo).strip()!=''
+##                -oo '$settings.oo'
+##           #end if
+                
+            $settings.allow_projection_difference
+                
+            #if str($settings.tileindex).strip()!=''
+                -tileindex '$settings.tileindex'
+            #end if
+                
+            #if str($settings.sb).strip()!=''
+                -sd '$settings.sb'
+            #end if
+                                        
+        #end if 
+        
+    ]]></command>
+    <inputs>      
+        <expand macro="gdal_input_raster_multiple"/>
+        <conditional name="settings">    
+            <expand macro="gdal_advanced_params_select"/>
+            <when value="advanced">
+                <expand macro="gdal_param_b"/>
+                <expand macro="gdal_param_te"/>
+                <expand macro="gdal_param_tr"/>
+                <expand macro="gdal_param_r"/>
+                <conditional name="condi_resolution">
+                    <param label="Control resolution computation" help="-resolution highest|lowest|average|user" name="resolution" type="select">
+                        <option value="chose_resolution">Chose a resolution computation, -resolution option</option>
+                        <option value="no_resolution" selected="true">Don't control output resolution</option>
+                    </param> 
+                    <when value="chose_resolution">
+                        <param name="reso" type="select" label="Chose a resolution">
+                            <option value="highest" selected="true"/>
+                            <option value="lowest"/>
+                            <option value="average"/>
+                            <option value="user"/>
+                        </param>
+                    </when>
+                    <when value="no_resolution">
+                    </when>
+                </conditional>
+                <expand macro="gdal_param_tap"/>
+                <param name="addalpha" type="boolean" truevalue="-addalpha" falsevalue="" checked="false" label="Adds an alpha mask band to the VRT when the source raster have none" help="-addalpha. Mainly useful for RGB sources (or grey-level sources). The alpha band is filled on-the-fly with the value 0 in areas without any source raster, and with value 255 in areas with source raster."/>
+                <param name="hidenodata" type="boolean" truevalue="-hidenodata" falsevalue="" checked="false" label="Makes the VRT band not report the NoData" help="-hidenodata. Even if any band contains nodata value, giving this option makes the VRT band not report the NoData. Useful when you want to control the background color of the dataset. By using along with the -addalpha option, you can prepare a dataset which doesn't report nodata value but is transparent in areas with no data"/>
+                <expand macro="gdal_param_separate"/>
+                <param name="allow_projection_difference" type="boolean" truevalue="-allow_projection_difference" falsevalue="" checked="false" label="Allow projection difference" help="-allow_projection_difference. The utility will accept to make a VRT even if the input datasets have not the same projection. Note: this does not mean that they will be reprojected. Their projection will just be ignored" />
+                <expand macro="gdal_param_a_srs"/>
+<!--
+                <expand macro="gdal_param_oo"/>
+-->
+                <param name="tileindex" type="text" label="Use the specified value as the tile index field" help="-tileindex field_name" value=""/>
+                <param name="sb" type="text" label="Use a subdataset" help="-sd subdataset. If the input dataset contains several subdatasets use a subdataset with the specified number (starting from 1). This is an alternative of giving the full subdataset name as an input" value=""/>
+            </when>
+        </conditional>
+    </inputs>
+    
+    <outputs>
+        <data name="output" format="xml" label="${on_string}.vrt"/> <!--output fixed to xml until I create vrt format. Should be derivated from xml.-->
+    </outputs>
+    
+    <tests>
+        <test>
+            <param name="input" value="small_east.dem,small_west.dem"/>
+            <param name="advanced" value="simple"/>
+            <output name="output" file="small_dem.vrt" lines_diff="4"/>
+        </test>    
+    </tests>
+    
+    <help><![CDATA[
+==========================
+Gdalbuildvrt
+==========================
+**What it does**
+
+This program builds a VRT (Virtual Dataset) that is a mosaic of the list of input GDAL datasets. 
+
+If one GDAL dataset is made of several subdatasets and has 0 raster bands, all the subdatasets will be added to the VRT rather than the dataset itself.
+
+
+gdalbuildvrt does some amount of checks to assure that all files that will be put in the resulting VRT have similar characteristics : number of bands, projection, color interpretation... If not, files that do not match the common characteristics will be skipped. (This is only true in the default mode, and not when using the -separate option)
+
+
+If there is some amount of spatial overlapping between files, the order of files appearing in the list of source matter: files that are listed at the end are the ones from which the content will be fetched. Note that nodata will be taken into account to potentially fetch data from less prioritary datasets, but currently, alpha channel is not taken into account to do alpha compositing (so a source with alpha=0 appearing on top of another source will override is content). This might be changed in later versions.
+
+
+This utility is somehow equivalent to the gdal_vrtmerge.py utility and is build by default in GDAL 1.6.1.
+
+|
+
+**How to use it**
+
+Add as much input files you want to use to create the VRT.
+
+|
+
+**Advanced options and sources**
+
+To see complete details and help section please check the official gdal sources.
+
+http://www.gdal.org
+
+http://www.gdal.org/gdalbuildvrt.html
+
+Raster Processing Tutorial : https://trac.osgeo.org/gdal/wiki/UserDocs/RasterProcTutorial
+    ]]></help>
+    <expand macro="gdal_citation"/>
+</tool>

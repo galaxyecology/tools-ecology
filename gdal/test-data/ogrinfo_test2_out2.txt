@@ -1,0 +1,83 @@
+INFO: Open of `/tmp/tmpEj2FAw/files/000/dataset_6.dat'
+      using driver `GeoJSON' successful.
+
+Layer name: OGRGeoJSON
+Geometry: Unknown (any)
+Feature Count: 39
+Extent: (-180.000000, 2.053389) - (180.000000, 81.250400)
+Layer SRS WKT:
+GEOGCS["WGS 84",
+    DATUM["WGS_1984",
+        SPHEROID["WGS 84",6378137,298.257223563,
+            AUTHORITY["EPSG","7030"]],
+        AUTHORITY["EPSG","6326"]],
+    PRIMEM["Greenwich",0,
+        AUTHORITY["EPSG","8901"]],
+    UNIT["degree",0.0174532925199433,
+        AUTHORITY["EPSG","9122"]],
+    AUTHORITY["EPSG","4326"]]
+Geometry Column = _ogr_geometry_
+scalerank: Integer (0.0)
+featurecla: String (0.0)
+labelrank: Integer (0.0)
+sovereignt: String (0.0)
+sov_a3: String (0.0)
+adm0_dif: Integer (0.0)
+level: Integer (0.0)
+type: String (0.0)
+admin: String (0.0)
+adm0_a3: String (0.0)
+geou_dif: Integer (0.0)
+geounit: String (0.0)
+gu_a3: String (0.0)
+su_dif: Integer (0.0)
+subunit: String (0.0)
+su_a3: String (0.0)
+brk_diff: Integer (0.0)
+name: String (0.0)
+name_long: String (0.0)
+brk_a3: String (0.0)
+brk_name: String (0.0)
+brk_group: String (0.0)
+abbrev: String (0.0)
+postal: String (0.0)
+formal_en: String (0.0)
+formal_fr: String (0.0)
+note_adm0: String (0.0)
+note_brk: String (0.0)
+name_sort: String (0.0)
+name_alt: String (0.0)
+mapcolor7: Integer (0.0)
+mapcolor8: Integer (0.0)
+mapcolor9: Integer (0.0)
+mapcolor13: Integer (0.0)
+pop_est: Integer (0.0)
+gdp_md_est: Integer (0.0)
+pop_year: Integer (0.0)
+lastcensus: Integer (0.0)
+gdp_year: Integer (0.0)
+economy: String (0.0)
+income_grp: String (0.0)
+wikipedia: Integer (0.0)
+fips_10: String (0.0)
+iso_a2: String (0.0)
+iso_a3: String (0.0)
+iso_n3: String (0.0)
+un_a3: String (0.0)
+wb_a2: String (0.0)
+wb_a3: String (0.0)
+woe_id: Integer (0.0)
+adm0_a3_is: String (0.0)
+adm0_a3_us: String (0.0)
+adm0_a3_un: Integer (0.0)
+adm0_a3_wb: Integer (0.0)
+continent: String (0.0)
+region_un: String (0.0)
+subregion: String (0.0)
+region_wb: String (0.0)
+name_len: Integer (0.0)
+long_len: Integer (0.0)
+abbrev_len: Integer (0.0)
+tiny: Integer (0.0)
+homepart: Integer (0.0)
+filename: String (0.0)

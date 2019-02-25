@@ -1,0 +1,260 @@
+<tool id="gdal-gdal_translate" name="GDAL Translate" version="@VERSION@">
+    <description>converts raster data between different formats.</description>
+
+    <macros>
+        <import>gdal_macros.xml</import>
+    </macros>   
+    <expand macro="gdal_requirements" />
+
+    <command detect_errors="exit_code"><![CDATA[
+        gdal_translate 
+
+            '$typeinput.input1' '$output'
+            #if $settings.advanced=='advanced'
+                
+                #if str($settings.ot).strip()!=''
+                    -ot $settings.ot
+                #end if
+
+                $settings.strict
+                
+                #if str($settings.b).strip()!=''
+                    $settings.b
+                #end if
+                
+                #if str($settings.mask).strip()!=''
+                    '$settings.mask'
+                #end if
+                
+                #if $settings.condi_resample.resample=='resampling'
+                    -r $settings.condi_resample.r
+                #end if
+
+                #if $settings.outsize.outsize=='outsize_x'
+                    -outsize xsize $settings.outsize.outx$settings.outsize.outsize_percent
+                #else
+                    -outsize ysize $settings.outsize.outy$settings.outsize.outsize_percent
+                #end if
+                        
+                #if $settings.condi_expand.expand=='expand'
+                    -expand $settings.condi_expand.expand_value
+                #end if
+                
+                #if $settings.condi_scale.scale=='scale'
+                    -scale $settings.condi_scale.src_min $settings.condi_scale.src_max $settings.condi_scale.dst_min $settings.condi_scale.dst_max
+                #end if
+                    
+                #if $settings.condi_srcwin.srcwin=='srcwin'
+                    -srcwin $settings.condi_srcwin.xoff $settings.condi_srcwin.yoff $settings.condi_srcwin.xsize $settings.condi_srcwin.ysize
+                #end if
+                
+                #if $settings.condi_a_ullr.a_ullr=='a_ullr'
+                    -a_ullr $settings.condi_a_ullr.ulx $settings.condi_a_ullr.uly $settings.condi_a_ullr.lrx $settings.condi_a_ullr.lry
+                #end if
+                
+                $settings.epoeco
+                ## $settings.sds
+                $settings.stats
+                $settings.norat
+                
+                #if str($settings.co).strip()!=''
+                    -co '$settings.co'
+                #end if
+                
+                #if str($settings.mo).strip()!=''
+                    -mo '$settings.mo'
+                #end if
+                
+##                #if str($settings.oo).strip()!=''
+##                    -oo '$settings.oo'
+##                #end if
+                
+                #if str($settings.a_srs).strip()!=''
+                    -a_srs '$settings.a_srs'
+                #end if
+                            
+            #end if
+            -q 
+            -of '$of'
+        
+    ]]></command>
+    <inputs>
+        <conditional name="typeinput">
+            <param type="select" name="input" label="Gdal raster supported input file" help="Choose between GTiff,VRT or netCDF. To perform a translate on a subdataset use the gdal information option 'create list of potential subdatasets' to have the usable subdatasets in a file. Then select this file and the subdataset you want to use.">
+                <option value="dataset">Data file</option>
+                <option value="subdataset">Subdataset</option>
+            </param>
+            <when value="dataset">
+                <param type="data" label="Input data" format="data" help="Select a file you want to convert in GTiff, VRT or netCDF" name="input1"/>
+            </when>    
+            <when value="subdataset">
+                <param type="data" label="Tabular of subdatasets" name="subdata_tab"/>
+                <param name="input1" type="select" label="Chose your subdata">
+                   <options from_dataset="subdata_tab">
+                       <column name="value" index="0"/>
+                   </options>
+                   <sanitizer>
+                        <valid initial="string.printable">
+                            <add value="&quot;"/>
+                        </valid>
+                    </sanitizer>
+                </param>
+            </when>
+        </conditional>
+        <expand macro="gdal_param_of"/>
+        <conditional name="settings">    
+            <expand macro="gdal_advanced_params_select"/>
+            <when value="advanced">
+                <expand macro="gdal_param_ot"/>
+                <param name="strict" type="boolean" truevalue="-strict" falsevalue="" checked="false" label="Don't be forgiving of mismatches and lost data" help="-strict"/>
+                <expand macro="gdal_param_b"/>
+                <param name="mask" type="text" label="Select an input band band to create output dataset mask band" help="-mask band e.g : -mask 1" value=""/>
+                <expand macro="gdal_param_r"/>
+                <expand macro="gdal_param_stats"/>
+                <expand macro="gdal_param_norat"/>
+                <expand macro="gdal_param_co"/>
+                <param name="mo" type="text" label="Pass a metadata key and value to set on the output dataset" help="-mo META-TAG=VALUE" value="" />
+
+<!-- commented as the gdalversion need to be upgraded
+                <param name="oo" type="text" label="-oo" value="NAME=VALUE" />
+                <expand macro="gdal_param_oo"/>
+-->
+
+                <conditional name="condi_expand">
+                    <param name="expand" type="select" label="Expose a dataset with 1 band with a color table" help="-expand gray|rgb|rgba" >
+                        <option value="no_expand" selected="true">Don't use the -expand option</option>
+                        <option value="expand">Use the -expand option</option>
+                    </param>
+                    <when value="no_expand">
+                    </when>
+                    <when value="expand">
+                        <param name="expand_value" type="select" label="Color table" multiple="False">
+                            <option value="gray" selected="true">GRAY</option>
+                            <option value="rgb">RGB</option>
+                            <option value="rgba">RGBA</option>
+                        </param>
+                    </when>
+                </conditional>
+                <conditional name="outsize">
+                    <param name="outsize" type="select" label="Set the size of the output file" help="-outsize in % or pixel. Default is 100%." >
+                        <option value="outsize_x" selected="true">xsize</option>
+                        <option value="outsize_y">ysize</option>
+                    </param>
+                    <when value="outsize_x">
+                        <param name="outsize_percent" type="boolean" truevalue="%" falsevalue="" checked="true" label="Use percentage"/>
+                        <param name="outx" label="xsize" type="integer" value="100" min="0"/>
+                    </when>
+                    <when value="outsize_y">
+                        <param name="outsize_percent" type="boolean" truevalue="%" falsevalue="" checked="true" label="Use percentage"/>
+                        <param name="outy" label="ysize" type="integer" value="100" min="0"/>
+                    </when>
+                </conditional>
+                <conditional name="condi_scale">
+                    <param name="scale" type="select" label="Rescale the input pixels values" help="-squale from the range src_min to src_max to the range dst_min to dst_max" >
+                        <option value="no_scale" selected="true">Don't use the -scale option</option>
+                        <option value="scale">Use the -scale option</option>
+                    </param>
+                    <when value="no_scale">
+                    </when>
+                    <when value="scale">
+                        <param name="src_min" type="integer" label="src_min" value="0" min="0"/>
+                        <param name="src_max" type="integer" label="src_max" value="0" min="0"/>
+                        <param name="dst_min" type="integer" label="dst_min" value="0" min="0"/>
+                        <param name="dst_max" type="integer" label="dst_max" value="0" min="0"/>
+                    </when>
+                </conditional>
+                <conditional name="condi_srcwin">
+                    <param name="srcwin" type="select" label="Selects a subwindow from the source image" help="-srcwin. Copying based on pixel/line location" >
+                        <option value="no_srcwin" selected="true">Don't use the -srcwin option</option>
+                        <option value="srcwin">Use the -srcwin option</option>
+                    </param>
+                    <when value="no_srcwin">
+                    </when>
+                    <when value="srcwin">
+                        <param name="xoff" type="integer" label="xoff" value="0" min="0"/>
+                        <param name="yoff" type="integer" label="yoff" value="0" min="0"/>
+                        <param name="xsize" type="integer" label="xsize" value="0" min="0"/>
+                        <param name="ysize" type="integer" label="ysize" value="0" min="0"/>
+                    </when>
+                </conditional>
+                <conditional name="condi_a_ullr">
+                    <param name="a_ullr" type="select" label="Assign/override the georeferenced bounds of the output file" help="-a_ullr ulx uly lrx lry. This assigns georeferenced bounds to the output file, ignoring what would have been derived from the source file. So this does not cause reprojection to the specified SRS" >
+                        <option value="no_a_ullr" selected="true">Don't use the -a_ullr option</option>
+                        <option value="a_ullr">Use the -a_ullr option</option>
+                    </param>
+                    <when value="no_a_ullr">
+                    </when>
+                    <when value="a_ullr">
+                        <param name="ulx" type="integer" label="ulx" value="0"/>
+                        <param name="uly" type="integer" label="uly" value="0"/>
+                        <param name="lrx" type="integer" label="lrx" value="0"/>
+                        <param name="lry" type="integer" label="lry" value="0"/>
+                    </when>
+                </conditional>
+                <param name="epoeco" type="select" label="Display error when outside the source raster" multiple="False">
+                    <option value="" selected="true">Default, no error</option>
+                    <option value="-epo">-epo : Error when partially outside</option>
+                    <option value="-eco">-eco : Error when completely outside</option>
+                </param>
+                <param name="a_srs" type="text" label="Override the projection" help="-a_srs. The srs_def may be any of the usual GDAL/OGR forms, complete WKT, PROJ.4, EPSG:n or a file containing the WKT. No reprojection is done" value="" />
+
+                <!--
+                <param name="sds" type="boolean" truevalue="-sds" falsevalue="" checked="false" label="-sds" help="Copy all subdatasets of this file to individual output files. Use with formats like HDF or OGDI that have subdatasets. The output file naming scheme has changed in GDAL 1.11 (e.g. ofile_1.tif, ofile_2.tif)."/>
+                Ici il y a surement une gestion de fichiers de sorties multiple à faire
+                -->
+                
+            </when>
+        </conditional>
+    </inputs>
+    
+    <outputs>
+        <expand macro="gdal_output_change_format"/>  
+    </outputs>
+    
+    
+    <tests>
+        <test>
+            <param name="input1" value="tinyworld.png"/>
+            <param name="of" value="GTiff" />
+            <param name="advanced" value="advanced"/>
+            <param name="a_ullr" value="a_ullr"/>
+            <param name="ulx" value="-180"/>
+            <param name="uly" value="90"/>
+            <param name="lrx" value="180"/>
+            <param name="lry" value="-90"/>
+            <param name="a_srs" value="WGS84"/>
+            <output name="output" file="tinyworld.tif"/>
+        </test>
+    </tests>
+    
+    <help><![CDATA[
+===============
+Gdal_translate
+===============
+
+**What it does**
+        
+The gdal_translate utility can be used to convert raster data between different formats, potentially performing some operations like subsettings, resampling, and rescaling pixels in the process. 
+
+|
+
+**How to use it**
+
+Select from history a raster file/subdataset.
+
+Specifiy output format using short name (http://www.gdal.org/formats_list.html).
+
+|
+
+**Advanced options and sources**
+
+To see complete details and help section please check the official gdal sources.
+
+http://www.gdal.org
+
+http://www.gdal.org/gdal_translate.html
+
+Raster Processing Tutorial : https://trac.osgeo.org/gdal/wiki/UserDocs/RasterProcTutorial
+    ]]></help>
+    <expand macro="gdal_citation"/>
+</tool>
