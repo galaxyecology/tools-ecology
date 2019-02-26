@@ -6,19 +6,19 @@
     <expand macro="gdal_requirements" />
     <command detect_errors="exit_code"><![CDATA[
         gdal_merge.py
-            -q        
+            -q
             #for $i in $input
-                "$i"
+                '$i'
             #end for
-            
+
             -of '$of'
-            
+
             #if $settings.advanced=='advanced'
-                
+
                 #if str($settings.co).strip()!=''
                     -co '$settings.co'
                 #end if
-                
+
                 #if str($settings.ot).strip()!=''
                     -ot '$settings.ot'
                 #end if
@@ -52,14 +52,14 @@
                 #end if
                 
             #end if
-            
+
             -o '$output'
         ]]></command>
-        
+
     <inputs>
         <expand macro="gdal_input_raster_multiple"/>  
         <expand macro="gdal_param_of"/>
-        <conditional name="settings">    
+        <conditional name="settings">
             <expand macro="gdal_advanced_params_select"/>
             <when value="advanced">
                 <expand macro="gdal_param_co"/> 
@@ -104,7 +104,7 @@
     <outputs>
         <expand macro="gdal_output_change_format"/>
     </outputs>
-    
+
     <tests>
         <test>
             <param name="input" value="small_west.dem,small_east.dem"/>
@@ -112,7 +112,7 @@
             <output name="output" file="small_merged.tif"/>
         </test>
     </tests>
-    
+
     <help><![CDATA[
 ==========================
 Gdal_merge
