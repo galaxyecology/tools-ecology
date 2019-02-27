@@ -2,7 +2,7 @@
     <token name="@VERSION@">2.4.0</token>  
     <xml name="gdal_requirements">
         <requirements>
-            <requirement type="package" version="2.4.0">gdal</requirement>
+            <requirement type="package" version="@VERSION@">gdal</requirement>
             <requirement type="package" version="3.7.1">geos</requirement>
         </requirements>
     </xml>
