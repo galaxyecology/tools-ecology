@@ -1,6 +1,5 @@
 Driver: GTiff/GeoTIFF
-Files: /tmp/tmpdWKpSn/files/000/dataset_1.dat
-       /tmp/tmpdWKpSn/files/000/dataset_1.dat.aux.xml
+Files: /tmp/tmpqeQqf5/files/000/dataset_4.dat
 Size is 273, 265
 Coordinate System is:
 PROJCS["unnamed",
@@ -21,6 +20,9 @@ Origin = (-64455.359436834092776,72521.133364936860744)
 Pixel Size = (500.000000000000000,-500.000000000000000)
 Metadata:
   AREA_OR_POINT=Area
+Metadata (DERIVED_SUBDATASETS):
+  DERIVED_SUBDATASET_1_NAME=DERIVED_SUBDATASET:LOGAMPLITUDE:/tmp/tmpqeQqf5/files/000/dataset_4.dat
+  DERIVED_SUBDATASET_1_DESC=log10 of amplitude of input bands from /tmp/tmpqeQqf5/files/000/dataset_4.dat
 Image Structure Metadata:
   INTERLEAVE=PIXEL
 Corner Coordinates:
@@ -30,7 +32,6 @@ Upper Right (   72044.641,   72521.133) ( 30d59'33.46"E, 72d 2'19.42"N)
 Lower Right (   72044.641,  -59978.867) ( 30d52' 2.96"E, 70d51' 7.03"N)
 Center      (    3794.641,    6271.133) ( 29d 0'24.70"E, 71d27'22.22"N)
 Band 1 Block=273x10 Type=Byte, ColorInterp=Red
-  Min=38.000 Max=255.000 
   Minimum=38.000, Maximum=255.000, Mean=55.724, StdDev=24.243
 0...10...20...30...40...50...60...70...80...90...100 - done.
   256 buckets from -0.5 to 255.5:
@@ -45,8 +46,8 @@ Band 1 Block=273x10 Type=Byte, ColorInterp=Red
     STATISTICS_MEAN=55.723519248048
     STATISTICS_MINIMUM=38
     STATISTICS_STDDEV=24.242663554615
+    STATISTICS_VALID_PERCENT=100
 Band 2 Block=273x10 Type=Byte, ColorInterp=Green
-  Min=77.000 Max=255.000 
   Minimum=77.000, Maximum=255.000, Mean=136.201, StdDev=29.298
 0...10...20...30...40...50...60...70...80...90...100 - done.
   256 buckets from -0.5 to 255.5:
@@ -61,8 +62,8 @@ Band 2 Block=273x10 Type=Byte, ColorInterp=Green
     STATISTICS_MEAN=136.20124403898
     STATISTICS_MINIMUM=77
     STATISTICS_STDDEV=29.297914270598
+    STATISTICS_VALID_PERCENT=100
 Band 3 Block=273x10 Type=Byte, ColorInterp=Blue
-  Min=111.000 Max=255.000 
   Minimum=111.000, Maximum=255.000, Mean=171.703, StdDev=31.001
 0...10...20...30...40...50...60...70...80...90...100 - done.
   256 buckets from -0.5 to 255.5:
@@ -76,4 +77,5 @@ Band 3 Block=273x10 Type=Byte, ColorInterp=Blue
     STATISTICS_MAXIMUM=255
     STATISTICS_MEAN=171.70326905799
     STATISTICS_MINIMUM=111
-    STATISTICS_STDDEV=31.000562281985
+    STATISTICS_STDDEV=31.000562281986
+    STATISTICS_VALID_PERCENT=100
