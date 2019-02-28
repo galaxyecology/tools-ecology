@@ -81,7 +81,6 @@ repositories:
       - gdal_macros.xml
       - test-data/custom.geo.json
       - test-data/ogrinfo_test1_out2.txt
-      - test-data/ogrinfo_test2_out2.txt
 
   gdal_ogr2ogr:
     description: The ogr2ogr program converts simple features data between file formats.
