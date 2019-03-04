@@ -1,0 +1,54 @@
+<tool id="vigiechiro_BilanEnrichiRP" name="Advanced restitution: 'Routier'or 'Pedestre' protocols" version="@VERSION@">
+    <description>from Animal Detection on Acoustic Recordings</description>
+    <macros>
+        <import>vigiechiro_macros.xml</import>
+    </macros>   
+    <expand macro="vigiechiro_bilanPF_bilanRP_requirements"/>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript 
+            '$__tool_directory__/BilanEnrichiRP.R' '$idc2' '$__tool_directory__/refRPSeuil50.csv' '$__tool_directory__/SpeciesList.csv' 
+        &&
+	tail -n +2 output-summaryRP.html > tmp && mv tmp output-summaryRP.html &&
+	tail -n +2 output-detailRP.html > tmp && mv tmp output-detailRP.html
+]]>
+    </command>
+    <inputs>
+        <param name="idc2" type="data" format="tabular" label="Corrected and validated observation file" help="Use output file from 'Tadarida identifications integration' : a sampling session file corrected and validated. Routier or Pedestre protocol"/>
+        <param name="output_choice" type="select" label="Select a summarised or detailed display" help="Chose whether your want a nigthly, hourly or global summary">
+            <option value="detailed">detailed output</option>
+            <option value="summarised">summarised output</option>
+        </param>		
+    </inputs>
+    <outputs>
+        <data name="output_summary_tabular" format="tabular" from_work_dir="output-summaryRP.tabular" label="${tool.name} on ${on_string} Summary table">
+            <filter>output_choice=='summarised'</filter>
+        </data>
+        <data name="output_summary_html" format="html" from_work_dir="output-summaryRP.html" label="${tool.name} on ${on_string} Summary html">
+            <filter>output_choice=='summarised'</filter>
+        </data>	 
+        <data name="output_detail_tabular" format="tabular" from_work_dir="output-detailRP.tabular" label="${tool.name} on ${on_string} Detail table">
+            <filter>output_choice=='detailed'</filter>
+        </data>
+        <data name="output_detail_html" format="html" from_work_dir="output-detailRP.html" label="${tool.name} on ${on_string} Detail html">
+            <filter>output_choice=='detailed'</filter>
+        </data>
+    </outputs>
+    <tests>
+        <test>
+            <param name="idc2" value="BilanEnrichiRP_Test1.tabular"/>
+	    <param name="output_choice" value="detailed"/>
+ 	    <output name="output_detail_tabular" file="BilanEnrichiRP_Test1_out_tab.tabular" ftype="tabular"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+**What it does**
+
+The tool analyses the observations made with the "Routier" or "Pedestre" protocols.
+
+**Arguments**
+
+- Input is an observation/participation file corrected by the tools Tadarida data cleaner and Tadarida identifications integration.
+- Outputs are Summary and details raw tabulars, and html visualisations.
+    ]]></help>
+    <expand macro="vigiechiro_bibref" />    
+</tool>
