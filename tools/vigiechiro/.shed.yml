@@ -13,7 +13,7 @@ type: unrestricted
 
 repositories:
   vigiechiro_bilanenrichipf:
-    description: Point fixe protocol advanced restitution tool from the vigiechiro suite
+    description: "Point fixe" protocol advanced restitution tool from the vigiechiro suite
     owner: ecology
     include:
       - vigiechiro_macros.xml  
@@ -25,7 +25,7 @@ repositories:
       - test-data/BilanEnrichiPF_Test1.tabular  
 
   vigiechiro_bilanenrichirp:  
-     description: Routier or Pedestre protocols advanced restitution tool from the vigiechiro suite
+     description: "Routier" or "Pedestre" protocols advanced restitution tool from the vigiechiro suite
      owner: ecology
      include:        
       - vigiechiro_macros.xml  
