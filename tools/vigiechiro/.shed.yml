@@ -4,7 +4,7 @@ description: Tools created by the vigiechiro team to analyses and identify chiro
 long_description: |
   The Vigie Chiro is a french scientific citizen program that studies bats. This tools suite allows to analyse data from the vigiechiro.herokuapp.com web portal and to create advanced restitutions. Two tools are useful to clean and synthetize data according to the sampling session. The other two produce advanced restitution based on the protocol used.
 
-homepage_url: https://www.gdal.org 
+homepage_url: https://www.vigienature-ecole.fr/les-observatoires/le-protocole-vigie-chiro 
 name: vigiechiro
 owner: ecology 
 remote_repository_url: https://github.com/galaxyecology/tools-ecology/tools/vigiechiro
@@ -14,6 +14,7 @@ type: unrestricted
 repositories:
   vigiechiro_bilanenrichipf:
     description: Point fixe protocol advanced restitution tool from the vigiechiro suite
+    owner: ecology
     include:
       - vigiechiro_macros.xml  
       - BilanEnrichiPFen.xml    
@@ -25,6 +26,7 @@ repositories:
 
   vigiechiro_bilanenrichirp:  
      description: Routier or Pedestre protocols advanced restitution tool from the vigiechiro suite
+     owner: ecology
      include:        
       - vigiechiro_macros.xml  
       - BilanEnrichiRPen.xml    
@@ -36,6 +38,7 @@ repositories:
 
   vigiechiro_idcorrect_2ndlayer: 
     description: Tadarida data clean tool from the vigiechiro suite
+    owner: ecology
     include:        
       - vigiechiro_macros.xml  
       - IdCorrect_2ndLayer_en.xml
@@ -48,6 +51,7 @@ repositories:
 
   vigiechiro_idvalid:
     description: Tadarida identifications integration tool from the vigiechiro suite    
+    owner: ecology
     include:    
       - vigiechiro_macros.xml  
       - IdValid.R
