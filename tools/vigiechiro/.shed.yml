@@ -4,7 +4,7 @@ description: Tools created by the vigiechiro team to analyses and identify chiro
 long_description: |
   The Vigie Chiro is a french scientific citizen program that studies bats. This tools suite allows to analyse data from the vigiechiro.herokuapp.com web portal and to create advanced restitutions. Two tools are useful to clean and synthetize data according to the sampling session. The other two produce advanced restitution based on the protocol used.
 
-homepage_url: https://www.vigienature-ecole.fr/les-observatoires/le-protocole-vigie-chiro 
+homepage_url: https://www.vigienature-ecole.fr 
 name: vigiechiro
 owner: ecology 
 remote_repository_url: https://github.com/galaxyecology/tools-ecology/tools/vigiechiro
