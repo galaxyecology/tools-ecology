@@ -1,4 +1,4 @@
-<tool id="vigiechiro_BilanEnrichiRP" name="Advanced restitution: 'Routier'or 'Pedestre' protocols" version="@VERSION@">
+<tool id="vigiechiro_bilanenrichirp" name="Advanced restitution: 'Routier'or 'Pedestre' protocols" version="@VERSION@">
     <description>from Animal Detection on Acoustic Recordings</description>
     <macros>
         <import>vigiechiro_macros.xml</import>
