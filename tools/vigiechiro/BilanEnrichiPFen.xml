@@ -1,4 +1,4 @@
-<tool id="vigiechiro_BilanEnrichiPF" name="Advanced restitution: 'Point fixe' protocol" version="@VERSION@">
+<tool id="vigiechiro_bilanenrichipf" name="Advanced restitution: 'Point fixe' protocol" version="@VERSION@">
     <description>from Animal Detection on Acoustic Recordings</description>
     <macros>
         <import>vigiechiro_macros.xml</import>
