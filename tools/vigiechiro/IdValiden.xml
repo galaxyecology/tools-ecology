@@ -7,8 +7,10 @@
         <requirement type="package" version="1.10.4">r-data.table</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
-        Rscript 
-         '$__tool_directory__/IdValid.R' '$inputfile'  '$__tool_directory__/Referentiel_seuils_C2.csv'  '$output'
+        Rscript '$__tool_directory__/IdValid.R' 
+            '$inputfile'  
+            '$__tool_directory__/Referentiel_seuils_C2.csv'  
+            '$output'
 ]]>
     </command>
     <inputs>

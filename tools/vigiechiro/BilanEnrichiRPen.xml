@@ -5,8 +5,10 @@
     </macros>   
     <expand macro="vigiechiro_bilanPF_bilanRP_requirements"/>
     <command detect_errors="exit_code"><![CDATA[
-        Rscript 
-            '$__tool_directory__/BilanEnrichiRP.R' '$idc2' '$__tool_directory__/refRPSeuil50.csv' '$__tool_directory__/SpeciesList.csv' 
+        Rscript '$__tool_directory__/BilanEnrichiRP.R' 
+            '$idc2' 
+            '$__tool_directory__/refRPSeuil50.csv' 
+            '$__tool_directory__/SpeciesList.csv' 
         &&
 	tail -n +2 output-summaryRP.html > tmp && mv tmp output-summaryRP.html &&
 	tail -n +2 output-detailRP.html > tmp && mv tmp output-detailRP.html
