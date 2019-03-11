@@ -61,7 +61,7 @@ Tadarida data cleaner
 
 **What it does**
 
-This tool intend to correct ids from 1st layer of Tadarida software, and improve data output according to context (= the whole output of a sampling session).
+This tool intends to correct ids from 1st layer of Tadarida software, and improves data output according to context (= the whole output of a sampling session).
 
 **Arguments**
 
