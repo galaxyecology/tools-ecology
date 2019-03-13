@@ -18,7 +18,7 @@
     </command>
     <inputs>
         <param name="idc2" type="data" format="tabular" label="Corrected and validated observation file" help="Use output file from 'Tadarida identifications integration' : a sampling session file corrected and validated. Point fixe protocol"/>
-        <param name="output_choice" type="select" multiple="True" label="Select a summary display" help="Chose whether your want a nigthly, hourly or global summary">
+        <param name="output_choice" type="select" multiple="True" optional="FALSE" label="Select a summary display" help="Chose whether your want a nigthly, hourly or global summary">
             <option value="nightly">nigthly summary</option>
             <option value="hourly">hourly summary</option>
             <option value="global" selected="true">global summary</option>
