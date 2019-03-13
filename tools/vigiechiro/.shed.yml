@@ -44,7 +44,6 @@ repositories:
       - IdCorrect_2ndLayer_en.xml
       - IdCorrect_2ndLayer.R
       - ClassifEspC2b_180222.learner
-      - ClassifEspC2b_171206.learner
       - test-data/IdCor2Layer_Test1_obs.csv
       - test-data/IdCor2Layer_Test1_out.tabular 
 
