@@ -16,8 +16,8 @@
     </command>
     <inputs>
         <param name="idc2" type="data" format="tabular" label="Corrected and validated observation file" help="Use output file from 'Tadarida identifications integration' : a sampling session file corrected and validated. Routier or Pedestre protocol"/>
-        <param name="output_choice" type="select" label="Select a summarised or detailed display" multiple="TRUE" optional="FALSE" help="Chose whether your want a summarised or detailed display">
-            <option value="detailed" selected="TRUE">detailed output</option>
+        <param name="output_choice" type="select" label="Select a summarised or detailed display" multiple="true" optional="false" help="Chose whether your want a summarised or detailed display">
+            <option value="detailed" selected="true">detailed output</option>
             <option value="summarised">summarised output</option>
         </param>		
     </inputs>
