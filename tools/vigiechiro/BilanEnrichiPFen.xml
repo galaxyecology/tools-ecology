@@ -1,0 +1,71 @@
+<tool id="vigiechiro_bilanenrichipf" name="Advanced restitution: 'Point fixe' protocol" version="@VERSION@">
+    <description>from Animal Detection on Acoustic Recordings</description>
+    <macros>
+        <import>vigiechiro_macros.xml</import>
+    </macros>   
+
+    <expand macro="vigiechiro_bilanPF_bilanRP_requirements" />
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript '$__tool_directory__/BilanEnrichiPF.R' 
+            '$idc2' 
+            '$__tool_directory__/refPF.csv' 
+            '$__tool_directory__/SpeciesList.csv' 
+        &&
+        tail -n +2 output-summary.html > tmp && mv tmp output-summary.html &&
+        tail -n +2 output-nightly.html > tmp && mv tmp output-nightly.html &&
+        tail -n +2 output-hourly.html > tmp && mv tmp output-hourly.html
+]]>
+    </command>
+    <inputs>
+        <param name="idc2" type="data" format="tabular" label="Corrected and validated observation file" help="Use output file from 'Tadarida identifications integration' : a sampling session file corrected and validated. Point fixe protocol"/>
+        <param name="output_choice" type="select" multiple="True" optional="FALSE" label="Select a summary display" help="Chose whether your want a nigthly, hourly or global summary">
+            <option value="nightly">nigthly summary</option>
+            <option value="hourly">hourly summary</option>
+            <option value="global" selected="true">global summary</option>
+        </param>		
+    </inputs>
+    <outputs>
+        <data name="output_summary_tabular" format="tabular" from_work_dir="output-summary.tabular" label="${tool.name} on ${on_string} Global Summary">
+            <filter>'global' in output_choice</filter>
+        </data>    
+        <data name="output_summary_html" format="html" from_work_dir="output-summary.html" label="${tool.name} on ${on_string} Global Summary">
+            <filter>'global' in output_choice</filter>
+        </data>
+        <data name="output_nightly_tabular" format="tabular" from_work_dir="output-nightly.tabular" label="${tool.name} on ${on_string} Nightly">
+            <filter>'nightly' in output_choice</filter>
+        </data>
+        <data name="output_nightly_html" format="html" from_work_dir="output-nightly.html" label="${tool.name} on ${on_string} Nightly">
+            <filter>'nightly' in output_choice</filter>
+        </data>
+        <data name="output_hourly_tabular" format="tabular" from_work_dir="output-hourly.tabular" label="${tool.name} on ${on_string} Hourly">
+           <filter>'hourly' in output_choice</filter>
+       </data> 
+       <data name="output_hourly_html" format="html" from_work_dir="output-hourly.html" label="${tool.name} on ${on_string} Hourly">
+           <filter>'hourly' in output_choice</filter>
+       </data>    
+    </outputs>
+    <tests>
+        <test>
+            <param name="idc2" value="BilanEnrichiPF_Test1.tabular"/>
+            <param name="output_choice" value="global"/> 
+            <output name="output_summary_tabular" file="BilanEnrichiPF_Test1_out_tab.tabular" ftype="tabular"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+.. class:: infomark 
+
+==========================
+Advanced restitution 
+==========================
+
+**What it does**
+
+The tool treats observations made with the "Point fixe" protocol:  
+
+**Arguments**
+
+- Input is an observation/participation file corrected by the tools Tadarida data cleaner and Tadarida identifications integration.
+- Outputs are Summary/Nightly/Hourly raw tabulars, and html visualisations.
+    ]]></help>
+    <expand macro="vigiechiro_bibref" />
+</tool>

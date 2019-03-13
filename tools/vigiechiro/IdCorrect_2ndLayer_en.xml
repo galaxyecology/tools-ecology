@@ -1,0 +1,68 @@
+<tool id="vigiechiro_idcorrect_2ndlayer" name="Tadarida data cleaner" version="@VERSION@">
+    <description>clean data from animal detection on acoustic recordings</description>
+    <macros>
+        <import>vigiechiro_macros.xml</import>
+   </macros>
+   <requirements>
+        <requirement type="package" version="1.10.4">r-data.table</requirement>
+        <requirement type="package" version="4.6_12">r-randomforest</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript 
+         '$__tool_directory__/IdCorrect_2ndLayer.R' '$participation_file' 
+
+         #if $learner.condi_learner == "custom"
+             '$learner.user_learner'
+         #else
+             '$__tool_directory__/ClassifEspC2b_180222.learner'
+         #end if
+         '${participation_file.name}' 
+         '$output'
+]]>
+    </command>
+    <inputs>
+        <param name="participation_file" type="data" format="csv" label="Participation file" help="Summary table of TadaridaC"/>
+        <param name="learner" type="data" label="Choose your leaner" format="rdata"/>
+        <conditional name="learner">
+            <param name="condi_learner" type="select" label="Select a classifier" help="Default is ClassifEspC2b_180222">
+                <option value="c18">ClassifEspC2b_180222</option>
+                <option value="custom">Custom Classifier</option>
+            </param>
+            <when value="c18">
+            </when>
+            <when value="custom">        
+                <param name="user_learner" type="data" label="Choose your classifier" format="rdata"/>
+            </when>
+        </conditional>
+    </inputs>
+    <outputs>
+        <data name="output" from_work_dir="output.tabular" format="tabular"/>
+    </outputs>
+    <tests>
+        <test> 
+            <param name="participation_file" value="IdCor2Layer_Test1_obs.csv"/>
+            <param name="condi_learner" value="default_learner"/>
+            <output name="output" file="IdCor2Layer_Test1_out.tabular"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+
+.. class:: infomark 
+
+==========================
+Tadarida data cleaner
+==========================
+
+**What it does**
+
+This tool intends to correct ids from 1st layer of Tadarida software, and improves data output according to context (= the whole output of a sampling session).
+
+**Arguments**
+
+It should be called with 2 consecutive arguments :
+
+- a summary table of TadaridaC output from vigiechiro.herokuapp.com web portal. 
+- the 2nd layer classifier built on validated id in Vigie-Chiro database (eg : "ClassifEspC2b_180222.learner")
+  ]]></help>
+    <expand macro="vigiechiro_bibref" />
+</tool>

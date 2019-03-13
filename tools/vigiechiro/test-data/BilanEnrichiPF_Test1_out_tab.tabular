@@ -1,0 +1,12 @@
+Code	Groupe	Nom francais	Nom scientifique	Risque d'erreur (%)	Nb Validations	Effort de validation	Nb de Contacts par Nuit	Niveau d'Activite	TriGroupe
+Pipkuh	Chauve-souris	Pipistrelle de Kuhl	Pipistrellus kuhlii	2	0	NA	11	MODEREE	3
+Pipnat	Chauve-souris	Pipistrelle de Nathusius	Pipistrellus nathusii	25	0	NA	7	FORTE	3
+Nyclei	Chauve-souris	Noctule de Leisler	Nyctalus leisleri	1	0	NA	6	MODEREE	3
+Eptser	Chauve-souris	Serotine commune	Eptesicus serotinus	16	0	NA	4	MODEREE	3
+Pippip	Chauve-souris	Pipistrelle commune	Pipistrellus pipistrellus	11	0	NA	4	FAIBLE	3
+MyoGT	Chauve-souris	Murin de grande taille	Myotis cf. myotis	9	0	NA	2	MODEREE	3
+Barbar	Chauve-souris	Barbastelle d'Europe	Barbastella barbastellus	4	0	NA	1	FAIBLE	3
+Tetvir	Sauterelle	Sauterelle verte	Tettigonia viridissima	1	0	NA	643	MODEREE	2
+noise	Autre	bruit	noise	17	0	NA	424	FAIBLE	1
+piaf	Autre	Oiseau sp.	Aves sp.	8	0	NA	15	MODEREE	1
+Lamsp.	Autre	Lampyre sp.	Lampyris sp.	1	0	NA	1	FAIBLE	1
