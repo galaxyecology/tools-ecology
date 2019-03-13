@@ -16,23 +16,23 @@
     </command>
     <inputs>
         <param name="idc2" type="data" format="tabular" label="Corrected and validated observation file" help="Use output file from 'Tadarida identifications integration' : a sampling session file corrected and validated. Routier or Pedestre protocol"/>
-        <param name="output_choice" type="select" label="Select a summarised or detailed display" help="Chose whether your want a nigthly, hourly or global summary">
-            <option value="detailed">detailed output</option>
+        <param name="output_choice" type="select" label="Select a summarised or detailed display" multiple="TRUE" optional="FALSE" help="Chose whether your want a summarised or detailed display">
+            <option value="detailed" selected="TRUE">detailed output</option>
             <option value="summarised">summarised output</option>
         </param>		
     </inputs>
     <outputs>
         <data name="output_summary_tabular" format="tabular" from_work_dir="output-summaryRP.tabular" label="${tool.name} on ${on_string} Summary table">
-            <filter>output_choice=='summarised'</filter>
+            <filter>'summarised' in output_choice</filter>
         </data>
         <data name="output_summary_html" format="html" from_work_dir="output-summaryRP.html" label="${tool.name} on ${on_string} Summary html">
-            <filter>output_choice=='summarised'</filter>
+            <filter>'summarised' in output_choice</filter>
         </data>	 
         <data name="output_detail_tabular" format="tabular" from_work_dir="output-detailRP.tabular" label="${tool.name} on ${on_string} Detail table">
-            <filter>output_choice=='detailed'</filter>
+            <filter>'detailed' in output_choice</filter>
         </data>
         <data name="output_detail_html" format="html" from_work_dir="output-detailRP.html" label="${tool.name} on ${on_string} Detail html">
-            <filter>output_choice=='detailed'</filter>
+            <filter>'detailed' in output_choice</filter>
         </data>
     </outputs>
     <tests>
