@@ -44,12 +44,6 @@
             <param name="condi_learner" value="default_learner"/>
             <output name="output" file="IdCor2Layer_Test1_out.tabular"/>
         </test>
-        <test>             
-            <param name="participation_file" value="IdCor2Layer_Test1_obs.csv"/>
-            <param name="condi_learner" value="custom_learner"/>
-            <param name="user_learner" value="ClassifEspC2b_171206.learner"/>
-            <output name="output" file="IdCor2Layer_Test1_out.tabular"/>
-        </test> 
     </tests>
     <help><![CDATA[
 
