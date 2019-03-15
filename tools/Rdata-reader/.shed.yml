@@ -1,0 +1,33 @@
+categories:
+    - Ecology
+description: Rtools that allows to load and export data from a binary Rdata file.
+long_description: |
+   The two R scripts are rdata_reader and rdata_parser. The first load a Rdata file and give a quick insight of its content. Then the parser tools try to extract and write chosen attributes in the most appropriate way. A specified option will bind the available data into a single table file when possible. 
+
+homepage_url: https://github.com/galaxyecology/tools-ecology/tools/Rdata
+name: rdata-reader
+owner: ecology 
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tools/Rdata
+type: unrestricted
+
+repositories:
+  rdata_reader:
+    description: The rdata reader tool loads a rdata binary file, returns its attributes and a general summary.
+    owner: ecology
+    include:
+      - rdata_reader.xml
+      - rdata_reader.R
+      - rdata_macros.xml
+      - test-data/rdata_test.Rdata
+      - test-data/attributes.tabular
+      - test-data/summary.tabular
+
+  rdata_parser:
+    description: The rdata parser tool extracts and writes selected attributes from a binary Rdata file.
+    owner: ecology
+    include:
+      - rdata_parser.xml
+      - rdata_parser.R
+      - rdata_macros.xml
+      - test-data/rdata_test.Rdata
+      - test-data/attributes.tabular
