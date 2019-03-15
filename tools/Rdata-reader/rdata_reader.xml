@@ -1,17 +1,17 @@
-<tool id="rdata_reader" name="Rdata binary file reader" version="0.1">
-    <requirements>
-        <requirement type="package" version="1.20.2">r-getopt</requirement>
-<!--        <requirement type="package" version="8.0">readline</requirement>-->
-    </requirements>
+<tool id="rdata_reader" name="Rdata binary file reader" version="@VERSION@">
+    <macros>
+        <import>rdata_macros.xml</import>
+    </macros>
+    <expand macro="rdata_requirements" />
     <command detect_errors="exit_code"><![CDATA[
         Rscript '$__tool_directory__/rdata_reader.R' '$input1' '$rdata_list_attr' ]]>
     </command>
     <inputs>
-        <param format="rdata" name="input1" type="data" label="Rdata binary file to explore"/>
+        <expand macro="rdata_input1"/>
     </inputs>
     <outputs>
-        <data format="tabular" name="rdata_list_attr" from_work_dir="rdata_list_attr" />
-        <data name="summary" from_work_dir="summary.tabular" format="tabular" label="Summary"/>
+        <data format="tabular" name="rdata_list_attr" from_work_dir="rdata_list_attr" label="List of attributes from ${input1.name}"/>
+        <data name="summary" from_work_dir="summary.tabular" format="tabular" label="Summary of ${input1.name} attributes"/>
     </outputs>
     <tests>
         <test>
@@ -26,16 +26,28 @@ Rdata reader
 ==========================
 **What it does**
 
-The Rdata reader tool give information on the content of a binary R file.
-
-It produces a list of the available dimensions in the Rdata (tabular output file).
-
-Use this tool before considering use "Rdata parser".
+The Rdata reader tool give informations on the content of a binary Rdata file.
 
 |
 
 **How to use it**
 
 Select a file in the Rdata format and execute the tool.
+
+Use this tool before considering to use "Rdata parser".
+
+|
+
+**Outputs**
+
+It produces a list of the available dimensions in the Rdata (tabular output file).
+
+It also writes a summary of the inner attributes and their values.
+
+|
+
+**More informations**
+
+More informations concerning R Data format and save / load functions can be found here: http://www.sthda.com/english/wiki/saving-data-into-r-data-format-rds-and-rdata.
     </help>
 </tool>
