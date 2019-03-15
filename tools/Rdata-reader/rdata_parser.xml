@@ -1,0 +1,73 @@
+<tool id="rdata_parser" name="Rdata binary file parser" version="@VERSION@">
+    <macros>
+        <import>rdata_macros.xml</import>
+    </macros>
+    <expand macro="rdata_requirements" />
+    <command detect_errors="exit_code"><![CDATA[
+        mkdir outputs &&
+	Rscript '$__tool_directory__/rdata_parser.R' '$input1' $selected_attributes '$other' '$bind_dataframe'
+]]>
+    </command>
+    <inputs>
+        <expand macro="rdata_input1"/>
+        <param name="rdata_attributes" type="data" label="File with .Rdata content details" format="tabular" help="Tabular file with Rdata attributes list. It can come from the Rdata reader tool : 'Rdata binary file reader on FILE'"/>
+        <param name="selected_attributes" label="Select which attribute(s) you want to extract" type="select"  multiple="true">
+            <options from_dataset="rdata_attributes">
+                <column name="value" index="0"/>
+            </options>
+        </param>
+        <param name="bind_dataframe" label="Bind variables in a single tabular when its possible" type="boolean" truevalue="bind" falsevalue="nobind" checked="true"/>
+    </inputs>
+    <outputs>
+        <data name="other">
+            <discover_datasets pattern="__designation_and_ext__" visible="true" directory="outputs" />
+        </data>
+    </outputs>
+    <tests>
+        <test>
+            <param name="input1" value="rdata_test.Rdata"/>
+            <param name="rdata_attributes" value="attributes.tabular"/>
+            <param name="selected_attributes" value="ID,Age,Name"/>
+            <param name="bind_dataframe" value="TRUE"/>
+            <output name="other">
+                <discovered_dataset designation="all_attributes">
+                  <assert_contents><has_line line="&quot;ID&quot;&#009;&quot;Age&quot;&#009;&quot;Name&quot;"/></assert_contents>
+                </discovered_dataset>
+            </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+
+==========================
+Rdata parser
+==========================
+**What it does**        
+
+
+The Rdata parser tool allows to extract informations from a binary R file in .RData format. 
+
+|
+
+**How to use it**
+
+First use the Rdata reader tool to get the list of dimensions available in the binary file.
+
+Use the reader tool output to select the dimension(s) you want to extract.
+
+If the selected variables can be displayed alongside in a tabular files the option \"Bind\" will attempt to do so.
+
+|
+
+**Outputs**
+
+The tool will produce one file per attribute selected unless the \"Bind\" option is set to \"Yes\".
+
+If the data can be displayed as a table the file will be a .tabular.
+
+|
+
+**More informations**
+
+More informations concerning R Data format and save / load functions can be found here:  http://www.sthda.com/english/wiki/saving-data-into-r-data-format-rds-and-rdata.
+    ]]></help>
+</tool>
