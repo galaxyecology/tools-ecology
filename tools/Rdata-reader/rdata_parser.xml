@@ -10,13 +10,13 @@
     </command>
     <inputs>
         <expand macro="rdata_input1"/>
-        <param name="rdata_attributes" type="data" label="File with .Rdata content details" format="tabular" help="Tabular file with Rdata attributes list. It can come from the Rdata reader tool : 'Rdata binary file reader on FILE'"/>
-        <param name="selected_attributes" label="Select which attribute(s) you want to extract" type="select"  multiple="true">
+        <param name="rdata_attributes" type="data" label="File with .Rdata content details" format="tabular" help="Tabular file with Rdata attributes list. It can come from the Rdata reader tool : 'List of attributes from RDATAFILE'"/>
+        <param name="selected_attributes" label="Select which attribute(s) you want to extract" type="select" optional="false" multiple="true">
             <options from_dataset="rdata_attributes">
                 <column name="value" index="0"/>
             </options>
         </param>
-        <param name="bind_dataframe" label="Bind variables in a single tabular when its possible" type="boolean" truevalue="bind" falsevalue="nobind" checked="true"/>
+        <param name="bind_dataframe" label="Bind attributes in a single tabular when its possible" type="boolean" truevalue="bind" falsevalue="nobind" checked="true"/>
     </inputs>
     <outputs>
         <data name="other">
@@ -44,15 +44,15 @@ Rdata parser
 **What it does**        
 
 
-The Rdata parser tool allows to extract informations from a binary R file in .RData format. 
+The Rdata parser tool allows to extract informations from a file in .RData format. 
 
 |
 
 **How to use it**
 
-First use the Rdata reader tool to get the list of dimensions available in the binary file.
+First use the Rdata reader tool to get the list of attributes available in the binary file.
 
-Use the reader tool output to select the dimension(s) you want to extract.
+Use the reader tool output to select the attribute(s) you want to extract.
 
 If the selected variables can be displayed alongside in a tabular files the option \"Bind\" will attempt to do so.
 
