@@ -5,8 +5,6 @@
             <requirement type="package" version="1.20.2">r-getopt</requirement>
         </requirements>
     </xml>
-
-
     <xml name="rdata_input1">
         <param format="rdata" name="input1" type="data" label="Rdata binary file to explore"/>
     </xml>i

@@ -31,7 +31,9 @@
             <param name="bind_dataframe" value="TRUE"/>
             <output name="other">
                 <discovered_dataset designation="all_attributes">
-                  <assert_contents><has_line line="&quot;ID&quot;&#009;&quot;Age&quot;&#009;&quot;Name&quot;"/></assert_contents>
+                    <assert_contents>
+                        <has_line line="&quot;ID&quot;&#009;&quot;Age&quot;&#009;&quot;Name&quot;"/>
+                    </assert_contents>
                 </discovered_dataset>
             </output>
         </test>
