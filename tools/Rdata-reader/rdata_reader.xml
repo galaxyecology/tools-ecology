@@ -22,27 +22,27 @@
     </tests>
     <help>
 ==========================
-Rdata reader
+Rdata binary file reader
 ==========================
 **What it does**
 
-The Rdata reader tool give informations on the content of a binary Rdata file.
+The Rdata reader tool gives informations on the content of a binary Rdata file.
 
 |
 
 **How to use it**
 
-Select a file in the Rdata format and execute the tool.
+Select a file in Rdata format and execute the tool.
 
-Use this tool before considering to use "Rdata parser".
+Use this tool before considering to use "Rdata binary file parser".
 
 |
 
 **Outputs**
 
-It produces a list of the available dimensions in the Rdata (tabular output file).
+A list of the available dimensions in the Rdata (tabular output file).
 
-It also writes a summary of the inner attributes and their values.
+Summary file of the inner attributes and their values.
 
 |
 
