@@ -1,0 +1,50 @@
+<tool id="regionalgam_glmmpql" name="Expected temporal trend" version="@VERSION@">
+    <description>of species abundance</description>
+    <macros>
+        <import>regionalgam_macros.xml</import>
+    </macros>
+    <expand macro="rg_nlme_mass_requirements"/>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript '$__tool_directory__/glmmpql.R' 
+            '$ab_indices' 
+            '$output' '$output2' 
+    ]]>
+    </command>
+    <inputs>
+        <expand macro="rg_ab_indices"/>
+    </inputs>
+    <outputs>
+        <data format="png" name="output" from_work_dir="output-plot.png" />
+        <data format="tabular" name="output2" from_work_dir="output-glmmpql" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="ab_indices" value="data_index2.tabular"/>
+            <param name="output" value="glmmpql-plot.png"/>
+            <output name="output2" file="glmmpql.tabular"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+=====================================
+Temporal trends of species abundance
+=====================================
+
+This tool is an implementation of the glmmpql function from RegionalGAM package:  https://github.com/RetoSchmucki/regionalGAM/
+
+This function computes a collated index for each year and estimates the temporal trend.
+
+A collated index correspond to the expected value for a year, when taking into account the variation contained among sites. 
+
+Here we also add an autoregressive term to account for temporal autocorrelation in the time series.
+
+|
+
+**Outputs**
+
+The tool returns the collated index in tabular format.
+
+It also and plot it against year for visualization in an output png file.
+
+    ]]></help>
+    <expand macro="rg_citation"/>
+</tool>

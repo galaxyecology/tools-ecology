@@ -1,0 +1,90 @@
+categories:
+    - Ecology
+description: Implementation of a method for compution abundance.
+long_description: Implementation of a method for computing an abundance index with the regional GAM approach, an extension of the two-stages model introduced by Dennis et al. (2013). This index offers the best performance for a wide range of sampling frequency, providing greater robustness and unbiased estimates compared to the popular linear interpolation approach (Schmucki et al. 2015).
+
+homepage_url: https://github.com/RetoSchmucki/regionalGAM 
+name: regionalgam
+owner: ecology 
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tools/regionalgam
+type: unrestricted
+
+repositories:
+  regionalgam_ab-index:
+    description: 
+    owner: ecology
+    include:
+      - ab-index.xml
+      - ab-index.R
+      - dennis-gam-initial-functions.R
+      - test-data/gatekeeper_CM
+      - test-data/flight_curve_result2.tabular
+      - test-data/data.index2.tabular
+      - regionalgam_macros.xml
+
+  regionalgam_autocorr-res-acf:
+    description:
+    owner:
+    include:
+      - autocorr-res-acf.xml
+      - autocorr-res-acf.R
+      - test-data/gls_rda2.rda
+      - test-data/res1.png
+      - regionalgam_macros.xml
+
+  regionalgam_flight-curve:
+    description:
+    owner:
+    include:
+      - flight-curve.xml
+      - flight-curve.R
+      - dennis-gam-initial-functions.R
+      - test-data/gatekeeper_CM
+      - test-data/flight_curve_result2.tabular
+      - regionalgam_macros.xml
+
+  regionalgam_glmmpql:
+    descriptio:
+    owner:
+    include:
+      - glmmpql.xml
+      - glmmpql.R
+      - test-data/data_index2.tabular
+      - test-data/glmmpql-plot.png
+      - test-data/glmmpql.tabular
+      - regionalgam_macros.xml
+      
+  regionalgam_gls-adjusted:
+    description:
+    owner:
+    include:
+      - gls-adjusted.xml
+      - gls-adjusted.R
+      - test-data/glmmpql.tabular
+      - test-data/data_index2.tabular
+      - test-data/gls-adju_sum.txt
+      - test-data/gls-adju_rda2.rda
+      - regionalgam_macros.xml
+
+  regionalgam_gls:
+    description:
+    owner:
+    include:
+      - gls.xml
+      - gls.R
+      - test-data/glmmpql.tabular
+      - test-data/data_index2.tabular
+      - test-data/gls_sum.txt
+      - test-data/gls_rda2.rda
+      - regionalgam_macros.xml
+
+  regionalgam_plot-trend:
+    description:
+    owner:
+    include:
+      - plot-trend.xml
+      - plot-trend.R
+      - test-data/data_index2.tabular
+      - test-data/gls-adju_rda2.rda
+      - test-data/trend2.png
+      - regionalgam_macros.xml

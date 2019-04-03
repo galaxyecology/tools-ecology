@@ -1,0 +1,45 @@
+<tool id="regionalgam_ab-index" name="Abundance index" version="@VERSION@">
+    <description>computation across species, sites and years</description>
+    <macros>
+        <import>regionalgam_macros.xml</import>
+    </macros>
+    <expand macro="rg_r_requirements"/>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript '$__tool_directory__/ab-index.R'
+            '$__tool_directory__/dennis-gam-initial-functions.R' 
+            '$count_file' '$input2' 
+            '$output' 
+    ]]>
+    </command>
+    <inputs>
+        <expand macro="rg_count_file"/>
+        <param format="tabular" name="input2" type="data" label="Regional expected pattern of abundance" help="Flight curve output, tabular file."/>
+    </inputs>
+    <outputs>
+        <data format="tabular" name="output" from_work_dir="data.index" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="count_file" value="gatekeeper_CM"/>
+            <param name="input2" value="flight_curve_result2.tabular"/>
+            <output name="output" file="data_index2.tabular"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+==========================
+Compute abundance index
+==========================
+
+This tool is an implementation of the abundance_index function from RegionalGAM package:  https://github.com/RetoSchmucki/regionalGAM/
+
+This function compute the Abundance Index across sites and years from your dataset and the regional flight curve.
+
+|
+
+**Outputs**
+
+The tool returns computed abundance indices in tabular format.
+
+    ]]></help>
+    <expand macro="rg_citation"/>
+</tool>
