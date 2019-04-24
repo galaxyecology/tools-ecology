@@ -3,8 +3,10 @@
     <macros>
         <import>vigiechiro_macros.xml</import>
     </macros>   
-
-    <expand macro="vigiechiro_bilanPF_bilanRP_requirements" />
+    <requirements>
+        <expand macro="vigiechiro_bilanPF_bilanRP_requirements" />
+        <expand macro="vigiechiro_r-data.table_requirement" />
+    </requirements>
     <command detect_errors="exit_code"><![CDATA[
         Rscript '$__tool_directory__/BilanEnrichiPF.R' 
             '$idc2' 

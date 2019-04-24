@@ -2,8 +2,11 @@
     <description>from Animal Detection on Acoustic Recordings</description>
     <macros>
         <import>vigiechiro_macros.xml</import>
-    </macros>   
-    <expand macro="vigiechiro_bilanPF_bilanRP_requirements"/>
+    </macros>  
+    <requirements>
+        <expand macro="vigiechiro_bilanPF_bilanRP_requirements"/>
+        <expand macro="vigiechiro_r-data.table_requirement"/>
+    </requirements>
     <command detect_errors="exit_code"><![CDATA[
         Rscript '$__tool_directory__/BilanEnrichiRP.R' 
             '$idc2' 

@@ -1,5 +1,5 @@
 <macros>
-    <token name="@VERSION@">0.1.0</token>
+    <token name="@VERSION@">0.1.1</token>
     <xml name="vigiechiro_bibref">
         <citations>
             <citation type="bibtex">
@@ -29,12 +29,12 @@
         </citations>
     </xml>
     <xml name="vigiechiro_bilanPF_bilanRP_requirements">
-        <requirements>
-            <requirement type="package" version="1.4.3">r-reshape2</requirement> 
-            <requirement type="package" version="1.11.4">r-data.table</requirement>
-            <requirement type="package" version="0.4">r-dt</requirement>
-            <requirement type="package" version="1.2">r-htmlwidgets</requirement>
-            <requirement type="package" version="2.6">pandoc</requirement>
-        </requirements>	
+        <requirement type="package" version="1.4.3">r-reshape2</requirement> 
+        <requirement type="package" version="0.4">r-dt</requirement>
+        <requirement type="package" version="1.2">r-htmlwidgets</requirement>
+        <requirement type="package" version="2.6">pandoc</requirement>
     </xml>
+    <xml name="vigiechiro_r-data.table_requirement">
+        <requirement type="package" version="1.12.2">r-data.table</requirement>
+    </xml> 
 </macros>
