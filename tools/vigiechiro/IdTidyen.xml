@@ -3,9 +3,7 @@
     <macros>
         <import>vigiechiro_macros.xml</import>
     </macros>
-    <requirements>
-        <expand macro="vigiechiro_r-data.table_requirement"/> 
-    </requirements>
+    <expand macro="vigiechiro_requirements"/>
     <command detect_errors="exit_code"><![CDATA[
         Rscript 
          '$__tool_directory__/Id_Tidy.R' 
