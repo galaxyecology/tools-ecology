@@ -41,11 +41,10 @@ repositories:
     owner: ecology
     include:        
       - vigiechiro_macros.xml  
-      - IdCorrect_2ndLayer_en.xml
-      - IdCorrect_2ndLayer.R
-      - ClassifEspC2b_180222.learner
-      - test-data/IdCor2Layer_Test1_obs.csv
-      - test-data/IdCor2Layer_Test1_out.tabular 
+      - IdTidyen.xml
+      - Id_Tidy.R
+      - test-data/input_tidy_test1_obs.csv
+      - test-data/output_tidy.tabular 
 
 
   vigiechiro_idvalid:
@@ -53,8 +52,7 @@ repositories:
     owner: ecology
     include:    
       - vigiechiro_macros.xml  
-      - IdValid.R
-      - IdValiden.xml
-      - Referentiel_seuils_C2.csv
-      - test-data/IdCor2Layer_Test1_out.tabular 
-      - test-data/BilanEnrichiPF_Test1.tabular  
+      - IdValidTidy.R
+      - IdValidTidyen.xml
+      - test-data/output_tidy.tabular 
+      - test-data/IdValidTidy.tabular  
