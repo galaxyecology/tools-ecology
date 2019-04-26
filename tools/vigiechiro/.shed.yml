@@ -36,7 +36,7 @@ repositories:
       - test-data/BilanEnrichiRP_Test1_out_tab.tabular
       - test-data/BilanEnrichiRP_Test1.tabular 
 
-  vigiechiro_idtidy: 
+  vigiechiro_idcorrect_2ndlayer: 
     description: "Tadarida data clean tool from the vigiechiro suite"
     owner: ecology
     include:        
@@ -47,7 +47,7 @@ repositories:
       - test-data/output_tidy.tabular 
 
 
-  vigiechiro_idvalid_tidy:
+  vigiechiro_idvalid:
     description: "Tadarida identifications integration tool from the vigiechiro suite"    
     owner: ecology
     include:    

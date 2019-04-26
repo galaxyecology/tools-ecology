@@ -1,4 +1,4 @@
-<tool id="vigiechiro_idvalid_tidy" name="Tadarida identifications validation" version="@VERSION@">
+<tool id="vigiechiro_idvalid" name="Tadarida identifications validation" version="@VERSION@">
     <description>Integrate identifications from animal detection on acoustic recordings</description>
     <macros>
         <import>vigiechiro_macros.xml</import>
