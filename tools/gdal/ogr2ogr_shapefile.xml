@@ -10,7 +10,7 @@
             #if $f=='ESRI Shapefile'
                 'shapefile.shp'
             #else
-                '$output'
+                'output'
             #end if
             #if $input.is_of_type("shp")
                 ${os.path.join( $input.extra_files_path, 'shapefile.shp' )} 
