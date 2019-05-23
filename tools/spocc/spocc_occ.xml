@@ -14,18 +14,18 @@
         #end if
     ]]></command>
     <inputs>
-        <param name="sname" type="text" label="Scientific name" value="Genus species"/>
+        <param name="sname" type="text" label="Scientific name of the species" help="Genus species format, eg : Canis lupus"/>
         <param name="from" type="select" multiple="true" label="Data source to get data from" help="Any combination of gbif, bison, inat, ebird, antweb, ala, idigbio, obis, ecoengine and/or vertnet" value="gbif,bison,inat">
-            <option value="gbif">gbif</option>
-            <option value="bison">bison</option>
-            <option value="inat">inat</option>
-            <option value="ebird">ebird</option>
-            <option value="antweb">antweb</option>
-            <option value="ala">ala</option>
-            <option value="idigbio">idigbio</option>
-            <option value="obis">obis</option>
-            <option value="ecoengine">ecoengine</option>
-            <option value="vernet">vernet</option>
+            <option value="gbif">Global Biodiversity Information Facility : GBIF</option>
+            <option value="bison">Biodiversity Information Serving Our Nation : BISON</option>
+            <option value="inat">INaturalist : INAT</option>
+            <option value="ebird">eBbird</option>
+            <option value="antweb">AntWeb</option>
+            <option value="ala">Atlas of Living Australia : ALA</option>
+            <option value="idigbio">Integrated Digitized Biocollections : iDigBio</option>
+            <option value="obis">Oceanic Biogeographic Information System : OBIS</option>
+            <option value="ecoengine">Berkeley Ecoinformatics Engine : EcoEngine</option>
+            <option value="vernet">VerNet</option>
         </param>    
         <param name="limit" type="integer" label="Number of records to return" help="This is passed across all sources" value="500"/>
     </inputs>
@@ -78,7 +78,38 @@ prov is the datasouce and key the occurence corresponding unique identifier.
 
 This tool use the spocc R package (Spocc::occ) :
 
-A programmatic interface to many species occurrence data sources, including Global Biodiversity Information Facility ('GBIF'), 'USGSs' Biodiversity Information Serving Our Nation ('BISON'), 'iNaturalist', Berkeley 'Ecoinformatics' Engine, 'AntWeb', Integrated Digitized 'Biocollections' ('iDigBio'), 'VertNet', Ocean 'Biogeographic' Information System ('OBIS'), and Atlas of Living Australia ('ALA'). 
+A programmatic interface to many species occurrence data sources, including :
+
+  - Global Biodiversity Information Facility : GBIF
+    https://www.gbif.org/
+
+  - USGSs' Biodiversity Information Serving Our Nation : BISON
+    https://bison.usgs.gov/#home
+    
+  - iNaturalist : iNat
+    https://www.inaturalist.org/,
+
+  - eBird
+    https://ebird.org/home
+
+  - Berkeley Ecoinformatics Engine : EcoEngine
+    https://ecoengine.berkeley.edu/
+
+  - AntWeb
+    https://www.antweb.org/
+
+  - Integrated Digitized Biocollections : iDigBio
+    https://www.idigbio.org/
+
+  - VertNet
+    http://vertnet.org/
+
+  - Ocean Biogeographic Information System : OBIS 
+    https://obis.org/
+
+  - Atlas of Living Australia : ALA
+    https://www.ala.org.au/. 
+
 
 Includes functionality for retrieving species occurrence data, and combining those data.
 
