@@ -20,8 +20,13 @@
     <tests>
         <test>
             <param name="ab_indices" value="data_index2.tabular"/>
-            <param name="output" value="glmmpql-plot.png"/>
-            <output name="output2" file="glmmpql.tabular"/>
+            <output name="output2" ftype="tabular">
+                <assert_contents>
+                    <has_line_matching expression="5.5.*"/>
+                    <has_line line="&quot;x&quot;"/>
+                    <has_n_columns n="1"/>
+                </assert_contents>
+            </output>   
         </test>
     </tests>
     <help><![CDATA[
