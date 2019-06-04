@@ -3,7 +3,7 @@
     <macros>
         <import>regionalgam_macros.xml</import>
     </macros>
-    <expand macro="rg_nlme_mass_requirements"/>
+    <expand macro="rg_r_requirements"/>
     <command detect_errors="exit_code"><![CDATA[
         Rscript '$__tool_directory__/autocorr-res-acf.R'
             '$gls_model' 
@@ -19,7 +19,7 @@
     <tests>
         <test>
             <param name="gls_model" value="gls_rda2.rda"/>
-            <output name="output" file="res1.png"/>
+            <output name="output" file="res.png"/>
         </test>
     </tests>
 
