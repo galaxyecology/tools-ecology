@@ -17,7 +17,7 @@
     </command>
     <inputs>
         <expand macro="rg_count_file"/>
-	<param name="minvisit" type="integer" value="3" min="0" label="Minimum number of visits" help="Subset the data with a minimum number of visits." />
+        <param name="minvisit" type="integer" value="3" min="0" label="Minimum number of visits" help="Subset the data with a minimum number of visits." />
         <param name="minoccur" type="integer" value="2" min="0" label="Minimum number of occurences" help="Subset the data with a minimum number of occurences."/>
     </inputs>
     <outputs>
@@ -28,7 +28,13 @@
             <param name="count_file" value="gatekeeper_CM"/>
             <param name="minvisit" value="3"/>
             <param name="minoccur" value="2"/>
-            <output name="output" file="flight_curve_result2.tabular"/>
+            <output name="output" ftype="tabular">
+                <assert_contents>
+                    <has_line line="&quot;species&quot;&#009;&quot;year&quot;&#009;&quot;week&quot;&#009;&quot;DAYNO&quot;&#009;&quot;DAYNO_adj&quot;&#009;&quot;nm&quot;"/>
+                    <has_n_columns n="6"/>
+                    <has_text_matching expression="&quot;Pyronia&#032;tithonus&quot;&#009;2003&#009;[0-9]&#009;[0-9]&#009;[0-9]&#009;[0-9]"/>
+                </assert_contents>
+            </output>   
         </test>
     </tests>
     <help><![CDATA[
