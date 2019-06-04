@@ -1,4 +1,4 @@
-<tool id="regionalgam_ab-index" name="Abundance index" version="@VERSION@">
+<tool id="regionalgam_ab_index" name="Abundance index" version="@VERSION@">
     <description>computation across species, sites and years</description>
     <macros>
         <import>regionalgam_macros.xml</import>

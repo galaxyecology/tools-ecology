@@ -1,4 +1,4 @@
-<tool id="regionalgam_plot-trend" name="Plot abundance" version="@VERSION@">
+<tool id="regionalgam_plot_trend" name="Plot abundance" version="@VERSION@">
     <description>with trend line</description>
     <macros>
         <import>regionalgam_macros.xml</import>

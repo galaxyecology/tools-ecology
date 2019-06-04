@@ -1,4 +1,4 @@
-<tool id="regionalgam_autocor-acf" name="Autocorrelation test" version="@VERSION@">
+<tool id="regionalgam_autocor_acf" name="Autocorrelation test" version="@VERSION@">
     <description>check for temporal autocorrelation in the residuals</description>
     <macros>
         <import>regionalgam_macros.xml</import>
