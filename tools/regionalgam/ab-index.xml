@@ -20,9 +20,9 @@
     </outputs>
     <tests>
         <test>
-            <param name="count_file" value="gatekeeper_CM"/>
-            <param name="input2" value="flight_curve_result2.tabular"/>
-            <output name="output" file="data_index2.tabular"/>
+            <param name="count_file" value="gatekeeper_CM_200320042005"/>
+            <param name="input2" value="s_flight_curve_result.tabular"/>
+            <output name="output" file="s_data_index.tabular"/>
         </test>
     </tests>
     <help><![CDATA[

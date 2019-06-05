@@ -19,9 +19,9 @@
     </outputs>
     <tests>
         <test>
-            <param name="ab_indices" value="data_index2.tabular"/>
-            <param name="gls_model" value="gls-adju_rda2.rda"/>
-            <output name="output" file="trend2.png"/>
+            <param name="ab_indices" value="s_data_index.tabular"/>
+            <param name="gls_model" value="s_gls-adju_rda.rda"/>
+            <output name="output" file="s_trend.png"/>
         </test>
     </tests>
     <help><![CDATA[

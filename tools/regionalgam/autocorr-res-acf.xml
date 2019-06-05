@@ -18,8 +18,8 @@
     </outputs>
     <tests>
         <test>
-            <param name="gls_model" value="gls_rda2.rda"/>
-            <output name="output" file="res.png"/>
+            <param name="gls_model" value="s_gls_rda.rda"/>
+            <output name="output" file="s_res.png"/>
         </test>
     </tests>
 

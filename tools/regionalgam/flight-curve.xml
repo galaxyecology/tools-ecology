@@ -25,7 +25,7 @@
     </outputs>
     <tests>
         <test>
-            <param name="count_file" value="gatekeeper_CM"/>
+            <param name="count_file" value="gatekeeper_CM_200320042005"/>
             <param name="minvisit" value="3"/>
             <param name="minoccur" value="2"/>
             <output name="output" ftype="tabular">

@@ -19,7 +19,7 @@
     </outputs>
     <tests>
         <test>
-            <param name="ab_indices" value="data_index2.tabular"/>
+            <param name="ab_indices" value="s_data_index.tabular"/>
             <output name="output2" ftype="tabular">
                 <assert_contents>
                     <has_line_matching expression="5.5.*"/>

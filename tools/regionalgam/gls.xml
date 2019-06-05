@@ -20,10 +20,10 @@
     </outputs>
     <tests>
         <test> 
-            <param name="collated_index" value="glmmpql.tabular"/>
-            <param name="ab_indices" value="data_index2.tabular"/>
-            <output name="output" file="gls_sum.txt"/>
-            <output name="output2" file="gls_rda2.rda"/>
+            <param name="collated_index" value="s_glmmpql.tabular"/>
+            <param name="ab_indices" value="s_data_index.tabular"/>
+            <output name="output" file="s_gls_sum.txt"/>
+            <output name="output2" file="s_gls_rda.rda"/>
         </test>
     </tests>
     <help><![CDATA[
