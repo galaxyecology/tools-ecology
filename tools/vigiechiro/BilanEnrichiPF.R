@@ -21,15 +21,15 @@ f2p <- function(x) #get date-time data from recording file names
 
 
 
-IdC2=fread(args[1])
+IdC2=fread(args[1],encoding="UTF-8")
 
 if(substr(IdC2$`nom du fichier`[1],2,2)!="a")
 {
 #  print("Protocole non conforme, ce script doit etre lance uniquement pour un protocole Point Fixe")
   print("Wrong protocol, please only use this tool for a \'Point Fixe\' protocol.")
 }else{
-  refPF=fread(args[2])
-  GroupList=fread(args[3])
+  refPF=fread(args[2],encoding="UTF-8")
+  GroupList=fread(args[3],encoding="UTF-8")
   
   IdC2$ConfV[is.na(IdC2$ConfV)]=""
   
@@ -232,6 +232,6 @@ if(substr(IdC2$`nom du fichier`[1],2,2)!="a")
   
   saveWidget(SummHTMLH,"output-hourly.html")
 #  write.csv2(SummPartH,"output-hourly.tabular",row.names=F)
-  write.table(SummPartH,"output-hourly.tabular",row.names=F,sep="\n")
+  write.table(SummPartH,"output-hourly.tabular",row.names=F,sep="\t")
   
 }

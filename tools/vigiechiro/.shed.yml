@@ -7,7 +7,7 @@ long_description: |
 homepage_url: https://www.vigienature-ecole.fr/les-observatoires/le-protocole-vigie-chiro 
 name: vigiechiro
 owner: ecology 
-remote_repository_url: https://github.com/galaxyecology/tools-ecology/tools/vigiechiro
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/vigiechiro
 type: unrestricted
 
 
@@ -23,6 +23,8 @@ repositories:
       - SpeciesList.csv
       - test-data/BilanEnrichiPF_Test1_out_tab.tabular
       - test-data/BilanEnrichiPF_Test1.tabular  
+      - test-data/BilanEnrichiPF_Test1_hourly.tabular  
+      - test-data/BilanEnrichiPF_Test1_nightly.tabular
 
   vigiechiro_bilanenrichirp:  
      description: "'Routier' or 'Pedestre' protocols advanced restitution tool from the vigiechiro suite"
@@ -34,6 +36,7 @@ repositories:
       - refRPSeuil50.csv
       - SpeciesList.csv
       - test-data/BilanEnrichiRP_Test1_out_tab.tabular
+      - test-data/BilanEnrichiRP_Test1_summarised.tabular 
       - test-data/BilanEnrichiRP_Test1.tabular 
 
   vigiechiro_idcorrect_2ndlayer: 

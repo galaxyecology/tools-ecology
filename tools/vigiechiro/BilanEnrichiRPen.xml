@@ -40,8 +40,9 @@
     <tests>
         <test>
             <param name="idc2" value="BilanEnrichiRP_Test1.tabular"/>
-	    <param name="output_choice" value="detailed"/>
+	    <param name="output_choice" value="detailed,summarised"/>
  	    <output name="output_detail_tabular" file="BilanEnrichiRP_Test1_out_tab.tabular" ftype="tabular"/>
+ 	    <output name="output_summary_tabular" file="BilanEnrichiRP_Test1_summarised.tabular" ftype="tabular"/>
         </test>
     </tests>
     <help><![CDATA[

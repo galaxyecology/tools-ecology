@@ -1,0 +1,20 @@
+"Code"	"Groupe"	"Nom francais"	"Nom scientifique"	"Risque d'erreur (%)"	"TriGroupe"	"16"	"17"	"18"	"16/03/2019.y"	"17/03/2019.y"	"18/03/2019.y"
+"Eptser"	"Chauve-souris"	"Serotine commune"	"Eptesicus serotinus"	"3"	3	2	0	0	1	NA	NA
+"Hypsav"	"Chauve-souris"	"Vespere de Savi"	"Hypsugo savii"	"60"	3	1	0	0	1	NA	NA
+"Nyclei"	"Chauve-souris"	"Noctule de Leisler"	"Nyctalus leisleri"	"37"	3	0	4	0	NA	2	NA
+"Pipkuh"	"Chauve-souris"	"Pipistrelle de Kuhl"	"Pipistrellus kuhlii"	"3"	3	4	0	0	1	NA	NA
+"Pipnat"	"Chauve-souris"	"Pipistrelle de Nathusius"	"Pipistrellus nathusii"	"51"	3	1	0	0	1	NA	NA
+"Pippip"	"Chauve-souris"	"Pipistrelle commune"	"Pipistrellus pipistrellus"	"1"	3	15	2	0	1	1	NA
+"Pippyg"	"Chauve-souris"	"Pipistrelle soprane"	"Pipistrellus pygmaeus"	"11"	3	4	0	0	2	NA	NA
+"Rhifer"	"Chauve-souris"	"Grand Rhinolophe"	"Rhinolophus ferrumequinum"	"1"	3	1	1	0	1	1	NA
+"Rhihip"	"Chauve-souris"	"Petit Rhinolophe"	"Rhinolophus hipposideros"	"3"	3	2	0	0	2	NA	NA
+"Confus"	"Sauterelle"	"Conocephale bigarre"	"Conocephalus fuscus"	"62"	2	0	1	0	NA	1	NA
+"Decalb"	"Sauterelle"	"Dectique a front blanc"	"Decticus albifrons"	"78"	2	0	1	0	NA	1	NA
+"Leppun"	"Sauterelle"	"Sauterelle ponctuee"	"Leptophyes punctatissima"	"94"	2	0	5	0	NA	1	NA
+"Phogri"	"Sauterelle"	"Decticelle cendree"	"Pholidoptera griseoaptera"	"92"	2	1	4	0	1	2	NA
+"Plaint"	"Sauterelle"	"Decticelle intermediaire"	"Platycleis intermedia"	"92"	2	1	2	0	1	1	NA
+"Testes"	"Sauterelle"	"Decticelle carroyee"	"Tessellana tessellata"	"85"	2	0	3	0	NA	2	NA
+"Tetvir"	"Sauterelle"	"Sauterelle verte"	"Tettigonia viridissima"	"64"	2	3	11	3	1	2	1
+"Yerray"	"Sauterelle"	"Decticelle frele"	"Yersinella raymondii"	"91"	2	0	3	0	NA	2	NA
+"noise"	"Autre"	"bruit"	"noise"	"1"	1	440	1598	257	1	2	1
+"piaf"	"Autre"	"Oiseau sp."	"Aves sp."	"1"	1	94	92	18	2	2	2
