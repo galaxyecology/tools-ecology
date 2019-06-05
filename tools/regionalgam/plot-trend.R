@@ -14,4 +14,6 @@ year <- unique(input$YEAR)
 png('output-plot-trend.png')
 plot(year,col.index, type='o',xlab="year",ylab="collated index")
 abline(mod,lty=2,col="red")
-dev.off()
+invisible(dev.off())
+
+cat("Show trend line on abundance plot")
