@@ -29,7 +29,7 @@ if(substr(IdC2$`nom du fichier`[1],2,2)!="a")
   print("Wrong protocol, please only use this tool for a \'Point Fixe\' protocol.")
 }else{
   refPF=fread(args[2],encoding="UTF-8")
-  GroupList=fread(args[3],encoding="Latin-1")
+  GroupList=fread(args[3],encoding="UTF-8")
   
   IdC2$ConfV[is.na(IdC2$ConfV)]=""
   
