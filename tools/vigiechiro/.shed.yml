@@ -7,7 +7,7 @@ long_description: |
 homepage_url: https://www.vigienature-ecole.fr/les-observatoires/le-protocole-vigie-chiro 
 name: vigiechiro
 owner: ecology 
-remote_repository_url: https://github.com/galaxyecology/tools-ecology/tools/vigiechiro
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/vigiechiro
 type: unrestricted
 
 
