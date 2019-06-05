@@ -19,7 +19,7 @@
     <tests>
         <test>
             <param name="gls_model" value="s_gls_rda.rda"/>
-            <output name="output" file="s_res.png"/>
+            <output name="output" file="s_res.png" compare="sim_size" delta="100"/>
         </test>
     </tests>
 

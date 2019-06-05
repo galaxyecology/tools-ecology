@@ -21,7 +21,7 @@
         <test>
             <param name="ab_indices" value="s_data_index.tabular"/>
             <param name="gls_model" value="s_gls-adju_rda.rda"/>
-            <output name="output" file="s_trend.png"/>
+            <output name="output" file="s_trend.png" compare="sim_size" delta="100"/>
         </test>
     </tests>
     <help><![CDATA[
