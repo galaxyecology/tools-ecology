@@ -1,0 +1,33 @@
+Generalized least squares fit by REML
+  Model: input1 ~ year 
+  Data: NULL 
+       AIC       BIC   logLik
+  4.718075 -5.281925 2.640963
+
+Correlation Structure: ARMA(2,0)
+ Formula: ~1 
+ Parameter estimate(s):
+         Phi1          Phi2 
+-1.026385e-06  1.342554e-06 
+
+Coefficients:
+                Value Std.Error   t-value p-value
+(Intercept) -116.2129  9.979614 -11.64503  0.0545
+year           0.0608  0.004980  12.20897  0.0520
+
+ Correlation: 
+     (Intr)
+year -1    
+
+Standardized residuals:
+              x
+[1,]  0.4082493
+[2,] -0.8164967
+[3,]  0.4082493
+attr(,"std")
+[1] 0.007042572 0.007042572 0.007042572
+attr(,"label")
+[1] "Standardized residuals"
+
+Residual standard error: 0.007042572 
+Degrees of freedom: 3 total; 1 residual

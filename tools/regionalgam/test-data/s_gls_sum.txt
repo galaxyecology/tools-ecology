@@ -1,0 +1,27 @@
+Generalized least squares fit by REML
+  Model: input1 ~ year 
+  Data: NULL 
+        AIC       BIC   logLik
+  0.7180747 -5.281925 2.640963
+
+Coefficients:
+                Value Std.Error   t-value p-value
+(Intercept) -116.2129   9.97963 -11.64501  0.0545
+year           0.0608   0.00498  12.20895  0.0520
+
+ Correlation: 
+     (Intr)
+year -1    
+
+Standardized residuals:
+              x
+[1,]  0.4082483
+[2,] -0.8164966
+[3,]  0.4082483
+attr(,"std")
+[1] 0.007042578 0.007042578 0.007042578
+attr(,"label")
+[1] "Standardized residuals"
+
+Residual standard error: 0.007042578 
+Degrees of freedom: 3 total; 1 residual
