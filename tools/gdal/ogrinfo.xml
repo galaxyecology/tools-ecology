@@ -17,7 +17,7 @@
         > '$output'
     ]]></command>
     <inputs>
-        <param type="data" name="input1" format="xml,txt,netcdf" label="Gdal supported vector input file" help="Currently supported format are GeoJSON GML KML and WFS"/>
+        <param type="data" name="input1" format="xml,txt,netcdf,shp" label="Gdal supported vector input file" help="Currently supported format are GeoJSON GML KML and WFS"/>
         <conditional name="settings">
             <expand macro="gdal_advanced_params_select"/>
             <when value="advanced">
