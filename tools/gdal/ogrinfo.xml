@@ -5,19 +5,25 @@
     </macros>
     <expand macro="gdal_requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        ogrinfo -ro '$input1'  -al 
-            #if $settings.advanced=='advanced'
-                #if $settings.condi_sql.sql=='sql':
-                    #if str($settings.condi_sql.sql_statement).strip()!='':
-                        -sql '$settings.condi_sql.sql_statement'
-                    #end if
+    ogrinfo -ro
+        #if $input1.is_of_type("shp") 
+            ${os.path.join( $input1.extra_files_path, 'shapefile.shp' )} 
+        #else
+            '$input1' 
+        #end if
+        -al
+        #if $settings.advanced=='advanced'
+            #if $settings.condi_sql.sql=='sql':
+                #if str($settings.condi_sql.sql_statement).strip()!='':
+                    -sql '$settings.condi_sql.sql_statement'
                 #end if
-                $settings.so
             #end if
+            $settings.so
+        #end if
         > '$output'
     ]]></command>
     <inputs>
-        <param type="data" name="input1" format="xml,txt,netcdf" label="Gdal supported vector input file" help="Currently supported format are GeoJSON GML KML and WFS"/>
+        <param type="data" name="input1" format="xml,txt,netcdf,shp" label="Gdal supported vector input file" help="Currently supported format are GeoJSON GML KML, WFS and Shapefile"/>
         <conditional name="settings">
             <expand macro="gdal_advanced_params_select"/>
             <when value="advanced">
@@ -46,20 +52,20 @@
         <test>
             <param name="input1" value="custom.geo.json"/>
             <param name="advanced" value="simple"/>
-            <output name="output" file="ogrinfo_test1_out2.txt" lines_diff="82"/>
+            <output name="output" file="ogrinfo_test1_out2.txt" lines_diff="85"/>
         </test>
-<!--
-     #Layername OGRGeoJSON is basicaly input filename, so in Galaxy it become "dataset_X". I couldn't create a test using the sql option, "X" will change every time we add or remove a testfile.
-     <test>
-            <param name="input1" value="custom.geo.json"/>
-            <param name="advanced" value="advanced"/>
-            <param name="sql" value="sql"/>
-            <param name="sql_statement" value="SELECT * FROM OGRGeoJSON"/> 
-            <param name="so" value="-so"/>
-            <output name="output" file="ogrinfo_test2_out2.txt" lines_diff="4"/>
+        <test>
+            <param name="input1" value="shp_compositefiles/shapefile.html" ftype="shp">
+                <composite_data value="shp_compositefiles/shapefile.shp"/>
+                <composite_data value="shp_compositefiles/shapefile.shx"/>
+                <composite_data value="shp_compositefiles/shapefile.dbf"/>
+                <composite_data value="shp_compositefiles/shapefile.sbn"/>
+                <composite_data value="shp_compositefiles/shapefile.sbx"/>
+            </param>
+            <param name="advanced" value="simple"/>
+            <output name="output" file="ogrinfo_shp.txt" lines_diff="2"/>
         </test>
--->
-   </tests>
+    </tests>
     <help><![CDATA[
 ========
 Ogrinfo
