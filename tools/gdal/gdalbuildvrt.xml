@@ -89,19 +89,14 @@
                 <expand macro="gdal_param_separate"/>
                 <param name="allow_projection_difference" type="boolean" truevalue="-allow_projection_difference" falsevalue="" checked="false" label="Allow projection difference" help="-allow_projection_difference. The utility will accept to make a VRT even if the input datasets have not the same projection. Note: this does not mean that they will be reprojected. Their projection will just be ignored" />
                 <expand macro="gdal_param_a_srs"/>
-<!--
-                <expand macro="gdal_param_oo"/>
--->
                 <param name="tileindex" type="text" label="Use the specified value as the tile index field" help="-tileindex field_name" value=""/>
                 <param name="sb" type="text" label="Use a subdataset" help="-sd subdataset. If the input dataset contains several subdatasets use a subdataset with the specified number (starting from 1). This is an alternative of giving the full subdataset name as an input" value=""/>
             </when>
         </conditional>
     </inputs>
-    
     <outputs>
         <data name="output" format="xml" label="${on_string}.vrt"/> <!--output fixed to xml until I create vrt format. Should be derivated from xml.-->
     </outputs>
-    
     <tests>
         <test>
             <param name="input" value="small_east.dem,small_west.dem"/>
@@ -109,7 +104,6 @@
             <output name="output" file="small_dem.vrt" lines_diff="4"/>
         </test>    
     </tests>
-    
     <help><![CDATA[
 ==========================
 Gdalbuildvrt

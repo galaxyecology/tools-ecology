@@ -47,7 +47,6 @@
             <filter>f == 'ESRI Shapefile'</filter>
         </data>
     </outputs>
-    
     <tests>
         <test>
             <param name="input" value="shp_compositefiles/shapefile.xml" ftype="shp">

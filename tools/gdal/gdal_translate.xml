@@ -4,7 +4,6 @@
         <import>gdal_macros.xml</import>
     </macros>
     <expand macro="gdal_requirements" />
-
     <command detect_errors="exit_code"><![CDATA[
         gdal_translate 
 
@@ -64,10 +63,6 @@
                     -mo '$settings.mo'
                 #end if
                 
-##                #if str($settings.oo).strip()!=''
-##                    -oo '$settings.oo'
-##                #end if
-                
                 #if str($settings.a_srs).strip()!=''
                     -a_srs '$settings.a_srs'
                 #end if
@@ -113,12 +108,6 @@
                 <expand macro="gdal_param_norat"/>
                 <expand macro="gdal_param_co"/>
                 <param name="mo" type="text" label="Pass a metadata key and value to set on the output dataset" help="-mo META-TAG=VALUE" value="" />
-
-<!-- commented as the gdalversion need to be upgraded
-                <param name="oo" type="text" label="-oo" value="NAME=VALUE" />
-                <expand macro="gdal_param_oo"/>
--->
-
                 <conditional name="condi_expand">
                     <param name="expand" type="select" label="Expose a dataset with 1 band with a color table" help="-expand gray|rgb|rgba" >
                         <option value="no_expand" selected="true">Don't use the -expand option</option>
@@ -196,21 +185,12 @@
                     <option value="-eco">-eco : Error when completely outside</option>
                 </param>
                 <param name="a_srs" type="text" label="Override the projection" help="-a_srs. The srs_def may be any of the usual GDAL/OGR forms, complete WKT, PROJ.4, EPSG:n or a file containing the WKT. No reprojection is done" value="" />
-
-                <!--
-                <param name="sds" type="boolean" truevalue="-sds" falsevalue="" checked="false" label="-sds" help="Copy all subdatasets of this file to individual output files. Use with formats like HDF or OGDI that have subdatasets. The output file naming scheme has changed in GDAL 1.11 (e.g. ofile_1.tif, ofile_2.tif)."/>
-                Ici il y a surement une gestion de fichiers de sorties multiple à faire
-                -->
-                
             </when>
         </conditional>
     </inputs>
-    
     <outputs>
         <expand macro="gdal_output_change_format"/>  
     </outputs>
-    
-    
     <tests>
         <test>
             <param name="input1" value="tinyworld.png"/>
@@ -225,7 +205,6 @@
             <output name="output" file="tinyworld.tif"/>
         </test>
     </tests>
-    
     <help><![CDATA[
 ===============
 Gdal_translate
