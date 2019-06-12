@@ -29,7 +29,7 @@
             <option value="ESRI Shapefile">ESRI Shapefile</option>
             <option value="GeoJSON">GEOJSON</option> 
             <option value="GML">GML</option>
-	    <option value="KML">KML</option>
+            <option value="KML">KML</option>
             <option value="WFS">WFS</option>
         </param>
     </inputs>
