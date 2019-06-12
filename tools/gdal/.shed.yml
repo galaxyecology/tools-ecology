@@ -106,7 +106,7 @@ repositories:
       - test-data/ogr2ogr_GML.gml
       - test-data/ogr2ogr_GML2.gml
       - test-data/ogr2ogr_geojson.json
-      - test-data/ogr2ogr_Test2_geojson.json
+      - test-data/ogr2ogr_test2_geojson.json
       - test-data/shp_compositefiles/ogr2ogr_shapefile2.html
       - test-data/shp_compositefiles/ogr2ogr_shapefile2.shp
       - test-data/shp_compositefiles/ogr2ogr_shapefile2.shx
