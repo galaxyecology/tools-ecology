@@ -81,7 +81,7 @@
             <param name="format" value="json" />
             <param name="subdataset" value="subd_n" />
             <param name="advanced" value="simple"/>
-            <output name="outputJson" file="stere_info.json" lines_diff="6"/>
+            <output name="outputJson" file="stere_info.json" lines_diff="4"/>
         </test>
         <test>
             <param name="input1" value="stere.tif"/>

@@ -63,7 +63,6 @@
         '$output'
 
     ]]></command>
-    
     <inputs>
         <expand macro="gdal_input_raster_multiple"/>
         <expand macro="gdal_param_of"/>
@@ -114,11 +113,9 @@
             </when>
         </conditional>
     </inputs>
-    
     <outputs>
         <expand macro="gdal_output_change_format"/>
     </outputs>
-    
     <tests>
         <test>
             <param name="input" value="stere.tif"/>
@@ -127,14 +124,12 @@
             <param name="advanced" value="simple"/>
             <output name="output" file="stere_warp1.tiff" compare="sim_size" />
         </test>
-        
         <test>
             <param name="input" value="tinyworld.tif"/>
             <param name="t_srs" value="+proj=ortho +datum=WGS84" />
             <param name="advanced" value="simple"/>
             <output name="output" file="gdalwarp_test2_out.tif"/>
         </test>
-        
         <test>
             <param name="input" value="tinyworld.tif"/>
             <param name="t_srs" value="+proj=ortho +datum=WGS84" />
@@ -142,8 +137,6 @@
             <param name="wo" value="SOURCE_EXTRA=125"/>
             <output name="output" file="gdalwarp_test3_out.tif"/>
         </test>
-
-        
         <test>
             <param name="input" value="tinyworld.tif"/>
             <param name="t_srs" value="+proj=ortho +datum=WGS84" />
@@ -153,13 +146,11 @@
             <param name="srcnodata" value="11 10 50"/>
             <output name="output" file="gdalwarp_test4_out.tif"/>
         </test>
-        
         <test>
             <param name="input" value="small_east.dem,small_west.dem"/>
             <param name="advanced" value="simple"/>
             <output name="output" file="small_warpmerged.tif"/>
         </test>     
-        
     </tests>
     <help><![CDATA[
 ==========================
