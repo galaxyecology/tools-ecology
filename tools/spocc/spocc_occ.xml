@@ -1,0 +1,124 @@
+<tool id="spocc_occ" name="Get species occurrences data" version="0.9.0">
+    <description>from GBIF, ALA, iNAT and others</description>
+    <requirements>
+        <requirement type="package" version="0.9.0">r-spocc</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript '$__tool_directory__/spocc_occ.R' 
+            '$sname' 
+            '$from' 
+            $limit; 
+
+        #if $from=='gbif':
+            sed -z -i -e 's/\n  \"/ /g' -e 's/\n}/ /g' output.tab
+        #end if
+    ]]></command>
+    <inputs>
+        <param name="sname" type="text" label="Scientific name of the species" help="Genus species format, eg : Canis lupus"/>
+        <param name="from" type="select" multiple="true" label="Data source to get data from" help="Any combination of gbif, bison, inat, ebird, antweb, ala, idigbio, obis, ecoengine and/or vertnet" value="gbif,bison,inat">
+            <option value="gbif">Global Biodiversity Information Facility : GBIF</option>
+            <option value="bison">Biodiversity Information Serving Our Nation : BISON</option>
+            <option value="inat">INaturalist : INAT</option>
+            <option value="ebird">eBbird</option>
+            <option value="antweb">AntWeb</option>
+            <option value="ala">Atlas of Living Australia : ALA</option>
+            <option value="idigbio">Integrated Digitized Biocollections : iDigBio</option>
+            <option value="obis">Oceanic Biogeographic Information System : OBIS</option>
+            <option value="ecoengine">Berkeley Ecoinformatics Engine : EcoEngine</option>
+            <option value="vernet">VerNet</option>
+        </param>    
+        <param name="limit" type="integer" label="Number of records to return" help="This is passed across all sources" value="500"/>
+    </inputs>
+    <outputs>
+        <data name="output" format="tabular" from_work_dir="output.tab" label="Species occurences"/>
+    </outputs>
+    <tests>
+        <test> 
+            <param name="sname" value="Canis lupus"/>
+            <param name="from" value="gbif,bison"/>
+            <param name="limit" value="50"/>
+            <output name="output">
+                <assert_contents>
+                    <has_text text="name"/>
+                    <has_text text="Canis lupus"/>
+                    <has_n_columns n="6"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+===========================
+Get species occurences data
+===========================      
+**What it does**
+
+Search species occurences across a single or many data sources.
+
+|
+
+**How to use it**
+
+Enter a species scientific name, be careful that the tool is case sensitive. Eg : Canis lupus.
+
+Select one or more data source. It can be any combination of gbif, bison, inat, ebird, antweb, ala, idigbio, obis, ecoengine and/or vertnet.
+
+|
+
+**Output**
+
+The tool returns a table with the species observations available in the chosen databases.
+
+Output file will have the following attributes : name, longituden latitude, prov, data, key.
+
+prov is the datasouce and key the occurence corresponding unique identifier.
+
+|
+
+**How it works**
+
+This tool use the spocc R package (Spocc::occ) :
+
+A programmatic interface to many species occurrence data sources, including :
+
+  - Global Biodiversity Information Facility : GBIF
+    https://www.gbif.org/
+
+  - USGSs' Biodiversity Information Serving Our Nation : BISON
+    https://bison.usgs.gov/#home
+    
+  - iNaturalist : iNat
+    https://www.inaturalist.org/,
+
+  - eBird
+    https://ebird.org/home
+
+  - Berkeley Ecoinformatics Engine : EcoEngine
+    https://ecoengine.berkeley.edu/
+
+  - AntWeb
+    https://www.antweb.org/
+
+  - Integrated Digitized Biocollections : iDigBio
+    https://www.idigbio.org/
+
+  - VertNet
+    http://vertnet.org/
+
+  - Ocean Biogeographic Information System : OBIS 
+    https://obis.org/
+
+  - Atlas of Living Australia : ALA
+    https://www.ala.org.au/. 
+
+
+Includes functionality for retrieving species occurrence data, and combining those data.
+
+|
+
+**Sources**
+
+Original source : https://cran.r-project.org/web/packages/spocc/index.html
+
+Reference manual : https://cran.r-project.org/web/packages/spocc/spocc.pdf
+    ]]></help>
+</tool>

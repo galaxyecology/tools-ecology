@@ -102,7 +102,7 @@
                 <expand macro="gdal_param_ot"/>
                 <param name="strict" type="boolean" truevalue="-strict" falsevalue="" checked="false" label="Don't be forgiving of mismatches and lost data" help="-strict"/>
                 <expand macro="gdal_param_b"/>
-                <param name="mask" type="text" label="Select an input band band to create output dataset mask band" help="-mask band e.g : -mask 1" value=""/>
+                <param name="mask" type="text" label="Select an input band to create output dataset mask band" help="-mask band e.g : -mask 1" value=""/>
                 <expand macro="gdal_param_r"/>
                 <expand macro="gdal_param_stats"/>
                 <expand macro="gdal_param_norat"/>

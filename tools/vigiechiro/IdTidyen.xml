@@ -1,0 +1,47 @@
+<tool id="vigiechiro_idcorrect_2ndlayer" name="Tadarida data cleaner" version="@VERSION@">
+    <description>clean data from animal detection on acoustic recordings</description>
+    <macros>
+        <import>vigiechiro_macros.xml</import>
+    </macros>
+    <expand macro="vigiechiro_requirements"/>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript 
+         '$__tool_directory__/Id_Tidy.R' 
+         '$participation_file'
+         '${participation_file.name}' 
+	 '$output'
+]]>
+    </command>
+    <inputs>
+        <param name="participation_file" type="data" format="csv" label="Participation file" help="Summary table of TadaridaC"/>
+    </inputs>
+    <outputs>
+        <data name="output" from_work_dir="Id_tidy.tabular" format="tabular"/>
+    </outputs>
+    <tests>
+        <test> 
+            <param name="participation_file" value="input_tidy_test1_obs.csv"/>
+            <output name="output" file="output_tidy.tabular"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+
+.. class:: infomark 
+
+==========================
+Tadarida data cleaner
+==========================
+
+**What it does**
+
+This tool intends to clean and format data from Tadarida software, and improve data output according to context (= the whole output of a sampling session). This step is mandatory before applying validations with the "Identifications validation" tool.
+
+**Arguments**
+
+- Input is a summary table of TadaridaC output from vigiechiro.herokuapp.com web portal.
+
+- Output is a formated data table ready to be corrected with the validation tool.
+
+  ]]></help>
+    <expand macro="vigiechiro_bibref" />
+</tool>

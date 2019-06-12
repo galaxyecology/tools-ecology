@@ -1,0 +1,32 @@
+"Code"	"Groupe"	"Nom francais"	"Nom scientifique"	"Risque d'erreur (%)"	"Nb Validations"	"Effort de validation"	"Nb de Contacts en expansion"	"Niveau d'Activite en expansion"	"Nb de Contacts en direct"	"Niveau d'Activite en direct"	"TriGroupe"
+"Pippip"	"Chauve-souris"	"Pipistrelle commune"	"Pipistrellus pipistrellus"	"1"	NA	"-"	"43"	"MODEREE"	"103"	"FORTE"	3
+"Nyclei"	"Chauve-souris"	"Noctule de Leisler"	"Nyctalus leisleri"	"1"	NA	"-"	"0"	NA	"27"	"FORTE"	3
+"Nycnoc"	"Chauve-souris"	"Noctule commune"	"Nyctalus noctula"	"15"	NA	"-"	"0"	NA	"16"	"FORTE"	3
+"Pipkuh"	"Chauve-souris"	"Pipistrelle de Kuhl"	"Pipistrellus kuhlii"	"92"	NA	"-"	"4"	"MODEREE"	"4"	"MODEREE"	3
+"Pipnat"	"Chauve-souris"	"Pipistrelle de Nathusius"	"Pipistrellus nathusii"	"53"	NA	"-"	"0"	NA	"4"	"FORTE"	3
+"Eptser"	"Chauve-souris"	"Serotine commune"	"Eptesicus serotinus"	"97"	NA	"-"	"0"	NA	"2"	"FAIBLE"	3
+"Rhihip"	"Chauve-souris"	"Petit Rhinolophe"	"Rhinolophus hipposideros"	"6"	NA	"-"	"3"	NA	"0"	NA	3
+"Myoema"	"Chauve-souris"	"Murin a oreilles echancrees"	"Myotis emarginatus"	"95"	NA	"-"	"2"	NA	"0"	NA	3
+"Rhieur"	"Chauve-souris"	"Rhinolophe euryale"	"Rhinolophus euryale"	"75"	NA	"-"	"2"	NA	"0"	NA	3
+"Pippyg"	"Chauve-souris"	"Pipistrelle soprane"	"Pipistrellus pygmaeus"	"95"	NA	"-"	"1"	"FAIBLE"	"0"	NA	3
+"Rhifer"	"Chauve-souris"	"Grand Rhinolophe"	"Rhinolophus ferrumequinum"	"97"	NA	"-"	"1"	NA	"0"	NA	3
+"Tetvir"	"Sauterelle"	"Sauterelle verte"	"Tettigonia viridissima"	"22"	NA	"-"	"52"	"FORTE"	"77"	"MODEREE"	2
+"Phogri"	"Sauterelle"	"Decticelle cendree"	"Pholidoptera griseoaptera"	"4"	NA	"-"	"5"	"MODEREE"	"69"	"TRES FORTE"	2
+"Leppun"	"Sauterelle"	"Sauterelle ponctuee"	"Leptophyes punctatissima"	"39"	NA	"-"	"0"	NA	"15"	"MODEREE"	2
+"Testes"	"Sauterelle"	"Decticelle carroyee"	"Tessellana tessellata"	"82"	NA	"-"	"0"	NA	"11"	"MODEREE"	2
+"Epheph"	"Sauterelle"	"Ephippigere des vignes"	"Ephippiger ephippiger"	"10"	NA	"-"	"1"	"FAIBLE"	"10"	"FORTE"	2
+"Isopyr"	"Sauterelle"	"Barbatiste pyreneen"	"Isophya pyrenaea"	"2"	NA	"-"	"9"	NA	"8"	NA	2
+"Phanan"	"Sauterelle"	"Phaneroptere meridional"	"Phaneroptera nana"	"77"	NA	"-"	"2"	"MODEREE"	"5"	"MODEREE"	2
+"Urosp"	"Sauterelle"	"Ephippigère carénée/d'Algérie"	"Uromenus sp."	"90"	NA	"-"	"4"	NA	"4"	NA	2
+"Plaint"	"Sauterelle"	"Decticelle intermediaire"	"Platycleis intermedia"	"92"	NA	"-"	"2"	"MODEREE"	"4"	"MODEREE"	2
+"Rusnit"	"Sauterelle"	"Conocephale gracieux"	"Ruspolia nitidula"	"94"	NA	"-"	"1"	"FAIBLE"	"3"	"MODEREE"	2
+"Phafal"	"Sauterelle"	"Phaneroptere commun"	"Phaneroptera falcata"	"91"	NA	"-"	"0"	NA	"2"	NA	2
+"Plaalb"	"Sauterelle"	"Decticelle chagrinee"	"Platycleis albopunctata"	"95"	NA	"-"	"0"	NA	"2"	"FAIBLE"	2
+"Roeroe"	"Sauterelle"	"Decticelle bariolee"	"Roeseliana roeselii"	"72"	NA	"-"	"2"	"FAIBLE"	"1"	"FAIBLE"	2
+"Barfis"	"Sauterelle"	"Barbitiste languedocien"	"Barbitistes fischeri"	"59"	NA	"-"	"1"	NA	"0"	NA	2
+"Confus"	"Sauterelle"	"Conocephale bigarre"	"Conocephalus fuscus"	"97"	NA	"-"	"1"	"FAIBLE"	"0"	NA	2
+"Sepsep"	"Sauterelle"	"Decticelle echassiere"	"Sepiana sepium"	"96"	NA	"-"	"1"	"FAIBLE"	"0"	NA	2
+"Yerray"	"Sauterelle"	"Decticelle frele"	"Yersinella raymondii"	"99"	NA	"-"	"1"	"FAIBLE"	"0"	NA	2
+"noise"	"Autre"	"bruit"	"noise"	"1"	NA	"-"	"600"	"MODEREE"	"723"	"MODEREE"	1
+"piaf"	"Autre"	"Oiseau sp."	"Aves sp."	"4"	NA	"-"	"0"	NA	"7"	NA	1
+"Ratnor"	"Autre"	"Surmulot"	"Rattus norvegicus"	"93"	NA	"-"	"0"	NA	"1"	NA	1

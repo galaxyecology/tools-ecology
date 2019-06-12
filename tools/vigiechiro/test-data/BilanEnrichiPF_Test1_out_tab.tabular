@@ -1,0 +1,20 @@
+"Code"	"Groupe"	"Nom francais"	"Nom scientifique"	"Risque d'erreur (%)"	"Nb Validations"	"Effort de validation"	"Nb de Contacts par Nuit"	"Niveau d'Activite"	"TriGroupe"
+"Pippip"	"Chauve-souris"	"Pipistrelle commune"	"Pipistrellus pipistrellus"	"1"	NA	"-"	"8"	"FAIBLE"	3
+"Nyclei"	"Chauve-souris"	"Noctule de Leisler"	"Nyctalus leisleri"	"37"	NA	"-"	"2"	"FAIBLE"	3
+"Pipkuh"	"Chauve-souris"	"Pipistrelle de Kuhl"	"Pipistrellus kuhlii"	"3"	NA	"-"	"2"	"FAIBLE"	3
+"Pippyg"	"Chauve-souris"	"Pipistrelle soprane"	"Pipistrellus pygmaeus"	"11"	NA	"-"	"2"	"FAIBLE"	3
+"Eptser"	"Chauve-souris"	"Serotine commune"	"Eptesicus serotinus"	"3"	NA	"-"	"1"	"FAIBLE"	3
+"Rhifer"	"Chauve-souris"	"Grand Rhinolophe"	"Rhinolophus ferrumequinum"	"1"	NA	"-"	"1"	"FAIBLE"	3
+"Rhihip"	"Chauve-souris"	"Petit Rhinolophe"	"Rhinolophus hipposideros"	"3"	NA	"-"	"1"	"FAIBLE"	3
+"Hypsav"	"Chauve-souris"	"Vespere de Savi"	"Hypsugo savii"	"60"	NA	"-"	"0"	"FAIBLE"	3
+"Pipnat"	"Chauve-souris"	"Pipistrelle de Nathusius"	"Pipistrellus nathusii"	"51"	NA	"-"	"0"	"FAIBLE"	3
+"Tetvir"	"Sauterelle"	"Sauterelle verte"	"Tettigonia viridissima"	"64"	NA	"-"	"8"	"FAIBLE"	2
+"Leppun"	"Sauterelle"	"Sauterelle ponctuee"	"Leptophyes punctatissima"	"94"	NA	"-"	"2"	"FAIBLE"	2
+"Phogri"	"Sauterelle"	"Decticelle cendree"	"Pholidoptera griseoaptera"	"92"	NA	"-"	"2"	"MODEREE"	2
+"Plaint"	"Sauterelle"	"Decticelle intermediaire"	"Platycleis intermedia"	"92"	NA	"-"	"2"	"FAIBLE"	2
+"Testes"	"Sauterelle"	"Decticelle carroyee"	"Tessellana tessellata"	"85"	NA	"-"	"2"	"FAIBLE"	2
+"Yerray"	"Sauterelle"	"Decticelle frele"	"Yersinella raymondii"	"91"	NA	"-"	"2"	"FAIBLE"	2
+"Confus"	"Sauterelle"	"Conocephale bigarre"	"Conocephalus fuscus"	"62"	NA	"-"	"0"	"FAIBLE"	2
+"Decalb"	"Sauterelle"	"Dectique a front blanc"	"Decticus albifrons"	"78"	NA	"-"	"0"	"FAIBLE"	2
+"noise"	"Autre"	"bruit"	"noise"	"1"	NA	"-"	"1148"	"MODEREE"	1
+"piaf"	"Autre"	"Oiseau sp."	"Aves sp."	"1"	NA	"-"	"102"	"MODEREE"	1

@@ -1,0 +1,43 @@
+<macros>
+    <token name="@VERSION@">0.1.1</token>
+    <xml name="vigiechiro_bibref">
+        <citations>
+            <citation type="bibtex">
+	    @article{kerbiriou2015vigie,
+	    title={Vigie-Chiro: 9 ans de suivi des tendances des esp{\`e}ces communes},
+            author={Kerbiriou, C and Julien, JF and Bas, Y and Marmet, J and Le Viol, I and Lorrilliere, R and Azam, C and Gasc, A and Lois, G},
+            journal={Symbioses, nouvelle s{\'e}rie},
+            number={34},
+            year={2015}
+            }
+            </citation>
+            <citation type="bibtex">
+	    @inproceedings{bas2013automatic,
+            title={Automatic echolocation calls identification in Europe vs. Neotropics: more species does not mean more difficult},
+            author={Bas, Yves and Escallon, Antoine and Ferre, Matthieu and Haquart, Alexandre and Rufray, Vincent and Disca, Thierry and Julien, Jean-Fran{\c{c}}ois}
+	            }
+           </citation>
+           <citation type="bibtex">
+            @inproceedings{kerbiriou2010long,
+            title={Long term trends monitoring of bats, from biodiversity indicator production to species specialization assessment},
+            author={Kerbiriou, C and Bas, Y and Dufr{\^e}ne, L and Robert, A and Julien, JF},
+            booktitle={24th Annual Meeting of the Society for Conservation Biology, Edmonton, Canada},
+            year={2010}
+            }
+            </citation>
+            <citation type="doi">10.5334/jors.154</citation>  
+        </citations>
+    </xml>
+    <xml name="vigiechiro_requirements">
+        <requirements>
+            <requirement type="package" version="1.12.2">r-data.table</requirement>
+            <yield />
+        </requirements>
+    </xml>
+    <xml name="vigiechiro_bilanenrichi_requirements">
+        <requirement type="package" version="1.4.3">r-reshape2</requirement> 
+        <requirement type="package" version="0.4">r-dt</requirement>
+        <requirement type="package" version="1.2">r-htmlwidgets</requirement>
+        <requirement type="package" version="2.6">pandoc</requirement>
+    </xml>
+</macros>
