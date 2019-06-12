@@ -1,5 +1,5 @@
 <macros>
-    <token name="@VERSION@">2.4.0</token>  
+    <token name="@VERSION@">3.0.0</token>  
     <xml name="gdal_requirements">
         <requirements>
             <requirement type="package" version="@VERSION@">gdal</requirement>
