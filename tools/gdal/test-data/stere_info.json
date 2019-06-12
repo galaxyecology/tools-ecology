@@ -1,16 +1,20 @@
 {
-  "description":"\/tmp\/tmpqeQqf5\/files\/000\/dataset_4.dat",
+  "description":"\/tmp\/tmpxQwYm4\/files\/000\/dataset_5.dat",
   "driverShortName":"GTiff",
   "driverLongName":"GeoTIFF",
   "files":[
-    "\/tmp\/tmpqeQqf5\/files\/000\/dataset_4.dat"
+    "\/tmp\/tmpxQwYm4\/files\/000\/dataset_5.dat"
   ],
   "size":[
     273,
     265
   ],
   "coordinateSystem":{
-    "wkt":"PROJCS[\"unnamed\",\n    GEOGCS[\"WGS 84\",\n        DATUM[\"unknown\",\n            SPHEROID[\"WGS84\",6378137,298.257223563]],\n        PRIMEM[\"Greenwich\",0],\n        UNIT[\"degree\",0.0174532925199433]],\n    PROJECTION[\"Stereographic\"],\n    PARAMETER[\"latitude_of_origin\",71.4],\n    PARAMETER[\"central_meridian\",28.9],\n    PARAMETER[\"scale_factor\",1],\n    PARAMETER[\"false_easting\",0],\n    PARAMETER[\"false_northing\",0],\n    UNIT[\"metre\",1,\n        AUTHORITY[\"EPSG\",\"9001\"]]]"
+    "wkt":"PROJCRS[\"unnamed\",\n    BASEGEOGCRS[\"WGS 84\",\n        DATUM[\"unknown\",\n            ELLIPSOID[\"WGS84\",6378137,298.257223563,\n                LENGTHUNIT[\"metre\",1,\n                    ID[\"EPSG\",9001]]]],\n        PRIMEM[\"Greenwich\",0,\n            ANGLEUNIT[\"degree\",0.0174532925199433,\n                ID[\"EPSG\",9122]]]],\n    CONVERSION[\"unnamed\",\n        METHOD[\"Stereographic\"],\n        PARAMETER[\"Latitude of natural origin\",71.4,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8801]],\n        PARAMETER[\"Longitude of natural origin\",28.9,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8802]],\n        PARAMETER[\"Scale factor at natural origin\",1,\n            SCALEUNIT[\"unity\",1],\n            ID[\"EPSG\",8805]],\n        PARAMETER[\"False easting\",0,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8806]],\n        PARAMETER[\"False northing\",0,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8807]]],\n    CS[Cartesian,2],\n        AXIS[\"easting\",east,\n            ORDER[1],\n            LENGTHUNIT[\"metre\",1,\n                ID[\"EPSG\",9001]]],\n        AXIS[\"northing\",north,\n            ORDER[2],\n            LENGTHUNIT[\"metre\",1,\n                ID[\"EPSG\",9001]]]]",
+    "dataAxisToSRSAxisMapping":[
+      1,
+      2
+    ]
   },
   "geoTransform":[
     -64455.3594368340927758,
