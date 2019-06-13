@@ -90,7 +90,7 @@
             <param name="input" value="ogr2ogr_KML.kml" ftype="xml"/>
             <param name="f" value="ESRI Shapefile"/>
             <output file="shp_compositefiles/ogr2ogr_shapefile2.html" name="shapefile">
-                <extra_files type="file" name="shapefile.dbf" value="shp_compositefiles/ogr2ogr_shapefile2.dbf"/>
+                <extra_files type="file" name="shapefile.dbf" value="shp_compositefiles/ogr2ogr_shapefile2.dbf" compare="sim_size" delta="50"/>
                 <extra_files type="file" name="shapefile.prj" value="shp_compositefiles/ogr2ogr_shapefile2.prj"/>
                 <extra_files type="file" name="shapefile.shp" value="shp_compositefiles/ogr2ogr_shapefile2.shp"/>
                 <extra_files type="file" name="shapefile.shx" value="shp_compositefiles/ogr2ogr_shapefile2.shx"/>
