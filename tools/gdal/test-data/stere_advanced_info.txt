@@ -1,28 +1,50 @@
 Driver: GTiff/GeoTIFF
-Files: /tmp/tmpqeQqf5/files/000/dataset_4.dat
+Files: /tmp/tmpxQwYm4/files/000/dataset_5.dat
 Size is 273, 265
 Coordinate System is:
-PROJCS["unnamed",
-    GEOGCS["WGS 84",
+PROJCRS["unnamed",
+    BASEGEOGCRS["WGS 84",
         DATUM["unknown",
-            SPHEROID["WGS84",6378137,298.257223563]],
-        PRIMEM["Greenwich",0],
-        UNIT["degree",0.0174532925199433]],
-    PROJECTION["Stereographic"],
-    PARAMETER["latitude_of_origin",71.4],
-    PARAMETER["central_meridian",28.9],
-    PARAMETER["scale_factor",1],
-    PARAMETER["false_easting",0],
-    PARAMETER["false_northing",0],
-    UNIT["metre",1,
-        AUTHORITY["EPSG","9001"]]]
+            ELLIPSOID["WGS84",6378137,298.257223563,
+                LENGTHUNIT["metre",1,
+                    ID["EPSG",9001]]]],
+        PRIMEM["Greenwich",0,
+            ANGLEUNIT["degree",0.0174532925199433,
+                ID["EPSG",9122]]]],
+    CONVERSION["unnamed",
+        METHOD["Stereographic"],
+        PARAMETER["Latitude of natural origin",71.4,
+            ANGLEUNIT["degree",0.0174532925199433],
+            ID["EPSG",8801]],
+        PARAMETER["Longitude of natural origin",28.9,
+            ANGLEUNIT["degree",0.0174532925199433],
+            ID["EPSG",8802]],
+        PARAMETER["Scale factor at natural origin",1,
+            SCALEUNIT["unity",1],
+            ID["EPSG",8805]],
+        PARAMETER["False easting",0,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8806]],
+        PARAMETER["False northing",0,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8807]]],
+    CS[Cartesian,2],
+        AXIS["easting",east,
+            ORDER[1],
+            LENGTHUNIT["metre",1,
+                ID["EPSG",9001]]],
+        AXIS["northing",north,
+            ORDER[2],
+            LENGTHUNIT["metre",1,
+                ID["EPSG",9001]]]]
+Data axis to CRS axis mapping: 1,2
 Origin = (-64455.359436834092776,72521.133364936860744)
 Pixel Size = (500.000000000000000,-500.000000000000000)
 Metadata:
   AREA_OR_POINT=Area
 Metadata (DERIVED_SUBDATASETS):
-  DERIVED_SUBDATASET_1_NAME=DERIVED_SUBDATASET:LOGAMPLITUDE:/tmp/tmpqeQqf5/files/000/dataset_4.dat
-  DERIVED_SUBDATASET_1_DESC=log10 of amplitude of input bands from /tmp/tmpqeQqf5/files/000/dataset_4.dat
+  DERIVED_SUBDATASET_1_NAME=DERIVED_SUBDATASET:LOGAMPLITUDE:/tmp/tmpxQwYm4/files/000/dataset_5.dat
+  DERIVED_SUBDATASET_1_DESC=log10 of amplitude of input bands from /tmp/tmpxQwYm4/files/000/dataset_5.dat
 Image Structure Metadata:
   INTERLEAVE=PIXEL
 Corner Coordinates:

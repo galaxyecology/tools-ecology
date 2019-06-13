@@ -7,7 +7,7 @@ long_description: |
 homepage_url: https://www.gdal.org
 name: gdal
 owner: ecology 
-remote_repository_url: https://github.com/galaxyecology/tools-ecology/tools/gdal
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/gdal
 type: unrestricted
 
 repositories:
@@ -81,6 +81,13 @@ repositories:
       - gdal_macros.xml
       - test-data/custom.geo.json
       - test-data/ogrinfo_test1_out2.txt
+      - test-data/shp_compositefiles/shapefile.html
+      - test-data/shp_compositefiles/shapefile.shp
+      - test-data/shp_compositefiles/shapefile.shx
+      - test-data/shp_compositefiles/shapefile.dbf
+      - test-data/shp_compositefiles/shapefile.sbn
+      - test-data/shp_compositefiles/shapefile.sbx
+      - test-data/ogrinfo_shp.txt
 
   gdal_ogr2ogr:
     description: The ogr2ogr program converts simple features data between file formats.
@@ -89,4 +96,20 @@ repositories:
       - ogr2ogr.xml
       - gdal_macros.xml
       - test-data/custom.geo.json
+      - test-data/shp_compositefiles/shapefile.html
+      - test-data/shp_compositefiles/shapefile.shp
+      - test-data/shp_compositefiles/shapefile.shx
+      - test-data/shp_compositefiles/shapefile.dbf
+      - test-data/shp_compositefiles/shapefile.sbn
+      - test-data/shp_compositefiles/shapefile.sbx
+      - test-data/ogr2ogr_KML.kml
+      - test-data/ogr2ogr_GML.gml
+      - test-data/ogr2ogr_GML2.gml
+      - test-data/ogr2ogr_geojson.json
+      - test-data/ogr2ogr_test2_geojson.json
+      - test-data/shp_compositefiles/ogr2ogr_shapefile2.html
+      - test-data/shp_compositefiles/ogr2ogr_shapefile2.shp
+      - test-data/shp_compositefiles/ogr2ogr_shapefile2.shx
+      - test-data/shp_compositefiles/ogr2ogr_shapefile2.dbf
+      - test-data/shp_compositefiles/ogr2ogr_shapefile2.prj
 
