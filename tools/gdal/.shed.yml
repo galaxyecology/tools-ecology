@@ -7,7 +7,7 @@ long_description: |
 homepage_url: https://www.gdal.org
 name: gdal
 owner: ecology 
-remote_repository_url: https://github.com/galaxyecology/tools-ecology/tools/gdal
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/gdal
 type: unrestricted
 
 repositories:
