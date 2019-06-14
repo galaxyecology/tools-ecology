@@ -2,25 +2,31 @@
     <description>converts simple features data between file formats</description>
     <macros>
         <import>gdal_macros.xml</import>
-    </macros> 
-    <requirements>
-        <requirement type="package" version="2.4.0">gdal</requirement>
-        <requirement type="package" version="3.7.1">geos</requirement>
-    </requirements>
+    </macros>
+    <expand macro="gdal_requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        ogr2ogr -f '$f'
+        ogr2ogr
+            -f '$f'
             #if $f=='ESRI Shapefile'
-                'output.shp'
+                'shapefile.shp'
             #else
-                '$output'
+                'output'
             #end if
-            '$input'
+            #if $input.is_of_type("shp")
+                ${os.path.join( $input.extra_files_path, 'shapefile.shp' )} 
+            #else    
+                '$input'
+            #end if
+            #if $f=='ESRI Shapefile'
+                &&
+                mkdir ${shapefile.extra_files_path} &&
+                mv shapefile.* ${shapefile.extra_files_path}
+            #end if 
     ]]></command>
     <inputs>
-        <param type="data" name="input" format="data" label="Gdal supported input file" help="http://www.gdal.org/ogr_formats.html"/>
-        <param type="select" name="f" label="Conversion format" value=""
-            help="Select the format to convert your input file. Currently supported : Shapefile, GeoJSON, GML, KML and WFS. The shapefiles outputs shp, shx, dbf and prj will populate a datacollection.">
-            <option value="ESRI Shapefile">ESRI Shapefile</option> 
+        <param type="data" name="input" format="shp,xml,json,txt" label="Gdal supported input file" help="http://www.gdal.org/ogr_formats.html"/>
+        <param type="select" name="f" label="Conversion format" value="" help="Select the format to convert your input file. Currently supported : Shapefile, GeoJSON, GML, KML and WFS.">
+            <option value="ESRI Shapefile">ESRI Shapefile</option>
             <option value="GeoJSON">GEOJSON</option> 
             <option value="GML">GML</option>
             <option value="KML">KML</option>
@@ -28,37 +34,74 @@
         </param>
     </inputs>
     <outputs>
-        <data name="output" format="xml" label="${on_string}.${f}">
+        <data name="output" from_work_dir="output" format="xml" label="${on_string}.${f}">
             <filter>f != 'ESRI Shapefile'</filter>
                 <change_format>
-                    <when input="f" value="GeoJson" format="json"/> 
+                    <when input="f" value="GeoJSON" format="json"/> 
                     <when input="f" value="GML" format="xml"/> 
                     <when input="f" value="KML" format="xml"/> 
                     <when input="f" value="WFS" format="txt"/> 
                 </change_format> 
         </data>
-        <collection name="shapefile" type="list" label="${on_string}.shapefile">
+        <data name="shapefile" format="shp" from_work_dir="shapefile" label="${on_string}.shapefile">
             <filter>f == 'ESRI Shapefile'</filter>
-                <data name="shp" format="binary" from_work_dir="*.shp"/>
-                <data name="shx" format="binary" from_work_dir="*.shx"/>
-                <data name="dbf" format="binary" from_work_dir="*.dbf"/>
-                <data name="prj" format="txt" from_work_dir="*.prj"/>
-       </collection>
+        </data>
     </outputs>
-    
     <tests>
-        <test> <!-- ogr2ogr -f KML custom.geo.kml custom.geo.json -->
-            <param name="input" value="custom.geo.json"/>
+        <test>
+            <param name="input" value="shp_compositefiles/shapefile.xml" ftype="shp">
+                <composite_data value="shp_compositefiles/shapefile.shp"/>
+                <composite_data value="shp_compositefiles/shapefile.shx"/>
+                <composite_data value="shp_compositefiles/shapefile.dbf"/>
+                <composite_data value="shp_compositefiles/shapefile.sbn"/>
+                <composite_data value="shp_compositefiles/shapefile.sbx"/>
+            </param>
             <param name="f" value="KML"/>
-            <output name="output">
-                <assert_contents>
-                    <has_text text="20.5902474301049,41.8554041611336 20.4631750830992,41.5150890162753 20.6051819190374,41.0862263046852 21.0200403174764,40.8427269557259 20.9999898617472,40.580003973954 20.6749967790636,40.434999904943 20.6150004411728,40.1100068222594 20.1500159034105,39.624997666984 19.9800004411701,39.6949933945234 19.9600016618732,39.915005805006 19.4060819841367,40.2507734238225 19.3190588721571,40.7272301295536 19.4035498389543,41.4095657415355 19.5400272966371,41.7199860703128 19.371768833095,41.8775475123707 19.3044861182508,42.1957451442078 19.7380513851796,42.6882473821656 19.8016133968987,42.5000934921908 20.0707,42.58863 20.2837545101819,42.3202595078151 20.52295,42.21787 20.5902474301049,41.8554041611336"/>                           
-                    <has_text text="31.7859981625716,52.1016779648855 32.1594120623127,52.0612669948332 32.4120581397876,52.2886949733497 32.715760532367,52.2384654811621 33.7526998227357,52.3350745713317 34.391730584457,51.7688817409258 34.1419783871904,51.5664134792062 34.2248157081543,51.2559931504289 35.0221830584179,51.2075723333715 35.3779236183151,50.7739553900103 35.3561161638879,50.5771973740591 36.6261678403253,50.2255909287451 37.3934595069951,50.3839533555036 38.0106311378569,49.9156615260746 38.5949882342134,49.9264619004236 40.0690584653391,49.6010554062817 40.0807890154693,49.3074299179993 39.6746639340875,48.7838184678019 39.8956323585676,48.2324050970314 39.7382776222388,47.898937079452 38.7705847511412,47.8256082220298 38.2551123390298,47.5464004583568 38.2235380388994,47.1021898463759 37.42513715999,47.0222205674042 36.7598547706644,46.6987002630409 35.8236845232648,46.6459644638871 34.9623417498239,46.2731965195496 35.020787794746,45.6512189804847 35.5100085792532,45.4099933945462 36.5299979998302,45.4699897324371 36.3347127621992,45.113215643894 35.2399992205281,44.9399962428516 33.8825110206529,44.3614785833441 33.32642093276,44.5648770208449 33.5469242693495,45.0347708196749 32.4541744321055,45.3274661321761 32.6308044776791,45.5191856959789 33.5881620623184,45.8515685084802 33.2985673357547,46.0805984563978 31.7441402524152,46.3333478867374 31.6753072446024,46.7062450221555 30.7487488136091,46.583100084004 30.3776086768889,46.0324101832857 29.6032890154274,45.2933080104311 29.1497249692017,45.4649254420724 28.6797794939394,45.3040308701317 28.233553501099,45.4882831894684 28.4852694027928,45.5969070501459 28.6599874203716,45.9399868841316 28.9337174822216,46.2588304713725 28.8629724464141,46.4378893092638 29.0721069678993,46.5176777207225 29.1706539242799,46.3792623968287 29.7599719581364,46.3499876979354 30.0246586443354,46.423936672545 29.8382100766263,46.5253258327017 29.9088517595693,46.6743606634315 29.5596741065731,46.9285828720913 29.4151351254527,47.3466452093326 29.0508679542273,47.5102269557525 29.122698195113,47.8490951605065 28.6708911475852,48.1181485052341 28.2595467465418,48.1555622422134 27.5225374691952,48.4671194525011 26.8578235206248,48.3682107610945 26.6193367855978,48.2207262233335 26.1974503923669,48.2208812526303 25.9459411964024,47.9871487493742 25.207743361113,47.8910564235275 24.8663171729606,47.7375257431883 24.4020561052504,47.9818777532804 23.7609582862374,47.9855984564055 23.1422363624068,48.0963410508069 22.7105314470405,47.8821939153894 22.6408199398788,48.1502395696874 22.0856083513349,48.4222643092718 22.2808419125336,48.8253921575807 22.5581376482118,49.0857380234671 22.7764188982126,49.0273953314096 22.5184501482116,49.4767735866197 23.4265084164444,50.3085057643574 23.9227571957433,50.4248810898788 24.0299857927489,50.7054066025752 23.5270707536844,51.5784540879302 24.0050777523842,51.6174439560945 24.5531063168395,51.8884610052492 25.327787713327,51.9106560329186 26.3379586117686,51.8322887233479 27.4540661964084,51.5923033717845 28.2416150245366,51.5722270778391 28.6176127458922,51.4277139349348 28.9928353207635,51.6020443792715 29.2549381853479,51.3682343613669 30.1573637224609,51.4161384141015 30.5551172218115,51.3195034857157 30.6194543800148,51.8228060980224 30.927549269339,52.0423534206144 31.7859981625716,52.1016779648855"/>
-                </assert_contents>
+            <output file="ogr2ogr_KML.kml" name="output"/> 
+        </test>
+        <test>
+            <param name="input" value="shp_compositefiles/shapefile.xml" ftype="shp">
+                <composite_data value="shp_compositefiles/shapefile.shp"/>
+                <composite_data value="shp_compositefiles/shapefile.shx"/>
+                <composite_data value="shp_compositefiles/shapefile.dbf"/>
+                <composite_data value="shp_compositefiles/shapefile.sbn"/>
+                <composite_data value="shp_compositefiles/shapefile.sbx"/>
+            </param>
+            <param name="f" value="GML"/>
+            <output file="ogr2ogr_GML.gml" name="output"/> 
+        </test>
+        <test>
+            <param name="input" value="shp_compositefiles/shapefile.xml" ftype="shp">
+                <composite_data value="shp_compositefiles/shapefile.shp"/>
+                <composite_data value="shp_compositefiles/shapefile.shx"/>
+                <composite_data value="shp_compositefiles/shapefile.dbf"/>
+                <composite_data value="shp_compositefiles/shapefile.sbn"/>
+                <composite_data value="shp_compositefiles/shapefile.sbx"/>
+            </param>
+            <param name="f" value="GeoJSON"/>
+            <output file="ogr2ogr_geojson.json" name="output"/> 
+        </test>   
+        <test>
+            <param name="input" value="ogr2ogr_KML.kml" ftype="xml"/>
+            <param name="f" value="GeoJSON"/>
+            <output file="ogr2ogr_test2_geojson.json" name="output"/> 
+        </test>   
+        <test>
+            <param name="input" value="ogr2ogr_KML.kml" ftype="xml"/>
+            <param name="f" value="ESRI Shapefile"/>
+            <output file="shp_compositefiles/ogr2ogr_shapefile2.html" name="shapefile">
+                <extra_files type="file" name="shapefile.dbf" value="shp_compositefiles/ogr2ogr_shapefile2.dbf" compare="sim_size" delta="50"/>
+                <extra_files type="file" name="shapefile.prj" value="shp_compositefiles/ogr2ogr_shapefile2.prj"/>
+                <extra_files type="file" name="shapefile.shp" value="shp_compositefiles/ogr2ogr_shapefile2.shp"/>
+                <extra_files type="file" name="shapefile.shx" value="shp_compositefiles/ogr2ogr_shapefile2.shx"/>
             </output>
         </test>
+        <test>
+            <param name="input" value="ogr2ogr_KML.kml" ftype="xml"/>
+            <param name="f" value="GML"/>
+            <output file="ogr2ogr_GML2.gml" name="output"/> 
+        </test>
     </tests>
-
     <help><![CDATA[
 ========
 Ogrinfo
@@ -82,7 +125,7 @@ To see complete details and help section please check the official gdal sources.
 
 http://www.gdal.org
 
-http://www.gdal.org/ogr_utilities.html
+https://gdal.org/programs/ogr2ogr.html
 
 http://download.osgeo.org/gdal/workshop/foss4ge2015/workshop_gdal.pdf
     ]]></help>

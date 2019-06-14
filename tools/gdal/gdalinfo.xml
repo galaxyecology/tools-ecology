@@ -62,7 +62,6 @@
             </when>
         </conditional>
     </inputs>
-
     <outputs>
         <data name="outputDefault" format="txt" label="Default info file">
             <filter>format == "default"</filter>
@@ -74,14 +73,13 @@
             <filter>subdataset == "subd_y"</filter>
         </data>
     </outputs>
-
     <tests>
         <test>
             <param name="input1" value="stere.tif"/>
             <param name="format" value="json" />
             <param name="subdataset" value="subd_n" />
             <param name="advanced" value="simple"/>
-            <output name="outputJson" file="stere_info.json" lines_diff="6"/>
+            <output name="outputJson" file="stere_info.json" lines_diff="4"/>
         </test>
         <test>
             <param name="input1" value="stere.tif"/>
@@ -95,7 +93,6 @@
             <output name="outputDefault" file="stere_advanced_info.txt" lines_diff="6"/>
         </test>
     </tests>
-
     <help><![CDATA[
 ==========================
 Gdalinfo

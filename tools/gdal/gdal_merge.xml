@@ -55,7 +55,6 @@
 
             -o '$output'
         ]]></command>
-
     <inputs>
         <expand macro="gdal_input_raster_multiple"/>  
         <expand macro="gdal_param_of"/>
@@ -100,11 +99,9 @@
             </when>
         </conditional>
     </inputs>
-        
     <outputs>
         <expand macro="gdal_output_change_format"/>
     </outputs>
-
     <tests>
         <test>
             <param name="input" value="small_west.dem,small_east.dem"/>
@@ -112,7 +109,6 @@
             <output name="output" file="small_merged.tif"/>
         </test>
     </tests>
-
     <help><![CDATA[
 ==========================
 Gdal_merge
