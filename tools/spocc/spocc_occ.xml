@@ -20,12 +20,14 @@
             <option value="bison">Biodiversity Information Serving Our Nation : BISON</option>
             <option value="inat">INaturalist : INAT</option>
             <option value="ebird">eBbird</option>
+<!--
             <option value="antweb">AntWeb</option>
             <option value="ala">Atlas of Living Australia : ALA</option>
             <option value="idigbio">Integrated Digitized Biocollections : iDigBio</option>
-            <option value="obis">Oceanic Biogeographic Information System : OBIS</option>
+            <option value="obis">Oceanic Biogeographic Information System : OBIS</option> 
+-->
             <option value="ecoengine">Berkeley Ecoinformatics Engine : EcoEngine</option>
-            <option value="vernet">VerNet</option>
+            <option value="vertnet">VertNet</option>
         </param>    
         <param name="limit" type="integer" label="Number of records to return" help="This is passed across all sources" value="500"/>
     </inputs>
@@ -60,7 +62,7 @@ Search species occurences across a single or many data sources.
 
 Enter a species scientific name, be careful that the tool is case sensitive. Eg : Canis lupus.
 
-Select one or more data source. It can be any combination of gbif, bison, inat, ebird, antweb, ala, idigbio, obis, ecoengine and/or vertnet.
+Select one or more data source. It can be any combination of gbif, bison, inat, ebird, ecoengine and/or vertnet.
 
 |
 
@@ -95,20 +97,20 @@ A programmatic interface to many species occurrence data sources, including :
   - Berkeley Ecoinformatics Engine : EcoEngine
     https://ecoengine.berkeley.edu/
 
-  - AntWeb
-    https://www.antweb.org/
-
-  - Integrated Digitized Biocollections : iDigBio
-    https://www.idigbio.org/
-
   - VertNet
     http://vertnet.org/
 
-  - Ocean Biogeographic Information System : OBIS 
-    https://obis.org/
+..  - AntWeb
+..    https://www.antweb.org/
 
-  - Atlas of Living Australia : ALA
-    https://www.ala.org.au/. 
+..  - Integrated Digitized Biocollections : iDigBio
+..    https://www.idigbio.org/
+
+..  - Ocean Biogeographic Information System : OBIS 
+..    https://obis.org/
+
+..  - Atlas of Living Australia : ALA
+..    https://www.ala.org.au/. 
 
 
 Includes functionality for retrieving species occurrence data, and combining those data.
