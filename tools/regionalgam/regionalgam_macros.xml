@@ -5,7 +5,12 @@
             <requirement type="package" version="3.5.1">r-base</requirement>
         </requirements>
     </xml>
-    <xml name="rg_nlme_mass_requirements">
+    <xml name="rg_cairo_requirements">
+        <requirements>
+            <requirement type="package" version="1.5.9">r-cairo</requirement>
+        </requirements>
+    </xml>
+   <xml name="rg_nlme_mass_requirements">
         <requirements>
             <requirement type="package" version="3.1_137">r-nlme</requirement>
             <requirement type="package" version="7.3_50">r-mass</requirement>

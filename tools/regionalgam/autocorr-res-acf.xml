@@ -3,7 +3,7 @@
     <macros>
         <import>regionalgam_macros.xml</import>
     </macros>
-    <expand macro="rg_r_requirements"/>
+    <expand macro="rg_cairo_requirements"/>
     <command detect_errors="exit_code"><![CDATA[
         Rscript '$__tool_directory__/autocorr-res-acf.R'
             '$gls_model' 
