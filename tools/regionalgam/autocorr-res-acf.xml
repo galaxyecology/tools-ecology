@@ -1,0 +1,45 @@
+<tool id="regionalgam_autocor_acf" name="Autocorrelation test" version="@VERSION@">
+    <description>check for temporal autocorrelation in the residuals</description>
+    <macros>
+        <import>regionalgam_macros.xml</import>
+    </macros>
+    <expand macro="rg_r_requirements"/>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript '$__tool_directory__/autocorr-res-acf.R'
+            '$gls_model' 
+            '$output' 
+    ]]>
+    </command>
+    <inputs>
+        <expand macro="rg_gls_model"/>
+    </inputs>
+    <outputs>
+        <data format="png" name="output" from_work_dir="output-acf.png" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="gls_model" value="s_gls_rda.rda"/>
+            <output name="output" file="s_res.png" compare="sim_size" delta="100"/>
+        </test>
+    </tests>
+
+    <help><![CDATA[
+======================================
+Model residuals autocorrelation check 
+======================================
+
+This tool is an implementation of the autocorr-res_acf function from RegionalGAM package:  https://github.com/RetoSchmucki/regionalGAM/
+
+This function uses a simple linear model and explore for temporal autocorrelation that we will account in the final model.
+
+Use a gls model and visualize autocorrelation in the residuals with the png output file.
+
+|
+
+**Outputs**
+
+The tools returns residuals visualization in an image png file.
+
+    ]]></help>
+    <expand macro="rg_citation"/>
+</tool>

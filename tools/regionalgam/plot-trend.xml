@@ -1,0 +1,44 @@
+<tool id="regionalgam_plot_trend" name="Plot abundance" version="@VERSION@">
+    <description>with trend line</description>
+    <macros>
+        <import>regionalgam_macros.xml</import>
+    </macros>
+    <expand macro="rg_nlme_mass_requirements"/>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript '$__tool_directory__/plot-trend.R' 
+            '$ab_indices' '$gls_model'  
+            '$output' 
+    ]]>
+    </command>
+    <inputs>
+        <expand macro="rg_ab_indices"/>
+        <expand macro="rg_gls_model"/>
+    </inputs>
+    <outputs>
+        <data format="png" name="output" from_work_dir="output-plot-trend.png" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="ab_indices" value="s_data_index.tabular"/>
+            <param name="gls_model" value="s_gls-adju_rda.rda"/>
+            <output name="output" file="s_trend.png" compare="sim_size" delta="100"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+==========================
+Plot abundance trend 
+==========================
+
+This tool is an implementation of the plot_trend function from RegionalGAM package: https://github.com/RetoSchmucki/regionalGAM/
+
+This function plot abundance and add a trend line, it is the year effect estimated in the model.
+
+|
+
+**Outputs**
+
+Trend estimation plotted in an image png file.
+
+    ]]></help>
+    <expand macro="rg_citation"/>
+</tool>
