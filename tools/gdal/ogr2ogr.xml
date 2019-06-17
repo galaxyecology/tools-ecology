@@ -5,6 +5,9 @@
     </macros>
     <expand macro="gdal_requirements" />
     <command detect_errors="exit_code"><![CDATA[
+        #if $input.is_of_type("tabular")
+            cp '$input' '$input''.tsv' &&
+        #end if 
         ogr2ogr
             -f '$f'
             #if $f=='ESRI Shapefile'
@@ -14,9 +17,19 @@
             #end if
             #if $input.is_of_type("shp")
                 ${os.path.join( $input.extra_files_path, 'shapefile.shp' )} 
-            #else    
+            #else if $input.is_of_type("tabular")
+                '$input''.tsv'
+            #else
                 '$input'
             #end if
+            #if $settings.advanced=='advanced'
+                #for $i in $settings.series_oo
+                    #if str('${i.oo}').strip()!=''
+                       -oo ${i.oo}
+                    #end if
+                #end for
+            #end if
+
             #if $f=='ESRI Shapefile'
                 &&
                 mkdir ${shapefile.extra_files_path} &&
@@ -24,7 +37,7 @@
             #end if 
     ]]></command>
     <inputs>
-        <param type="data" name="input" format="shp,xml,json,txt" label="Gdal supported input file" help="http://www.gdal.org/ogr_formats.html"/>
+        <param type="data" name="input" format="shp,xml,json,csv,txt" label="Gdal supported input file" help="http://www.gdal.org/ogr_formats.html"/>
         <param type="select" name="f" label="Conversion format" value="" help="Select the format to convert your input file. Currently supported : Shapefile, GeoJSON, GML, KML and WFS.">
             <option value="ESRI Shapefile">ESRI Shapefile</option>
             <option value="GeoJSON">GEOJSON</option> 
@@ -32,6 +45,12 @@
             <option value="KML">KML</option>
             <option value="WFS">WFS</option>
         </param>
+        <conditional name="settings">
+            <expand macro="gdal_advanced_params_select"/>
+            <when value="advanced">
+                <expand macro="gdal_param_oo"/>
+            </when>
+        </conditional>
     </inputs>
     <outputs>
         <data name="output" from_work_dir="output" format="xml" label="${on_string}.${f}">

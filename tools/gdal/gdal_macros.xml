@@ -128,11 +128,11 @@
         </param>
     </xml>
 
-<!-- need to upgrade gdal version to use
     <xml name="gdal_param_oo">
-        <param name="oo" type="text" label="-oo NAME=VALUE" value="" />
+        <repeat name="series_oo" title="Add an input dataset open option">
+            <param name="oo" type="text" label="Input dataset open option" help="-oo NAME=VALUE. Format specific." value="" />
+        </repeat>
     </xml>
--->
 
     <xml name="gdal_input_raster_multiple">
         <param type="data" name="input" format="gtiff,tiff,netcdf,VRT,txt,xml" help="Formats currently supported are : GTiff, netCDF and VRT" label="Gdal supported input file" multiple="true"/>
