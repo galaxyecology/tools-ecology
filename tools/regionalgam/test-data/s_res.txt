@@ -1,0 +1,5 @@
+
+Autocorrelations of series ‘residuals(mod, type = "normalized")’, by lag
+
+     0      1      2 
+ 1.000 -0.667  0.167 
