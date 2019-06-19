@@ -40,7 +40,7 @@ This function plot abundance and add a trend line, it is the year effect estimat
 
 **Outputs**
 
-Trend estimation plotted in an image png file.
+Trend estimation plotted in an image png file, and raw values in a tabular file.
 
     ]]></help>
     <expand macro="rg_citation"/>

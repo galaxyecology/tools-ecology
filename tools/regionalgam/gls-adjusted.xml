@@ -23,7 +23,7 @@
             <param name="collated_index" value="s_glmmpql.tabular"/>
             <param name="ab_indices" value="s_data_index.tabular"/>
             <output name="output" file="s_gls-adju_sum.txt"/>
-            <output name="output2" file="s_gls-adju_rda.rda"/>
+            <output name="output2" file="s_gls-adju_rda.rda" compare="sim_size" delta="100"/>
         </test>
     </tests>
     <help><![CDATA[
