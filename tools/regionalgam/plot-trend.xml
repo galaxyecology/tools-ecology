@@ -24,7 +24,15 @@
             <param name="ab_indices" value="s_data_index.tabular"/>
             <param name="gls_model" value="s_gls-adju_rda.rda"/>
 <!--            <output name="output" file="s_trend.png" compare="sim_size" delta="100"/>-->
-            <output name="output_tsv" file="s_trend.tsv"/>
+            <output name="output_tsv" ftype="tabular">
+                <assert_contents>
+                    <has_line_matching expression="2003&#009;5.5699.*"/>
+                    <has_line_matching expression="2004&#009;5.6221.*"/>
+                    <has_line_matching expression="2005&#009;5.6915.*"/>
+                    <has_line line="&quot;year&quot;&#009;&quot;collated index&quot;"/>
+                    <has_n_columns n="2"/>
+                </assert_contents>
+            </output>
         </test>
     </tests>
     <help><![CDATA[

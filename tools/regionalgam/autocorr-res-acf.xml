@@ -22,14 +22,6 @@
         <test>
             <param name="gls_model" value="s_gls_rda.rda"/>
             <output name="output_res_values" file="s_res.txt"/>
-                <assert_contents>
-                    <has_line_matching expression="2003&#009;5.5699.*"/>
-                    <has_line_matching expression="2004&#009;5.6221.*"/>
-                    <has_line_matching expression="2005&#009;5.6915.*"/>
-                    <has_line line="&quot;year&quot;&#009;&quot;collated index&quot;"/>
-                    <has_n_columns n="2"/>
-                </assert_contents>
-            </output> 
         </test>
     </tests>
 
