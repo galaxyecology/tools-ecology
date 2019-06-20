@@ -5,6 +5,9 @@
     </macros>
     <expand macro="gdal_requirements" />
     <command detect_errors="exit_code"><![CDATA[
+        #if $input.is_of_type("tabular")
+            cp '$input' '$input''.tsv' &&
+        #end if 
         ogr2ogr
             -f '$f'
             #if $f=='ESRI Shapefile'
@@ -14,8 +17,17 @@
             #end if
             #if $input.is_of_type("shp")
                 ${os.path.join( $input.extra_files_path, 'shapefile.shp' )} 
-            #else    
+            #else if $input.is_of_type("tabular")
+                '$input''.tsv'
+            #else
                 '$input'
+            #end if
+            #if $settings.advanced=='advanced'
+                #for $i in $settings.series_oo
+                    #if str('${i.oo}').strip()!=''
+                       -oo ${i.oo}
+                    #end if
+                #end for
             #end if
             #if $f=='ESRI Shapefile'
                 &&
@@ -24,7 +36,7 @@
             #end if 
     ]]></command>
     <inputs>
-        <param type="data" name="input" format="shp,xml,json,txt" label="Gdal supported input file" help="http://www.gdal.org/ogr_formats.html"/>
+        <param type="data" name="input" format="shp,xml,json,tabular,txt" label="Gdal supported input file" help="http://www.gdal.org/ogr_formats.html"/>
         <param type="select" name="f" label="Conversion format" value="" help="Select the format to convert your input file. Currently supported : Shapefile, GeoJSON, GML, KML and WFS.">
             <option value="ESRI Shapefile">ESRI Shapefile</option>
             <option value="GeoJSON">GEOJSON</option> 
@@ -32,6 +44,12 @@
             <option value="KML">KML</option>
             <option value="WFS">WFS</option>
         </param>
+        <conditional name="settings">
+            <expand macro="gdal_advanced_params_select"/>
+            <when value="advanced">
+                <expand macro="gdal_param_oo"/>
+            </when>
+        </conditional>
     </inputs>
     <outputs>
         <data name="output" from_work_dir="output" format="xml" label="${on_string}.${f}">
@@ -57,6 +75,7 @@
                 <composite_data value="shp_compositefiles/shapefile.sbx"/>
             </param>
             <param name="f" value="KML"/>
+            <param name="advanced" value="simple"/>
             <output file="ogr2ogr_KML.kml" name="output"/> 
         </test>
         <test>
@@ -68,6 +87,7 @@
                 <composite_data value="shp_compositefiles/shapefile.sbx"/>
             </param>
             <param name="f" value="GML"/>
+            <param name="advanced" value="simple"/>
             <output file="ogr2ogr_GML.gml" name="output"/> 
         </test>
         <test>
@@ -79,16 +99,19 @@
                 <composite_data value="shp_compositefiles/shapefile.sbx"/>
             </param>
             <param name="f" value="GeoJSON"/>
+            <param name="advanced" value="simple"/>
             <output file="ogr2ogr_geojson.json" name="output"/> 
         </test>   
         <test>
             <param name="input" value="ogr2ogr_KML.kml" ftype="xml"/>
             <param name="f" value="GeoJSON"/>
+            <param name="advanced" value="simple"/>
             <output file="ogr2ogr_test2_geojson.json" name="output"/> 
         </test>   
         <test>
             <param name="input" value="ogr2ogr_KML.kml" ftype="xml"/>
             <param name="f" value="ESRI Shapefile"/>
+            <param name="advanced" value="simple"/>
             <output file="shp_compositefiles/ogr2ogr_shapefile2.html" name="shapefile">
                 <extra_files type="file" name="shapefile.dbf" value="shp_compositefiles/ogr2ogr_shapefile2.dbf" compare="sim_size" delta="50"/>
                 <extra_files type="file" name="shapefile.prj" value="shp_compositefiles/ogr2ogr_shapefile2.prj"/>
@@ -99,9 +122,18 @@
         <test>
             <param name="input" value="ogr2ogr_KML.kml" ftype="xml"/>
             <param name="f" value="GML"/>
+            <param name="advanced" value="simple"/>
             <output file="ogr2ogr_GML2.gml" name="output"/> 
         </test>
-    </tests>
+        <test>
+            <param name="input" value="ogr2ogr_fromgbif.tabular" ftype="tabular"/>
+            <param name="f" value="GeoJSON"/>
+            <param name="advanced" value="advanced"/>
+            <param name="oo" value="X_POSSIBLE_NAMES=longitude"/>
+            <param name="oo" value="Y_POSSIBLE_NAMES=latitude"/>
+            <output file="ogr2ogr_gbif_to_json.json" name="output" lines_diff="2"/> 
+        </test>
+</tests>
     <help><![CDATA[
 ========
 Ogrinfo
