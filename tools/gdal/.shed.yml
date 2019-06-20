@@ -112,4 +112,5 @@ repositories:
       - test-data/shp_compositefiles/ogr2ogr_shapefile2.shx
       - test-data/shp_compositefiles/ogr2ogr_shapefile2.dbf
       - test-data/shp_compositefiles/ogr2ogr_shapefile2.prj
-
+      - test-data/ogr2ogr_fromgbif.tabular
+      - test-data/ogr2ogr_gbif_to_json.json

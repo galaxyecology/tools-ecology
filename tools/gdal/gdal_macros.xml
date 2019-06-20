@@ -130,7 +130,7 @@
 
     <xml name="gdal_param_oo">
         <repeat name="series_oo" title="Add an input dataset open option">
-            <param name="oo" type="text" label="Input dataset open option" help="-oo NAME=VALUE. Format specific." value="" />
+            <param name="oo" type="text" label="Input dataset open option" help="-oo NAME=VALUE. eg : X_POSSIBLE_NAMES=longitude. Format specific, can be used multiple times." value="" />
         </repeat>
     </xml>
 
