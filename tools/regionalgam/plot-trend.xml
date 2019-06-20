@@ -23,7 +23,6 @@
         <test>
             <param name="ab_indices" value="s_data_index.tabular"/>
             <param name="gls_model" value="s_gls-adju_rda.rda"/>
-<!--            <output name="output" file="s_trend.png" compare="sim_size" delta="100"/>-->
             <output name="output_tsv" ftype="tabular">
                 <assert_contents>
                     <has_line_matching expression="2003&#009;5.5699.*"/>

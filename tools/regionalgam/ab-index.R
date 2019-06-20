@@ -1,7 +1,4 @@
 #!/usr/bin/env Rscript
-#library("getopt")
-#library(devtools)
-#library(RegionalGAM)
 
 args = commandArgs(trailingOnly=TRUE)
 source(args[1])
