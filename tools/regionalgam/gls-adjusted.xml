@@ -1,0 +1,50 @@
+<tool id="regionalgam_gls_adjusted" name="Linear regression ajusted" version="@VERSION@">
+    <description>for autocorrelation in the residuals</description>
+    <macros>
+        <import>regionalgam_macros.xml</import>
+    </macros>
+    <expand macro="rg_nlme_mass_requirements"/>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript '$__tool_directory__/gls-adjusted.R'
+            '$collated_index' '$ab_indices' 
+            '$output' '$output2'
+    ]]>
+    </command>
+    <inputs>
+        <expand macro="rg_collated_index"/>
+        <expand macro="rg_ab_indices"/>
+    </inputs>
+    <outputs>
+        <data format="txt" name="output" from_work_dir="mod_adjusted-summary.txt" />
+        <data format="rdata" name="output2" from_work_dir="mod_adjusted.rda" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="collated_index" value="s_glmmpql.tabular"/>
+            <param name="ab_indices" value="s_data_index.tabular"/>
+            <output name="output" file="s_gls-adju_sum.txt"/>
+            <output name="output2" file="s_gls-adju_rda.rda" compare="sim_size" delta="100"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+==========================
+Linear regression ajusted
+==========================
+
+This tool is an implementation of the gls_adjusted function from RegionalGAM package: https://github.com/RetoSchmucki/regionalGAM/
+
+This function adjust the model to account for autocorrelation in the residuals.
+
+|
+
+**Outputs**
+
+The tool returns the linear regression model in an Rdata file.
+
+It also returns a summary of this model in txt format.
+
+    ]]></help>
+    <citations>
+        <citation type="doi">10.1111/1365-2664.12561</citation>  
+    </citations>
+</tool>

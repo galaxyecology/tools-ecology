@@ -1,0 +1,47 @@
+<tool id="regionalgam_gls" name="Model temporal trend" version="@VERSION@">
+    <description>with a simple linear regression</description>
+    <macros>
+        <import>regionalgam_macros.xml</import>
+    </macros>
+    <expand macro="rg_nlme_mass_requirements"/>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript '$__tool_directory__/gls.R' 
+            '$collated_index' '$ab_indices' 
+            '$output' '$output2' 
+    ]]>
+    </command>
+    <inputs>
+        <expand macro="rg_collated_index"/> 
+        <expand macro="rg_ab_indices"/> 
+    </inputs>
+    <outputs>
+        <data format="txt" name="output" from_work_dir="mod-summary.txt" />
+        <data format="rdata" name="output2" from_work_dir="mod.rda" />
+    </outputs>
+    <tests>
+        <test> 
+            <param name="collated_index" value="s_glmmpql.tabular"/>
+            <param name="ab_indices" value="s_data_index.tabular"/>
+            <output name="output" file="s_gls_sum.txt"/>
+            <output name="output2" file="s_gls_rda.rda"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+==========================
+Model temporal trend
+==========================
+
+This tool is an implementation of the gls function from RegionalGAM package:  https://github.com/RetoSchmucki/regionalGAM/
+
+This function model temporal trend with a simple linear regression.
+
+|
+
+**Outputs**
+
+The tool returns the linear regression model in an Rdata file.
+
+It also returns a summary of this model in txt format.
+    ]]></help>
+    <expand macro="rg_citation"/>
+</tool>
