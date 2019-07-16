@@ -3,7 +3,7 @@
 args = commandArgs(trailingOnly=TRUE)
 source(args[1])
 
-
+library(data.table)
 # import file
 input = fread(args[2])
 # retransform to data.frame to allow the calculation by the fonctions in the file dennis-gam-initial-function.R
