@@ -1,0 +1,124 @@
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Run test : method = gam, smooth= TRUE, ic = TRUE.
+$ Rscript FunctExeTemporalAnalysisofIndicatorTrait2.r test-data/Datafilteredfortrendanalysis2.tabular tabSpecies.csv species_indicateur_fonctionnel.tabular coordCarreSTOCfaux.tabular "ssi" "csi" gam "" "idindicatortrait" TRUE TRUE FunctTrendSTOCGalaxy.r
+
+
+Methode: gam
+
+Estimation de la variation annuelle csi~ factor(year)+s(longitude_grid_wgs84,latitude_grid_wgs84,bs='sos'),random=reStruct(object = ~ 1| id_plot,correlation=corAR1(form=~year)
+Saving 7 x 7 in image
+
+Gam pour la figure csi~s(year),random=reStruct(object = ~ 1| id_plot,correlation=corAR1(form=~year)
+Saving 7 x 7 in image
+
+Estimation de la tendence   csi ~ year+s(longitude_grid_wgs84,latitude_grid_wgs84,bs='sos'),random=reStruct(object = ~ 1| id_plot,correlation=corAR1(form=~year)
+
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Run test : method = gam, smooth= FALSE, ic = TRUE.
+$ Rscript FunctExeTemporalAnalysisofIndicatorTrait2.r test-data/Datafilteredfortrendanalysis2.tabular tabSpecies.csv species_indicateur_fonctionnel.tabular coordCarreSTOCfaux.tabular "ssi" "csi" gam "" "idindicatortrait" FALSE TRUE FunctTrendSTOCGalaxy.r
+
+
+Methode: gam
+
+Estimation de la variation annuelle csi~ factor(year)+s(longitude_grid_wgs84,latitude_grid_wgs84,bs='sos'),random=reStruct(object = ~ 1| id_plot,correlation=corAR1(form=~year)
+Saving 7 x 7 in image
+
+Estimation de la tendence   csi ~ year+s(longitude_grid_wgs84,latitude_grid_wgs84,bs='sos'),random=reStruct(object = ~ 1| id_plot,correlation=corAR1(form=~year)
+
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Run test : method = gam, smooth= TRUE, ic = FALSE.
+$ Rscript FunctExeTemporalAnalysisofIndicatorTrait2.r test-data/Datafilteredfortrendanalysis2.tabular tabSpecies.csv species_indicateur_fonctionnel.tabular coordCarreSTOCfaux.tabular "ssi" "csi" gam "" "idindicatortrait" TRUE FALSE FunctTrendSTOCGalaxy.r
+
+
+Methode: gam
+
+Estimation de la variation annuelle csi~ factor(year)+s(longitude_grid_wgs84,latitude_grid_wgs84,bs='sos'),random=reStruct(object = ~ 1| id_plot,correlation=corAR1(form=~year)
+Saving 7 x 7 in image
+
+Gam pour la figure csi~s(year),random=reStruct(object = ~ 1| id_plot,correlation=corAR1(form=~year)
+Saving 7 x 7 in image
+
+Estimation de la tendence   csi ~ year+s(longitude_grid_wgs84,latitude_grid_wgs84,bs='sos'),random=reStruct(object = ~ 1| id_plot,correlation=corAR1(form=~year)
+
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Run test : method = gam, smooth= FALSE, ic = FALSE.
+$ Rscript FunctExeTemporalAnalysisofIndicatorTrait2.r test-data/Datafilteredfortrendanalysis2.tabular tabSpecies.csv species_indicateur_fonctionnel.tabular coordCarreSTOCfaux.tabular "ssi" "csi" gam "" "idindicatortrait" FALSE FALSE FunctTrendSTOCGalaxy.r
+
+
+Methode: gam
+
+Estimation de la variation annuelle csi~ factor(year)+s(longitude_grid_wgs84,latitude_grid_wgs84,bs='sos'),random=reStruct(object = ~ 1| id_plot,correlation=corAR1(form=~year)
+Saving 7 x 7 in image
+
+Estimation de la tendence   csi ~ year+s(longitude_grid_wgs84,latitude_grid_wgs84,bs='sos'),random=reStruct(object = ~ 1| id_plot,correlation=corAR1(form=~year)
+
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Run test : method = glmmtmb, smooth= TRUE, ic = TRUE.
+$ Rscript FunctExeTemporalAnalysisofIndicatorTrait2.r test-data/Datafilteredfortrendanalysis2.tabular tabSpecies.csv species_indicateur_fonctionnel.tabular coordCarreSTOCfaux.tabular "ssi" "csi" glmmtmb "" "idindicatortrait" TRUE TRUE FunctTrendSTOCGalaxy.r
+
+
+Method : glmmTMB 
+
+Estimation de la variation annuelle glmmTMB(csi~ factor(year)+(1|id_plot)
+Saving 7 x 7 in image
+
+Estimation de la tendance glmmTMB(csi~ year+(1|id_plot)
+
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Run test : method = glmmtmb, smooth= FALSE, ic = TRUE.
+$ Rscript FunctExeTemporalAnalysisofIndicatorTrait2.r test-data/Datafilteredfortrendanalysis2.tabular tabSpecies.csv species_indicateur_fonctionnel.tabular coordCarreSTOCfaux.tabular "ssi" "csi" glmmtmb "" "idindicatortrait" FALSE TRUE FunctTrendSTOCGalaxy.r
+
+
+Method : glmmTMB 
+
+Estimation de la variation annuelle glmmTMB(csi~ factor(year)+(1|id_plot)
+Saving 7 x 7 in image
+
+Estimation de la tendance glmmTMB(csi~ year+(1|id_plot)
+
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Run test : method = glmmtmb, smooth= TRUE, ic = FALSE.
+$ Rscript FunctExeTemporalAnalysisofIndicatorTrait2.r test-data/Datafilteredfortrendanalysis2.tabular tabSpecies.csv species_indicateur_fonctionnel.tabular coordCarreSTOCfaux.tabular "ssi" "csi" glmmtmb "" "idindicatortrait" TRUE FALSE FunctTrendSTOCGalaxy.r
+
+
+Method : glmmTMB 
+
+Estimation de la variation annuelle glmmTMB(csi~ factor(year)+(1|id_plot)
+Saving 7 x 7 in image
+
+Estimation de la tendance glmmTMB(csi~ year+(1|id_plot)
+
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Run test : method = glmmtmb, smooth= FALSE, ic = FALSE.
+$ Rscript FunctExeTemporalAnalysisofIndicatorTrait2.r test-data/Datafilteredfortrendanalysis2.tabular tabSpecies.csv species_indicateur_fonctionnel.tabular coordCarreSTOCfaux.tabular "ssi" "csi" glmmtmb "" "idindicatortrait" FALSE FALSE FunctTrendSTOCGalaxy.r
+
+
+Method : glmmTMB 
+
+Estimation de la variation annuelle glmmTMB(csi~ factor(year)+(1|id_plot)
+Saving 7 x 7 in image
+
+Estimation de la tendance glmmTMB(csi~ year+(1|id_plot)
+done, exit
+

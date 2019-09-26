@@ -1,0 +1,71 @@
+<tool id="stoceps_maketablecarrer" name="Preprocess population data" version="@VERSION@">
+    <description>for evolution trend analyzes</description>
+    <macros>
+        <import>stoceps_macros.xml</import>
+    </macros>
+    <expand macro="reshape_requirements"/>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript 
+         '$__tool_directory__/ExemakeTableAnalyseGalaxy.r' 
+         '$input'
+         '$__tool_directory__/FunctTrendSTOCGalaxy.r' 
+         '$output'
+    ]]>
+    </command>
+    <inputs>
+        <param name="input" type="data" format="tabular" label="Input file" help="Population count file, with location, date, species and abundance."/>
+    </inputs>
+    <outputs>
+        <data name="output" from_work_dir="Datatransformedforfiltering_trendanalysis.tabular" format="tabular"/>
+    </outputs>
+    <tests>
+        <test> 
+            <param name="input" value="data_FrenchBBS_squarre_dataSTOCallSp_France_trend_2001_2017_ALAARV-PARCAE_2001_2018.tabular"/>
+            <output name="output" file="Datatransformedforfiltering_trendanalysis.tabular"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+===============================
+STOC preprocess population data
+===============================
+
+**What it does**
+
+Reshape the data for the next steps of STOC analyzes by adding zero count to sites that are in the dataset, for species having no count data for those sites.
+
+
+|
+
+**Input description**
+
+A tabular file with abundance per year, per site and per species with no or few zero abundance.
+
+The data file can be extracted from the STOC database on demand : romain.lorrilliere@mnhn.fr
+
+The table needs the following structure (at least these 4 fours columns) :
+
++-----------+---------+----------+---------+
+|   carre   |  annee  |  espece  |  abond  |
++===========+=========+==========+=========+
+| carreId1  |   2019  | especeId |   12    |  
++-----------+---------+----------+---------+
+|    ...    |   ...   |   ...    |   ...   |
++-----------+---------+----------+---------+
+
+|
+
+**Output**
+
+A tabular file transformed, with one column indicating the year, one indicating the site, and one column for each species abundance.
+
+This file is ready for the next filtering steps.
+
+|
+
+**Source**
+
+UnPublished script available at http://www.vigienature.fr/sites/vigienature/files/atoms/files/analysestoceps_0.zip
+
+First version written by romain.lorrilliere@mnhn.fr
+  ]]></help>
+</tool>

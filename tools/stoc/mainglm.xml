@@ -1,0 +1,142 @@
+<tool id="stoceps_glm" name="Estimate temporal population evolution" version="@VERSION@">
+    <description>by species</description>
+    <macros>
+        <import>stoceps_macros.xml</import>
+    </macros>
+    <expand macro="mainglm_requirements"/>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript
+         '$__tool_directory__/ExeMainGlmGalaxy.r'
+         '$input'
+         #if $settings.advanced=='advanced'
+             #if $settings.condi_spfile.user_sp_file=='default'
+                 '$__tool_directory__/tabSpecies.csv'
+             #else
+                 '$settings.condi_spfile.spfile'
+             #end if
+             'mainglm'
+             $settings.sp_code
+             $settings.compute_ic
+         #else
+             '$__tool_directory__/tabSpecies.csv'
+             'mainglm'
+             ''
+             'TRUE'
+         #end if
+         '$__tool_directory__/FunctTrendSTOCGalaxy.r'
+
+
+        '$yearly_variations'
+        '$global_tendencies'
+        #if $settings.advanced=='advanced'
+            #if $settings.return_plot=='plot'
+                '$plots'
+            #end if
+        #end if
+    ]]>
+    </command>
+    <inputs>
+        <expand macro="stoceps_input_filtered"/>
+        <conditional name="settings">
+            <expand macro="stoceps_advanced_params_select"/>
+            <when value="advanced">
+                <param name="sp_code" type="select" label="Filter species to exclude" help="Create a subsample by selecting the species codes you don't want to use." multiple="true" optional="true">
+                    <options from_dataset="input">
+                        <column name="value" index="2"/>
+                        <filter type="unique_value" name="espece" column="2"/>
+                    </options>
+                    <sanitizer>
+                        <valid initial="string.printable">
+                            <remove value="&quot;"/>
+                        </valid>
+                    </sanitizer>
+                </param>
+                <conditional name="condi_spfile">
+                    <param name="user_sp_file" type="select" label="Use a custom species details file">
+                        <option value="default" selected="true">No, use the default.</option>
+                        <option value="customfile">Yes, use a custom file.</option>
+                    </param>
+                    <when value="default">
+                    </when>
+                    <when value="customfile">
+                        <param name="spfile" type="data" format="tabular" label="Species details file" help="Tabular file with species indicator status." />
+                    </when>
+                </conditional>
+                <param name="return_plot" type="boolean" truevalue="plot" falsevalue="noplot" checked="yes" help="All the figures will be stocked in a datacollection" label="Return visualizations."/>
+                <expand macro="stoceps_compute_ic"/>
+            </when>
+        </conditional>
+    </inputs>
+    <outputs>
+        <data name="yearly_variations" from_work_dir="Output/mainglm/variationsAnnuellesEspece_mainglm.tabular" format="tabular" label="GLM - Yearly variations on ${on_string}"/>
+        <data name="global_tendencies" from_work_dir="Output/mainglm/tendanceGlobalEspece_mainglm.tabular" format="tabular" label="GLM - Global species tendencies on ${on_string}"/>
+        <collection type="list" name="plots">
+            <filter>return_plot == 'plot'</filter>
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" visible="false" format="png" directory="Output/mainglm/"/>
+        </collection>
+    </outputs>
+    <tests>
+    <!--
+        <test>
+            <param name="input" value="Datafilteredfortrendanalysis.tabular"/>
+            <param name="advanced" value="simple"/>
+            <output name="yearly_variations"  file="mainglm_tab_years.tabular"/>
+            <output name="global_tendencies"  file="mainglm_tab_global.tabular"/>
+            <output_collection name="plots"  type="list">
+                <element name="ALAARV_mainglm" file="mainglm_plot_sp1.png" ftype="png"/>
+                <element name="PARCAE_mainglm" file="mainglm_plot_sp2.png" ftype="png"/>
+            </output_collection>
+  </test>
+    -->
+    </tests>
+    <help><![CDATA[
+=================================================
+STOC Estimate species population evolution
+=================================================
+
+**What it does**
+
+Compute and plot evolution of species population, using a glm model.
+
+|
+
+**Input description**
+
+A first mandatory tabular file with species count shaped and filtered with the STOCs 'Preprocess population data' ans 'Filter species' tools.
+
+A second optional "species details file" containing indicator status of species (Column with TRUE or FALSE), including the species name or ID (one used in the species count data). If you are not analyzing the default STOC data, you need one file of this kind.
+
+Example dataset ::
+
+"espece"  "nom"                       "nomscientific"               "indicateur"     "specialisation"
+"ACCGEN"  "Autour des palombes"       "Accipiter gentilis"          FALSE            ""
+"ACCNIS"  "Epervier d'Europe"         "Accipiter nisus"             FALSE            ""
+"ACRARU"  "Rousserolle turdoïde"      "Acrocephalus arundinaceus"   FALSE            ""
+"ACRMEL"  "Lusciniole à moustaches"   "Acrocephalus melanopogon"    FALSE            ""
+"ACRPAL"  "Phragmite aquatique"       "Acrocephalus paludicola"     FALSE            ""
+"ACRRIS"  "Rousserolle verderolle"    "Acrocephalus palustris"      FALSE            ""
+"ACRSCH"  "Phragmite des joncs"       "Acrocephalus schoenobaenus"  FALSE            ""
+"ACRSCI"  "Rousserolle effarvatte"    "Acrocephalus scirpaceus"     FALSE            ""
+"ACTHYP"  "Chevalier guignette"       "Actitis hypoleucos"          FALSE            ""
+"AEGCAU"  "Mésange à longue queue"    "Aegithalos caudatus"         FALSE            ""
+"AEGFUN"  "Chouette de Tengmalm"      "Aegolius funereus"           FALSE            ""
+"AIXGAL"  "Canard mandarin"           "Aix galericulata"            FALSE            ""
+"AIXSPO"  "Canard carolin"            "Aix sponsa"                  FALSE            ""
+"ALAARV"  "Alouette des champs"       "Alauda arvensis"             TRUE             "milieux agricoles"
+
+|
+
+**Output**
+
+For each species present in the data, a plot of populations trend is created and stocked in a common data collection.
+
+Two tabular files are created, they describe global tendencies and yearly variations.
+
+|
+
+**Source**
+
+UnPublished script available at http://www.vigienature.fr/sites/vigienature/files/atoms/files/analysestoceps_0.zip
+the first version written by romain.lorrilliere@mnhn.fr
+  ]]></help>
+</tool>

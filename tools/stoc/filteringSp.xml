@@ -1,0 +1,70 @@
+<tool id="stoceps_filteringsp" name="Filter species" version="@VERSION@">
+    <description>with rare and low abundances</description>
+    <macros>
+        <import>stoceps_macros.xml</import>
+    </macros>
+    <expand macro="reshape2_requirements"/>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript 
+         '$__tool_directory__/ExeFilteringRareLowabundSPGalaxy.r' 
+         '$input'
+         '$__tool_directory__/FunctTrendSTOCGalaxy.r' 
+         '$output'
+    ]]>
+    </command>
+    <inputs>
+        <param name="input" type="data" format="tabular" label="Preprocessed Stoc input file" help="Output file from the 'Preprocess population data tool'"/>
+    </inputs>
+    <outputs>
+        <data name="output" from_work_dir="Datafilteredfortrendanalysis.tabular" format="tabular"/>
+    </outputs>
+    <tests>
+        <test> 
+            <param name="input" value="Datatransformedforfiltering_trendanalysis.tabular"/>
+            <output name="output" file="Datafilteredfortrendanalysis.tabular"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+=================================================
+STOC Filter species with rare and low abundances
+=================================================
+
+**What it does**
+
+Reshape the data for the next steps of STOC analyzes by removing species with not enough data to perform the analysis i.e. with low abundance or not observed at all.
+
+The format of the file from the STOC data can be obtained after running the tool "Preprocess population data".
+
+|
+
+**Input description**
+
+A tabular file with each species abundance in different column, and one column to indicate the year, and another one indicating the site. This file may come from the tools preprocess population data that use the function MakeTableAnalysis .
+
+The table needs the following structure (at least these 4 four columns, if one species, and as much additional columns as there are additional species) :
+
++-----------+---------+--------------+--------------+--------------+
+|   carre   |  annee  |  speciesId1  |  speciesId2  |  speciesIdN  |
++===========+=========+==============+==============+==============+
+| carreId1  |   2019  |     abund    |    abund     |    abund     |
++-----------+---------+--------------+--------------+--------------+
+|    ...    |   ...   |     ...      |     ...      |     ...      | 
++-----------+---------+--------------+--------------+--------------+
+
+|
+
+**Output**
+
+A tabular file transformed, with only one column for the abundance, one column indicating the species, one indicating the site and one indicating the year.
+
+This file is ready for its analysis with "Estimate temporal population evolution"
+
+|
+
+**Source**
+
+UnPublished script available at http://www.vigienature.fr/sites/vigienature/files/atoms/files/analysestoceps_0.zip
+
+First version written by romain.lorrilliere@mnhn.fr
+  ]]></help>
+</tool>
