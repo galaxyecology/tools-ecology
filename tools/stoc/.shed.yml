@@ -5,7 +5,7 @@ long_description: |
   Tools to analyse STOC data.
 
 name: stoceps 
-owner: mnhn65mo 
+owner: ecology 
 remote_repository_url: https://github.com/Alanamosse/Galaxy-E/tree/stoctool/tools/stoc
 type: unrestricted
 
