@@ -126,4 +126,5 @@ r-reshape2   version 1.4.3
 
 
   ]]></help>
+  <expand macro="stoceps_bibref" />
 </tool>
