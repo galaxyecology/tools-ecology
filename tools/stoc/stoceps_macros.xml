@@ -60,4 +60,15 @@
     <xml name="stoceps_filter_gam">
         <filter> settings['method'] == 'gam'</filter>
     </xml>
+    <xml name="stoceps_bibref">
+        <citations>
+            <citation type="bibtex">
+	    @unpublished{stocepsromain,
+	    title={Vigie-Nature STOC unpublished scripts},
+            author={Lorrilliere, R},
+            url={http://www.vigienature.fr/sites/vigienature/files/atoms/files/analysestoceps_0.zip}
+            }
+            </citation>
+        </citations>
+    </xml>
 </macros>
