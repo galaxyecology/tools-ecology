@@ -185,4 +185,5 @@ R library needed
   r-glmmtmb=0.2.3
 
   ]]></help>
+  <expand macro="stoceps_bibref" />
 </tool>
