@@ -1,4 +1,4 @@
-CSI Temporal analysis indocator - FunctExeTemporalAnalysisofIndicatorTrait.r
+CSI Temporal analysis indicator - FunctExeTemporalAnalysisofIndicatorTrait.r
 This script compute the indicator csi, cti and ctri per year and site, wich also correspond to a community weighted mean (CWM), and analyse its temporal evolution trend and create graphical vizualisation.
 As indicator you can thus use also a trait.
 
