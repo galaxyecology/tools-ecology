@@ -67,4 +67,5 @@ UnPublished script available at http://www.vigienature.fr/sites/vigienature/file
 
 First version written by romain.lorrilliere@mnhn.fr
   ]]></help>
+  <expand macro="stoceps_bibref" />
 </tool>
