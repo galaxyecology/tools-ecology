@@ -110,8 +110,11 @@
 
             <when value="coord_from_stdin">
                 <conditional name="condi_coord">
-                    <param name="coord" type="boolean" label="Search values for custom coordinates" truevalue="yes_cust_coord" checked="true" falsevalue="nope" help="Use this option to get valid values at your custom coordinates. If only NA values are availables the tool will search for the next closest coordinate until valid values."/>
-                    <when value="yes_cust_coord">
+                    <param name="coord" type="select" label="Search values for custom coordinates" help="Use this option to get valid values at your custom coordinates. If only NA values are availables the tool will search for the next closest coordinate until valid values."/>
+                        <option value="yes_cust_coord">Yes</option>
+                        <option value="nope">No</option>
+                    </param>
+					<when value="yes_cust_coord">
                         <param name="lat_dim" type="select" label="Select latitude" >
                             <options from_dataset="var_tab">
                                 <column name="value" index="0"/>
