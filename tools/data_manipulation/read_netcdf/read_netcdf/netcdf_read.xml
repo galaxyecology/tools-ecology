@@ -114,7 +114,7 @@
                         <option value="yes_cust_coord">Yes</option>
                         <option value="nope">No</option>
                     </param>
-					<when value="yes_cust_coord">
+                    <when value="yes_cust_coord">
                         <param name="lat_dim" type="select" label="Select latitude" >
                             <options from_dataset="var_tab">
                                 <column name="value" index="0"/>
