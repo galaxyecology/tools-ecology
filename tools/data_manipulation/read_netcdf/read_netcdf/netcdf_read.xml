@@ -1,0 +1,256 @@
+<tool id="netcdf_read" name="Netcdf Reader" version="0.2.0">
+    <description>extracts variable values with custom conditions on dimensions</description>
+    <requirements>
+        <requirement type="package" version="2.1.0">matplotlib</requirement>
+        <requirement type="package" version="1.3.1">netCDF4</requirement>
+        <requirement type="package" version="1.0.0">scipy</requirement>
+        <requirement type="package" version="1.1.0">datamash</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+    mkdir output_dir && 
+
+    #if $condi_source_coord.coord_source=="coord_from_file"
+        i=0 &&
+        re='^[-+]?[0-9]+\.?[0-9]*$' && 
+        while read line; do 
+            lat=\$(echo \$line | cut -d' ' -f1) 
+            lon=\$(echo \$line | cut -d' ' -f2)
+            && 
+            if ! [[ \$lat =~ \$re ]] || ! [[ \$lon =~ \$re ]] ; then continue ;fi
+            &&
+            i=\$((\$i+1)) &&
+            python '$__tool_directory__/netcdf_read.py' '$input' '$var_tab' $var
+            #for $i,$uc in enumerate($user_choice)
+                #if $uc.condi_between.comparator=="bi"
+                    ${uc.dim} ${uc.condi_between.comparator} ${uc.condi_between.t1}-${uc.condi_between.t2}
+                #elif $uc.condi_between.comparator=="be"
+                    ${uc.dim} ${uc.condi_between.comparator} ${uc.condi_between.t1}-${uc.condi_between.t2}
+                #else
+                    ${uc.dim} ${uc.condi_between.comparator} ${uc.condi_between.value}
+                #end if
+            #end for   
+            '$condi_source_coord.lat_dim'
+            \$lat
+            '$condi_source_coord.lon_dim'
+            \$lon
+        
+            &&
+            cat 'header' | sed 's/array(\[//g' | sed 's/], dtype=float32)//g'| sed 's/,\s/_/g' | sed 's/(//g' | sed 's/)//g' > 'header_cleaned'
+            &&
+            cat 'header_cleaned' 'sortie.tabular' > 'supersortie.tabular'
+            &&
+            datamash transpose < 'supersortie.tabular' > 'supersortie_transposed.tabular'
+            &&
+            sed -i 's/_/\t/g' 'supersortie_transposed.tabular'
+            &&
+            cat 'header_names' 'supersortie_transposed.tabular' | sed 's/\s/\t/g' > 'output_dir/coord'\$i'.tabular'; 
+        done<'$coord_tabular'
+
+    #else
+
+        python '$__tool_directory__/netcdf_read.py' '$input' '$var_tab' $var
+        #for $i,$uc in enumerate($user_choice)
+            #if $uc.condi_between.comparator=="bi"
+                ${uc.dim} ${uc.condi_between.comparator} ${uc.condi_between.t1}-${uc.condi_between.t2}
+            #elif $uc.condi_between.comparator=="be"
+                ${uc.dim} ${uc.condi_between.comparator} ${uc.condi_between.t1}-${uc.condi_between.t2}
+            #else
+                ${uc.dim} ${uc.condi_between.comparator} ${uc.condi_between.value}
+            #end if
+        #end for
+        #if $condi_source_coord.condi_coord.coord=='yes_cust_coord'
+            $condi_source_coord.condi_coord.lat_dim $condi_source_coord.condi_coord.lat_val $condi_source_coord.condi_coord.lon_dim $condi_source_coord.condi_coord.lon_val
+        #end if
+        &&
+        cat 'header' | sed 's/array(\[//g' | sed 's/], dtype=float32)//g'| sed 's/,\s/_/g' | sed 's/(//g' | sed 's/)//g' > 'header_cleaned'
+        &&
+        cat 'header_cleaned' 'sortie.tabular' > 'supersortie.tabular'
+        &&
+        datamash transpose < 'supersortie.tabular' > 'supersortie_transposed.tabular'
+        &&
+        sed -i 's/_/\t/g' 'supersortie_transposed.tabular'
+        &&
+        cat 'header_names' 'supersortie_transposed.tabular' | sed 's/\s/\t/g' > 'final.tabular'
+
+    #end if
+
+
+    ]]></command>
+    <inputs>
+        <param type="data" name="input" label="Input netcdf file" format="netcdf,h5"/>
+        <param type="data" label="Tabular of variables" name="var_tab" format="tabular" help="Select the tabular file which summarize the available variables and dimensions."/>
+
+        <param name="var" type="select" label="Chose the variable to extract">
+            <options from_dataset="var_tab">
+                <column name="name" index="0"/>
+                <column name="value" index="0"/>
+                <column name="n_dim" index="1"/>
+            </options>
+        </param>
+
+        <conditional name="condi_source_coord">
+            <param name="coord_source" type="select" label="Source of coordinates">
+                <option value="coord_from_file">Use coordinates from input file</option>
+                <option value="coord_from_stdin">Manually enter coordinate</option>
+            </param>
+
+            <when value="coord_from_file">
+                <param type="data" label="Tabular of coord" name="coord_tabular" format="tabular" help="Format : Latitude	Longitude"/>
+                <param name="lat_dim" type="select" label="Select latitude" >
+                    <options from_dataset="var_tab">
+                        <column name="value" index="0"/>
+                    </options>
+                </param>
+                <param name="lon_dim" type="select" label="Select longitude" >
+                    <options from_dataset="var_tab">
+                        <column name="value" index="0"/>
+                    </options>
+                </param>
+            </when>
+
+            <when value="coord_from_stdin">
+                <conditional name="condi_coord">
+                    <param name="coord" type="boolean" label="Search values for custom coordinates" truevalue="yes_cust_coord" checked="true" falsevalue="nope" help="Use this option to get valid values at your custom coordinates. If only NA values are availables the tool will search for the next closest coordinate until valid values."/>
+                    <when value="yes_cust_coord">
+                        <param name="lat_dim" type="select" label="Select latitude" >
+                            <options from_dataset="var_tab">
+                                <column name="value" index="0"/>
+                            </options>
+                        </param>
+                        <param name="lat_val" type="float" value="0" label="Latitude"/>
+                        <param name="lon_dim" type="select" label="Select longitude" >
+                            <options from_dataset="var_tab">
+                                <column name="value" index="0"/>
+                            </options>
+                        </param>
+                        <param name="lon_val" type="float" value="0" label="Longitude"/>
+                    </when>
+
+                    <when value="nope"></when>
+                </conditional>
+            </when>
+
+        </conditional>
+
+        <repeat name="user_choice" title="Filter">
+            <param name="dim" type="select" label="Dimensions">
+                <options from_dataset="var_tab">
+                    <column name="value" index="0"/>
+                </options>
+            </param>
+            <conditional name="condi_between">
+                <param name="comparator" type="select" label="Comparator">
+                    <option value="e">Equal</option>
+                    <option value="g">Greater</option>
+                    <option value="ge">Greater or equal</option>
+                    <option value="l">Less</option>
+                    <option value="le">Less or equal</option>
+                    <option value="be">Between-exclude ]threshold1,threshold2[</option>
+                    <option value="bi">Between-include [threshold1,threshold2]</option>
+                </param>
+                <when value="bi">
+                    <param name="t1" type="float" value="0" label="Inferior threshold"/>
+                    <param name="t2" type="float" value="0" label="Superior threshold"/>
+                </when>
+                <when value="be">
+                    <param name="t1" type="float" value="0" label="Inferior threshold"/>
+                    <param name="t2" type="float" value="0" label="Superior threshold"/>
+                </when>
+                <when value="e">
+                    <param name="value" type="float" value="0" label="Value"/>
+                </when>
+                <when value="g">
+                    <param name="value" type="float" value="0" label="Value"/>
+                </when>
+                <when value="ge">
+                    <param name="value" type="float" value="0" label="Value"/>
+                </when>
+                <when value="l">
+                    <param name="value" type="float" value="0" label="Value"/>
+                </when>
+                <when value="le">
+                    <param name="value" type="float" value="0" label="Value"/>
+                </when>
+            </conditional>
+        </repeat>
+
+    </inputs>        
+
+    <outputs>
+        <collection type="list" name="output">
+            <discover_datasets pattern="__designation_and_ext__" visible="false" format="tabular" directory="output_dir"/>
+            <filter>condi_source_coord['coord_source'] == 'coord_from_file'</filter>
+        </collection>
+        <data name="simpleoutput" from_work_dir="final.tabular" format="tabular">
+            <filter>condi_source_coord['coord_source'] == 'coord_from_stdin'</filter>
+        </data>
+    </outputs>
+
+
+    <tests>
+        <test>
+             <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
+             <param name="var_tab" value="var_tab_dataset-ibi"/>
+             <param name="var" value="phy"/>
+             <param name="dim_tab" value="tab_dim_phy_dataset-ibi"/>
+             <param name="coord" value="yes_cut_coord"/>
+             <param name="lat_dim" value="latitude"/>
+             <param name="lat_val" value="44.0"/>
+             <param name="lon_dim" value="longitude"/>
+             <param name="lon_val" value="-2.0"/>
+             <param name="output" value="Test1.tabular"/>
+        </test>
+        <test>
+             <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
+             <param name="var_tab" value="var_tab_dataset-ibi"/>
+             <param name="var" value="nh4"/>
+             <param name="dim_tab" value="tab_dim_nh4_dataset-ibi"/>
+             <param name="coord" value="nope"/>
+             <param name="dim" value="time"/>
+             <param name="comparator" value="e"/>
+             <param name="value" value="7272.0"/>
+             <param name="dim" value="latitude"/>
+             <param name="comparator" value="ge"/>
+             <param name="value" value="45.0"/>
+             <param name="output" value="Test2.tabular"/>
+        </test>
+
+
+
+
+    </tests>
+
+    <help><![CDATA[
+**What it does**
+
+This tool extracts variable values with custom conditions on dimensions.
+
+It can use manualy given coordinates or automaticaly take them from a tabular file to filter informations.
+
+If no values are availables at a coordinate X, the tool will search the closest coordinate with a non NA value.
+
+Filter can be set on every dimension. Available filtering operations are : =, >, <, >=, <=, [interval], ]interval[.
+
+
+
+**Input**
+
+A netcdf file (.nc).
+
+Variable tabular file from 'Netcdf Metadate Info'.
+
+Tabular file with coordinates and the following structure : 'lat'	'lon'.
+
+
+**Outputs**
+
+A single output with values for the wanted variable if there is only one coordinate.
+
+A data collection where one file is created for every coordinate, if multiple coordinates from tabular file.
+
+
+------------------------------------------------- 
+
+The Netcdf Read tool can be used after the Netcdf Info. 
+    ]]></help>
+</tool>
