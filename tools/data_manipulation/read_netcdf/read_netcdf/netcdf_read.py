@@ -1,3 +1,10 @@
+#!/usr/bin/env python
+#Alan Amosse then Yvan Le Bras
+
+"""
+A script for using regex substitutions on columns.
+"""
+
 import netCDF4
 from netCDF4 import Dataset
 import numpy as np
