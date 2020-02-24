@@ -67,7 +67,7 @@ Compute and plot evolution of species population by specialization group, using 
 
 **Input description**
 
-A tabular file with species count shaped and filtered with the STOCs 'Preprocess population data' and 'Filter species' tools. 
+Two tabular files processed with the STOCs 'Preprocess population data' 'Filter species' and 'mainglm' tools. 
 
 |
 
