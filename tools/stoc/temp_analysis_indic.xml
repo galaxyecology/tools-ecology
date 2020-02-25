@@ -53,7 +53,10 @@
         <data name="output_plot__gam_csiplot" from_work_dir="Output/figcsi_plotFrance.png" format="png" label="GAM - Temp trends plot on ${on_string}">
             <expand macro="stoceps_filter_gam"/>
         </data>
-
+        <data name="output_tab_gam_smoothed" from_work_dir="Output/csi_gammsmoothFrance.tabular" format="tabular" label="GAM - Temp trends smoothed data on ${on_string}">
+            <expand macro="stoceps_filter_gam"/>
+        </data>
+        
         <data name="output_plot_glmmtb_csiplot" from_work_dir="Output/csi_glmmTMB_France.png" format="png" label="GlmmTMB - Temp trends plot on ${on_string}">
             <expand macro="stoceps_filter_glmmtmb"/>
         </data>
