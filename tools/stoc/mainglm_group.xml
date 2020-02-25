@@ -48,6 +48,7 @@
         <data name="data_group" from_work_dir="Output/mainglm_group/donneesGroupes_mainglm_group.tabular" format="tabular" label="Glm - Group data on ${on_string}"/>
         <data name="year_var_group" from_work_dir="Output/mainglm_group/variationsAnnuellesGroupes_mainglm_group.tabular" format="tabular" label="Glm - Group yearly variations data on ${on_string}"/>
         <data name="glob_tend_group" from_work_dir="Output/mainglm_group/tendancesGlobalesGroupes_mainglm_group.tabular" format="tabular" label="Glm - Group tendencies on ${on_string}"/>
+        <data name="plot_year_var_group" from_work_dir="Output/mainglm_group/variationsAnnuellesGroupes_mainglm_group.png" format="png" label="Glm - Group yearly variations plot on ${on_string}"/>
     </outputs>
     <tests>
     </tests>
@@ -74,7 +75,7 @@ Two tabular files processed with the STOCs 'Preprocess population data' 'Filter 
 **Output**
 
 
-Three tabular files are created, they describe global tendencies and yearly variations per groups.
+Three tabular files are created, they describe global tendencies and yearly variations per groups. One plot of yearly variations per group.
 
 |
 
