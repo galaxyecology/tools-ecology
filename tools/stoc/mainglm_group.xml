@@ -51,6 +51,15 @@
         <data name="plot_year_var_group" from_work_dir="Output/mainglm_group/variationsAnnuellesGroupes_mainglm_group.png" format="png" label="Glm - Group yearly variations plot on ${on_string}"/>
     </outputs>
     <tests>
+        <test>
+            <param name="input_y_var" value="mainglm_tab_years.tabular"/>
+            <param name="input_glob_tendencies" value ="mainglm_tab_global.tabular"/>
+            <param name="advanced" value="simple"/>
+            <output name="data_group" file="donneesGroupes_mainglm_group1.tabular"/>
+            <output name="year_var_group" file="variationsAnnuellesGroupes_mainglm_group1.tabular"/>
+            <output name="glob_tend_group" file="tendancesGlobalesGroupes_mainglm_group1.tabular"/>
+            <output name="plot_year_var_group" file="variationsAnnuellesGroupes_mainglm_group1.png/>
+        </test>
     </tests>
     <help><![CDATA[
 =================================================
