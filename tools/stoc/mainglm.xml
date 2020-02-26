@@ -66,18 +66,19 @@
         </collection>
     </outputs>
     <tests>
-    <!--
         <test>
             <param name="input" value="Datafilteredfortrendanalysis.tabular"/>
             <param name="advanced" value="simple"/>
+            <param name="user_sp_file" value="default"/>
+            <param name="return_plot" value="plot"/>
+            <param name="compute_ic" value="TRUE"/>
             <output name="yearly_variations"  file="mainglm_tab_years.tabular"/>
             <output name="global_tendencies"  file="mainglm_tab_global.tabular"/>
             <output_collection name="plots"  type="list">
                 <element name="ALAARV_mainglm" file="mainglm_plot_sp1.png" ftype="png"/>
                 <element name="PARCAE_mainglm" file="mainglm_plot_sp2.png" ftype="png"/>
             </output_collection>
-  </test>
-    -->
+        </test>
     </tests>
     <help><![CDATA[
 =================================================
