@@ -58,7 +58,7 @@
             <output name="data_group" file="donneesGroupes_mainglm_group1.tabular"/>
             <output name="year_var_group" file="variationsAnnuellesGroupes_mainglm_group1.tabular"/>
             <output name="glob_tend_group" file="tendancesGlobalesGroupes_mainglm_group1.tabular"/>
-            <output name="plot_year_var_group" file="variationsAnnuellesGroupes_mainglm_group1.png/>
+            <output name="plot_year_var_group" file="variationsAnnuellesGroupes_mainglm_group1.png"/>
         </test>
     </tests>
     <help><![CDATA[
