@@ -133,8 +133,7 @@ Estimate temporal evolution of population per species - ExeMainGlmGalaxy.r
 This script analyse the temporal evolution of species population and create graphical vizualisation.
 
 Script needs the followings inputs :
- - stoc or community data filtered with at least 4 columns: year, site, species, and abundance with 0. Corresponding to "observed" or predicted 0 abundance.
- May come from the tools "Preprocess population data for evolution trend analyzes" (ExemakeTableAnalyseGalaxy.r) followed by "Filter species with rare and low abundances" (ExeFilteringRareLowabundSPGalaxy.r).
+ - stoc or community data filtered with at least 4 columns: year, site, species, and abundance with 0. Corresponding to "observed" or predicted 0 abundance. May come from the tools "Preprocess population data for evolution trend analyzes" (ExemakeTableAnalyseGalaxy.r) followed by "Filter species with rare and low abundances" (ExeFilteringRareLowabundSPGalaxy.r).
  - species details file with name and indicator status file with at least 2 columns: the species name or species ID (found in the community data or in stoc data) and his status as indicator species
  - file that stocks functions : "FunctTrendSTOCGalaxy.r"
 
@@ -153,9 +152,9 @@ How to execute, eg :
 
 Outputs are created in an Output repo :
 GLM gives 1 graph per species and 2 tables:
- - nameofspecies_id.png (one plot per species)
- - tendanceGlobalEspece_id.tabular
- - variationsAnnuellesEspece_id.tabular
+- nameofspecies_id.png (one plot per species)
+- tendanceGlobalEspece_id.tabular
+- variationsAnnuellesEspece_id.tabular
 
 
 R library needed

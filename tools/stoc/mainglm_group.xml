@@ -99,10 +99,8 @@ Estimate temporal evolution of population by specialization group - ExeMainglmPa
 This script analyse the temporal evolution by group on and create graphical vizualisation.
 
 Script needs the followings inputs :
- - stoc Yearly variation dataset.
- May come from the "Estimate temporal population evoution by species" tool (ExeMainGlmGalaxy.r).
- - stoc global variation dataset.
- May come from the "Estimate temporal population evoution by species" tool (ExeMainGlmGalaxy.r).
+ - stoc Yearly variation dataset. May come from the "Estimate temporal population evoution by species" tool (ExeMainGlmGalaxy.r).
+ - stoc global variation dataset. May come from the "Estimate temporal population evoution by species" tool (ExeMainGlmGalaxy.r).
  - species details file with name and indicator status file with at least 2 columns: the species name or species ID (found in the community data or in stoc data) and his status as indicator species
  - file that stocks functions : "FunctTrendSTOCGalaxy.r"
  - A stoc bias tabular file
@@ -120,9 +118,9 @@ How to execute, eg :
 
 Outputs are created in an Output repo :
 GLM gives 3 tables:
- - donneesGroupes_id.tabular
- - variationsAnnuellesGroupes_id.tabular
- - tendancesGlobalesGroupes_id.tabular
+- donneesGroupes_id.tabular
+- variationsAnnuellesGroupes_id.tabular
+- tendancesGlobalesGroupes_id.tabular
 
 
 R library needed
