@@ -31,7 +31,6 @@
             <requirement type="package" version="1.10_1">r-arm</requirement>
             <requirement type="package" version="3.1.0">r-ggplot2</requirement>
             <requirement type="package" version="1.0.0">r-scales</requirement>
-            <requirement type="package" version="3.1.0">r-ggplot2</requirement>
             <requirement type="package" version="1.8_24">r-mgcv</requirement>
             <requirement type="package" version="1.8.4">r-plyr</requirement>
             <requirement type="package" version="0.3_2">r-speedglm</requirement>

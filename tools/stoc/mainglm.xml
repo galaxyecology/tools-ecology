@@ -66,18 +66,35 @@
         </collection>
     </outputs>
     <tests>
-    <!--
-        <test>
+<test>
             <param name="input" value="Datafilteredfortrendanalysis.tabular"/>
             <param name="advanced" value="simple"/>
-            <output name="yearly_variations"  file="mainglm_tab_years.tabular"/>
-            <output name="global_tendencies"  file="mainglm_tab_global.tabular"/>
+            <output name="yearly_variations">
+		<assert_contents>
+			<has_n_lines n="37"/>
+			<has_n_columns n="14"/>
+			<has_size value="3247" delta="100"/>
+		</assert_contents>
+	    </output> 
+            <output name="global_tendencies">
+		<assert_contents>
+			<has_n_lines n="3"/>
+			<has_size value="468" delta="50"/>
+		</assert_contents>
+	    </output>
             <output_collection name="plots"  type="list">
-                <element name="ALAARV_mainglm" file="mainglm_plot_sp1.png" ftype="png"/>
-                <element name="PARCAE_mainglm" file="mainglm_plot_sp2.png" ftype="png"/>
+                <element name="ALAARV_mainglm">
+			<assert_contents>
+				<has_size value="244898" delta="5000"/>
+			</assert_contents>
+		</element>
+                <element name="PARCAE_mainglm">
+			<assert_contents>
+				<has_size value="219465" delta="5000"/>
+			</assert_contents>
+		</element>
             </output_collection>
-  </test>
-    -->
+        </test>
     </tests>
     <help><![CDATA[
 =================================================
@@ -135,8 +152,7 @@ Estimate temporal evolution of population per species - ExeMainGlmGalaxy.r
 This script analyse the temporal evolution of species population and create graphical vizualisation.
 
 Script needs the followings inputs :
- - stoc or community data filtered with at least 4 columns: year, site, species, and abundance with 0. Corresponding to "observed" or predicted 0 abundance.
- May come from the tools "Preprocess population data for evolution trend analyzes" (ExemakeTableAnalyseGalaxy.r) followed by "Filter species with rare and low abundances" (ExeFilteringRareLowabundSPGalaxy.r).
+ - stoc or community data filtered with at least 4 columns: year, site, species, and abundance with 0. Corresponding to "observed" or predicted 0 abundance. May come from the tools "Preprocess population data for evolution trend analyzes" (ExemakeTableAnalyseGalaxy.r) followed by "Filter species with rare and low abundances" (ExeFilteringRareLowabundSPGalaxy.r).
  - species details file with name and indicator status file with at least 2 columns: the species name or species ID (found in the community data or in stoc data) and his status as indicator species
  - file that stocks functions : "FunctTrendSTOCGalaxy.r"
 
@@ -155,9 +171,9 @@ How to execute, eg :
 
 Outputs are created in an Output repo :
 GLM gives 1 graph per species and 2 tables:
- - nameofspecies_id.png (one plot per species)
- - tendanceGlobalEspece_id.tabular
- - variationsAnnuellesEspece_id.tabular
+- nameofspecies_id.png (one plot per species)
+- tendanceGlobalEspece_id.tabular
+- variationsAnnuellesEspece_id.tabular
 
 
 R library needed

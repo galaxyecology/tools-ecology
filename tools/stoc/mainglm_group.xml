@@ -48,8 +48,37 @@
         <data name="data_group" from_work_dir="Output/mainglm_group/donneesGroupes_mainglm_group.tabular" format="tabular" label="Glm - Group data on ${on_string}"/>
         <data name="year_var_group" from_work_dir="Output/mainglm_group/variationsAnnuellesGroupes_mainglm_group.tabular" format="tabular" label="Glm - Group yearly variations data on ${on_string}"/>
         <data name="glob_tend_group" from_work_dir="Output/mainglm_group/tendancesGlobalesGroupes_mainglm_group.tabular" format="tabular" label="Glm - Group tendencies on ${on_string}"/>
+        <data name="plot_year_var_group" from_work_dir="Output/mainglm_group/variationsAnnuellesGroupes_mainglm_group.png" format="png" label="Glm - Group yearly variations plot on ${on_string}"/>
     </outputs>
     <tests>
+	<test>
+            <param name="input_y_var" value="mainglm_tab_years.tabular"/>
+            <param name="input_glob_tendencies" value ="mainglm_tab_global.tabular"/>
+            <param name="advanced" value="simple"/>
+            <output name="data_group">
+		<assert_contents>
+			<has_n_lines n="37"/>
+			<has_size value="3277" delta="100"/>
+		</assert_contents>
+	    </output>
+            <output name="year_var_group">
+		<assert_contents>
+			<has_n_lines n="37"/>
+			<has_size value="1623" delta="100"/>
+		</assert_contents>
+	    </output>
+            <output name="glob_tend_group">
+		<assert_contents>
+			<has_n_lines n="3"/>
+			<has_size value="154" delta="20"/>
+		</assert_contents>
+	    </output>
+            <output name="plot_year_var_group">
+		<assert_contents>
+			<has_size value="141535" delta="5000"/>
+		</assert_contents>
+	    </output>
+        </test>
     </tests>
     <help><![CDATA[
 =================================================
@@ -67,14 +96,14 @@ Compute and plot evolution of species population by specialization group, using 
 
 **Input description**
 
-A tabular file with species count shaped and filtered with the STOCs 'Preprocess population data' and 'Filter species' tools. 
+Two tabular files processed with the STOCs 'Preprocess population data' 'Filter species' and 'mainglm' tools. 
 
 |
 
 **Output**
 
 
-Three tabular files are created, they describe global tendencies and yearly variations per groups.
+Three tabular files are created, they describe global tendencies and yearly variations per groups. One plot of yearly variations per group.
 
 |
 
@@ -89,10 +118,8 @@ Estimate temporal evolution of population by specialization group - ExeMainglmPa
 This script analyse the temporal evolution by group on and create graphical vizualisation.
 
 Script needs the followings inputs :
- - stoc Yearly variation dataset.
- May come from the "Estimate temporal population evoution by species" tool (ExeMainGlmGalaxy.r).
- - stoc global variation dataset.
- May come from the "Estimate temporal population evoution by species" tool (ExeMainGlmGalaxy.r).
+ - stoc Yearly variation dataset. May come from the "Estimate temporal population evoution by species" tool (ExeMainGlmGalaxy.r).
+ - stoc global variation dataset. May come from the "Estimate temporal population evoution by species" tool (ExeMainGlmGalaxy.r).
  - species details file with name and indicator status file with at least 2 columns: the species name or species ID (found in the community data or in stoc data) and his status as indicator species
  - file that stocks functions : "FunctTrendSTOCGalaxy.r"
  - A stoc bias tabular file
@@ -109,10 +136,10 @@ How to execute, eg :
  $ Rscript ExeMainglmParGroupGalaxy.r yearly_variation.tabular global_variation.tabular tabSpecies.csv 'mainglm_group' '' FunctTrendSTOCGalaxy.r biais.tabular
 
 Outputs are created in an Output repo :
-GLM gives 3 tables:
- - donneesGroupes_id.tabular
- - variationsAnnuellesGroupes_id.tabular
- - tendancesGlobalesGroupes_id.tabular
+GLM gives 3 tables :
+- donneesGroupes_id.tabular
+- variationsAnnuellesGroupes_id.tabular
+- tendancesGlobalesGroupes_id.tabular
 
 
 R library needed
