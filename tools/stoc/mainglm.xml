@@ -66,14 +66,33 @@
         </collection>
     </outputs>
     <tests>
-        <test>
+<test>
             <param name="input" value="Datafilteredfortrendanalysis.tabular"/>
             <param name="advanced" value="simple"/>
-            <output name="yearly_variations"  file="mainglm_tab_years.tabular"/>
-            <output name="global_tendencies"  file="mainglm_tab_global.tabular"/>
+            <output name="yearly_variations">
+		<assert_contents>
+			<has_n_lines n="37"/>
+			<has_n_columns n="14"/>
+			<has_size value="3247" delta="100"/>
+		</assert_contents>
+	    </output> 
+            <output name="global_tendencies">
+		<assert_contents>
+			<has_n_lines n="3"/>
+			<has_size value="468" delta="50"/>
+		</assert_contents>
+	    </output>
             <output_collection name="plots"  type="list">
-                <element name="ALAARV_mainglm" file="mainglm_plot_sp1.png" ftype="png"/>
-                <element name="PARCAE_mainglm" file="mainglm_plot_sp2.png" ftype="png"/>
+                <element name="ALAARV_mainglm">
+			<assert_contents>
+				<has_size value="244898" delta="5000"/>
+			</assert_contents>
+		</element>
+                <element name="PARCAE_mainglm">
+			<assert_contents>
+				<has_size value="219465" delta="5000"/>
+			</assert_contents>
+		</element>
             </output_collection>
         </test>
     </tests>
