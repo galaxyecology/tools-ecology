@@ -73,10 +73,7 @@
 					<has_size value="154" delta="20"/>
 				</assert_contents>
 			</output>
-			<output name="plot_year_var_group">
-				<assert_contents>
-					<has_size value="141535" delta="5000"/>
-				</assert_contents>
+			<output name="plot_year_var_group" ftype="png">
 			</output>
 		</test>
 	</tests>
