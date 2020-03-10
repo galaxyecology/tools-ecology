@@ -73,8 +73,7 @@
 					<has_size value="154" delta="20"/>
 				</assert_contents>
 			</output>
-			<output name="plot_year_var_group" ftype="png">
-			</output>
+			<output name="plot_year_var_group" ftype="png"/>
 		</test>
 	</tests>
     <help><![CDATA[
