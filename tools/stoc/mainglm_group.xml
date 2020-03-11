@@ -50,32 +50,36 @@
         <data name="glob_tend_group" from_work_dir="Output/mainglm_group/tendancesGlobalesGroupes_mainglm_group.tabular" format="tabular" label="Glm - Group tendencies on ${on_string}"/>
         <data name="plot_year_var_group" from_work_dir="Output/mainglm_group/variationsAnnuellesGroupes_mainglm_group.png" format="png" label="Glm - Group yearly variations plot on ${on_string}"/>
     </outputs>
-	<tests>
-		<test>
-			<param name="input_y_var" value="mainglm_tab_years.tabular"/>
-			<param name="input_glob_tendencies" value ="mainglm_tab_global.tabular"/>
-			<param name="advanced" value="simple"/>
-			<output name="data_group">
-				<assert_contents>
-					<has_n_lines n="37"/>
-					<has_size value="3277" delta="100"/>
-				</assert_contents>
-			</output>
-			<output name="year_var_group">
-				<assert_contents>
-					<has_n_lines n="37"/>
-					<has_size value="1623" delta="100"/>
-				</assert_contents>
-			</output>
-			<output name="glob_tend_group">
-				<assert_contents>
-					<has_n_lines n="3"/>
-					<has_size value="154" delta="20"/>
-				</assert_contents>
-			</output>
-			<output name="plot_year_var_group" ftype="png"/>
-		</test>
-	</tests>
+    <tests>
+        <test>
+            <param name="input_y_var" value="mainglm_tab_years.tabular"/>
+            <param name="input_glob_tendencies" value ="mainglm_tab_global.tabular"/>
+            <param name="advanced" value="simple"/>
+            <output name="data_group">
+                <assert_contents>
+                    <has_n_lines n="37"/>
+                    <has_size value="3277" delta="100"/>
+                </assert_contents>
+            </output>
+            <output name="year_var_group">
+                <assert_contents>
+                    <has_n_lines n="37"/>
+                    <has_size value="1623" delta="100"/>
+                </assert_contents>
+            </output>
+            <output name="glob_tend_group">
+                <assert_contents>
+                    <has_n_lines n="3"/>
+                    <has_size value="154" delta="20"/>
+                </assert_contents>
+            </output>
+            <output name="plot_year_var_group">
+                <assert_contents>
+                    <has_text text="PNG"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
     <help><![CDATA[
 =================================================
 STOC Estimate species population evolution

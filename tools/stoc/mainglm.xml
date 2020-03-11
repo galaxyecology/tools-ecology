@@ -65,29 +65,37 @@
             <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" visible="false" format="png" directory="Output/mainglm/"/>
         </collection>
     </outputs>
-	<tests>
-		<test>
-			<param name="input" value="Datafilteredfortrendanalysis.tabular"/>
-			<param name="advanced" value="simple"/>
-			<output name="yearly_variations">
-				<assert_contents>
-					<has_n_lines n="37"/>
-					<has_n_columns n="14"/>
-					<has_size value="3247" delta="100"/>
-				</assert_contents>
-			</output> 
-			<output name="global_tendencies">
-				<assert_contents>
-					<has_n_lines n="3"/>
-					<has_size value="468" delta="50"/>
-				</assert_contents>
-			</output>
-			<output_collection name="plots"  type="list">
-				<element name="ALAARV_mainglm" ftype="png"/>
-				<element name="PARCAE_mainglm" ftype="png"/>
-			</output_collection>
-		</test>
-	</tests>
+    <tests>
+        <test>
+            <param name="input" value="Datafilteredfortrendanalysis.tabular"/>
+            <param name="advanced" value="simple"/>
+            <output name="yearly_variations">
+                <assert_contents>
+                    <has_n_lines n="37"/>
+                    <has_n_columns n="14"/>
+                    <has_size value="3247" delta="100"/>
+                </assert_contents>
+            </output> 
+            <output name="global_tendencies">
+                <assert_contents>
+                    <has_n_lines n="3"/>
+                    <has_size value="468" delta="50"/>
+                </assert_contents>
+            </output>
+            <output_collection name="plots"  type="list" count="2">
+                <element name="ALAARV_mainglm">
+                    <assert_contents>
+                        <has_text text="PNG"/>
+                    </assert_contents>
+                </element>
+                <element name="PARCAE_mainglm">
+                    <assert_contents>
+                        <has_text text="PNG"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+        </test>
+    </tests>
     <help><![CDATA[
 =================================================
 STOC Estimate species population evolution
