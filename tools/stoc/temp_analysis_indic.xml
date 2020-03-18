@@ -74,11 +74,34 @@
             <param name="smooth_plot" value="TRUE"/>
             <param name="method" value="gam"/>
             <param name="compute_ic" value="FALSE"/>
-            <output name="output_tab_gammcomplet" file="csi_gammCOMPLET_France.tabular"/>
-            <output name="output_tab_gam_annee" file="csi_gammParannee_France.tabular"/>
-            <output name="output_tab_gam_smoothed" file="csi_gammsmoothFrance.tabular"/>
-            <output name="output_plot_carre" file="figcsi_carre_France.png"/>
-            <output name="output_plot__gam_csiplot" file="figcsi_plotFrance.png"/>
+            <output name="output_tab_gammcomplet">
+                <assert_contents>
+                    <has_n_lines n="20"/>
+                    <has_size value="3500" delta="100"/>
+                </assert_contents>
+            </output>
+            <output name="output_tab_gam_annee">
+                <assert_contents>
+                    <has_n_lines n="19"/>
+                    <has_size value="2400" delta="100"/>
+                </assert_contents>
+            </output>
+            <output name="output_tab_gam_smoothed">
+                <assert_contents>
+                    <has_n_lines n="19"/>
+                    <has_size value="1200" delta="50"/>
+                </assert_contents>
+            </output>
+            <output name="output_plot_carre">
+                <assert_contents>
+                    <has_text text="PNG"/>
+                </assert_contents>
+            </output>
+            <output name="output_plot__gam_csiplot">
+                <assert_contents>
+                    <has_text text="PNG"/>
+                </assert_contents>
+            </output>
         </test>
         <test>
             <param name="input" value="Datafilteredfortrendanalysis.tabular"/>
@@ -86,9 +109,23 @@
             <param name="smooth_plot" value="FALSE"/>
             <param name="method" value="glmmtmb"/>
             <param name="compute_ic" value="TRUE"/>
-            <output name="output_plot_glmmtb_csiplot" file="csi_glmmTMB_France.png"/>
-            <output name="output_tab_glmmtb_annee" file="ggdata_csiFrance.tabular"/>
-            <output name="output_tab_glmmtb_gammcomplet" file="GlmmTMB_coefficient_csiFrance.tabular"/>
+            <output name="output_plot_glmmtb_csiplot">
+                <assert_contents>
+                    <has_text text="PNG"/>
+                </assert_contents>
+            </output>
+            <output name="output_tab_glmmtb_annee">
+                <assert_contents>
+                    <has_n_lines n="18"/>
+                    <has_size value="1400" delta="50"/>
+                </assert_contents>
+            </output>
+            <output name="output_tab_glmmtb_gammcomplet">
+                <assert_contents>
+                    <has_n_lines n="19"/>
+                    <has_size value="2900" delta="100"/>
+                </assert_contents>
+            </output>
         </test>
     </tests>
     <help><![CDATA[
