@@ -66,7 +66,6 @@
             <param name="input" value="Datafilteredfortrendanalysis.tabular"/>
             <param name="advanced" value="simple"/>
             <output name="yearly_variations">
-            <output name="yearly_variations">
                 <assert_contents>
                     <has_n_lines n="37"/>
                     <has_n_columns n="14"/>
