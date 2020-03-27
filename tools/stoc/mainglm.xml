@@ -8,17 +8,12 @@
         Rscript
          '$__tool_directory__/ExeMainGlmGalaxy.r'
          '$input'
+         '$inputtabSpecies'
          #if $settings.advanced=='advanced'
-             #if $settings.condi_spfile.user_sp_file=='default'
-                 '$__tool_directory__/tabSpecies.csv'
-             #else
-                 '$settings.condi_spfile.spfile'
-             #end if
              'mainglm'
              $settings.sp_code
              $settings.compute_ic
          #else
-             '$__tool_directory__/tabSpecies.csv'
              'mainglm'
              ''
              'TRUE'
@@ -37,10 +32,11 @@
     </command>
     <inputs>
         <expand macro="stoceps_input_filtered"/>
+        <param name="inputtabSpecies" type="data" format="tabular" label="Species file" help="Input species tabular file, with 5 columns (species ID, species name, species scientific name, specialization status)." />
         <conditional name="settings">
             <expand macro="stoceps_advanced_params_select"/>
             <when value="advanced">
-                <param name="sp_code" type="select" label="Filter species to exclude" help="Create a subsample by selecting the species codes you don't want to use." multiple="true" optional="true">
+                <param name="sp_code" type="select" label="Filter species to exclude" help="Create a subsample by selecting species codes you don't want to use." multiple="true" optional="true">
                     <options from_dataset="input">
                         <column name="value" index="2"/>
                         <filter type="unique_value" name="espece" column="2"/>
@@ -51,7 +47,6 @@
                         </valid>
                     </sanitizer>
                 </param>
-                <param name="spfile" optional="true" type="data" format="tabular" label="Use a custom species details file" help="Provide an optional tabular file with species indicator status to treat this species list only." />
                 <param name="return_plot" type="boolean" truevalue="plot" falsevalue="noplot" checked="yes" help="All the figures will be stocked in a datacollection" label="Return visualizations."/>
                 <expand macro="stoceps_compute_ic"/>
             </when>
@@ -66,33 +61,34 @@
         </collection>
     </outputs>
     <tests>
-        <test>
+<test>
+            <param name="inputtabSpecies" value="tabSpecies.csv"/>
             <param name="input" value="Datafilteredfortrendanalysis.tabular"/>
             <param name="advanced" value="simple"/>
             <output name="yearly_variations">
-                <assert_contents>
-                    <has_n_lines n="37"/>
-                    <has_n_columns n="14"/>
-                    <has_size value="3247" delta="100"/>
-                </assert_contents>
-            </output> 
+		<assert_contents>
+			<has_n_lines n="37"/>
+			<has_n_columns n="14"/>
+			<has_size value="3247" delta="100"/>
+		</assert_contents>
+	    </output> 
             <output name="global_tendencies">
-                <assert_contents>
-                    <has_n_lines n="3"/>
-                    <has_size value="468" delta="50"/>
-                </assert_contents>
-            </output>
-            <output_collection name="plots"  type="list" count="2">
+		<assert_contents>
+			<has_n_lines n="3"/>
+			<has_size value="468" delta="50"/>
+		</assert_contents>
+	    </output>
+            <output_collection name="plots"  type="list">
                 <element name="ALAARV_mainglm">
-                    <assert_contents>
-                        <has_text text="PNG"/>
-                    </assert_contents>
-                </element>
+			<assert_contents>
+				<has_size value="244898" delta="5000"/>
+			</assert_contents>
+		</element>
                 <element name="PARCAE_mainglm">
-                    <assert_contents>
-                        <has_text text="PNG"/>
-                    </assert_contents>
-                </element>
+			<assert_contents>
+				<has_size value="219465" delta="5000"/>
+			</assert_contents>
+		</element>
             </output_collection>
         </test>
     </tests>
