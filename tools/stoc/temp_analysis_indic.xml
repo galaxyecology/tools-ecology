@@ -9,10 +9,18 @@
          '$__tool_directory__/FunctExeTemporalAnalysisofIndicatorTrait.r' 
          '$input'
          '$inputtabSpecies'
-         '$inputspeciesindic' 
+         '$inputspeciesindic'
          '$inputcoord'
-         'ssi'
-         'csi'
+         #if $index=='csi' 
+             'ssi'
+             'csi'
+         #elif $index=='cti'
+             'sti'
+             'cti'
+         #else
+             'stri'
+             'ctri'
+         #end if
          #if $settings.advanced=='advanced' 
              $settings.method '' 'idindicatortrait'
              $settings.smooth_plot
@@ -29,7 +37,12 @@
         <expand macro="stoceps_input_filtered"/>
         <param name="inputcoord" type="data" format="tabular" label="Coordinates of sites" help="Input localization tabular file, with 3 columns (site ID, latitude, longitude)." />
         <param name="inputtabSpecies" type="data" format="tabular" label="Species file" help="Input species tabular file, with 5 columns (species ID, species name, species scientific name, specialization status)." />
-        <param name="inputspeciesindic" type="data" format="tabular" label="indicators info file" help="Input indicator info tabular file, with 15 columns (species ID, ssi, sti, sti_europe, thermal_niche_mean, thermal_niche_range, thermal_niche_max, thermal_niche_min, stri, exp_stri, trophic_vegetation, trophic_invertebrate, trophic_vertebrate)." />
+        <param name="inputspeciesindic" type="data" format="tabular" label="indicators info file" help="Input indicator info tabular file, with a `species ID` column and at least one index column (named `ssi` or `sti` or `stri`)." />
+        <param name="index" type="select" help="Available index" label="Chose the index you want to compute">
+            <option selected="true" value="csi">CSI</option>
+            <option value="cti">CTI</option>
+            <option value="ctri">CTRI</option>
+        </param>
         <conditional name="settings">
             <expand macro="stoceps_advanced_params_select"/>
             <when value="advanced">
