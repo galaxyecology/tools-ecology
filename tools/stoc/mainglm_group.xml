@@ -58,28 +58,29 @@
             <param name="input_glob_tendencies" value ="mainglm_tab_global.tabular"/>
             <param name="advanced" value="simple"/>
             <output name="data_group">
-		<assert_contents>
-			<has_n_lines n="37"/>
-			<has_size value="3277" delta="100"/>
-		</assert_contents>
-	    </output>
+            <output name="data_group">
+                <assert_contents>
+                    <has_n_lines n="37"/>
+                    <has_size value="3277" delta="100"/>
+                </assert_contents>
+            </output>
             <output name="year_var_group">
-		<assert_contents>
-			<has_n_lines n="37"/>
-			<has_size value="1623" delta="100"/>
-		</assert_contents>
-	    </output>
+                <assert_contents>
+                    <has_n_lines n="37"/>
+                    <has_size value="1623" delta="100"/>
+                </assert_contents>
+            </output>
             <output name="glob_tend_group">
-		<assert_contents>
-			<has_n_lines n="3"/>
-			<has_size value="154" delta="20"/>
-		</assert_contents>
-	    </output>
+                <assert_contents>
+                    <has_n_lines n="3"/>
+                    <has_size value="154" delta="20"/>
+                </assert_contents>
+            </output>
             <output name="plot_year_var_group">
-		<assert_contents>
-			<has_size value="141535" delta="5000"/>
-		</assert_contents>
-	    </output>
+                <assert_contents>
+                    <has_text text="PNG"/>
+                </assert_contents>
+            </output>
         </test>
     </tests>
     <help><![CDATA[
@@ -106,26 +107,7 @@ Two tabular files processed with the STOCs 'Preprocess population data' 'Filter 
 
 
 Two tabular files are created, they describe global tendencies and yearly variations per groups. One plot of yearly variations per group.
-A Third "species details file" containing group status (here "specialisation") of species (Column with TRUE or FALSE), including the species name or ID (one used in the species count data). If you are not analyzing the default STOC data, you need one file of this kind.
-
-Example dataset ::
-
-"espece"  "nom"                       "nomscientific"               "indicateur"     "specialisation"
-"ACCGEN"  "Autour des palombes"       "Accipiter gentilis"          FALSE            ""
-"ACCNIS"  "Epervier d'Europe"         "Accipiter nisus"             FALSE            ""
-"ACRARU"  "Rousserolle turdoïde"      "Acrocephalus arundinaceus"   FALSE            ""
-"ACRMEL"  "Lusciniole à moustaches"   "Acrocephalus melanopogon"    FALSE            ""
-"ACRPAL"  "Phragmite aquatique"       "Acrocephalus paludicola"     FALSE            ""
-"ACRRIS"  "Rousserolle verderolle"    "Acrocephalus palustris"      FALSE            ""
-"ACRSCH"  "Phragmite des joncs"       "Acrocephalus schoenobaenus"  FALSE            ""
-"ACRSCI"  "Rousserolle effarvatte"    "Acrocephalus scirpaceus"     FALSE            ""
-"ACTHYP"  "Chevalier guignette"       "Actitis hypoleucos"          FALSE            ""
-"AEGCAU"  "Mésange à longue queue"    "Aegithalos caudatus"         FALSE            ""
-"AEGFUN"  "Chouette de Tengmalm"      "Aegolius funereus"           FALSE            ""
-"AIXGAL"  "Canard mandarin"           "Aix galericulata"            FALSE            ""
-"AIXSPO"  "Canard carolin"            "Aix sponsa"                  FALSE            ""
-"ALAARV"  "Alouette des champs"       "Alauda arvensis"             TRUE             "milieux agricoles"
-
+One tabular file describing species with several columns as species ID, species name, species scientific name and specialization status.
 |
 
 **Source**
