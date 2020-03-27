@@ -106,10 +106,8 @@ Compute and plot evolution of species population, using a glm model.
 **Input description**
 
 A first mandatory tabular file with species count shaped and filtered with the STOCs 'Preprocess population data' ans 'Filter species' tools.
-A second file describing species with several columns as species ID, species name, species scientific name and group information (specialization status for example).
-
-A third optional "species details file" containing indicator status of species (Column with TRUE or FALSE), including the species name or ID (one used in the species count data). If you are not analyzing the default STOC data, you need one file of this kind.
-
+A second "species details file" containing indicator status of species (Column with TRUE or FALSE), including the species name or ID (one used in the species count data). If you are not analyzing the default STOC data, you need one file of this kind.
+ 
 Example dataset ::
 
 "espece"  "nom"                       "nomscientific"               "indicateur"     "specialisation"
