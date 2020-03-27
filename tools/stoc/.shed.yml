@@ -12,7 +12,7 @@ type: unrestricted
 repositories:
   stoc_maketable:
     description: Preprocess population data.
-    owner: mnhn65mo
+    owner: ecology
     include:
       - makeTableAnalyse.xml
       - stoceps_macros.xml
@@ -23,7 +23,7 @@ repositories:
 
   stoc_filteringsp:
     description: Filter species with rare and low abundances.
-    owner: mnhn65mo
+    owner: ecology
     include:
       - filteringSp.xml
       - ExeFilteringRareLowabundSPGalaxy.r
@@ -34,7 +34,7 @@ repositories:
 
   stoc_mainglm:
     description: Estimate species population evolution. 
-    owner: mnhn65mo
+    owner: ecology
     include:
       - mainglm.xml
       - stoceps_macros.xml
@@ -44,7 +44,7 @@ repositories:
   
   stoc_mainglm_group:
     description: Estimate species population evolution by specialization group.
-    owner: mnhn65mo
+    owner: ecology
     include:
       - mainglm_group.xml
       - ExeMainglmParGroupGalaxy.r
@@ -55,7 +55,7 @@ repositories:
 
   stoc_trend_indic:
     description: Temporal trend indicator using GlmmTMB or GAM models.
-    owner: mnhn65mo
+    owner: ecology
     include:
       - temp_analysis_indic.xml
       - stoceps_macros.xml
