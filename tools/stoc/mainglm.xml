@@ -61,7 +61,7 @@
         </collection>
     </outputs>
     <tests>
-<test>
+        <test>
             <param name="inputtabSpecies" value="tabSpecies.csv"/>
             <param name="input" value="Datafilteredfortrendanalysis.tabular"/>
             <param name="advanced" value="simple"/>
