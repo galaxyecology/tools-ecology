@@ -58,7 +58,6 @@
             <param name="input_glob_tendencies" value ="mainglm_tab_global.tabular"/>
             <param name="advanced" value="simple"/>
             <output name="data_group">
-            <output name="data_group">
                 <assert_contents>
                     <has_n_lines n="37"/>
                     <has_size value="3277" delta="100"/>
