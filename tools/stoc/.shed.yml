@@ -1,0 +1,66 @@
+categories:
+    - Ecology
+description: Tools to analyse STOC data.
+long_description: |
+  Tools to analyse STOC data.
+
+name: stoceps 
+owner: ecology 
+remote_repository_url: https://github.com/Alanamosse/Galaxy-E/tree/stoctool/tools/stoc
+type: unrestricted
+
+repositories:
+  stoc_maketable:
+    description: Preprocess population data.
+    owner: ecology
+    include:
+      - makeTableAnalyse.xml
+      - stoceps_macros.xml
+      - ExemakeTableAnalyseGalaxy.r
+      - FunctTrendSTOCGalaxy.r
+      - test-data/data_FrenchBBS_squarre_dataSTOCallSp_France_trend_2001_2017_ALAARV-PARCAE_2001_2018.tabular
+      - test-data/Datatransformedforfiltering_trendanalysis.tabular
+
+  stoc_filteringsp:
+    description: Filter species with rare and low abundances.
+    owner: ecology
+    include:
+      - filteringSp.xml
+      - ExeFilteringRareLowabundSPGalaxy.r
+      - FunctTrendSTOCGalaxy.r
+      - stoceps_macros.xml
+      - test-data/Datafilteredfortrendanalysis.tabular
+      - test-data/Datatransformedforfiltering_trendanalysis.tabular
+
+  stoc_mainglm:
+    description: Estimate species population evolution. 
+    owner: ecology
+    include:
+      - mainglm.xml
+      - stoceps_macros.xml
+      - ExeMainGlmGalaxy.r
+      - FunctTrendSTOCGalaxy.r
+      - tabSpecies.csv
+  
+  stoc_mainglm_group:
+    description: Estimate species population evolution by specialization group.
+    owner: ecology
+    include:
+      - mainglm_group.xml
+      - ExeMainglmParGroupGalaxy.r
+      - stoceps_macros.xml
+      - tabSpecies.csv
+      - FunctTrendSTOCGalaxy.r
+      - biais.tabular
+
+  stoc_trend_indic:
+    description: Temporal trend indicator using GlmmTMB or GAM models.
+    owner: ecology
+    include:
+      - temp_analysis_indic.xml
+      - stoceps_macros.xml
+      - FunctExeTemporalAnalysisofIndicatorTrait.r
+      - tabSpecies.csv
+      - species_indicateur_fonctionnel.tabular
+      - coordCarreSTOCfaux.tabular
+      - FunctTrendSTOCGalaxy.r

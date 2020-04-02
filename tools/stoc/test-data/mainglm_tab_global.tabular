@@ -1,0 +1,3 @@
+id	code_espece	nom_espece	indicateur	nombre_annees	premiere_annee	derniere_annee	tendance	IC_inferieur	IC_superieur	pourcentage_variation	erreur_standard	p_value	significatif	categorie_tendance_EBCC	mediane_occurrence	valide	raison_incertitude
+mainglm	PARCAE	Mésange bleue	TRUE	17	2001	2018	1.005	0.993	1.016	8.886	0.0064	0.432	FALSE	Stable	24.5	bon	
+mainglm	ALAARV	Alouette des champs	TRUE	17	2001	2018	0.949	0.939	0.961	-59.245	0.0063	0	TRUE	Declin moderee	14	bon	

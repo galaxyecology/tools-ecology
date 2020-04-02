@@ -1,0 +1,73 @@
+<macros>
+    <token name="@VERSION@">0.0.1</token>
+    <xml name="reshape_requirements">
+        <requirements>
+            <requirement type="package" version="0.8.8">r-reshape</requirement>
+            <requirement type="package" version="1.12.0">r-data.table</requirement>
+        </requirements>    
+    </xml>
+    <xml name="reshape2_requirements">
+        <requirements>
+            <requirement type="package" version="1.4.3">r-reshape2</requirement>
+        </requirements>    
+    </xml>
+    <xml name="mainglm_requirements">
+        <requirements>
+            <requirement type="package" version="3.0.0">r-ggplot2</requirement>
+            <requirement type="package" version="0.3_2">r-speedglm</requirement>
+            <requirement type="package" version="1.10_1">r-arm</requirement>
+            <requirement type="package" version="1.12.0">r-data.table</requirement>
+            <requirement type="package" version="1.4.3">r-reshape2</requirement>
+        </requirements>
+    </xml>
+    <xml name="temp_indic_requirements">
+        <requirements>
+            <requirement type="package" version="1.3_15">r-rodbc</requirement>
+            <requirement type="package" version="0.8.8">r-reshape</requirement>
+            <requirement type="package" version="1.12.0">r-data.table</requirement>
+            <requirement type="package" version="1.4_3">r-rgdal</requirement>
+            <requirement type="package" version="1.7.4">r-lubridate</requirement>
+            <requirement type="package" version="4.6_2">r-doby</requirement>
+            <requirement type="package" version="1.10_1">r-arm</requirement>
+            <requirement type="package" version="3.1.0">r-ggplot2</requirement>
+            <requirement type="package" version="1.0.0">r-scales</requirement>
+            <requirement type="package" version="1.8_24">r-mgcv</requirement>
+            <requirement type="package" version="1.8.4">r-plyr</requirement>
+            <requirement type="package" version="0.3_2">r-speedglm</requirement>
+            <requirement type="package" version="3.1_0">r-lmertest</requirement>
+            <requirement type="package" version="0.2.3">r-glmmtmb</requirement>
+        </requirements>
+    </xml>
+    <xml name="stoceps_input_filtered">
+        <param name="input" type="data" format="tabular" label="Stoc filtered input" help="Input Stoc count file, shaped and filtered with the 'preprocess population data' and 'filter species' tools." />
+    </xml>
+    <xml name="stoceps_advanced_params_select">
+        <param name="advanced" type="select" label="Specify advanced parameters">
+            <option value="simple" selected="true">No, use program defaults.</option>
+            <option value="advanced">Yes, see full parameter list.</option>
+        </param>        
+        <when value="simple">
+        </when>        
+    </xml>
+    <xml name="stoceps_compute_ic">
+        <param name="compute_ic" type="boolean" truevalue="TRUE" falsevalue="FALSE" checked="yes" label="Compute confidence intervals"/>
+    </xml>
+    <xml name="stoceps_filter_glmmtmb">
+        <filter> settings['advanced'] == 'advanced'</filter>
+        <filter> settings['method'] == 'glmmtmb'</filter>
+    </xml>
+    <xml name="stoceps_filter_gam">
+        <filter> settings['method'] == 'gam'</filter>
+    </xml>
+    <xml name="stoceps_bibref">
+        <citations>
+            <citation type="bibtex">
+	    @unpublished{stocepsromain,
+	    title={Vigie-Nature STOC unpublished scripts},
+            author={Lorrilliere, R},
+            url={http://www.vigienature.fr/sites/vigienature/files/atoms/files/analysestoceps_0.zip}
+            }
+            </citation>
+        </citations>
+    </xml>
+</macros>

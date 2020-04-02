@@ -1,0 +1,37 @@
+id	code_espece	nom_espece	indicateur	annee	abondance_relative	IC_inferieur	IC_superieur	erreur_standard	p_value	significatif	nb_carre	nb_carre_presence	abondance
+mainglm	PARCAE	Mésange bleue	TRUE	2001	1	1	1	0	1	FALSE	12	12	65
+mainglm	PARCAE	Mésange bleue	TRUE	2002	1.279	0.924	2.06	0.2734	0.25	FALSE	18	16	118
+mainglm	PARCAE	Mésange bleue	TRUE	2003	1.215	0.872	1.969	0.2601	0.363	FALSE	19	16	117
+mainglm	PARCAE	Mésange bleue	TRUE	2004	1.241	0.902	1.75	0.2546	0.294	FALSE	24	23	149
+mainglm	PARCAE	Mésange bleue	TRUE	2005	1.57	1.206	2.166	0.3098	0.023	TRUE	25	24	202
+mainglm	PARCAE	Mésange bleue	TRUE	2006	1.434	1.007	1.996	0.2846	0.07	FALSE	26	25	194
+mainglm	PARCAE	Mésange bleue	TRUE	2007	1.293	0.957	1.863	0.2609	0.203	FALSE	25	25	171
+mainglm	PARCAE	Mésange bleue	TRUE	2008	1.601	1.225	2.329	0.3125	0.016	TRUE	27	27	225
+mainglm	PARCAE	Mésange bleue	TRUE	2009	1.316	0.918	1.8	0.2615	0.168	FALSE	26	25	197
+mainglm	PARCAE	Mésange bleue	TRUE	2010	1.434	1.083	1.963	0.2845	0.07	FALSE	23	23	203
+mainglm	PARCAE	Mésange bleue	TRUE	2011	1.258	0.917	1.739	0.2526	0.255	FALSE	25	24	186
+mainglm	PARCAE	Mésange bleue	TRUE	2012	1.234	0.935	1.718	0.2465	0.292	FALSE	28	28	198
+mainglm	PARCAE	Mésange bleue	TRUE	2013	1.32	0.956	1.834	0.2711	0.177	FALSE	22	21	161
+mainglm	PARCAE	Mésange bleue	TRUE	2014	1.508	1.154	2.074	0.3036	0.042	TRUE	26	25	205
+mainglm	PARCAE	Mésange bleue	TRUE	2015	1.234	0.877	1.714	0.2649	0.327	FALSE	20	19	142
+mainglm	PARCAE	Mésange bleue	TRUE	2016	1.248	0.931	1.817	0.2615	0.291	FALSE	26	25	190
+mainglm	PARCAE	Mésange bleue	TRUE	2017	1.389	1.006	1.957	0.2873	0.113	FALSE	26	25	219
+mainglm	PARCAE	Mésange bleue	TRUE	2018	1.529	1.148	2.19	0.3157	0.04	TRUE	27	26	246
+mainglm	ALAARV	Alouette des champs	TRUE	2001	1	1	1	0	1	FALSE	12	10	40
+mainglm	ALAARV	Alouette des champs	TRUE	2002	0.807	0.555	1.108	0.1581	0.274	FALSE	18	12	62
+mainglm	ALAARV	Alouette des champs	TRUE	2003	0.897	0.633	1.401	0.1703	0.568	FALSE	19	13	75
+mainglm	ALAARV	Alouette des champs	TRUE	2004	0.698	0.465	0.991	0.13	0.054	FALSE	24	15	89
+mainglm	ALAARV	Alouette des champs	TRUE	2005	0.739	0.532	1.07	0.136	0.101	FALSE	25	19	97
+mainglm	ALAARV	Alouette des champs	TRUE	2006	0.699	0.491	1.03	0.1319	0.059	FALSE	26	14	81
+mainglm	ALAARV	Alouette des champs	TRUE	2007	0.546	0.366	0.799	0.1105	0.003	TRUE	25	14	54
+mainglm	ALAARV	Alouette des champs	TRUE	2008	0.484	0.337	0.727	0.0951	0	TRUE	27	16	64
+mainglm	ALAARV	Alouette des champs	TRUE	2009	0.406	0.288	0.588	0.0835	0	TRUE	26	13	51
+mainglm	ALAARV	Alouette des champs	TRUE	2010	0.431	0.279	0.651	0.0925	0	TRUE	23	10	42
+mainglm	ALAARV	Alouette des champs	TRUE	2011	0.53	0.368	0.829	0.101	0.001	TRUE	25	15	82
+mainglm	ALAARV	Alouette des champs	TRUE	2012	0.495	0.339	0.692	0.0972	0	TRUE	28	11	81
+mainglm	ALAARV	Alouette des champs	TRUE	2013	0.501	0.335	0.728	0.0978	0	TRUE	22	11	74
+mainglm	ALAARV	Alouette des champs	TRUE	2014	0.393	0.282	0.563	0.0761	0	TRUE	26	14	83
+mainglm	ALAARV	Alouette des champs	TRUE	2015	0.428	0.302	0.673	0.0855	0	TRUE	20	11	72
+mainglm	ALAARV	Alouette des champs	TRUE	2016	0.381	0.265	0.543	0.076	0	TRUE	26	16	75
+mainglm	ALAARV	Alouette des champs	TRUE	2017	0.406	0.291	0.582	0.0807	0	TRUE	26	16	79
+mainglm	ALAARV	Alouette des champs	TRUE	2018	0.401	0.291	0.59	0.0807	0	TRUE	27	15	76

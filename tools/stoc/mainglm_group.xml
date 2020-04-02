@@ -1,0 +1,121 @@
+<tool id="stoceps_glm_group" name="Estimate temporal population evolution" version="@VERSION@">
+    <description>by specialization group</description>
+    <macros>
+        <import>stoceps_macros.xml</import>
+    </macros>
+    <expand macro="mainglm_requirements"/>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript 
+         '$__tool_directory__/ExeMainglmParGroupGalaxy.r' 
+         '$input_y_var'
+         '$input_glob_tendencies'
+         '$inputtabSpecies'
+         'mainglm_group'
+         #if $settings.advanced=='advanced' 
+             $settings.sp_code
+         #else
+             ''
+         #end if
+         '$__tool_directory__/FunctTrendSTOCGalaxy.r'
+         '$__tool_directory__/biais.tabular'
+         
+        '$data_group'
+        '$year_var_group'
+        '$glob_tend_group'
+    ]]>
+    </command>
+    <inputs>
+        <param name="input_y_var" type="data" format="tabular" label="Yearly variation dataset" help="Output from the 'Estimate temporal population evoution by species' tool."/>
+        <param name="input_glob_tendencies" type="data" format="tabular" label="Global tendencies dataset" help="Output from the 'Estimate temporal population evoution by species' tool."/>
+        <param name="inputtabSpecies" type="data" format="tabular" label="Species file" help="Input species tabular file, with 5 columns (species ID, species name, species scientific name, specialization status)." />
+        <conditional name="settings">
+            <expand macro="stoceps_advanced_params_select"/>
+            <when value="advanced">
+                <param name="sp_code" type="select" label="Filter species to exclude" help="Create a subsample by selecting the species codes you don't want to use." multiple="true" optional="true">
+                    <options from_dataset="input_glob_tendencies">
+                        <column name="value" index="1"/>
+                        <filter type="unique_value" name="espece" column="1"/>
+                    </options>
+                    <sanitizer>
+                        <valid initial="string.printable">
+                            <remove value="&quot;"/>
+                        </valid>
+                    </sanitizer>
+                </param>
+            </when>
+        </conditional>
+    </inputs>
+    <outputs>
+        <data name="data_group" from_work_dir="Output/mainglm_group/donneesGroupes_mainglm_group.tabular" format="tabular" label="Glm - Group data on ${on_string}"/>
+        <data name="year_var_group" from_work_dir="Output/mainglm_group/variationsAnnuellesGroupes_mainglm_group.tabular" format="tabular" label="Glm - Group yearly variations data on ${on_string}"/>
+        <data name="glob_tend_group" from_work_dir="Output/mainglm_group/tendancesGlobalesGroupes_mainglm_group.tabular" format="tabular" label="Glm - Group tendencies on ${on_string}"/>
+        <data name="plot_year_var_group" from_work_dir="Output/mainglm_group/variationsAnnuellesGroupes_mainglm_group.png" format="png" label="Glm - Group yearly variations plot on ${on_string}"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="inputtabSpecies" value="tabSpecies.csv"/>
+            <param name="input_y_var" value="mainglm_tab_years.tabular"/>
+            <param name="input_glob_tendencies" value ="mainglm_tab_global.tabular"/>
+            <param name="advanced" value="simple"/>
+            <output name="data_group">
+                <assert_contents>
+                    <has_n_lines n="37"/>
+                    <has_size value="3277" delta="100"/>
+                </assert_contents>
+            </output>
+            <output name="year_var_group">
+                <assert_contents>
+                    <has_n_lines n="37"/>
+                    <has_size value="1623" delta="100"/>
+                </assert_contents>
+            </output>
+            <output name="glob_tend_group">
+                <assert_contents>
+                    <has_n_lines n="3"/>
+                    <has_size value="154" delta="20"/>
+                </assert_contents>
+            </output>
+            <output name="plot_year_var_group">
+                <assert_contents>
+                    <has_text text="PNG"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+=================================================
+STOC Estimate species population evolution
+=================================================
+
+**What it does**
+
+
+
+Compute and plot evolution of species population by specialization group, using a glm model.
+
+
+|
+
+**Input description**
+
+Two tabular files processed with the STOCs 'Preprocess population data' 'Filter species' on one hand and 'mainglm' tools on the other hand. 
+
+One tabular species file, with a `species ID` column and species names.
+
+|
+
+**Output**
+
+
+Two tabular files are created, they describe global tendencies and yearly variations per groups. One plot of yearly variations per group.
+One tabular file describing species with several columns as species ID, species name, species scientific name and specialization status.
+|
+
+**Source**
+
+UnPublished script available at http://www.vigienature.fr/sites/vigienature/files/atoms/files/analysestoceps_0.zip
+the first version written by Romain Lorrilliere.
+
+  ]]></help>
+  <expand macro="stoceps_bibref" />
+</tool>
