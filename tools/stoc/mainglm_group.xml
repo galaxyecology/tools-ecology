@@ -1,4 +1,4 @@
-<tool id="stoceps_glm_group" name="Estimate temporal population evolution" version="@VERSION@">
+<tool id="stoceps_glm_group" name="Estimate temporal population variation" version="@VERSION@">
     <description>by specialization group</description>
     <macros>
         <import>stoceps_macros.xml</import>
@@ -84,14 +84,14 @@
     </tests>
     <help><![CDATA[
 =================================================
-STOC Estimate species population evolution
+STOC Estimate species population variation
 =================================================
 
 **What it does**
 
 
 
-Compute and plot evolution of species population by specialization group, using a glm model.
+Compute and plot trends of species population by specialization group, using a glm model.
 
 
 |
