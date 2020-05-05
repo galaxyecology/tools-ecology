@@ -1,0 +1,8 @@
+VariableName	NumberOfDimensions	Dim0Name	Dim0Size	Dim1Name	Dim1Size	Dim2Name	Dim2Size	Dim3Name	Dim3Size
+phy	4	time	145	depth	1	latitude	97	longitude	103
+time	1	time	145	 	 	 	 	 	 
+chl	4	time	145	depth	1	latitude	97	longitude	103
+nh4	4	time	145	depth	1	latitude	97	longitude	103
+longitude	1	longitude	103	 	 	 	 	 	 
+latitude	1	latitude	97	 	 	 	 	 	 
+depth	1	depth	1	 	 	 	 	 	 
