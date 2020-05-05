@@ -110,7 +110,7 @@
 
             <when value="coord_from_stdin">
                 <conditional name="condi_coord">
-                    <param name="coord" type="select" label="Search values for custom coordinates" help="Use this option to get valid values at your custom coordinates. If only NA values are availables the tool will search for the next closest coordinate until valid values."/>
+                    <param name="coord" type="select" label="Search values for custom coordinates" help="Use this option to get valid values at your custom coordinates. If only NA values are availables the tool will search for the next closest coordinate until valid values.">
                         <option value="yes_cust_coord">Yes</option>
                         <option value="nope">No</option>
                     </param>
@@ -176,9 +176,7 @@
                 </when>
             </conditional>
         </repeat>
-
     </inputs>        
-
     <outputs>
         <collection type="list" name="output">
             <discover_datasets pattern="__designation_and_ext__" visible="false" format="tabular" directory="output_dir"/>
@@ -188,8 +186,6 @@
             <filter>condi_source_coord['coord_source'] == 'coord_from_stdin'</filter>
         </data>
     </outputs>
-
-
     <tests>
         <test>
              <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
@@ -217,10 +213,6 @@
              <param name="value" value="45.0"/>
              <param name="output" value="Test2.tabular"/>
         </test>
-
-
-
-
     </tests>
 
     <help><![CDATA[
