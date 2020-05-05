@@ -1,0 +1,25 @@
+categories:
+    - Ecology
+owner: ecology
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/data_manipulation/read_netcdf/read_netcdf/
+type: unrestricted
+
+repositories:
+  netcdf_metadata_info:
+    description: Summarize content of a netcdf file.
+    owner: ecology
+    include:
+      - netcdf_metadata_info.xml
+      - test-data/dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc
+      - test-data/Metadata_infos_from_dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc.Variables.tab
+      - test-data/info_file.txt
+
+  netcdf_read:
+    description: Extracts variable values with custom conditions on dimensions.
+    owner: ecology
+    include:
+      - netcdf_read.xml
+      - netcdf_read.py
+      - test-data/dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc
+      - test-data/Test1.tabular
+      - test-data/Test2.tabular
