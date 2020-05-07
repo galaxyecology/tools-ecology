@@ -158,8 +158,11 @@ STOC Temporal population trend indicator
 
 Compute and plot time variation of indicator or mean trait values of communities.
 
+The default GAM model tests fixed effects of year, smoothed longitude and latitude and random effect of site on the selected indicator : indicator ~ year + s(longitude,latitude) + 1|site
+The GlmmTMB model tests fixed effects of year and random effect of site on the selected indicator : indicator ~ year + 1|site 
+
 CSI Temporal analysis indicator
-This script computes the indicator csi, cti and ctri per year and site, wich also correspond to a community weighted mean (CWM), and analyse its temporal evolution trend and create graphical vizualisation.
+This script computes the indicator csi, cti and ctri per year and site, wich also correspond to a community weighted mean (CWM), analyse its temporal evolution trend with gam or glmmtmb model and create graphical vizualisation.
 As indicator you can thus use also a trait.
 
 |

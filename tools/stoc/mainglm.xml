@@ -99,7 +99,7 @@ STOC Estimate species population variation
 
 **What it does**
 
-Compute and plot trends of species population, using a glm model.
+Compute and plot trends of species population, using a glm model of formula : abundance ~ site + year. Testing the effect of site and year on abundance with quasipoisson distribution.
 
 |
 
