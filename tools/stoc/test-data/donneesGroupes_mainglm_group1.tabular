@@ -1,0 +1,37 @@
+"code_espece"	"nom_espece"	"annee"	"groupe_indicateur"	"poids_erreur_standard"	"poids_incertitude"	"poids_final"	"abondance_relative"	"IC_inferieur"	"IC_superieur"	"valide"	"mediane_occurrence"
+"ALAARV"	"Alouette des champs"	2001	"milieux agricoles"	1	1	1	1	1	1	"bon"	14
+"ALAARV"	"Alouette des champs"	2002	"milieux agricoles"	1	1	1	0.807	0.578	1.212	"bon"	14
+"ALAARV"	"Alouette des champs"	2003	"milieux agricoles"	1	1	1	0.897	0.624	1.253	"bon"	14
+"ALAARV"	"Alouette des champs"	2004	"milieux agricoles"	1	1	1	0.698	0.528	0.952	"bon"	14
+"ALAARV"	"Alouette des champs"	2005	"milieux agricoles"	1	1	1	0.739	0.522	1.024	"bon"	14
+"ALAARV"	"Alouette des champs"	2006	"milieux agricoles"	1	1	1	0.699	0.484	0.938	"bon"	14
+"ALAARV"	"Alouette des champs"	2007	"milieux agricoles"	1	1	1	0.546	0.368	0.743	"bon"	14
+"ALAARV"	"Alouette des champs"	2008	"milieux agricoles"	1	1	1	0.484	0.342	0.694	"bon"	14
+"ALAARV"	"Alouette des champs"	2009	"milieux agricoles"	1	1	1	0.406	0.303	0.576	"bon"	14
+"ALAARV"	"Alouette des champs"	2010	"milieux agricoles"	1	1	1	0.431	0.288	0.647	"bon"	14
+"ALAARV"	"Alouette des champs"	2011	"milieux agricoles"	1	1	1	0.53	0.365	0.725	"bon"	14
+"ALAARV"	"Alouette des champs"	2012	"milieux agricoles"	1	1	1	0.495	0.36	0.701	"bon"	14
+"ALAARV"	"Alouette des champs"	2013	"milieux agricoles"	1	1	1	0.501	0.333	0.76	"bon"	14
+"ALAARV"	"Alouette des champs"	2014	"milieux agricoles"	1	1	1	0.393	0.293	0.556	"bon"	14
+"ALAARV"	"Alouette des champs"	2015	"milieux agricoles"	1	1	1	0.428	0.295	0.631	"bon"	14
+"ALAARV"	"Alouette des champs"	2016	"milieux agricoles"	1	1	1	0.381	0.248	0.539	"bon"	14
+"ALAARV"	"Alouette des champs"	2017	"milieux agricoles"	1	1	1	0.406	0.278	0.572	"bon"	14
+"ALAARV"	"Alouette des champs"	2018	"milieux agricoles"	1	1	1	0.401	0.249	0.571	"bon"	14
+"PARCAE"	"MÃ©sange bleue"	2001	"generaliste"	1	1	1	1	1	1	"bon"	24.5
+"PARCAE"	"MÃ©sange bleue"	2002	"generaliste"	1	1	1	1.279	0.87	2.064	"bon"	24.5
+"PARCAE"	"MÃ©sange bleue"	2003	"generaliste"	1	1	1	1.215	0.787	1.779	"bon"	24.5
+"PARCAE"	"MÃ©sange bleue"	2004	"generaliste"	1	1	1	1.241	0.838	1.923	"bon"	24.5
+"PARCAE"	"MÃ©sange bleue"	2005	"generaliste"	1	1	1	1.57	1.037	2.217	"bon"	24.5
+"PARCAE"	"MÃ©sange bleue"	2006	"generaliste"	1	1	1	1.434	0.982	2.097	"bon"	24.5
+"PARCAE"	"MÃ©sange bleue"	2007	"generaliste"	1	1	1	1.293	0.854	1.949	"bon"	24.5
+"PARCAE"	"MÃ©sange bleue"	2008	"generaliste"	1	1	1	1.601	1.103	2.302	"bon"	24.5
+"PARCAE"	"MÃ©sange bleue"	2009	"generaliste"	1	1	1	1.316	0.894	1.977	"bon"	24.5
+"PARCAE"	"MÃ©sange bleue"	2010	"generaliste"	1	1	1	1.434	0.927	2.024	"bon"	24.5
+"PARCAE"	"MÃ©sange bleue"	2011	"generaliste"	1	1	1	1.258	0.879	1.99	"bon"	24.5
+"PARCAE"	"MÃ©sange bleue"	2012	"generaliste"	1	1	1	1.234	0.858	1.748	"bon"	24.5
+"PARCAE"	"MÃ©sange bleue"	2013	"generaliste"	1	1	1	1.32	0.871	1.894	"bon"	24.5
+"PARCAE"	"MÃ©sange bleue"	2014	"generaliste"	1	1	1	1.508	1.005	2.201	"bon"	24.5
+"PARCAE"	"MÃ©sange bleue"	2015	"generaliste"	1	1	1	1.234	0.782	1.997	"bon"	24.5
+"PARCAE"	"MÃ©sange bleue"	2016	"generaliste"	1	1	1	1.248	0.789	1.766	"bon"	24.5
+"PARCAE"	"MÃ©sange bleue"	2017	"generaliste"	1	1	1	1.389	0.859	2.13	"bon"	24.5
+"PARCAE"	"MÃ©sange bleue"	2018	"generaliste"	1	1	1	1.529	1.025	2.318	"bon"	24.5
