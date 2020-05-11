@@ -91,7 +91,7 @@ STOC Estimate species population variation
 
 
 
-Compute and plot trends of species population by specialization group, using a glm model.
+Compute and plot trends of species population by specialization group, using a glm model. The same model than glm per species is used but results are aggregated by specialization group.
 
 
 |

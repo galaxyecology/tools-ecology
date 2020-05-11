@@ -10,7 +10,6 @@
          '$input'
          '$inputtabSpecies'
          '$inputspeciesindic'
-         '$inputcoord'
          #if $index=='csi' 
              'ssi'
              'csi'
@@ -21,12 +20,17 @@
              'stri'
              'ctri'
          #end if
+         #if $method.model=='gam'
+             'gam' '' 'idindicatortrait'
+             '$inputcoord'
+         #else
+             'glmmtmb' '' 'idindicatortrait'
+             ''
+         #end if
          #if $settings.advanced=='advanced' 
-             $settings.method '' 'idindicatortrait'
              $settings.smooth_plot
              $settings.compute_ic
          #else
-             'gam' '' 'idindicatortrait'
              'TRUE'
              'TRUE'
          #end if
@@ -35,7 +39,7 @@
     </command>
     <inputs>
         <expand macro="stoceps_input_filtered"/>
-        <param name="inputcoord" type="data" format="tabular" label="Coordinates of sites" help="Input localization tabular file, with 3 columns (site ID, latitude, longitude)." />
+
         <param name="inputtabSpecies" type="data" format="tabular" label="Species file" help="Input species tabular file, with 5 columns (species ID, species name, species scientific name, specialization status)." />
         <param name="inputspeciesindic" type="data" format="tabular" label="indicators info file" help="Input indicator info tabular file, with a `species ID` column and at least one index column (named `ssi` or `sti` or `stri`)." />
         <param name="index" type="select" help="Available index" label="Chose the index you want to compute">
@@ -43,14 +47,21 @@
             <option value="cti">CTI</option>
             <option value="ctri">CTRI</option>
         </param>
+        <conditional name="method">
+            <param name="model" type="select" help="Available methods are GlmmTMB and Gam" label="Choose the model method">
+                <option value="glmmtmb">GlmmTMB</option>
+                <option selected="true" value="gam">Gam</option>
+            </param>
+            <when value="gam">
+                 <param name="inputcoord" type="data" format="tabular" label="Coordinates of sites" help="Input localization tabular file, with 3 columns (site ID, latitude, longitude)." />
+            </when>
+            <when value="glmmtmb">
+            </when>
+        </conditional>
         <conditional name="settings">
             <expand macro="stoceps_advanced_params_select"/>
             <when value="advanced">
                 <param name="smooth_plot" type="boolean" truevalue="TRUE" falsevalue="FALSE" checked="yes" label="Smooth visualization."/>
-                <param name="method" type="select" help="Available methods are GlmmTMB and Gam" label="Chose the model method">
-                    <option selected="true" value="glmmtmb">GlmmTMB</option>
-                    <option value="gam">Gam</option>
-                </param>
                 <expand macro="stoceps_compute_ic"/>
             </when>
         </conditional>
@@ -90,7 +101,7 @@
             <param name="inputtabSpecies" value="tabSpecies.csv"/>
             <param name="advanced" value="advanced"/>
             <param name="smooth_plot" value="TRUE"/>
-            <param name="method" value="gam"/>
+            <param name="model" value="gam"/>
             <param name="compute_ic" value="FALSE"/>
             <output name="output_tab_gammcomplet">
                 <assert_contents>
@@ -123,12 +134,11 @@
         </test>
         <test>
             <param name="input" value="Datafilteredfortrendanalysis.tabular"/>
-            <param name="inputcoord" value="coordCarreSTOCfaux.tabular"/>
             <param name="inputspeciesindic" value="species_indicateur_fonctionnel.tabular"/>
             <param name="inputtabSpecies" value="tabSpecies.csv"/>
             <param name="advanced" value="advanced"/>
             <param name="smooth_plot" value="FALSE"/>
-            <param name="method" value="glmmtmb"/>
+            <param name="model" value="glmmtmb"/>
             <param name="compute_ic" value="TRUE"/>
             <output name="output_plot_glmmtb_csiplot">
                 <assert_contents>
@@ -158,8 +168,11 @@ STOC Temporal population trend indicator
 
 Compute and plot time variation of indicator or mean trait values of communities.
 
+The default GAM model tests fixed effects of year, smoothed longitude and latitude and random effect of site on the selected indicator : indicator ~ year + s(longitude,latitude) + 1|site
+The GlmmTMB model tests fixed effects of year and random effect of site on the selected indicator : indicator ~ year + 1|site 
+
 CSI Temporal analysis indicator
-This script computes the indicator csi, cti and ctri per year and site, wich also correspond to a community weighted mean (CWM), and analyse its temporal evolution trend and create graphical vizualisation.
+This script computes the indicator csi, cti and ctri per year and site, wich also correspond to a community weighted mean (CWM), analyse its temporal evolution trend with gam or glmmtmb model and create graphical vizualisation.
 As indicator you can thus use also a trait.
 
 |
@@ -176,7 +189,7 @@ One tabular species file, with a `species ID` column and species names.
 
 One tabular file with trait data including at least one column with the species name or ID (the one used in the count data file) and one column with the trait value for each species (named `ssi` or `sti` or `stri`). For the CSI indicator notably (community specialization index), this should be the ssi (species specialization index).   
 
-One tabular file with coordinates in latitude and longitude (one column for each) including also the site ID (the one used in the count data file) 
+One additional tabular for Gam method only file with coordinates in latitude and longitude (one column for each) including also the site ID (the one used in the count data file) 
 
 |
 

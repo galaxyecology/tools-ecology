@@ -38,12 +38,12 @@ if (length(args)<12) {
     Datafiltered<-args[1] ###### Nom du fichier avec extension ".typedefichier", peut provenir de la fonction "FiltreEspeceRare" / file name without the file type ".filetype", may result from the function "FiltreEspeceRare"    
     tabSpecies<-args[2] ###### Nom du fichier avec extension ".typedefichier", fichier mis à disposition dans Galaxy-E avec specialisation à l'habitat des especes et si espece considérée comme indicatrice / file name without the file type ".filetype", file available in Galaxy-E containing habitat specialization for each species and whether or not they are considered as indicator  
     tabtrait<-args[3] ##### Nom du fichier avec extension ".typedefichier", fichier mis à disposition dans Galaxy-E avec degre de specialisation de l espece et affinite thermique /file name without the file type ".filetype", file available in Galaxy-E containing specilalization degree as well as thermic preferences
-    coordCarre<-args[4] #### Nom du fichier avec extension ".typedefichier", fichier mis à disposition dans Galaxy-E avec les coordonnees gps des carres /file name without the file type ".filetype", file available in Galaxy-E containing gps coordinates of the plots
-    Var <- args[5] #### Nom du trait dans fichier de traits "nomdutrait" exemple: "ssi" pour l'indice de specialisation par sps / Name of the trait in the file containing trait data   
-    indicator <- args[6] #### Nom de l'indicateur ou du trait par communauté ex pour ssi c'est csi calculé au niveau communauté / Name of the indicator or the trait per community ex: for the ssi, it is the csi measured at the community level  
-    methode <- args[7] #### Methode d'analyse de l'evolution du trait ou de l'indicateur, lmer pour modèloe mixte seul ou gam pour generalized additive model / name of the models used to analyze evolution of mean trait or indicator
-    dd <- args[8] ##### Nom du fichier si déjà un fichier avec trait moyen par communauté, avec une colonne annee appelé "year" et une colonne plot appelé "carre" correspondant à l'echelle des communautés etudiées / name of the file if a file with the mean trait value per community is already prepared with one column named "year" for the year, one column named "carre" for the plots (the scale of the community measurment)
-    id<-args[9]#Id name for output res repo 
+    coordCarre<-args[9] #### Nom du fichier avec extension ".typedefichier", fichier mis à disposition dans Galaxy-E avec les coordonnees gps des carres /file name without the file type ".filetype", file available in Galaxy-E containing gps coordinates of the plots
+    Var <- args[4] #### Nom du trait dans fichier de traits "nomdutrait" exemple: "ssi" pour l'indice de specialisation par sps / Name of the trait in the file containing trait data   
+    indicator <- args[5] #### Nom de l'indicateur ou du trait par communauté ex pour ssi c'est csi calculé au niveau communauté / Name of the indicator or the trait per community ex: for the ssi, it is the csi measured at the community level  
+    methode <- args[6] #### Methode d'analyse de l'evolution du trait ou de l'indicateur, lmer pour modèloe mixte seul ou gam pour generalized additive model / name of the models used to analyze evolution of mean trait or indicator
+    dd <- args[7] ##### Nom du fichier si déjà un fichier avec trait moyen par communauté, avec une colonne annee appelé "year" et une colonne plot appelé "carre" correspondant à l'echelle des communautés etudiées / name of the file if a file with the mean trait value per community is already prepared with one column named "year" for the year, one column named "carre" for the plots (the scale of the community measurment)
+    id<-args[8]#Id name for output res repo 
     plot_smooth<-args[10]#TRUE or FALSE
     ic<-args[11]#TRUE or FALSE
     source(args[12])
@@ -73,7 +73,6 @@ if(!dd==""){
 }
 
 spTrait=read.table(tabtrait,sep="\t",dec=".",header=TRUE) ############# species_indicateur_fonctionnel.csv pour le STOC sinon fichier avec traits pour calcul du trait moyen par communauté / file with the trait for the community weighted mean calculation 
-coordCarre=read.table(coordCarre,sep="\t",dec=".",header=TRUE) ######## carre.csv  charge les coordonnées des carrés qui sont utilisés comme covariable  / load the gps coordinates of the plots, is used as covariable in the models
 
 dir.create(paste("Output/",sep=""),recursive=TRUE,showWarnings=FALSE)##### Creation du dossier de sortie
 #cat(paste("Create Output/","\n",sep=""))
@@ -113,8 +112,6 @@ csi_cti_ctri <- function(tabCLEAN=tabCLEAN,coordCarre=coordCarre,spTrait=spTrait
         dd <- data.frame(indic,traitcarre$carre,traitcarre$annee) 
         names(dd)[2] <- "carre"
         names(dd)[3] <- "year"
-        dd$longitude_grid_wgs84 <- coordCarre$longitude_grid_wgs84[match(dd$carre,coordCarre$pk_carre)] #### recupere coordonnées gps / retrieve gps coordinates
-        dd$latitude_grid_wgs84 <- coordCarre$latitude_grid_wgs84[match(dd$carre,coordCarre$pk_carre)]  #### recupere coordonnées gps / retrieve gps coordinates
         dd$id_plot <- dd$carre  ### id_plot nom données aux carrés dans le script /id_plot is use as the name of the plot in the following script
     }else{
         colnames(dd)[colnames == "indicator"] <- "indic"
@@ -126,6 +123,10 @@ csi_cti_ctri <- function(tabCLEAN=tabCLEAN,coordCarre=coordCarre,spTrait=spTrait
     pasdetemps <-nban-1
 
     if(methode == "gam") {
+        coordCarre=read.table(coordCarre,sep="\t",dec=".",header=TRUE) ######## carre.csv  charge les coordonnées des carrés qui sont utilisés comme covariable  / load the gps coordinates of the plots, is used as covariable in the models
+        dd$longitude_grid_wgs84 <- coordCarre$longitude_grid_wgs84[match(dd$carre,coordCarre$pk_carre)] #### recupere coordonnées gps / retrieve gps coordinates
+        dd$latitude_grid_wgs84 <- coordCarre$latitude_grid_wgs84[match(dd$carre,coordCarre$pk_carre)]  #### recupere coordonnées gps / retrieve gps coordinates
+
         cat("Methode: gam\n")
         ## Utilisation des modèles GAMM pour obtenir les tendances d evolution par an du csi cti ou ctri !!!! Marche pas si peu de données !!!!  / Use of GAMM model for the estimation of the annual variations of the csi cti or ctri  !!! does not work with few data !!! 
         cat("\nEstimation de la variation annuelle ",indicator,"~ factor(year)+s(longitude_grid_wgs84,latitude_grid_wgs84,bs='sos'),random=reStruct(object = ~ 1| id_plot,correlation=corAR1(form=~year)\n",sep="")
