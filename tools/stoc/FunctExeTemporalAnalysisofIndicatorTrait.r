@@ -73,10 +73,6 @@ if(!dd==""){
 }
 
 spTrait=read.table(tabtrait,sep="\t",dec=".",header=TRUE) ############# species_indicateur_fonctionnel.csv pour le STOC sinon fichier avec traits pour calcul du trait moyen par communauté / file with the trait for the community weighted mean calculation 
-if (methode == "gam")
-{
-    coordCarre=read.table(coordCarre,sep="\t",dec=".",header=TRUE) ######## carre.csv  charge les coordonnées des carrés qui sont utilisés comme covariable  / load the gps coordinates of the plots, is used as covariable in the models
-}else{}
 
 dir.create(paste("Output/",sep=""),recursive=TRUE,showWarnings=FALSE)##### Creation du dossier de sortie
 #cat(paste("Create Output/","\n",sep=""))
@@ -116,11 +112,6 @@ csi_cti_ctri <- function(tabCLEAN=tabCLEAN,coordCarre=coordCarre,spTrait=spTrait
         dd <- data.frame(indic,traitcarre$carre,traitcarre$annee) 
         names(dd)[2] <- "carre"
         names(dd)[3] <- "year"
-        if (methode == "gam")
-        {
-            dd$longitude_grid_wgs84 <- coordCarre$longitude_grid_wgs84[match(dd$carre,coordCarre$pk_carre)] #### recupere coordonnées gps / retrieve gps coordinates
-            dd$latitude_grid_wgs84 <- coordCarre$latitude_grid_wgs84[match(dd$carre,coordCarre$pk_carre)]  #### recupere coordonnées gps / retrieve gps coordinates
-        }else{}
         dd$id_plot <- dd$carre  ### id_plot nom données aux carrés dans le script /id_plot is use as the name of the plot in the following script
     }else{
         colnames(dd)[colnames == "indicator"] <- "indic"
@@ -132,6 +123,10 @@ csi_cti_ctri <- function(tabCLEAN=tabCLEAN,coordCarre=coordCarre,spTrait=spTrait
     pasdetemps <-nban-1
 
     if(methode == "gam") {
+        coordCarre=read.table(coordCarre,sep="\t",dec=".",header=TRUE) ######## carre.csv  charge les coordonnées des carrés qui sont utilisés comme covariable  / load the gps coordinates of the plots, is used as covariable in the models
+        dd$longitude_grid_wgs84 <- coordCarre$longitude_grid_wgs84[match(dd$carre,coordCarre$pk_carre)] #### recupere coordonnées gps / retrieve gps coordinates
+        dd$latitude_grid_wgs84 <- coordCarre$latitude_grid_wgs84[match(dd$carre,coordCarre$pk_carre)]  #### recupere coordonnées gps / retrieve gps coordinates
+
         cat("Methode: gam\n")
         ## Utilisation des modèles GAMM pour obtenir les tendances d evolution par an du csi cti ou ctri !!!! Marche pas si peu de données !!!!  / Use of GAMM model for the estimation of the annual variations of the csi cti or ctri  !!! does not work with few data !!! 
         cat("\nEstimation de la variation annuelle ",indicator,"~ factor(year)+s(longitude_grid_wgs84,latitude_grid_wgs84,bs='sos'),random=reStruct(object = ~ 1| id_plot,correlation=corAR1(form=~year)\n",sep="")

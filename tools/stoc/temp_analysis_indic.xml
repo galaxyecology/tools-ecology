@@ -134,7 +134,6 @@
         </test>
         <test>
             <param name="input" value="Datafilteredfortrendanalysis.tabular"/>
-            <!--<param name="inputcoord" value="coordCarreSTOCfaux.tabular"/>-->
             <param name="inputspeciesindic" value="species_indicateur_fonctionnel.tabular"/>
             <param name="inputtabSpecies" value="tabSpecies.csv"/>
             <param name="advanced" value="advanced"/>

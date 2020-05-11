@@ -53,7 +53,6 @@
         <param name="compute_ic" type="boolean" truevalue="TRUE" falsevalue="FALSE" checked="yes" label="Compute confidence intervals"/>
     </xml>
     <xml name="stoceps_filter_glmmtmb">
-        <!--<filter> settings['advanced'] == 'advanced'</filter>-->
         <filter> method['model'] == 'glmmtmb'</filter>
     </xml>
     <xml name="stoceps_filter_gam">
