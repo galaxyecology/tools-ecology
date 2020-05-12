@@ -99,62 +99,39 @@ class XarrayTool ():
                 writer.writerow(line)
         f.close()
 
-    def rowfiltertime(self, ds, single_filter):
-        ds = ds.set_index(['time'])
+    def rowfilter(self, single_filter):
         l = single_filter.split('#')
         filter_varname = l[0]
         op = l[1]
-        ll = np.datetime64(l[2])
+        ll = float(l[2])
         if (op == 'bi'):
-            rl = np.datetime64(l[3])
-        print('var = ', filter_varname, "operator = ", op, ' ll = ', ll, ' rl =  ', rl)
-        if op == 'bi':
-            print('between include')
-            ds = ds.loc[ll: rl]
-        elif op == 'l':
-            print('lower than')
- #           ds = ds.loc[:rl], drop=True)
-        elif op == 'le':
-            print('lower equal')
- #           ds = ds.where(ds[filter_varname] <= ll, drop=True)
-        elif op == 'g':
-            print('greater than')
- #           ds = ds.where(ds[filter_varname] > ll, drop=True)
-        elif op == 'ge':
-            print('greater equal')
- #           ds = ds.where(ds[filter_varname] >= ll, drop=True)
-        elif op == 'e':
-            print('equal')
- #           ds = ds.sel({filter_varname:ll}, method='nearest')
-        return ds
-
-    def rowfilter(self, ds, single_filter):
-        l = single_filter.split('#')
-        filter_varname = l[0]
-        op = l[1]
-        ll = l[2]
-        if (op == 'bi'):
-            rl = l[3]
-        print('var = ', filter_varname, "operator = ", op, ' ll = ', ll, ' rl =  ', rl)
-        if op == 'bi':
-            print('between include')
-            ds = ds.sel({filter_varname : slice(ll, rl)})
-        elif op == 'l':
-            print('lower than')
-            ds = ds.where(ds[filter_varname] < ll, drop=True)
-        elif op == 'le':
-            print('lower equal')
-            ds = ds.where(ds[filter_varname] <= ll, drop=True)
-        elif op == 'g':
-            print('greater than')
-            ds = ds.where(ds[filter_varname] > ll, drop=True)
-        elif op == 'ge':
-            print('greater equal')
-            ds = ds.where(ds[filter_varname] >= ll, drop=True)
-        elif op == 'e':
-            print('equal')
-            ds = ds.sel({filter_varname:ll}, method='nearest')
-        return ds
+            rl = float(l[3])
+        if filter_varname == self.select: # filter on values of the selected variable
+            if op == 'bi':
+                print('between include')
+                self.dset = self.dset.where((self.dset <= rl) & (self.dset >= ll)) 
+            elif op == 'le':
+                print('lower equal')
+                self.dset = self.dset.where(self.dset <= ll) 
+            elif op == 'ge':
+                print('greater equal')
+                self.dset = self.dset.where(self.dset >= ll)
+            elif op == 'e':
+                print('equal')
+                self.dset = self.dset.where(self.dset == ll) 
+        else: # filter on other dimensions of the selected variable
+            if op == 'bi':
+                print('between include')
+                self.dset = self.dset.sel({filter_varname : slice(ll, rl)})
+            elif op == 'le':
+                print('lower equal')
+                self.dset = self.dset.sel({filter_varname : slice(None, ll)})
+            elif op == 'ge':
+                print('greater equal')
+                self.dset = self.dset.sel({filter_varname : slice(ll, None)})
+            elif op == 'e':
+                print('equal')
+                self.dset = self.dset.sel({filter_varname:ll}, method='nearest')
 
     def selection(self):
         if  self.dset is None:
@@ -184,15 +161,9 @@ class XarrayTool ():
             self.dset = self.dset.sel({time_varname: ll}, method = 'nearest')
 
     def filter_selection(self):
-        print("additional filter")
- #       
- #       if self.filter:
- #          print("Filter", self.filter)
- #          for single_filter in self.filter:
- #              if single_filter.split('#')[0] == 'time':
- #                  dset = self.rowfiltertime(dset, single_filter)
- #              else:
- #                  dset = self.rowfilter(dset, single_filter)
+        print("additional filter")       
+        for single_filter in self.filter:
+           self.rowfilter(single_filter)
 
     def area_selection(self):
         print("Area selection")

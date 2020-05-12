@@ -172,9 +172,7 @@
             <conditional name="condi_between">
                 <param name="comparator" type="select" label="Comparator">
                     <option value="e">Equal</option>
-                    <option value="g">Greater</option>
                     <option value="ge">Greater or equal</option>
-                    <option value="l">Less</option>
                     <option value="le">Less or equal</option>
                     <option value="bi">Between-include [threshold1,threshold2]</option>
                 </param>
@@ -185,13 +183,7 @@
                 <when value="e">
                     <param name="value" type="text" value="0" label="Value"/>
                 </when>
-                <when value="g">
-                    <param name="value" type="text" value="0" label="Value"/>
-                </when>
                 <when value="ge">
-                    <param name="value" type="text" value="0" label="Value"/>
-                </when>
-                <when value="l">
                     <param name="value" type="text" value="0" label="Value"/>
                 </when>
                 <when value="le">
