@@ -9,13 +9,15 @@ import warnings
 
 import csv
 import numpy as np
+import pandas as pd
 import xarray as xr
 
 
 class XarrayTool ():
     def __init__(self, infile, outfile_info="", outfile_summary="",
-		select="", outfile="", outputdir="", latname="", latval="",
-		lonname="", lonval="", filter_list="", coords="", verbose=False
+		select="", outfile="", outputdir="", latname="", latvalN="", latvalS="",
+		lonname="", lonvalE="", lonvalW="", filter_list="", coords="",
+                time="", verbose=False
 		):
         self.infile = infile
         self.outfile_info = outfile_info
@@ -24,12 +26,30 @@ class XarrayTool ():
         self.outfile = outfile
         self.outputdir = outputdir
         self.latname = latname
-        self.latval = float(latval)
+        if latvalN != "" and latvalN is not None:
+                self.latvalN = float(latvalN)
+        else:
+                self.latvalN = ""
+        if latvalS != "" and latvalS is not None:
+                self.latvalS = float(latvalS)
+        else:
+                self.latvalS = ""
         self.lonname = lonname
-        self.lonval = float(lonval)
+        if lonvalE != "" and lonvalE is not None:
+                self.lonvalE = float(lonvalE)
+        else:
+                self.lonvalE = ""
+        if lonvalW != "" and lonvalW is not None:
+                self.lonvalW = float(lonvalW)
+        else:
+                self.lonvalW = ""
         self.filter = filter_list
+        self.time = time
         self.coords = coords
         self.verbose = verbose
+        # initialization
+        self.dset = None
+        self.gset = None
         if self.verbose:
             print("infile: ", self.infile)
             print("outfile_info: ", self.outfile_info)
@@ -39,10 +59,13 @@ class XarrayTool ():
             print("outfile: ", self.outfile)
             print("outputdir: ", self.outputdir)
             print("latname: ", self.latname)
-            print("latval: ", self.latval)
+            print("latvalN: ", self.latvalN)
+            print("latvalS: ", self.latvalS)
             print("lonname: ", self.lonname)
-            print("lonval: ", self.lonval)
+            print("lonvalE: ", self.lonvalE)
+            print("lonvalW: ", self.lonvalW)
             print("filter: ", self.filter)
+            print("time: ", self.time)
             print("coords: ", self.coords)
 
     def info(self):
@@ -75,23 +98,123 @@ class XarrayTool ():
                         line.append(d)
                 writer.writerow(line)
         f.close()
-     
-    def extract_singleloc(self, ds):
-        print("single location")
-    
+
+    def rowfiltertime(self, ds, single_filter):
+        ds = ds.set_index(['time'])
+        l = single_filter.split('#')
+        filter_varname = l[0]
+        op = l[1]
+        ll = np.datetime64(l[2])
+        if (op == 'bi'):
+            rl = np.datetime64(l[3])
+        print('var = ', filter_varname, "operator = ", op, ' ll = ', ll, ' rl =  ', rl)
+        if op == 'bi':
+            print('between include')
+            ds = ds.loc[ll: rl]
+        elif op == 'l':
+            print('lower than')
+ #           ds = ds.loc[:rl], drop=True)
+        elif op == 'le':
+            print('lower equal')
+ #           ds = ds.where(ds[filter_varname] <= ll, drop=True)
+        elif op == 'g':
+            print('greater than')
+ #           ds = ds.where(ds[filter_varname] > ll, drop=True)
+        elif op == 'ge':
+            print('greater equal')
+ #           ds = ds.where(ds[filter_varname] >= ll, drop=True)
+        elif op == 'e':
+            print('equal')
+ #           ds = ds.sel({filter_varname:ll}, method='nearest')
+        return ds
+
+    def rowfilter(self, ds, single_filter):
+        l = single_filter.split('#')
+        filter_varname = l[0]
+        op = l[1]
+        ll = l[2]
+        if (op == 'bi'):
+            rl = l[3]
+        print('var = ', filter_varname, "operator = ", op, ' ll = ', ll, ' rl =  ', rl)
+        if op == 'bi':
+            print('between include')
+            ds = ds.sel({filter_varname : slice(ll, rl)})
+        elif op == 'l':
+            print('lower than')
+            ds = ds.where(ds[filter_varname] < ll, drop=True)
+        elif op == 'le':
+            print('lower equal')
+            ds = ds.where(ds[filter_varname] <= ll, drop=True)
+        elif op == 'g':
+            print('greater than')
+            ds = ds.where(ds[filter_varname] > ll, drop=True)
+        elif op == 'ge':
+            print('greater equal')
+            ds = ds.where(ds[filter_varname] >= ll, drop=True)
+        elif op == 'e':
+            print('equal')
+            ds = ds.sel({filter_varname:ll}, method='nearest')
+        return ds
+
     def selection(self):
-        print("Select ", self.select)
-        ds = xr.open_dataset(self.infile)
-        df = ds[self.select].to_dataframe().dropna(how='all').reset_index()
-        if self.filter:
-           print("Filter") 
-        if self.latval and self.lonval:
-           print("select lat lon single location")
-           self.extract_singleloc(ds)
-        elif self.coords != "":
-           print("Coord file") 
-        if self.coords == "" or self.coords is None:
-           df.to_csv(self.outfile, header=True, sep='\t')
+        if  self.dset is None:
+            self.ds = xr.open_dataset(self.infile)
+            self.dset = self.ds[self.select] #select variable
+            self.datetime_selection()
+            self.filter_selection()
+
+        self.area_selection()
+        self.gset = self.gset.to_dataframe().dropna(how='all').reset_index() # convert to dataframe
+        self.gset.to_csv(self.outfile, header=True, sep='\t')
+
+    def datetime_selection(self):
+        print("date/time selection")
+        l = self.time.split('#')
+        time_varname = l[0]
+        op = l[1]
+        ll = l[2]
+        if (op == 'sl'):
+            rl = l[3]
+            self.dset = self.dset.sel({time_varname: slice(ll,rl)})
+        elif (op == 'to'):
+            self.dset = self.dset.sel({time_varname: slice(None,ll)})
+        elif (op == 'from'):
+            self.dset = self.dset.sel({time_varname: slice(ll, None)})
+        elif (op == 'is'):
+            self.dset = self.dset.sel({time_varname: ll}, method = 'nearest')
+
+    def filter_selection(self):
+        print("additional filter")
+ #       
+ #       if self.filter:
+ #          print("Filter", self.filter)
+ #          for single_filter in self.filter:
+ #              if single_filter.split('#')[0] == 'time':
+ #                  dset = self.rowfiltertime(dset, single_filter)
+ #              else:
+ #                  dset = self.rowfilter(dset, single_filter)
+
+    def area_selection(self):
+        print("Area selection")
+        if self.latvalS != "" and self.lonvalW != "": # Select geographical area
+            self.gset = self.dset.sel({self.latname: slice(self.latvalS,self.latvalN),
+                                        self.lonname: slice(self.lonvalW, self.lonvalE)})
+        elif self.latvalN != "" and self.lonvalE != "": # select nearest location
+            self.gset = self.dset.sel({self.latname:self.latvalN, self.lonname:self.lonvalE},
+                          method='nearest')
+            # would need to check if Nan only to take the next nearest point until we found a location
+        else:
+            self.gset = self.dset
+
+    def selection_from_coords(self):
+        print("Select from coord file", self.select)
+        fcoords = pd.read_csv(self.coords, sep='\t')
+        for row in fcoords.itertuples():
+            self.latvalN = row[0]
+            self.lonvalE = row[1]
+            self.outfile = self.outputdir + '/' + self.select + '_' + str(row.Index) + '.tabular'
+            self.selection()
+    
 
 if __name__ == '__main__':
         warnings.filterwarnings("ignore")
@@ -118,16 +241,24 @@ if __name__ == '__main__':
             help='Latitude name'
         )
         parser.add_argument(
-            '--latval',
-            help='Latitude value'
+            '--latvalN',
+            help='North latitude value'
+        )
+        parser.add_argument(
+            '--latvalS',
+            help='South latitude value'
         )
         parser.add_argument(
             '--lonname',
             help='Longitude name'
         )
         parser.add_argument(
-            '--lonval',
-            help='Longitude value'
+            '--lonvalE',
+            help='East longitude value'
+        )
+        parser.add_argument(
+            '--lonvalW',
+            help='West longitude value'
         )
         parser.add_argument(
             '--coords',
@@ -137,6 +268,10 @@ if __name__ == '__main__':
             '--filter',
             nargs="*",
             help='Filter list variable#operator#value_s#value_e'
+        )
+        parser.add_argument(
+            '--time',
+            help='select timeseries variable#operator#value_s[#value_e]'
         )
         parser.add_argument(
             '--outfile',
@@ -153,12 +288,15 @@ if __name__ == '__main__':
         args = parser.parse_args()
 
         p = XarrayTool(args.infile, args.info, args.summary, args.select, args.outfile,
-                       args.outputdir, args.latname, args.latval, args.lonname, args.lonval, 
-                       args.filter, args.coords, args.verbose)
+                       args.outputdir, args.latname, args.latvalN, args.latvalS, 
+                       args.lonname, args.lonvalE, args.lonvalW,
+                       args.filter, args.coords, args.time, args.verbose)
         if args.info:
     	        p.info()
         if args.summary:
     	        p.summary()
-        if args.select:
+        if args.coords:
+                p.selection_from_coords()
+        elif args.latvalN and args.lonvalE:
                 p.selection()
 

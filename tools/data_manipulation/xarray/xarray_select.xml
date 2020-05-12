@@ -8,25 +8,43 @@
     <command detect_errors="exit_code"><![CDATA[
     mkdir output_dir &&
     python '$__tool_directory__/xarray_tool.py' '$input' --select '$var' 
+           --verbose
            --filter
     #for $i,$uc in enumerate($user_choice)
         #if $uc.condi_between.comparator=="bi"
-             '${uc.dim}#${uc.condi_between.comparator}#${uc.condi_between.t1}#${uc.condi_between.t2}'
-        #elif $uc.condi_between.comparator=="be"
              '${uc.dim}#${uc.condi_between.comparator}#${uc.condi_between.t1}#${uc.condi_between.t2}'
         #else
              '${uc.dim}#${uc.condi_between.comparator}#${uc.condi_between.value}'
         #end if
     #end for
-         --verbose
+
+    #if $time.condi_datetime.datetime=="yes"
+         --time 
+        #if $time.condi_datetime.condi_between.comparator=="sl"
+             '${time.condi_datetime.dim}#${time.condi_datetime.condi_between.comparator}#${time.condi_datetime.condi_between.t1}#${time.condi_datetime.condi_between.t2}'
+        #else
+             '${time.condi_datetime.dim}#${time.condi_datetime.condi_between.comparator}#${time.condi_datetime.condi_between.t1}'
+        #end if
+    #end if
+
     #if $condi_source_coord.coord_source=="coord_from_file"
          --coords '$coord_tabular'
          --latname '$condi_source_coord.lat_dim' --lonname '$condi_source_coord.lon_dim'
          --outputdir output_dir
     #else
          --outfile 'final.tabular'
-        #if $condi_source_coord.condi_coord.coord=='yes_cust_coord'
-           --latname $condi_source_coord.condi_coord.lat_dim --latval $condi_source_coord.condi_coord.lat_val --lonname $condi_source_coord.condi_coord.lon_dim --lonval $condi_source_coord.condi_coord.lon_val
+        #if $condi_source_coord.condi_coord.coord=='single'
+           --latname $condi_source_coord.condi_coord.lat_dim
+           --latvalN $condi_source_coord.condi_coord.lat_val
+           --lonname $condi_source_coord.condi_coord.lon_dim
+           --lonvalE $condi_source_coord.condi_coord.lon_val
+        #elif $condi_source_coord.condi_coord.coord=='subregion'
+           --latname $condi_source_coord.condi_coord.lat_dim
+           --latvalN $condi_source_coord.condi_coord.lat_valN
+           --latvalS $condi_source_coord.condi_coord.lat_valS
+           --lonname $condi_source_coord.condi_coord.lon_dim
+           --lonvalE $condi_source_coord.condi_coord.lon_valE
+           --lonvalW $condi_source_coord.condi_coord.lon_valW
         #end if
     #end if
     ]]></command>
@@ -43,18 +61,18 @@
 
         <conditional name="condi_source_coord">
             <param name="coord_source" type="select" label="Source of coordinates">
+                <option value="coord_from_stdin">Manually enter coordinates</option>
                 <option value="coord_from_file">Use coordinates from input file</option>
-                <option value="coord_from_stdin">Manually enter coordinate</option>
             </param>
 
             <when value="coord_from_file">
                 <param type="data" label="Tabular of coord" name="coord_tabular" format="tabular" help="Format : Latitude	Longitude"/>
-                <param name="lat_dim" type="select" label="Select latitude" >
+                <param name="lat_dim" type="select" label="Name of latitude coordinate" >
                     <options from_dataset="var_tab">
                         <column name="value" index="0"/>
                     </options>
                 </param>
-                <param name="lon_dim" type="select" label="Select longitude" >
+                <param name="lon_dim" type="select" label="Name of longitude coordinate" >
                     <options from_dataset="var_tab">
                         <column name="value" index="0"/>
                     </options>
@@ -63,32 +81,89 @@
 
             <when value="coord_from_stdin">
                 <conditional name="condi_coord">
-                    <param name="coord" type="select" label="Search values for custom coordinates" help="Use this option to get valid values at your custom coordinates. If only NA values are availables the tool will search for the next closest coordinate until valid values.">
-                        <option value="yes_cust_coord">Yes</option>
-                        <option value="nope">No</option>
+                    <param name="coord" type="select" label="Geographical area" help="Use this option to get valid values at your custom coordinates.">
+                        <option value="global">Whole available region</option>
+                        <option value="single">Single location</option>
+                        <option value="subregion">Sub-region extraction</option>
                     </param>
-                    <when value="yes_cust_coord">
-                        <param name="lat_dim" type="select" label="Select latitude" >
+                    <when value="single">
+                        <param name="lat_dim" type="select" label="Name of latitude coordinate" >
                             <options from_dataset="var_tab">
                                 <column name="value" index="0"/>
                             </options>
                         </param>
                         <param name="lat_val" type="float" value="0" label="Latitude"/>
-                        <param name="lon_dim" type="select" label="Select longitude" >
+                        <param name="lon_dim" type="select" label="Name of longitude coordinate" >
                             <options from_dataset="var_tab">
                                 <column name="value" index="0"/>
                             </options>
                         </param>
                         <param name="lon_val" type="float" value="0" label="Longitude"/>
                     </when>
-
+                    <when value="subregion">
+                        <param name="lat_dim" type="select" label="Name of latitude coordinate" >
+                            <options from_dataset="var_tab">
+                                <column name="value" index="0"/>
+                            </options>
+                        </param>
+                        <param name="lat_valN" type="float" value="0" label="Latitude North"/>
+                        <param name="lat_valS" type="float" value="0" label="Latitude South"/>
+                        <param name="lon_dim" type="select" label="Name of longitude coordinate" >
+                            <options from_dataset="var_tab">
+                                <column name="value" index="0"/>
+                            </options>
+                        </param>
+                        <param name="lon_valE" type="float" value="0" label="Longitude East"/>
+                        <param name="lon_valW" type="float" value="0" label="Longitude West"/>
+                    </when>
                     <when value="nope"></when>
                 </conditional>
             </when>
 
         </conditional>
-
-        <repeat name="user_choice" title="Filter">
+    
+        <section name="time" title="Select Time series" expanded="false">
+            <conditional name="condi_datetime">
+                <param name="datetime" type="select" label="Datetime selection" help="Use this option to extract timeseries from your dataset">
+                    <option value="no">No</option>
+                    <option value="yes">Yes</option>
+                </param>
+                <when value="no"></when>
+                <when value="yes">
+                    <param name="dim" type="select" label="Select datetime dimension" help="Use this option only if your dataset contains a date/time dimension">
+                        <options from_dataset="var_tab">
+                            <column name="value" index="0"/>
+                        </options>
+                    </param>
+                    <conditional name="condi_between">
+                        <param name="comparator" type="select" label="date/Time selection">
+                            <option value="is">is</option>
+                            <option value="sl">slice</option>
+                            <option value="ne">nearest</option>
+                            <option value="to">to</option>
+                            <option value="from">from</option>
+                        </param>
+                        <when value="sl">
+                            <param name="t1" type="text" value="" label="Start date/time"/>
+                            <param name="t2" type="text" value="" label="End date/time"/>
+                        </when>
+                        <when value="is">
+                            <param name="t1" type="text" value="" label="date/time"/>
+                        </when>
+                        <when value="ne">
+                            <param name="t1" type="text" value="" label="date/time"/>
+                        </when>
+                        <when value="to">
+                            <param name="t1" type="text" value="" label="date/time"/>
+                        </when>
+                        <when value="from">
+                            <param name="t1" type="text" value="" label="date/time"/>
+                        </when>
+                    </conditional>
+                </when>
+            </conditional>
+        </section>
+        <repeat name="user_choice" title="additional filter" help="Use this option to filter on the selected dataset">
             <param name="dim" type="select" label="Dimensions">
                 <options from_dataset="var_tab">
                     <column name="value" index="0"/>
@@ -101,14 +176,9 @@
                     <option value="ge">Greater or equal</option>
                     <option value="l">Less</option>
                     <option value="le">Less or equal</option>
-                    <option value="be">Between-exclude ]threshold1,threshold2[</option>
                     <option value="bi">Between-include [threshold1,threshold2]</option>
                 </param>
                 <when value="bi">
-                    <param name="t1" type="text" value="0" label="Inferior threshold"/>
-                    <param name="t2" type="text" value="0" label="Superior threshold"/>
-                </when>
-                <when value="be">
                     <param name="t1" type="text" value="0" label="Inferior threshold"/>
                     <param name="t2" type="text" value="0" label="Superior threshold"/>
                 </when>
