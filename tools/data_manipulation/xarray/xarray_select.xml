@@ -4,6 +4,8 @@
         <requirement type="package" version="3">python</requirement>
         <requirement type="package" version="1.5.3">netcdf4</requirement>
         <requirement type="package" version="0.15.1">xarray</requirement> 
+        <requirement type="package" version="0.7.0">geopandas</requirement>
+        <requirement type="package" version="1.7.0">shapely</requirement> 
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
     mkdir output_dir &&

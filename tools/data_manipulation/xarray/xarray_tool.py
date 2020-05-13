@@ -10,7 +10,10 @@ import warnings
 import csv
 import numpy as np
 import pandas as pd
+import geopandas as gpd
 import xarray as xr
+from shapely.ops import nearest_points
+from shapely.geometry import Point 
 
 
 class XarrayTool ():
@@ -171,11 +174,32 @@ class XarrayTool ():
             self.gset = self.dset.sel({self.latname: slice(self.latvalS,self.latvalN),
                                         self.lonname: slice(self.lonvalW, self.lonvalE)})
         elif self.latvalN != "" and self.lonvalE != "": # select nearest location
-            self.gset = self.dset.sel({self.latname:self.latvalN, self.lonname:self.lonvalE},
-                          method='nearest')
-            # would need to check if Nan only to take the next nearest point until we found a location
+            self.nearest_location() # find nearest location without NaN values
+            self.gset = self.dset.sel({self.latname:self.nearest_latvalN,
+                                       self.lonname:self.nearest_lonvalE},
+                                      method='nearest')
         else:
             self.gset = self.dset
+
+    def nearest_location():
+        # Build a geopandas dataframe with all first elements in each dimension
+        # so we assume null values correspond to a mask that is the same for all dimensions
+        # in the dataset.
+        dsel_frame = self.dset
+        for dim in dsel.dims:
+            if dim != self.latname and dim != self.lonname:
+                dsel_frame = dsel_frame.isel({dim:0})
+        # transform to pandas dataframe
+        dff = dsel_frame.to_dataframe().dropna().reset_index()
+        # transform to geopandas to collocate
+        gdf = gdp.GeoDataFrame(dff, geometry=gdp.points_from_xy(dff[self.lonname],
+                                                                dff[self.latname]))
+        # Find nearest location where values are not null
+        point = Point(self.lonvalE,self.latvalN)
+        multipoint = gdf.geometry.unary_union
+        queried_geom, nearest_geom = nearest_points(point, multipoint)
+        self.nearest_latvalN = nearest_geom.y
+        self.nearest_lonvalE = nearest_geom.x
 
     def selection_from_coords(self):
         print("Select from coord file", self.select)
