@@ -188,7 +188,7 @@ class XarrayTool ():
             print("nearest lon: ", self.nearest_lonvalE)
             self.gset = self.dset.sel({self.latname: self.nearest_latvalN,
                                        self.lonname: self.nearest_lonvalE},
-                                       method='nearest')
+                                      method='nearest')
         else:
             self.gset = self.dset
 
