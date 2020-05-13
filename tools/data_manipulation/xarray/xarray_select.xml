@@ -118,7 +118,7 @@
                         <param name="lon_valE" type="float" value="0" label="Longitude East"/>
                         <param name="lon_valW" type="float" value="0" label="Longitude West"/>
                     </when>
-                    <when value="nope"></when>
+                    <when value="global"></when>
                 </conditional>
             </when>
 
@@ -206,29 +206,49 @@
     <tests>
         <test>
              <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
-             <param name="var_tab" value="var_tab_dataset-ibi"/>
              <param name="var" value="phy"/>
-             <param name="dim_tab" value="tab_dim_phy_dataset-ibi"/>
-             <param name="coord" value="yes_cut_coord"/>
-             <param name="lat_dim" value="latitude"/>
-             <param name="lat_val" value="44.0"/>
-             <param name="lon_dim" value="longitude"/>
-             <param name="lon_val" value="-2.0"/>
-             <param name="output" value="Test1.tabular"/>
+             <param name="var_tab" value="var_tab_dataset-ibi"/>
+             <conditional name="condi_source_coord">
+                 <param name="coord_source" value="coord_from_stdin"/>
+                  <conditional name="condi_coord">
+                    <param name="coord" value="single"/>
+                    <param name="lat_dim" value="latitude"/>
+                    <param name="lat_val" value="44.0"/>
+                    <param name="lon_dim" value="longitude"/>
+                    <param name="lon_val" value="-2.0"/>
+                  </conditional>
+             </conditional>
+             <output name="simpleoutput" value="Test1.tabular"/>
         </test>
         <test>
              <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
              <param name="var_tab" value="var_tab_dataset-ibi"/>
              <param name="var" value="nh4"/>
-             <param name="dim_tab" value="tab_dim_nh4_dataset-ibi"/>
-             <param name="coord" value="nope"/>
-             <param name="dim" value="time"/>
-             <param name="comparator" value="e"/>
-             <param name="value" value="7272.0"/>
-             <param name="dim" value="latitude"/>
-             <param name="comparator" value="ge"/>
-             <param name="value" value="45.0"/>
-             <param name="output" value="Test2.tabular"/>
+
+             <conditional name="condi_source_coord">
+                 <param name="coord_source" value="coord_from_stdin"/>
+                  <conditional name="condi_coord">
+                    <param name="coord" value="global"/>
+                  </conditional>
+             </conditional>
+             <section name="time" title="Select Time series" expanded="false">
+                 <conditional name="condi_datetime">
+                     <param name="datetime" value="yes"/>
+                     <conditional name="condi_between">
+                         <param name="comparator" value="sl"/>
+                         <param name="t1" type="text" value="2003-12-15" label="Start date/time"/>
+                         <param name="t2" type="text" value="2004-12-15" label="End date/time"/>
+                     </conditional>
+                 </conditional>
+             </section>
+             <repeat name="user_choice">
+                 <param name="dim" value="nh4"/>
+                 <conditional name="condi_between">
+                    <param name="comparator" value="ge"/>
+                    <param name="value" value="50."/>
+                 </conditional>
+             </repeat>
+             <output name="simpleoutput" value="Test2.tabular"/>
         </test>
     </tests>
 

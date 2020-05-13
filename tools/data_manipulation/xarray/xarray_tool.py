@@ -141,8 +141,10 @@ class XarrayTool ():
         if self.dset is None:
             self.ds = xr.open_dataset(self.infile)
             self.dset = self.ds[self.select]  # select variable
-            self.datetime_selection()
-            self.filter_selection()
+            if self.time:
+                self.datetime_selection()
+            if self.filter:
+                self.filter_selection()
 
         self.area_selection()
         # convert to dataframe
@@ -171,19 +173,22 @@ class XarrayTool ():
             self.rowfilter(single_filter)
 
     def area_selection(self):
-        print("Area selection")
         if self.latvalS != "" and self.lonvalW != "":
             # Select geographical area
+            print("Geographical area selection")
             self.gset = self.dset.sel({self.latname:
                                        slice(self.latvalS, self.latvalN),
                                        self.lonname:
                                        slice(self.lonvalW, self.lonvalE)})
         elif self.latvalN != "" and self.lonvalE != "":
             # select nearest location
+            print("Single point selection")
             self.nearest_location()  # find nearest location without NaN values
+            print("nearest lat: ", self.nearest_latvalN)
+            print("nearest lon: ", self.nearest_lonvalE)
             self.gset = self.dset.sel({self.latname: self.nearest_latvalN,
                                        self.lonname: self.nearest_lonvalE},
-                                      method='nearest')
+                                       method='nearest')
         else:
             self.gset = self.dset
 
@@ -191,6 +196,7 @@ class XarrayTool ():
         # Build a geopandas dataframe with all first elements in each dimension
         # so we assume null values correspond to a mask that is the same for
         # all dimensions in the dataset.
+        print("get nearest location")
         dsel_frame = self.dset
         for dim in self.dset.dims:
             if dim != self.latname and dim != self.lonname:
@@ -304,5 +310,5 @@ if __name__ == '__main__':
                 p.summary()
         if args.coords:
                 p.selection_from_coords()
-        elif args.latvalN and args.lonvalE:
+        elif args.select:
                 p.selection()
