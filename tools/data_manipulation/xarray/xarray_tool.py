@@ -3,25 +3,23 @@
 # - select data and save results in csv file for further post-processing
 
 import argparse
-import os
-import shutil
 import warnings
 
 import csv
-import numpy as np
 import pandas as pd
-import geopandas as gpd
+import geopandas as gdp
 import xarray as xr
 from shapely.ops import nearest_points
-from shapely.geometry import Point 
+from shapely.geometry import Point
 
 
 class XarrayTool ():
     def __init__(self, infile, outfile_info="", outfile_summary="",
-		select="", outfile="", outputdir="", latname="", latvalN="", latvalS="",
-		lonname="", lonvalE="", lonvalW="", filter_list="", coords="",
-                time="", verbose=False
-		):
+                 select="", outfile="", outputdir="", latname="",
+                 latvalN="", latvalS="", lonname="", lonvalE="",
+                 lonvalW="", filter_list="", coords="", time="",
+                 verbose=False
+                 ):
         self.infile = infile
         self.outfile_info = outfile_info
         self.outfile_summary = outfile_summary
@@ -89,113 +87,122 @@ class XarrayTool ():
         for name, da in ds.data_vars.items():
                 line = [name]
                 line.append(len(ds[name].shape))
-                for d,s in zip(da.shape, da.sizes):
+                for d, s in zip(da.shape, da.sizes):
                         line.append(s)
                         line.append(d)
                 writer.writerow(line)
         for name, da in ds.coords.items():
                 line = [name]
                 line.append(len(ds[name].shape))
-                for d,s in zip(da.shape, da.sizes):
+                for d, s in zip(da.shape, da.sizes):
                         line.append(s)
                         line.append(d)
                 writer.writerow(line)
         f.close()
 
     def rowfilter(self, single_filter):
-        l = single_filter.split('#')
-        filter_varname = l[0]
-        op = l[1]
-        ll = float(l[2])
+        split_filter = single_filter.split('#')
+        filter_varname = split_filter[0]
+        op = split_filter[1]
+        ll = float(split_filter[2])
         if (op == 'bi'):
-            rl = float(l[3])
-        if filter_varname == self.select: # filter on values of the selected variable
+            rl = float(split_filter[3])
+        if filter_varname == self.select:
+            # filter on values of the selected variable
             if op == 'bi':
                 print('between include')
-                self.dset = self.dset.where((self.dset <= rl) & (self.dset >= ll)) 
+                self.dset = self.dset.where((self.dset <= rl) &
+                                            (self.dset >= ll))
             elif op == 'le':
                 print('lower equal')
-                self.dset = self.dset.where(self.dset <= ll) 
+                self.dset = self.dset.where(self.dset <= ll)
             elif op == 'ge':
                 print('greater equal')
                 self.dset = self.dset.where(self.dset >= ll)
             elif op == 'e':
                 print('equal')
-                self.dset = self.dset.where(self.dset == ll) 
-        else: # filter on other dimensions of the selected variable
+                self.dset = self.dset.where(self.dset == ll)
+        else:  # filter on other dimensions of the selected variable
             if op == 'bi':
                 print('between include')
-                self.dset = self.dset.sel({filter_varname : slice(ll, rl)})
+                self.dset = self.dset.sel({filter_varname: slice(ll, rl)})
             elif op == 'le':
                 print('lower equal')
-                self.dset = self.dset.sel({filter_varname : slice(None, ll)})
+                self.dset = self.dset.sel({filter_varname: slice(None, ll)})
             elif op == 'ge':
                 print('greater equal')
-                self.dset = self.dset.sel({filter_varname : slice(ll, None)})
+                self.dset = self.dset.sel({filter_varname: slice(ll, None)})
             elif op == 'e':
                 print('equal')
-                self.dset = self.dset.sel({filter_varname:ll}, method='nearest')
+                self.dset = self.dset.sel({filter_varname: ll},
+                                          method='nearest')
 
     def selection(self):
-        if  self.dset is None:
+        if self.dset is None:
             self.ds = xr.open_dataset(self.infile)
-            self.dset = self.ds[self.select] #select variable
+            self.dset = self.ds[self.select]  # select variable
             self.datetime_selection()
             self.filter_selection()
 
         self.area_selection()
-        self.gset = self.gset.to_dataframe().dropna(how='all').reset_index() # convert to dataframe
+        # convert to dataframe
+        self.gset = self.gset.to_dataframe().dropna(how='all').reset_index()
         self.gset.to_csv(self.outfile, header=True, sep='\t')
 
     def datetime_selection(self):
         print("date/time selection")
-        l = self.time.split('#')
-        time_varname = l[0]
-        op = l[1]
-        ll = l[2]
+        split_filter = self.time.split('#')
+        time_varname = split_filter[0]
+        op = split_filter[1]
+        ll = split_filter[2]
         if (op == 'sl'):
-            rl = l[3]
-            self.dset = self.dset.sel({time_varname: slice(ll,rl)})
+            rl = split_filter[3]
+            self.dset = self.dset.sel({time_varname: slice(ll, rl)})
         elif (op == 'to'):
-            self.dset = self.dset.sel({time_varname: slice(None,ll)})
+            self.dset = self.dset.sel({time_varname: slice(None, ll)})
         elif (op == 'from'):
             self.dset = self.dset.sel({time_varname: slice(ll, None)})
         elif (op == 'is'):
-            self.dset = self.dset.sel({time_varname: ll}, method = 'nearest')
+            self.dset = self.dset.sel({time_varname: ll}, method='nearest')
 
     def filter_selection(self):
-        print("additional filter")       
+        print("additional filter")
         for single_filter in self.filter:
-           self.rowfilter(single_filter)
+            self.rowfilter(single_filter)
 
     def area_selection(self):
         print("Area selection")
-        if self.latvalS != "" and self.lonvalW != "": # Select geographical area
-            self.gset = self.dset.sel({self.latname: slice(self.latvalS,self.latvalN),
-                                        self.lonname: slice(self.lonvalW, self.lonvalE)})
-        elif self.latvalN != "" and self.lonvalE != "": # select nearest location
-            self.nearest_location() # find nearest location without NaN values
-            self.gset = self.dset.sel({self.latname:self.nearest_latvalN,
-                                       self.lonname:self.nearest_lonvalE},
+        if self.latvalS != "" and self.lonvalW != "":
+            # Select geographical area
+            self.gset = self.dset.sel({self.latname:
+                                       slice(self.latvalS, self.latvalN),
+                                       self.lonname:
+                                       slice(self.lonvalW, self.lonvalE)})
+        elif self.latvalN != "" and self.lonvalE != "":
+            # select nearest location
+            self.nearest_location()  # find nearest location without NaN values
+            self.gset = self.dset.sel({self.latname: self.nearest_latvalN,
+                                       self.lonname: self.nearest_lonvalE},
                                       method='nearest')
         else:
             self.gset = self.dset
 
-    def nearest_location():
+    def nearest_location(self):
         # Build a geopandas dataframe with all first elements in each dimension
-        # so we assume null values correspond to a mask that is the same for all dimensions
-        # in the dataset.
+        # so we assume null values correspond to a mask that is the same for
+        # all dimensions in the dataset.
         dsel_frame = self.dset
-        for dim in dsel.dims:
+        for dim in self.dset.dims:
             if dim != self.latname and dim != self.lonname:
-                dsel_frame = dsel_frame.isel({dim:0})
+                dsel_frame = dsel_frame.isel({dim: 0})
         # transform to pandas dataframe
         dff = dsel_frame.to_dataframe().dropna().reset_index()
         # transform to geopandas to collocate
-        gdf = gdp.GeoDataFrame(dff, geometry=gdp.points_from_xy(dff[self.lonname],
-                                                                dff[self.latname]))
+        gdf = gdp.GeoDataFrame(dff,
+                               geometry=gdp.points_from_xy(dff[self.lonname],
+                                                           dff[self.latname]))
         # Find nearest location where values are not null
-        point = Point(self.lonvalE,self.latvalN)
+        point = Point(self.lonvalE, self.latvalN)
         multipoint = gdf.geometry.unary_union
         queried_geom, nearest_geom = nearest_points(point, multipoint)
         self.nearest_latvalN = nearest_geom.y
@@ -207,9 +214,10 @@ class XarrayTool ():
         for row in fcoords.itertuples():
             self.latvalN = row[0]
             self.lonvalE = row[1]
-            self.outfile = self.outputdir + '/' + self.select + '_' + str(row.Index) + '.tabular'
+            self.outfile = (self.outputdir + '/' + self.select + '_'
+                            + str(row.Index) + '.tabular')
             self.selection()
-    
+
 
 if __name__ == '__main__':
         warnings.filterwarnings("ignore")
@@ -257,7 +265,8 @@ if __name__ == '__main__':
         )
         parser.add_argument(
             '--coords',
-            help='Input file containing Latitude Longitude for geographical selection'
+            help='Input file containing Latitude and Longitude'
+                 'for geographical selection'
         )
         parser.add_argument(
             '--filter',
@@ -270,11 +279,13 @@ if __name__ == '__main__':
         )
         parser.add_argument(
             '--outfile',
-            help='csv outfile for storing results of the selection (valid only when --select)'
+            help='csv outfile for storing results of the selection'
+                 '(valid only when --select)'
         )
         parser.add_argument(
             '--outputdir',
-            help='folder name for storing results with multiple selections (valid only when --select)'
+            help='folder name for storing results with multiple selections'
+                 '(valid only when --select)'
         )
         parser.add_argument(
             "-v", "--verbose",
@@ -282,16 +293,16 @@ if __name__ == '__main__':
             action="store_true")
         args = parser.parse_args()
 
-        p = XarrayTool(args.infile, args.info, args.summary, args.select, args.outfile,
-                       args.outputdir, args.latname, args.latvalN, args.latvalS, 
-                       args.lonname, args.lonvalE, args.lonvalW,
-                       args.filter, args.coords, args.time, args.verbose)
+        p = XarrayTool(args.infile, args.info, args.summary, args.select,
+                       args.outfile, args.outputdir, args.latname,
+                       args.latvalN, args.latvalS, args.lonname,
+                       args.lonvalE, args.lonvalW, args.filter,
+                       args.coords, args.time, args.verbose)
         if args.info:
-    	        p.info()
+                p.info()
         if args.summary:
-    	        p.summary()
+                p.summary()
         if args.coords:
                 p.selection_from_coords()
         elif args.latvalN and args.lonvalE:
                 p.selection()
-
