@@ -21,8 +21,26 @@
         <test>
              <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
              <param name="output" value="Metadata_infos_from_dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc.Variables.tab"/>
-             <output name="info" value="info_file.txt" compare="sim_size" delta="10"/>
-             <output name="output" ftype="tabular" file="Metadata_infos_from_dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc.Variables.tab" compare="sim_size" delta="10"/>
+             <output name="info" value="info_file.txt">
+                 <assert_contents>
+                     <has_text_matching expression="depth\s+=\s+1"/>
+                     <has_text_matching expression="latitude\s+=\s+97"/>
+                     <has_text_matching expression="longitude\s+=\s+103"/>
+                     <has_text_matching expression="time\s+=\s+145"/>
+                 </assert_contents>
+             </output>
+             <output name="output" ftype="tabular" file="Metadata_infos_from_dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc.Variables.tab">
+                 <assert_contents>
+                     <has_text_matching expression="VariableName\tNumberOfDimensions\tDim0Name\tDim0Size\tDim1Name\tDim1Size\tDim2Name\tDim2Size\tDim3Name\tDim3Size"/>
+                     <has_text_matching expression="phy\t4\ttime\t145\tdepth\t1\tlatitude\t97\tlongitude\t103"/>
+                     <has_text_matching expression="chl\t4\ttime\t145\tdepth\t1\tlatitude\t97\tlongitude\t103"/>
+                     <has_text_matching expression="nh4\t4\ttime\t145\tdepth\t1\tlatitude\t97\tlongitude\t103"/>
+                     <has_text_matching expression="time\t1\ttime\t145"/>
+                     <has_text_matching expression="longitude\t1\tlongitude\t103"/>
+                     <has_text_matching expression="latitude\t1\tlatitude\t97"/>
+                     <has_text_matching expression="depth\t1\tdepth\t1"/>
+                 </assert_contents>
+             </output>
         </test>
     </tests>  
     <help><![CDATA[
