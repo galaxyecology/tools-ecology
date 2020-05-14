@@ -110,30 +110,22 @@ class XarrayTool ():
         if filter_varname == self.select:
             # filter on values of the selected variable
             if op == 'bi':
-                print('between include')
                 self.dset = self.dset.where((self.dset <= rl) &
                                             (self.dset >= ll))
             elif op == 'le':
-                print('lower equal')
                 self.dset = self.dset.where(self.dset <= ll)
             elif op == 'ge':
-                print('greater equal')
                 self.dset = self.dset.where(self.dset >= ll)
             elif op == 'e':
-                print('equal')
                 self.dset = self.dset.where(self.dset == ll)
         else:  # filter on other dimensions of the selected variable
             if op == 'bi':
-                print('between include')
                 self.dset = self.dset.sel({filter_varname: slice(ll, rl)})
             elif op == 'le':
-                print('lower equal')
                 self.dset = self.dset.sel({filter_varname: slice(None, ll)})
             elif op == 'ge':
-                print('greater equal')
                 self.dset = self.dset.sel({filter_varname: slice(ll, None)})
             elif op == 'e':
-                print('equal')
                 self.dset = self.dset.sel({filter_varname: ll},
                                           method='nearest')
 
@@ -152,7 +144,6 @@ class XarrayTool ():
         self.gset.to_csv(self.outfile, header=True, sep='\t')
 
     def datetime_selection(self):
-        print("date/time selection")
         split_filter = self.time.split('#')
         time_varname = split_filter[0]
         op = split_filter[1]
@@ -168,24 +159,19 @@ class XarrayTool ():
             self.dset = self.dset.sel({time_varname: ll}, method='nearest')
 
     def filter_selection(self):
-        print("additional filter")
         for single_filter in self.filter:
             self.rowfilter(single_filter)
 
     def area_selection(self):
         if self.latvalS != "" and self.lonvalW != "":
             # Select geographical area
-            print("Geographical area selection")
             self.gset = self.dset.sel({self.latname:
                                        slice(self.latvalS, self.latvalN),
                                        self.lonname:
                                        slice(self.lonvalW, self.lonvalE)})
         elif self.latvalN != "" and self.lonvalE != "":
             # select nearest location
-            print("Single point selection")
             self.nearest_location()  # find nearest location without NaN values
-            print("nearest lat: ", self.nearest_latvalN)
-            print("nearest lon: ", self.nearest_lonvalE)
             self.gset = self.dset.sel({self.latname: self.nearest_latvalN,
                                        self.lonname: self.nearest_lonvalE},
                                       method='nearest')
@@ -196,7 +182,6 @@ class XarrayTool ():
         # Build a geopandas dataframe with all first elements in each dimension
         # so we assume null values correspond to a mask that is the same for
         # all dimensions in the dataset.
-        print("get nearest location")
         dsel_frame = self.dset
         for dim in self.dset.dims:
             if dim != self.latname and dim != self.lonname:
@@ -215,7 +200,6 @@ class XarrayTool ():
         self.nearest_lonvalE = nearest_geom.x
 
     def selection_from_coords(self):
-        print("Select from coord file", self.select)
         fcoords = pd.read_csv(self.coords, sep='\t')
         for row in fcoords.itertuples():
             self.latvalN = row[0]

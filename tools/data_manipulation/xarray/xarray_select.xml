@@ -3,13 +3,13 @@
     <requirements>
         <requirement type="package" version="3">python</requirement>
         <requirement type="package" version="1.5.3">netcdf4</requirement>
-        <requirement type="package" version="0.15.1">xarray</requirement> 
+        <requirement type="package" version="0.15.1">xarray</requirement>
         <requirement type="package" version="0.7.0">geopandas</requirement>
-        <requirement type="package" version="1.7.0">shapely</requirement> 
+        <requirement type="package" version="1.7.0">shapely</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
     mkdir output_dir &&
-    python '$__tool_directory__/xarray_tool.py' '$input' --select '$var' 
+    python '$__tool_directory__/xarray_tool.py' '$input' --select '$var'
            --verbose
            --filter
     #for $i,$uc in enumerate($user_choice)
@@ -21,7 +21,7 @@
     #end for
 
     #if $time.condi_datetime.datetime=="yes"
-         --time 
+         --time
         #if $time.condi_datetime.condi_between.comparator=="sl"
              '${time.condi_datetime.dim}#${time.condi_datetime.condi_between.comparator}#${time.condi_datetime.condi_between.t1}#${time.condi_datetime.condi_between.t2}'
         #else
@@ -51,7 +51,7 @@
     #end if
     ]]></command>
     <inputs>
-        <param type="data" name="input" label="Input netcdf file" format="netcdf,h5"/>
+        <param type="data" name="input" label="Input netcdf file" format="netcdf"/>
         <param type="data" label="Tabular of variables" name="var_tab" format="tabular" help="Select the tabular file which summarize the available variables and dimensions."/>
 
         <param name="var" type="select" label="Choose the variable to extract">
@@ -123,7 +123,7 @@
             </when>
 
         </conditional>
-    
+
         <section name="time" title="Select Time series" expanded="false">
             <conditional name="condi_datetime">
                 <param name="datetime" type="select" label="Datetime selection" help="Use this option to extract timeseries from your dataset">
@@ -193,7 +193,7 @@
                 </when>
             </conditional>
         </repeat>
-    </inputs>        
+    </inputs>
     <outputs>
         <collection type="list" name="output">
             <discover_datasets pattern="__designation_and_ext__" visible="false" format="tabular" directory="output_dir"/>
@@ -281,8 +281,8 @@ A single output with values for the wanted variable if there is only one coordin
 A data collection where one file is created for every coordinate, if multiple coordinates from tabular file.
 
 
-------------------------------------------------- 
+-------------------------------------------------
 
-The xarray select tool can be used after the xarray Info. 
+The xarray select tool can be used after the xarray Info.
     ]]></help>
 </tool>
