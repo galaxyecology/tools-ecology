@@ -218,7 +218,12 @@
                     <param name="lon_val" value="-2.0"/>
                   </conditional>
              </conditional>
-             <output name="simpleoutput" value="Test1.tabular"/>
+             <output name="simpleoutput" value="Test1.tabular">
+                 <assert_contents>
+                     <has_text_matching expression="0\t2002-12-15\t0.5"/>
+                     <has_text_matching expression="144\t2014-12-15\t0.5"/>
+                 </assert_contents>
+             </output>
         </test>
         <test>
              <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
@@ -248,7 +253,12 @@
                     <param name="value" value="50."/>
                  </conditional>
              </repeat>
-             <output name="simpleoutput" value="Test2.tabular"/>
+             <output name="simpleoutput" value="Test2.tabular">
+                 <assert_contents>
+                     <has_text_matching expression="0\t2003-12-15\t0.5"/>
+                     <has_text_matching expression="23\t2004-12-15\t0.5"/>
+                 </assert_contents>
+             </output>
         </test>
     </tests>
 
