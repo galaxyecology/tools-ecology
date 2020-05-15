@@ -1,4 +1,4 @@
-<tool id="xarray_metadata_info" name="Netcdf Metadata Info" version="0.15.1">
+<tool id="xarray_metadata_info" name="NetCDF xarray Metadata Info" version="0.15.1">
     <description>summarize content of a Netcdf file</description>
     <requirements>
         <requirement type="package" version="3">python</requirement>

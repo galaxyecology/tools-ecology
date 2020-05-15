@@ -1,4 +1,4 @@
-<tool id="xarray_select" name="Netcdf Selection" version="0.15.1">
+<tool id="xarray_select" name="NetCDF xarray Selection" version="0.15.1">
     <description>extracts variable values with custom conditions on dimensions</description>
     <requirements>
         <requirement type="package" version="3">python</requirement>
