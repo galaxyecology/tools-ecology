@@ -1,0 +1,298 @@
+<tool id="xarray_select" name="NetCDF xarray Selection" version="0.15.1">
+    <description>extracts variable values with custom conditions on dimensions</description>
+    <requirements>
+        <requirement type="package" version="3">python</requirement>
+        <requirement type="package" version="1.5.3">netcdf4</requirement>
+        <requirement type="package" version="0.15.1">xarray</requirement>
+        <requirement type="package" version="0.7.0">geopandas</requirement>
+        <requirement type="package" version="1.7.0">shapely</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+    mkdir output_dir &&
+    python '$__tool_directory__/xarray_tool.py' '$input' --select '$var'
+           --verbose
+           --filter
+    #for $i,$uc in enumerate($user_choice)
+        #if $uc.condi_between.comparator=="bi"
+             '${uc.dim}#${uc.condi_between.comparator}#${uc.condi_between.t1}#${uc.condi_between.t2}'
+        #else
+             '${uc.dim}#${uc.condi_between.comparator}#${uc.condi_between.value}'
+        #end if
+    #end for
+
+    #if $time.condi_datetime.datetime=="yes"
+         --time
+        #if $time.condi_datetime.condi_between.comparator=="sl"
+             '${time.condi_datetime.dim}#${time.condi_datetime.condi_between.comparator}#${time.condi_datetime.condi_between.t1}#${time.condi_datetime.condi_between.t2}'
+        #else
+             '${time.condi_datetime.dim}#${time.condi_datetime.condi_between.comparator}#${time.condi_datetime.condi_between.t1}'
+        #end if
+    #end if
+
+    #if $condi_source_coord.coord_source=="coord_from_file"
+         --coords '$coord_tabular'
+         --latname '$condi_source_coord.lat_dim' --lonname '$condi_source_coord.lon_dim'
+         --outputdir output_dir
+    #else
+         --outfile 'final.tabular'
+        #if $condi_source_coord.condi_coord.coord=='single'
+           --latname $condi_source_coord.condi_coord.lat_dim
+           --latvalN $condi_source_coord.condi_coord.lat_val
+           --lonname $condi_source_coord.condi_coord.lon_dim
+           --lonvalE $condi_source_coord.condi_coord.lon_val
+        #elif $condi_source_coord.condi_coord.coord=='subregion'
+           --latname $condi_source_coord.condi_coord.lat_dim
+           --latvalN $condi_source_coord.condi_coord.lat_valN
+           --latvalS $condi_source_coord.condi_coord.lat_valS
+           --lonname $condi_source_coord.condi_coord.lon_dim
+           --lonvalE $condi_source_coord.condi_coord.lon_valE
+           --lonvalW $condi_source_coord.condi_coord.lon_valW
+        #end if
+    #end if
+    ]]></command>
+    <inputs>
+        <param type="data" name="input" label="Input netcdf file" format="netcdf"/>
+        <param type="data" label="Tabular of variables" name="var_tab" format="tabular" help="Select the tabular file which summarize the available variables and dimensions."/>
+
+        <param name="var" type="select" label="Choose the variable to extract">
+            <options from_dataset="var_tab">
+                <column name="name" index="0"/>
+                <column name="value" index="0"/>
+            </options>
+        </param>
+
+        <conditional name="condi_source_coord">
+            <param name="coord_source" type="select" label="Source of coordinates">
+                <option value="coord_from_stdin">Manually enter coordinates</option>
+                <option value="coord_from_file">Use coordinates from input file</option>
+            </param>
+
+            <when value="coord_from_file">
+                <param type="data" label="Tabular of coord" name="coord_tabular" format="tabular" help="Format : Latitude	Longitude"/>
+                <param name="lat_dim" type="select" label="Name of latitude coordinate" >
+                    <options from_dataset="var_tab">
+                        <column name="value" index="0"/>
+                    </options>
+                </param>
+                <param name="lon_dim" type="select" label="Name of longitude coordinate" >
+                    <options from_dataset="var_tab">
+                        <column name="value" index="0"/>
+                    </options>
+                </param>
+            </when>
+
+            <when value="coord_from_stdin">
+                <conditional name="condi_coord">
+                    <param name="coord" type="select" label="Geographical area" help="Use this option to get valid values at your custom coordinates.">
+                        <option value="global">Whole available region</option>
+                        <option value="single">Single location</option>
+                        <option value="subregion">Sub-region extraction</option>
+                    </param>
+                    <when value="single">
+                        <param name="lat_dim" type="select" label="Name of latitude coordinate" >
+                            <options from_dataset="var_tab">
+                                <column name="value" index="0"/>
+                            </options>
+                        </param>
+                        <param name="lat_val" type="float" value="0" label="Latitude"/>
+                        <param name="lon_dim" type="select" label="Name of longitude coordinate" >
+                            <options from_dataset="var_tab">
+                                <column name="value" index="0"/>
+                            </options>
+                        </param>
+                        <param name="lon_val" type="float" value="0" label="Longitude"/>
+                    </when>
+                    <when value="subregion">
+                        <param name="lat_dim" type="select" label="Name of latitude coordinate" >
+                            <options from_dataset="var_tab">
+                                <column name="value" index="0"/>
+                            </options>
+                        </param>
+                        <param name="lat_valN" type="float" value="0" label="Latitude North"/>
+                        <param name="lat_valS" type="float" value="0" label="Latitude South"/>
+                        <param name="lon_dim" type="select" label="Name of longitude coordinate" >
+                            <options from_dataset="var_tab">
+                                <column name="value" index="0"/>
+                            </options>
+                        </param>
+                        <param name="lon_valE" type="float" value="0" label="Longitude East"/>
+                        <param name="lon_valW" type="float" value="0" label="Longitude West"/>
+                    </when>
+                    <when value="global"></when>
+                </conditional>
+            </when>
+
+        </conditional>
+
+        <section name="time" title="Select Time series" expanded="false">
+            <conditional name="condi_datetime">
+                <param name="datetime" type="select" label="Datetime selection" help="Use this option to extract timeseries from your dataset">
+                    <option value="no">No</option>
+                    <option value="yes">Yes</option>
+                </param>
+                <when value="no"></when>
+                <when value="yes">
+                    <param name="dim" type="select" label="Select datetime dimension" help="Use this option only if your dataset contains a date/time dimension">
+                        <options from_dataset="var_tab">
+                            <column name="value" index="0"/>
+                        </options>
+                    </param>
+                    <conditional name="condi_between">
+                        <param name="comparator" type="select" label="date/Time selection">
+                            <option value="is">is</option>
+                            <option value="sl">slice</option>
+                            <option value="ne">nearest</option>
+                            <option value="to">to</option>
+                            <option value="from">from</option>
+                        </param>
+                        <when value="sl">
+                            <param name="t1" type="text" value="" label="Start date/time"/>
+                            <param name="t2" type="text" value="" label="End date/time"/>
+                        </when>
+                        <when value="is">
+                            <param name="t1" type="text" value="" label="date/time"/>
+                        </when>
+                        <when value="ne">
+                            <param name="t1" type="text" value="" label="date/time"/>
+                        </when>
+                        <when value="to">
+                            <param name="t1" type="text" value="" label="date/time"/>
+                        </when>
+                        <when value="from">
+                            <param name="t1" type="text" value="" label="date/time"/>
+                        </when>
+                    </conditional>
+                </when>
+            </conditional>
+        </section>
+        <repeat name="user_choice" title="additional filter" help="Use this option to filter on the selected dataset">
+            <param name="dim" type="select" label="Dimensions">
+                <options from_dataset="var_tab">
+                    <column name="value" index="0"/>
+                </options>
+            </param>
+            <conditional name="condi_between">
+                <param name="comparator" type="select" label="Comparator">
+                    <option value="e">Equal</option>
+                    <option value="ge">Greater or equal</option>
+                    <option value="le">Less or equal</option>
+                    <option value="bi">Between-include [threshold1,threshold2]</option>
+                </param>
+                <when value="bi">
+                    <param name="t1" type="text" value="0" label="Inferior threshold"/>
+                    <param name="t2" type="text" value="0" label="Superior threshold"/>
+                </when>
+                <when value="e">
+                    <param name="value" type="text" value="0" label="Value"/>
+                </when>
+                <when value="ge">
+                    <param name="value" type="text" value="0" label="Value"/>
+                </when>
+                <when value="le">
+                    <param name="value" type="text" value="0" label="Value"/>
+                </when>
+            </conditional>
+        </repeat>
+    </inputs>
+    <outputs>
+        <collection type="list" name="output">
+            <discover_datasets pattern="__designation_and_ext__" visible="false" format="tabular" directory="output_dir"/>
+            <filter>condi_source_coord['coord_source'] == 'coord_from_file'</filter>
+        </collection>
+        <data name="simpleoutput" from_work_dir="final.tabular" format="tabular">
+            <filter>condi_source_coord['coord_source'] == 'coord_from_stdin'</filter>
+        </data>
+    </outputs>
+    <tests>
+        <test>
+             <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
+             <param name="var" value="phy"/>
+             <param name="var_tab" value="var_tab_dataset-ibi"/>
+             <conditional name="condi_source_coord">
+                 <param name="coord_source" value="coord_from_stdin"/>
+                  <conditional name="condi_coord">
+                    <param name="coord" value="single"/>
+                    <param name="lat_dim" value="latitude"/>
+                    <param name="lat_val" value="44.0"/>
+                    <param name="lon_dim" value="longitude"/>
+                    <param name="lon_val" value="-2.0"/>
+                  </conditional>
+             </conditional>
+             <output name="simpleoutput" value="Test1.tabular">
+                 <assert_contents>
+                     <has_text_matching expression="0\t2002-12-15\t0.5"/>
+                     <has_text_matching expression="144\t2014-12-15\t0.5"/>
+                 </assert_contents>
+             </output>
+        </test>
+        <test>
+             <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
+             <param name="var_tab" value="var_tab_dataset-ibi"/>
+             <param name="var" value="nh4"/>
+
+             <conditional name="condi_source_coord">
+                 <param name="coord_source" value="coord_from_stdin"/>
+                  <conditional name="condi_coord">
+                    <param name="coord" value="global"/>
+                  </conditional>
+             </conditional>
+             <section name="time" title="Select Time series" expanded="false">
+                 <conditional name="condi_datetime">
+                     <param name="datetime" value="yes"/>
+                     <conditional name="condi_between">
+                         <param name="comparator" value="sl"/>
+                         <param name="t1" type="text" value="2003-12-15" label="Start date/time"/>
+                         <param name="t2" type="text" value="2004-12-15" label="End date/time"/>
+                     </conditional>
+                 </conditional>
+             </section>
+             <repeat name="user_choice">
+                 <param name="dim" value="nh4"/>
+                 <conditional name="condi_between">
+                    <param name="comparator" value="ge"/>
+                    <param name="value" value="50."/>
+                 </conditional>
+             </repeat>
+             <output name="simpleoutput" value="Test2.tabular">
+                 <assert_contents>
+                     <has_text_matching expression="0\t2003-12-15\t0.5"/>
+                     <has_text_matching expression="23\t2004-12-15\t0.5"/>
+                 </assert_contents>
+             </output>
+        </test>
+    </tests>
+
+    <help><![CDATA[
+**What it does**
+
+This tool extracts variable values with custom conditions on dimensions.
+
+It can use manualy given coordinates or automaticaly take them from a tabular file to filter informations.
+
+If no values are availables at a coordinate X, the tool will search the closest coordinate with a non NA value.
+
+Filter can be set on every dimension. Available filtering operations are : =, >, <, >=, <=, [interval], ]interval[.
+
+
+
+**Input**
+
+A netcdf file (.nc).
+
+Variable tabular file from 'Netcdf Metadate Info'.
+
+Tabular file with coordinates and the following structure : 'lat'	'lon'.
+
+
+**Outputs**
+
+A single output with values for the wanted variable if there is only one coordinate.
+
+A data collection where one file is created for every coordinate, if multiple coordinates from tabular file.
+
+
+-------------------------------------------------
+
+The xarray select tool can be used after the xarray Info.
+    ]]></help>
+</tool>
