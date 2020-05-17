@@ -3,14 +3,17 @@
 # - select data and save results in csv file for further post-processing
 
 import argparse
+import csv
 import warnings
 
-import csv
-import pandas as pd
 import geopandas as gdp
-import xarray as xr
-from shapely.ops import nearest_points
+
+import pandas as pd
+
 from shapely.geometry import Point
+from shapely.ops import nearest_points
+
+import xarray as xr
 
 
 class XarrayTool ():
@@ -210,89 +213,90 @@ class XarrayTool ():
 
 
 if __name__ == '__main__':
-        warnings.filterwarnings("ignore")
-        parser = argparse.ArgumentParser()
+    warnings.filterwarnings("ignore")
+    parser = argparse.ArgumentParser()
 
-        parser.add_argument(
-             'infile',
-             help='netCDF input filename'
-        )
-        parser.add_argument(
-             '--info',
-             help='Output filename where metadata information is stored'
-        )
-        parser.add_argument(
-            '--summary',
-            help='Output filename where data summary information is stored'
-        )
-        parser.add_argument(
-            '--select',
-            help='Variable name to select'
-        )
-        parser.add_argument(
-            '--latname',
-            help='Latitude name'
-        )
-        parser.add_argument(
-            '--latvalN',
-            help='North latitude value'
-        )
-        parser.add_argument(
-            '--latvalS',
-            help='South latitude value'
-        )
-        parser.add_argument(
-            '--lonname',
-            help='Longitude name'
-        )
-        parser.add_argument(
-            '--lonvalE',
-            help='East longitude value'
-        )
-        parser.add_argument(
-            '--lonvalW',
-            help='West longitude value'
-        )
-        parser.add_argument(
-            '--coords',
-            help='Input file containing Latitude and Longitude'
-                 'for geographical selection'
-        )
-        parser.add_argument(
-            '--filter',
-            nargs="*",
-            help='Filter list variable#operator#value_s#value_e'
-        )
-        parser.add_argument(
-            '--time',
-            help='select timeseries variable#operator#value_s[#value_e]'
-        )
-        parser.add_argument(
-            '--outfile',
-            help='csv outfile for storing results of the selection'
-                 '(valid only when --select)'
-        )
-        parser.add_argument(
-            '--outputdir',
-            help='folder name for storing results with multiple selections'
-                 '(valid only when --select)'
-        )
-        parser.add_argument(
-            "-v", "--verbose",
-            help="switch on verbose mode",
-            action="store_true")
-        args = parser.parse_args()
+    parser.add_argument(
+        'infile',
+        help='netCDF input filename'
+    )
+    parser.add_argument(
+        '--info',
+        help='Output filename where metadata information is stored'
+    )
+    parser.add_argument(
+        '--summary',
+        help='Output filename where data summary information is stored'
+    )
+    parser.add_argument(
+        '--select',
+        help='Variable name to select'
+    )
+    parser.add_argument(
+        '--latname',
+        help='Latitude name'
+    )
+    parser.add_argument(
+        '--latvalN',
+        help='North latitude value'
+    )
+    parser.add_argument(
+        '--latvalS',
+        help='South latitude value'
+    )
+    parser.add_argument(
+        '--lonname',
+        help='Longitude name'
+    )
+    parser.add_argument(
+        '--lonvalE',
+        help='East longitude value'
+    )
+    parser.add_argument(
+        '--lonvalW',
+        help='West longitude value'
+    )
+    parser.add_argument(
+        '--coords',
+        help='Input file containing Latitude and Longitude'
+             'for geographical selection'
+    )
+    parser.add_argument(
+        '--filter',
+        nargs="*",
+        help='Filter list variable#operator#value_s#value_e'
+    )
+    parser.add_argument(
+        '--time',
+        help='select timeseries variable#operator#value_s[#value_e]'
+    )
+    parser.add_argument(
+        '--outfile',
+        help='csv outfile for storing results of the selection'
+             '(valid only when --select)'
+    )
+    parser.add_argument(
+        '--outputdir',
+        help='folder name for storing results with multiple selections'
+             '(valid only when --select)'
+    )
+    parser.add_argument(
+        "-v", "--verbose",
+        help="switch on verbose mode",
+        action="store_true"
+    )
+    args = parser.parse_args()
 
-        p = XarrayTool(args.infile, args.info, args.summary, args.select,
-                       args.outfile, args.outputdir, args.latname,
-                       args.latvalN, args.latvalS, args.lonname,
-                       args.lonvalE, args.lonvalW, args.filter,
-                       args.coords, args.time, args.verbose)
-        if args.info:
-                p.info()
-        if args.summary:
-                p.summary()
-        if args.coords:
-                p.selection_from_coords()
-        elif args.select:
-                p.selection()
+    p = XarrayTool(args.infile, args.info, args.summary, args.select,
+                   args.outfile, args.outputdir, args.latname,
+                   args.latvalN, args.latvalS, args.lonname,
+                   args.lonvalE, args.lonvalW, args.filter,
+                   args.coords, args.time, args.verbose)
+    if args.info:
+        p.info()
+    if args.summary:
+        p.summary()
+    if args.coords:
+        p.selection_from_coords()
+    elif args.select:
+        p.selection()
