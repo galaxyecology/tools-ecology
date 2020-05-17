@@ -31,22 +31,22 @@ class XarrayTool ():
         self.outputdir = outputdir
         self.latname = latname
         if latvalN != "" and latvalN is not None:
-                self.latvalN = float(latvalN)
+            self.latvalN = float(latvalN)
         else:
-                self.latvalN = ""
+            self.latvalN = ""
         if latvalS != "" and latvalS is not None:
-                self.latvalS = float(latvalS)
+            self.latvalS = float(latvalS)
         else:
-                self.latvalS = ""
+            self.latvalS = ""
         self.lonname = lonname
         if lonvalE != "" and lonvalE is not None:
-                self.lonvalE = float(lonvalE)
+            self.lonvalE = float(lonvalE)
         else:
-                self.lonvalE = ""
+            self.lonvalE = ""
         if lonvalW != "" and lonvalW is not None:
-                self.lonvalW = float(lonvalW)
+            self.lonvalW = float(lonvalW)
         else:
-                self.lonvalW = ""
+            self.lonvalW = ""
         self.filter = filter_list
         self.time = time
         self.coords = coords
@@ -84,23 +84,23 @@ class XarrayTool ():
         writer = csv.writer(f, delimiter='\t')
         header = ['VariableName', 'NumberOfDimensions']
         for idx, val in enumerate(ds.dims.items()):
-                header.append('Dim'+str(idx)+'Name')
-                header.append('Dim'+str(idx)+'Size')
+            header.append('Dim'+str(idx)+'Name')
+            header.append('Dim'+str(idx)+'Size')
         writer.writerow(header)
         for name, da in ds.data_vars.items():
-                line = [name]
-                line.append(len(ds[name].shape))
-                for d, s in zip(da.shape, da.sizes):
-                        line.append(s)
-                        line.append(d)
-                writer.writerow(line)
+            line = [name]
+            line.append(len(ds[name].shape))
+            for d, s in zip(da.shape, da.sizes):
+                line.append(s)
+                line.append(d)
+            writer.writerow(line)
         for name, da in ds.coords.items():
-                line = [name]
-                line.append(len(ds[name].shape))
-                for d, s in zip(da.shape, da.sizes):
-                        line.append(s)
-                        line.append(d)
-                writer.writerow(line)
+            line = [name]
+            line.append(len(ds[name].shape))
+            for d, s in zip(da.shape, da.sizes):
+                line.append(s)
+                line.append(d)
+            writer.writerow(line)
         f.close()
 
     def rowfilter(self, single_filter):
