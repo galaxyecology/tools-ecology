@@ -2,7 +2,10 @@ categories:
     - Ecology
 owner: ecology
 remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/data_manipulation/xarray/
-homepage: http://xarray.pydata.org
+homepage_url: http://xarray.pydata.org
+long_description: |
+  xarray (formerly xray) is an open source project and Python package that makes working with
+  labelled multi-dimensional arrays simple, efficient, and fun!
 type: unrestricted
 auto_tool_repositories:
   name_template: "{{ tool_id }}"
