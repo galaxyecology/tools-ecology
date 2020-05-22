@@ -236,13 +236,13 @@
                     <param name="coord" value="global"/>
                   </conditional>
              </conditional>
-             <section name="time" title="Select Time series" expanded="false">
+             <section name="time">
                  <conditional name="condi_datetime">
                      <param name="datetime" value="yes"/>
                      <conditional name="condi_between">
                          <param name="comparator" value="sl"/>
-                         <param name="t1" type="text" value="2003-12-15" label="Start date/time"/>
-                         <param name="t2" type="text" value="2004-12-15" label="End date/time"/>
+                         <param name="t1" value="2003-12-15" />
+                         <param name="t2" value="2004-12-15" />
                      </conditional>
                  </conditional>
              </section>
