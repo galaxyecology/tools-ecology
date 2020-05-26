@@ -38,6 +38,7 @@
     <inputs>
         <param type="data" name="input" format="shp,xml,json,tabular,txt" label="Gdal supported input file" help="http://www.gdal.org/ogr_formats.html"/>
         <param type="select" name="f" label="Conversion format" value="" help="Select the format to convert your input file. Currently supported : Shapefile, GeoJSON, GML, KML and WFS.">
+            <option value="CSV">CSV</option>
             <option value="ESRI Shapefile">ESRI Shapefile</option>
             <option value="GeoJSON">GEOJSON</option> 
             <option value="GML">GML</option>
@@ -60,6 +61,9 @@
                     <when input="f" value="KML" format="xml"/> 
                     <when input="f" value="WFS" format="txt"/> 
                 </change_format> 
+        </data>
+        <data name="outputcsv" format="csv" from_work_dir="output/shapefile.csv" label="${on_string}.csv">
+            <filter>f == 'CSV'</filter>
         </data>
         <data name="shapefile" format="shp" from_work_dir="shapefile" label="${on_string}.shapefile">
             <filter>f == 'ESRI Shapefile'</filter>
