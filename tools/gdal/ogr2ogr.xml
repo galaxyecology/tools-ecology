@@ -55,7 +55,7 @@
         <data name="output" from_work_dir="output" format="xml" label="${on_string}.${f}">
             <filter>f != 'ESRI Shapefile'</filter>
                 <change_format>
-                    <when input="f" value="GeoJSON" format="json"/> 
+                    <when input="f" value="GeoJSON" format="geojson"/> 
                     <when input="f" value="GML" format="xml"/> 
                     <when input="f" value="KML" format="xml"/> 
                     <when input="f" value="WFS" format="txt"/> 
