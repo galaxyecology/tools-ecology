@@ -1,0 +1,912 @@
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ Analysis for level AGDR :
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+One or more factor(s) have only one level 
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ Analysis for level HR :
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Fitted model:
+	glmmTMB(formula = species.richness ~ year + habitat1 + (1 | site),     data = cutData, family = loiChoisie, ziformula = ~0, dispformula = ~1)
+
+
+--------------------------------------------------------------------------- 
+Summary table : 
+
+Family :  poisson , link :  log 
+Response :  species.richness 
+
+AIC table : 
+
+ AIC	BIC	logLik	deviance	df.resid
+ 8677.521 8744.632 -4325.76 8651.521 1277
+
+Analysis of Variance table (random effects) :
+                                                
+1  Groups Name        Std.Dev.          Variance
+2  site   (Intercept) 0.35498  0.126009382912547
+
+Number of obs :  1290 , groups :  101
+
+ Parameter significances (fixed effects) : 
+
+                       z value  Pr(>|z|)    
+(Intercept)            11.9383 < 2.2e-16 ***
+year2008               -1.0935  0.274171    
+year2009                0.6170  0.537260    
+year2010                1.3650  0.172268    
+year2012               -3.0780  0.002084 ** 
+year2013               -0.3293  0.741951    
+year2014               -0.4857  0.627155    
+year2017                1.5902  0.111787    
+habitat1Corail vivant  13.3764 < 2.2e-16 ***
+habitat1Detritique     11.7474 < 2.2e-16 ***
+habitat1Fond lagonaire  7.3091  2.69e-13 ***
+habitat1Herbier        -6.1744  6.64e-10 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+
+
+
+--------------------------------------------------------------------------- 
+ Values predicted by the model: 
+
+     2007:Algueraie:Radiales Signal laregnere 
+                                    1.2050102 
+               2007:Algueraie:Recif Laregnere 
+                                    4.3495148 
+                   2007:Algueraie:Recif Senez 
+                                    4.0909438 
+               2007:Corail vivant:Recif Senez 
+                                   12.3248752 
+                        2007:Corail vivant:NA 
+                                   14.2463072 
+                  2007:Detritique:Ilot Signal 
+                                    7.0254831 
+              2007:Detritique:Recif Laregnere 
+                                   11.3713469 
+                  2007:Detritique:Recif Senez 
+                                   10.6953403 
+                           2007:Detritique:NA 
+                                   12.3627300 
+          2007:Fond lagonaire:Recif Laregnere 
+                                    7.8714930 
+              2007:Fond lagonaire:Recif Senez 
+                                    7.4035466 
+                       2007:Fond lagonaire:NA 
+                                    8.5577499 
+       2007:Herbier:Radiales Signal laregnere 
+                                    0.5936379 
+                     2008:Algueraie:Mbe Kouen 
+                                    5.2987205 
+     2008:Algueraie:Radiales Signal laregnere 
+                                    1.0914517 
+               2008:Algueraie:Recif Laregnere 
+                                    3.9396227 
+                 2008:Corail vivant:Mbe Kouen 
+                                   15.9635701 
+                  2008:Detritique:Ilot Signal 
+                                    6.3634115 
+                    2008:Detritique:Mbe Kouen 
+                                   13.8529448 
+              2008:Detritique:Recif Laregnere 
+                                   10.2997272 
+                           2008:Detritique:NA 
+                                   11.1976838 
+              2008:Fond lagonaire:Ilot Signal 
+                                    4.4048915 
+                2008:Fond lagonaire:Mbe Kouen 
+                                    9.5893089 
+2008:Fond lagonaire:Radiales Signal laregnere 
+                                    1.9752444 
+          2008:Fond lagonaire:Recif Laregnere 
+                                    7.1296946 
+                       2008:Fond lagonaire:NA 
+                                    7.7512797 
+                     2008:Herbier:Ilot Signal 
+                                    1.1990844 
+       2008:Herbier:Radiales Signal laregnere 
+                                    0.5376943 
+                 2008:Herbier:Recif Laregnere 
+                                    1.9408210 
+                     2009:Algueraie:Mbe Kouen 
+                                    6.1914632 
+     2009:Algueraie:Radiales Signal laregnere 
+                                    1.2753425 
+               2009:Algueraie:Recif Laregnere 
+                                    4.6033810 
+                            2009:Algueraie:NA 
+                                    5.0047155 
+                 2009:Corail vivant:Mbe Kouen 
+                                   18.6531556 
+           2009:Corail vivant:Recif Laregnere 
+                                   13.8687057 
+                        2009:Corail vivant:NA 
+                                   15.0778150 
+                  2009:Detritique:Ilot Signal 
+                                    7.4355363 
+                    2009:Detritique:Mbe Kouen 
+                                   16.1869264 
+    2009:Detritique:Radiales Signal laregnere 
+                                    3.3342482 
+              2009:Detritique:Recif Laregnere 
+                                   12.0350531 
+                           2009:Detritique:NA 
+                                   13.0842998 
+              2009:Fond lagonaire:Ilot Signal 
+                                    5.1470395 
+                2009:Fond lagonaire:Mbe Kouen 
+                                   11.2049416 
+2009:Fond lagonaire:Radiales Signal laregnere 
+                                    2.3080389 
+          2009:Fond lagonaire:Recif Laregnere 
+                                    8.3309248 
+                       2009:Fond lagonaire:NA 
+                                    9.0572362 
+       2009:Herbier:Radiales Signal laregnere 
+                                    0.6282864 
+                 2009:Herbier:Recif Laregnere 
+                                    2.2678158 
+                              2009:Herbier:NA 
+                                    2.4655298 
+     2010:Algueraie:Radiales Signal laregnere 
+                                    1.3671610 
+               2010:Algueraie:Recif Laregnere 
+                                    4.9348021 
+           2010:Corail vivant:Recif Laregnere 
+                                   14.8671853 
+                  2010:Detritique:Ilot Signal 
+                                    7.9708588 
+                    2010:Detritique:Mbe Kouen 
+                                   17.3523067 
+    2010:Detritique:Radiales Signal laregnere 
+                                    3.5742979 
+              2010:Detritique:Recif Laregnere 
+                                   12.9015186 
+              2010:Fond lagonaire:Ilot Signal 
+                                    5.5176014 
+                2010:Fond lagonaire:Mbe Kouen 
+                                   12.0116432 
+2010:Fond lagonaire:Radiales Signal laregnere 
+                                    2.4742066 
+          2010:Fond lagonaire:Recif Laregnere 
+                                    8.9307111 
+       2010:Herbier:Radiales Signal laregnere 
+                                    0.6735200 
+         2012:Corail vivant:Baie Port Bouquet 
+                                   13.0291564 
+              2012:Corail vivant:Cap Goulvain 
+                                   14.2638571 
+                      2012:Corail vivant:Deva 
+                                   14.6829118 
+          2012:Corail vivant:Grand recif Ngoe 
+                                   16.7845431 
+               2012:Corail vivant:Ilot Hienga 
+                                    9.1380968 
+                     2012:Corail vivant:Ilots 
+                                   14.5647605 
+         2012:Corail vivant:Toupeti frangeant 
+                                    9.8145301 
+                        2012:Corail vivant:NA 
+                                    9.2167332 
+            2012:Detritique:Baie Port Bouquet 
+                                   11.3065049 
+                 2012:Detritique:Cap Goulvain 
+                                   12.3779595 
+                         2012:Detritique:Deva 
+                                   12.7416088 
+                2012:Detritique:Dongan Hienga 
+                                    5.8303278 
+                2012:Detritique:Dongan Hiengu 
+                                    6.4603587 
+                    2012:Detritique:Frangeant 
+                                    6.4489046 
+                       2012:Detritique:Gouaro 
+                                   10.2701331 
+             2012:Detritique:Grand recif Ngoe 
+                                   14.5653727 
+                       2012:Detritique:Hienga 
+                                    4.8955704 
+                    2012:Detritique:Ile Verte 
+                                   10.2565667 
+                  2012:Detritique:Ilot Hienga 
+                                    7.9299022 
+               2012:Detritique:Ilot Hiengabat 
+                                    6.5278835 
+               2012:Detritique:Ilot Hienghene 
+                                    7.0216098 
+                  2012:Detritique:Ilot Tiguit 
+                                    7.5025453 
+                        2012:Detritique:Ilots 
+                                   12.6390789 
+             2012:Detritique:Les Charpentiers 
+                                    5.3815099 
+                  2012:Detritique:Recif Douok 
+                                    6.3904364 
+                   2012:Detritique:Recif Kaun 
+                                    4.7794385 
+               2012:Detritique:Recif Mengalia 
+                                    6.8682130 
+                           2012:Detritique:NA 
+                                    7.9981417 
+        2012:Fond lagonaire:Baie Port Bouquet 
+                                    7.8266080 
+             2012:Fond lagonaire:Cap Goulvain 
+                                    8.5682921 
+                     2012:Fond lagonaire:Deva 
+                                    8.8200181 
+            2012:Fond lagonaire:Dongan Hienga 
+                                    4.0358794 
+            2012:Fond lagonaire:Dongan Hiengu 
+                                    4.4720005 
+                2012:Fond lagonaire:Frangeant 
+                                    4.4640717 
+         2012:Fond lagonaire:Grand recif Ngoe 
+                                   10.0824670 
+            2012:Fond lagonaire:Ilot de sable 
+                                    7.0651322 
+           2012:Fond lagonaire:Ilot Hiengabat 
+                                    4.5187426 
+           2012:Fond lagonaire:Ilot Hienghene 
+                                    4.8605106 
+                    2012:Fond lagonaire:Ilots 
+                                    8.7490446 
+               2012:Fond lagonaire:Recif Kaun 
+                                    3.3084310 
+           2012:Fond lagonaire:Recif Mengalia 
+                                    4.7543260 
+        2012:Fond lagonaire:Toupeti frangeant 
+                                    5.8955836 
+                       2012:Fond lagonaire:NA 
+                                    5.5364872 
+                          2012:Herbier:Gouaro 
+                                    1.9352445 
+                              2012:Herbier:NA 
+                                    1.5071236 
+                         2013:Algueraie:Crouy 
+                                    6.0481847 
+                       2013:Algueraie:Goeland 
+                                    5.0577843 
+                 2013:Algueraie:Lagon Mba Mbo 
+                                    6.1290439 
+                         2013:Algueraie:Lange 
+                                    3.7821619 
+                     2013:Algueraie:Laregnere 
+                                    4.6416094 
+                     2013:Algueraie:Mbe Kouen 
+                                    5.6495623 
+                 2013:Algueraie:Recif Cimenia 
+                                    4.9812001 
+                2013:Algueraie:Recif de Prony 
+                                    4.5533342 
+             2013:Algueraie:Recif Nogumatiugi 
+                                    5.8194078 
+               2013:Algueraie:Seche Croissant 
+                                    6.6461991 
+              2013:Corail vivant:Bampton nord 
+                                   17.9746269 
+       2013:Corail vivant:Barriere nord-ouest 
+                                   18.9982221 
+            2013:Corail vivant:Barriere ouest 
+                                   16.8382743 
+                  2013:Corail vivant:Caye est 
+                                    9.6945301 
+         2013:Corail vivant:Caye observatoire 
+                                    8.5917245 
+                 2013:Corail vivant:Corne sud 
+                                   15.1423703 
+                2013:Corail vivant:Desmazures 
+                                   10.1167180 
+                   2013:Corail vivant:Goeland 
+                                   15.2376964 
+                   2013:Corail vivant:Ilot Gi 
+                                   13.8821185 
+               2013:Corail vivant:Ilot Ieroue 
+                                   16.7251316 
+               2013:Corail vivant:Ilot Kouare 
+                                   10.3995543 
+                 2013:Corail vivant:Ilot Mato 
+                                   14.2934475 
+                2013:Corail vivant:Ilot Mbore 
+                                   14.3365852 
+                  2013:Corail vivant:Ilot Ndo 
+                                    8.7815339 
+                  2013:Corail vivant:Ilot Nge 
+                                   17.5370395 
+               2013:Corail vivant:Ilot Puemba 
+                                   11.4543489 
+                2013:Corail vivant:Ilot Totea 
+                                   11.9455009 
+                   2013:Corail vivant:Ilot Ua 
+                                   16.7099210 
+            2013:Corail vivant:Ilot Uaterembi 
+                                   15.5434213 
+                2013:Corail vivant:Ilot Uatio 
+                                   17.6711998 
+                2013:Corail vivant:La Palette 
+                                   19.6011447 
+                 2013:Corail vivant:Laregnere 
+                                   13.9838774 
+                       2013:Corail vivant:Mba 
+                                   19.3483749 
+                 2013:Corail vivant:Mbe Kouen 
+                                   17.0205589 
+                       2013:Corail vivant:Mbo 
+                                   15.4214744 
+                  2013:Corail vivant:Pandanus 
+                                   14.4371679 
+      2013:Corail vivant:Recif Bellona milieu 
+                                   10.6510224 
+  2013:Corail vivant:Recif Bellona Nord-ouest 
+                                   13.3302544 
+         2013:Corail vivant:Recif Bellona Sud 
+                                   10.7187385 
+               2013:Corail vivant:Recif Boody 
+                                   11.3597590 
+             2013:Corail vivant:Recif Cimenia 
+                                   15.0069695 
+            2013:Corail vivant:Recif de Prony 
+                                   13.7179286 
+      2013:Corail vivant:Recif Dumont Urville 
+                                   11.7505746 
+            2013:Corail vivant:Recif Garanhua 
+                                   20.0773959 
+                  2013:Corail vivant:Recif Ia 
+                                   10.2200320 
+               2013:Corail vivant:Recif Kanre 
+                                   13.0680832 
+                2013:Corail vivant:Recif Kuta 
+                                   10.8699396 
+           2013:Corail vivant:Recif Mbe Kouen 
+                                   13.5391561 
+          2013:Corail vivant:Recif Ndunekunie 
+                                   18.4940980 
+            2013:Corail vivant:Recif Neokouie 
+                                   14.7849188 
+            2013:Corail vivant:Recif Neokumbi 
+                                   17.7920665 
+            2013:Corail vivant:Recif Ngedembi 
+                                    7.9383274 
+         2013:Corail vivant:Recif Nogumatiugi 
+                                   17.5322561 
+              2013:Corail vivant:Recif Puakue 
+                                   19.5091869 
+             2013:Corail vivant:Recif Purembi 
+                                   13.4819060 
+               2013:Corail vivant:Recif Senez 
+                                   11.9025534 
+              2013:Corail vivant:Recif Tiendi 
+                                   13.9118390 
+            2013:Corail vivant:Recif Tironhua 
+                                   15.4876868 
+             2013:Corail vivant:Recif Tiukuru 
+                                   18.3076230 
+             2013:Corail vivant:Recif Tootira 
+                                   13.2804437 
+                  2013:Corail vivant:Recif Ua 
+                                   14.3365852 
+               2013:Corail vivant:Recif Umadu 
+                                   13.9118390 
+               2013:Corail vivant:Recif Umbei 
+                                   20.0085979 
+            2013:Corail vivant:Recif Ungeueto 
+                                    9.7405434 
+                        2013:Corail vivant:NA 
+                                   13.7581460 
+                 2013:Detritique:Bampton nord 
+                                   15.5981094 
+          2013:Detritique:Barriere nord-ouest 
+                                   16.4863699 
+               2013:Detritique:Barriere ouest 
+                                   14.6119998 
+            2013:Detritique:Caye observatoire 
+                                    7.4557686 
+                    2013:Detritique:Corne sud 
+                                   13.1403199 
+                   2013:Detritique:Desmazures 
+                                    8.7791349 
+                      2013:Detritique:Goeland 
+                                   13.2230425 
+                      2013:Detritique:Ilot Gi 
+                                   12.0466925 
+                  2013:Detritique:Ilot Kouare 
+                                    9.0245760 
+                    2013:Detritique:Ilot Mato 
+                                   12.4036376 
+                   2013:Detritique:Ilot Sable 
+                                   19.5516318 
+                    2013:Detritique:Ilot Tere 
+                                   19.2210319 
+               2013:Detritique:Ilot Uaterembi 
+                                   13.4883460 
+                       2013:Detritique:Kuendu 
+                                    8.0892866 
+                   2013:Detritique:La Palette 
+                                   17.0095770 
+                          2013:Detritique:Maa 
+                                   12.3619129 
+                    2013:Detritique:Mbe Kouen 
+                                   14.7701837 
+                          2013:Detritique:Mbo 
+                                   13.3825223 
+                     2013:Detritique:Pandanus 
+                                   12.5283560 
+         2013:Detritique:Recif Bellona milieu 
+                                    9.2427962 
+     2013:Detritique:Recif Bellona Nord-ouest 
+                                   11.5677932 
+                  2013:Detritique:Recif Boody 
+                                    9.8578271 
+                2013:Detritique:Recif Cimenia 
+                                   13.0228212 
+               2013:Detritique:Recif Garanhua 
+                                   17.4228606 
+                     2013:Detritique:Recif Ie 
+                                   16.2752116 
+                  2013:Detritique:Recif Kanre 
+                                   11.3402850 
+              2013:Detritique:Recif Mbe Kouen 
+                                   11.7490749 
+             2013:Detritique:Recif Ndunekunie 
+                                   16.0488986 
+               2013:Detritique:Recif Ngedembi 
+                                    6.8887605 
+            2013:Detritique:Recif Nogumatiugi 
+                                   15.2142267 
+               2013:Detritique:Recif Tironhua 
+                                   13.4399804 
+                2013:Detritique:Recif Tiukuru 
+                                   15.8870784 
+              2013:Detritique:Seche Croissant 
+                                   17.3757852 
+                           2013:Detritique:NA 
+                                   11.9391110 
+             2013:Fond lagonaire:Bampton nord 
+                                   10.7973498 
+      2013:Fond lagonaire:Barriere nord-ouest 
+                                   11.4122229 
+           2013:Fond lagonaire:Barriere ouest 
+                                   10.1147433 
+        2013:Fond lagonaire:Caye observatoire 
+                                    5.1610448 
+                2013:Fond lagonaire:Corne sud 
+                                    9.0960146 
+                    2013:Fond lagonaire:Crouy 
+                                   10.9456447 
+               2013:Fond lagonaire:Desmazures 
+                                    6.0771076 
+                  2013:Fond lagonaire:Goeland 
+                                    9.1532769 
+                2013:Fond lagonaire:Ilot Koko 
+                                    9.6852703 
+               2013:Fond lagonaire:Ilot Sable 
+                                   13.5340637 
+               2013:Fond lagonaire:Ilot Totea 
+                                    7.1756567 
+                  2013:Fond lagonaire:Ilot Ua 
+                                   10.0376416 
+               2013:Fond lagonaire:La Palette 
+                                   11.7743982 
+            2013:Fond lagonaire:Lagon Mba Mbo 
+                                   11.0919788 
+                    2013:Fond lagonaire:Lange 
+                                    6.8447315 
+                2013:Fond lagonaire:Laregnere 
+                                    8.4001085 
+                      2013:Fond lagonaire:Mba 
+                                   11.6225596 
+                2013:Fond lagonaire:Mbe Kouen 
+                                   10.2242416 
+                      2013:Fond lagonaire:Mbo 
+                                    9.2636723 
+                 2013:Fond lagonaire:Pandanus 
+                                    8.6723999 
+     2013:Fond lagonaire:Recif Bellona milieu 
+                                    6.3980640 
+ 2013:Fond lagonaire:Recif Bellona Nord-ouest 
+                                    8.0074774 
+        2013:Fond lagonaire:Recif Bellona Sud 
+                                    6.4387411 
+              2013:Fond lagonaire:Recif Boody 
+                                    6.8238018 
+            2013:Fond lagonaire:Recif Cimenia 
+                                    9.0146794 
+           2013:Fond lagonaire:Recif de Prony 
+                                    8.2403532 
+                 2013:Fond lagonaire:Recif Ia 
+                                    6.1391683 
+                 2013:Fond lagonaire:Recif Ie 
+                                   11.2660546 
+          2013:Fond lagonaire:Recif Mbe Kouen 
+                                    8.1329646 
+         2013:Fond lagonaire:Recif Ndunekunie 
+                                   11.1093958 
+           2013:Fond lagonaire:Recif Neokouie 
+                                    8.8812937 
+           2013:Fond lagonaire:Recif Neokumbi 
+                                   10.6876858 
+           2013:Fond lagonaire:Recif Ngedembi 
+                                    4.7685495 
+        2013:Fond lagonaire:Recif Nogumatiugi 
+                                   10.5316178 
+              2013:Fond lagonaire:Recif Ouest 
+                                   10.2733123 
+             2013:Fond lagonaire:Recif Puakue 
+                                   11.7191592 
+            2013:Fond lagonaire:Recif Purembi 
+                                    8.0985745 
+              2013:Fond lagonaire:Recif Senez 
+                                    7.1498581 
+           2013:Fond lagonaire:Recif Tironhua 
+                                    9.3034460 
+              2013:Fond lagonaire:Recif Umbei 
+                                   12.0191552 
+                       2013:Fond lagonaire:NA 
+                                    8.2645117 
+                   2013:Herbier:Lagon Mba Mbo 
+                                    3.0194204 
+          2013:Herbier:Lagon Signal Laregnere 
+                                    1.4770353 
+                           2013:Herbier:Lange 
+                                    1.8632493 
+                       2013:Herbier:Laregnere 
+                                    2.2866487 
+                             2013:Herbier:Mba 
+                                    3.1638533 
+                       2013:Herbier:Mbe Kouen 
+                                    2.7832080 
+                             2013:Herbier:Mbo 
+                                    2.5217251 
+                        2013:Herbier:Pandanus 
+                                    2.3607709 
+                 2013:Herbier:Recif Mbe Kouen 
+                                    2.2139277 
+                     2013:Herbier:Recif Senez 
+                                    1.9463098 
+                              2013:Herbier:NA 
+                                    2.2497370 
+             2014:Corail vivant:Baie Xepenehe 
+                                    7.2061001 
+           2014:Corail vivant:Grand Astrolabe 
+                                   17.9444133 
+                    2014:Corail vivant:Hunter 
+                                   21.4123632 
+                     2014:Corail vivant:Jinek 
+                                   12.0919774 
+           2014:Corail vivant:Petit Astrolabe 
+                                   19.4215266 
+                    2014:Corail vivant:Petrie 
+                                   17.1807287 
+               2014:Corail vivant:Pointe Easo 
+                                   10.8531247 
+               2014:Corail vivant:Recif Jinek 
+                                   14.1086973 
+                   2014:Corail vivant:Walpole 
+                                   19.1859912 
+                2014:Detritique:Baie Xepenehe 
+                                    6.2533447 
+                    2014:Detritique:Chepenehe 
+                                    5.7377329 
+              2014:Detritique:Grand Astrolabe 
+                                   15.5718905 
+                       2014:Detritique:Hunter 
+                                   18.5813250 
+                        2014:Detritique:Jinek 
+                                   10.4932351 
+                      2014:Detritique:Matthew 
+                                    8.8732820 
+              2014:Detritique:Petit Astrolabe 
+                                   16.8537071 
+                       2014:Detritique:Petrie 
+                                   14.9091766 
+                  2014:Detritique:Pointe Easo 
+                                    9.4181775 
+                  2014:Detritique:Recif Jinek 
+                                   12.2433141 
+                      2014:Detritique:Walpole 
+                                   16.6493131 
+            2014:Fond lagonaire:Baie Xepenehe 
+                                    4.3287009 
+          2014:Fond lagonaire:Grand Astrolabe 
+                                   10.7792005 
+                    2014:Fond lagonaire:Jinek 
+                                    7.2636450 
+                  2014:Fond lagonaire:Matthew 
+                                    6.1422783 
+          2014:Fond lagonaire:Petit Astrolabe 
+                                   11.6665017 
+                   2014:Fond lagonaire:Petrie 
+                                   10.3204555 
+           2017:Corail vivant:Grand Astrolabe 
+                                   25.1018785 
+           2017:Corail vivant:Petit Astrolabe 
+                                   27.1681661 
+                    2017:Corail vivant:Petrie 
+                                   24.0335840 
+              2017:Detritique:Grand Astrolabe 
+                                   21.7830306 
+              2017:Detritique:Petit Astrolabe 
+                                   23.5761237 
+                       2017:Detritique:Petrie 
+                                   20.8559808 
+          2017:Fond lagonaire:Grand Astrolabe 
+                                   15.0786864 
+          2017:Fond lagonaire:Petit Astrolabe 
+                                   16.3199043 
+                   2017:Fond lagonaire:Petrie 
+                                   14.4369624 
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ Analysis for level RC :
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+One or more factor(s) have only one level 
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ Analysis for level RE :
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Fitted model:
+	glmmTMB(formula = species.richness ~ year + habitat1 + (1 | site),     data = cutData, family = loiChoisie, ziformula = ~0, dispformula = ~1)
+
+
+--------------------------------------------------------------------------- 
+Summary table : 
+
+Family :  poisson , link :  log 
+Response :  species.richness 
+
+AIC table : 
+
+ AIC	BIC	logLik	deviance	df.resid
+ 5478.412 5529.451 -2728.206 5456.412 754
+
+Analysis of Variance table (random effects) :
+                                                 
+1  Groups Name        Std.Dev.           Variance
+2  site   (Intercept) 0.2794   0.0780659378774298
+
+Number of obs :  765 , groups :  14
+
+ Parameter significances (fixed effects) : 
+
+                       z value  Pr(>|z|)    
+(Intercept)             7.6613  1.84e-14 ***
+year2008               -2.8740 0.0040532 ** 
+year2009               -3.1401 0.0016887 ** 
+year2010                1.0526 0.2925136    
+year2012                0.0647 0.9484457    
+year2013               -2.7824 0.0053957 ** 
+habitat1Corail vivant  18.7064 < 2.2e-16 ***
+habitat1Detritique     15.4378 < 2.2e-16 ***
+habitat1Fond lagonaire  9.2828 < 2.2e-16 ***
+habitat1Herbier        -3.6878 0.0002262 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+
+
+
+--------------------------------------------------------------------------- 
+ Values predicted by the model: 
+
+                   2007:Algueraie:Ilot Signal 
+                                     3.533712 
+                     2007:Algueraie:Laregnere 
+                                     3.185639 
+     2007:Algueraie:Radiales Signal laregnere 
+                                     2.630363 
+               2007:Corail vivant:Ilot Signal 
+                                    17.584683 
+                 2007:Corail vivant:Laregnere 
+                                    15.852579 
+                  2007:Detritique:Ilot Signal 
+                                    13.114518 
+                    2007:Detritique:Laregnere 
+                                    11.822729 
+              2007:Fond lagonaire:Ilot Signal 
+                                     7.772789 
+                2007:Fond lagonaire:Laregnere 
+                                     7.007163 
+                     2007:Herbier:Ilot Signal 
+                                     2.399027 
+                       2007:Herbier:Laregnere 
+                                     2.162721 
+       2007:Herbier:Radiales Signal laregnere 
+                                     1.785746 
+                         2008:Algueraie:Abore 
+                                     2.932089 
+                   2008:Algueraie:Ilot Signal 
+                                     3.057164 
+                     2008:Algueraie:Laregnere 
+                                     2.756031 
+     2008:Algueraie:Radiales Signal laregnere 
+                                     2.275638 
+                     2008:Corail vivant:Abore 
+                                    14.590846 
+                 2008:Corail vivant:Laregnere 
+                                    13.714737 
+                        2008:Detritique:Abore 
+                                    10.881738 
+                  2008:Detritique:Ilot Signal 
+                                    11.345925 
+                    2008:Detritique:Laregnere 
+                                    10.228343 
+                    2008:Fond lagonaire:Abore 
+                                     6.449451 
+              2008:Fond lagonaire:Ilot Signal 
+                                     6.724568 
+                2008:Fond lagonaire:Laregnere 
+                                     6.062194 
+                           2008:Herbier:Abore 
+                                     1.990586 
+                     2008:Herbier:Ilot Signal 
+                                     2.075500 
+                       2008:Herbier:Laregnere 
+                                     1.871062 
+       2008:Herbier:Radiales Signal laregnere 
+                                     1.544924 
+                     2009:Algueraie:Laregnere 
+                                     2.718623 
+                            2009:Algueraie:NA 
+                                     2.611386 
+                     2009:Corail vivant:Abore 
+                                    14.392801 
+                        2009:Corail vivant:NA 
+                                    12.994944 
+                        2009:Detritique:Abore 
+                                    10.734038 
+                  2009:Detritique:Ilot Signal 
+                                    11.191924 
+                    2009:Detritique:Laregnere 
+                                    10.089511 
+                           2009:Detritique:NA 
+                                     9.691527 
+                    2009:Fond lagonaire:Abore 
+                                     6.361912 
+              2009:Fond lagonaire:Ilot Signal 
+                                     6.633294 
+                2009:Fond lagonaire:Laregnere 
+                                     5.979910 
+2009:Fond lagonaire:Radiales Signal laregnere 
+                                     4.937575 
+                       2009:Fond lagonaire:NA 
+                                     5.744030 
+                           2009:Herbier:Abore 
+                                     1.963568 
+                     2009:Herbier:Ilot Signal 
+                                     2.047329 
+                       2009:Herbier:Laregnere 
+                                     1.845665 
+       2009:Herbier:Radiales Signal laregnere 
+                                     1.523955 
+                              2009:Herbier:NA 
+                                     1.772862 
+                     2010:Corail vivant:Abore 
+                                    17.781675 
+                        2010:Detritique:Abore 
+                                    13.261433 
+                  2010:Detritique:Ilot Signal 
+                                    13.827132 
+                    2010:Detritique:Laregnere 
+                                    12.465149 
+                    2010:Fond lagonaire:Abore 
+                                     7.859863 
+              2010:Fond lagonaire:Ilot Signal 
+                                     8.195145 
+                2010:Fond lagonaire:Laregnere 
+                                     7.387917 
+                           2010:Herbier:Abore 
+                                     2.425902 
+                       2010:Herbier:Laregnere 
+                                     2.280239 
+       2010:Herbier:Radiales Signal laregnere 
+                                     1.882779 
+         2012:Corail vivant:Baie Port Bouquet 
+                                    13.739358 
+        2012:Corail vivant:Faille aux requins 
+                                    20.364318 
+               2012:Corail vivant:Ilot Hienga 
+                                    10.265016 
+                     2012:Corail vivant:Ilots 
+                                    15.749389 
+                       2012:Corail vivant:Poe 
+                                    19.686279 
+              2012:Corail vivant:Recif Doiman 
+                                    11.819429 
+            2012:Detritique:Baie Port Bouquet 
+                                    10.246705 
+           2012:Detritique:Faille aux requins 
+                                    15.187548 
+                    2012:Detritique:Ile Verte 
+                                    17.205702 
+                  2012:Detritique:Ilot Hienga 
+                                     7.655568 
+                        2012:Detritique:Ilots 
+                                    11.745771 
+                          2012:Detritique:Poe 
+                                    14.681872 
+                 2012:Detritique:Recif Doiman 
+                                     8.814837 
+               2012:Detritique:Recif Pidanain 
+                                     9.972632 
+        2012:Fond lagonaire:Baie Port Bouquet 
+                                     6.073077 
+       2012:Fond lagonaire:Faille aux requins 
+                                     9.001444 
+                2012:Fond lagonaire:Ile Verte 
+                                    10.197575 
+              2012:Fond lagonaire:Ilot Hienga 
+                                     4.537347 
+                    2012:Fond lagonaire:Ilots 
+                                     6.961551 
+                      2012:Fond lagonaire:Poe 
+                                     8.701737 
+             2012:Fond lagonaire:Recif Doiman 
+                                     5.224429 
+           2012:Fond lagonaire:Recif Pidanain 
+                                     5.910638 
+                             2012:Herbier:Poe 
+                                     2.685742 
+                   2013:Algueraie:Ilot Signal 
+                                     2.946013 
+                     2013:Algueraie:Laregnere 
+                                     2.655828 
+                    2013:Corail vivant:Canard 
+                                     8.031027 
+               2013:Corail vivant:Ilot Maitre 
+                                    17.885217 
+               2013:Corail vivant:Ilot Signal 
+                                    14.660135 
+                 2013:Corail vivant:Laregnere 
+                                    13.216101 
+                  2013:Detritique:Ilot Maitre 
+                                    13.338654 
+                  2013:Detritique:Ilot Signal 
+                                    10.933413 
+                   2013:Fond lagonaire:Canard 
+                                     3.549878 
+              2013:Fond lagonaire:Ilot Maitre 
+                                     7.905631 
+              2013:Fond lagonaire:Ilot Signal 
+                                     6.480078 
+                2013:Fond lagonaire:Laregnere 
+                                     5.841786 
+                          2013:Herbier:Canard 
+                                     1.095650 
+                     2013:Herbier:Ilot Maitre 
+                                     2.440028 
+                     2013:Herbier:Ilot Signal 
+                                     2.000039 
+                       2013:Herbier:Laregnere 
+                                     1.803034 
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ Analysis for level RI :
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+One or more factor(s) have only one level 
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ Analysis for level RN :
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+One or more factor(s) have only one level 
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ Analysis for level RP :
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+One or more factor(s) have only one level 
+

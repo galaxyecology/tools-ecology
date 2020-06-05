@@ -1,0 +1,41 @@
+<macros>
+    <token name="@VERSION@">0.0.1</token>
+    <xml name="Pampa_requirements">
+        <requirements>
+            <requirement type="package" version="1.0.2">r-tidyr</requirement>
+        </requirements>    
+    </xml>
+    <xml name="GLM_requirements">
+        <requirements>
+            <requirement type="package" version="1.0.1">r-glmmtmb</requirement>
+            <requirement type="package" version="1.4_13">r-multcomp</requirement>
+        </requirements>    
+    </xml>
+    <xml name="Plot_requirements">
+        <requirements>
+            <requirement type="package" version="3.1.1">r-ggplot2</requirement>
+        </requirements>    
+    </xml>
+    <xml name="pampa_input_calculate">
+        <param name="input" type="data" format="tabular" label="Input file" help="Observation data file, with location, year, species and abundance."/>
+    </xml>
+    <xml name="pampa_advanced_params_select">
+        <param name="advanced" type="select" label="Specify advanced parameters">
+            <option value="simple" selected="true">No, use program defaults.</option>
+            <option value="advanced">Yes, see full parameter list.</option>
+        </param>        
+        <when value="simple">
+        </when>        
+    </xml>
+    <xml name="pampa_bibref">
+        <citations>
+            <citation type="bibtex">
+	    @unpublished{pampayves,
+	    title={ PAMPA "ressources et biodiversité" scripts },
+            author={Yves Reecht},
+            url={https://wwz.ifremer.fr/pampa/Meth.-Outils/Outils}
+            }
+            </citation>
+        </citations>
+    </xml>
+</macros>
