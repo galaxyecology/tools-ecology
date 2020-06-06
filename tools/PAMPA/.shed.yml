@@ -18,7 +18,7 @@ repositories:
       - FunctExeCalcPresAbsGalaxy.r
       - FunctPAMPAGalaxy.r
       - test-data/Observations.tabular
-	  
+      
   pampa_communitymetrics:
     description: Compute community metrics from abundance data
     owner: ecology
@@ -29,7 +29,7 @@ repositories:
       - FunctPAMPAGalaxy.r
       - test-data/Observations.tabular
       - test-data/TabMetricsFromSVRObs.tabular
-	  
+      
   pampa_glmcomm:
     description: Compute GLM on community data
     owner: ecology
@@ -40,7 +40,7 @@ repositories:
       - FunctPAMPAGalaxy.r
       - test-data/TabMetricsFromSVRObs.tabular
       - test-data/Unitobs.tabular
-	  
+      
   pampa_glmsp:
     description: Compute GLM on population data
     owner: ecology
@@ -49,3 +49,4 @@ repositories:
       - pampa_macros.xml
       - FunctExeCalcGLMSpGalaxy.r
       - FunctPAMPAGalaxy.r
+      
