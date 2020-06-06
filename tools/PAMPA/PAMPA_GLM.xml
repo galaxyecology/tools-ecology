@@ -1,0 +1,145 @@
+<tool id="pampa_glmcomm" name="Compute GLM on community data" version="@VERSION@">
+    <description>Compute a GLM of your choice on community data</description>
+    <macros>
+        <import>pampa_macros.xml</import>
+    </macros>
+    <expand macro="GLM_requirements"/>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript 
+         '$__tool_directory__/FunctExeCalcGLMGalaxy.r' 
+         '$input_metric'
+         '$input_unitobs'
+         '$varint'
+         '$varrep'
+         '$varrand'
+         '$sep'
+         #if $settings.advanced=='advanced' 
+             $settings.distrib
+             $settings.log
+         #else
+             'None'
+             'FALSE'
+         #end if
+         'unit'
+         '$__tool_directory__/FunctPAMPAGalaxy.r' 
+         '$output_summary'
+         '$output_recap'
+    ]]>
+    </command>
+    <inputs>
+        <param name="input_metric" type="data" format="tabular" label="Input metrics file" help="Metrics data file, with location, year, and metrics informations as 'species richness', 'Simpson index' or others who can be used as interest variable."/>
+        <param name="input_unitobs" type="data" format="tabular" label="Unitobs informations file" help="Unitobs file, with all informations available about unitobs."/>
+        <param name="varint" type="data_column" data_ref="input_metric" label="Interest variable from metrics file" help= "Choose the field of the interest variable."/>
+        <param name="sep" type="data_column" data_ref="input_unitobs" force_select="false" label="Separation factor of your analysis from unitobs file" help= "Choose the field of the separation factor, for each level of this factor, one GLM will be computed."/>
+        <param name="varrep" type="select" label="Response variables" help= "Choose the response variables you want to include in your analysis." multiple="true">
+            <option selected="true" value="year">Year</option>
+            <option selected="true" value="site">Site</option>
+            <option selected="true" value="habitat1">Habitat</option>
+        </param>
+        <param name="varrand" type="select" label="Random effect ?" help="Allocate a random effect on site or year makes your model more reliable as random events on a peculiar site or year can affect populations, it takes account of pseudoreplication. However, avoid applying it on a less than 10 levels variable (less than 10 different sites and/or year)." multiple="true">
+            <option value="year">Year</option>
+            <option selected="true" value="site">Site</option>
+        </param>
+        <conditional name="settings">
+            <expand macro="pampa_advanced_params_select"/>
+            <when value="advanced">
+                <param name="distrib" type="select" label="Distribution for model">
+                    <option selected="true" value="None">Auto</option>
+                    <option value="gaussian">Gaussian</option>
+                    <option value="inverse.gaussian">Inverse Gaussian</option>
+                    <option value="poisson">Poisson</option>
+                    <option value="quasipoisson">Quasi-Poisson</option>
+                    <option value="binomial">Binomial</option>
+                    <option value="quasibinomial">Quasi-Binomial</option>
+                    <option value="Gamma">Gamma</option>
+                </param>
+                <param name="log" type="boolean" truevalue="TRUE" falsevalue="FALSE" checked="yes" label="Log on interest variable ?"/>
+            </when>
+        </conditional>
+    </inputs>
+    <outputs>
+        <data name="output_summary" from_work_dir="GLMSummary.txt" format="txt" label="GLM - Results from your Analysis on ${on_string}"/>
+        <data name="output_recap" from_work_dir="GLMSummaryFull.txt" format="txt" label="Simple statistics on chosen variables on ${on_string}"/>
+    </outputs>
+    <tests>
+        <test> 
+            
+        </test>
+    </tests>
+    <help><![CDATA[
+==============================================================
+Compute GLM on community data with selected interest variables
+==============================================================
+
+**What it does**
+
+This tool from PAMPA toolsuite computes Generalized Linear Models on community data. 
+
+It allows user to choose composition of the model :
+
+- Interest variable among numeric or integer variables of the input file
+
+- Response variables among year, site and/or habitat
+
+- Allocation of random effect on year and/or site
+
+|
+
+**Input description**
+
+A tabular file with community data. Must at least contain two or three columns depending on the case : 
+
+- ['year' and 'location'] or ['observation.unit'] 
+
+- At least one community metric 
+
++------------------+---------+---------+-----+       
+| observation.unit | metric1 | metric2 | ... |            
++==================+=========+=========+=====+        
+|   site_yearID    |    2    |   0.4   | ... |            
++------------------+---------+---------+-----+        
+|        ...       |   ...   |   ...   | ... |       
++------------------+---------+---------+-----+           
+
+OR
+
++------+----------+---------+---------+-----+
+| year | location | metric1 | metric2 | ... |
++======+==========+=========+=========+=====+
+| 2000 |locationID|    2    |   0.4   | ... |
++------+----------+---------+---------+-----+
+|  ... |    ...   |   ...   |   ...   | ... |
++------+----------+---------+---------+-----+
+
+The first input may be extracted from the 'Calculate community metrics' tool.
+
+A tabular file with unitobs or location data which contains at least as much columns as used response variables and separation factor in addition with the 'observation.unit' or 'location' column.
+
++--------------------------------+---------+--------+------------+-----+       
+| observation.unit OR location   | ??site? |  year  |  habitat1  | ... |            
++================================+=========+========+============+=====+        
+|  site_yearID     OR locationID | site ID |  2000  | habitatID  | ... |            
++--------------------------------+---------+--------+------------+-----+        
+|              ...               |   ...   |   ...  |     ...    | ... |       
++--------------------------------+---------+--------+------------+-----+ 
+
+|
+
+**Output**
+
+Two text files : 
+
+- A first text file with GLM results. When a separation factor is selected, one analysis is computed for every level and the last analysis is on the whole dataset.
+
+- A second text file with simple statistics on the whole dataset.
+
+|
+
+**Source**
+
+Derived from PAMPA scripts (https://wwz.ifremer.fr/pampa/Meth.-Outils/Outils) written by Yves Reecht.
+
+  ]]></help>
+
+  <expand macro="pampa_bibref" />
+</tool>
