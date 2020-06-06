@@ -28,7 +28,7 @@ repositories:
       - FunctExeCalcCommIndexesGalaxy.r
       - FunctPAMPAGalaxy.r
       - test-data/Observations.tabular
-	  - test-data/TabMetricsFromSVRObs.tabular
+      - test-data/TabMetricsFromSVRObs.tabular
 	  
   pampa_glmcomm:
     description: Compute GLM on community data
@@ -38,8 +38,8 @@ repositories:
       - pampa_macros.xml
       - FunctExeCalcGLMGalaxy.r
       - FunctPAMPAGalaxy.r
-	  - test-data/TabMetricsFromSVRObs.tabular
-	  - test-data/Unitobs.tabular
+      - test-data/TabMetricsFromSVRObs.tabular
+      - test-data/Unitobs.tabular
 	  
   pampa_glmsp:
     description: Compute GLM on population data
