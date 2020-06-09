@@ -112,6 +112,8 @@ modeleLineaireWP2.species.f <- function(metrique, listFact, listRand, FactAna, D
 
     if (all(is.na(match(tmpData[,unitobs],tabUnitobs[,unitobs])))) {stop("Observation units doesn't match in the two input tables")}
 
+    #if(all(is.element(listFact,colnames(tmpData)))){stop("YAAAS")}
+
     if(is.element("species.code",colnames(tmpData)))
     {
         col <- c(unitobs,metrique,FactAna)
@@ -120,10 +122,10 @@ modeleLineaireWP2.species.f <- function(metrique, listFact, listRand, FactAna, D
 
         for (i in listFactTab) {
             switch(i,
-                  "year"={tmpData[,"year"] <- as.integer(tmpData[,"year"])},
                   tmpData[,i] <- as.factor(tmpData[,i]))
             
          }
+
     }else{
         stop("Warning : wrong data frame, data frame should be aggregated by observation unit (year and site) and species")
     }
