@@ -121,7 +121,6 @@ modeleLineaireWP2.unitobs.f <- function(metrique, listFact, listRand, FactAna, D
 
         for (i in listFactTab) {
             switch(i,
-                  "year"={tmpData[,"year"] <- as.integer(tmpData[,"year"])},
                   tmpData[,i] <- as.factor(tmpData[,i]))
          }
     }else{
