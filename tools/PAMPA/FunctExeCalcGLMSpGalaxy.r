@@ -7,6 +7,7 @@
 #####################################################################################################################
 
 ###################### Packages
+#suppressMessages(library(MASS))
 suppressMessages(library(multcomp))
 suppressMessages(library(glmmTMB)) ###Version: 0.2.3
 
@@ -47,7 +48,7 @@ check_file(obs,err_msg_data1,vars_data1,3)
 
 vars_data2 <- c(listFact,listRand)
 vars_data2 <- vars_data2[vars_data2 != "None"]
-err_msg_data2<-"The input unitobs dataset doesn't have the right format. It needs to have at least the following 2 variables :\n- observation.unit (or year and site)\n- factors used in GLM (habitat1, year and/or site)\n"
+err_msg_data2<-"The input unitobs dataset doesn't have the right format. It needs to have at least the following 2 variables :\n- observation.unit (or year and site)\n- factors used in GLM (habitat, year and/or site)\n"
 check_file(tabUnitobs,err_msg_data2,vars_data2,2)
 
 
@@ -66,21 +67,22 @@ if (colFactAna != "None")
 ########## Computing Generalized Linear Model ## Function : modeleLineaireWP2.unitobs.f ############
 ####################################################################################################
 
-modeleLineaireWP2.species.f <- function(metrique, listFact, listRand, FactAna, Distrib, log=FALSE, tabMetrics, tableMetrique, tabUnitobs, unitobs="observation.unit", nbName="number")
+modeleLineaireWP2.species.f <- function(metrique, listFact, listRand, FactAna, Distrib, log=FALSE, tabMetrics, tableMetrique, tabUnitobs, unitobs="observation.unit", outresiduals = FALSE, nbName="number")
 {
-    ## Purpose: Management of different stage of GLM per species
+    ## Purpose: Gestions des différentes étapes des modèles linéaires.
     ## ----------------------------------------------------------------------
-    ## Arguments: metrique : selected metric
-    ##            listFact : Factors for GLM
-    ##            listRand : Random factors for GLM
-    ##            factAna : Separation factor for GLMs
-    ##            Distrib : selected distribution for model
-    ##            log : log transformation on data ? boolean
-    ##            tabMetrics : data table metrics
-    ##            tableMetrique : data table's name
-    ##            tabUnitobs : data table unitobs
+    ## Arguments: metrique : la métrique choisie.
+    ##            factAna : le facteur de séparation des graphiques.
+    ##            factAnaSel : la sélection de modalités pour ce dernier
+    ##            listFact : liste du (des) facteur(s) de regroupement
+    ##            listFactSel : liste des modalités sélectionnées pour ce(s)
+    ##                          dernier(s)
+    ##            tabMetrics : table de métriques.
+    ##            tableMetrique : nom de la table de métriques.
+    ##            dataEnv : environnement de stockage des données.
+    ##            baseEnv : environnement de l'interface.
     ## ----------------------------------------------------------------------
-    ## Author: Yves Reecht, Date: 18 août 2010, 15:59 modified by Coline ROYAUX 04 june 2020
+    ## Author: Yves Reecht, Date: 18 août 2010, 15:59
 
     tmpData <- tabMetrics
 
@@ -89,6 +91,7 @@ modeleLineaireWP2.species.f <- function(metrique, listFact, listRand, FactAna, D
         if (all(is.element(listFact,listRand)) || listFact[1] == "None")
         {
             RespFact <- paste("(1|",paste(listRand,collapse=") + (1|"),")")
+            listF <- NULL
             listFact <- listRand
         }else{
             listF <- listFact[!is.element(listFact,listRand)]
@@ -96,7 +99,7 @@ modeleLineaireWP2.species.f <- function(metrique, listFact, listRand, FactAna, D
             listFact <- c(listF,listRand)
         }   
     }else{
-
+        listF <- listFact
         RespFact <- paste(listFact, collapse=" + ")
     }
     ##Creating model's expression :
@@ -112,8 +115,6 @@ modeleLineaireWP2.species.f <- function(metrique, listFact, listRand, FactAna, D
 
     if (all(is.na(match(tmpData[,unitobs],tabUnitobs[,unitobs])))) {stop("Observation units doesn't match in the two input tables")}
 
-    #if(all(is.element(listFact,colnames(tmpData)))){stop("YAAAS")}
-
     if(is.element("species.code",colnames(tmpData)))
     {
         col <- c(unitobs,metrique,FactAna)
@@ -121,19 +122,16 @@ modeleLineaireWP2.species.f <- function(metrique, listFact, listRand, FactAna, D
         colnames(tmpData) <- c(col,listFact)
 
         for (i in listFactTab) {
-            switch(i,
-                  tmpData[,i] <- as.factor(tmpData[,i]))
-            
+            tmpData[,i] <- as.factor(tmpData[,i])
          }
-
     }else{
         stop("Warning : wrong data frame, data frame should be aggregated by observation unit (year and site) and species")
     }
 
-    ## Suppress unsed 'levels' :
+    ## Suppression des 'levels' non utilisés :
     tmpData <- dropLevels.f(tmpData)
 
-    ## Automatic choice of distribution if none is selected by user :
+    ## Aide au choix du type d'analyse :
     if (Distrib == "None") 
     {
         if (metrique == "pres.abs") 
@@ -149,18 +147,48 @@ modeleLineaireWP2.species.f <- function(metrique, listFact, listRand, FactAna, D
         loiChoisie <- Distrib
     }
 
+    ##Create results table : 
+    lev <- unlist(lapply(listF,FUN=function(x){levels(tmpData[,x])}))
+
+    if (listRand[1] != "None") ## if random effects
+    {
+        TabSum <- data.frame(species=levels(tmpData[,FactAna]),AIC=NA,BIC=NA,logLik=NA, deviance=NA,df.resid=NA)
+        colrand <- unlist(lapply(listRand,
+                           FUN=function(x){lapply(c("Std.Dev","NbObservation","NbLevels"),
+                                                  FUN=function(y){paste(x,y,collapse = ":")
+                                                                 })
+                                          }))
+        TabSum[,colrand] <- NA
+
+        if (! is.null(lev)) ## if fixed effects + random effects
+        {
+            colcoef <- unlist(lapply(c("(Intercept)",lev),
+                               FUN=function(x){lapply(c("Estimate","Std.Err","Zvalue","Pvalue","signif"),
+                                                      FUN=function(y){paste(x,y,collapse = ":")
+                                                                     })
+                                              }))
+        }else{ ## if no fixed effects
+            colcoef <- NULL
+        }
+
+    }else{ ## if no random effects
+        TabSum <- data.frame(species=levels(tmpData[,FactAna]),AIC=NA,Resid.deviance=NA,df.resid=NA,Null.deviance=NA,df.null=NA)
+
+        colcoef <- unlist(lapply(c("(Intercept)",lev),
+                           FUN=function(x){lapply(c("Estimate","Std.Err","Tvalue","Pvalue","signif"),
+                                                  FUN=function(y){paste(x,y,collapse = ":")
+                                                                 })
+                                          }))
+    }  
+  
+    TabSum[,colcoef] <- NA
+
     ## Compute Model(s) :
-    resFile <- "GLMSummary.txt"
-    
+   
     for (sp in levels(tmpData[,FactAna])) 
     {
         cutData <- tmpData[grep(sp,tmpData[,FactAna]),]
         cutData <- dropLevels.f(cutData)
-
-        cat("--------------------------------------------------------------------------------\n",
-            "--------------------------------------------------------------------------------\n Analysis for species ",sp,
-            " :\n--------------------------------------------------------------------------------\n--------------------------------------------------------------------------------\n",
-            sep="",file=resFile,append=TRUE)
 
         res <-""
 
@@ -171,25 +199,39 @@ modeleLineaireWP2.species.f <- function(metrique, listFact, listRand, FactAna, D
             res <- tryCatch(glm(exprML,data=cutData,family=loiChoisie), error=function(e){})
         }
 
-          ## Write results :      
-         if (! is.null(res))
-         {
-            sortiesLM.f(objLM=res, formule=exprML, metrique=metrique,
-                        factAna=factAna, #modSel=iFactGraphSel, listFactSel=listFactSel,
-                        listFact=listFact,
-                        Data=cutData, #Log=Log,
-                        type=ifelse(tableMetrique == "unitSpSz" && factAna != "size.class",
-                                    "CL_unitobs",
-                                    "unitobs"))
+          ## Écriture des résultats formatés dans un fichier :
+        if (! is.null(res))
+        {
+            TabSum <- sortiesLM.f(objLM=res, TabSum=TabSum, factAna=factAna, cut=sp, colAna="species", lev=lev, Data=cutData, metrique=metrique, type="espece", listFact=listFact)
 
         }else{
-            cat("\nCannot compute GLM. Check if one or more factor(s) have only one level, or try with another distribution for the model in advanced settings \n\n",file=resFile,append=TRUE)
+            cat("\nCannot compute GLM for species",sp,"Check if one or more factor(s) have only one level, or try with another distribution for the model in advanced settings \n\n")
         }
 
     }
 
+    ## simple statistics and infos :
+    filename <- "GLMSummaryFull.txt"
+
+    ## Save data on model :
+
+    infoStats.f(filename=filename, Data=tmpData, agregLevel=aggreg, type="stat",
+                metrique=metrique, factGraph=factAna, #factGraphSel=modSel,
+                listFact=listFact)#, listFactSel=listFactSel)
+
+    ## Informations on model :
+    cat("######################################### \nFitted model:", file=filename, fill=1,append=TRUE)
+    cat("\t", deparse(exprML), "\n\n\n", file=filename, sep="",append=TRUE)
+    cat("Family : ", loiChoisie, 
+        "\nResponse : ", metrique,
+        file=filename,append=TRUE)
+
+    return(TabSum)
 }
 
 ################# Analysis
 
-modeleLineaireWP2.species.f(metrique=metric, listFact=listFact, listRand=listRand, FactAna=FactAna, Distrib=Distrib, log=log, tabMetrics=obs, tableMetrique=aggreg, tabUnitobs=tabUnitobs, nbName="number")
+Tab <- modeleLineaireWP2.species.f(metrique=metric, listFact=listFact, listRand=listRand, FactAna=FactAna, Distrib=Distrib, log=log, tabMetrics=obs, tableMetrique=aggreg, tabUnitobs=tabUnitobs, outresiduals=SupprOutlay, nbName="number")
+
+write.table(Tab,"GLMSummary.tabular", row.names=FALSE, sep="\t", dec=".",fileEncoding="UTF-8")
+

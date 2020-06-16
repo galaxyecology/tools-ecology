@@ -20,7 +20,8 @@
     </outputs>
     <tests>
         <test> 
-            
+            <param name="input" value="ObservationsSansszcl.tabular"/>
+            <output name="output_presabs" value="Presence_absence_table_sansszcl.tabular"/>      
         </test>
     </tests>
     <help><![CDATA[

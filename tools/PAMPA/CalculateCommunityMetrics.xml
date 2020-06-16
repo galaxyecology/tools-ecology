@@ -27,7 +27,9 @@
     </outputs>
     <tests>
         <test> 
-            
+            <param name="input" value="ObservationsSansszcl.tabular"/>
+            <param name="indexes" value="all"/>
+            <output name="output_community" value="Community_metrics.tabular"/>
         </test>
     </tests>
     <help><![CDATA[
