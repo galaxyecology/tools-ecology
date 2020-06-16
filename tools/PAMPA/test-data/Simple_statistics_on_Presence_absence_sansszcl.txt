@@ -1,0 +1,1184 @@
+
+##################################################
+Metrics and factors (and possible units/selections):
+
+ Metrics: number 
+            aggregated per observation units.
+
+Analyses factor(s): 
+ *  year 
+ *  habitat 
+ *  site 
+ *  
+
+########################
+Base statistics:
+
+        Min.      1st Qu.       Median         Mean      3rd Qu.         Max. 
+0.000000e+00 0.000000e+00 0.000000e+00 8.750157e-02 0.000000e+00 7.000000e+02 
+          sd            N 
+1.926000e+00 1.078597e+06 
+
+#########################################
+Statistics per combination of factor levels:
+
+                                              Min. 1st Qu. Median         Mean
+2007.Algueraie.Ilot Signal                       0       0      0 0.0269041304
+2007.Algueraie.Laregnere                         0       0      0 0.0132183908
+2007.Algueraie.Radiales Signal laregnere         0       0      0 0.0120663650
+2007.Algueraie.Recif Laregnere                   0       0      0 0.0132625995
+2007.Algueraie.Recif Senez                       0       0      0 0.0654288240
+2007.Corail vivant.Ilot Signal                   0       0      0 0.0742705570
+2007.Corail vivant.Laregnere                     0       0      0 0.2579259821
+2007.Corail vivant.NA                            0       0      0 0.0901856764
+2007.Corail vivant.Recif Senez                   0       0      0 0.0928381963
+2007.Detritique.Ilot Signal                      0       0      0 0.0395667551
+2007.Detritique.Laregnere                        0       0      0 0.0566755084
+2007.Detritique.NA                               0       0      0 0.0576923077
+2007.Detritique.Recif Laregnere                  0       0      0 0.0474506337
+2007.Detritique.Recif Senez                      0       0      0 0.0170940171
+2007.Fond lagonaire.Ilot Signal                  0       0      0 0.0599764220
+2007.Fond lagonaire.Laregnere                    0       0      0 0.0465075155
+2007.Fond lagonaire.NA                           0       0      0 0.0228920505
+2007.Fond lagonaire.Recif Laregnere              0       0      0 0.0281672351
+2007.Fond lagonaire.Recif Senez                  0       0      0 0.0831122900
+2007.Herbier.Ilot Signal                         0       0      0 0.0142646625
+2007.Herbier.Laregnere                           0       0      0 0.0188623637
+2007.Herbier.NA                                  0       0      0 0.0041261421
+2007.Herbier.Radiales Signal laregnere           0       0      0 0.0091364574
+2008.Algueraie.Abore                             0       0      0 0.0318302387
+2008.Algueraie.Ilot Signal                       0       0      0 0.0269672856
+2008.Algueraie.Laregnere                         0       0      0 0.0219569702
+2008.Algueraie.Mbe Kouen                         0       0      0 0.0601237843
+2008.Algueraie.Radiales Signal laregnere         0       0      0 0.0489832007
+2008.Algueraie.Recif Laregnere                   0       0      0 0.0174624226
+2008.Corail vivant.Abore                         0       0      0 0.1131741821
+2008.Corail vivant.Laregnere                     0       0      0 0.2126436782
+2008.Corail vivant.Mbe Kouen                     0       0      0 0.1352785146
+2008.Corail vivant.NA                            0       0      0 0.0501768347
+2008.Detritique.Abore                            0       0      0 0.0694076039
+2008.Detritique.Ilot Signal                      0       0      0 0.0345711760
+2008.Detritique.Laregnere                        0       0      0 0.0505452402
+2008.Detritique.Mbe Kouen                        0       0      0 0.0817402970
+2008.Detritique.NA                               0       0      0 0.0449532319
+2008.Detritique.Recif Laregnere                  0       0      0 0.2567639257
+2008.Fond lagonaire.Abore                        0       0      0 0.0487768936
+2008.Fond lagonaire.Ilot Signal                  0       0      0 0.0223695844
+2008.Fond lagonaire.Laregnere                    0       0      0 0.0247252747
+2008.Fond lagonaire.Mbe Kouen                    0       0      0 0.0227674624
+2008.Fond lagonaire.NA                           0       0      0 0.0345810001
+2008.Fond lagonaire.Radiales Signal laregnere    0       0      0 0.0128205128
+2008.Fond lagonaire.Recif Laregnere              0       0      0 0.0289124668
+2008.Herbier.Abore                               0       0      0 0.0000000000
+2008.Herbier.Ilot Signal                         0       0      0 0.0028882994
+2008.Herbier.Laregnere                           0       0      0 0.0063252397
+2008.Herbier.Radiales Signal laregnere           0       0      0 0.0047155909
+2008.Herbier.Recif Laregnere                     0       0      0 0.0099979596
+2009.Algueraie.Laregnere                         0       0      0 0.0132625995
+2009.Algueraie.Mbe Kouen                         0       0      0 0.0455349248
+2009.Algueraie.NA                                0       0      0 0.0222148541
+2009.Algueraie.Radiales Signal laregnere         0       0      0 0.0026525199
+2009.Algueraie.Recif Laregnere                   0       0      0 0.0123784262
+2009.Corail vivant.Abore                         0       0      0 0.0663764765
+2009.Corail vivant.Mbe Kouen                     0       0      0 0.1202475685
+2009.Corail vivant.NA                            0       0      0 0.1257852855
+2009.Corail vivant.Recif Laregnere               0       0      0 0.3819628647
+2009.Detritique.Abore                            0       0      0 0.0432204712
+2009.Detritique.Ilot Signal                      0       0      0 0.0447527715
+2009.Detritique.Laregnere                        0       0      0 0.0470692256
+2009.Detritique.Mbe Kouen                        0       0      0 0.0768375118
+2009.Detritique.NA                               0       0      0 0.0598198497
+2009.Detritique.Radiales Signal laregnere        0       0      0 0.0000000000
+2009.Detritique.Recif Laregnere                  0       0      0 0.0714917267
+2009.Fond lagonaire.Abore                        0       0      0 0.0246030831
+2009.Fond lagonaire.Ilot Signal                  0       0      0 0.0349248453
+2009.Fond lagonaire.Laregnere                    0       0      0 0.0961538462
+2009.Fond lagonaire.Mbe Kouen                    0       0      0 0.0919540230
+2009.Fond lagonaire.NA                           0       0      0 0.0801834660
+2009.Fond lagonaire.Radiales Signal laregnere    0       0      0 0.0058576481
+2009.Fond lagonaire.Recif Laregnere              0       0      0 0.0035366932
+2009.Herbier.Abore                               0       0      0 0.0000000000
+2009.Herbier.Ilot Signal                         0       0      0 0.0053050398
+2009.Herbier.Laregnere                           0       0      0 0.0000000000
+2009.Herbier.NA                                  0       0      0 0.0099585835
+2009.Herbier.Radiales Signal laregnere           0       0      0 0.0021472780
+2009.Herbier.Recif Laregnere                     0       0      0 0.0000000000
+2010.Algueraie.Radiales Signal laregnere         0       0      0 0.0022988506
+2010.Algueraie.Recif Laregnere                   0       0      0 0.0070733864
+2010.Corail vivant.Abore                         0       0      0 0.0890125294
+2010.Corail vivant.Recif Laregnere               0       0      0 0.0318302387
+2010.Detritique.Abore                            0       0      0 0.0856692236
+2010.Detritique.Ilot Signal                      0       0      0 0.0641365708
+2010.Detritique.Laregnere                        0       0      0 0.0855567691
+2010.Detritique.Mbe Kouen                        0       0      0 0.1194125160
+2010.Detritique.Radiales Signal laregnere        0       0      0 0.0097259063
+2010.Detritique.Recif Laregnere                  0       0      0 0.0495137047
+2010.Fond lagonaire.Abore                        0       0      0 0.0710966016
+2010.Fond lagonaire.Ilot Signal                  0       0      0 0.0304408235
+2010.Fond lagonaire.Laregnere                    0       0      0 0.1268788683
+2010.Fond lagonaire.Mbe Kouen                    0       0      0 0.0351900973
+2010.Fond lagonaire.Radiales Signal laregnere    0       0      0 0.0000000000
+2010.Fond lagonaire.Recif Laregnere              0       0      0 0.0333038609
+2010.Herbier.Abore                               0       0      0 0.0216622458
+2010.Herbier.Laregnere                           0       0      0 0.0061892131
+2010.Herbier.Radiales Signal laregnere           0       0      0 0.0085696797
+2012.Algueraie.NA                                0       0      0 0.0008841733
+2012.Corail vivant.Baie Port Bouquet             0       0      0 0.0905540819
+2012.Corail vivant.Cap Goulvain                  0       0      0 0.0486295314
+2012.Corail vivant.Deva                          0       0      0 0.1087533156
+2012.Corail vivant.Faille aux requins            0       0      0 0.1314470970
+2012.Corail vivant.Grand recif Ngoe              0       0      0 0.1290893015
+2012.Corail vivant.Ilot de sable                 0       0      0 0.0539345712
+2012.Corail vivant.Ilot Hienga                   0       0      0 0.0353669319
+2012.Corail vivant.Ilots                         0       0      0 0.1520778073
+2012.Corail vivant.NA                            0       0      0 0.0791695320
+2012.Corail vivant.Poe                           0       0      0 0.1087533156
+2012.Corail vivant.Recif Doiman                  0       0      0 0.1401414677
+2012.Corail vivant.Toupeti frangeant             0       0      0 0.0733863837
+2012.Detritique.Baie Port Bouquet                0       0      0 0.0521662246
+2012.Detritique.Cap Goulvain                     0       0      0 0.0698496905
+2012.Detritique.Deva                             0       0      0 0.0811399034
+2012.Detritique.Dongan Hienga                    0       0      0 0.0207289518
+2012.Detritique.Dongan Hiengu                    0       0      0 0.0530503979
+2012.Detritique.Faille aux requins               0       0      0 0.1553618795
+2012.Detritique.Frangeant                        0       0      0 0.0389036251
+2012.Detritique.Gouaro                           0       0      0 0.1138373121
+2012.Detritique.Grand recif Ngoe                 0       0      0 0.1034482759
+2012.Detritique.Hienga                           0       0      0 0.0229885057
+2012.Detritique.Ile Verte                        0       0      0 0.2077365164
+2012.Detritique.Ilot de sable                    0       0      0 0.0123784262
+2012.Detritique.Ilot Hienga                      0       0      0 0.0427350427
+2012.Detritique.Ilot Hiengabat                   0       0      0 0.0601237843
+2012.Detritique.Ilot Hienghene                   0       0      0 0.0349248453
+2012.Detritique.Ilot Tiguit                      0       0      0 0.0294724433
+2012.Detritique.Ilots                            0       0      0 0.1858974359
+2012.Detritique.Les Charpentiers                 0       0      0 0.0229885057
+2012.Detritique.NA                               0       0      0 0.0284076324
+2012.Detritique.Poe                              0       0      0 0.1141943821
+2012.Detritique.Recif Doiman                     0       0      0 0.0403404067
+2012.Detritique.Recif Douok                      0       0      0 0.0296198055
+2012.Detritique.Recif Kaun                       0       0      0 0.0172413793
+2012.Detritique.Recif Mengalia                   0       0      0 0.0392351901
+2012.Detritique.Recif Pidanain                   0       0      0 0.0517241379
+2012.Fond lagonaire.Baie Port Bouquet            0       0      0 0.0588606796
+2012.Fond lagonaire.Cap Goulvain                 0       0      0 0.0477453581
+2012.Fond lagonaire.Deva                         0       0      0 0.0600330998
+2012.Fond lagonaire.Dongan Hienga                0       0      0 0.0000000000
+2012.Fond lagonaire.Dongan Hiengu                0       0      0 0.0070733864
+2012.Fond lagonaire.Faille aux requins           0       0      0 0.1145888594
+2012.Fond lagonaire.Frangeant                    0       0      0 0.0000000000
+2012.Fond lagonaire.Grand recif Ngoe             0       0      0 0.0778072502
+2012.Fond lagonaire.Ile Verte                    0       0      0 0.1370468612
+2012.Fond lagonaire.Ilot de sable                0       0      0 0.0265251989
+2012.Fond lagonaire.Ilot Hienga                  0       0      0 0.0064839375
+2012.Fond lagonaire.Ilot Hiengabat               0       0      0 0.0111995284
+2012.Fond lagonaire.Ilot Hienghene               0       0      0 0.0035366932
+2012.Fond lagonaire.Ilots                        0       0      0 0.0442086649
+2012.Fond lagonaire.NA                           0       0      0 0.0209372237
+2012.Fond lagonaire.Poe                          0       0      0 0.0390643839
+2012.Fond lagonaire.Recif Doiman                 0       0      0 0.0557029178
+2012.Fond lagonaire.Recif Kaun                   0       0      0 0.0154730327
+2012.Fond lagonaire.Recif Mengalia               0       0      0 0.0221043324
+2012.Fond lagonaire.Recif Pidanain               0       0      0 0.0000000000
+2012.Fond lagonaire.Toupeti frangeant            0       0      0 0.0247568523
+2012.Herbier.Gouaro                              0       0      0 0.0000000000
+2012.Herbier.NA                                  0       0      0 0.0471559092
+2012.Herbier.Poe                                 0       0      0 0.1618037135
+2013.Algueraie.Crouy                             0       0      0 0.1215738285
+2013.Algueraie.Goeland                           0       0      0 0.1461833186
+2013.Algueraie.Ilot Signal                       0       0      0 0.1741821397
+2013.Algueraie.Lagon Mba Mbo                     0       0      0 0.1702033599
+2013.Algueraie.Lange                             0       0      0 0.1308576481
+2013.Algueraie.Laregnere                         0       0      0 0.1056587091
+2013.Algueraie.Mbe Kouen                         0       0      0 0.1175950486
+2013.Algueraie.NA                                0       0      0 0.0119363395
+2013.Algueraie.Recif Cimenia                     0       0      0 0.0167992927
+2013.Algueraie.Recif de Prony                    0       0      0 0.1229000884
+2013.Algueraie.Recif Nogumatiugi                 0       0      0 0.0000000000
+2013.Algueraie.Seche Croissant                   0       0      0 0.3236074271
+2013.Corail vivant.Bampton nord                  0       0      0 0.1858237548
+2013.Corail vivant.Barriere nord-ouest           0       0      0 0.1461096375
+2013.Corail vivant.Barriere ouest                0       0      0 0.1314260452
+2013.Corail vivant.Canard                        0       0      0 0.1856763926
+2013.Corail vivant.Caye est                      0       0      0 0.1001326260
+2013.Corail vivant.Caye observatoire             0       0      0 0.0341998232
+2013.Corail vivant.Corne sud                     0       0      0 0.2247273799
+2013.Corail vivant.Desmazures                    0       0      0 0.0472148541
+2013.Corail vivant.Goeland                       0       0      0 0.3483642794
+2013.Corail vivant.Ilot Gi                       0       0      0 0.0627763042
+2013.Corail vivant.Ilot Ieroue                   0       0      0 0.0937223696
+2013.Corail vivant.Ilot Kouare                   0       0      0 0.2479000884
+2013.Corail vivant.Ilot Maitre                   0       0      0 0.4571175950
+2013.Corail vivant.Ilot Mato                     0       0      0 0.0557029178
+2013.Corail vivant.Ilot Mbore                    0       0      0 0.0534924845
+2013.Corail vivant.Ilot Ndo                      0       0      0 0.0572502210
+2013.Corail vivant.Ilot Nge                      0       0      0 0.0676392573
+2013.Corail vivant.Ilot Puemba                   0       0      0 0.0335985853
+2013.Corail vivant.Ilot Signal                   0       0      0 0.3821396994
+2013.Corail vivant.Ilot Totea                    0       0      0 0.0380194518
+2013.Corail vivant.Ilot Ua                       0       0      0 0.1184792219
+2013.Corail vivant.Ilot Uaterembi                0       0      0 0.0265251989
+2013.Corail vivant.Ilot Uatio                    0       0      0 0.0783966991
+2013.Corail vivant.La Palette                    0       0      0 0.1710875332
+2013.Corail vivant.Laregnere                     0       0      0 0.4203842135
+2013.Corail vivant.Mba                           0       0      0 0.5024314766
+2013.Corail vivant.Mbe Kouen                     0       0      0 0.3713527851
+2013.Corail vivant.Mbo                           0       0      0 0.3218390805
+2013.Corail vivant.NA                            0       0      0 0.0813548816
+2013.Corail vivant.Pandanus                      0       0      0 0.4005305040
+2013.Corail vivant.Recif Bellona milieu          0       0      0 0.0792219275
+2013.Corail vivant.Recif Bellona Nord-ouest      0       0      0 0.0406719717
+2013.Corail vivant.Recif Bellona Sud             0       0      0 0.1193633952
+2013.Corail vivant.Recif Boody                   0       0      0 0.0358090186
+2013.Corail vivant.Recif Cimenia                 0       0      0 0.0869016041
+2013.Corail vivant.Recif de Prony                0       0      0 0.3222811671
+2013.Corail vivant.Recif Dumont Urville          0       0      0 0.0981432361
+2013.Corail vivant.Recif Garanhua                0       0      0 0.1308576481
+2013.Corail vivant.Recif Ia                      0       0      0 0.0450928382
+2013.Corail vivant.Recif Kanre                   0       0      0 0.0698496905
+2013.Corail vivant.Recif Kuta                    0       0      0 0.0291777188
+2013.Corail vivant.Recif Mbe Kouen               0       0      0 0.2687886826
+2013.Corail vivant.Recif Ndunekunie              0       0      0 0.1405835544
+2013.Corail vivant.Recif Neokouie                0       0      0 0.0636604775
+2013.Corail vivant.Recif Neokumbi                0       0      0 0.0495137047
+2013.Corail vivant.Recif Ngedembi                0       0      0 0.0203359859
+2013.Corail vivant.Recif Nogumatiugi             0       0      0 0.1108532272
+2013.Corail vivant.Recif Puakue                  0       0      0 0.1370468612
+2013.Corail vivant.Recif Purembi                 0       0      0 0.0543766578
+2013.Corail vivant.Recif Senez                   0       0      0 0.8364279399
+2013.Corail vivant.Recif Tiendi                  0       0      0 0.3978779841
+2013.Corail vivant.Recif Tironhua                0       0      0 0.0738284704
+2013.Corail vivant.Recif Tiukuru                 0       0      0 0.2694076039
+2013.Corail vivant.Recif Tootira                 0       0      0 0.0663129973
+2013.Corail vivant.Recif Ua                      0       0      0 0.0563218391
+2013.Corail vivant.Recif Umadu                   0       0      0 0.0680813439
+2013.Corail vivant.Recif Umbei                   0       0      0 0.4111405836
+2013.Corail vivant.Recif Ungeueto                0       0      0 0.8355437666
+2013.Corail vivant.Seche Croissant               0       0      0 0.4752431477
+2013.Detritique.Bampton nord                     0       0      0 0.1047745358
+2013.Detritique.Barriere nord-ouest              0       0      0 0.0641025641
+2013.Detritique.Barriere ouest                   0       0      0 0.0754073513
+2013.Detritique.Caye observatoire                0       0      0 0.0839964633
+2013.Detritique.Corne sud                        0       0      0 0.2183908046
+2013.Detritique.Desmazures                       0       0      0 0.0309460654
+2013.Detritique.Goeland                          0       0      0 0.6224580018
+2013.Detritique.Ilot Gi                          0       0      0 0.0663129973
+2013.Detritique.Ilot Kouare                      0       0      0 0.1458885942
+2013.Detritique.Ilot Maitre                      0       0      0 0.3743000295
+2013.Detritique.Ilot Mato                        0       0      0 0.0309460654
+2013.Detritique.Ilot Sable                       0       0      0 0.7170645447
+2013.Detritique.Ilot Signal                      0       0      0 0.3554376658
+2013.Detritique.Ilot Tere                        0       0      0 0.1405835544
+2013.Detritique.Ilot Uaterembi                   0       0      0 0.1034482759
+2013.Detritique.Kuendu                           0       0      0 0.1706454465
+2013.Detritique.La Palette                       0       0      0 0.1896551724
+2013.Detritique.Maa                              0       0      0 0.3740053050
+2013.Detritique.Mbe Kouen                        0       0      0 0.7763041556
+2013.Detritique.Mbo                              0       0      0 0.4146772767
+2013.Detritique.NA                               0       0      0 0.0486227301
+2013.Detritique.Pandanus                         0       0      0 0.1768346596
+2013.Detritique.Recif Bellona milieu             0       0      0 0.0610079576
+2013.Detritique.Recif Bellona Nord-ouest         0       0      0 0.0424403183
+2013.Detritique.Recif Boody                      0       0      0 0.0990274094
+2013.Detritique.Recif Cimenia                    0       0      0 0.3315649867
+2013.Detritique.Recif Garanhua                   0       0      0 0.1892130858
+2013.Detritique.Recif Ie                         0       0      0 0.2360742706
+2013.Detritique.Recif Kanre                      0       0      0 0.0583554377
+2013.Detritique.Recif Mbe Kouen                  0       0      0 0.3103448276
+2013.Detritique.Recif Ndunekunie                 0       0      0 0.1052166225
+2013.Detritique.Recif Ngedembi                   0       0      0 0.0274093722
+2013.Detritique.Recif Nogumatiugi                0       0      0 0.0450928382
+2013.Detritique.Recif Tironhua                   0       0      0 0.4014146773
+2013.Detritique.Recif Tiukuru                    0       0      0 0.0132625995
+2013.Detritique.Seche Croissant                  0       0      0 0.4482758621
+2013.Fond lagonaire.Bampton nord                 0       0      0 0.1331564987
+2013.Fond lagonaire.Barriere nord-ouest          0       0      0 0.0459770115
+2013.Fond lagonaire.Barriere ouest               0       0      0 0.0710654288
+2013.Fond lagonaire.Canard                       0       0      0 0.0981432361
+2013.Fond lagonaire.Caye observatoire            0       0      0 0.0371352785
+2013.Fond lagonaire.Corne sud                    0       0      0 0.0541003537
+2013.Fond lagonaire.Crouy                        0       0      0 0.3819628647
+2013.Fond lagonaire.Desmazures                   0       0      0 0.0755968170
+2013.Fond lagonaire.Goeland                      0       0      0 0.2461538462
+2013.Fond lagonaire.Ilot Koko                    0       0      0 0.1213527851
+2013.Fond lagonaire.Ilot Maitre                  0       0      0 0.2760831123
+2013.Fond lagonaire.Ilot Sable                   0       0      0 0.4093722370
+2013.Fond lagonaire.Ilot Signal                  0       0      0 0.1839080460
+2013.Fond lagonaire.Ilot Totea                   0       0      0 0.0663129973
+2013.Fond lagonaire.Ilot Ua                      0       0      0 0.0468611848
+2013.Fond lagonaire.La Palette                   0       0      0 0.0772178014
+2013.Fond lagonaire.Lagon Mba Mbo                0       0      0 0.4062776304
+2013.Fond lagonaire.Lange                        0       0      0 0.2074860006
+2013.Fond lagonaire.Laregnere                    0       0      0 0.1852744956
+2013.Fond lagonaire.Mba                          0       0      0 0.4319186561
+2013.Fond lagonaire.Mbe Kouen                    0       0      0 0.1522041177
+2013.Fond lagonaire.Mbo                          0       0      0 0.2524314766
+2013.Fond lagonaire.NA                           0       0      0 0.0433815652
+2013.Fond lagonaire.Pandanus                     0       0      0 0.2371794872
+2013.Fond lagonaire.Recif Bellona milieu         0       0      0 0.0474137931
+2013.Fond lagonaire.Recif Bellona Nord-ouest     0       0      0 0.0477453581
+2013.Fond lagonaire.Recif Bellona Sud            0       0      0 0.0533156499
+2013.Fond lagonaire.Recif Boody                  0       0      0 0.0406719717
+2013.Fond lagonaire.Recif Cimenia                0       0      0 0.0752652520
+2013.Fond lagonaire.Recif de Prony               0       0      0 0.3390804598
+2013.Fond lagonaire.Recif Ia                     0       0      0 0.0070733864
+2013.Fond lagonaire.Recif Ie                     0       0      0 0.1078691424
+2013.Fond lagonaire.Recif Mbe Kouen              0       0      0 0.2556734453
+2013.Fond lagonaire.Recif Ndunekunie             0       0      0 0.1149425287
+2013.Fond lagonaire.Recif Neokouie               0       0      0 0.1435307987
+2013.Fond lagonaire.Recif Neokumbi               0       0      0 0.2524314766
+2013.Fond lagonaire.Recif Ngedembi               0       0      0 0.0194518126
+2013.Fond lagonaire.Recif Nogumatiugi            0       0      0 0.1559092249
+2013.Fond lagonaire.Recif Ouest                  0       0      0 0.2723253758
+2013.Fond lagonaire.Recif Puakue                 0       0      0 0.0839964633
+2013.Fond lagonaire.Recif Purembi                0       0      0 0.0243147657
+2013.Fond lagonaire.Recif Senez                  0       0      0 0.1358679635
+2013.Fond lagonaire.Recif Tironhua               0       0      0 0.0247568523
+2013.Fond lagonaire.Recif Umbei                  0       0      0 0.3306808134
+2013.Fond lagonaire.Seche Croissant              0       0      0 0.9911582670
+2013.Herbier.Canard                              0       0      0 0.0221043324
+2013.Herbier.Ilot Maitre                         0       0      0 0.1126436782
+2013.Herbier.Ilot Signal                         0       0      0 0.0268199234
+2013.Herbier.Lagon Mba Mbo                       0       0      0 0.0680813439
+2013.Herbier.Lagon Signal Laregnere              0       0      0 0.0396614879
+2013.Herbier.Lange                               0       0      0 0.0627763042
+2013.Herbier.Laregnere                           0       0      0 0.0379457707
+2013.Herbier.Mba                                 0       0      0 0.1273209549
+2013.Herbier.Mbe Kouen                           0       0      0 0.0501031536
+2013.Herbier.Mbo                                 0       0      0 0.0990274094
+2013.Herbier.NA                                  0       0      0 0.0353669319
+2013.Herbier.Pandanus                            0       0      0 0.0486295314
+2013.Herbier.Recif Mbe Kouen                     0       0      0 0.0185676393
+2013.Herbier.Recif Senez                         0       0      0 0.0338933098
+2013.Herbier.Seche Croissant                     0       0      0 0.0198938992
+2014.Corail vivant.Baie Xepenehe                 0       0      0 0.0339329636
+2014.Corail vivant.Grand Astrolabe               0       0      0 0.1920424403
+2014.Corail vivant.Hunter                        0       0      0 1.0499557913
+2014.Corail vivant.Jinek                         0       0      0 0.1029059829
+2014.Corail vivant.Petit Astrolabe               0       0      0 0.3719678622
+2014.Corail vivant.Petrie                        0       0      0 0.1733962079
+2014.Corail vivant.Pointe Easo                   0       0      0 0.0680813439
+2014.Corail vivant.Recif Jinek                   0       0      0 0.0528293546
+2014.Corail vivant.Walpole                       0       0      0 0.1109637489
+2014.Detritique.Baie Xepenehe                    0       0      0 0.0240308995
+2014.Detritique.Chepenehe                        0       0      0 0.0389036251
+2014.Detritique.Grand Astrolabe                  0       0      0 0.2088209289
+2014.Detritique.Hunter                           0       0      0 0.1828028294
+2014.Detritique.Jinek                            0       0      0 0.0732095491
+2014.Detritique.Matthew                          0       0      0 0.0141467728
+2014.Detritique.Petit Astrolabe                  0       0      0 0.2208959623
+2014.Detritique.Petrie                           0       0      0 0.1506883921
+2014.Detritique.Pointe Easo                      0       0      0 0.0310344828
+2014.Detritique.Recif Jinek                      0       0      0 0.0477453581
+2014.Detritique.Walpole                          0       0      0 0.0548187445
+2014.Fond lagonaire.Baie Xepenehe                0       0      0 0.0281167109
+2014.Fond lagonaire.Grand Astrolabe              0       0      0 0.1438992042
+2014.Fond lagonaire.Jinek                        0       0      0 0.0479418410
+2014.Fond lagonaire.Matthew                      0       0      0 0.0053050398
+2014.Fond lagonaire.Petit Astrolabe              0       0      0 0.0610079576
+2014.Fond lagonaire.Petrie                       0       0      0 0.0747126437
+2015.Corail vivant.Grand Guilbert                0       0      0 0.0313881521
+2015.Corail vivant.Huon                          0       0      0 0.2614360836
+2015.Corail vivant.Merite                        0       0      0 0.0916592986
+2015.Corail vivant.Pelotas                       0       0      0 0.1280282935
+2015.Corail vivant.Petit Guilbert                0       0      0 0.3333333333
+2015.Corail vivant.Portail                       0       0      0 0.2819039198
+2015.Corail vivant.Surprise                      0       0      0 0.1582117595
+2015.Detritique.Grand Guilbert                   0       0      0 0.1258473327
+2015.Detritique.Huon                             0       0      0 0.1902446213
+2015.Detritique.Merite                           0       0      0 0.1497200118
+2015.Detritique.Pelotas                          0       0      0 0.1074270557
+2015.Detritique.Portail                          0       0      0 0.2435897436
+2015.Detritique.Surprise                         0       0      0 0.1273209549
+2015.Fond lagonaire.Grand Guilbert               0       0      0 0.3029767168
+2015.Fond lagonaire.Huon                         0       0      0 0.2001768347
+2015.Fond lagonaire.Merite                       0       0      0 0.0906277630
+2015.Fond lagonaire.Pelotas                      0       0      0 0.6799292661
+2015.Fond lagonaire.Petit Guilbert               0       0      0 0.0707338638
+2015.Fond lagonaire.Portail                      0       0      0 0.0549955791
+2015.Fond lagonaire.Surprise                     0       0      0 0.0477453581
+2017.Corail vivant.Grand Astrolabe               0       0      0 0.3297966401
+2017.Corail vivant.Petit Astrolabe               0       0      0 0.1945181256
+2017.Corail vivant.Petrie                        0       0      0 0.1421750663
+2017.Detritique.Grand Astrolabe                  0       0      0 0.1378541498
+2017.Detritique.Petit Astrolabe                  0       0      0 0.1221106480
+2017.Detritique.Petrie                           0       0      0 0.1233790156
+2017.Fond lagonaire.Grand Astrolabe              0       0      0 0.0536398467
+2017.Fond lagonaire.Petit Astrolabe              0       0      0 0.0517241379
+2017.Fond lagonaire.Petrie                       0       0      0 0.0889478338
+                                              3rd Qu.        Max.       sd
+2007.Algueraie.Ilot Signal                          0  20.0000000  0.52240
+2007.Algueraie.Laregnere                            0  15.6666667  0.32090
+2007.Algueraie.Radiales Signal laregnere            0  10.6666667  0.25020
+2007.Algueraie.Recif Laregnere                      0  10.6666667  0.27670
+2007.Algueraie.Recif Senez                          0  12.0000000  0.67230
+2007.Corail vivant.Ilot Signal                      0  20.0000000  0.60510
+2007.Corail vivant.Laregnere                        0 450.0000000  8.83000
+2007.Corail vivant.NA                               0  20.0000000  1.08400
+2007.Corail vivant.Recif Senez                      0  46.6666667  1.45100
+2007.Detritique.Ilot Signal                         0  10.3333333  0.30610
+2007.Detritique.Laregnere                           0  23.3333333  0.57650
+2007.Detritique.NA                                  0  23.3333333  0.72280
+2007.Detritique.Recif Laregnere                     0   4.6666667  0.30050
+2007.Detritique.Recif Senez                         0   6.6666667  0.23280
+2007.Fond lagonaire.Ilot Signal                     0  80.0000000  1.73000
+2007.Fond lagonaire.Laregnere                       0  70.0000000  0.94970
+2007.Fond lagonaire.NA                              0  32.6666667  0.43190
+2007.Fond lagonaire.Recif Laregnere                 0  14.6666667  0.45390
+2007.Fond lagonaire.Recif Senez                     0  20.0000000  1.10400
+2007.Herbier.Ilot Signal                            0  33.3333333  0.47930
+2007.Herbier.Laregnere                              0  10.6666667  0.37390
+2007.Herbier.NA                                     0   4.0000000  0.11970
+2007.Herbier.Radiales Signal laregnere              0   4.3333333  0.14730
+2008.Algueraie.Abore                                0   4.0000000  0.25460
+2008.Algueraie.Ilot Signal                          0   5.6666667  0.27330
+2008.Algueraie.Laregnere                            0  40.0000000  0.66410
+2008.Algueraie.Mbe Kouen                            0  11.6666667  0.67010
+2008.Algueraie.Radiales Signal laregnere            0 118.6666667  1.98900
+2008.Algueraie.Recif Laregnere                      0   5.6666667  0.20590
+2008.Corail vivant.Abore                            0  40.3333333  1.50400
+2008.Corail vivant.Laregnere                        0  38.0000000  1.69900
+2008.Corail vivant.Mbe Kouen                        0  11.6666667  0.89240
+2008.Corail vivant.NA                               0  12.0000000  0.43180
+2008.Detritique.Abore                               0  18.6666667  0.68350
+2008.Detritique.Ilot Signal                         0  12.0000000  0.32030
+2008.Detritique.Laregnere                           0  18.3333333  0.50810
+2008.Detritique.Mbe Kouen                           0 150.0000000  1.69400
+2008.Detritique.NA                                  0  25.0000000  0.57970
+2008.Detritique.Recif Laregnere                     0 500.0000000  8.61700
+2008.Fond lagonaire.Abore                           0  24.3333333  0.58960
+2008.Fond lagonaire.Ilot Signal                     0  16.0000000  0.34690
+2008.Fond lagonaire.Laregnere                       0  46.6666667  0.62390
+2008.Fond lagonaire.Mbe Kouen                       0   8.3333333  0.27320
+2008.Fond lagonaire.NA                              0  21.6666667  0.46130
+2008.Fond lagonaire.Radiales Signal laregnere       0  12.3333333  0.31600
+2008.Fond lagonaire.Recif Laregnere                 0  19.0000000  0.45710
+2008.Herbier.Abore                                  0   0.0000000  0.00000
+2008.Herbier.Ilot Signal                            0   4.0000000  0.06933
+2008.Herbier.Laregnere                              0   5.6666667  0.13340
+2008.Herbier.Radiales Signal laregnere              0   4.0000000  0.08991
+2008.Herbier.Recif Laregnere                        0  25.0000000  0.37450
+2009.Algueraie.Laregnere                            0   2.0000000  0.13890
+2009.Algueraie.Mbe Kouen                            0  13.3333333  0.54450
+2009.Algueraie.NA                                   0  15.0000000  0.34570
+2009.Algueraie.Radiales Signal laregnere            0   3.6666667  0.07121
+2009.Algueraie.Recif Laregnere                      0   2.6666667  0.17150
+2009.Corail vivant.Abore                            0  41.0000000  0.65080
+2009.Corail vivant.Mbe Kouen                        0  19.0000000  1.04600
+2009.Corail vivant.NA                               0 326.0000000  3.98000
+2009.Corail vivant.Recif Laregnere                  0  80.0000000  4.22500
+2009.Detritique.Abore                               0  20.6666667  0.47470
+2009.Detritique.Ilot Signal                         0  18.6666667  0.46440
+2009.Detritique.Laregnere                           0  22.3333333  0.52700
+2009.Detritique.Mbe Kouen                           0 150.0000000  1.48000
+2009.Detritique.NA                                  0  90.0000000  1.00800
+2009.Detritique.Radiales Signal laregnere           0   0.0000000  0.00000
+2009.Detritique.Recif Laregnere                     0  70.0000000  1.42400
+2009.Fond lagonaire.Abore                           0  19.6666667  0.36090
+2009.Fond lagonaire.Ilot Signal                     0   7.6666667  0.30400
+2009.Fond lagonaire.Laregnere                       0 300.0000000  4.48300
+2009.Fond lagonaire.Mbe Kouen                       0  50.0000000  1.42000
+2009.Fond lagonaire.NA                              0 400.0000000  3.51100
+2009.Fond lagonaire.Radiales Signal laregnere       0  12.0000000  0.17640
+2009.Fond lagonaire.Recif Laregnere                 0   1.3333333  0.06867
+2009.Herbier.Abore                                  0   0.0000000  0.00000
+2009.Herbier.Ilot Signal                            0   5.0000000  0.13990
+2009.Herbier.Laregnere                              0   0.0000000  0.00000
+2009.Herbier.NA                                     0  19.6666667  0.29680
+2009.Herbier.Radiales Signal laregnere              0   2.6666667  0.05837
+2009.Herbier.Recif Laregnere                        0   0.0000000  0.00000
+2010.Algueraie.Radiales Signal laregnere            0   2.0000000  0.06091
+2010.Algueraie.Recif Laregnere                      0   2.0000000  0.10570
+2010.Corail vivant.Abore                            0  35.3333333  0.81270
+2010.Corail vivant.Recif Laregnere                  0   3.3333333  0.22190
+2010.Detritique.Abore                               0 158.3333333  1.52900
+2010.Detritique.Ilot Signal                         0  48.6666667  0.98780
+2010.Detritique.Laregnere                           0  64.0000000  1.28200
+2010.Detritique.Mbe Kouen                           0 226.6666667  2.34800
+2010.Detritique.Radiales Signal laregnere           0   2.0000000  0.11490
+2010.Detritique.Recif Laregnere                     0  15.0000000  0.44820
+2010.Fond lagonaire.Abore                           0  58.6666667  1.03900
+2010.Fond lagonaire.Ilot Signal                     0  14.0000000  0.38470
+2010.Fond lagonaire.Laregnere                       0 135.0000000  3.14000
+2010.Fond lagonaire.Mbe Kouen                       0   4.3333333  0.24410
+2010.Fond lagonaire.Radiales Signal laregnere       0   0.0000000  0.00000
+2010.Fond lagonaire.Recif Laregnere                 0   6.6666667  0.30070
+2010.Herbier.Abore                                  0   8.6666667  0.34950
+2010.Herbier.Laregnere                              0   1.6666667  0.09237
+2010.Herbier.Radiales Signal laregnere              0  18.0000000  0.31360
+2012.Algueraie.NA                                   0   0.6666667  0.02428
+2012.Corail vivant.Baie Port Bouquet                0  91.6666667  1.42900
+2012.Corail vivant.Cap Goulvain                     0   3.3333333  0.31560
+2012.Corail vivant.Deva                             0  11.6666667  0.81590
+2012.Corail vivant.Faille aux requins               0  32.3333333  1.51600
+2012.Corail vivant.Grand recif Ngoe                 0  34.6666667  1.52200
+2012.Corail vivant.Ilot de sable                    0  11.3333333  0.61910
+2012.Corail vivant.Ilot Hienga                      0   3.6666667  0.25470
+2012.Corail vivant.Ilots                            0  87.0000000  2.16600
+2012.Corail vivant.NA                               0  42.3333333  0.76660
+2012.Corail vivant.Poe                              0  13.3333333  0.76920
+2012.Corail vivant.Recif Doiman                     0  52.0000000  1.99000
+2012.Corail vivant.Toupeti frangeant                0  10.6666667  0.61620
+2012.Detritique.Baie Port Bouquet                   0  10.0000000  0.49810
+2012.Detritique.Cap Goulvain                        0   9.3333333  0.53760
+2012.Detritique.Deva                                0  51.0000000  0.99500
+2012.Detritique.Dongan Hienga                       0   7.6666667  0.23980
+2012.Detritique.Dongan Hiengu                       0  27.6666667  0.86390
+2012.Detritique.Faille aux requins                  0  63.3333333  1.82300
+2012.Detritique.Frangeant                           0  11.6666667  0.37510
+2012.Detritique.Gouaro                              0  65.0000000  1.86400
+2012.Detritique.Grand recif Ngoe                    0  39.6666667  1.18600
+2012.Detritique.Hienga                              0   7.3333333  0.38370
+2012.Detritique.Ile Verte                           0 114.0000000  3.12500
+2012.Detritique.Ilot de sable                       0   2.6666667  0.12910
+2012.Detritique.Ilot Hienga                         0  15.3333333  0.62480
+2012.Detritique.Ilot Hiengabat                      0  15.0000000  0.74000
+2012.Detritique.Ilot Hienghene                      0  10.0000000  0.36680
+2012.Detritique.Ilot Tiguit                         0   4.6666667  0.23570
+2012.Detritique.Ilots                               0  48.3333333  2.11600
+2012.Detritique.Les Charpentiers                    0  11.3333333  0.36330
+2012.Detritique.NA                                  0  28.0000000  0.44180
+2012.Detritique.Poe                                 0  81.6666667  1.65100
+2012.Detritique.Recif Doiman                        0  13.0000000  0.39790
+2012.Detritique.Recif Douok                         0   6.6666667  0.31090
+2012.Detritique.Recif Kaun                          0   5.0000000  0.18630
+2012.Detritique.Recif Mengalia                      0  18.3333333  0.44420
+2012.Detritique.Recif Pidanain                      0  18.3333333  0.57060
+2012.Fond lagonaire.Baie Port Bouquet               0  16.6666667  0.58030
+2012.Fond lagonaire.Cap Goulvain                    0  13.3333333  0.55510
+2012.Fond lagonaire.Deva                            0  42.3333333  0.83350
+2012.Fond lagonaire.Dongan Hienga                   0   0.0000000  0.00000
+2012.Fond lagonaire.Dongan Hiengu                   0   1.0000000  0.06393
+2012.Fond lagonaire.Faille aux requins              0  33.6666667  1.27200
+2012.Fond lagonaire.Frangeant                       0   0.0000000  0.00000
+2012.Fond lagonaire.Grand recif Ngoe                0  21.6666667  0.79840
+2012.Fond lagonaire.Ile Verte                       0  35.0000000  1.53500
+2012.Fond lagonaire.Ilot de sable                   0   2.6666667  0.18800
+2012.Fond lagonaire.Ilot Hienga                     0   2.3333333  0.08956
+2012.Fond lagonaire.Ilot Hiengabat                  0   4.0000000  0.16010
+2012.Fond lagonaire.Ilot Hienghene                  0   0.6666667  0.04196
+2012.Fond lagonaire.Ilots                           0   8.0000000  0.39670
+2012.Fond lagonaire.NA                              0  35.0000000  0.44730
+2012.Fond lagonaire.Poe                             0  56.6666667  0.74850
+2012.Fond lagonaire.Recif Doiman                    0   6.6666667  0.44780
+2012.Fond lagonaire.Recif Kaun                      0   7.6666667  0.23380
+2012.Fond lagonaire.Recif Mengalia                  0   8.3333333  0.30630
+2012.Fond lagonaire.Recif Pidanain                  0   0.0000000  0.00000
+2012.Fond lagonaire.Toupeti frangeant               0   7.0000000  0.29240
+2012.Herbier.Gouaro                                 0   0.0000000  0.00000
+2012.Herbier.NA                                     0  13.6666667  0.59770
+2012.Herbier.Poe                                    0 111.6666667  2.73500
+2013.Algueraie.Crouy                                0  21.3333333  1.15400
+2013.Algueraie.Goeland                              0  19.6666667  1.36400
+2013.Algueraie.Ilot Signal                          0  20.3333333  1.26800
+2013.Algueraie.Lagon Mba Mbo                        0  25.3333333  1.58400
+2013.Algueraie.Lange                                0  25.3333333  1.43100
+2013.Algueraie.Laregnere                            0  28.0000000  1.19000
+2013.Algueraie.Mbe Kouen                            0  24.0000000  1.45300
+2013.Algueraie.NA                                   0   7.0000000  0.25830
+2013.Algueraie.Recif Cimenia                        0   2.0000000  0.15190
+2013.Algueraie.Recif de Prony                       0  25.0000000  1.38000
+2013.Algueraie.Recif Nogumatiugi                    0   0.0000000  0.00000
+2013.Algueraie.Seche Croissant                      0  24.3333333  2.10300
+2013.Corail vivant.Bampton nord                     0 200.0000000  3.49900
+2013.Corail vivant.Barriere nord-ouest              0  23.6666667  1.10700
+2013.Corail vivant.Barriere ouest                   0 203.3333333  3.03400
+2013.Corail vivant.Canard                           0  32.0000000  1.63900
+2013.Corail vivant.Caye est                         0  36.3333333  1.39500
+2013.Corail vivant.Caye observatoire                0   8.3333333  0.36770
+2013.Corail vivant.Corne sud                        0 400.0000000  5.94500
+2013.Corail vivant.Desmazures                       0  14.0000000  0.51970
+2013.Corail vivant.Goeland                          0  47.6666667  2.85400
+2013.Corail vivant.Ilot Gi                          0   5.3333333  0.42440
+2013.Corail vivant.Ilot Ieroue                      0   8.6666667  0.64530
+2013.Corail vivant.Ilot Kouare                      0 308.3333333  7.24400
+2013.Corail vivant.Ilot Maitre                      0  32.3333333  2.73400
+2013.Corail vivant.Ilot Mato                        0   4.0000000  0.30190
+2013.Corail vivant.Ilot Mbore                       0   5.6666667  0.35490
+2013.Corail vivant.Ilot Ndo                         0  13.0000000  0.65400
+2013.Corail vivant.Ilot Nge                         0   8.3333333  0.46000
+2013.Corail vivant.Ilot Puemba                      0   3.6666667  0.25740
+2013.Corail vivant.Ilot Signal                      0  47.0000000  2.55100
+2013.Corail vivant.Ilot Totea                       0   5.0000000  0.30470
+2013.Corail vivant.Ilot Ua                          0  19.0000000  0.99940
+2013.Corail vivant.Ilot Uaterembi                   0   4.6666667  0.25930
+2013.Corail vivant.Ilot Uatio                       0  11.3333333  0.60150
+2013.Corail vivant.La Palette                       0  70.0000000  2.58300
+2013.Corail vivant.Laregnere                        0  47.3333333  2.52700
+2013.Corail vivant.Mba                              0  52.0000000  2.92200
+2013.Corail vivant.Mbe Kouen                        0  18.6666667  1.84000
+2013.Corail vivant.Mbo                              0  25.6666667  2.03900
+2013.Corail vivant.NA                               0 166.6666667  1.23300
+2013.Corail vivant.Pandanus                         0  19.0000000  2.02100
+2013.Corail vivant.Recif Bellona milieu             0  20.0000000  0.72440
+2013.Corail vivant.Recif Bellona Nord-ouest         0  10.0000000  0.43340
+2013.Corail vivant.Recif Bellona Sud                0 133.3333333  3.14100
+2013.Corail vivant.Recif Boody                      0   8.6666667  0.44670
+2013.Corail vivant.Recif Cimenia                    0  44.3333333  1.04300
+2013.Corail vivant.Recif de Prony                   0  31.6666667  2.15200
+2013.Corail vivant.Recif Dumont Urville             0  14.6666667  0.78370
+2013.Corail vivant.Recif Garanhua                   0  16.6666667  0.91400
+2013.Corail vivant.Recif Ia                         0   4.6666667  0.32980
+2013.Corail vivant.Recif Kanre                      0  18.3333333  0.96610
+2013.Corail vivant.Recif Kuta                       0   4.0000000  0.24440
+2013.Corail vivant.Recif Mbe Kouen                  0  40.3333333  2.06100
+2013.Corail vivant.Recif Ndunekunie                 0  24.0000000  1.35200
+2013.Corail vivant.Recif Neokouie                   0  12.6666667  0.69150
+2013.Corail vivant.Recif Neokumbi                   0   5.3333333  0.32350
+2013.Corail vivant.Recif Ngedembi                   0   6.0000000  0.31680
+2013.Corail vivant.Recif Nogumatiugi                0  23.3333333  0.94400
+2013.Corail vivant.Recif Puakue                     0  21.3333333  1.26600
+2013.Corail vivant.Recif Purembi                    0   6.0000000  0.38350
+2013.Corail vivant.Recif Senez                      0  34.0000000  3.74000
+2013.Corail vivant.Recif Tiendi                     0  79.0000000  4.58900
+2013.Corail vivant.Recif Tironhua                   0  46.6666667  0.96820
+2013.Corail vivant.Recif Tiukuru                    0  98.6666667  3.16600
+2013.Corail vivant.Recif Tootira                    0  10.0000000  0.57220
+2013.Corail vivant.Recif Ua                         0   8.0000000  0.38360
+2013.Corail vivant.Recif Umadu                      0  10.0000000  0.57670
+2013.Corail vivant.Recif Umbei                      0  44.0000000  2.88000
+2013.Corail vivant.Recif Ungeueto                   0 167.3333333 11.31000
+2013.Corail vivant.Seche Croissant                  0  39.3333333  2.72300
+2013.Detritique.Bampton nord                        0  19.3333333  0.84880
+2013.Detritique.Barriere nord-ouest                 0   6.3333333  0.42030
+2013.Detritique.Barriere ouest                      0  16.0000000  0.57980
+2013.Detritique.Caye observatoire                   0   8.0000000  0.63050
+2013.Detritique.Corne sud                           0  39.0000000  2.20300
+2013.Detritique.Desmazures                          0   3.3333333  0.25250
+2013.Detritique.Goeland                             0  29.6666667  3.09300
+2013.Detritique.Ilot Gi                             0   6.0000000  0.45550
+2013.Detritique.Ilot Kouare                         0  24.0000000  1.34600
+2013.Detritique.Ilot Maitre                         0  54.3333333  2.53700
+2013.Detritique.Ilot Mato                           0   3.3333333  0.22000
+2013.Detritique.Ilot Sable                          0  37.6666667  3.80100
+2013.Detritique.Ilot Signal                         0  26.0000000  2.05900
+2013.Detritique.Ilot Tere                           0  26.6666667  1.41500
+2013.Detritique.Ilot Uaterembi                      0   8.0000000  0.63410
+2013.Detritique.Kuendu                              0  15.0000000  1.28800
+2013.Detritique.La Palette                          0  41.0000000  1.73200
+2013.Detritique.Maa                                 0  28.6666667  2.29100
+2013.Detritique.Mbe Kouen                           0  27.0000000  3.21100
+2013.Detritique.Mbo                                 0  45.6666667  2.71200
+2013.Detritique.NA                                  0  38.3333333  0.63350
+2013.Detritique.Pandanus                            0  10.0000000  1.01000
+2013.Detritique.Recif Bellona milieu                0  12.0000000  0.68420
+2013.Detritique.Recif Bellona Nord-ouest            0   9.0000000  0.48740
+2013.Detritique.Recif Boody                         0  13.0000000  0.76430
+2013.Detritique.Recif Cimenia                       0  84.3333333  4.14100
+2013.Detritique.Recif Garanhua                      0  72.6666667  2.76100
+2013.Detritique.Recif Ie                            0  27.0000000  1.96400
+2013.Detritique.Recif Kanre                         0   5.6666667  0.41700
+2013.Detritique.Recif Mbe Kouen                     0  20.0000000  1.68000
+2013.Detritique.Recif Ndunekunie                    0   8.6666667  0.65580
+2013.Detritique.Recif Ngedembi                      0   2.3333333  0.20800
+2013.Detritique.Recif Nogumatiugi                   0   5.6666667  0.40830
+2013.Detritique.Recif Tironhua                      0 260.0000000  9.48000
+2013.Detritique.Recif Tiukuru                       0   1.6666667  0.13140
+2013.Detritique.Seche Croissant                     0  40.0000000  2.83700
+2013.Fond lagonaire.Bampton nord                    0  30.0000000  1.17000
+2013.Fond lagonaire.Barriere nord-ouest             0   7.0000000  0.36860
+2013.Fond lagonaire.Barriere ouest                  0  25.0000000  0.68620
+2013.Fond lagonaire.Canard                          0  13.0000000  0.82810
+2013.Fond lagonaire.Caye observatoire               0  17.3333333  0.64380
+2013.Fond lagonaire.Corne sud                       0  33.3333333  0.70100
+2013.Fond lagonaire.Crouy                           0  57.6666667  2.77100
+2013.Fond lagonaire.Desmazures                      0   6.0000000  0.52490
+2013.Fond lagonaire.Goeland                         0  26.3333333  1.69400
+2013.Fond lagonaire.Ilot Koko                       0  59.6666667  2.22000
+2013.Fond lagonaire.Ilot Maitre                     0  47.6666667  2.28900
+2013.Fond lagonaire.Ilot Sable                      0  14.0000000  1.91900
+2013.Fond lagonaire.Ilot Signal                     0  56.3333333  1.67900
+2013.Fond lagonaire.Ilot Totea                      0  16.6666667  0.87150
+2013.Fond lagonaire.Ilot Ua                         0   4.0000000  0.28330
+2013.Fond lagonaire.La Palette                      0  38.0000000  0.94070
+2013.Fond lagonaire.Lagon Mba Mbo                   0  44.0000000  2.82000
+2013.Fond lagonaire.Lange                           0  25.0000000  1.62500
+2013.Fond lagonaire.Laregnere                       0  49.6666667  1.52500
+2013.Fond lagonaire.Mba                             0  47.6666667  2.71100
+2013.Fond lagonaire.Mbe Kouen                       0  46.6666667  1.43700
+2013.Fond lagonaire.Mbo                             0  45.6666667  1.73100
+2013.Fond lagonaire.NA                              0 149.6666667  0.82630
+2013.Fond lagonaire.Pandanus                        0  29.6666667  1.87700
+2013.Fond lagonaire.Recif Bellona milieu            0  38.0000000  0.77480
+2013.Fond lagonaire.Recif Bellona Nord-ouest        0   5.6666667  0.32300
+2013.Fond lagonaire.Recif Bellona Sud               0  35.0000000  0.77350
+2013.Fond lagonaire.Recif Boody                     0   7.3333333  0.36330
+2013.Fond lagonaire.Recif Cimenia                   0  96.0000000  1.38800
+2013.Fond lagonaire.Recif de Prony                  0  49.3333333  2.42600
+2013.Fond lagonaire.Recif Ia                        0   1.0000000  0.07655
+2013.Fond lagonaire.Recif Ie                        0  28.0000000  1.46900
+2013.Fond lagonaire.Recif Mbe Kouen                 0  26.6666667  1.70600
+2013.Fond lagonaire.Recif Ndunekunie                0  10.0000000  0.80430
+2013.Fond lagonaire.Recif Neokouie                  0  48.6666667  1.81300
+2013.Fond lagonaire.Recif Neokumbi                  0  43.3333333  2.37700
+2013.Fond lagonaire.Recif Ngedembi                  0   2.6666667  0.16720
+2013.Fond lagonaire.Recif Nogumatiugi               0 200.0000000  3.63800
+2013.Fond lagonaire.Recif Ouest                     0  90.0000000  4.63900
+2013.Fond lagonaire.Recif Puakue                    0   6.3333333  0.48290
+2013.Fond lagonaire.Recif Purembi                   0   2.3333333  0.16160
+2013.Fond lagonaire.Recif Senez                     0  28.6666667  1.29400
+2013.Fond lagonaire.Recif Tironhua                  0   2.0000000  0.16480
+2013.Fond lagonaire.Recif Umbei                     0  68.3333333  4.12900
+2013.Fond lagonaire.Seche Croissant                 0  49.3333333  5.00400
+2013.Herbier.Canard                                 0   7.0000000  0.35600
+2013.Herbier.Ilot Maitre                            0  34.0000000  1.34500
+2013.Herbier.Ilot Signal                            0  11.0000000  0.40460
+2013.Herbier.Lagon Mba Mbo                          0  18.6666667  0.95480
+2013.Herbier.Lagon Signal Laregnere                 0  23.0000000  0.67220
+2013.Herbier.Lange                                  0  30.0000000  0.95980
+2013.Herbier.Laregnere                              0  27.0000000  0.61830
+2013.Herbier.Mba                                    0  28.3333333  1.34000
+2013.Herbier.Mbe Kouen                              0  10.3333333  0.58430
+2013.Herbier.Mbo                                    0  11.0000000  0.92550
+2013.Herbier.NA                                     0  60.6666667  1.40000
+2013.Herbier.Pandanus                               0  13.6666667  0.61360
+2013.Herbier.Recif Mbe Kouen                        0   7.0000000  0.36050
+2013.Herbier.Recif Senez                            0   9.6666667  0.49530
+2013.Herbier.Seche Croissant                        0   7.0000000  0.32920
+2014.Corail vivant.Baie Xepenehe                    0  50.0000000  0.59140
+2014.Corail vivant.Grand Astrolabe                  0  32.0000000  1.64500
+2014.Corail vivant.Hunter                           0 700.0000000 25.52000
+2014.Corail vivant.Jinek                            0  93.3333333  1.81100
+2014.Corail vivant.Petit Astrolabe                  0  79.0000000  2.75900
+2014.Corail vivant.Petrie                           0  45.0000000  1.79000
+2014.Corail vivant.Pointe Easo                      0   7.3333333  0.41520
+2014.Corail vivant.Recif Jinek                      0   8.3333333  0.38750
+2014.Corail vivant.Walpole                          0  30.0000000  1.20200
+2014.Detritique.Baie Xepenehe                       0  11.3333333  0.25580
+2014.Detritique.Chepenehe                           0  24.3333333  0.88950
+2014.Detritique.Grand Astrolabe                     0  41.6666667  1.72800
+2014.Detritique.Hunter                              0  75.0000000  2.69600
+2014.Detritique.Jinek                               0  26.3333333  0.73010
+2014.Detritique.Matthew                             0   1.0000000  0.08985
+2014.Detritique.Petit Astrolabe                     0  34.3333333  1.79300
+2014.Detritique.Petrie                              0  93.0000000  2.05000
+2014.Detritique.Pointe Easo                         0   3.6000000  0.24620
+2014.Detritique.Recif Jinek                         0   3.0000000  0.27950
+2014.Detritique.Walpole                             0   3.3333333  0.31970
+2014.Fond lagonaire.Baie Xepenehe                   0  20.3333333  0.49740
+2014.Fond lagonaire.Grand Astrolabe                 0  30.6666667  1.38700
+2014.Fond lagonaire.Jinek                           0  35.0000000  0.70710
+2014.Fond lagonaire.Matthew                         0   1.0000000  0.07274
+2014.Fond lagonaire.Petit Astrolabe                 0  11.6666667  0.53430
+2014.Fond lagonaire.Petrie                          0  23.6666667  0.86670
+2015.Corail vivant.Grand Guilbert                   0   4.3333333  0.25320
+2015.Corail vivant.Huon                             0 253.3333333  4.59800
+2015.Corail vivant.Merite                           0  21.6666667  0.85040
+2015.Corail vivant.Pelotas                          0  20.0000000  1.04600
+2015.Corail vivant.Petit Guilbert                   0 133.3333333  5.25700
+2015.Corail vivant.Portail                          0 133.3333333  4.19600
+2015.Corail vivant.Surprise                         0 156.6666667  2.99200
+2015.Detritique.Grand Guilbert                      0  29.3333333  1.23700
+2015.Detritique.Huon                                0 415.0000000  6.21700
+2015.Detritique.Merite                              0  39.0000000  1.55600
+2015.Detritique.Pelotas                             0  22.0000000  1.11700
+2015.Detritique.Portail                             0  45.0000000  2.56300
+2015.Detritique.Surprise                            0  32.6666667  1.17100
+2015.Fond lagonaire.Grand Guilbert                  0 160.0000000  5.36900
+2015.Fond lagonaire.Huon                            0 200.0000000  4.71600
+2015.Fond lagonaire.Merite                          0  18.0000000  0.84680
+2015.Fond lagonaire.Pelotas                         0 108.0000000  6.44100
+2015.Fond lagonaire.Petit Guilbert                  0  11.0000000  0.54620
+2015.Fond lagonaire.Portail                         0  11.3333333  0.52290
+2015.Fond lagonaire.Surprise                        0  40.0000000  0.75810
+2017.Corail vivant.Grand Astrolabe                  0 150.0000000  3.77700
+2017.Corail vivant.Petit Astrolabe                  0  44.0000000  1.73300
+2017.Corail vivant.Petrie                           0  61.6666667  1.65300
+2017.Detritique.Grand Astrolabe                     0  59.0000000  1.21300
+2017.Detritique.Petit Astrolabe                     0  63.0000000  1.12400
+2017.Detritique.Petrie                              0  52.3333333  1.24500
+2017.Fond lagonaire.Grand Astrolabe                 0   9.6666667  0.43700
+2017.Fond lagonaire.Petit Astrolabe                 0   6.0000000  0.35520
+2017.Fond lagonaire.Petrie                          0  26.3333333  0.87990
+                                                  N
+2007.Algueraie.Ilot Signal                     2639
+2007.Algueraie.Laregnere                       7540
+2007.Algueraie.Radiales Signal laregnere       6409
+2007.Algueraie.Recif Laregnere                 1885
+2007.Algueraie.Recif Senez                      377
+2007.Corail vivant.Ilot Signal                 3770
+2007.Corail vivant.Laregnere                   2639
+2007.Corail vivant.NA                           377
+2007.Corail vivant.Recif Senez                 1131
+2007.Detritique.Ilot Signal                    4524
+2007.Detritique.Laregnere                      3770
+2007.Detritique.NA                             6032
+2007.Detritique.Recif Laregnere                1131
+2007.Detritique.Recif Senez                    1131
+2007.Fond lagonaire.Ilot Signal                2262
+2007.Fond lagonaire.Laregnere                  7540
+2007.Fond lagonaire.NA                        20735
+2007.Fond lagonaire.Recif Laregnere            2639
+2007.Fond lagonaire.Recif Senez                 754
+2007.Herbier.Ilot Signal                       5655
+2007.Herbier.Laregnere                         2262
+2007.Herbier.NA                                1131
+2007.Herbier.Radiales Signal laregnere         3393
+2008.Algueraie.Abore                            754
+2008.Algueraie.Ilot Signal                      754
+2008.Algueraie.Laregnere                       4524
+2008.Algueraie.Mbe Kouen                        377
+2008.Algueraie.Radiales Signal laregnere       3770
+2008.Algueraie.Recif Laregnere                 1508
+2008.Corail vivant.Abore                        754
+2008.Corail vivant.Laregnere                    754
+2008.Corail vivant.Mbe Kouen                    377
+2008.Corail vivant.NA                          1508
+2008.Detritique.Abore                          2262
+2008.Detritique.Ilot Signal                    3770
+2008.Detritique.Laregnere                      4524
+2008.Detritique.Mbe Kouen                     10933
+2008.Detritique.NA                             7163
+2008.Detritique.Recif Laregnere                3770
+2008.Fond lagonaire.Abore                     13572
+2008.Fond lagonaire.Ilot Signal                7540
+2008.Fond lagonaire.Laregnere                 10556
+2008.Fond lagonaire.Mbe Kouen                  1508
+2008.Fond lagonaire.NA                        16965
+2008.Fond lagonaire.Radiales Signal laregnere  3016
+2008.Fond lagonaire.Recif Laregnere            3770
+2008.Herbier.Abore                              754
+2008.Herbier.Ilot Signal                       5655
+2008.Herbier.Laregnere                         4901
+2008.Herbier.Radiales Signal laregnere         4524
+2008.Herbier.Recif Laregnere                   4901
+2009.Algueraie.Laregnere                        754
+2009.Algueraie.Mbe Kouen                        754
+2009.Algueraie.NA                              6032
+2009.Algueraie.Radiales Signal laregnere       3393
+2009.Algueraie.Recif Laregnere                  377
+2009.Corail vivant.Abore                      14703
+2009.Corail vivant.Mbe Kouen                    377
+2009.Corail vivant.NA                          7163
+2009.Corail vivant.Recif Laregnere              377
+2009.Detritique.Abore                          6409
+2009.Detritique.Ilot Signal                    4901
+2009.Detritique.Laregnere                      6409
+2009.Detritique.Mbe Kouen                     11687
+2009.Detritique.NA                            12064
+2009.Detritique.Radiales Signal laregnere       377
+2009.Detritique.Recif Laregnere                2639
+2009.Fond lagonaire.Abore                      8671
+2009.Fond lagonaire.Ilot Signal                3770
+2009.Fond lagonaire.Laregnere                  4524
+2009.Fond lagonaire.Mbe Kouen                  1885
+2009.Fond lagonaire.NA                        18096
+2009.Fond lagonaire.Radiales Signal laregnere  6032
+2009.Fond lagonaire.Recif Laregnere             377
+2009.Herbier.Abore                              377
+2009.Herbier.Ilot Signal                       1508
+2009.Herbier.Laregnere                         1131
+2009.Herbier.NA                                7163
+2009.Herbier.Radiales Signal laregnere         2639
+2009.Herbier.Recif Laregnere                    377
+2010.Algueraie.Radiales Signal laregnere       1885
+2010.Algueraie.Recif Laregnere                  377
+2010.Corail vivant.Abore                      15457
+2010.Corail vivant.Recif Laregnere              377
+2010.Detritique.Abore                         13949
+2010.Detritique.Ilot Signal                    4901
+2010.Detritique.Laregnere                      6409
+2010.Detritique.Mbe Kouen                     13572
+2010.Detritique.Radiales Signal laregnere       377
+2010.Detritique.Recif Laregnere                1885
+2010.Fond lagonaire.Abore                     14703
+2010.Fond lagonaire.Ilot Signal                2639
+2010.Fond lagonaire.Laregnere                  2262
+2010.Fond lagonaire.Mbe Kouen                  1885
+2010.Fond lagonaire.Radiales Signal laregnere   377
+2010.Fond lagonaire.Recif Laregnere            1131
+2010.Herbier.Abore                              754
+2010.Herbier.Laregnere                          377
+2010.Herbier.Radiales Signal laregnere         4901
+2012.Algueraie.NA                               754
+2012.Corail vivant.Baie Port Bouquet           9048
+2012.Corail vivant.Cap Goulvain                 377
+2012.Corail vivant.Deva                         377
+2012.Corail vivant.Faille aux requins          1131
+2012.Corail vivant.Grand recif Ngoe             754
+2012.Corail vivant.Ilot de sable                377
+2012.Corail vivant.Ilot Hienga                  754
+2012.Corail vivant.Ilots                       4147
+2012.Corail vivant.NA                         10179
+2012.Corail vivant.Poe                          754
+2012.Corail vivant.Recif Doiman                 754
+2012.Corail vivant.Toupeti frangeant            377
+2012.Detritique.Baie Port Bouquet               754
+2012.Detritique.Cap Goulvain                   1131
+2012.Detritique.Deva                           4901
+2012.Detritique.Dongan Hienga                  3393
+2012.Detritique.Dongan Hiengu                  2639
+2012.Detritique.Faille aux requins             2639
+2012.Detritique.Frangeant                      1885
+2012.Detritique.Gouaro                         1508
+2012.Detritique.Grand recif Ngoe               1508
+2012.Detritique.Hienga                          377
+2012.Detritique.Ile Verte                      3770
+2012.Detritique.Ilot de sable                  1508
+2012.Detritique.Ilot Hienga                    1131
+2012.Detritique.Ilot Hiengabat                  754
+2012.Detritique.Ilot Hienghene                 3016
+2012.Detritique.Ilot Tiguit                    1131
+2012.Detritique.Ilots                          1508
+2012.Detritique.Les Charpentiers               1131
+2012.Detritique.NA                            11687
+2012.Detritique.Poe                            4901
+2012.Detritique.Recif Doiman                   3016
+2012.Detritique.Recif Douok                     754
+2012.Detritique.Recif Kaun                     3016
+2012.Detritique.Recif Mengalia                 3016
+2012.Detritique.Recif Pidanain                 1508
+2012.Fond lagonaire.Baie Port Bouquet          2639
+2012.Fond lagonaire.Cap Goulvain                754
+2012.Fond lagonaire.Deva                      14703
+2012.Fond lagonaire.Dongan Hienga               377
+2012.Fond lagonaire.Dongan Hiengu               377
+2012.Fond lagonaire.Faille aux requins         1885
+2012.Fond lagonaire.Frangeant                   377
+2012.Fond lagonaire.Grand recif Ngoe           1885
+2012.Fond lagonaire.Ile Verte                  3016
+2012.Fond lagonaire.Ilot de sable               377
+2012.Fond lagonaire.Ilot Hienga                1131
+2012.Fond lagonaire.Ilot Hiengabat             1131
+2012.Fond lagonaire.Ilot Hienghene              377
+2012.Fond lagonaire.Ilots                      1131
+2012.Fond lagonaire.NA                         9425
+2012.Fond lagonaire.Poe                        8294
+2012.Fond lagonaire.Recif Doiman                377
+2012.Fond lagonaire.Recif Kaun                 2262
+2012.Fond lagonaire.Recif Mengalia             1131
+2012.Fond lagonaire.Recif Pidanain              377
+2012.Fond lagonaire.Toupeti frangeant          1131
+2012.Herbier.Gouaro                             377
+2012.Herbier.NA                                1131
+2012.Herbier.Poe                               3393
+2013.Algueraie.Crouy                            754
+2013.Algueraie.Goeland                         1131
+2013.Algueraie.Ilot Signal                      754
+2013.Algueraie.Lagon Mba Mbo                    754
+2013.Algueraie.Lange                            377
+2013.Algueraie.Laregnere                       1508
+2013.Algueraie.Mbe Kouen                        377
+2013.Algueraie.NA                               754
+2013.Algueraie.Recif Cimenia                    377
+2013.Algueraie.Recif de Prony                   754
+2013.Algueraie.Recif Nogumatiugi                377
+2013.Algueraie.Seche Croissant                  754
+2013.Corail vivant.Bampton nord                4524
+2013.Corail vivant.Barriere nord-ouest         1508
+2013.Corail vivant.Barriere ouest              5278
+2013.Corail vivant.Canard                      1508
+2013.Corail vivant.Caye est                    1508
+2013.Corail vivant.Caye observatoire           1885
+2013.Corail vivant.Corne sud                   6786
+2013.Corail vivant.Desmazures                  1885
+2013.Corail vivant.Goeland                      377
+2013.Corail vivant.Ilot Gi                      377
+2013.Corail vivant.Ilot Ieroue                  754
+2013.Corail vivant.Ilot Kouare                 3016
+2013.Corail vivant.Ilot Maitre                  754
+2013.Corail vivant.Ilot Mato                    377
+2013.Corail vivant.Ilot Mbore                   754
+2013.Corail vivant.Ilot Ndo                     754
+2013.Corail vivant.Ilot Nge                     754
+2013.Corail vivant.Ilot Puemba                  377
+2013.Corail vivant.Ilot Signal                 1885
+2013.Corail vivant.Ilot Totea                   377
+2013.Corail vivant.Ilot Ua                      754
+2013.Corail vivant.Ilot Uaterembi               377
+2013.Corail vivant.Ilot Uatio                  1131
+2013.Corail vivant.La Palette                   754
+2013.Corail vivant.Laregnere                   4147
+2013.Corail vivant.Mba                         1508
+2013.Corail vivant.Mbe Kouen                    377
+2013.Corail vivant.Mbo                          754
+2013.Corail vivant.NA                         36569
+2013.Corail vivant.Pandanus                     754
+2013.Corail vivant.Recif Bellona milieu        1508
+2013.Corail vivant.Recif Bellona Nord-ouest     754
+2013.Corail vivant.Recif Bellona Sud           1885
+2013.Corail vivant.Recif Boody                  754
+2013.Corail vivant.Recif Cimenia               2639
+2013.Corail vivant.Recif de Prony               754
+2013.Corail vivant.Recif Dumont Urville        1131
+2013.Corail vivant.Recif Garanhua               754
+2013.Corail vivant.Recif Ia                     377
+2013.Corail vivant.Recif Kanre                  377
+2013.Corail vivant.Recif Kuta                   377
+2013.Corail vivant.Recif Mbe Kouen             1131
+2013.Corail vivant.Recif Ndunekunie             377
+2013.Corail vivant.Recif Neokouie               377
+2013.Corail vivant.Recif Neokumbi               754
+2013.Corail vivant.Recif Ngedembi               377
+2013.Corail vivant.Recif Nogumatiugi           3016
+2013.Corail vivant.Recif Puakue                 377
+2013.Corail vivant.Recif Purembi                754
+2013.Corail vivant.Recif Senez                  377
+2013.Corail vivant.Recif Tiendi                 377
+2013.Corail vivant.Recif Tironhua              3770
+2013.Corail vivant.Recif Tiukuru               2262
+2013.Corail vivant.Recif Tootira                377
+2013.Corail vivant.Recif Ua                     754
+2013.Corail vivant.Recif Umadu                  377
+2013.Corail vivant.Recif Umbei                  377
+2013.Corail vivant.Recif Ungeueto               377
+2013.Corail vivant.Seche Croissant              754
+2013.Detritique.Bampton nord                    754
+2013.Detritique.Barriere nord-ouest             754
+2013.Detritique.Barriere ouest                 2639
+2013.Detritique.Caye observatoire               377
+2013.Detritique.Corne sud                       377
+2013.Detritique.Desmazures                      377
+2013.Detritique.Goeland                         377
+2013.Detritique.Ilot Gi                         377
+2013.Detritique.Ilot Kouare                     377
+2013.Detritique.Ilot Maitre                    1131
+2013.Detritique.Ilot Mato                       377
+2013.Detritique.Ilot Sable                      377
+2013.Detritique.Ilot Signal                     377
+2013.Detritique.Ilot Tere                       377
+2013.Detritique.Ilot Uaterembi                  377
+2013.Detritique.Kuendu                          377
+2013.Detritique.La Palette                      754
+2013.Detritique.Maa                             754
+2013.Detritique.Mbe Kouen                       377
+2013.Detritique.Mbo                            1131
+2013.Detritique.NA                             9802
+2013.Detritique.Pandanus                        377
+2013.Detritique.Recif Bellona milieu            377
+2013.Detritique.Recif Bellona Nord-ouest        377
+2013.Detritique.Recif Boody                     377
+2013.Detritique.Recif Cimenia                   754
+2013.Detritique.Recif Garanhua                  754
+2013.Detritique.Recif Ie                        377
+2013.Detritique.Recif Kanre                     377
+2013.Detritique.Recif Mbe Kouen                 754
+2013.Detritique.Recif Ndunekunie                377
+2013.Detritique.Recif Ngedembi                  377
+2013.Detritique.Recif Nogumatiugi               377
+2013.Detritique.Recif Tironhua                  754
+2013.Detritique.Recif Tiukuru                   377
+2013.Detritique.Seche Croissant                 377
+2013.Fond lagonaire.Bampton nord               1885
+2013.Fond lagonaire.Barriere nord-ouest        2262
+2013.Fond lagonaire.Barriere ouest             4524
+2013.Fond lagonaire.Canard                      377
+2013.Fond lagonaire.Caye observatoire           754
+2013.Fond lagonaire.Corne sud                  6032
+2013.Fond lagonaire.Crouy                      2262
+2013.Fond lagonaire.Desmazures                  377
+2013.Fond lagonaire.Goeland                    1885
+2013.Fond lagonaire.Ilot Koko                  1508
+2013.Fond lagonaire.Ilot Maitre                1508
+2013.Fond lagonaire.Ilot Sable                  377
+2013.Fond lagonaire.Ilot Signal                2262
+2013.Fond lagonaire.Ilot Totea                  377
+2013.Fond lagonaire.Ilot Ua                     377
+2013.Fond lagonaire.La Palette                 3393
+2013.Fond lagonaire.Lagon Mba Mbo              1508
+2013.Fond lagonaire.Lange                      1131
+2013.Fond lagonaire.Laregnere                  4147
+2013.Fond lagonaire.Mba                         754
+2013.Fond lagonaire.Mbe Kouen                  2639
+2013.Fond lagonaire.Mbo                        2262
+2013.Fond lagonaire.NA                        71253
+2013.Fond lagonaire.Pandanus                   1508
+2013.Fond lagonaire.Recif Bellona milieu       3016
+2013.Fond lagonaire.Recif Bellona Nord-ouest   1131
+2013.Fond lagonaire.Recif Bellona Sud          3770
+2013.Fond lagonaire.Recif Boody                2262
+2013.Fond lagonaire.Recif Cimenia              6032
+2013.Fond lagonaire.Recif de Prony              754
+2013.Fond lagonaire.Recif Ia                    377
+2013.Fond lagonaire.Recif Ie                    377
+2013.Fond lagonaire.Recif Mbe Kouen            2262
+2013.Fond lagonaire.Recif Ndunekunie            377
+2013.Fond lagonaire.Recif Neokouie             1131
+2013.Fond lagonaire.Recif Neokumbi              754
+2013.Fond lagonaire.Recif Ngedembi              754
+2013.Fond lagonaire.Recif Nogumatiugi          3393
+2013.Fond lagonaire.Recif Ouest                 377
+2013.Fond lagonaire.Recif Puakue                377
+2013.Fond lagonaire.Recif Purembi               754
+2013.Fond lagonaire.Recif Senez                1131
+2013.Fond lagonaire.Recif Tironhua              377
+2013.Fond lagonaire.Recif Umbei                 377
+2013.Fond lagonaire.Seche Croissant             377
+2013.Herbier.Canard                             754
+2013.Herbier.Ilot Maitre                       1885
+2013.Herbier.Ilot Signal                       4524
+2013.Herbier.Lagon Mba Mbo                      754
+2013.Herbier.Lagon Signal Laregnere            2639
+2013.Herbier.Lange                             2262
+2013.Herbier.Laregnere                         9048
+2013.Herbier.Mba                               1508
+2013.Herbier.Mbe Kouen                         1131
+2013.Herbier.Mbo                                377
+2013.Herbier.NA                                1885
+2013.Herbier.Pandanus                          2639
+2013.Herbier.Recif Mbe Kouen                    377
+2013.Herbier.Recif Senez                       1131
+2013.Herbier.Seche Croissant                    754
+2014.Corail vivant.Baie Xepenehe              20735
+2014.Corail vivant.Grand Astrolabe             1885
+2014.Corail vivant.Hunter                       754
+2014.Corail vivant.Jinek                       5655
+2014.Corail vivant.Petit Astrolabe             8671
+2014.Corail vivant.Petrie                      3393
+2014.Corail vivant.Pointe Easo                  754
+2014.Corail vivant.Recif Jinek                  754
+2014.Corail vivant.Walpole                      754
+2014.Detritique.Baie Xepenehe                  7163
+2014.Detritique.Chepenehe                       754
+2014.Detritique.Grand Astrolabe                6409
+2014.Detritique.Hunter                         1508
+2014.Detritique.Jinek                          3770
+2014.Detritique.Matthew                         377
+2014.Detritique.Petit Astrolabe                2262
+2014.Detritique.Petrie                         7917
+2014.Detritique.Pointe Easo                     754
+2014.Detritique.Recif Jinek                     377
+2014.Detritique.Walpole                         377
+2014.Fond lagonaire.Baie Xepenehe              1885
+2014.Fond lagonaire.Grand Astrolabe            1508
+2014.Fond lagonaire.Jinek                      3393
+2014.Fond lagonaire.Matthew                     377
+2014.Fond lagonaire.Petit Astrolabe            1131
+2014.Fond lagonaire.Petrie                     1508
+2015.Corail vivant.Grand Guilbert               754
+2015.Corail vivant.Huon                        7163
+2015.Corail vivant.Merite                      1131
+2015.Corail vivant.Pelotas                     1885
+2015.Corail vivant.Petit Guilbert               754
+2015.Corail vivant.Portail                     1131
+2015.Corail vivant.Surprise                    6032
+2015.Detritique.Grand Guilbert                 1131
+2015.Detritique.Huon                           4524
+2015.Detritique.Merite                         1131
+2015.Detritique.Pelotas                         754
+2015.Detritique.Portail                         754
+2015.Detritique.Surprise                       1508
+2015.Fond lagonaire.Grand Guilbert             1131
+2015.Fond lagonaire.Huon                       3770
+2015.Fond lagonaire.Merite                      754
+2015.Fond lagonaire.Pelotas                     377
+2015.Fond lagonaire.Petit Guilbert              754
+2015.Fond lagonaire.Portail                    1885
+2015.Fond lagonaire.Surprise                   3770
+2017.Corail vivant.Grand Astrolabe             1885
+2017.Corail vivant.Petit Astrolabe              754
+2017.Corail vivant.Petrie                      1885
+2017.Detritique.Grand Astrolabe                8671
+2017.Detritique.Petit Astrolabe               10556
+2017.Detritique.Petrie                         9048
+2017.Fond lagonaire.Grand Astrolabe            2262
+2017.Fond lagonaire.Petit Astrolabe             754
+2017.Fond lagonaire.Petrie                     1885
+
+######################################### 
+Fitted model:
+	number ~ year + habitat + (1 | site)
+
+
+Family :  gaussian 
+Response :  number
