@@ -1,0 +1,420 @@
+
+##################################################
+Metrics and factors (and possible units/selections):
+
+ Metrics: species.richness 
+            aggregated per observation units.
+
+Analyses factor(s): 
+ *  year 
+ *  habitat 
+ *  site 
+ *  
+
+########################
+Base statistics:
+
+      Min.    1st Qu.     Median       Mean    3rd Qu.       Max.         sd 
+  1.000000   1.000000   1.000000   1.106892   1.000000   2.000000   0.309200 
+         N 
+711.000000 
+
+#########################################
+Statistics per combination of factor levels:
+
+                                              Min. 1st Qu. Median     Mean
+2007.Algueraie.Ilot Signal                       1    1.00    1.0 1.000000
+2007.Algueraie.Radiales Signal laregnere         1    1.00    1.0 1.000000
+2007.Corail vivant.Ilot Signal                   1    1.00    1.0 1.000000
+2007.Corail vivant.NA                            1    1.00    1.0 1.000000
+2007.Corail vivant.Recif Senez                   1    1.00    1.0 1.000000
+2007.Detritique.Recif Laregnere                  1    1.00    1.0 1.000000
+2007.Fond lagonaire.Ilot Signal                  1    1.00    1.0 1.000000
+2007.Herbier.Ilot Signal                         1    1.00    1.0 1.000000
+2008.Corail vivant.Abore                         1    1.00    1.0 1.000000
+2008.Corail vivant.Laregnere                     2    2.00    2.0 2.000000
+2008.Corail vivant.NA                            1    1.00    1.0 1.000000
+2008.Detritique.Mbe Kouen                        1    1.00    1.0 1.000000
+2008.Detritique.NA                               1    1.00    1.0 1.000000
+2008.Detritique.Recif Laregnere                  1    1.00    1.0 1.000000
+2008.Fond lagonaire.Abore                        1    1.00    1.0 1.000000
+2008.Fond lagonaire.NA                           1    1.00    1.0 1.000000
+2008.Herbier.Ilot Signal                         1    1.00    1.0 1.000000
+2008.Herbier.Radiales Signal laregnere           1    1.00    1.0 1.000000
+2009.Algueraie.NA                                1    1.00    1.0 1.000000
+2009.Corail vivant.Abore                         1    1.00    1.0 1.037037
+2009.Corail vivant.Mbe Kouen                     1    1.00    1.0 1.000000
+2009.Corail vivant.NA                            1    1.00    1.0 1.125000
+2009.Corail vivant.Recif Laregnere               1    1.00    1.0 1.000000
+2009.Detritique.Mbe Kouen                        1    1.00    1.0 1.000000
+2009.Detritique.NA                               1    1.00    1.0 1.000000
+2009.Detritique.Recif Laregnere                  1    1.00    1.0 1.000000
+2009.Fond lagonaire.Mbe Kouen                    1    1.00    1.0 1.000000
+2009.Fond lagonaire.NA                           1    1.00    1.0 1.000000
+2009.Fond lagonaire.Radiales Signal laregnere    1    1.00    1.0 1.000000
+2009.Herbier.Radiales Signal laregnere           1    1.00    1.0 1.000000
+2010.Corail vivant.Abore                         1    1.00    1.0 1.114286
+2010.Detritique.Abore                            1    1.00    1.0 1.000000
+2010.Detritique.Laregnere                        1    1.00    1.0 1.000000
+2010.Detritique.Mbe Kouen                        1    1.00    1.0 1.000000
+2010.Detritique.Recif Laregnere                  1    1.00    1.0 1.000000
+2010.Fond lagonaire.Abore                        1    1.00    1.0 1.000000
+2010.Fond lagonaire.Laregnere                    1    1.00    1.0 1.000000
+2010.Fond lagonaire.Mbe Kouen                    1    1.00    1.0 1.000000
+2010.Herbier.Radiales Signal laregnere           1    1.00    1.0 1.000000
+2012.Corail vivant.Baie Port Bouquet             1    1.00    1.0 1.000000
+2012.Corail vivant.Cap Goulvain                  1    1.00    1.0 1.000000
+2012.Corail vivant.Deva                          1    1.00    1.0 1.000000
+2012.Corail vivant.Grand recif Ngoe              1    1.00    1.0 1.000000
+2012.Corail vivant.Ilot de sable                 1    1.00    1.0 1.000000
+2012.Corail vivant.Ilots                         1    1.00    1.0 1.000000
+2012.Corail vivant.NA                            1    1.00    1.0 1.000000
+2012.Corail vivant.Poe                           1    1.00    1.0 1.000000
+2012.Corail vivant.Recif Doiman                  1    1.00    1.0 1.000000
+2012.Detritique.Cap Goulvain                     1    1.00    1.0 1.000000
+2012.Detritique.Deva                             1    1.00    1.0 1.000000
+2012.Detritique.Dongan Hienga                    1    1.00    1.0 1.000000
+2012.Detritique.Dongan Hiengu                    1    1.00    1.0 1.000000
+2012.Detritique.Faille aux requins               1    1.00    1.0 1.000000
+2012.Detritique.Gouaro                           1    1.00    1.0 1.000000
+2012.Detritique.Grand recif Ngoe                 1    1.00    1.0 1.000000
+2012.Detritique.Ile Verte                        1    1.00    1.0 1.200000
+2012.Detritique.Ilot de sable                    1    1.00    1.0 1.000000
+2012.Detritique.Ilot Hiengabat                   1    1.00    1.0 1.000000
+2012.Detritique.Ilot Hienghene                   1    1.00    1.0 1.000000
+2012.Detritique.Ilot Tiguit                      1    1.00    1.0 1.000000
+2012.Detritique.Les Charpentiers                 1    1.00    1.0 1.000000
+2012.Detritique.Poe                              1    1.00    1.0 1.000000
+2012.Detritique.Recif Doiman                     1    1.00    1.0 1.000000
+2012.Detritique.Recif Douok                      1    1.00    1.0 1.000000
+2012.Detritique.Recif Mengalia                   1    1.00    1.0 1.000000
+2012.Detritique.Recif Pidanain                   1    1.00    1.0 1.000000
+2012.Fond lagonaire.Baie Port Bouquet            1    1.00    1.0 1.000000
+2012.Fond lagonaire.Deva                         1    1.00    1.0 1.000000
+2012.Fond lagonaire.Faille aux requins           1    1.00    1.0 1.000000
+2012.Fond lagonaire.Grand recif Ngoe             1    1.00    1.0 1.000000
+2012.Fond lagonaire.Ile Verte                    1    1.00    1.0 1.000000
+2012.Fond lagonaire.Ilots                        1    1.00    1.0 1.000000
+2012.Fond lagonaire.NA                           1    1.00    1.0 1.000000
+2012.Fond lagonaire.Poe                          1    1.00    1.0 1.333333
+2012.Fond lagonaire.Recif Doiman                 1    1.00    1.0 1.000000
+2013.Algueraie.Lagon Mba Mbo                     1    1.00    1.0 1.000000
+2013.Algueraie.Seche Croissant                   2    2.00    2.0 2.000000
+2013.Corail vivant.Bampton nord                  1    1.00    1.0 1.333333
+2013.Corail vivant.Barriere nord-ouest           1    1.00    1.0 1.333333
+2013.Corail vivant.Barriere ouest                1    1.00    1.0 1.000000
+2013.Corail vivant.Canard                        1    1.00    1.0 1.000000
+2013.Corail vivant.Corne sud                     1    1.00    1.0 1.142857
+2013.Corail vivant.Ilot Gi                       1    1.00    1.0 1.000000
+2013.Corail vivant.Ilot Kouare                   1    1.00    1.0 1.166667
+2013.Corail vivant.Ilot Maitre                   1    1.00    1.0 1.000000
+2013.Corail vivant.Ilot Mbore                    1    1.00    1.0 1.000000
+2013.Corail vivant.Ilot Ndo                      1    1.00    1.0 1.000000
+2013.Corail vivant.Ilot Nge                      1    1.00    1.0 1.000000
+2013.Corail vivant.Ilot Signal                   1    1.00    1.0 1.000000
+2013.Corail vivant.Ilot Ua                       1    1.00    1.0 1.000000
+2013.Corail vivant.Ilot Uatio                    1    1.25    1.5 1.500000
+2013.Corail vivant.La Palette                    1    1.00    1.0 1.000000
+2013.Corail vivant.Laregnere                     1    1.00    1.0 1.000000
+2013.Corail vivant.Mba                           1    1.00    1.0 1.000000
+2013.Corail vivant.Mbo                           2    2.00    2.0 2.000000
+2013.Corail vivant.NA                            1    1.00    1.0 1.157143
+2013.Corail vivant.Recif Bellona milieu          1    1.00    1.0 1.000000
+2013.Corail vivant.Recif Bellona Nord-ouest      1    1.00    1.0 1.000000
+2013.Corail vivant.Recif Cimenia                 1    1.00    1.0 1.000000
+2013.Corail vivant.Recif de Prony                1    1.00    1.0 1.000000
+2013.Corail vivant.Recif Garanhua                1    1.00    1.0 1.000000
+2013.Corail vivant.Recif Mbe Kouen               1    1.00    1.0 1.000000
+2013.Corail vivant.Recif Neokouie                1    1.00    1.0 1.000000
+2013.Corail vivant.Recif Neokumbi                1    1.00    1.0 1.000000
+2013.Corail vivant.Recif Nogumatiugi             1    1.00    1.0 1.142857
+2013.Corail vivant.Recif Purembi                 1    1.00    1.0 1.000000
+2013.Corail vivant.Recif Senez                   1    1.00    1.0 1.000000
+2013.Corail vivant.Recif Tiendi                  1    1.00    1.0 1.000000
+2013.Corail vivant.Recif Tironhua                1    1.00    1.0 1.333333
+2013.Corail vivant.Recif Tiukuru                 1    1.00    1.0 1.333333
+2013.Corail vivant.Recif Ua                      1    1.00    1.0 1.000000
+2013.Corail vivant.Recif Umadu                   1    1.00    1.0 1.000000
+2013.Corail vivant.Recif Umbei                   1    1.00    1.0 1.000000
+2013.Detritique.Barriere nord-ouest              1    1.00    1.0 1.000000
+2013.Detritique.Goeland                          1    1.00    1.0 1.000000
+2013.Detritique.Ilot Gi                          1    1.00    1.0 1.000000
+2013.Detritique.Ilot Kouare                      1    1.00    1.0 1.000000
+2013.Detritique.Ilot Tere                        1    1.00    1.0 1.000000
+2013.Detritique.La Palette                       1    1.00    1.0 1.000000
+2013.Detritique.Mbe Kouen                        2    2.00    2.0 2.000000
+2013.Detritique.Mbo                              1    1.00    1.0 1.000000
+2013.Detritique.NA                               1    1.00    1.0 1.142857
+2013.Detritique.Recif Cimenia                    2    2.00    2.0 2.000000
+2013.Detritique.Recif Garanhua                   1    1.25    1.5 1.500000
+2013.Detritique.Recif Ie                         1    1.00    1.0 1.000000
+2013.Detritique.Recif Kanre                      1    1.00    1.0 1.000000
+2013.Detritique.Recif Mbe Kouen                  1    1.00    1.0 1.000000
+2013.Detritique.Recif Ndunekunie                 1    1.00    1.0 1.000000
+2013.Detritique.Recif Nogumatiugi                1    1.00    1.0 1.000000
+2013.Detritique.Recif Tironhua                   1    1.00    1.0 1.000000
+2013.Detritique.Seche Croissant                  1    1.00    1.0 1.000000
+2013.Fond lagonaire.Bampton nord                 1    1.00    1.0 1.000000
+2013.Fond lagonaire.Barriere nord-ouest          1    1.00    1.0 1.000000
+2013.Fond lagonaire.Corne sud                    1    1.00    1.0 1.000000
+2013.Fond lagonaire.Crouy                        1    1.00    1.0 1.000000
+2013.Fond lagonaire.Ilot Koko                    1    1.00    1.0 1.000000
+2013.Fond lagonaire.Lagon Mba Mbo                1    1.00    1.0 1.000000
+2013.Fond lagonaire.Mba                          1    1.00    1.0 1.000000
+2013.Fond lagonaire.Mbe Kouen                    1    1.00    1.0 1.000000
+2013.Fond lagonaire.Mbo                          1    1.00    1.0 1.000000
+2013.Fond lagonaire.NA                           1    1.00    1.0 1.061224
+2013.Fond lagonaire.Recif Bellona Sud            1    1.00    1.0 1.000000
+2013.Fond lagonaire.Recif Cimenia                1    1.00    1.0 1.166667
+2013.Fond lagonaire.Recif Ia                     1    1.00    1.0 1.000000
+2013.Fond lagonaire.Recif Ie                     1    1.00    1.0 1.000000
+2013.Fond lagonaire.Recif Mbe Kouen              1    1.00    1.0 1.000000
+2013.Fond lagonaire.Recif Ndunekunie             1    1.00    1.0 1.000000
+2013.Fond lagonaire.Recif Neokouie               1    1.00    1.0 1.000000
+2013.Fond lagonaire.Recif Neokumbi               1    1.00    1.0 1.000000
+2013.Fond lagonaire.Recif Nogumatiugi            1    1.00    1.0 1.000000
+2013.Fond lagonaire.Recif Puakue                 1    1.00    1.0 1.000000
+2013.Fond lagonaire.Recif Purembi                1    1.00    1.0 1.000000
+2013.Fond lagonaire.Recif Senez                  1    1.00    1.0 1.000000
+2013.Fond lagonaire.Recif Umbei                  1    1.00    1.0 1.000000
+2013.Fond lagonaire.Seche Croissant              1    1.00    1.0 1.000000
+2013.Herbier.Ilot Signal                         1    1.00    1.0 1.000000
+2013.Herbier.Laregnere                           1    1.00    1.0 1.000000
+2014.Corail vivant.Baie Xepenehe                 1    1.00    1.0 1.142857
+2014.Corail vivant.Grand Astrolabe               1    1.00    1.0 1.000000
+2014.Corail vivant.Jinek                         1    1.00    1.0 1.444444
+2014.Corail vivant.Petit Astrolabe               1    1.00    1.0 1.272727
+2014.Corail vivant.Petrie                        1    1.00    1.0 1.250000
+2014.Corail vivant.Pointe Easo                   1    1.25    1.5 1.500000
+2014.Corail vivant.Recif Jinek                   1    1.00    1.0 1.000000
+2014.Corail vivant.Walpole                       1    1.00    1.0 1.000000
+2014.Detritique.Baie Xepenehe                    1    1.00    1.0 1.000000
+2014.Detritique.Grand Astrolabe                  1    1.00    1.0 1.000000
+2014.Detritique.Hunter                           1    1.00    1.0 1.000000
+2014.Detritique.Jinek                            1    1.00    1.0 1.333333
+2014.Detritique.Petrie                           1    1.00    1.0 1.000000
+2014.Fond lagonaire.Baie Xepenehe                1    1.00    1.0 1.000000
+2014.Fond lagonaire.Grand Astrolabe              1    1.00    1.0 1.000000
+2014.Fond lagonaire.Jinek                        1    1.25    1.5 1.500000
+2015.Corail vivant.Grand Guilbert                2    2.00    2.0 2.000000
+2015.Corail vivant.Huon                          1    1.00    1.0 1.125000
+2015.Corail vivant.Merite                        1    1.00    1.0 1.000000
+2015.Corail vivant.Pelotas                       1    1.75    2.0 1.750000
+2015.Corail vivant.Petit Guilbert                1    1.00    1.0 1.000000
+2015.Corail vivant.Portail                       1    1.00    1.0 1.333333
+2015.Corail vivant.Surprise                      1    1.00    1.0 1.000000
+2015.Detritique.Huon                             2    2.00    2.0 2.000000
+2015.Detritique.Portail                          1    1.00    1.0 1.000000
+2015.Fond lagonaire.Huon                         1    1.00    1.0 1.000000
+2015.Fond lagonaire.Portail                      1    1.00    1.0 1.000000
+2017.Corail vivant.Grand Astrolabe               1    1.00    1.5 1.500000
+2017.Corail vivant.Petit Astrolabe               1    1.00    1.0 1.000000
+2017.Corail vivant.Petrie                        1    1.00    2.0 1.600000
+2017.Detritique.Grand Astrolabe                  1    1.00    1.0 1.400000
+2017.Detritique.Petit Astrolabe                  1    1.00    1.0 1.333333
+2017.Detritique.Petrie                           1    1.00    1.0 1.166667
+2017.Fond lagonaire.Grand Astrolabe              1    1.00    1.0 1.000000
+2017.Fond lagonaire.Petit Astrolabe              1    1.00    1.0 1.000000
+2017.Fond lagonaire.Petrie                       1    1.00    1.0 1.000000
+                                              3rd Qu. Max.     sd  N
+2007.Algueraie.Ilot Signal                       1.00    1     NA  1
+2007.Algueraie.Radiales Signal laregnere         1.00    1 0.0000  2
+2007.Corail vivant.Ilot Signal                   1.00    1 0.0000  3
+2007.Corail vivant.NA                            1.00    1     NA  1
+2007.Corail vivant.Recif Senez                   1.00    1 0.0000  2
+2007.Detritique.Recif Laregnere                  1.00    1     NA  1
+2007.Fond lagonaire.Ilot Signal                  1.00    1     NA  1
+2007.Herbier.Ilot Signal                         1.00    1     NA  1
+2008.Corail vivant.Abore                         1.00    1 0.0000  2
+2008.Corail vivant.Laregnere                     2.00    2     NA  1
+2008.Corail vivant.NA                            1.00    1     NA  1
+2008.Detritique.Mbe Kouen                        1.00    1 0.0000  9
+2008.Detritique.NA                               1.00    1     NA  1
+2008.Detritique.Recif Laregnere                  1.00    1     NA  1
+2008.Fond lagonaire.Abore                        1.00    1 0.0000  5
+2008.Fond lagonaire.NA                           1.00    1 0.0000  2
+2008.Herbier.Ilot Signal                         1.00    1     NA  1
+2008.Herbier.Radiales Signal laregnere           1.00    1     NA  1
+2009.Algueraie.NA                                1.00    1 0.0000  3
+2009.Corail vivant.Abore                         1.00    2 0.1925 27
+2009.Corail vivant.Mbe Kouen                     1.00    1     NA  1
+2009.Corail vivant.NA                            1.00    2 0.3536  8
+2009.Corail vivant.Recif Laregnere               1.00    1     NA  1
+2009.Detritique.Mbe Kouen                        1.00    1 0.0000  8
+2009.Detritique.NA                               1.00    1 0.0000  8
+2009.Detritique.Recif Laregnere                  1.00    1 0.0000  2
+2009.Fond lagonaire.Mbe Kouen                    1.00    1 0.0000  2
+2009.Fond lagonaire.NA                           1.00    1 0.0000  6
+2009.Fond lagonaire.Radiales Signal laregnere    1.00    1 0.0000  3
+2009.Herbier.Radiales Signal laregnere           1.00    1     NA  1
+2010.Corail vivant.Abore                         1.00    2 0.3228 35
+2010.Detritique.Abore                            1.00    1 0.0000  7
+2010.Detritique.Laregnere                        1.00    1 0.0000  2
+2010.Detritique.Mbe Kouen                        1.00    1 0.0000 11
+2010.Detritique.Recif Laregnere                  1.00    1 0.0000  2
+2010.Fond lagonaire.Abore                        1.00    1 0.0000 16
+2010.Fond lagonaire.Laregnere                    1.00    1     NA  1
+2010.Fond lagonaire.Mbe Kouen                    1.00    1 0.0000  2
+2010.Herbier.Radiales Signal laregnere           1.00    1     NA  1
+2012.Corail vivant.Baie Port Bouquet             1.00    1 0.0000  7
+2012.Corail vivant.Cap Goulvain                  1.00    1     NA  1
+2012.Corail vivant.Deva                          1.00    1     NA  1
+2012.Corail vivant.Grand recif Ngoe              1.00    1     NA  1
+2012.Corail vivant.Ilot de sable                 1.00    1     NA  1
+2012.Corail vivant.Ilots                         1.00    1 0.0000  8
+2012.Corail vivant.NA                            1.00    1 0.0000 15
+2012.Corail vivant.Poe                           1.00    1     NA  1
+2012.Corail vivant.Recif Doiman                  1.00    1 0.0000  2
+2012.Detritique.Cap Goulvain                     1.00    1 0.0000  2
+2012.Detritique.Deva                             1.00    1 0.0000  3
+2012.Detritique.Dongan Hienga                    1.00    1 0.0000  3
+2012.Detritique.Dongan Hiengu                    1.00    1 0.0000  3
+2012.Detritique.Faille aux requins               1.00    1 0.0000  4
+2012.Detritique.Gouaro                           1.00    1 0.0000  2
+2012.Detritique.Grand recif Ngoe                 1.00    1 0.0000  3
+2012.Detritique.Ile Verte                        1.00    2 0.4472  5
+2012.Detritique.Ilot de sable                    1.00    1     NA  1
+2012.Detritique.Ilot Hiengabat                   1.00    1 0.0000  2
+2012.Detritique.Ilot Hienghene                   1.00    1 0.0000  4
+2012.Detritique.Ilot Tiguit                      1.00    1     NA  1
+2012.Detritique.Les Charpentiers                 1.00    1     NA  1
+2012.Detritique.Poe                              1.00    1 0.0000  3
+2012.Detritique.Recif Doiman                     1.00    1 0.0000  3
+2012.Detritique.Recif Douok                      1.00    1 0.0000  2
+2012.Detritique.Recif Mengalia                   1.00    1 0.0000  2
+2012.Detritique.Recif Pidanain                   1.00    1 0.0000  2
+2012.Fond lagonaire.Baie Port Bouquet            1.00    1     NA  1
+2012.Fond lagonaire.Deva                         1.00    1 0.0000 13
+2012.Fond lagonaire.Faille aux requins           1.00    1 0.0000  3
+2012.Fond lagonaire.Grand recif Ngoe             1.00    1 0.0000  2
+2012.Fond lagonaire.Ile Verte                    1.00    1 0.0000  4
+2012.Fond lagonaire.Ilots                        1.00    1     NA  1
+2012.Fond lagonaire.NA                           1.00    1 0.0000  5
+2012.Fond lagonaire.Poe                          1.50    2 0.5774  3
+2012.Fond lagonaire.Recif Doiman                 1.00    1     NA  1
+2013.Algueraie.Lagon Mba Mbo                     1.00    1     NA  1
+2013.Algueraie.Seche Croissant                   2.00    2     NA  1
+2013.Corail vivant.Bampton nord                  1.50    2 0.5774  3
+2013.Corail vivant.Barriere nord-ouest           1.50    2 0.5774  3
+2013.Corail vivant.Barriere ouest                1.00    1 0.0000  5
+2013.Corail vivant.Canard                        1.00    1     NA  1
+2013.Corail vivant.Corne sud                     1.00    2 0.3780  7
+2013.Corail vivant.Ilot Gi                       1.00    1     NA  1
+2013.Corail vivant.Ilot Kouare                   1.00    2 0.4082  6
+2013.Corail vivant.Ilot Maitre                   1.00    1     NA  1
+2013.Corail vivant.Ilot Mbore                    1.00    1     NA  1
+2013.Corail vivant.Ilot Ndo                      1.00    1     NA  1
+2013.Corail vivant.Ilot Nge                      1.00    1     NA  1
+2013.Corail vivant.Ilot Signal                   1.00    1 0.0000  2
+2013.Corail vivant.Ilot Ua                       1.00    1 0.0000  2
+2013.Corail vivant.Ilot Uatio                    1.75    2 0.7071  2
+2013.Corail vivant.La Palette                    1.00    1     NA  1
+2013.Corail vivant.Laregnere                     1.00    1 0.0000  7
+2013.Corail vivant.Mba                           1.00    1 0.0000  2
+2013.Corail vivant.Mbo                           2.00    2     NA  1
+2013.Corail vivant.NA                            1.00    2 0.3666 70
+2013.Corail vivant.Recif Bellona milieu          1.00    1     NA  1
+2013.Corail vivant.Recif Bellona Nord-ouest      1.00    1     NA  1
+2013.Corail vivant.Recif Cimenia                 1.00    1 0.0000  3
+2013.Corail vivant.Recif de Prony                1.00    1     NA  1
+2013.Corail vivant.Recif Garanhua                1.00    1     NA  1
+2013.Corail vivant.Recif Mbe Kouen               1.00    1     NA  1
+2013.Corail vivant.Recif Neokouie                1.00    1     NA  1
+2013.Corail vivant.Recif Neokumbi                1.00    1 0.0000  2
+2013.Corail vivant.Recif Nogumatiugi             1.00    2 0.3780  7
+2013.Corail vivant.Recif Purembi                 1.00    1 0.0000  2
+2013.Corail vivant.Recif Senez                   1.00    1     NA  1
+2013.Corail vivant.Recif Tiendi                  1.00    1     NA  1
+2013.Corail vivant.Recif Tironhua                2.00    2 0.5000  9
+2013.Corail vivant.Recif Tiukuru                 1.50    2 0.5774  3
+2013.Corail vivant.Recif Ua                      1.00    1 0.0000  2
+2013.Corail vivant.Recif Umadu                   1.00    1     NA  1
+2013.Corail vivant.Recif Umbei                   1.00    1     NA  1
+2013.Detritique.Barriere nord-ouest              1.00    1     NA  1
+2013.Detritique.Goeland                          1.00    1     NA  1
+2013.Detritique.Ilot Gi                          1.00    1     NA  1
+2013.Detritique.Ilot Kouare                      1.00    1     NA  1
+2013.Detritique.Ilot Tere                        1.00    1     NA  1
+2013.Detritique.La Palette                       1.00    1     NA  1
+2013.Detritique.Mbe Kouen                        2.00    2     NA  1
+2013.Detritique.Mbo                              1.00    1     NA  1
+2013.Detritique.NA                               1.00    2 0.3780  7
+2013.Detritique.Recif Cimenia                    2.00    2     NA  1
+2013.Detritique.Recif Garanhua                   1.75    2 0.7071  2
+2013.Detritique.Recif Ie                         1.00    1     NA  1
+2013.Detritique.Recif Kanre                      1.00    1     NA  1
+2013.Detritique.Recif Mbe Kouen                  1.00    1     NA  1
+2013.Detritique.Recif Ndunekunie                 1.00    1     NA  1
+2013.Detritique.Recif Nogumatiugi                1.00    1     NA  1
+2013.Detritique.Recif Tironhua                   1.00    1     NA  1
+2013.Detritique.Seche Croissant                  1.00    1     NA  1
+2013.Fond lagonaire.Bampton nord                 1.00    1     NA  1
+2013.Fond lagonaire.Barriere nord-ouest          1.00    1     NA  1
+2013.Fond lagonaire.Corne sud                    1.00    1     NA  1
+2013.Fond lagonaire.Crouy                        1.00    1     NA  1
+2013.Fond lagonaire.Ilot Koko                    1.00    1 0.0000  2
+2013.Fond lagonaire.Lagon Mba Mbo                1.00    1     NA  1
+2013.Fond lagonaire.Mba                          1.00    1     NA  1
+2013.Fond lagonaire.Mbe Kouen                    1.00    1 0.0000  2
+2013.Fond lagonaire.Mbo                          1.00    1     NA  1
+2013.Fond lagonaire.NA                           1.00    2 0.2422 49
+2013.Fond lagonaire.Recif Bellona Sud            1.00    1     NA  1
+2013.Fond lagonaire.Recif Cimenia                1.00    2 0.4082  6
+2013.Fond lagonaire.Recif Ia                     1.00    1     NA  1
+2013.Fond lagonaire.Recif Ie                     1.00    1     NA  1
+2013.Fond lagonaire.Recif Mbe Kouen              1.00    1     NA  1
+2013.Fond lagonaire.Recif Ndunekunie             1.00    1     NA  1
+2013.Fond lagonaire.Recif Neokouie               1.00    1 0.0000  2
+2013.Fond lagonaire.Recif Neokumbi               1.00    1 0.0000  2
+2013.Fond lagonaire.Recif Nogumatiugi            1.00    1 0.0000  5
+2013.Fond lagonaire.Recif Puakue                 1.00    1     NA  1
+2013.Fond lagonaire.Recif Purembi                1.00    1     NA  1
+2013.Fond lagonaire.Recif Senez                  1.00    1     NA  1
+2013.Fond lagonaire.Recif Umbei                  1.00    1     NA  1
+2013.Fond lagonaire.Seche Croissant              1.00    1     NA  1
+2013.Herbier.Ilot Signal                         1.00    1     NA  1
+2013.Herbier.Laregnere                           1.00    1     NA  1
+2014.Corail vivant.Baie Xepenehe                 1.00    2 0.3631 14
+2014.Corail vivant.Grand Astrolabe               1.00    1 0.0000  4
+2014.Corail vivant.Jinek                         2.00    2 0.5270  9
+2014.Corail vivant.Petit Astrolabe               1.50    2 0.4671 11
+2014.Corail vivant.Petrie                        1.25    2 0.5000  4
+2014.Corail vivant.Pointe Easo                   1.75    2 0.7071  2
+2014.Corail vivant.Recif Jinek                   1.00    1 0.0000  2
+2014.Corail vivant.Walpole                       1.00    1     NA  1
+2014.Detritique.Baie Xepenehe                    1.00    1 0.0000  2
+2014.Detritique.Grand Astrolabe                  1.00    1     NA  1
+2014.Detritique.Hunter                           1.00    1 0.0000  2
+2014.Detritique.Jinek                            1.50    2 0.5774  3
+2014.Detritique.Petrie                           1.00    1 0.0000  2
+2014.Fond lagonaire.Baie Xepenehe                1.00    1     NA  1
+2014.Fond lagonaire.Grand Astrolabe              1.00    1     NA  1
+2014.Fond lagonaire.Jinek                        1.75    2 0.7071  2
+2015.Corail vivant.Grand Guilbert                2.00    2     NA  1
+2015.Corail vivant.Huon                          1.00    2 0.3416 16
+2015.Corail vivant.Merite                        1.00    1     NA  1
+2015.Corail vivant.Pelotas                       2.00    2 0.5000  4
+2015.Corail vivant.Petit Guilbert                1.00    1     NA  1
+2015.Corail vivant.Portail                       1.50    2 0.5774  3
+2015.Corail vivant.Surprise                      1.00    1 0.0000  7
+2015.Detritique.Huon                             2.00    2 0.0000  2
+2015.Detritique.Portail                          1.00    1 0.0000  2
+2015.Fond lagonaire.Huon                         1.00    1     NA  1
+2015.Fond lagonaire.Portail                      1.00    1     NA  1
+2017.Corail vivant.Grand Astrolabe               2.00    2 0.5774  4
+2017.Corail vivant.Petit Astrolabe               1.00    1 0.0000  2
+2017.Corail vivant.Petrie                        2.00    2 0.5477  5
+2017.Detritique.Grand Astrolabe                  2.00    2 0.5164 10
+2017.Detritique.Petit Astrolabe                  2.00    2 0.4924 12
+2017.Detritique.Petrie                           1.00    2 0.4082  6
+2017.Fond lagonaire.Grand Astrolabe              1.00    1     NA  1
+2017.Fond lagonaire.Petit Astrolabe              1.00    1 0.0000  2
+2017.Fond lagonaire.Petrie                       1.00    1     NA  1
+
+######################################### 
+Fitted model:
+	species.richness ~ year + habitat + (1 | site)
+
+
+Family :  poisson 
+Response :  species.richness
