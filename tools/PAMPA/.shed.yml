@@ -17,7 +17,8 @@ repositories:
       - pampa_macros.xml
       - FunctExeCalcPresAbsGalaxy.r
       - FunctPAMPAGalaxy.r
-      - test-data/Observations.tabular
+      - test-data/ObservationsSansszcl_cropped.tabular
+      - test-data/Presence_absence_table_sansszcl_cropped.tabular
       
   pampa_communitymetrics:
     description: Compute community metrics from abundance data
@@ -27,8 +28,8 @@ repositories:
       - pampa_macros.xml
       - FunctExeCalcCommIndexesGalaxy.r
       - FunctPAMPAGalaxy.r
-      - test-data/Observations.tabular
-      - test-data/TabMetricsFromSVRObs.tabular
+      - test-data/ObservationsSansszcl_cropped.tabular
+      - test-data/Community_metrics_cropped.tabular
       
   pampa_glmcomm:
     description: Compute GLM on community data
@@ -38,8 +39,10 @@ repositories:
       - pampa_macros.xml
       - FunctExeCalcGLMGalaxy.r
       - FunctPAMPAGalaxy.r
-      - test-data/TabMetricsFromSVRObs.tabular
+      - test-data/Community_metrics_cropped.tabular
       - test-data/Unitobs.tabular
+      - test-data/GLM_table_community_on_Community_metrics_cropped.tabular
+      - test-data/Simple_statistics_on_Community_metrics_cropped.txt
       
   pampa_glmsp:
     description: Compute GLM on population data
@@ -49,4 +52,7 @@ repositories:
       - pampa_macros.xml
       - FunctExeCalcGLMSpGalaxy.r
       - FunctPAMPAGalaxy.r
-      
+      - test-data/Presence_absence_table_sansszcl_cropped.tabular
+      - test-data/Unitobs.tabular
+      - test-data/GLM_table_population_analysis_on_Presence_absence_sansszcl_cropped.tabular
+      - test-data/Simple_statistics_on_Presence_absence_sansszcl_cropped.txt
