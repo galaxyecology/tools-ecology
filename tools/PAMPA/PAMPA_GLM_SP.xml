@@ -39,14 +39,14 @@
     </outputs>
     <tests>
         <test> 
-            <param name="input_metric" value="Presence_absence_table_sansszcl.tabular"/>
+            <param name="input_metric" value="Presence_absence_table_sansszcl_cropped.tabular"/>
             <param name="input_unitobs" value="Unitobs.tabular"/>
             <param name="varint" value="4"/>
             <param name="varrep" value="year,site,habitat"/>
             <param name="varrand" value="site"/>
             <param name="advanced" value="simple"/>
-            <output name="output_summary" value="GLM_table_population_analysis_on_Presence_absence_sansszcl.tabular"/>
-            <output name="output_recap" value="Simple_statistics_on_Presence_absence_sansszcl.txt" lines_diff="2"/>       
+            <output name="output_summary" value="GLM_table_population_analysis_on_Presence_absence_sansszcl_cropped.tabular"/>
+            <output name="output_recap" value="Simple_statistics_on_Presence_absence_sansszcl_cropped.txt" lines_diff="2"/>       
         </test>
     </tests>
     <help><![CDATA[
