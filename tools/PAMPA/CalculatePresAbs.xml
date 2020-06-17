@@ -58,7 +58,8 @@ OR
 |  ... |    ...   |      ...     |     ...    |
 +------+----------+--------------+------------+
 
-The data frame may also contain : 
+The data frame may also contain:
+ 
 - 'size.class' field with 'G' representing big individuals in given species, 'M'middle-sized individuals and 'P' small individuals
 - 'rotation' field for STAVIRO data
 
