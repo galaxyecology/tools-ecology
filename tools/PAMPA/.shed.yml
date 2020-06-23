@@ -1,0 +1,58 @@
+categories:
+    - Ecology
+description: Tools to compute and analyse biodiversity metrics
+long_description: |
+  Tools to compute and analyse biodiversity metrics derived from PAMPA scripts
+name: pampa 
+owner: ecology 
+remote_repository_url: https://github.com/ColineRoyaux/PAMPA-Galaxy
+type: unrestricted
+
+repositories:
+  pampa_presabs:
+    description: Compute abundances and presence absence from raw count data
+    owner: ecology
+    include:
+      - CalculatePresAbs.xml
+      - pampa_macros.xml
+      - FunctExeCalcPresAbsGalaxy.r
+      - FunctPAMPAGalaxy.r
+      - test-data/ObservationsSansszcl_cropped.tabular
+      - test-data/Presence_absence_table_sansszcl_cropped.tabular
+      
+  pampa_communitymetrics:
+    description: Compute community metrics from abundance data
+    owner: ecology
+    include:
+      - CalculateCommunityMetrics.xml
+      - pampa_macros.xml
+      - FunctExeCalcCommIndexesGalaxy.r
+      - FunctPAMPAGalaxy.r
+      - test-data/ObservationsSansszcl_cropped.tabular
+      - test-data/Community_metrics_cropped.tabular
+      
+  pampa_glmcomm:
+    description: Compute GLM on community data
+    owner: ecology
+    include:
+      - PAMPA_GLM.xml
+      - pampa_macros.xml
+      - FunctExeCalcGLMGalaxy.r
+      - FunctPAMPAGalaxy.r
+      - test-data/Community_metrics_cropped.tabular
+      - test-data/Unitobs.tabular
+      - test-data/GLM_table_community_on_Community_metrics_cropped.tabular
+      - test-data/Simple_statistics_on_Community_metrics_cropped.txt
+      
+  pampa_glmsp:
+    description: Compute GLM on population data
+    owner: ecology
+    include:
+      - PAMPA_GLM_SP.xml
+      - pampa_macros.xml
+      - FunctExeCalcGLMSpGalaxy.r
+      - FunctPAMPAGalaxy.r
+      - test-data/Presence_absence_table_sansszcl_cropped.tabular
+      - test-data/Unitobs.tabular
+      - test-data/GLM_table_population_analysis_on_Presence_absence_sansszcl_cropped.tabular
+      - test-data/Simple_statistics_on_Presence_absence_sansszcl_cropped.txt
