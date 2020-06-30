@@ -15,7 +15,7 @@
          'species.code'
          #if $settings.advanced=='advanced' 
              $settings.distrib
-             $settings.log
+             'FALSE'
          #else
              'None'
              'FALSE'
@@ -45,8 +45,16 @@
             <param name="varrep" value="year,site,habitat"/>
             <param name="varrand" value="site"/>
             <param name="advanced" value="simple"/>
-            <output name="output_summary" value="GLM_table_population_analysis_on_Presence_absence_sansszcl_cropped.tabular"/>
-            <output name="output_recap" value="Simple_statistics_on_Presence_absence_sansszcl_cropped.txt" lines_diff="2"/>       
+            <output name="output_summary">
+                <assert_contents> 
+                    <has_n_lines n="4"/>
+                </assert_contents> 
+            </output>
+            <output name="output_recap">  
+                <assert_contents> 
+                    <has_n_lines n="614"/>
+                </assert_contents> 
+            </output>     
         </test>
     </tests>
     <help><![CDATA[
