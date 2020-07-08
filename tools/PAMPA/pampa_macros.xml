@@ -7,6 +7,7 @@
     </xml>
     <xml name="GLM_requirements">
         <requirements>
+            <requirement type="package" version="1.2.2">r-gap</requirement>
             <requirement type="package" version="1.0.1">r-glmmtmb</requirement>
             <requirement type="package" version="1.4_13">r-multcomp</requirement>
         </requirements>    
@@ -62,6 +63,10 @@
             <option value="year">Year</option>
             <option selected="true" value="site">Site</option>
         </param>
+    </xml>
+    <xml name="pampa_output_GLM">
+        <data name="output_recap" from_work_dir="GLMSummaryFull.txt" format="txt" label="Simple statistics on chosen variables on ${on_string}"/>
+        <data name="output_rate" from_work_dir="RatingGLM.txt" format="txt" label="Your analysis rating file on ${on_string}"/>
     </xml>
     <xml name="pampa_bibref">
         <citations>
