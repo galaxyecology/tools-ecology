@@ -34,8 +34,9 @@
         </conditional>
     </inputs>
     <outputs>
+
         <data name="output_summary" from_work_dir="GLMSummary.tabular" format="tabular" label="GLM - Results from your population analysis on ${on_string}"/>
-        <data name="output_recap" from_work_dir="GLMSummaryFull.txt" format="txt" label="Simple statistics on chosen variables on ${on_string}"/>
+        <expand macro="pampa_output_GLM"/>
     </outputs>
     <tests>
         <test> 
@@ -52,9 +53,14 @@
             </output>
             <output name="output_recap">  
                 <assert_contents> 
-                    <has_n_lines n="614"/>
+                    <has_n_lines n="607"/>
                 </assert_contents> 
             </output>     
+            <output name="output_rate">
+                <assert_contents> 
+                    <has_n_lines n="46"/>
+                </assert_contents> 
+            </output>
         </test>
     </tests>
     <help><![CDATA[

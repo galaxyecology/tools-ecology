@@ -9,6 +9,7 @@
 ###################### Packages
 suppressMessages(library(multcomp))
 suppressMessages(library(glmmTMB)) ###Version: 0.2.3
+suppressMessages(library(gap)) 
 
 ###################### Load arguments and declaring variables
 
@@ -179,14 +180,29 @@ modeleLineaireWP2.unitobs.f <- function(metrique, listFact, listRand, FactAna, D
     }else{ ## if no random effects
         TabSum <- data.frame(analysis=c("global", Anacut),AIC=NA,Resid.deviance=NA,df.resid=NA,Null.deviance=NA,df.null=NA)
 
-        colcoef <- unlist(lapply(c("(Intercept)",lev),
-                           FUN=function(x){lapply(c("Estimate","Std.Err","Tvalue","Pvalue","signif"),
-                                                  FUN=function(y){paste(x,y,collapse = ":")
-                                                                 })
-                                          }))
+        switch(loiChoisie,
+               "gaussian"={colcoef <- unlist(lapply(c("(Intercept)",lev),
+                                             FUN=function(x){lapply(c("Estimate","Std.Err","Tvalue","Pvalue","signif"),
+                                                                    FUN=function(y){paste(x,y,collapse = ":")
+                                                                                   })
+                                                            }))},
+               "quasipoisson"={colcoef <- unlist(lapply(c("(Intercept)",lev),
+                                             FUN=function(x){lapply(c("Estimate","Std.Err","Tvalue","Pvalue","signif"),
+                                                                    FUN=function(y){paste(x,y,collapse = ":")
+                                                                                   })
+                                                            }))},
+               colcoef <- unlist(lapply(c("(Intercept)",lev),
+                                        FUN=function(x){lapply(c("Estimate","Std.Err","Zvalue","Pvalue","signif"),
+                                                               FUN=function(y){paste(x,y,collapse = ":")
+                                                                              })
+                                                       })))
+
     }  
   
     TabSum[,colcoef] <- NA
+
+    ### creating rate table 
+    TabRate <- data.frame(analysis=c("global", Anacut), complete_plan=NA, balanced_plan=NA, NA_proportion_OK=NA, no_residual_dispersion=NA, uniform_residuals=NA, outliers_proportion_OK=NA, no_zero_inflation=NA, observation_factor_ratio_OK=NA, enough_levels_random_effect=NA, rate=NA)
 
     for (cut in Anacut) 
     {
@@ -213,6 +229,8 @@ modeleLineaireWP2.unitobs.f <- function(metrique, listFact, listRand, FactAna, D
                                               "CL_unitobs",
                                               "unitobs"))
 
+            TabRate[TabRate[,"analysis"]==cut,c(2:11)] <- noteGLM.f(data=cutData, objLM=res, metric=metrique, listFact=listFact, details=TRUE)
+
         }else{
             cat("\nCannot compute GLM for level",cut,"Check if one or more factor(s) have only one level, or try with another distribution for the model in advanced settings \n\n")
         }
@@ -236,6 +254,9 @@ modeleLineaireWP2.unitobs.f <- function(metrique, listFact, listRand, FactAna, D
                           type=ifelse(tableMetrique == "unitSpSz" && factAna != "size.class",
                                       "CL_unitobs",
                                       "unitobs"))
+
+    TabRate[TabRate[,"analysis"]=="global",c(2:11)] <- noteGLM.f(data=tmpData, objLM=resG, metric=metrique, listFact=listFact, details=TRUE)
+    noteGLMs.f(tabRate=TabRate,exprML=exprML,objLM=resG, file_out=TRUE)
     ## simple statistics and infos :
     filename <- "GLMSummaryFull.txt"
 
@@ -244,13 +265,6 @@ modeleLineaireWP2.unitobs.f <- function(metrique, listFact, listRand, FactAna, D
     infoStats.f(filename=filename, Data=tmpData, agregLevel=aggreg, type="stat",
                 metrique=metrique, factGraph=factAna, #factGraphSel=modSel,
                 listFact=listFact)#, listFactSel=listFactSel)
-
-    ## Informations on model :
-    cat("######################################### \nFitted model:", file=filename, fill=1,append=TRUE)
-    cat("\t", deparse(exprML), "\n\n\n", file=filename, sep="",append=TRUE)
-    cat("Family : ", loiChoisie, 
-        "\nResponse : ", metrique,
-        file=filename,append=TRUE)
 
     return(TabSum)
 
