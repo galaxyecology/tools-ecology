@@ -15,7 +15,7 @@
     </command>
     <inputs>
         <expand macro="pampa_input_calculate"/>
-        <param name="indexes" type="select" label="Choose the community metrics you want to compute" help="Presence/absence, Species richness, Simpson and Shannon index are systematically computed." multiple="true">
+        <param name="indexes" type="select" label="Choose the community metrics you want to compute" help="Presence/absence, Species richness, Simpson & Shannon index are systematically computed." multiple="true">
             <option selected="true" value="all">All</option>
             <option value="simpson.l">1-Simpson</option>
             <option value="pielou">Pielou</option>
