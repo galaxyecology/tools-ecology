@@ -43,6 +43,10 @@
              </output>
         </test>
     </tests>
+    <edam_topics>
+       <edam_topic>topic_0610</edam_topic>
+       <edam_topic>topic_3050</edam_topic>
+    </edam_topics>
     <help><![CDATA[
 **What it does**
 
