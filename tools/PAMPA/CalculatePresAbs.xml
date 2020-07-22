@@ -24,6 +24,9 @@
             <output name="output_presabs" value="Presence_absence_table_sansszcl_cropped.tabular"/>      
         </test>
     </tests>
+    <edam_topics>
+       <edam_topic>topic_0610</edam_topic>
+    </edam_topics>
     <help><![CDATA[
 ====================================================
 Calculate presence absence table from abundance data
