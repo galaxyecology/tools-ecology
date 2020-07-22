@@ -32,6 +32,9 @@
             <output name="output_community" value="Community_metrics_cropped.tabular"/>
         </test>
     </tests>
+    <edam_topics>
+       <edam_topic>topic_0610</edam_topic>
+    </edam_topics>
     <help><![CDATA[
 ===============================================
 Calculate community metrics from abundance data
