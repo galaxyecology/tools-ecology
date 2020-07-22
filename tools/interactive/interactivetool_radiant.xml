@@ -37,6 +37,10 @@
     </outputs>
     <tests>
     </tests>
+    <edam_topics>
+       <edam_topic>topic_0610</edam_topic>
+       <edam_topic>topic_3050</edam_topic>
+    </edam_topics>
     <help>
 <![CDATA[
 `Radiant <https://radiant-rstats.github.io/docs/>`_ is an open-source platform-independent browser-based interface for business analytics in R. The application is based on the Shiny package and can be run locally or on a server. Radiant was developed by Vincent Nijs. Please use the issue tracker on GitHub to suggest enhancements or report problems: https://github.com/radiant-rstats/radiant/issues. For other questions and comments please use radiant@rady.ucsd.edu.
