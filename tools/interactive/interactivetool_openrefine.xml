@@ -54,6 +54,10 @@ tail -f /dev/null
         <test expect_num_outputs="1">
         </test>
     </tests>
+    <edam_topics>
+       <edam_topic>topic_0610</edam_topic>
+       <edam_topic>topic_3050</edam_topic>
+    </edam_topics>
     <help><![CDATA[
 
 `Openrefine <https://openrefine.org/>`_ (previously Google Refine) is a powerful tool for working with messy data:
