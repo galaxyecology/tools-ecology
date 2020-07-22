@@ -137,7 +137,11 @@
             <param name="oo" value="Y_POSSIBLE_NAMES=latitude"/>
             <output file="ogr2ogr_gbif_to_json.json" name="output" lines_diff="2"/> 
         </test>
-</tests>
+    </tests>
+    <edam_topics>
+       <edam_topic>topic_0610</edam_topic>
+       <edam_topic>topic_3050</edam_topic>
+    </edam_topics>
     <help><![CDATA[
 ========
 Ogrinfo
