@@ -44,7 +44,7 @@ def.typeobs.f <- function(Obs)
 
 ######################################### start of the function create.unitobs called by FunctExeCalcCommIndexesGalaxy.r and FunctExeCalcPresAbsGalaxy.r
 ####### Create unitobs column when inexistant
-create.unitobs <- function(data,year="year",point="point", unitobs="observation.unit")
+create.unitobs <- function(data,year="year",location="location", unitobs="observation.unit")
 {
     if (is.element(paste(unitobs),colnames(data)) && all(grepl("[1-2][0|8|9][0-9]{2}_.*",data[,unitobs])==FALSE))
     {
@@ -52,22 +52,22 @@ create.unitobs <- function(data,year="year",point="point", unitobs="observation.
 
     }else{ 
 
-        unitab <- unite(data,col="observation.unit",c(year,point))
+        unitab <- unite(data,col="observation.unit",c(year,location))
     }
     return(unitab)
 }
 ######################################### start of the function create.unitobs
 
-######################################### start of the function create.year.point called by FunctExeCalcCommIndexesGalaxy.r and FunctExeCalcPresAbsGalaxy.r
+######################################### start of the function create.year.location called by FunctExeCalcCommIndexesGalaxy.r and FunctExeCalcPresAbsGalaxy.r
 ####### separate unitobs column when existant
-create.year.point <- function(data,year="year",point="point", unitobs="observation.unit")
+create.year.location <- function(data,year="year",location="location", unitobs="observation.unit")
 {
     if (all(grepl("[1-2][0|8|9][0-9]{2}_.*",data[,unitobs]))==TRUE)
     {
-        tab <- separate(data,col=unitobs,into=c(year,point),sep="_")
+        tab <- separate(data,col=unitobs,into=c(year,location),sep="_")
     }else{
         tab <- separate(data,col=unitobs,into=c("site1", year,"obs"),sep=c(2,4))
-        tab <- unite(tab, col=point, c("site1","obs"))
+        tab <- unite(tab, col=location, c("site1","obs"))
 
     }
 
@@ -75,7 +75,7 @@ create.year.point <- function(data,year="year",point="point", unitobs="observati
 
     return(tab)
 }
-######################################### start of the function create.unitobs
+######################################### start of the function create.year.location
 
 ######################################### start of the function check_file called by every Galaxy Rscripts
 
@@ -1082,6 +1082,7 @@ noteGLM.f <- function(data, objLM, metric, listFact, details = FALSE)
     ##            objLM : GLM assessed
     ##            metric : selected metric
     ##            listFact : Analysis factors list
+    ##            details : detailed output ?
     ## ----------------------------------------------------------------------
     ## Author: Coline ROYAUX, 26 june 2020
 
@@ -1220,14 +1221,14 @@ noteGLMs.f <- function(tabRate, exprML, objLM, file_out=FALSE)
 {
     ## Purpose: Note your GLM analysis
     ## ----------------------------------------------------------------------
-    ## Arguments: data : rates table from noteGLM.f
-    ##            objLM : GLM assessed
-    ##            metric : selected metric
-    ##            listFact : Analysis factors list
+    ## Arguments: tabRate : rates table from noteGLM.f
+    ##            exprML : GLM expression assessed
+    ##            objLM : GLM object
+    ##            file_out : Output as file ? else global rate only
     ## ----------------------------------------------------------------------
     ## Author: Coline ROYAUX, 26 june 2020
 
-    RateM <- mean(na.omit(tabRate[,"rate"]))
+    RateM <- median(na.omit(tabRate[,"rate"]))
     sum <- summary(objLM)
 
     if (length(grep("^glmmTMB", objLM$call)) > 0)
@@ -1300,13 +1301,13 @@ noteGLMs.f <- function(tabRate, exprML, objLM, file_out=FALSE)
 
                                              
                               })
-        cat("\n\nC1: Complete plan?\nC2: Balanced plan?\nC3: Few NA?\nC4: Regular dispersion?\nC5: Uniform residuals?\nC6: Regular outliers proportion?\nC7: No zero-inflation?\nC8: Enough observations for the amount of factors?\nC9: Enough levels on random effect?", file=namefile, append=TRUE)
+        cat("\n\nC1: Complete plan?\nC2: Balanced plan?\nC3: Few NA?\nC4: Regular dispersion?\nC5: Uniform residuals?\nC6: Regular outliers proportion?\nC7: No zero-inflation?\nC8: Good observation/factor ratio?\nC9: Enough levels on random effect?", file=namefile, append=TRUE)
 
         ## Red flags - advice :
         cat("\n\n######################################### \nRed flags - advice:\n\n", file=namefile, append=TRUE)
         if (all(na.omit(tabRate["NA_proportion_OK"]) == FALSE))
         {
-            cat("\n","\t- More than 10% of your dataset bares NAs", file=namefile, append=TRUE)
+            cat("\n","\t- More than 10% of lines of your dataset contains NAs", file=namefile, append=TRUE)
         }else{}
 
         if (length(grep("FALSE",tabRate["no_residual_dispersion"])) / length(na.omit(tabRate["no_residual_dispersion"])) > 0.5)
@@ -1321,12 +1322,12 @@ noteGLMs.f <- function(tabRate, exprML, objLM, file_out=FALSE)
 
         if (length(grep("FALSE",tabRate["outliers_proportion_OK"])) / length(na.omit(tabRate["outliers_proportion_OK"])) > 0.5)
         {
-            cat("\n","\t- More than 50% of your analyses have too much outliers : Try with another distribution family or try to select your data", file=namefile, append=TRUE)
+            cat("\n","\t- More than 50% of your analyses have too much outliers : Try with another distribution family or try to select or filter your data", file=namefile, append=TRUE)
         }else{}
 
         if (length(grep("FALSE",tabRate["no_zero_inflation"])) / length(na.omit(tabRate["no_zero_inflation"])) > 0.5)
         {
-            cat("\n","\t- More than 50% of your analyses have zero inflation : Try to select your data", file=namefile, append=TRUE)
+            cat("\n","\t- More than 50% of your analyses have zero inflation : Try to select or filter your data", file=namefile, append=TRUE)
         }else{}
 
         if (length(grep("FALSE",tabRate["observation_factor_ratio_OK"])) / length(na.omit(tabRate["observation_factor_ratio_OK"])) > 0.5)
