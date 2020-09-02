@@ -35,7 +35,7 @@ ObsType <- def.typeobs.f(Obs=obs)
 obs <- create.unitobs(data=obs)
 
 vars_data<-c("observation.unit","species.code","number")
-err_msg_data<-"The input dataset doesn't have the right format. It need to have at least the following 3 variables :\n- observation.unit (or point and year)\n- species.code\n- number\n"
+err_msg_data<-"The input dataset doesn't have the right format. It need to have at least the following 3 variables :\n- observation.unit (or location and year)\n- species.code\n- number\n"
 check_file(obs,err_msg_data,vars_data,3)
 
 
@@ -148,7 +148,7 @@ res <- calc.numbers.f(obs, ObsType=ObsType , factors=factors, nbName="number")
 
 tableCommunityIndexes <- calcBiodiv.f(res, MPA, unitobs="observation.unit", code.especes="species.code", nombres="number",
                          indices=index)
-tableCommunityIndexes <- create.year.point(tableCommunityIndexes)
+tableCommunityIndexes <- create.year.location(tableCommunityIndexes)
 #Save dataframe in a tabular format
 
 filenameComm <- "TabCommunityIndexes.tabular"
