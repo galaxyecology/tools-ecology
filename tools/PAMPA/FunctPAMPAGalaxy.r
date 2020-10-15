@@ -891,14 +891,84 @@ subsetToutesTables.f <- function(metrique, tabMetrics, facteurs, selections,
 ######################################### end of the function subsetToutesTables.f
 
 
+######################################### start of the function create.res.table called by modeleLineaireWP2.xxx.f in FunctExeCalcGLMxxGalaxy.r
+create.res.table <- function(listRand, listFact, row, lev, distrib)
+{
+    ## Purpose: create results table
+    ## ----------------------------------------------------------------------
+    ## Arguments: listRand : Analysis random factors list    
+    ##            listFact : Analysis factors list
+    ##            row : rows of results table = species or separation factor
+    ##            lev : Levels of analysis factors list
+    ##            distrib : distribution law
+    ## ----------------------------------------------------------------------
+    ## Author: Coline ROYAUX 04 october 2020
+
+    if (listRand[1] != "None") ## if random effects
+    {
+        TabSum <- data.frame(analysis=row,Interest.var=NA,distribution=NA,AIC=NA,BIC=NA,logLik=NA, deviance=NA,df.resid=NA)
+        colrand <- unlist(lapply(listRand, 
+                           FUN=function(x){lapply(c("Std.Dev","NbObservation","NbLevels"),
+                                                  FUN=function(y){paste(x,y,collapse = ":")
+                                                                 })
+                                          }))
+        TabSum[,colrand] <- NA
+
+        if (! is.null(lev)) ## if fixed effects + random effects
+        {
+            colcoef <- unlist(lapply(c("(Intercept)",lev),
+                               FUN=function(x){lapply(c("Estimate","Std.Err","Zvalue","Pvalue","IC_up","IC_inf","signif"),
+                                                      FUN=function(y){paste(x,y,collapse = ":")
+                                                                     })
+                                              }))
+
+        }else{ ## if no fixed effects
+            colcoef <- NULL
+        }
+
+    }else{ ## if no random effects
+        TabSum <- data.frame(analysis=row,Interest.var=NA,distribution=NA,AIC=NA,Resid.deviance=NA,df.resid=NA,Null.deviance=NA,df.null=NA)
+
+        switch(distrib,
+               "gaussian"={colcoef <- unlist(lapply(c("(Intercept)",lev),
+                                             FUN=function(x){lapply(c("Estimate","Std.Err","Tvalue","Pvalue","IC_up","IC_inf","signif"),
+                                                                    FUN=function(y){paste(x,y,collapse = ":")
+                                                                                   })
+                                                            }))
+
+                           },
+               "quasipoisson"={colcoef <- unlist(lapply(c("(Intercept)",lev),
+                                             FUN=function(x){lapply(c("Estimate","Std.Err","Tvalue","Pvalue","IC_up","IC_inf","signif"),
+                                                                    FUN=function(y){paste(x,y,collapse = ":")
+                                                                                   })
+                                                            }))
+
+                               },
+               {colcoef <- unlist(lapply(c("(Intercept)",lev),
+                                        FUN=function(x){lapply(c("Estimate","Std.Err","Zvalue","Pvalue","IC_up","IC_inf","signif"),
+                                                               FUN=function(y){paste(x,y,collapse = ":")
+                                                                              })
+                                                       }))
+                })
+
+    }
+  
+    TabSum[,colcoef] <- NA
+
+
+    return(TabSum)
+}
+######################################### end of the function create.res.table 
+
 ######################################### start of the function sortiesLM.f called by modeleLineaireWP2.unitobs.f in FunctExeCalcGLMGalaxy.r
-sortiesLM.f <- function(objLM, TabSum, #formule, 
+sortiesLM.f <- function(objLM, objLMY, TabSum, #formule, 
                         metrique, factAna, cut, colAna, listFact, lev = NULL, Data, 
-                        Log=FALSE, sufixe=NULL, type="espece")
+                        Log=FALSE, sufixe=NULL)
 {
     ## Purpose: Form GLM and LM results
     ## ----------------------------------------------------------------------
     ## Arguments: objLM : lm object
+    ##            objLMY : lm object with year as continuous
     ##            TabSum : output summary table
     ##            formule : LM formula
     ##            metrique : Chosen metric
@@ -910,11 +980,13 @@ sortiesLM.f <- function(objLM, TabSum, #formule,
     ##            Data : Data used for analysis
     ##            Log : put log on metric ? (boolean)
     ##            sufixe : sufix for file name
-    ##            type : analysis type 
     ## ----------------------------------------------------------------------
     ## Author: Yves Reecht, Date: 25 août 2010, 16:19 modified by Coline ROYAUX 04 june 2020
 
+    TabSum[,"Interest.var"] <- as.character(metrique)#rep(,nrow(TabSum))
     sumLM <- summary(objLM)
+    TabSum[,"distribution"] <- as.character(sumLM$family[1])#rep(,nrow(TabSum))
+
     if (length(grep("^glmmTMB", objLM$call)) > 0) #if random effects
     {
         TabSum[TabSum[,colAna]==cut,"AIC"] <- sumLM$AICtab[1]
@@ -930,19 +1002,30 @@ sortiesLM.f <- function(objLM, TabSum, #formule,
 
             TabSum[TabSum[,colAna]==cut,grepl("Intercept.*Zvalue",colnames(TabSum))] <- TabCoef[grepl("Intercept",rownames(TabCoef)),"z value"]
             TabSum[TabSum[,colAna]==cut,grepl("Intercept.*Pvalue",colnames(TabSum))] <- TabCoef[grepl("Intercept",rownames(TabCoef)),"Pr(>|z|)"]
-            
+
             TabSum[TabSum[,colAna]==cut,grepl(paste(lev,"Zvalue",collapse="|"),colnames(TabSum))] <- unlist(lapply(lev,FUN=function(x){if (length(grep(x,rownames(TabCoef))) > 0) {TabCoef[grepl(x,rownames(TabCoef)),"z value"]}else{NA}}))
             TabSum[TabSum[,colAna]==cut,grepl(paste(lev,"Pvalue",collapse="|"),colnames(TabSum))] <- unlist(lapply(lev,FUN=function(x){if (length(grep(x,rownames(TabCoef))) > 0) {TabCoef[grepl(x,rownames(TabCoef)),"Pr(>|z|)"]}else{NA}}))
+
+            if (any(objLMY != ""))
+            {
+                sumLMY <- summary(objLMY)
+                TabCoefY <- as.data.frame(sumLMY$coefficients$cond)
+                TabCoefY$signif <- lapply(TabCoefY[,"Pr(>|z|)"],FUN=function(x){if(!is.na(x) && x < 0.05){"yes"}else{"no"}})
+                TabSum[TabSum[,colAna]==cut,"year Zvalue"] <- ifelse(length(TabCoefY["year","z value"]) > 0,TabCoefY["year","z value"],NA)
+                TabSum[TabSum[,colAna]==cut,"year Pvalue"] <- ifelse(length(TabCoefY["year","Pr(>|z|)"]) > 0,TabCoefY["year","Pr(>|z|)"],NA)
+            }else{}
+
         }else{}
 
         switch(as.character(length(sumLM$varcor$cond)),
                "1"={StdD <- c(sumLM$varcor$cond[[1]])},
                "2"={StdD <- c(sumLM$varcor$cond[[1]],sumLM$varcor$cond[[2]])},
                StdD <- NULL)
+
         TabSum[TabSum[,colAna]==cut,grepl(paste(listRand,"Std.Dev",collapse="|"),colnames(TabSum))] <- StdD
         TabSum[TabSum[,colAna]==cut,grepl(paste(listRand,"NbObservation",collapse="|"),colnames(TabSum))] <- sumLM$nobs
         TabSum[TabSum[,colAna]==cut,grepl(paste(listRand,"NbLevels",collapse="|"),colnames(TabSum))] <- unlist(lapply(listRand,FUN=function(x){nlevels(Data[,x])}))
-            
+
     }else{ ## if fixed effects only
 
         TabSum[TabSum[,colAna]==cut,"AIC"] <- sumLM$aic
@@ -951,6 +1034,12 @@ sortiesLM.f <- function(objLM, TabSum, #formule,
         TabSum[TabSum[,colAna]==cut,"Null.deviance"] <- sumLM$null.deviance
         TabSum[TabSum[,colAna]==cut,"df.null"] <- sumLM$df.null
         TabCoef <- as.data.frame(sumLM$coefficients)
+
+        if (any(objLMY != ""))
+        {
+            sumLMY <- summary(objLMY)
+            TabCoefY <- as.data.frame(sumLMY$coefficients)
+        }else{}
 
         if (sumLM$family[1] == "gaussian" || sumLM$family[1] == "quasipoisson") 
         {
@@ -962,7 +1051,15 @@ sortiesLM.f <- function(objLM, TabSum, #formule,
             TabSum[TabSum[,colAna]==cut,grepl(paste(lev,"Tvalue",collapse="|"),colnames(TabSum))] <- unlist(lapply(lev,FUN=function(x){if (length(grep(x,rownames(TabCoef))) > 0) {TabCoef[grepl(x,rownames(TabCoef)),"t value"]}else{NA}}))
 
             TabSum[TabSum[,colAna]==cut,grepl(paste(lev,"Pvalue",collapse="|"),colnames(TabSum))] <- unlist(lapply(lev,FUN=function(x){if (length(grep(x,rownames(TabCoef))) > 0) {TabCoef[grepl(x,rownames(TabCoef)),"Pr(>|t|)"]}else{NA}}))
-          }else{
+
+            if (any(objLMY != ""))
+            {
+                TabCoefY$signif <- lapply(TabCoefY[,"Pr(>|t|)"],FUN=function(x){if(!is.na(x) && x < 0.05){"yes"}else{"no"}})
+                TabSum[TabSum[,colAna]==cut,"year Tvalue"] <- ifelse(length(TabCoefY["year","t value"]) > 0,TabCoefY["year","t value"],NA)
+                TabSum[TabSum[,colAna]==cut,"year Pvalue"] <- ifelse(length(TabCoefY["year","Pr(>|z|)"]) > 0,TabCoefY["year","Pr(>|t|)"],NA)             
+            }else{}
+
+        }else{
             TabCoef$signif <- lapply(TabCoef[,"Pr(>|z|)"],FUN=function(x){if(!is.na(x) && x < 0.05){"yes"}else{"no"}})
 
             TabSum[TabSum[,colAna]==cut,grepl("Intercept.*Zvalue",colnames(TabSum))] <- TabCoef[grepl("Intercept",rownames(TabCoef)),"z value"]
@@ -970,7 +1067,15 @@ sortiesLM.f <- function(objLM, TabSum, #formule,
             
             TabSum[TabSum[,colAna]==cut,grepl(paste(lev,"Zvalue",collapse="|"),colnames(TabSum))] <- unlist(lapply(lev,FUN=function(x){if (length(grep(x,rownames(TabCoef))) > 0) {TabCoef[grepl(x,rownames(TabCoef)),"z value"]}else{NA}}))
             TabSum[TabSum[,colAna]==cut,grepl(paste(lev,"Pvalue",collapse="|"),colnames(TabSum))] <- unlist(lapply(lev,FUN=function(x){if (length(grep(x,rownames(TabCoef))) > 0) {TabCoef[grepl(x,rownames(TabCoef)),"Pr(>|z|)"]}else{NA}}))
-           }
+
+            if (any(objLMY != ""))
+            {
+                TabCoefY$signif <- lapply(TabCoefY[,"Pr(>|z|)"],FUN=function(x){if(!is.na(x) && x < 0.05){"yes"}else{"no"}})
+
+                TabSum[TabSum[,colAna]==cut,"year Zvalue"] <- ifelse(length(TabCoefY["year","z value"]) > 0,TabCoefY["year","z value"],NA)
+                TabSum[TabSum[,colAna]==cut,"year Pvalue"] <- ifelse(length(TabCoefY["year","Pr(>|z|)"]) > 0,TabCoefY["year","Pr(>|z|)"],NA)
+            }else{}
+        }
     }
 
     if (! is.null(lev)) ## if fixed effects
@@ -980,10 +1085,22 @@ sortiesLM.f <- function(objLM, TabSum, #formule,
         TabSum[TabSum[,colAna]==cut,grepl("Intercept.*signif",colnames(TabSum))] <- TabCoef[grepl("Intercept",rownames(TabCoef)),"signif"]
 
         TabSum[TabSum[,colAna]==cut,grepl(paste(lev,"Estimate",collapse="|"),colnames(TabSum))] <- unlist(lapply(lev,FUN=function(x){if (length(grep(x,rownames(TabCoef))) > 0) {TabCoef[grepl(x,rownames(TabCoef)),"Estimate"]}else{NA}}))
-
         TabSum[TabSum[,colAna]==cut,grepl(paste(lev,"Std.Err",collapse="|"),colnames(TabSum))] <- unlist(lapply(lev,FUN=function(x){if (length(grep(x,rownames(TabCoef))) > 0) {TabCoef[grepl(x,rownames(TabCoef)),"Std. Error"]}else{NA}}))
         TabSum[TabSum[,colAna]==cut,grepl(paste(lev,"signif",collapse="|"),colnames(TabSum))] <- unlist(lapply(lev,FUN=function(x){if (length(grep(x,rownames(TabCoef))) > 0) {TabCoef[grepl(x,rownames(TabCoef)),"signif"]}else{NA}})) 
+
+        if (any(objLMY != ""))
+        {
+            TabSum[TabSum[,colAna]==cut,"year Estimate"] <- ifelse(length(TabCoefY["year","Estimate"]) > 0,TabCoefY["year","Estimate"],NA)
+            TabSum[TabSum[,colAna]==cut,"year Std.Err"] <- ifelse(length(TabCoefY["year","Std. Error"]) > 0,TabCoefY["year","Std. Error"],NA)
+            TabSum[TabSum[,colAna]==cut,"year signif"] <- ifelse(length(TabCoefY["year","signif"]) > 0,TabCoefY["year","signif"],NA)
+        }else{}
+
     }else{}
+
+    IC <- tryCatch(as.data.frame(confint(objLM)), error=function(e){})
+
+    TabSum[TabSum[,colAna]==cut,grepl(paste(lev,"IC_up",collapse="|"),colnames(TabSum))] <- unlist(lapply(lev,FUN=function(x){if (length(grep(x,rownames(IC))) > 0) {IC[grepl(x,rownames(IC)),"97.5 %"]}else{NA}})) 
+    TabSum[TabSum[,colAna]==cut,grepl(paste(lev,"IC_inf",collapse="|"),colnames(TabSum))] <- unlist(lapply(lev,FUN=function(x){if (length(grep(x,rownames(IC))) > 0) {IC[grepl(x,rownames(IC)),"2.5 %"]}else{NA}})) 
 
     return(TabSum)
    

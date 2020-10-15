@@ -15,7 +15,7 @@
          'species.code'
          #if $settings.advanced=='advanced' 
              $settings.distrib
-             'FALSE'
+             $settings.Rdata
          #else
              'None'
              'FALSE'
@@ -24,6 +24,11 @@
          '$__tool_directory__/FunctPAMPAGalaxy.r' 
          '$output_summary'
          '$output_recap'
+         #if $settings.advanced=='advanced'
+             #if $settings.Rdata=='TRUE'
+                 '$output_GLM'
+             #end if
+         #end if
     ]]>
     </command>
     <inputs>
@@ -34,7 +39,6 @@
         </conditional>
     </inputs>
     <outputs>
-
         <data name="output_summary" from_work_dir="GLMSummary.tabular" format="tabular" label="GLM - Results from your population analysis on ${on_string}"/>
         <expand macro="pampa_output_GLM"/>
     </outputs>
@@ -125,6 +129,8 @@ A tabular file with unitobs or location data which contains at least as much col
 +--------------------------------+--------------+---------+--------+------------+-----+        
 |              ...               |      ...     |   ...   |   ...  |     ...    | ... |       
 +--------------------------------+--------------+---------+--------+------------+-----+ 
+
+The site may represent the same entity as the location or represent an aggregation of several locations.
 
 |
 
