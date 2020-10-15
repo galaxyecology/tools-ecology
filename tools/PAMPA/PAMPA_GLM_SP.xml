@@ -15,17 +15,17 @@
          'species.code'
          #if $settings.advanced=='advanced' 
              $settings.distrib
-             $settings.Rdata
+             $settings.rdata
          #else
              'None'
-             'FALSE'
+             'false'
          #end if
          'unitSp'
          '$__tool_directory__/FunctPAMPAGalaxy.r' 
          '$output_summary'
          '$output_recap'
          #if $settings.advanced=='advanced'
-             #if $settings.Rdata=='TRUE'
+             #if $settings.rdata=='true'
                  '$output_GLM'
              #end if
          #end if
@@ -43,13 +43,15 @@
         <expand macro="pampa_output_GLM"/>
     </outputs>
     <tests>
-        <test> 
+        <test expect_num_outputs="4"> 
             <param name="input_metric" value="Presence_absence_table_sansszcl_cropped.tabular"/>
             <param name="input_unitobs" value="Unitobs.tabular"/>
             <param name="varint" value="4"/>
             <param name="varrep" value="year,site,habitat"/>
             <param name="varrand" value="site"/>
-            <param name="advanced" value="simple"/>
+            <param name="advanced" value="advanced"/>
+            <param name="distrib" value="None"/>
+            <param name="rdata" value="true"/>
             <output name="output_summary">
                 <assert_contents> 
                     <has_n_lines n="4"/>
@@ -65,6 +67,11 @@
                     <has_n_lines n="46"/>
                 </assert_contents> 
             </output>
+            <output_collection name="output_GLM"  type="list" count="3">
+                <element name="GLM_Abalstel" ftype="Rdata" file="GLM_Abalstel.Rdata"/>
+                <element name="GLM_Hemifasc" ftype="Rdata" file="GLM_Hemifasc.Rdata"/>
+                <element name="GLM_Zebrscop" ftype="Rdata" file="GLM_Zebrscop.Rdata"/>
+            </output_collection>
         </test>
     </tests>
     <edam_topics>

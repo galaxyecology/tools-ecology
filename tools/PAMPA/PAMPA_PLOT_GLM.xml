@@ -27,7 +27,7 @@
        </collection>
     </outputs>
     <tests>
-        <test> 
+        <test expect_num_outputs="2"> 
             <param name="input" value="GLM_table_population_analysis_on_Presence_absence_sansszcl_cropped.tabular"/>
             <param name="datatable" value="Presence_absence_table_sansszcl_cropped.tabular"/>
             <param name="unitobstable" value="Unitobs.tabular"/>

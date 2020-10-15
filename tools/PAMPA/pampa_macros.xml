@@ -47,7 +47,7 @@
                 <option value="quasibinomial">Quasi-Binomial</option>
                 <option value="Gamma">Gamma</option>
             </param>
-            <param name="Rdata" type="boolean" checked="yes" label="GLM object(s) as .Rdata output ?"/>
+            <param name="rdata" type="boolean" checked="yes" label="GLM object(s) as .Rdata output ?"/>
         </when>
     </xml>
     <xml name="pampa_input_GLM">
@@ -70,9 +70,8 @@
         <data name="output_recap" from_work_dir="GLMSummaryFull.txt" format="txt" label="Simple statistics on chosen variables on ${on_string}"/>
         <data name="output_rate" from_work_dir="RatingGLM.txt" format="txt" label="Your analysis rating file on ${on_string}"/>
         <collection type="list" name="output_GLM">
-            <filter> settings['advanced'] == 'advanced'</filter>
-            <filter> settings['Rdata'] == 'TRUE'</filter>
             <discover_datasets pattern="(?P&lt;designation&gt;.+)\.Rdata" visible="false" format="Rdata"/>
+            <filter> settings['advanced'] == 'advanced' and settings['rdata']</filter>
         </collection>
     </xml>
     <xml name="pampa_bibref">

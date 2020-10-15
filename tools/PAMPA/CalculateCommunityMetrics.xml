@@ -26,7 +26,7 @@
         <data name="output_community" from_work_dir="TabCommunityIndexes.tabular" format="tabular"/>
     </outputs>
     <tests>
-        <test> 
+        <test expect_num_outputs="1"> 
             <param name="input" value="ObservationsSansszcl_cropped.tabular"/>
             <param name="indexes" value="all"/>
             <output name="output_community" value="Community_metrics_cropped.tabular"/>
