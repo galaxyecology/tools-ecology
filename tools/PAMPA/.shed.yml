@@ -43,6 +43,9 @@ repositories:
       - test-data/Unitobs.tabular
       - test-data/GLM_table_community_on_Community_metrics_cropped.tabular
       - test-data/Simple_statistics_on_Community_metrics_cropped.txt
+      - test-data/GLM_HR.Rdata
+      - test-data/GLM_RE.Rdata
+      - test-data/global_GLM.Rdata
       
   pampa_glmsp:
     description: Compute GLM on population data
@@ -56,3 +59,19 @@ repositories:
       - test-data/Unitobs.tabular
       - test-data/GLM_table_population_analysis_on_Presence_absence_sansszcl_cropped.tabular
       - test-data/Simple_statistics_on_Presence_absence_sansszcl_cropped.txt
+      - test-data/GLM_Abalstel.Rdata
+      - test-data/GLM_Hemifasc.Rdata
+      - test-data/GLM_Zebrscop.Rdata
+
+  pampa_plotglm:
+    description: Create a plot from GLM data
+    owner: ecology
+    include:
+      - PAMPA_PLOT_GLM.xml
+      - pampa_macros.xml
+      - FunctExePlotGLMGalaxy.r
+      - FunctPAMPAGalaxy.r
+      - test-data/GLM_table_population_analysis_on_Presence_absence_sansszcl_cropped.tabular
+      - test-data/Presence_absence_table_sansszcl_cropped.tabular
+      - test-data/Unitobs.tabular
+      - test-data/stdout.txt
