@@ -1,0 +1,143 @@
+<tool id="pampa_plotglm" name="Create a plot from GLM data" version="@VERSION@">
+    <description>as temporal trend</description>
+    <macros>
+        <import>pampa_macros.xml</import>
+    </macros>
+    <expand macro="Plot_requirements"/>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript 
+         '$__tool_directory__/FunctExePlotGLMGalaxy.r' 
+         '$input'
+         '$datatable'
+         '$unitobstable'
+         '$__tool_directory__/FunctPAMPAGalaxy.r' 
+         '$report'
+         '$plots'
+    ]]>
+    </command>
+    <inputs>
+        <param name="input" type="data" format="tabular" label="Input glm results file" help=""/>
+        <param name="datatable" type="data" format="tabular" label="Data table used for glm" help=""/>
+        <param name="unitobstable" type="data" format="tabular" label="Unitobs table used for glm" help=""/>
+    </inputs>
+    <outputs>
+       <data name="report" from_work_dir="stdout.txt" label="Report" format="txt"/>
+       <collection type="list" name="plots">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" visible="false" format="png"/>
+       </collection>
+    </outputs>
+    <tests>
+        <test expect_num_outputs="2"> 
+            <param name="input" value="GLM_table_population_analysis_on_Presence_absence_sansszcl_cropped.tabular"/>
+            <param name="datatable" value="Presence_absence_table_sansszcl_cropped.tabular"/>
+            <param name="unitobstable" value="Unitobs.tabular"/>
+            <output name="report" value="stdout.txt"/>
+            <output_collection name="plots"  type="list" count="3">
+                <element name="Abalstel" ftype="png">
+                    <assert_contents>
+                        <has_text text="PNG"/>
+                    </assert_contents>
+                </element>
+                <element name="Hemifasc" ftype="png">
+                    <assert_contents>
+                        <has_text text="PNG"/>
+                    </assert_contents>
+                </element>
+                <element name="Zebrscop" ftype="png">
+                    <assert_contents>
+                        <has_text text="PNG"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+        </test>
+    </tests>
+    <edam_topics>
+       <edam_topic>topic_0610</edam_topic>
+       <edam_topic>topic_3050</edam_topic>
+    </edam_topics>
+    <help><![CDATA[
+=============================================
+Create plot(s) from GLM results output
+=============================================
+
+**What it does**
+
+This tool from PAMPA toolsuite creates one or several png plots from GLM results table. 
+
+|
+
+**Input description**
+
+A tabular file with GLM results data. Must at least contain three columns + columns of GLM results : 
+
+- 'analysis' : representing the part of data used for each GLM computed. With "global" if GLM computed on the whole dataset or, if several GLM have been computed on several subsections of the dataset, the name of the level from the separation factor used to split the dataset.
+- 'Interest.var' : representing the metric selected as interest variable in the GLM(s).
+- 'distribution' : representing the probability distribution used for GLM(s).
+- At least estimates and p value for every year of the time series analysed. Formated as 'yyyy Estimate' and 'yyyy Pvalue'.
+
++----------+--------------+--------------+---------------+-------------+-----+       
+| analysis | Interest.var | distribution | 2020 Estimate | 2020 Pvalue | ... |            
++==========+==============+==============+===============+=============+=====+        
+|  global  |   metric1    |   gaussian   |   1.4533246   |    0.007    | ... |            
++----------+--------------+--------------+---------------+-------------+-----+        
+|   ...    |     ...      |      ...     |      ...      |     ...     | ... |       
++----------+--------------+--------------+---------------+-------------+-----+    
+
+The first input may be extracted from the 'Compute GLM on population data' or 'Compute GLM on community data' tools.  
+
+
+A tabular file with community data, the same used to compute the GLM in the 'Compute GLM' tools. Must at least contain three columns : 
+
+- 'observation.unit'
+
+- 'location'
+
+- At least the community metric used as interest variable in the GLM(s). 
+
++------------------+----------+---------+-----+
+| observation.unit | location | metric1 | ... |
++==================+==========+=========+=====+
+|   site_yearID    |locationID|    2    | ... |
++------------------+----------+---------+-----+
+|        ...       |    ...   |   ...   | ... |
++------------------+----------+---------+-----+
+
+The second input may be extracted from the 'Calculate community metrics' or 'Calculate presence absence table' tools.
+
+
+A tabular file with unitobs data which contains at least two or three columns depending on the case : 
+
+- 'observation.unit'
+
+- 'year' : formated as yyyy (example : 2020)
+
+- if the GLM is a community analysis with a separation factor : the separation factor used to split data
+
++------------------+--------+---------------------+-----+       
+| observation.unit |  year  |  separation_factor  | ... |            
++==================+========+=====================+=====+        
+|   site_yearID    |  2020  |          A          | ... |            
++------------------+--------+---------------------+-----+        
+|      ...         |  ...   |         ...         | ... |       
++------------------+--------+---------------------+-----+ 
+
+|
+
+**Output**
+
+Two outputs : 
+
+- A report file on the computation (can be blank).
+
+- A data collection containing plot(s) created by the tool.
+
+|
+
+**Source**
+
+Derived from PAMPA scripts (https://wwz.ifremer.fr/pampa/Meth.-Outils/Outils) written by Yves Reecht.
+
+  ]]></help>
+
+  <expand macro="pampa_bibref" />
+</tool>

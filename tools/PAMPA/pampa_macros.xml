@@ -1,5 +1,5 @@
 <macros>
-    <token name="@VERSION@">0.0.1</token>
+    <token name="@VERSION@">0.0.2</token>
     <xml name="Pampa_requirements">
         <requirements>
             <requirement type="package" version="1.0.2">r-tidyr</requirement>
@@ -15,6 +15,7 @@
     <xml name="Plot_requirements">
         <requirements>
             <requirement type="package" version="3.1.1">r-ggplot2</requirement>
+            <requirement type="package" version="1.3_25">r-boot</requirement>
         </requirements>    
     </xml>
     <xml name="pampa_input_calculate">
@@ -46,6 +47,7 @@
                 <option value="quasibinomial">Quasi-Binomial</option>
                 <option value="Gamma">Gamma</option>
             </param>
+            <param name="rdata" type="boolean" checked="yes" label="GLM object(s) as .Rdata output ?"/>
         </when>
     </xml>
     <xml name="pampa_input_GLM">
@@ -67,6 +69,10 @@
     <xml name="pampa_output_GLM">
         <data name="output_recap" from_work_dir="GLMSummaryFull.txt" format="txt" label="Simple statistics on chosen variables on ${on_string}"/>
         <data name="output_rate" from_work_dir="RatingGLM.txt" format="txt" label="Your analysis rating file on ${on_string}"/>
+        <collection type="list" name="output_GLM">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.Rdata" visible="false" format="Rdata"/>
+            <filter> settings['advanced'] == 'advanced' and settings['rdata']</filter>
+        </collection>
     </xml>
     <xml name="pampa_bibref">
         <citations>

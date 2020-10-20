@@ -15,15 +15,21 @@
          '$sep'
          #if $settings.advanced=='advanced' 
              $settings.distrib
-             'FALSE'
+             $settings.rdata
          #else
              'None'
-             'FALSE'
+             'false'
          #end if
          'unit'
          '$__tool_directory__/FunctPAMPAGalaxy.r' 
          '$output_summary'
          '$output_recap'
+         '$output_rate'
+         #if $settings.advanced=='advanced'
+             #if $settings.rdata=='true'
+                 '$output_GLM'
+             #end if
+         #end if
     ]]>
     </command>
     <inputs>
@@ -39,14 +45,16 @@
         <expand macro="pampa_output_GLM"/>
     </outputs>
     <tests>
-        <test>
+        <test expect_num_outputs="4">
             <param name="input_metric" value="Community_metrics_cropped.tabular"/>
             <param name="input_unitobs" value="Unitobs.tabular"/>
             <param name="varint" value="4"/>
             <param name="varrep" value="year,site,habitat"/>
             <param name="varrand" value="site"/>
             <param name="sep" value="22"/>
-            <param name="advanced" value="simple"/>
+            <param name="advanced" value="advanced"/>
+            <param name="distrib" value="None"/>
+            <param name="rdata" value="true"/>
             <output name="output_summary">
                 <assert_contents> 
                     <has_n_lines n="9"/>
@@ -62,6 +70,11 @@
                     <has_n_lines n="51"/>
                 </assert_contents> 
             </output>
+            <output_collection name="output_GLM"  type="list" count="3">
+                <element name="GLM_HR" ftype="Rdata" file="GLM_HR.Rdata"/>
+                <element name="GLM_RE" ftype="Rdata" file="GLM_RE.Rdata"/>
+                <element name="global_GLM" ftype="Rdata" file="global_GLM.Rdata"/>
+            </output_collection>
         </test>
     </tests>
     <edam_topics>
@@ -118,12 +131,14 @@ The first input may be extracted from the 'Calculate community metrics' tool.
 A tabular file with unitobs or location data which contains at least as much columns as used response variables and separation factor in addition with the 'observation.unit' or 'location' column.
 
 +--------------------------------+---------+--------+------------+-----+       
-| observation.unit OR location   | ??site? |  year  |  habitat   | ... |            
+| observation.unit OR location   |   site  |  year  |  habitat   | ... |            
 +================================+=========+========+============+=====+        
 |  site_yearID     OR locationID | site ID |  2000  | habitatID  | ... |            
 +--------------------------------+---------+--------+------------+-----+        
 |              ...               |   ...   |   ...  |     ...    | ... |       
 +--------------------------------+---------+--------+------------+-----+ 
+
+The site may represent the same entity as the location or represent an aggregation of several locations
 
 |
 

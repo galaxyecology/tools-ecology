@@ -27,11 +27,13 @@ if (length(args) < 10) {
     listRand <- strsplit(args [5],",")[[1]] ###### Selected randomized response factors for GLM
     colFactAna <- args[6] ####### (optional) Selected splitting factors for GLMs
     Distrib <- args[7] ###### (optional) Selected distribution for GLM 
-    log <- args[8] ###### (Optional) Log on interest metric ?
+    GLMout <- args[8] ###### (Optional) GLM object as Rdata output ?
     aggreg <- args[9] ###### Aggregation level of the data table
     source(args[10]) ###### Import functions
 
 }
+
+
 #### Data must be a dataframe with at least 3 variables : unitobs representing location and year ("observation.unit"), species code ("species.code") and abundance ("number")
 
 
@@ -57,15 +59,20 @@ vars_data1<- NULL
 err_msg_data1<-"The input metrics dataset doesn't have the right format. It needs to have at least the following 2 variables :\n- observation.unit (or year and site)\n- numeric or integer metric\n"
 check_file(obs,err_msg_data1,vars_data1,2)
 
-vars_data2 <- c(listFact,listRand)
+vars_data2 <- c("observation.unit",listFact,listRand)
 err_msg_data2<-"The input unitobs dataset doesn't have the right format. It needs to have at least the following 2 variables :\n- observation.unit (or year and site)\n- factors used in GLM (habitat, year and/or site)\n"
 check_file(tabUnitobs,err_msg_data2,vars_data2[vars_data2 != "None"],2)
+
+if (all(c(listFact,listRand)=="None")) {stop("GLM needs to have at least one response variable.")}
+
+if (listFact[1] == "None" || all(is.element(listFact,listRand))) {stop("GLM can't have only random effects.")} 
+
 
 ####################################################################################################
 ########## Computing Generalized Linear Model ## Function : modeleLineaireWP2.unitobs.f ############
 ####################################################################################################
 
-modeleLineaireWP2.unitobs.f <- function(metrique, listFact, listRand, FactAna, Distrib, log=FALSE, tabMetrics, tableMetrique, tabUnitobs, unitobs="observation.unit", nbName="number")
+modeleLineaireWP2.unitobs.f <- function(metrique, listFact, listRand, FactAna, Distrib, tabMetrics, tableMetrique, tabUnitobs, unitobs="observation.unit", nbName="number")
 {
     ## Purpose: Monitoring steps for GLM on unitobs
     ## ----------------------------------------------------------------------
@@ -74,7 +81,6 @@ modeleLineaireWP2.unitobs.f <- function(metrique, listFact, listRand, FactAna, D
     ##            listRand : Random factors for GLM
     ##            factAna : Separation factor for GLMs
     ##            Distrib : selected distribution for model
-    ##            log : log transformation on data ? boolean
     ##            tabMetrics : data table metrics
     ##            tableMetrique : data table's name
     ##            tabUnitobs : data table unitobs
@@ -101,12 +107,7 @@ modeleLineaireWP2.unitobs.f <- function(metrique, listFact, listRand, FactAna, D
     }
 
     ##Creating model's expression :
-
-    #if (log == FALSE) {
-        exprML <- eval(parse(text=paste(metrique, "~", RespFact)))
-    #}else{
-     #   exprML <- eval(parse(text=paste("log(",metrique,")", "~", RespFact)))
-    #}
+    exprML <- eval(parse(text=paste(metrique, "~", RespFact)))
 
     ##Creating analysis table :
 
@@ -143,9 +144,6 @@ modeleLineaireWP2.unitobs.f <- function(metrique, listFact, listRand, FactAna, D
         loiChoisie <- Distrib
     }
 
-
-    ## Compute Model(s) :
-
     if (FactAna != "None" && nlevels(tmpData[,FactAna]) > 1)
     {
         Anacut <- levels(tmpData[,FactAna])
@@ -155,79 +153,57 @@ modeleLineaireWP2.unitobs.f <- function(metrique, listFact, listRand, FactAna, D
 
     ##Create results table : 
     lev <- unlist(lapply(listF,FUN=function(x){levels(tmpData[,x])}))
+    row <- c("global", Anacut)
 
-    if (listRand[1] != "None") ## if random effects
+    if (is.element("year",listF) && ! is.element("year",listRand))
     {
-        TabSum <- data.frame(analysis=c("global", Anacut),AIC=NA,BIC=NA,logLik=NA, deviance=NA,df.resid=NA)
-        colrand <- unlist(lapply(listRand, 
-                           FUN=function(x){lapply(c("Std.Dev","NbObservation","NbLevels"),
-                                                  FUN=function(y){paste(x,y,collapse = ":")
-                                                                 })
-                                          }))
-        TabSum[,colrand] <- NA
-
-        if (! is.null(lev)) ## if fixed effects + random effects
-        {
-            colcoef <- unlist(lapply(c("(Intercept)",lev),
-                               FUN=function(x){lapply(c("Estimate","Std.Err","Zvalue","Pvalue","signif"),
-                                                      FUN=function(y){paste(x,y,collapse = ":")
-                                                                     })
-                                              }))
-        }else{ ## if no fixed effects
-            colcoef <- NULL
-        }
-
-    }else{ ## if no random effects
-        TabSum <- data.frame(analysis=c("global", Anacut),AIC=NA,Resid.deviance=NA,df.resid=NA,Null.deviance=NA,df.null=NA)
-
-        switch(loiChoisie,
-               "gaussian"={colcoef <- unlist(lapply(c("(Intercept)",lev),
-                                             FUN=function(x){lapply(c("Estimate","Std.Err","Tvalue","Pvalue","signif"),
-                                                                    FUN=function(y){paste(x,y,collapse = ":")
-                                                                                   })
-                                                            }))},
-               "quasipoisson"={colcoef <- unlist(lapply(c("(Intercept)",lev),
-                                             FUN=function(x){lapply(c("Estimate","Std.Err","Tvalue","Pvalue","signif"),
-                                                                    FUN=function(y){paste(x,y,collapse = ":")
-                                                                                   })
-                                                            }))},
-               colcoef <- unlist(lapply(c("(Intercept)",lev),
-                                        FUN=function(x){lapply(c("Estimate","Std.Err","Zvalue","Pvalue","signif"),
-                                                               FUN=function(y){paste(x,y,collapse = ":")
-                                                                              })
-                                                       })))
-
-    }  
-  
-    TabSum[,colcoef] <- NA
-
+        TabSum <- create.res.table(listRand=listRand, listFact=listFact, row=row, lev=unlist(c("year",lev)), distrib=loiChoisie)
+    }else{
+        TabSum <- create.res.table(listRand=listRand, listFact=listFact, row=row, lev=lev, distrib=loiChoisie)
+    }
     ### creating rate table 
-    TabRate <- data.frame(analysis=c("global", Anacut), complete_plan=NA, balanced_plan=NA, NA_proportion_OK=NA, no_residual_dispersion=NA, uniform_residuals=NA, outliers_proportion_OK=NA, no_zero_inflation=NA, observation_factor_ratio_OK=NA, enough_levels_random_effect=NA, rate=NA)
+    TabRate <- data.frame(analysis=row, complete_plan=NA, balanced_plan=NA, NA_proportion_OK=NA, no_residual_dispersion=NA, uniform_residuals=NA, outliers_proportion_OK=NA, no_zero_inflation=NA, observation_factor_ratio_OK=NA, enough_levels_random_effect=NA, rate=NA)
 
+    ##plural analysis
     for (cut in Anacut) 
     {
         cutData <- tmpData[grep(cut,tmpData[,FactAna]),]
         cutData <- dropLevels.f(cutData)
 
         res <-""
+        resY <- ""
 
         if (listRand[1] != "None")
         {
             res <- tryCatch(glmmTMB(exprML,family=loiChoisie, data=cutData), error=function(e){})
+            if (is.element("year",listF) && ! is.element("year",listRand)) #Model with year as continuous
+            { 
+                cutData$year <- as.numeric(cutData$year)
+                resY <- tryCatch(glmmTMB(exprML,family=loiChoisie, data=cutData), error=function(e){})
+                cutData$year <- as.factor(cutData$year)
+            }else{resY <- ""}
+
         }else{
             res <- tryCatch(glm(exprML,data=cutData,family=loiChoisie), error=function(e){})
+            if (is.element("year",listF)) #Model with year as continuous
+            { 
+                cutData$year <- as.numeric(cutData$year)
+                resY <- tryCatch(glm(exprML,family=loiChoisie, data=cutData), error=function(e){})
+                cutData$year <- as.factor(cutData$year)
+            }else{resY <- ""}
+
         }
 
           ## Write results :
          if (! is.null(res))
          {
-            TabSum <- sortiesLM.f(objLM=res, TabSum=TabSum, metrique=metrique,
+            fileSaveGLMcut <- paste("GLM_",cut,".Rdata",sep="")
+            save(res,file=fileSaveGLMcut)
+
+            TabSum <- sortiesLM.f(objLM=res, objLMY=resY, TabSum=TabSum, metrique=metrique,
                                   factAna=factAna, cut=cut, colAna="analysis", lev=lev, #modSel=iFactGraphSel, listFactSel=listFactSel,
                                   listFact=listFact,
-                                  Data=cutData, #Log=Log,
-                                  type=ifelse(tableMetrique == "unitSpSz" && factAna != "size.class",
-                                              "CL_unitobs",
-                                              "unitobs"))
+                                  Data=cutData)
 
             TabRate[TabRate[,"analysis"]==cut,c(2:11)] <- noteGLM.f(data=cutData, objLM=res, metric=metrique, listFact=listFact, details=TRUE)
 
@@ -239,32 +215,49 @@ modeleLineaireWP2.unitobs.f <- function(metrique, listFact, listRand, FactAna, D
 
     ## Global analysis : 
 
+    resG <- ""
+    resGY <- ""
+
     if (listRand[1] != "None")
     {
         resG <- glmmTMB(exprML,family=loiChoisie, data=tmpData)
+        if (is.element("year",listFact) && ! is.element("year",listRand)) #Model with year as continuous
+        { 
+            tmpData$year <- as.numeric(tmpData$year)
+            resGY <- glmmTMB(exprML,family=loiChoisie, data=tmpData)
+            tmpData$year <- as.factor(tmpData$year)
+        }else{resGY <- ""}
+
     }else{
         resG <- glm(exprML,data=tmpData,family=loiChoisie)
+        if (is.element("year",listFact)) #Model with year as continuous
+        { 
+            tmpData$year <- as.numeric(tmpData$year)
+            resGY <- glm(exprML,family=loiChoisie, data=tmpData)
+            tmpData$year <- as.factor(tmpData$year)
+        }else{resGY <- ""}
     }
 
     ## write results :
-    TabSum <- sortiesLM.f(objLM=resG, TabSum=TabSum, metrique=metrique,
+
+    save(resG,file="global_GLM.Rdata")
+
+    TabSum <- sortiesLM.f(objLM=resG, objLMY=resGY, TabSum=TabSum, metrique=metrique,
                           factAna=factAna, cut="global", colAna="analysis", lev=lev, #modSel=iFactGraphSel, listFactSel=listFactSel,
                           listFact=listFact,
-                          Data=tmpData, #Log=Log,
-                          type=ifelse(tableMetrique == "unitSpSz" && factAna != "size.class",
-                                      "CL_unitobs",
-                                      "unitobs"))
+                          Data=tmpData)
 
     TabRate[TabRate[,"analysis"]=="global",c(2:11)] <- noteGLM.f(data=tmpData, objLM=resG, metric=metrique, listFact=listFact, details=TRUE)
     noteGLMs.f(tabRate=TabRate,exprML=exprML,objLM=resG, file_out=TRUE)
+
     ## simple statistics and infos :
     filename <- "GLMSummaryFull.txt"
-
-    ## Save data on model :
         
     infoStats.f(filename=filename, Data=tmpData, agregLevel=aggreg, type="stat",
                 metrique=metrique, factGraph=factAna, #factGraphSel=modSel,
                 listFact=listFact)#, listFactSel=listFactSel)
+
+    TabSum$separation <- FactAna
 
     return(TabSum)
 
@@ -272,6 +265,6 @@ modeleLineaireWP2.unitobs.f <- function(metrique, listFact, listRand, FactAna, D
 
 ################# Analysis
 
-Tab <- modeleLineaireWP2.unitobs.f(metrique=metric, listFact=listFact, listRand=listRand, FactAna=FactAna, Distrib=Distrib, log=log, tabMetrics=obs, tableMetrique=aggreg, tabUnitobs=tabUnitobs, nbName="number")
+Tab <- modeleLineaireWP2.unitobs.f(metrique=metric, listFact=listFact, listRand=listRand, FactAna=FactAna, Distrib=Distrib, tabMetrics=obs, tableMetrique=aggreg, tabUnitobs=tabUnitobs, nbName="number")
 
 write.table(Tab,"GLMSummary.tabular", row.names=FALSE, sep="\t", dec=".",fileEncoding="UTF-8")
