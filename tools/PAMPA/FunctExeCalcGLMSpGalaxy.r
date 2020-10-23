@@ -8,8 +8,10 @@
 
 ###################### Packages
 suppressMessages(library(multcomp))
+suppressMessages(library(DHARMa)) 
 suppressMessages(library(glmmTMB)) ###Version: 0.2.3
 suppressMessages(library(gap))
+
 
 ###################### Load arguments and declaring variables
 

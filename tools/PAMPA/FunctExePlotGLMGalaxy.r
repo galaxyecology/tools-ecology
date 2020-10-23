@@ -120,15 +120,19 @@ ggplot.glm <- function(glmtable, datatable,unitobs,metric=metric,sp,description=
 
     ##### Table 1
 
-    coefan <- glmtab[glmtab[,1]==sp,grep("[0-2][0|9][0-9][0-9].Estimate",colnames(glmtab))] ## extract estimates for each years to contruct graph 1
-    coefan <- unlist(na.omit(coefan))
+    coefan <- unlist(lapply(an,FUN=function(x){if (length(glmtab[glmtab[,1]==sp,grep(paste0("X",x,".Estimate"),colnames(glmtab))]) > 0) {glmtab[glmtab[,1]==sp,grep(paste0("X",x,".Estimate"),colnames(glmtab))]}else{NA}}))  ## extract estimates for each years to contruct graph 1
    
+    ic_inf <- unlist(lapply(an,FUN=function(x){if (length(glmtab[glmtab[,1]==sp,grep(paste0("X",x,".IC_inf"),colnames(glmtab))]) > 0) {glmtab[glmtab[,1]==sp,grep(paste0("X",x,".IC_inf"),colnames(glmtab))]}else{NA}}))
+
+    ic_up <- unlist(lapply(an,FUN=function(x){if (length(glmtab[glmtab[,1]==sp,grep(paste0("X",x,".IC_up"),colnames(glmtab))]) > 0) {glmtab[glmtab[,1]==sp,grep(paste0("X",x,".IC_up"),colnames(glmtab))]}else{NA}}))
+
+
     switch(distrib,  ## Applying the reciprocal of the link function to coefficients and confidence intervals depending on distribution law
            "poisson"={coefyear <- c(1,exp(as.numeric(coefan))) ## link function : log
                       if(assessIC) 
                       {
-                          ic_inf_sim <- c(1,exp(as.numeric(glmtab[glmtab[,1]==sp,grep("[0-2][0|9][0-9][0-9].IC_inf",colnames(glmtab))])))
-                          ic_sup_sim <- c(1,exp(as.numeric(glmtab[glmtab[,1]==sp,grep("[0-2][0|9][0-9][0-9].IC_up",colnames(glmtab))])))
+                          ic_inf_sim <- c(1,exp(as.numeric(ic_inf)))
+                          ic_sup_sim <- c(1,exp(as.numeric(ic_up)))
                       } else {
                           ic_inf_sim <- NA
                           ic_sup_sim <- NA
@@ -136,8 +140,8 @@ ggplot.glm <- function(glmtable, datatable,unitobs,metric=metric,sp,description=
            "quasipoisson"={coefyear <- c(1,exp(as.numeric(coefan))) ## link function : log
                            if(assessIC) 
                            {
-                               ic_inf_sim <- c(1,exp(as.numeric(glmtab[glmtab[,1]==sp,grep("[0-2][0|9][0-9][0-9].IC_inf",colnames(glmtab))])))
-                               ic_sup_sim <- c(1,exp(as.numeric(glmtab[glmtab[,1]==sp,grep("[0-2][0|9][0-9][0-9].IC_up",colnames(glmtab))])))
+                               ic_inf_sim <- c(1,exp(as.numeric(ic_inf)))
+                               ic_sup_sim <- c(1,exp(as.numeric(ic_up)))
                            } else {
                                ic_inf_sim <- NA
                                ic_sup_sim <- NA
@@ -145,8 +149,8 @@ ggplot.glm <- function(glmtable, datatable,unitobs,metric=metric,sp,description=
            "inverse.gaussian"={coefyear <- c(1,as.numeric(coefan)^(-1/2)) ## link function : x^-2
                                if(assessIC) 
                                {
-                                   ic_inf_sim <- c(1,as.numeric(glmtab[glmtab[,1]==sp,grep("[0-2][0|9][0-9][0-9].IC_inf",colnames(glmtab))])^(-1/2))
-                                   ic_sup_sim <- c(1,as.numeric(glmtab[glmtab[,1]==sp,grep("[0-2][0|9][0-9][0-9].IC_up",colnames(glmtab))])^(-1/2))
+                                   ic_inf_sim <- c(1,as.numeric(ic_inf)^(-1/2))
+                                   ic_sup_sim <- c(1,as.numeric(ic_up)^(-1/2))
                                } else {
                                    ic_inf_sim <- NA
                                    ic_sup_sim <- NA
@@ -154,8 +158,8 @@ ggplot.glm <- function(glmtable, datatable,unitobs,metric=metric,sp,description=
            "binomial"={coefyear <- c(1,inv.logit(as.numeric(coefan))) ## link function : logit
                        if(assessIC) 
                        {
-                           ic_inf_sim <- c(1,inv.logit(as.numeric(glmtab[glmtab[,1]==sp,grep("[0-2][0|9][0-9][0-9].IC_inf",colnames(glmtab))])))
-                           ic_sup_sim <- c(1,inv.logit(as.numeric(glmtab[glmtab[,1]==sp,grep("[0-2][0|9][0-9][0-9].IC_up",colnames(glmtab))])))
+                           ic_inf_sim <- c(1,inv.logit(as.numeric(ic_inf)))
+                           ic_sup_sim <- c(1,inv.logit(as.numeric(ic_up)))
                        } else {
                            ic_inf_sim <- NA
                            ic_sup_sim <- NA
@@ -163,8 +167,8 @@ ggplot.glm <- function(glmtable, datatable,unitobs,metric=metric,sp,description=
            "quasibinomial"={coefyear <- c(1,inv.logit(as.numeric(coefan))) ## link function : logit
                             if(assessIC) 
                             {
-                                ic_inf_sim <- c(1,inv.logit(as.numeric(glmtab[glmtab[,1]==sp,grep("[0-2][0|9][0-9][0-9].IC_inf",colnames(glmtab))])))
-                                ic_sup_sim <- c(1,inv.logit(as.numeric(glmtab[glmtab[,1]==sp,grep("[0-2][0|9][0-9][0-9].IC_up",colnames(glmtab))])))
+                                ic_inf_sim <- c(1,inv.logit(as.numeric(ic_inf)))
+                                ic_sup_sim <- c(1,inv.logit(as.numeric(ic_up)))
                             } else {
                                 ic_inf_sim <- NA
                                 ic_sup_sim <- NA
@@ -172,8 +176,8 @@ ggplot.glm <- function(glmtable, datatable,unitobs,metric=metric,sp,description=
            "Gamma"={coefyear <- c(1,as.numeric(coefan)^(-1)) ## link function : -x^-1
                     if(assessIC) 
                     {
-                        ic_inf_sim <- c(1,as.numeric(glmtab[glmtab[,1]==sp,grep("[0-2][0|9][0-9][0-9].IC_inf",colnames(glmtab))])^(-1))
-                        ic_sup_sim <- c(1,as.numeric(glmtab[glmtab[,1]==sp,grep("[0-2][0|9][0-9][0-9].IC_up",colnames(glmtab))])^(-1))
+                        ic_inf_sim <- c(1,as.numeric(ic_inf)^(-1))
+                        ic_sup_sim <- c(1,as.numeric(ic_up)^(-1))
                     } else {
                         ic_inf_sim <- NA
                         ic_sup_sim <- NA
@@ -181,15 +185,15 @@ ggplot.glm <- function(glmtable, datatable,unitobs,metric=metric,sp,description=
            {coefyear <- c(1,as.numeric(coefan))
             if(assessIC) 
             {
-                ic_inf_sim <- c(1,as.numeric(glmtab[glmtab[,1]==sp,grep("[0-2][0|9][0-9][0-9].IC_inf",colnames(glmtab))]))
-                ic_sup_sim <- c(1,as.numeric(glmtab[glmtab[,1]==sp,grep("[0-2][0|9][0-9][0-9].IC_up",colnames(glmtab))]))
+                ic_inf_sim <- c(1,as.numeric(ic_inf))
+                ic_sup_sim <- c(1,as.numeric(ic_up))
             } else {
                 ic_inf_sim <- NA
                 ic_sup_sim <- NA
             }})
 
-    pval <- glmtab[glmtab[,1]==sp,grep("[0-2][0|9][0-9][0-9].Pvalue",colnames(glmtab))] ## extract p value for each year 
-    pval <- c(1,unlist(pval[grep("FALSE",is.na(pval))])) 
+    pval <- c(1,unlist(lapply(an,FUN=function(x){if (length(glmtab[glmtab[,1]==sp,grep(paste0("X",x,".Pvalue"),colnames(glmtab))]) > 0) {glmtab[glmtab[,1]==sp,grep(paste0("X",x,".Pvalue"),colnames(glmtab))]}else{NA}}))) ## extract p value for each year 
+
 
     tab1 <- data.frame(year,val=coefyear,  ## table for the graphical output 1
                        LL=unlist(ic_inf_sim),UL=unlist(ic_sup_sim),
@@ -310,11 +314,12 @@ ggplot.glm <- function(glmtable, datatable,unitobs,metric=metric,sp,description=
         p <- p + facet_grid(panel ~ ., scale = "free") +
         theme(legend.position="none",
               panel.grid.minor=element_blank(),
-              panel.grid.major.y=element_blank())  +
-              ylab("") + xlab("year")+ ggtitle(titre) +
-              scale_colour_manual(values=col, name = "" ,
+              panel.grid.major.y=element_blank(),
+              axis.text.x = element_text(angle=90,vjust=0.5,hjust=1))  +
+        ylab("") + xlab("year")+ ggtitle(titre) +
+        scale_colour_manual(values=col, name = "" ,
                                   breaks = names(col))+
-              scale_x_continuous(breaks=min(dgg$year):max(dgg$year))
+        scale_x_continuous(breaks=min(dgg$year):max(dgg$year))
         p <- p + geom_hline(data =hline.data,mapping = aes(yintercept=z, colour = couleur,linetype=type ),
                         alpha=1,size=1.2)
         if(assessIC) ############# ONLY FOR THE CONFIDENCE INTERVAL
@@ -338,7 +343,8 @@ ggplot.glm <- function(glmtable, datatable,unitobs,metric=metric,sp,description=
         p <- p + facet_grid(panel ~ ., scale = "free") +
                  theme(legend.position="none",
                        panel.grid.minor=element_blank(),
-                       panel.grid.major.y=element_blank())  +
+                       panel.grid.major.y=element_blank(),
+                       axis.text.x = element_text(angle=90,vjust=0.5,hjust=1))  +
                  ylab("") + xlab("year")+ ggtitle(titre) +
                  scale_colour_manual(values=col, name = "" ,
                                      breaks = names(col))+

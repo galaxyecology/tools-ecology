@@ -1,5 +1,5 @@
 <macros>
-    <token name="@VERSION@">0.0.2</token>
+    <token name="@VERSION@">0.0.1</token>
     <xml name="Pampa_requirements">
         <requirements>
             <requirement type="package" version="1.0.2">r-tidyr</requirement>
@@ -10,6 +10,7 @@
             <requirement type="package" version="1.2.2">r-gap</requirement>
             <requirement type="package" version="1.0.1">r-glmmtmb</requirement>
             <requirement type="package" version="1.4_13">r-multcomp</requirement>
+            <requirement type="package" version="0.3.3.0">r-dharma</requirement>
         </requirements>    
     </xml>
     <xml name="Plot_requirements">
