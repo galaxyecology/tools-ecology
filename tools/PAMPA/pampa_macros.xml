@@ -1,5 +1,5 @@
 <macros>
-    <token name="@VERSION@">0.0.1</token>
+    <token name="@VERSION@">0.0.2</token>
     <xml name="Pampa_requirements">
         <requirements>
             <requirement type="package" version="1.0.2">r-tidyr</requirement>
