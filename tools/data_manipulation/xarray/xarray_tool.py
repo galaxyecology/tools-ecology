@@ -84,8 +84,8 @@ class XarrayTool ():
         writer = csv.writer(f, delimiter='\t')
         header = ['VariableName', 'NumberOfDimensions']
         for idx, val in enumerate(ds.dims.items()):
-            header.append('Dim'+str(idx) + 'Name')
-            header.append('Dim'+str(idx) + 'Size')
+            header.append('Dim' + str(idx) + 'Name')
+            header.append('Dim' + str(idx) + 'Size')
         writer.writerow(header)
         for name, da in ds.data_vars.items():
             line = [name]
