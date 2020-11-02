@@ -84,8 +84,8 @@ class XarrayTool ():
         writer = csv.writer(f, delimiter='\t')
         header = ['VariableName', 'NumberOfDimensions']
         for idx, val in enumerate(ds.dims.items()):
-            header.append('Dim'+str(idx)+'Name')
-            header.append('Dim'+str(idx)+'Size')
+            header.append('Dim' + str(idx) + 'Name')
+            header.append('Dim' + str(idx) + 'Size')
         writer.writerow(header)
         for name, da in ds.data_vars.items():
             line = [name]
@@ -113,8 +113,7 @@ class XarrayTool ():
         if filter_varname == self.select:
             # filter on values of the selected variable
             if op == 'bi':
-                self.dset = self.dset.where((self.dset <= rl) &
-                                            (self.dset >= ll))
+                self.dset = self.dset.where((self.dset <= rl) & (self.dset >= ll))
             elif op == 'le':
                 self.dset = self.dset.where(self.dset <= ll)
             elif op == 'ge':
@@ -207,8 +206,7 @@ class XarrayTool ():
         for row in fcoords.itertuples():
             self.latvalN = row[0]
             self.lonvalE = row[1]
-            self.outfile = (self.outputdir + '/' + self.select + '_'
-                            + str(row.Index) + '.tabular')
+            self.outfile = (self.outputdir + '/' + self.select + '_' + str(row.Index) + '.tabular')
             self.selection()
 
 
