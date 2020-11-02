@@ -68,9 +68,21 @@
                 </assert_contents> 
             </output>
             <output_collection name="output_GLM"  type="list" count="3">
-                <element name="GLM_Abalstel" ftype="Rdata" file="GLM_Abalstel.Rdata"/>
-                <element name="GLM_Hemifasc" ftype="Rdata" file="GLM_Hemifasc.Rdata"/>
-                <element name="GLM_Zebrscop" ftype="Rdata" file="GLM_Zebrscop.Rdata"/>
+                <element name="GLM_Abalstel" ftype="Rdata">
+                    <assert_contents> 
+                        <has_size value="199219" delta="10000"/>
+                    </assert_contents> 
+                </element>
+                <element name="GLM_Hemifasc" ftype="Rdata">
+                    <assert_contents> 
+                        <has_size value="202264" delta="10000"/>
+                    </assert_contents> 
+                </element>
+                <element name="GLM_Zebrscop" ftype="Rdata">
+                    <assert_contents> 
+                        <has_size value="207311" delta="10000"/>
+                    </assert_contents> 
+                </element>
             </output_collection>
         </test>
     </tests>
