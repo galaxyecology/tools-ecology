@@ -26,10 +26,10 @@ if (length(args) < 2) {
 
 
 #Import des données / Import data
-obs<- read.table(import_data, sep = "\t", dec = ".", header = TRUE, encoding = "UTF-8") #
+obs <- read.table(import_data, sep = "\t", dec = ".", header = TRUE, encoding = "UTF-8") #
 obs[obs == -999] <- NA
-factors <- fact_det_f(Obs = obs)
-obs_type <- def_typeobs_f(Obs = obs)
+factors <- fact_det_f(obs = obs)
+obs_type <- def_typeobs_f(obs = obs)
 obs <- create_unitobs(data = obs)
 
 vars_data <- c("observation.unit", "species.code", "number")

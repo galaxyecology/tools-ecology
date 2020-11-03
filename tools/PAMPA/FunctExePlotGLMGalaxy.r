@@ -175,10 +175,10 @@ ggplot_glm <- function(glmtable, datatable, unitobs, metric = metric, sp, descri
                                      ic_sup_sim <- NA
                            }},
            "inverse.gaussian" = {
-                                     coefyear <- c(1, as.numeric(coefan)^( - 1 / 2)) ## link function : x^ - 2
+                                     coefyear <- c(1, as.numeric(coefan) ^ (- 1 / 2)) ## link function : x^ - 2
                                      if (assess_ic) {
-                                         ic_inf_sim <- c(1, as.numeric(ic_inf)^( - 1 / 2))
-                                         ic_sup_sim <- c(1, as.numeric(ic_up)^( - 1 / 2))
+                                         ic_inf_sim <- c(1, as.numeric(ic_inf) ^ (- 1 / 2))
+                                         ic_sup_sim <- c(1, as.numeric(ic_up) ^ (- 1 / 2))
                                      } else {
                                          ic_inf_sim <- NA
                                          ic_sup_sim <- NA
@@ -202,15 +202,15 @@ ggplot_glm <- function(glmtable, datatable, unitobs, metric = metric, sp, descri
                                       ic_sup_sim <- NA
                             }},
            "Gamma" = {
-                          coefyear <- c(1, as.numeric(coefan)^( - 1)) ## link function : -x^ - 1
+                          coefyear <- c(1, as.numeric(coefan) ^ (- 1)) ## link function : -x^ - 1
                           if (assess_ic) {
-                              ic_inf_sim <- c(1, as.numeric(ic_inf)^( - 1))
-                              ic_sup_sim <- c(1, as.numeric(ic_up)^( - 1))
+                              ic_inf_sim <- c(1, as.numeric(ic_inf) ^ (- 1))
+                              ic_sup_sim <- c(1, as.numeric(ic_up) ^ (- 1))
                           } else {
                               ic_inf_sim <- NA
                               ic_sup_sim <- NA
-                    }},
-           {
+                    }}
+          ,{
                 coefyear <- c(1, as.numeric(coefan))
                 if (assess_ic) {
                     ic_inf_sim <- c(1, as.numeric(ic_inf))
@@ -230,15 +230,15 @@ ggplot_glm <- function(glmtable, datatable, unitobs, metric = metric, sp, descri
 
 
     tab1 <- data.frame(year, val = coefyear,  ## table for the graphical output 1
-                       LL = unlist(ic_inf_sim), UL = unlist(ic_sup_sim),
-                       catPoint = ifelse(pval<s_signif, "significatif", NA), pval,
+                       ll = unlist(ic_inf_sim), ul = unlist(ic_sup_sim),
+                       catPoint = ifelse(pval < s_signif, "significatif", NA), pval,
                        courbe = vpan[1],
                        panel = vpan[1])
     ## cleaning of wrong or biaised measures of the confidence interval
     if (assess_ic) {
-        tab1$UL <-  ifelse(tab1$UL == Inf, NA, tab1$UL)
-        tab1$UL <-  ifelse(tab1$UL > 1.000000e+20, NA, tab1$UL)
-        tab1$UL[1] <- 1
+        tab1$ul <-  ifelse(tab1$ul == Inf, NA, tab1$ul)
+        tab1$ul <-  ifelse(tab1$ul > 1.000000e+20, NA, tab1$ul)
+        tab1$ul[1] <- 1
         tab1$val <-  ifelse(tab1$val > 1.000000e+20, 1.000000e+20, tab1$val)
     }
 
@@ -253,8 +253,8 @@ ggplot_glm <- function(glmtable, datatable, unitobs, metric = metric, sp, descri
                                  pourcentage <- round((exp(as.numeric(coefancontinu) * as.numeric(pasdetemps)) - 1) * 100, 2)
                             },
            "inverse.gaussian" = {
-                                     trend <- round(as.numeric(coefancontinu)^( - 1 / 2), 3) ## link function : x^ - 2
-                                     pourcentage <- round((((as.numeric(coefancontinu) * as.numeric(pasdetemps))^( - 1 / 2)) - 1) * 100, 2)
+                                     trend <- round(as.numeric(coefancontinu) ^ (- 1 / 2), 3) ## link function : x^ - 2
+                                     pourcentage <- round((((as.numeric(coefancontinu) * as.numeric(pasdetemps)) ^ (- 1 / 2)) - 1) * 100, 2)
                                 },
            "binomial" = {
                              trend <- round(inv.logit(as.numeric(coefancontinu)), 3) ## link function : logit
@@ -265,10 +265,10 @@ ggplot_glm <- function(glmtable, datatable, unitobs, metric = metric, sp, descri
                                   pourcentage <- round((inv.logit(as.numeric(coefancontinu) * as.numeric(pasdetemps)) - 1) * 100, 2)
                              },
            "Gamma" = {
-                          trend <- round(as.numeric(coefancontinu)^( - 1), 3) ## link function : -x^ - 1
-                          pourcentage <- round((((as.numeric(coefancontinu) * as.numeric(pasdetemps))^( - 1)) - 1) * 100, 2)
-                     },
-           {
+                          trend <- round(as.numeric(coefancontinu) ^ (- 1), 3) ## link function : -x^ - 1
+                          pourcentage <- round((((as.numeric(coefancontinu) * as.numeric(pasdetemps)) ^ (- 1)) - 1) * 100, 2)
+                     }
+          ,{
                 trend <- round(as.numeric(coefancontinu), 3)
                 pourcentage <-  round((((as.numeric(coefancontinu) * as.numeric(pasdetemps))) - 1) * 100, 2)
            })
@@ -278,7 +278,7 @@ ggplot_glm <- function(glmtable, datatable, unitobs, metric = metric, sp, descri
     ## table for global trend on the whole time series
     tab1t <- NULL
     if (length(pval) > 0) {
-        tab1t <- data.frame(Est = trend, pourcent = pourcentage, signif = pval<s_signif, pval)
+        tab1t <- data.frame(Est = trend, pourcent = pourcentage, signif = pval < s_signif, pval)
     }
 
     ##### Table 2
@@ -306,27 +306,27 @@ ggplot_glm <- function(glmtable, datatable, unitobs, metric = metric, sp, descri
                                                                                      length(unique(subset(datatablecut[datatablecut[, metric] > 0, ], year == x)[, "location"]))
                                                                                              }) ##  number of plots where the species were observed
                                      valplot <- (na.omit(as.numeric(nb_loc_presence)) / na.omit(as.numeric(nb_loc))) * 100
-                                }, ## % of presence in observered plots if presence / absence
-           {
+                                } ## % of presence in observered plots if presence / absence
+          ,{
                 valplot <- lapply(sort(year), FUN = function(x) {
                                                         mean(na.omit(as.numeric(subset(datatablecut, year == x)[, as.character(metric)])))
                                                                 })
            } ## mean if any other metric
           )
 
-    tab2 <- data.frame(year, val = round(as.numeric(valplot), 2), LL = NA, UL = NA, catPoint = NA, pval = NA,
+    tab2 <- data.frame(year, val = round(as.numeric(valplot), 2), ll = NA, ul = NA, catPoint = NA, pval = NA,
                        courbe = vpan[2], panel = vpan[2])
 
     ## Creating ggplots
 
     dgg <- tab1
 
-    figname<- paste(sp, ".png", sep = "")
+    figname <- paste(sp, ".png", sep = "")
 
     ## coord for horizontal lines in graphs
-    hline.data1 <- data.frame(z = c(1), panel = c(vpan[1]), couleur = "var estimates", type = "var estimates")
-    hline.data3 <- data.frame(z = 0, panel = vpan[2], couleur = "seuil", type = "seuil")
-    hline.data <- rbind(hline.data1, hline.data3)
+    hline_data1 <- data.frame(z = c(1), panel = c(vpan[1]), couleur = "var estimates", type = "var estimates")
+    hline_data3 <- data.frame(z = 0, panel = vpan[2], couleur = "seuil", type = "seuil")
+    hline_data <- rbind(hline_data1, hline_data3)
     titre <- paste(sp)
 
     ## text for the population evolution trend
@@ -336,10 +336,10 @@ ggplot_glm <- function(glmtable, datatable, unitobs, metric = metric, sp, descri
         if (assess_ic) {
             txt_pente1 <- paste("Global trend : ", tab1t$Est,
                                ifelse(tab1t$signif, " *", ""),
-                               ifelse(tab1t$signif, paste("\n", ifelse(tab1t$pourcent>0, "+ ", "- "),
+                               ifelse(tab1t$signif, paste("\n", ifelse(tab1t$pourcent > 0, "+ ", "- "),
                                                          abs(tab1t$pourcent), " % in ", pasdetemps, " years", sep = ""), ""), sep = "")
         }else{
-            txt_pente1 <- ifelse(tab1t$signif, paste("\n", ifelse(tab1t$pourcent>0, "+ ", "- "),
+            txt_pente1 <- ifelse(tab1t$signif, paste("\n", ifelse(tab1t$pourcent > 0, "+ ", "- "),
                                                    abs(tab1t$pourcent), " % in ", pasdetemps, " years", sep = ""), "")
         }
     }else{
@@ -347,7 +347,7 @@ ggplot_glm <- function(glmtable, datatable, unitobs, metric = metric, sp, descri
     }
 
     ## table of the text for the population evolution trend
-    tab_text_pent <- data.frame(y = c(max(c(dgg$val, dgg$UL), na.rm = TRUE) * .9),
+    tab_text_pent <- data.frame(y = c(max(c(dgg$val, dgg$ul), na.rm = TRUE) * .9),
                               x = median(dgg$year),
                               txt = ifelse(trend_on_graph, c(txt_pente1), ""),
                               courbe = c(vpan[1]), panel = c(vpan[1]))
@@ -373,15 +373,15 @@ ggplot_glm <- function(glmtable, datatable, unitobs, metric = metric, sp, descri
               panel.grid.minor = element_blank(),
               panel.grid.major.y = element_blank(),
               axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))  +
-        ylab("") + xlab("year")+ ggtitle(titre) +
+        ylab("") + xlab("year") + ggtitle(titre) +
         scale_colour_manual(values = col, name = "",
-                                  breaks = names(col))+
+                                  breaks = names(col)) +
         scale_x_continuous(breaks = min(dgg$year):max(dgg$year))
-        p <- p + geom_hline(data =hline.data, mapping = aes(yintercept = z, colour = couleur, linetype = type ),
+        p <- p + geom_hline(data = hline_data, mapping = aes(yintercept = z, colour = couleur, linetype = type),
                         alpha = 1, size = 1.2)
         if (assess_ic) { ############# ONLY FOR THE CONFIDENCE INTERVAL
-            p <- p + geom_ribbon(mapping = aes(ymin = LL, ymax = UL), fill = col[vpan[1]], alpha = .2)
-            p <- p + geom_pointrange(mapping= aes(y = val, ymin = LL, ymax = UL), fill = col[vpan[1]], alpha = .2)
+            p <- p + geom_ribbon(mapping = aes(ymin = ll, ymax = ul), fill = col[vpan[1]], alpha = .2)
+            p <- p + geom_pointrange(mapping = aes(y = val, ymin = ll, ymax = ul), fill = col[vpan[1]], alpha = .2)
         }
 
         p <- p + geom_line(mapping = aes(colour = courbe), size = 1.5)
@@ -401,17 +401,17 @@ ggplot_glm <- function(glmtable, datatable, unitobs, metric = metric, sp, descri
                        panel.grid.minor = element_blank(),
                        panel.grid.major.y = element_blank(),
                        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))  +
-                 ylab("") + xlab("year")+ ggtitle(titre) +
+                 ylab("") + xlab("year") + ggtitle(titre) +
                  scale_colour_manual(values = col, name = "",
-                                     breaks = names(col))+
+                                     breaks = names(col)) +
                  scale_x_continuous(breaks = min(dgg$year):max(dgg$year))
-        p <- p + geom_hline(data =subset(hline.data, panel == vpan[1]), mapping = aes(yintercept = z, colour = couleur, linetype = type ),
+        p <- p + geom_hline(data = subset(hline_data, panel == vpan[1]), mapping = aes(yintercept = z, colour = couleur, linetype = type),
                             alpha = 1, size = 1.2)
 
         if (assess_ic) { ############# ONLY FOR THE CONFIDENCE INTERVAL
-            p <- p + geom_ribbon(mapping = aes(ymin = LL, ymax = UL), fill = col[vpan[1]], alpha = .2)
-            p <- p + geom_pointrange(mapping= aes(y = val, ymin = LL, ymax = UL), fill = col[vpan[1]], alpha = .2)
-	}
+            p <- p + geom_ribbon(mapping = aes(ymin = ll, ymax = ul), fill = col[vpan[1]], alpha = .2)
+            p <- p + geom_pointrange(mapping = aes(y = val, ymin = ll, ymax = ul), fill = col[vpan[1]], alpha = .2)
+        }
 
         p <- p + geom_line(mapping = aes(colour = courbe), size = 1.5)
         p <- p + geom_point(mapping = aes(colour = courbe), size = 3)
@@ -419,7 +419,6 @@ ggplot_glm <- function(glmtable, datatable, unitobs, metric = metric, sp, descri
         p <-  p + geom_text(data = tab_text_pent, mapping = aes(x, y, label = txt), parse = FALSE, color = col[vpan[1]], fontface = 2, size = 4)
         ggsave(figname, p, width = 15, height = 9, units = "cm")
     }
-    #return(p)
 }
 ############################################################################################################ fin fonction graphique / end of function for graphical output
 
