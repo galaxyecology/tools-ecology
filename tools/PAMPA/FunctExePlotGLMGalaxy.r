@@ -12,24 +12,24 @@ suppressMessages(library(boot))
 
 ###################### Load arguments and declaring variables
 
-args = commandArgs(trailingOnly=TRUE)
-#options(encoding = "UTF-8")
+args = commandArgs(trailingOnly = TRUE)
+
 
 if (length(args) < 2) {
-    stop("At least 3 arguments must be supplied input dataset file with GLM results (.tabular)", call.=FALSE) #si pas d'arguments -> affiche erreur et quitte / if no args -> error and exit1
+    stop("At least 3 arguments must be supplied input dataset file with GLM results (.tabular)", call.=FALSE) #if no args -> error and exit1
 
 } else {
-    Importdata <- args[1] ###### file name : glm results table
-    DataTab <- args[2] ###### file name : Metrics table
-    UnitobsTab <- args[3] ###### file name : Unitobs table
+    import_data <- args[1] ###### file name : glm results table
+    data_tab <- args[2] ###### file name : Metrics table
+    unitobs_tab <- args[3] ###### file name : Unitobs table
     source(args[4]) ###### Import functions
 
 }
 
 #Import data 
-glmtable <- read.table(Importdata,sep="\t",dec=".",header=TRUE,encoding="UTF-8") #
-datatable <- read.table(DataTab,sep="\t",dec=".",header=TRUE,encoding="UTF-8") #
-unitobs <- read.table(UnitobsTab,sep="\t",dec=".",header=TRUE,encoding="UTF-8") #
+glmtable <- read.table(import_data,sep="\t",dec=".",header=TRUE,encoding="UTF-8") #
+datatable <- read.table(data_tab,sep="\t",dec=".",header=TRUE,encoding="UTF-8") #
+unitobs <- read.table(unitobs_tab,sep="\t",dec=".",header=TRUE,encoding="UTF-8") #
 
 #Check files
 
@@ -39,7 +39,7 @@ check_file(glmtable,err_msg_data1,vars_data1,4)
 
 if (length(grep("[0-2][0|9][0-9][0-9].[Estimate|Pvalue]",colnames(glmtable))) == 0){stop("The input GLM results dataset doesn't have the right format or informations. This tool is to represent temporal trends, if your GLM doesn't take the year variable as a fixed effect this tool is not proper to make any representation of it. It needs to have at least estimates and p-value for every year from your time series GLM as columns with name formated as : yyyy Estimate (example : 2020 Estimate) and  yyyy Pvalue (example : 2020 Pvalue).")}
 
-if (length(grep("[0-2][0|9][0-9][0-9].IC_[up|inf]",colnames(glmtable))) == 0){assessIC <- FALSE}else{assessIC <- TRUE}
+if (length(grep("[0-2][0|9][0-9][0-9].IC_[up|inf]",colnames(glmtable))) == 0){assess_ic <- FALSE}else{assess_ic <- TRUE}
 
 metric <- as.character(glmtable[1,"Interest.var"])
 
@@ -58,7 +58,7 @@ if (all(is.na(match(datatable[,"observation.unit"],unitobs[,"observation.unit"])
 ######################### Creating plot from time series GLM data ## Function : ggplot.glm #########################
 ####################################################################################################################
 ggplot.glm <- function(glmtable, datatable,unitobs,metric=metric,sp,description=TRUE,
-                       trendOnGraph=TRUE,assessIC=TRUE) 
+                       trend_on_graph=TRUE,assess_ic=TRUE) 
 {
     ## Purpose: Creating plot from time series GLM data
     ## ----------------------------------------------------------------------
@@ -68,12 +68,12 @@ ggplot.glm <- function(glmtable, datatable,unitobs,metric=metric,sp,description=
     ##            metric : Interest variable in GLM(s)
     ##            sp : name of processed GLM
     ##            description : Two graphs ? 
-    ##            trendOnGraph : Write global trend of the time series on graph ? 
-    ##            assessIC : Assess confidence intervals ?
+    ##            trend_on_graph : Write global trend of the time series on graph ? 
+    ##            assess_ic : Assess confidence intervals ?
     ## ----------------------------------------------------------------------
     ## Author: Coline ROYAUX 13 october 2020
 
-    seuilSignif <- 0.05 ## threshold when pvalue is considered significant
+    s_signif <- 0.05 ## threshold when pvalue is considered significant
     distrib <- as.character(glmtable[1,"distribution"]) ## extract GLM distribution
 
     col <- c("observation.unit","location",metric) ## names of needed columns in metrics table to construct the 2nd panel of the graph
@@ -129,7 +129,7 @@ ggplot.glm <- function(glmtable, datatable,unitobs,metric=metric,sp,description=
 
     switch(distrib,  ## Applying the reciprocal of the link function to coefficients and confidence intervals depending on distribution law
            "poisson"={coefyear <- c(1,exp(as.numeric(coefan))) ## link function : log
-                      if(assessIC) 
+                      if(assess_ic) 
                       {
                           ic_inf_sim <- c(1,exp(as.numeric(ic_inf)))
                           ic_sup_sim <- c(1,exp(as.numeric(ic_up)))
@@ -138,7 +138,7 @@ ggplot.glm <- function(glmtable, datatable,unitobs,metric=metric,sp,description=
                           ic_sup_sim <- NA
                       }},
            "quasipoisson"={coefyear <- c(1,exp(as.numeric(coefan))) ## link function : log
-                           if(assessIC) 
+                           if(assess_ic) 
                            {
                                ic_inf_sim <- c(1,exp(as.numeric(ic_inf)))
                                ic_sup_sim <- c(1,exp(as.numeric(ic_up)))
@@ -147,7 +147,7 @@ ggplot.glm <- function(glmtable, datatable,unitobs,metric=metric,sp,description=
                                ic_sup_sim <- NA
                            }},
            "inverse.gaussian"={coefyear <- c(1,as.numeric(coefan)^(-1/2)) ## link function : x^-2
-                               if(assessIC) 
+                               if(assess_ic) 
                                {
                                    ic_inf_sim <- c(1,as.numeric(ic_inf)^(-1/2))
                                    ic_sup_sim <- c(1,as.numeric(ic_up)^(-1/2))
@@ -156,7 +156,7 @@ ggplot.glm <- function(glmtable, datatable,unitobs,metric=metric,sp,description=
                                    ic_sup_sim <- NA
                                }},
            "binomial"={coefyear <- c(1,inv.logit(as.numeric(coefan))) ## link function : logit
-                       if(assessIC) 
+                       if(assess_ic) 
                        {
                            ic_inf_sim <- c(1,inv.logit(as.numeric(ic_inf)))
                            ic_sup_sim <- c(1,inv.logit(as.numeric(ic_up)))
@@ -165,7 +165,7 @@ ggplot.glm <- function(glmtable, datatable,unitobs,metric=metric,sp,description=
                            ic_sup_sim <- NA
                        }},
            "quasibinomial"={coefyear <- c(1,inv.logit(as.numeric(coefan))) ## link function : logit
-                            if(assessIC) 
+                            if(assess_ic) 
                             {
                                 ic_inf_sim <- c(1,inv.logit(as.numeric(ic_inf)))
                                 ic_sup_sim <- c(1,inv.logit(as.numeric(ic_up)))
@@ -174,7 +174,7 @@ ggplot.glm <- function(glmtable, datatable,unitobs,metric=metric,sp,description=
                                 ic_sup_sim <- NA
                             }},
            "Gamma"={coefyear <- c(1,as.numeric(coefan)^(-1)) ## link function : -x^-1
-                    if(assessIC) 
+                    if(assess_ic) 
                     {
                         ic_inf_sim <- c(1,as.numeric(ic_inf)^(-1))
                         ic_sup_sim <- c(1,as.numeric(ic_up)^(-1))
@@ -183,7 +183,7 @@ ggplot.glm <- function(glmtable, datatable,unitobs,metric=metric,sp,description=
                         ic_sup_sim <- NA
                     }},
            {coefyear <- c(1,as.numeric(coefan))
-            if(assessIC) 
+            if(assess_ic) 
             {
                 ic_inf_sim <- c(1,as.numeric(ic_inf))
                 ic_sup_sim <- c(1,as.numeric(ic_up))
@@ -197,11 +197,11 @@ ggplot.glm <- function(glmtable, datatable,unitobs,metric=metric,sp,description=
 
     tab1 <- data.frame(year,val=coefyear,  ## table for the graphical output 1
                        LL=unlist(ic_inf_sim),UL=unlist(ic_sup_sim),
-                       catPoint=ifelse(pval<seuilSignif,"significatif",NA),pval,
+                       catPoint=ifelse(pval<s_signif,"significatif",NA),pval,
                        courbe=vpan[1],
                        panel=vpan[1])
     ## cleaning of wrong or biaised measures of the confidence interval
-    if(assessIC) 
+    if(assess_ic) 
     {
         tab1$UL <-  ifelse(tab1$UL == Inf, NA,tab1$UL)
         tab1$UL <-  ifelse(tab1$UL > 1.000000e+20, NA,tab1$UL)
@@ -232,7 +232,7 @@ ggplot.glm <- function(glmtable, datatable,unitobs,metric=metric,sp,description=
     tab1t <- NULL
     if (length(pval) > 0)
     {
-        tab1t <- data.frame(Est=trend,pourcent=pourcentage,signif=pval<seuilSignif,pval)
+        tab1t <- data.frame(Est=trend,pourcent=pourcentage,signif=pval<s_signif,pval)
     }
 
     ##### Table 2
@@ -275,37 +275,37 @@ ggplot.glm <- function(glmtable, datatable,unitobs,metric=metric,sp,description=
     pasdetemps <- max(dgg$year) - min(dgg$year) + 1
     if (! is.null(tab1t))
     {
-        if(assessIC){
-            txtPente1 <- paste("Global trend : ", tab1t$Est,
+        if(assess_ic){
+            txt_pente1 <- paste("Global trend : ", tab1t$Est,
                                ifelse(tab1t$signif," *",""),
                                ifelse(tab1t$signif,paste("\n",ifelse(tab1t$pourcent>0,"+ ","- "), 
                                                          abs(tab1t$pourcent)," % in ",pasdetemps," years",sep=""),""),sep="")
         }else{  
-            txtPente1 <- ifelse(tab1t$signif,paste("\n",ifelse(tab1t$pourcent>0,"+ ","- "),
+            txt_pente1 <- ifelse(tab1t$signif,paste("\n",ifelse(tab1t$pourcent>0,"+ ","- "),
                                                    abs(tab1t$pourcent)," % in ",pasdetemps," years",sep=""),"")
         }
     }else{
-        trendOnGraph <- FALSE
+        trend_on_graph <- FALSE
     }
 
     ## table of the text for the population evolution trend
-    tabTextPent <- data.frame(y=c(max(c(dgg$val,dgg$UL),na.rm=TRUE)*.9),
+    tab_text_pent <- data.frame(y=c(max(c(dgg$val,dgg$UL),na.rm=TRUE)*.9),
                               x=median(dgg$year),
-                              txt=ifelse(trendOnGraph,c(txtPente1),""),
+                              txt=ifelse(trend_on_graph,c(txt_pente1),""),
                               courbe=c(vpan[1]),panel=c(vpan[1]))
 
     dgg <- rbind(tab1,tab2)
 
     ## colors for plots
-    vecColPoint <- c("#ffffff","#eeb40f","#ee0f59")
-    names(vecColPoint) <- c("significatif","infSeuil","0")
-    vecColCourbe <- c("#3c47e0","#5b754d","#55bb1d","#973ce0")
-    names(vecColCourbe) <- c(vpan[1],"loc","presence",vpan[2])
-    vecColHline <- c("#ffffff","#e76060")
-    names(vecColHline) <- c("var estimates","seuil")
+    vec_col_point <- c("#ffffff","#eeb40f","#ee0f59")
+    names(vec_col_point) <- c("significatif","infSeuil","0")
+    vec_col_courbe <- c("#3c47e0","#5b754d","#55bb1d","#973ce0")
+    names(vec_col_courbe) <- c(vpan[1],"loc","presence",vpan[2])
+    vec_col_hline <- c("#ffffff","#e76060")
+    names(vec_col_hline) <- c("var estimates","seuil")
   
-    col <- c(vecColPoint,vecColCourbe,vecColHline)
-    names(col) <- c(names(vecColPoint),names(vecColCourbe),names(vecColHline))  
+    col <- c(vec_col_point,vec_col_courbe,vec_col_hline)
+    names(col) <- c(names(vec_col_point),names(vec_col_courbe),names(vec_col_hline))  
 
     if(description)## if 2 panels
     { 
@@ -322,7 +322,7 @@ ggplot.glm <- function(glmtable, datatable,unitobs,metric=metric,sp,description=
         scale_x_continuous(breaks=min(dgg$year):max(dgg$year))
         p <- p + geom_hline(data =hline.data,mapping = aes(yintercept=z, colour = couleur,linetype=type ),
                         alpha=1,size=1.2)
-        if(assessIC) ############# ONLY FOR THE CONFIDENCE INTERVAL
+        if(assess_ic) ############# ONLY FOR THE CONFIDENCE INTERVAL
         { 
             p <- p + geom_ribbon(mapping=aes(ymin=LL,ymax=UL),fill=col[vpan[1]],alpha=.2) 
             p <- p + geom_pointrange(mapping= aes(y=val,ymin=LL,ymax=UL),fill=col[vpan[1]],alpha=.2)
@@ -331,7 +331,7 @@ ggplot.glm <- function(glmtable, datatable,unitobs,metric=metric,sp,description=
         p <- p + geom_line(mapping=aes(colour=courbe),size = 1.5)
         p <- p + geom_point(mapping=aes(colour=courbe),size = 3)
         p <- p + geom_point(mapping=aes(colour=catPoint,alpha=ifelse(!is.na(catPoint),1,0)),size = 2)
-        p <- p + geom_text(data=tabTextPent, mapping=aes(x,y,label=txt) ,parse=FALSE,color=col[vpan[1]],fontface=2, size=4)
+        p <- p + geom_text(data=tab_text_pent, mapping=aes(x,y,label=txt) ,parse=FALSE,color=col[vpan[1]],fontface=2, size=4)
         ggsave(figname, p,width=16,height=15, units="cm")
 
     } else {
@@ -352,7 +352,7 @@ ggplot.glm <- function(glmtable, datatable,unitobs,metric=metric,sp,description=
         p <- p + geom_hline(data =subset(hline.data,panel==vpan[1]),mapping = aes(yintercept=z, colour = couleur,linetype=type ),
                             alpha=1,size=1.2)
     
-        if(assessIC) ############# ONLY FOR THE CONFIDENCE INTERVAL
+        if(assess_ic) ############# ONLY FOR THE CONFIDENCE INTERVAL
         { 
             p <- p + geom_ribbon(mapping=aes(ymin=LL,ymax=UL),fill=col[vpan[1]],alpha=.2) 
             p <- p + geom_pointrange(mapping= aes(y=val,ymin=LL,ymax=UL),fill=col[vpan[1]],alpha=.2)
@@ -361,7 +361,7 @@ ggplot.glm <- function(glmtable, datatable,unitobs,metric=metric,sp,description=
         p <- p + geom_line(mapping=aes(colour=courbe),size = 1.5)
         p <- p + geom_point(mapping=aes(colour=courbe),size = 3)
         p <- p + geom_point(mapping=aes(colour=catPoint,alpha=ifelse(!is.na(catPoint),1,0)),size = 2)
-        p <-  p + geom_text(data=tabTextPent, mapping=aes(x,y,label=txt),parse=FALSE,color=col[vpan[1]],fontface=2, size=4)
+        p <-  p + geom_text(data=tab_text_pent, mapping=aes(x,y,label=txt),parse=FALSE,color=col[vpan[1]],fontface=2, size=4)
         ggsave(figname, p,width=15,height=9,units="cm")
     }
     #return(p)
@@ -377,7 +377,7 @@ for (sp in glmtable[,1])
     if (!all(is.na(glmtable[glmtable[,1]==sp,4:(length(glmtable)-1)]))) ##ignore lines with only NA
     { 
         #p <- 
-        ggplot.glm(glmtable = glmtable, datatable=datatable,unitobs=unitobs,metric=metric, sp=sp, description=TRUE, trendOnGraph=TRUE, assessIC=assessIC)
+        ggplot.glm(glmtable = glmtable, datatable=datatable,unitobs=unitobs,metric=metric, sp=sp, description=TRUE, trend_on_graph=TRUE, assess_ic=assess_ic)
         #plots <- list(plots,p)
     }
 }
