@@ -73,7 +73,7 @@ create_year_location <- function(data, year = "year", location = "location", uni
 
 ######################################### start of the function check_file called by every Galaxy Rscripts
 
-check_file <- function(dataset, err_msg, vars, nb_vars){
+check_file <- function(dataset, err_msg, vars, nb_vars) {
 
     ## Purpose: General function to check integrity of input file. Will
     ##          check numbers and contents of variables(colnames).
@@ -86,13 +86,13 @@ check_file <- function(dataset, err_msg, vars, nb_vars){
     ## ----------------------------------------------------------------------
     ## Author: Alan Amosse, Benjamin Yguel
 
-    if(ncol(dataset) < nb_vars){ #checking for right number of columns in the file if not = error message
+    if (ncol(dataset) < nb_vars) { #checking for right number of columns in the file if not = error message
         cat("\nerr nb var\n")
         stop(err_msg, call. = FALSE)
     }
 
-    for(i in vars){
-        if(!(i %in% names(dataset))){ #checking colnames
+    for(i in vars) {
+        if (!(i %in% names(dataset))) { #checking colnames
             stop(err_msg, call. = FALSE)
         }
     }
@@ -129,7 +129,7 @@ stat_rotations_nb_f <- function(factors, obs) {
     ## Abundance per rotation at chosen aggregation factors :
     nombres_rot <- tapply(obs$number,
                        as.list(obs[, c(factors, "rotation"), drop = FALSE]),
-                       function(x, ...){ifelse(all(is.na(x)), NA, sum(x, ...))},
+                       function(x, ...) {ifelse(all(is.na(x)), NA, sum(x, ...))},
                        na.rm = TRUE)
 
     ## If valid rotation NA are considered 0 :
@@ -146,15 +146,15 @@ stat_rotations_nb_f <- function(factors, obs) {
 
     ## Means :
     nb_mean <- apply(nombres_rot, which(is.element(names(dimnames(nombres_rot)), factors)),
-                         function(x, ...){ifelse(all(is.na(x)), NA, mean(x, ...))}, na.rm = TRUE)
+                         function(x, ...) {ifelse(all(is.na(x)), NA, mean(x, ...))}, na.rm = TRUE)
 
     ## Maxima :
     nb_max <- apply(nombres_rot, which(is.element(names(dimnames(nombres_rot)), factors)),
-                        function(x, ...){ifelse(all(is.na(x)), NA, max(x, ...))}, na.rm = TRUE)
+                        function(x, ...) {ifelse(all(is.na(x)), NA, max(x, ...))}, na.rm = TRUE)
 
     ## SD :
     nb_sd <- apply(nombres_rot, which(is.element(names(dimnames(nombres_rot)), factors)),
-                       function(x, ...){ifelse(all(is.na(x)), NA, sd(x, ...))}, na.rm = TRUE)
+                       function(x, ...) {ifelse(all(is.na(x)), NA, sd(x, ...))}, na.rm = TRUE)
 
     ## Valid rotations count :
     nombres_rotations <- apply(rotations, 1, sum, na.rm = TRUE)
@@ -666,7 +666,7 @@ agregations_generic_f <- function(d_ata, metrics, factors, list_fact = NULL, uni
 
 
     ## Check of other aggregated factors supplémentaires. There must be no NULL elements :
-    if (any(sapply(reslong[, list_fact], function(x){any(is.null(unlist(x)))}))) {
+    if (any(sapply(reslong[, list_fact], function(x) {any(is.null(unlist(x)))}))) {
         warning(paste("One of the suppl. factors is probably a subset",
                       " of the observations grouping factor(s).", sep = ""))
         return(NULL)
@@ -677,7 +677,7 @@ agregations_generic_f <- function(d_ata, metrics, factors, list_fact = NULL, uni
 
 ######################################### end of the function agregations_generic_f
 
-######################################### start of the function drop_levels_f called y calc_biodiv_f in FucntExeCalcCommIndexesGalaxy.r and linear_model_wp2_community_f in FunctExeCalcGLMGalaxy.r
+######################################### start of the function drop_levels_f called y calc_biodiv_f in FucntExeCalcCommIndexesGalaxy.r and glm_community in FunctExeCalcGLMGalaxy.r
 drop_levels_f <- function(df, which = NULL) {
     ## Purpose: Suppress unused levels of factors
     ## ----------------------------------------------------------------------
@@ -709,7 +709,7 @@ drop_levels_f <- function(df, which = NULL) {
 }
 ######################################### end of the function drop_levels_f
 
-######################################### start of the function subset_all_tables_f called by linear_model_wp2_community_f in FunctExeCalcGLMGalaxy.r
+######################################### start of the function subset_all_tables_f called by glm_community in FunctExeCalcGLMGalaxy.r
 
 subset_all_tables_f <- function(metrique, tab_metrics, facteurs, selections,
                                  tab_unitobs, refesp, tab_metrique = "", nb_name = "number", obs_type = "",
@@ -839,16 +839,16 @@ create_res_table <- function(list_rand, list_fact, row, lev, distrib) {
     if (list_rand[1] != "None") { ## if random effects
         tab_sum <- data.frame(analysis = row, Interest.var = NA, distribution = NA, AIC = NA, BIC = NA, logLik = NA, deviance = NA, df.resid = NA)
         colrand <- unlist(lapply(list_rand,
-                           FUN = function(x){lapply(c("Std.Dev", "NbObservation", "NbLevels"),
-                                                  FUN = function(y){paste(x, y, collapse = ":")
+                           FUN = function(x) {lapply(c("Std.Dev", "NbObservation", "NbLevels"),
+                                                  FUN = function(y) {paste(x, y, collapse = ":")
                                                                  })
                                           }))
         tab_sum[, colrand] <- NA
 
         if (! is.null(lev)) { ## if fixed effects + random effects
             colcoef <- unlist(lapply(c("(Intercept)", lev),
-                               FUN = function(x){lapply(c("Estimate", "Std.Err", "Zvalue", "Pvalue", "IC_up", "IC_inf", "signif"),
-                                                      FUN = function(y){paste(x, y, collapse = ":")
+                               FUN = function(x) {lapply(c("Estimate", "Std.Err", "Zvalue", "Pvalue", "IC_up", "IC_inf", "signif"),
+                                                      FUN = function(y) {paste(x, y, collapse = ":")
                                                                      })
                                               }))
 
@@ -861,22 +861,22 @@ create_res_table <- function(list_rand, list_fact, row, lev, distrib) {
 
         switch(distrib,
                "gaussian" = {colcoef <- unlist(lapply(c("(Intercept)", lev),
-                                             FUN = function(x){lapply(c("Estimate", "Std.Err", "Tvalue", "Pvalue", "IC_up", "IC_inf", "signif"),
-                                                                    FUN = function(y){paste(x, y, collapse = ":")
+                                             FUN = function(x) {lapply(c("Estimate", "Std.Err", "Tvalue", "Pvalue", "IC_up", "IC_inf", "signif"),
+                                                                    FUN = function(y) {paste(x, y, collapse = ":")
                                                                                    })
                                                             }))
 
                            },
                "quasipoisson" = {colcoef <- unlist(lapply(c("(Intercept)", lev),
-                                             FUN = function(x){lapply(c("Estimate", "Std.Err", "Tvalue", "Pvalue", "IC_up", "IC_inf", "signif"),
-                                                                    FUN = function(y){paste(x, y, collapse = ":")
+                                             FUN = function(x) {lapply(c("Estimate", "Std.Err", "Tvalue", "Pvalue", "IC_up", "IC_inf", "signif"),
+                                                                    FUN = function(y) {paste(x, y, collapse = ":")
                                                                                    })
                                                             }))
 
                                },
                {colcoef <- unlist(lapply(c("(Intercept)", lev),
-                                        FUN = function(x){lapply(c("Estimate", "Std.Err", "Zvalue", "Pvalue", "IC_up", "IC_inf", "signif"),
-                                                               FUN = function(y){paste(x, y, collapse = ":")
+                                        FUN = function(x) {lapply(c("Estimate", "Std.Err", "Zvalue", "Pvalue", "IC_up", "IC_inf", "signif"),
+                                                               FUN = function(y) {paste(x, y, collapse = ":")
                                                                               })
                                                        }))
                 })
@@ -890,7 +890,7 @@ create_res_table <- function(list_rand, list_fact, row, lev, distrib) {
 }
 ######################################### end of the function create_res_table
 
-######################################### start of the function sorties_lm_f called by linear_model_wp2_community_f in FunctExeCalcGLMGalaxy.r
+######################################### start of the function sorties_lm_f called by glm_community in FunctExeCalcGLMGalaxy.r
 sorties_lm_f <- function(obj_lm, obj_lmy, tab_sum, #formule,
                         metrique, fact_ana, cut, col_ana, list_fact, lev = NULL, d_ata,
                         Log = FALSE, sufixe = NULL) {
@@ -925,7 +925,7 @@ sorties_lm_f <- function(obj_lm, obj_lmy, tab_sum, #formule,
 
         if (! is.null(lev)) { ## if fixed effects + random effects
             tab_coef <- as.data.frame(sum_lm$coefficients$cond)
-            tab_coef$signif <- lapply(tab_coef[, "Pr(>|z|)"], FUN = function(x){if(!is.na(x) && x < 0.05){
+            tab_coef$signif <- lapply(tab_coef[, "Pr(>|z|)"], FUN = function(x) {if (!is.na(x) && x < 0.05) {
                                                                                     "yes"
                                                                                 }else{
                                                                                     "no"
@@ -935,13 +935,13 @@ sorties_lm_f <- function(obj_lm, obj_lmy, tab_sum, #formule,
             tab_sum[tab_sum[, col_ana] == cut, grepl("Intercept.*Zvalue", colnames(tab_sum))] <- tab_coef[grepl("Intercept", rownames(tab_coef)), "z value"]
             tab_sum[tab_sum[, col_ana] == cut, grepl("Intercept.*Pvalue", colnames(tab_sum))] <- tab_coef[grepl("Intercept", rownames(tab_coef)), "Pr(>|z|)"]
 
-            tab_sum[tab_sum[, col_ana] == cut, grepl(paste(lev, "Zvalue", collapse = "|"), colnames(tab_sum))] <- unlist(lapply(lev, FUN = function(x){if (length(grep(x, rownames(tab_coef))) > 0) {
+            tab_sum[tab_sum[, col_ana] == cut, grepl(paste(lev, "Zvalue", collapse = "|"), colnames(tab_sum))] <- unlist(lapply(lev, FUN = function(x) {if (length(grep(x, rownames(tab_coef))) > 0) {
                 tab_coef[grepl(x, rownames(tab_coef)), "z value"]
             }else{
                 NA
             }
            }))
-            tab_sum[tab_sum[, col_ana] == cut, grepl(paste(lev, "Pvalue", collapse = "|"), colnames(tab_sum))] <- unlist(lapply(lev, FUN = function(x){if (length(grep(x, rownames(tab_coef))) > 0) {
+            tab_sum[tab_sum[, col_ana] == cut, grepl(paste(lev, "Pvalue", collapse = "|"), colnames(tab_sum))] <- unlist(lapply(lev, FUN = function(x) {if (length(grep(x, rownames(tab_coef))) > 0) {
                 tab_coef[grepl(x, rownames(tab_coef)), "Pr(>|z|)"]
             }else{
                 NA
@@ -951,7 +951,7 @@ sorties_lm_f <- function(obj_lm, obj_lmy, tab_sum, #formule,
             if (any(obj_lmy != "")) {
                 sum_lmy <- summary(obj_lmy)
                 tab_coefy <- as.data.frame(sum_lmy$coefficients$cond)
-                tab_coefy$signif <- lapply(tab_coefy[, "Pr(>|z|)"], FUN = function(x){if(!is.na(x) && x < 0.05){
+                tab_coefy$signif <- lapply(tab_coefy[, "Pr(>|z|)"], FUN = function(x) {if (!is.na(x) && x < 0.05) {
                                                                                           "yes"
                                                                                       }else{
                                                                                           "no"
@@ -970,7 +970,7 @@ sorties_lm_f <- function(obj_lm, obj_lmy, tab_sum, #formule,
 
         tab_sum[tab_sum[, col_ana] == cut, grepl(paste(list_rand, "Std.Dev", collapse = "|"), colnames(tab_sum))] <- std_d
         tab_sum[tab_sum[, col_ana] == cut, grepl(paste(list_rand, "NbObservation", collapse = "|"), colnames(tab_sum))] <- sum_lm$nobs
-        tab_sum[tab_sum[, col_ana] == cut, grepl(paste(list_rand, "NbLevels", collapse = "|"), colnames(tab_sum))] <- unlist(lapply(list_rand, FUN = function(x){nlevels(d_ata[, x])
+        tab_sum[tab_sum[, col_ana] == cut, grepl(paste(list_rand, "NbLevels", collapse = "|"), colnames(tab_sum))] <- unlist(lapply(list_rand, FUN = function(x) {nlevels(d_ata[, x])
                  }))
 
     }else{ ## if fixed effects only
@@ -989,7 +989,7 @@ sorties_lm_f <- function(obj_lm, obj_lmy, tab_sum, #formule,
 
         if (sum_lm$family[1] == "gaussian" || sum_lm$family[1] == "quasipoisson") {
 
-            tab_coef$signif <- lapply(tab_coef[, "Pr(>|t|)"], FUN = function(x){if(!is.na(x) && x < 0.05) {
+            tab_coef$signif <- lapply(tab_coef[, "Pr(>|t|)"], FUN = function(x) {if (!is.na(x) && x < 0.05) {
                                                                                     "yes"
                                                                                 }else{
                                                                                     "no"
@@ -998,14 +998,14 @@ sorties_lm_f <- function(obj_lm, obj_lmy, tab_sum, #formule,
             tab_sum[tab_sum[, col_ana] == cut, grepl("Intercept.*Tvalue", colnames(tab_sum))] <- tab_coef[grepl("Intercept", rownames(tab_coef)), "t value"]
             tab_sum[tab_sum[, col_ana] == cut, grepl("Intercept.*Pvalue", colnames(tab_sum))] <- tab_coef[grepl("Intercept", rownames(tab_coef)), "Pr(>|t|)"]
 
-            tab_sum[tab_sum[, col_ana] == cut, grepl(paste(lev, "Tvalue", collapse = "|"), colnames(tab_sum))] <- unlist(lapply(lev, FUN = function(x){if (length(grep(x, rownames(tab_coef))) > 0) {
+            tab_sum[tab_sum[, col_ana] == cut, grepl(paste(lev, "Tvalue", collapse = "|"), colnames(tab_sum))] <- unlist(lapply(lev, FUN = function(x) {if (length(grep(x, rownames(tab_coef))) > 0) {
                 tab_coef[grepl(x, rownames(tab_coef)), "t value"]
             }else{
                 NA
             }
            }))
 
-            tab_sum[tab_sum[, col_ana] == cut, grepl(paste(lev, "Pvalue", collapse = "|"), colnames(tab_sum))] <- unlist(lapply(lev, FUN = function(x){if (length(grep(x, rownames(tab_coef))) > 0) {
+            tab_sum[tab_sum[, col_ana] == cut, grepl(paste(lev, "Pvalue", collapse = "|"), colnames(tab_sum))] <- unlist(lapply(lev, FUN = function(x) {if (length(grep(x, rownames(tab_coef))) > 0) {
                 tab_coef[grepl(x, rownames(tab_coef)), "Pr(>|t|)"]
             }else{
                 NA
@@ -1013,7 +1013,7 @@ sorties_lm_f <- function(obj_lm, obj_lmy, tab_sum, #formule,
            }))
 
             if (any(obj_lmy != "")) {
-                tab_coefy$signif <- lapply(tab_coefy[, "Pr(>|t|)"], FUN = function(x){if(!is.na(x) && x < 0.05){
+                tab_coefy$signif <- lapply(tab_coefy[, "Pr(>|t|)"], FUN = function(x) {if (!is.na(x) && x < 0.05) {
                                                                                           "yes"
                                                                                       }else{
                                                                                           "no"
@@ -1024,7 +1024,7 @@ sorties_lm_f <- function(obj_lm, obj_lmy, tab_sum, #formule,
             }
 
         }else{
-            tab_coef$signif <- lapply(tab_coef[, "Pr(>|z|)"], FUN = function(x){if(!is.na(x) && x < 0.05){
+            tab_coef$signif <- lapply(tab_coef[, "Pr(>|z|)"], FUN = function(x) {if (!is.na(x) && x < 0.05) {
                                                                                     "yes"
                                                                                 }else{
                                                                                     "no"
@@ -1034,13 +1034,13 @@ sorties_lm_f <- function(obj_lm, obj_lmy, tab_sum, #formule,
             tab_sum[tab_sum[, col_ana] == cut, grepl("Intercept.*Zvalue", colnames(tab_sum))] <- tab_coef[grepl("Intercept", rownames(tab_coef)), "z value"]
             tab_sum[tab_sum[, col_ana] == cut, grepl("Intercept.*Pvalue", colnames(tab_sum))] <- tab_coef[grepl("Intercept", rownames(tab_coef)), "Pr(>|z|)"]
 
-            tab_sum[tab_sum[, col_ana] == cut, grepl(paste(lev, "Zvalue", collapse = "|"), colnames(tab_sum))] <- unlist(lapply(lev, FUN = function(x){if (length(grep(x, rownames(tab_coef))) > 0) {
+            tab_sum[tab_sum[, col_ana] == cut, grepl(paste(lev, "Zvalue", collapse = "|"), colnames(tab_sum))] <- unlist(lapply(lev, FUN = function(x) {if (length(grep(x, rownames(tab_coef))) > 0) {
                 tab_coef[grepl(x, rownames(tab_coef)), "z value"]
             }else{
                 NA
             }
            }))
-            tab_sum[tab_sum[, col_ana] == cut, grepl(paste(lev, "Pvalue", collapse = "|"), colnames(tab_sum))] <- unlist(lapply(lev, FUN = function(x){if (length(grep(x, rownames(tab_coef))) > 0) {
+            tab_sum[tab_sum[, col_ana] == cut, grepl(paste(lev, "Pvalue", collapse = "|"), colnames(tab_sum))] <- unlist(lapply(lev, FUN = function(x) {if (length(grep(x, rownames(tab_coef))) > 0) {
                 tab_coef[grepl(x, rownames(tab_coef)), "Pr(>|z|)"]
             }else{
                 NA
@@ -1048,7 +1048,7 @@ sorties_lm_f <- function(obj_lm, obj_lmy, tab_sum, #formule,
            }))
 
             if (any(obj_lmy != "")) {
-                tab_coefy$signif <- lapply(tab_coefy[, "Pr(>|z|)"], FUN = function(x){if(!is.na(x) && x < 0.05){
+                tab_coefy$signif <- lapply(tab_coefy[, "Pr(>|z|)"], FUN = function(x) {if (!is.na(x) && x < 0.05) {
                                                                                           "yes"
                                                                                       }else{
                                                                                           "no"
@@ -1066,19 +1066,19 @@ sorties_lm_f <- function(obj_lm, obj_lmy, tab_sum, #formule,
         tab_sum[tab_sum[, col_ana] == cut, grepl("Intercept.*Std.Err", colnames(tab_sum))] <- tab_coef[grepl("Intercept", rownames(tab_coef)), "Std. Error"]
         tab_sum[tab_sum[, col_ana] == cut, grepl("Intercept.*signif", colnames(tab_sum))] <- tab_coef[grepl("Intercept", rownames(tab_coef)), "signif"]
 
-        tab_sum[tab_sum[, col_ana] == cut, grepl(paste(lev, "Estimate", collapse = "|"), colnames(tab_sum))] <- unlist(lapply(lev, FUN = function(x){if (length(grep(x, rownames(tab_coef))) > 0) {
+        tab_sum[tab_sum[, col_ana] == cut, grepl(paste(lev, "Estimate", collapse = "|"), colnames(tab_sum))] <- unlist(lapply(lev, FUN = function(x) {if (length(grep(x, rownames(tab_coef))) > 0) {
                 tab_coef[grepl(x, rownames(tab_coef)), "Estimate"]
             }else{
                 NA
             }
            }))
-        tab_sum[tab_sum[, col_ana] == cut, grepl(paste(lev, "Std.Err", collapse = "|"), colnames(tab_sum))] <- unlist(lapply(lev, FUN = function(x){if (length(grep(x, rownames(tab_coef))) > 0) {
+        tab_sum[tab_sum[, col_ana] == cut, grepl(paste(lev, "Std.Err", collapse = "|"), colnames(tab_sum))] <- unlist(lapply(lev, FUN = function(x) {if (length(grep(x, rownames(tab_coef))) > 0) {
                 tab_coef[grepl(x, rownames(tab_coef)), "Std. Error"]
             }else{
                 NA
             }
            }))
-        tab_sum[tab_sum[, col_ana] == cut, grepl(paste(lev, "signif", collapse = "|"), colnames(tab_sum))] <- unlist(lapply(lev, FUN = function(x){if (length(grep(x, rownames(tab_coef))) > 0) {
+        tab_sum[tab_sum[, col_ana] == cut, grepl(paste(lev, "signif", collapse = "|"), colnames(tab_sum))] <- unlist(lapply(lev, FUN = function(x) {if (length(grep(x, rownames(tab_coef))) > 0) {
                 tab_coef[grepl(x, rownames(tab_coef)), "signif"]
             }else{
                 NA
@@ -1093,15 +1093,15 @@ sorties_lm_f <- function(obj_lm, obj_lmy, tab_sum, #formule,
 
     }
 
-    ic <- tryCatch(as.data.frame(confint(obj_lm)), error = function(e){})
+    ic <- tryCatch(as.data.frame(confint(obj_lm)), error = function(e) {})
 
-    tab_sum[tab_sum[, col_ana] == cut, grepl(paste(lev, "IC_up", collapse = "|"), colnames(tab_sum))] <- unlist(lapply(lev, FUN = function(x){if (length(grep(x, rownames(ic))) > 0) {
+    tab_sum[tab_sum[, col_ana] == cut, grepl(paste(lev, "IC_up", collapse = "|"), colnames(tab_sum))] <- unlist(lapply(lev, FUN = function(x) {if (length(grep(x, rownames(ic))) > 0) {
      ic[grepl(x, rownames(ic)), "97.5 %"]
  }else{
      NA
  }
 }))
-    tab_sum[tab_sum[, col_ana] == cut, grepl(paste(lev, "IC_inf", collapse = "|"), colnames(tab_sum))] <- unlist(lapply(lev, FUN = function(x){if (length(grep(x, rownames(ic))) > 0) {
+    tab_sum[tab_sum[, col_ana] == cut, grepl(paste(lev, "IC_inf", collapse = "|"), colnames(tab_sum))] <- unlist(lapply(lev, FUN = function(x) {if (length(grep(x, rownames(ic))) > 0) {
      ic[grepl(x, rownames(ic)), "2.5 %"]
  }else{
      NA
@@ -1116,7 +1116,7 @@ sorties_lm_f <- function(obj_lm, obj_lmy, tab_sum, #formule,
 ######################################### end of the function sorties_lm_f
 
 
-######################################### start of the function note_glm_f called by linear_model_wp2_species_f and linear_model_wp2_community_f
+######################################### start of the function note_glm_f called by glm_species and glm_community
 
 note_glm_f <- function(data, obj_lm, metric, list_fact, details = FALSE) {
     ## Purpose: Note your GLM analysis
@@ -1245,7 +1245,7 @@ note_glm_f <- function(data, obj_lm, metric, list_fact, details = FALSE) {
 
 ######################################### end of the function note_glm_f
 
-######################################### start of the function note_glms_f called by linear_model_wp2_species_f and linear_model_wp2_community_f
+######################################### start of the function note_glms_f called by glm_species and glm_community
 
 note_glms_f <- function(tab_rate, expr_lm, obj_lm, file_out = FALSE) {
     ## Purpose: Note your GLM analysis
@@ -1360,7 +1360,7 @@ note_glms_f <- function(tab_rate, expr_lm, obj_lm, file_out = FALSE) {
 
 ######################################### end of the function note_glm_f
 
-######################################### start of the function info_stats_f called by linear_model_wp2_species_f and linear_model_wp2_community_f
+######################################### start of the function info_stats_f called by glm_species and glm_community
 
 info_stats_f <- function(filename, d_ata, agreg_level = c("species", "unitobs"), type = c("graph", "stat"),
                         metrique, fact_graph, fact_graph_sel, list_fact, list_fact_sel) {
@@ -1538,7 +1538,7 @@ summary_fr <- function(object, digits = max(3, getOption("digits") - 3), ...) {
     if ( ! is.numeric(object)) stop("Programming error")
 
     ## Compute summary :
-    res <- c(summary(object = object, digits, ...), "sd" = signif(sd(x = object), digits = digits), "N" = length(object))
+    res <- c(summary(object = object, digits, ...), "sd" = signif (sd(x = object), digits = digits), "N" = length(object))
 
     return(res)
 }
