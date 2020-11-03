@@ -15,7 +15,7 @@ suppressMessages(library(gap))
 
 ###################### Load arguments and declaring variables
 
-args = commandArgs(trailingOnly = TRUE)
+args <- commandArgs(trailingOnly = TRUE)
 
 if (length(args) < 10) {
     stop("At least 4 arguments must be supplied : \n- two input dataset files (.tabular) : metrics table and unitobs table \n- Interest variable field from metrics table \n- Response variable from unitobs table.", call. = FALSE) # if no args -> error and exit1
@@ -37,13 +37,13 @@ if (length(args) < 10) {
 
 
 #Import des données / Import data
-obs<- read.table(import_data, sep = "\t", dec = ".", header = TRUE, encoding = "UTF-8") #
+obs <- read.table(import_data, sep = "\t", dec = ".", header = TRUE, encoding = "UTF-8") #
 obs[obs == -999] <- NA
 metric <- colnames(obs)[colmetric]
 tab_unitobs <- read.table(import_unitobs, sep = "\t", dec = ".", header = TRUE, encoding = "UTF-8")
 tab_unitobs[tab_unitobs == -999] <- NA
 
-vars_data1<- c("species.code")
+vars_data1 <- c("species.code")
 err_msg_data1 <- "The input metrics dataset doesn't have the right format. It needs to have at least the following 3 variables :\n- species.code \n- observation.unit (or year and site)\n- numeric or integer metric\n"
 check_file(obs, err_msg_data1, vars_data1, 3)
 
@@ -54,23 +54,26 @@ check_file(tab_unitobs, err_msg_data2, vars_data2[vars_data2 != "None"], 2)
 
 if (col_fact_ana != "None") {
     fact_ana <- col_fact_ana
-    if (class(obs[fact_ana]) == "numeric" || fact_ana == "observation.unit"){stop("Wrong chosen separation factor : Analysis can't be separated by observation unit or numeric factor")
+    if (class(obs[fact_ana]) == "numeric" || fact_ana == "observation.unit") {
+        stop("Wrong chosen separation factor : Analysis can't be separated by observation unit or numeric factor")
     }
 }else{
     fact_ana <- col_fact_ana
 }
 
-if (all(c(list_fact, list_rand) == "None")) {stop("GLM needs to have at least one response variable.")
+if (all(c(list_fact, list_rand) == "None")) {
+    stop("GLM needs to have at least one response variable.")
 }
 
-if (list_fact[1] == "None" || all(is.element(list_fact, list_rand))) {stop("GLM can't have only random effects.")
+if (list_fact[1] == "None" || all(is.element(list_fact, list_rand))) {
+    stop("GLM can't have only random effects.")
 }
 
 ####################################################################################################
-########## Computing Generalized Linear Model ## Function : linear_model_wp2_community_f ############
+########## Computing Generalized Linear Model ## Function : glm_species ############
 ####################################################################################################
 
-linear_model_wp2_species_f <- function(metrique, list_fact, list_rand, fact_ana, distrib, tab_metrics, tab_metrique, tab_unitobs, unitobs = "observation.unit", nb_name = "number") {
+glm_species <- function(metrique, list_fact, list_rand, fact_ana, distrib, tab_metrics, tab_metrique, tab_unitobs, unitobs = "observation.unit", nb_name = "number") {
     ## Purpose: Monitoring steps for GLM on species data
     ## ----------------------------------------------------------------------
     ## Arguments: metrique : selected metric
@@ -107,9 +110,11 @@ linear_model_wp2_species_f <- function(metrique, list_fact, list_rand, fact_ana,
     list_fact_tab <- c(list_fact, fact_ana)
     list_fact_tab <- list_fact_tab[list_fact_tab != "None"]
 
-    if (all(is.na(match(tmpd_ata[, unitobs], tab_unitobs[, unitobs])))) {stop("Observation units doesn't match in the two input tables")}
+    if (all(is.na(match(tmpd_ata[, unitobs], tab_unitobs[, unitobs])))) {
+        stop("Observation units doesn't match in the two input tables")
+    }
 
-    if(is.element("species.code", colnames(tmpd_ata))) {
+    if (is.element("species.code", colnames(tmpd_ata))) {
         col <- c(unitobs, metrique, fact_ana)
         tmpd_ata <- cbind(tmpd_ata[, col], tab_unitobs[match(tmpd_ata[, unitobs], tab_unitobs[, unitobs]), list_fact])
         colnames(tmpd_ata) <- c(col, list_fact)
@@ -130,8 +135,12 @@ linear_model_wp2_species_f <- function(metrique, list_fact, list_rand, fact_ana,
             chose_distrib <- "binomial"
         }else{
             switch(class(tmpd_ata[, metrique]),
-                  "integer" = {chose_distrib <- "poisson"},
-                  "numeric" = {chose_distrib <- "gaussian"},
+                  "integer" = {
+                                   chose_distrib <- "poisson"
+                              },
+                  "numeric" = {
+                                   chose_distrib <- "gaussian"
+                              },
                   stop("Selected metric class doesn't fit, you should select an integer or a numeric variable"))
         }
     }else{
@@ -139,7 +148,9 @@ linear_model_wp2_species_f <- function(metrique, list_fact, list_rand, fact_ana,
     }
 
     ##Create results table :
-    lev <- unlist(lapply(list_f, FUN = function(x){levels(tmpd_ata[, x])}))
+    lev <- unlist(lapply(list_f, FUN = function(x) {
+                                                        levels(tmpd_ata[, x])
+                                                   }))
     row <- levels(tmpd_ata[, fact_ana])
 
     if (is.element("year", list_f) && ! is.element("year", list_rand)) {
@@ -160,20 +171,24 @@ linear_model_wp2_species_f <- function(metrique, list_fact, list_rand, fact_ana,
         resy <- ""
 
         if (list_rand[1] != "None") {
-            res <- tryCatch(glmmTMB(expr_lm, family = chose_distrib, data = cutd_ata), error = function(e){})
+            res <- tryCatch(glmmTMB(expr_lm, family = chose_distrib, data = cutd_ata), error = function(e) {
+                                                                                                           })
 
             if (is.element("year", list_f) && ! is.element("year", list_rand)) { #Model with year as continuous
                 cutd_ata$year <- as.numeric(cutd_ata$year)
-                resy <- tryCatch(glmmTMB(expr_lm, family = chose_distrib, data = cutd_ata), error = function(e){})
+                resy <- tryCatch(glmmTMB(expr_lm, family = chose_distrib, data = cutd_ata), error = function(e) {
+                                                                                                                })
                 cutd_ata$year <- as.factor(cutd_ata$year)
             }else{
                 resy <- ""
             }
         }else{
-            res <- tryCatch(glm(expr_lm, data = cutd_ata, family = chose_distrib), error = function(e){})
+            res <- tryCatch(glm(expr_lm, data = cutd_ata, family = chose_distrib), error = function(e) {
+                                                                                                       })
             if (is.element("year", list_f)) { #Model with year as continuous
                 cutd_ata$year <- as.numeric(cutd_ata$year)
-                resy <- tryCatch(glm(expr_lm, family = chose_distrib, data = cutd_ata), error = function(e){})
+                resy <- tryCatch(glm(expr_lm, family = chose_distrib, data = cutd_ata), error = function(e) {
+                                                                                                            })
                 cutd_ata$year <- as.factor(cutd_ata$year)
             }else{
                 resy <- ""
@@ -210,6 +225,6 @@ linear_model_wp2_species_f <- function(metrique, list_fact, list_rand, fact_ana,
 
 ################# Analysis
 
-Tab <- linear_model_wp2_species_f(metrique = metric, list_fact = list_fact, list_rand = list_rand, fact_ana = fact_ana, distrib = distrib, tab_metrics = obs, tab_metrique = aggreg, tab_unitobs = tab_unitobs, nb_name = "number")
+tab <- glm_species(metrique = metric, list_fact = list_fact, list_rand = list_rand, fact_ana = fact_ana, distrib = distrib, tab_metrics = obs, tab_metrique = aggreg, tab_unitobs = tab_unitobs, nb_name = "number")
 
-write.table(Tab, "GLMSummary.tabular", row.names = FALSE, sep = "\t", dec = ".", fileEncoding = "UTF-8")
+write.table(tab, "GLMSummary.tabular", row.names = FALSE, sep = "\t", dec = ".", fileEncoding = "UTF-8")
