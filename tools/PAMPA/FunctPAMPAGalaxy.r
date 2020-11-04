@@ -127,7 +127,9 @@ stat_rotations_nb_f <- function(factors, obs) {
     ## Abundance per rotation at chosen aggregation factors :
     nombres_rot <- tapply(obs$number,
                        as.list(obs[, c(factors, "rotation"), drop = FALSE]),
-                       function(x, ...) {ifelse(all(is.na(x)), NA, sum(x, ...))},
+                       function(x, ...) {
+                       ifelse(all(is.na(x)), NA, sum(x, ...))
+                                        },
                        na.rm = TRUE)
 
     ## If valid rotation NA are considered 0 :
@@ -355,7 +357,7 @@ agregation_f <- function(metric, d_ata, factors, cas_metric,
                              function(ii) {
                              ifelse(all(is.na(d_ata[ii, metric])) || sum(d_ata[ii, "nombre.tot"], na.rm = TRUE) == 0,
                                     NA,
-                                    ifelse(all(na.omit(d_ata[ii, metric]) == 0), 
+                                    ifelse(all(na.omit(d_ata[ii, metric]) == 0),
                                            0,
                                            (sum(d_ata[ii, nb_name][!is.na(d_ata[ii, metric])], na.rm = TRUE) /
                                             sum(d_ata[ii, "nombre.tot"], na.rm = TRUE)) *
@@ -373,7 +375,7 @@ agregation_f <- function(metric, d_ata, factors, cas_metric,
                              function(ii) {
                              ifelse(all(is.na(d_ata[ii, metric])) || sum(d_ata[ii, "tot.biomass"], na.rm = TRUE) == 0,
                                     NA,
-                                    ifelse(all(na.omit(d_ata[ii, metric]) == 0), 
+                                    ifelse(all(na.omit(d_ata[ii, metric]) == 0),
                                            0,
                                            (sum(d_ata[ii, "biomass"][!is.na(d_ata[ii, metric])], na.rm = TRUE) /
                                             sum(d_ata[ii, "tot.biomass"], na.rm = TRUE)) *
@@ -889,8 +891,8 @@ create_res_table <- function(list_rand, list_fact, row, lev, distrib) {
                                                                                       })
                                                                                 }))
 
-                               },
-               {
+                               }
+             , {
                     colcoef <- unlist(lapply(c("(Intercept)", lev),
                                       FUN = function(x) {
                                                 lapply(c("Estimate", "Std.Err", "Zvalue", "Pvalue", "IC_up", "IC_inf", "signif"),
@@ -987,8 +989,12 @@ sorties_lm_f <- function(obj_lm, obj_lmy, tab_sum, #formule,
         }
 
         switch(as.character(length(sum_lm$varcor$cond)),
-               "1" = {std_d <- c(sum_lm$varcor$cond[[1]])},
-               "2" = {std_d <- c(sum_lm$varcor$cond[[1]], sum_lm$varcor$cond[[2]])},
+               "1" = {
+                          std_d <- c(sum_lm$varcor$cond[[1]])
+                     },
+               "2" = {
+                          std_d <- c(sum_lm$varcor$cond[[1]], sum_lm$varcor$cond[[2]])
+                     },
                std_d <- NULL)
 
         tab_sum[tab_sum[, col_ana] == cut, grepl(paste(list_rand, "Std.Dev", collapse = "|"), colnames(tab_sum))] <- std_d
@@ -1128,7 +1134,8 @@ sorties_lm_f <- function(obj_lm, obj_lmy, tab_sum, #formule,
 
     }
 
-    ic <- tryCatch(as.data.frame(confint(obj_lm)), error = function(e) {})
+    ic <- tryCatch(as.data.frame(confint(obj_lm)), error = function(e) {
+                                                                       })
 
     tab_sum[tab_sum[, col_ana] == cut, grepl(paste(lev, "IC_up", collapse = "|"), colnames(tab_sum))] <- unlist(lapply(lev, FUN = function(x) {
     if (length(grep(x, rownames(ic))) > 0) {
@@ -1175,11 +1182,11 @@ note_glm_f <- function(data, obj_lm, metric, list_fact, details = FALSE) {
 
     plan <- as.data.frame(table(data[, list_fact]))
 
-    if (nrow(plan[plan$freq == 0, ]) < nrow(plan) * 0.1) { # +0.5 if less than 10% of possible factor's level combinations aren't represented in the sampling scheme
+    if (nrow(plan[plan$Freq == 0, ]) < nrow(plan) * 0.1) { # +0.5 if less than 10% of possible factor's level combinations aren't represented in the sampling scheme
         rate <- rate + 0.5
         detres$complete_plan <- TRUE
 
-        if (summary(as.factor(plan$freq))[1] > nrow(plan) * 0.9) {  # +0.5 if the frequency of the most represented frequency of possible factor's levels combinations is superior to 90% of the total number of possible factor's levels combinations
+        if (summary(as.factor(plan$Freq))[1] > nrow(plan) * 0.9) {  # +0.5 if the frequency of the most represented frequency of possible factor's levels combinations is superior to 90% of the total number of possible factor's levels combinations
             rate <- rate + 0.5
             detres$balanced_plan <- TRUE
         }
@@ -1254,8 +1261,8 @@ note_glm_f <- function(data, obj_lm, metric, list_fact, details = FALSE) {
 
         if (length(grep("^glmmTMB", obj_lm$call)) > 0) {
             nlev_rand <- c()
-            for(fact in names(summary(obj_lm)$varcor$cond)) {
-                nlev_rand <- c(nlev_rand, length(unlist(unique(data[, fact]))))
+            for (fact in names(summary(obj_lm)$varcor$cond)) {
+                 nlev_rand <- c(nlev_rand, length(unlist(unique(data[, fact]))))
             }
 
             if (all(nlev_rand > 10)) { # +1 if more than 10 levels in one random effect
@@ -1401,19 +1408,17 @@ note_glms_f <- function(tab_rate, expr_lm, obj_lm, file_out = FALSE) {
 
 info_stats_f <- function(filename, d_ata, agreg_level = c("species", "unitobs"), type = c("graph", "stat"),
                         metrique, fact_graph, fact_graph_sel, list_fact, list_fact_sel) {
-    ## Purpose: Écrire les infos et statistic sur les données associées à
-    ##          un graphique ou analyse.
+    ## Purpose: informations and simple statistics
     ## ----------------------------------------------------------------------
-    ## Arguments: filename : chemin du fichier de résultats.
-    ##            d_ata : données du graphique/de l'analyse.
-    ##            agreg_level : niveau d'agrégation de la fonction appelante.
-    ##            type : type de fonction appelante (grapique ou analyse).
-    ##            metrique : la métrique choisie.
-    ##            fact_graph : le facteur sélection des espèces.
-    ##            fact_graph_sel : la sélection de modalités pour ce dernier
-    ##            list_fact : liste du (des) facteur(s) de regroupement
-    ##            list_fact_sel : liste des modalités sélectionnées pour ce(s)
-    ##                          dernier(s)
+    ## Arguments: filename : name of file
+    ##            d_ata : input data
+    ##            agreg_level : aggregation level
+    ##            type : type of function calling
+    ##            metrique : selected metric
+    ##            fact_graph : selection factor
+    ##            fact_graph_sel : list of factors levels selected for this factor
+    ##            list_fact : list of grouping factors
+    ##            list_fact_sel : list of factors levels selected for these factors
     ## ----------------------------------------------------------------------
     ## Author: Yves Reecht, Date: 10 sept. 2012, 15:26 modified by Coline ROYAUX 04 june 2020
 
@@ -1479,31 +1484,11 @@ print_selection_info_f <- function(metrique, list_fact,
     cat("\n Metrics:", metrique,
         "\n", file = f_ile, append = TRUE)
 
-    ## aggregation level :
-    cat("            aggregated per ",
-        switch(agreg_level,
-               "CL_espece" =, "CL_unitobs" =, "spCL_unitobs" =, "spCL_espece" = {
-                   "size class / "
-               }),
-        switch(agreg_level,
-               "CL_espece" =, "spCL_espece" =, "species" =, "spSpecies" =, "spEspece" = {
-                   "species / "
-               }),
-        switch(agreg_level,
-               "spUnitobs" =, "spCL_unitobs" =, "spCL_espece" =, "spUnitobs(CL)" =, "spSpecies" =, "spEspece" = {
-                   paste(list_fact, " (mean over ", sep = "")
-              }),
-        "observation units",
-        switch(agreg_level,
-               "spUnitobs" =, "spCL_unitobs" =, "spCL_espece" =, "spUnitobs(CL)" =, "spSpecies" =, "spEspece" = {
-                   ")"
-              }),
-        ".\n",
-        sep = "", file = f_ile, append = TRUE)
-
     ## Clustering factors :
     if (is.element(agreg_level, c("spCL_unitobs", "spCL_espece", "spSpecies", "spEspece",
-                                 "spUnitobs", "spUnitobs(CL)"))) {type <- "spatialGraph"}
+                                 "spUnitobs", "spUnitobs(CL)"))) {
+                                                                     type <- "spatialGraph"
+                                                                 }
 
     cat(switch(type,
                "graph" = "\nGrouping factor(s): \n * ",
@@ -1529,7 +1514,7 @@ print_stats_f <- function(d_ata, metrique, list_fact, f_ile, headline = NULL) {
     ## Author: Yves Reecht, Date: 11 sept. 2012, 10:09 modified by Coline ROYAUX 04 june 2020
 
     ## Header :
-    if ( ! is.null(headline)) {
+    if (! is.null(headline)) {
         cat("\n", rep("#", nchar(headline) + 3), "\n",
             "## ", headline, "\n",
             sep = "", file = f_ile, append = TRUE)
@@ -1539,7 +1524,7 @@ print_stats_f <- function(d_ata, metrique, list_fact, f_ile, headline = NULL) {
 
     capture.output(print(summary_fr(d_ata[, metrique])), file = f_ile, append = TRUE)
 
-    if ( ! is.null(list_fact)) {
+    if (! is.null(list_fact)) {
         cat("\n#########################################",
             "\nStatistics per combination of factor levels:\n\n", file = f_ile, sep = "", append = TRUE)
 
@@ -1572,10 +1557,10 @@ summary_fr <- function(object, digits = max(3, getOption("digits") - 3), ...) {
     ## ----------------------------------------------------------------------
     ## Author: Yves Reecht, Date: 13 sept. 2012, 15:47 modified by Coline ROYAUX 04 june 2020
 
-    if ( ! is.numeric(object)) stop("Programming error")
+    if (! is.numeric(object)) stop("Programming error")
 
     ## Compute summary :
-    res <- c(summary(object = object, digits, ...), "sd" = signif (sd(x = object), digits = digits), "N" = length(object))
+    res <- c(summary(object = object, digits, ...), "sd" = signif(sd(x = object), digits = digits), "N" = length(object))
 
     return(res)
 }

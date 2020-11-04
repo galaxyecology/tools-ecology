@@ -210,7 +210,7 @@ ggplot_glm <- function(glmtable, datatable, unitobs, metric = metric, sp, descri
                               ic_inf_sim <- NA
                               ic_sup_sim <- NA
                     }}
-          ,{
+         , {
                 coefyear <- c(1, as.numeric(coefan))
                 if (assess_ic) {
                     ic_inf_sim <- c(1, as.numeric(ic_inf))
@@ -268,7 +268,7 @@ ggplot_glm <- function(glmtable, datatable, unitobs, metric = metric, sp, descri
                           trend <- round(as.numeric(coefancontinu) ^ (- 1), 3) ## link function : -x^ - 1
                           pourcentage <- round((((as.numeric(coefancontinu) * as.numeric(pasdetemps)) ^ (- 1)) - 1) * 100, 2)
                      }
-          ,{
+         , {
                 trend <- round(as.numeric(coefancontinu), 3)
                 pourcentage <-  round((((as.numeric(coefancontinu) * as.numeric(pasdetemps))) - 1) * 100, 2)
            })
@@ -307,7 +307,7 @@ ggplot_glm <- function(glmtable, datatable, unitobs, metric = metric, sp, descri
                                                                                              }) ##  number of plots where the species were observed
                                      valplot <- (na.omit(as.numeric(nb_loc_presence)) / na.omit(as.numeric(nb_loc))) * 100
                                 } ## % of presence in observered plots if presence / absence
-          ,{
+         , {
                 valplot <- lapply(sort(year), FUN = function(x) {
                                                         mean(na.omit(as.numeric(subset(datatablecut, year == x)[, as.character(metric)])))
                                                                 })
