@@ -62,7 +62,7 @@
             </output>
             <output name="output_recap">
                 <assert_contents>
-                    <has_n_lines n="413"/>
+                    <has_n_lines n="412"/>
                 </assert_contents> 
             </output>
             <output name="output_rate">
