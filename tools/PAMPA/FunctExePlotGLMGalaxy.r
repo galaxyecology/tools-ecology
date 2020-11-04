@@ -423,7 +423,6 @@ ggplot_glm <- function(glmtable, datatable, unitobs, metric = metric, sp, descri
 ############################################################################################################ fin fonction graphique / end of function for graphical output
 
 ################# Analysis
-#plots <- list()
 
 for (sp in glmtable[, 1]) {
 
