@@ -31,7 +31,11 @@
             <param name="input" value="GLM_table_population_analysis_on_Presence_absence_sansszcl_cropped.tabular"/>
             <param name="datatable" value="Presence_absence_table_sansszcl_cropped.tabular"/>
             <param name="unitobstable" value="Unitobs.tabular"/>
-            <output name="report" value="stdout.txt"/>
+            <output name="report">
+                <assert_contents>
+                    <has_size value="0"/>
+                </assert_contents>
+            </output>
             <output_collection name="plots"  type="list" count="3">
                 <element name="Abalstel" ftype="png">
                     <assert_contents>

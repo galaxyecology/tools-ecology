@@ -1,4 +1,4 @@
-"point"	"year"	"number"	"species.richness"	"simpson"	"simpson.l"	"shannon"	"pielou"	"hill"	"observation.unit"
+"location"	"year"	"number"	"species_richness"	"simpson"	"simpson_l"	"shannon"	"pielou"	"hill"	"observation.unit"
 "AB_0008"	"08"	2.66666666666667	1	1	0	0	NA	0	"AB080008"
 "AB_0015"	"08"	3	1	1	0	0	NA	0	"AB080015"
 "AB_0027"	"08"	1.33333333333333	1	1	0	0	NA	0	"AB080027"

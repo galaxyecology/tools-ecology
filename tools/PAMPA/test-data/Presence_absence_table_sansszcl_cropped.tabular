@@ -1,4 +1,4 @@
-"point"	"year"	"species.code"	"number"	"number.max"	"number.sd"	"pres.abs"	"observation.unit"
+"location"	"year"	"species.code"	"number"	"number.max"	"number.sd"	"presence_absence"	"observation.unit"
 "AB_0008"	"08"	"Abalstel"	0	0	0	0	"AB080008"
 "AB_0015"	"08"	"Abalstel"	0	0	0	0	"AB080015"
 "AB_0027"	"08"	"Abalstel"	0	0	0	0	"AB080027"

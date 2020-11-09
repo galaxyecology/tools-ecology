@@ -62,18 +62,30 @@
             </output>
             <output name="output_recap">
                 <assert_contents>
-                    <has_n_lines n="413"/>
+                    <has_n_lines n="412"/>
                 </assert_contents> 
             </output>
             <output name="output_rate">
                 <assert_contents> 
-                    <has_n_lines n="51"/>
+                    <has_n_lines n="50"/>
                 </assert_contents> 
             </output>
             <output_collection name="output_GLM"  type="list" count="3">
-                <element name="GLM_HR" ftype="Rdata" file="GLM_HR.Rdata"/>
-                <element name="GLM_RE" ftype="Rdata" file="GLM_RE.Rdata"/>
-                <element name="global_GLM" ftype="Rdata" file="global_GLM.Rdata"/>
+                <element name="GLM_HR" ftype="Rdata">
+                    <assert_contents> 
+                        <has_size value="185018" delta="10000"/>
+                    </assert_contents> 
+                </element>
+                <element name="GLM_RE" ftype="Rdata">
+                    <assert_contents> 
+                        <has_size value="168685" delta="10000"/>
+                    </assert_contents> 
+                </element>
+                <element name="global_GLM" ftype="Rdata">
+                    <assert_contents> 
+                        <has_size value="195910" delta="10000"/>
+                    </assert_contents> 
+                </element>
             </output_collection>
         </test>
     </tests>
