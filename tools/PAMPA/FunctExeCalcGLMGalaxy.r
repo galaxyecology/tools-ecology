@@ -177,11 +177,11 @@ glm_community <- function(metrique, list_fact, list_rand, fact_ana, distrib, tab
         resy <- ""
 
         if (list_rand[1] != "None") {
-            res <- tryCatch(glmmTMB(expr_lm, family = chose_distrib, data = cutd_ata), error = function(e) {
+            res <- tryCatch(glmmTMB::glmmTMB(expr_lm, family = chose_distrib, data = cutd_ata), error = function(e) {
                                                                                                            })
             if (is.element("year", list_f) && ! is.element("year", list_rand)) { #Model with year as continuous
                 cutd_ata$year <- as.numeric(cutd_ata$year)
-                resy <- tryCatch(glmmTMB(expr_lm, family = chose_distrib, data = cutd_ata), error = function(e) {
+                resy <- tryCatch(glmmTMB::glmmTMB(expr_lm, family = chose_distrib, data = cutd_ata), error = function(e) {
                                                                                                                 })
                 cutd_ata$year <- as.factor(cutd_ata$year)
             }else{
@@ -226,11 +226,13 @@ glm_community <- function(metrique, list_fact, list_rand, fact_ana, distrib, tab
     res_gy <- ""
 
     if (list_rand[1] != "None") {
-        res_g <- glmmTMB(expr_lm, family = chose_distrib, data = tmpd_ata)
+        res_g <- glmmTMB::glmmTMB(expr_lm, family = chose_distrib, data = tmpd_ata)
         if (is.element("year", list_fact) && ! is.element("year", list_rand)) { #Model with year as continuous
+            yr <- tmpd_ata$year
             tmpd_ata$year <- as.numeric(tmpd_ata$year)
-            res_gy <- glmmTMB(expr_lm, family = chose_distrib, data = tmpd_ata)
+            res_gy <- glmmTMB::glmmTMB(expr_lm, family = chose_distrib, data = tmpd_ata)
             tmpd_ata$year <- as.factor(tmpd_ata$year)
+            tmpd_ata$year <- yr
         }else{
             res_gy <- ""
         }
@@ -238,9 +240,10 @@ glm_community <- function(metrique, list_fact, list_rand, fact_ana, distrib, tab
     }else{
         res_g <- glm(expr_lm, data = tmpd_ata, family = chose_distrib)
         if (is.element("year", list_fact)) { #Model with year as continuous
+            yr <- tmpd_ata$year
             tmpd_ata$year <- as.numeric(tmpd_ata$year)
             res_gy <- glm(expr_lm, family = chose_distrib, data = tmpd_ata)
-            tmpd_ata$year <- as.factor(tmpd_ata$year)
+            tmpd_ata$year <- yr
         }else{
             res_gy <- ""
         }
@@ -260,7 +263,6 @@ glm_community <- function(metrique, list_fact, list_rand, fact_ana, distrib, tab
 
     ## simple statistics and infos :
     filename <- "GLMSummaryFull.txt"
-
     info_stats_f(filename = filename, d_ata = tmpd_ata, agreg_level = aggreg, type = "stat",
                 metrique = metrique, fact_graph = fact_ana, #fact_graph_sel = modSel,
                 list_fact = list_fact)#, list_fact_sel = list_fact_sel)

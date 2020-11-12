@@ -184,19 +184,19 @@ ggplot_glm <- function(glmtable, datatable, unitobs, metric = metric, sp, descri
                                          ic_sup_sim <- NA
                                }},
            "binomial" = {
-                             coefyear <- c(1, inv.logit(as.numeric(coefan))) ## link function : logit
+                             coefyear <- c(1, boot::inv.logit(as.numeric(coefan))) ## link function : logit
                              if (assess_ic) {
-                                 ic_inf_sim <- c(1, inv.logit(as.numeric(ic_inf)))
-                                 ic_sup_sim <- c(1, inv.logit(as.numeric(ic_up)))
+                                 ic_inf_sim <- c(1, boot::inv.logit(as.numeric(ic_inf)))
+                                 ic_sup_sim <- c(1, boot::inv.logit(as.numeric(ic_up)))
                              } else {
                                  ic_inf_sim <- NA
                                  ic_sup_sim <- NA
                        }},
            "quasibinomial" = {
-                                  coefyear <- c(1, inv.logit(as.numeric(coefan))) ## link function : logit
+                                  coefyear <- c(1, boot::inv.logit(as.numeric(coefan))) ## link function : logit
                                   if (assess_ic) {
-                                      ic_inf_sim <- c(1, inv.logit(as.numeric(ic_inf)))
-                                      ic_sup_sim <- c(1, inv.logit(as.numeric(ic_up)))
+                                      ic_inf_sim <- c(1, boot::inv.logit(as.numeric(ic_inf)))
+                                      ic_sup_sim <- c(1, boot::inv.logit(as.numeric(ic_up)))
                                   } else {
                                       ic_inf_sim <- NA
                                       ic_sup_sim <- NA
@@ -257,12 +257,12 @@ ggplot_glm <- function(glmtable, datatable, unitobs, metric = metric, sp, descri
                                      pourcentage <- round((((as.numeric(coefancontinu) * as.numeric(pasdetemps)) ^ (- 1 / 2)) - 1) * 100, 2)
                                 },
            "binomial" = {
-                             trend <- round(inv.logit(as.numeric(coefancontinu)), 3) ## link function : logit
-                             pourcentage <- round((inv.logit(as.numeric(coefancontinu) * as.numeric(pasdetemps)) - 1) * 100, 2)
+                             trend <- round(boot::inv.logit(as.numeric(coefancontinu)), 3) ## link function : logit
+                             pourcentage <- round((boot::inv.logit(as.numeric(coefancontinu) * as.numeric(pasdetemps)) - 1) * 100, 2)
                         },
            "quasibinomial" = {
-                                  trend <- round(inv.logit(as.numeric(coefancontinu)), 3) ## link function : logit
-                                  pourcentage <- round((inv.logit(as.numeric(coefancontinu) * as.numeric(pasdetemps)) - 1) * 100, 2)
+                                  trend <- round(boot::inv.logit(as.numeric(coefancontinu)), 3) ## link function : logit
+                                  pourcentage <- round((boot::inv.logit(as.numeric(coefancontinu) * as.numeric(pasdetemps)) - 1) * 100, 2)
                              },
            "Gamma" = {
                           trend <- round(as.numeric(coefancontinu) ^ (- 1), 3) ## link function : -x^ - 1
@@ -366,7 +366,7 @@ ggplot_glm <- function(glmtable, datatable, unitobs, metric = metric, sp, descri
     names(col) <- c(names(vec_col_point), names(vec_col_courbe), names(vec_col_hline))
 
     if (description) { ## if 2 panels
-        p <- ggplot(data = dgg, mapping = aes(x = year, y = val))
+        p <- ggplot2::ggplot(data = dgg, mapping = ggplot2::aes_string(x = "year", y = "val"))
         ## Titles and scales
         p <- p + facet_grid(panel ~ ., scale = "free") +
         theme(legend.position = "none",
@@ -377,22 +377,22 @@ ggplot_glm <- function(glmtable, datatable, unitobs, metric = metric, sp, descri
         scale_colour_manual(values = col, name = "",
                                   breaks = names(col)) +
         scale_x_continuous(breaks = min(dgg$year):max(dgg$year))
-        p <- p + geom_hline(data = hline_data, mapping = aes(yintercept = z, colour = couleur, linetype = type),
+        p <- p + ggplot2::geom_hline(data = hline_data, mapping = ggplot2::aes_string(yintercept = "z", colour = "couleur", linetype = "type"),
                         alpha = 1, size = 1.2)
         if (assess_ic) { ############# ONLY FOR THE CONFIDENCE INTERVAL
-            p <- p + geom_ribbon(mapping = aes(ymin = ll, ymax = ul), fill = col[vpan[1]], alpha = .2)
-            p <- p + geom_pointrange(mapping = aes(y = val, ymin = ll, ymax = ul), fill = col[vpan[1]], alpha = .2)
+            p <- p + ggplot2::geom_ribbon(mapping = ggplot2::aes_string(ymin = "ll", ymax = "ul"), fill = col[vpan[1]], alpha = .2)
+            p <- p + ggplot2::geom_pointrange(mapping = ggplot2::aes_string(y = "val", ymin = "ll", ymax = "ul"), fill = col[vpan[1]], alpha = .2)
         }
 
-        p <- p + geom_line(mapping = aes(colour = courbe), size = 1.5)
-        p <- p + geom_point(mapping = aes(colour = courbe), size = 3)
-        p <- p + geom_point(mapping = aes(colour = catPoint, alpha = ifelse(!is.na(catPoint), 1, 0)), size = 2)
-        p <- p + geom_text(data = tab_text_pent, mapping = aes(x, y, label = txt), parse = FALSE, color = col[vpan[1]], fontface = 2, size = 4)
-        ggsave(figname, p, width = 16, height = 15, units = "cm")
+        p <- p + ggplot2::geom_line(mapping = ggplot2::aes_string(colour = "courbe"), size = 1.5)
+        p <- p + ggplot2::geom_point(mapping = ggplot2::aes_string(colour = "courbe"), size = 3)
+        p <- p + ggplot2::geom_point(mapping = ggplot2::aes(colour = catPoint, alpha = ifelse(!is.na(catPoint), 1, 0)), size = 2)
+        p <- p + ggplot2::geom_text(data = tab_text_pent, mapping = ggplot2::aes_string("x", "y", label = "txt"), parse = FALSE, color = col[vpan[1]], fontface = 2, size = 4)
+        ggplot2::ggsave(figname, p, width = 16, height = 15, units = "cm")
 
     } else {
 
-        p <- ggplot(data = subset(dgg, panel == "var estimates"), mapping = aes(x = year, y = val))
+        p <- ggplot2::ggplot(data = subset(dgg, panel == "var estimates"), mapping = ggplot2::aes_string(x = "year", y = "val"))
 
         ## Titles and scales
 
@@ -405,19 +405,19 @@ ggplot_glm <- function(glmtable, datatable, unitobs, metric = metric, sp, descri
                  scale_colour_manual(values = col, name = "",
                                      breaks = names(col)) +
                  scale_x_continuous(breaks = min(dgg$year):max(dgg$year))
-        p <- p + geom_hline(data = subset(hline_data, panel == vpan[1]), mapping = aes(yintercept = z, colour = couleur, linetype = type),
+        p <- p + ggplot2::geom_hline(data = subset(hline_data, panel == vpan[1]), mapping = ggplot2::aes_string(yintercept = "z", colour = "couleur", linetype = "type"),
                             alpha = 1, size = 1.2)
 
         if (assess_ic) { ############# ONLY FOR THE CONFIDENCE INTERVAL
-            p <- p + geom_ribbon(mapping = aes(ymin = ll, ymax = ul), fill = col[vpan[1]], alpha = .2)
-            p <- p + geom_pointrange(mapping = aes(y = val, ymin = ll, ymax = ul), fill = col[vpan[1]], alpha = .2)
+            p <- p + ggplot2::geom_ribbon(mapping = ggplot2::aes_string(ymin = "ll", ymax = "ul"), fill = col[vpan[1]], alpha = .2)
+            p <- p + ggplot2::geom_pointrange(mapping = ggplot2::aes_string(y = "val", ymin = "ll", ymax = "ul"), fill = col[vpan[1]], alpha = .2)
         }
 
-        p <- p + geom_line(mapping = aes(colour = courbe), size = 1.5)
-        p <- p + geom_point(mapping = aes(colour = courbe), size = 3)
-        p <- p + geom_point(mapping = aes(colour = catPoint, alpha = ifelse(!is.na(catPoint), 1, 0)), size = 2)
-        p <-  p + geom_text(data = tab_text_pent, mapping = aes(x, y, label = txt), parse = FALSE, color = col[vpan[1]], fontface = 2, size = 4)
-        ggsave(figname, p, width = 15, height = 9, units = "cm")
+        p <- p + ggplot2::geom_line(mapping = ggplot2::aes_string(colour = "courbe"), size = 1.5)
+        p <- p + ggplot2::geom_point(mapping = ggplot2::aes_string(colour = "courbe"), size = 3)
+        p <- p + ggplot2::geom_point(mapping = ggplot2::aes_string(colour = catPoint, alpha = ifelse(!is.na(catPoint), 1, 0)), size = 2)
+        p <-  p + ggplot2::geom_text(data = tab_text_pent, mapping = ggplot2::aes_string("x", "y", label = "txt"), parse = FALSE, color = col[vpan[1]], fontface = 2, size = 4)
+        ggplot2::ggsave(figname, p, width = 15, height = 9, units = "cm")
     }
 }
 ############################################################################################################ fin fonction graphique / end of function for graphical output

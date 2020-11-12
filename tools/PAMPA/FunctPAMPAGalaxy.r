@@ -12,11 +12,11 @@
 ####### Define the finest aggregation with the observation table
 
 fact_det_f <- function(obs,
-                       size.class = "size.class",
+                       size_class = "size.class",
                        code_species = "species.code",
                        unitobs = "observation.unit") {
-    if (any(is.element(c(size.class), colnames(obs))) && all(! is.na(obs[, size.class]))) {
-            factors <- c(unitobs, code_species, size.class)
+    if (any(is.element(c(size_class), colnames(obs))) && all(! is.na(obs[, size_class]))) {
+            factors <- c(unitobs, code_species, size_class)
         }else{
             factors <- c(unitobs, code_species)
         }
@@ -45,7 +45,7 @@ create_unitobs <- function(data, year = "year", location = "location", unitobs =
             unitab <- data
     }else{
 
-        unitab <- unite(data, col = "observation.unit", c(year, location))
+        unitab <- tidyr::unite(data, col = "observation.unit", c(year, location))
     }
     return(unitab)
 }
@@ -55,11 +55,11 @@ create_unitobs <- function(data, year = "year", location = "location", unitobs =
 ####### separate unitobs column when existant
 create_year_location <- function(data, year = "year", location = "location", unitobs = "observation.unit") {
     if (all(grepl("[1-2][0|8|9][0-9]{2}_.*", data[, unitobs])) == TRUE) {
-        tab <- separate(data, col = unitobs, into = c(year, location), sep = "_")
+        tab <- tidyr::separate(data, col = unitobs, into = c(year, location), sep = "_")
     }else{
         if (all(grepl("[A-Z]{2}[0-9]{2}.*", data[, unitobs]) == TRUE)) {
-            tab <- separate(data, col = unitobs, into = c("site1", year, "obs"), sep = c(2, 4))
-            tab <- unite(tab, col = location, c("site1", "obs"))
+            tab <- tidyr::separate(data, col = unitobs, into = c("site1", year, "obs"), sep = c(2, 4))
+            tab <- tidyr::unite(tab, col = location, c("site1", "obs"))
         }else{
             tab <- data
         }
@@ -240,8 +240,8 @@ calc_numbers_f <- function(obs, obs_type = "", factors = c("observation.unit", "
 
     if (obs_type == "SVR") {
         ## statistics on abundances :
-        res$number.max <- as.vector(stat_rotations[["nb_max"]])
-        res$number.sd <- as.vector(stat_rotations[["nb_sd"]])
+        res[,"number.max"] <- as.vector(stat_rotations[["nb_max"]])
+        res[,"number.sd"] <- as.vector(stat_rotations[["nb_sd"]])
 
     }
 
@@ -799,7 +799,7 @@ subset_all_tables_f <- function(metrique, tab_metrics, facteurs, selections,
     if (is.element("size.class", colnames(restmp))) {
         if (length(grep("^[[:digit:]]*[-_][[:digit:]]*$", unique(as.character(restmp$size.class)), perl = TRUE)) ==
             length(unique(as.character(restmp$size.class)))) {
-            restmp$size.class <-
+            restmp[,"size.class"] <-
                 factor(as.character(restmp$size.class),
                        levels = unique(as.character(restmp$size.class))[
                                order(as.numeric(sub("^([[:digit:]]*)[-_][[:digit:]]*$",
@@ -808,7 +808,7 @@ subset_all_tables_f <- function(metrique, tab_metrics, facteurs, selections,
                                                     perl = TRUE)),
                                      na.last = FALSE)])
         }else{
-            restmp$size.class <- factor(restmp$size.class)
+            restmp[,"size.class"] <- factor(restmp$size.class)
         }
     }
 
@@ -1198,19 +1198,19 @@ note_glm_f <- function(data, obj_lm, metric, list_fact, details = FALSE) {
 
     if (nrow(data) - nrow(na.omit(data)) < nrow(data) * 0.1) { # +1 if less than 10% of the lines in the dataframe bares a NA
         rate <- rate + 1
-        detres$NA_proportion_OK <- TRUE
+        detres["NA_proportion_OK"] <- TRUE
     }else{
-        detres$NA_proportion_OK <- FALSE
+        detres["NA_proportion_OK"] <- FALSE
     }
 
     #### Model criterions ####
 
     if (length(grep("quasi", obj_lm$family)) == 0) { #DHARMa doesn't work with quasi distributions
 
-        residuals <- simulateResiduals(obj_lm)
+        residuals <- DHARMa::simulateResiduals(obj_lm)
 
-        capture.output(test_res <- testResiduals(residuals))
-        test_zero <- testZeroInflation(residuals)
+        capture.output(test_res <- DHARMa::testResiduals(residuals))
+        test_zero <- DHARMa::testZeroInflation(residuals)
 
         ## dispersion of residuals
 
@@ -1224,7 +1224,7 @@ note_glm_f <- function(data, obj_lm, metric, list_fact, details = FALSE) {
         ## uniformity of residuals
 
         if (test_res$uniformity$p.value > 0.05) { # +1 if uniformity tests not significative
-            rate <- rate + 1.5
+            rate <- rate + 1
             detres$uniform_residuals <- TRUE
         }else{
             detres$uniform_residuals <- FALSE
@@ -1234,15 +1234,15 @@ note_glm_f <- function(data, obj_lm, metric, list_fact, details = FALSE) {
 
         if (test_res$outliers$p.value > 0.05) { # +0.5 if outliers tests not significative
             rate <- rate + 0.5
-            detres$outliers_proportion_OK <- TRUE
+            detres["outliers_proportion_OK"] <- TRUE
         }else{
-            detres$outliers_proportion_OK <- FALSE
+            detres["outliers_proportion_OK"] <- FALSE
         }
 
         ## Zero inflation test
 
         if (test_zero$p.value > 0.05) { # +1 if zero inflation tests not significative
-            rate <- rate + 1.5
+            rate <- rate + 1
             detres$no_zero_inflation <- TRUE
         }else{
             detres$no_zero_inflation <- FALSE
@@ -1252,9 +1252,9 @@ note_glm_f <- function(data, obj_lm, metric, list_fact, details = FALSE) {
 
         if (length(list_fact) / nrow(na.omit(data)) < 0.1) { # +1 if quantity of factors is less than 10% of the quantity of observations
             rate <- rate + 1
-            detres$observation_factor_ratio_OK <- TRUE
+            detres["observation_factor_ratio_OK"] <- TRUE
         }else{
-            detres$observation_factor_ratio_OK <- FALSE
+            detres["observation_factor_ratio_OK"] <- FALSE
         }
 
         ## less than 10 factors' level on random effect
