@@ -905,7 +905,7 @@ create_res_table <- function(list_rand, list_fact, row, lev, distrib) {
 
 ######################################### start of the function sorties_lm_f called by glm_community in FunctExeCalcGLMGalaxy.r
 sorties_lm_f <- function(obj_lm, obj_lmy, tab_sum, #formule,
-                        metrique, fact_ana, cut, col_ana, list_fact, lev = NULL, d_ata,
+                        metrique, fact_ana, cut, col_ana, list_fact, list_rand, lev = NULL, d_ata,
                         log = FALSE, sufixe = NULL) {
     ## Purpose: Form GLM and LM results
     ## ----------------------------------------------------------------------
@@ -918,6 +918,7 @@ sorties_lm_f <- function(obj_lm, obj_lmy, tab_sum, #formule,
     ##            cut : level of separation factor
     ##            col_ana : colname for separation factor in output summary table
     ##            list_fact : Analysis factors list
+    ##            list_rand : Analysis random factors list
     ##            levels : Levels of analysis factors list
     ##            d_ata : d_ata used for analysis
     ##            log : put log on metric ? (boolean)
@@ -1292,6 +1293,9 @@ note_glms_f <- function(tab_rate, expr_lm, obj_lm, file_out = FALSE) {
     ##            file_out : Output as file ? else global rate only
     ## ----------------------------------------------------------------------
     ## Author: Coline ROYAUX, 26 june 2020
+    namefile <- "RatingGLM.txt"
+
+    if (length(grep("quasi", obj_lm$family)) == 0) { #DHARMa doesn't work with quasi distributions
 
     rate_m <- median(na.omit(tab_rate[, "rate"]))
     sum <- summary(obj_lm)
@@ -1315,7 +1319,6 @@ note_glms_f <- function(tab_rate, expr_lm, obj_lm, file_out = FALSE) {
     }
 
     if (file_out) {
-        namefile <- "RatingGLM.txt"
 
         cat("###########################################################################",
             "\n########################### Analysis evaluation ###########################",
@@ -1391,6 +1394,9 @@ note_glms_f <- function(tab_rate, expr_lm, obj_lm, file_out = FALSE) {
 
         return(rate_m)
 
+    }
+    }else{
+        cat("Models with quasi distributions can't be rated for now", file = namefile, append = TRUE)
     }
 }
 

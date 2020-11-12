@@ -209,7 +209,7 @@ glm_community <- function(metrique, list_fact, list_rand, fact_ana, distrib, tab
 
             tab_sum <- sorties_lm_f(obj_lm = res, obj_lmy = resy, tab_sum = tab_sum, metrique = metrique,
                                   fact_ana = fact_ana, cut = cut, col_ana = "analysis", lev = lev, #modSel = iFactGraphSel, list_fact_sel = list_fact_sel,
-                                  list_fact = list_fact,
+                                  list_fact = list_fact, list_rand = list_rand,
                                   d_ata = cutd_ata)
 
             tab_rate[tab_rate[, "analysis"] == cut, c(2:11)] <- note_glm_f(data = cutd_ata, obj_lm = res, metric = metrique, list_fact = list_fact, details = TRUE)
@@ -255,7 +255,7 @@ glm_community <- function(metrique, list_fact, list_rand, fact_ana, distrib, tab
 
     tab_sum <- sorties_lm_f(obj_lm = res_g, obj_lmy = res_gy, tab_sum = tab_sum, metrique = metrique,
                           fact_ana = fact_ana, cut = "global", col_ana = "analysis", lev = lev, #modSel = iFactGraphSel, list_fact_sel = list_fact_sel,
-                          list_fact = list_fact,
+                          list_fact = list_fact, list_rand = list_rand,
                           d_ata = tmpd_ata)
 
     tab_rate[tab_rate[, "analysis"] == "global", c(2:11)] <- note_glm_f(data = tmpd_ata, obj_lm = res_g, metric = metrique, list_fact = list_fact, details = TRUE)

@@ -200,7 +200,7 @@ glm_species <- function(metrique, list_fact, list_rand, fact_ana, distrib, tab_m
             file_save_glm_sp <- paste("GLM_", sp, ".Rdata", sep = "")
             save(res, file = file_save_glm_sp)
 
-            tab_sum <- sorties_lm_f(obj_lm = res, obj_lmy = resy, tab_sum = tab_sum, fact_ana = fact_ana, cut = sp, col_ana = "analysis", lev = lev, d_ata = cutd_ata, metrique = metrique, list_fact = list_fact)
+            tab_sum <- sorties_lm_f(obj_lm = res, obj_lmy = resy, tab_sum = tab_sum, fact_ana = fact_ana, cut = sp, col_ana = "analysis", lev = lev, d_ata = cutd_ata, metrique = metrique, list_fact = list_fact, list_rand = list_rand)
 
             tab_rate[tab_rate[, "species"] == sp, c(2:11)] <- note_glm_f(data = cutd_ata, obj_lm = res, metric = metrique, list_fact = list_fact, details = TRUE)
 

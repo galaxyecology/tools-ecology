@@ -175,10 +175,10 @@ ggplot_glm <- function(glmtable, datatable, unitobs, metric = metric, sp, descri
                                      ic_sup_sim <- NA
                            }},
            "inverse.gaussian" = {
-                                     coefyear <- c(1, as.numeric(coefan) ^ (- 1 / 2)) ## link function : x^ - 2
+                                     coefyear <- c(0, as.numeric(coefan) ^ (- 1 / 2)) ## link function : x^ - 2
                                      if (assess_ic) {
-                                         ic_inf_sim <- c(1, as.numeric(ic_inf) ^ (- 1 / 2))
-                                         ic_sup_sim <- c(1, as.numeric(ic_up) ^ (- 1 / 2))
+                                         ic_inf_sim <- c(0, as.numeric(ic_inf) ^ (- 1 / 2))
+                                         ic_sup_sim <- c(0, as.numeric(ic_up) ^ (- 1 / 2))
                                      } else {
                                          ic_inf_sim <- NA
                                          ic_sup_sim <- NA
@@ -211,10 +211,10 @@ ggplot_glm <- function(glmtable, datatable, unitobs, metric = metric, sp, descri
                               ic_sup_sim <- NA
                     }}
          , {
-                coefyear <- c(1, as.numeric(coefan))
+                coefyear <- c(0, as.numeric(coefan))
                 if (assess_ic) {
-                    ic_inf_sim <- c(1, as.numeric(ic_inf))
-                    ic_sup_sim <- c(1, as.numeric(ic_up))
+                    ic_inf_sim <- c(0, as.numeric(ic_inf))
+                    ic_sup_sim <- c(0, as.numeric(ic_up))
                 } else {
                     ic_inf_sim <- NA
                     ic_sup_sim <- NA
@@ -238,7 +238,6 @@ ggplot_glm <- function(glmtable, datatable, unitobs, metric = metric, sp, descri
     if (assess_ic) {
         tab1$ul <-  ifelse(tab1$ul == Inf, NA, tab1$ul)
         tab1$ul <-  ifelse(tab1$ul > 1.000000e+20, NA, tab1$ul)
-        tab1$ul[1] <- 1
         tab1$val <-  ifelse(tab1$val > 1.000000e+20, 1.000000e+20, tab1$val)
     }
 
@@ -324,7 +323,7 @@ ggplot_glm <- function(glmtable, datatable, unitobs, metric = metric, sp, descri
     figname <- paste(sp, ".png", sep = "")
 
     ## coord for horizontal lines in graphs
-    hline_data1 <- data.frame(z = c(1), panel = c(vpan[1]), couleur = "var estimates", type = "var estimates")
+    hline_data1 <- data.frame(z = tab1$val[1], panel = c(vpan[1]), couleur = "var estimates", type = "var estimates")
     hline_data3 <- data.frame(z = 0, panel = vpan[2], couleur = "seuil", type = "seuil")
     hline_data <- rbind(hline_data1, hline_data3)
     titre <- paste(sp)
@@ -386,7 +385,8 @@ ggplot_glm <- function(glmtable, datatable, unitobs, metric = metric, sp, descri
 
         p <- p + ggplot2::geom_line(mapping = ggplot2::aes_string(colour = "courbe"), size = 1.5)
         p <- p + ggplot2::geom_point(mapping = ggplot2::aes_string(colour = "courbe"), size = 3)
-        p <- p + ggplot2::geom_point(mapping = ggplot2::aes(colour = catPoint, alpha = ifelse(!is.na(catPoint), 1, 0)), size = 2)
+        alph <- ifelse(!is.na(dgg$catPoint), 1, 0)
+        p <- p + ggplot2::geom_point(mapping = ggplot2::aes_string(colour = "catPoint", alpha = alph), size = 2)
         p <- p + ggplot2::geom_text(data = tab_text_pent, mapping = ggplot2::aes_string("x", "y", label = "txt"), parse = FALSE, color = col[vpan[1]], fontface = 2, size = 4)
         ggplot2::ggsave(figname, p, width = 16, height = 15, units = "cm")
 
@@ -405,6 +405,7 @@ ggplot_glm <- function(glmtable, datatable, unitobs, metric = metric, sp, descri
                  scale_colour_manual(values = col, name = "",
                                      breaks = names(col)) +
                  scale_x_continuous(breaks = min(dgg$year):max(dgg$year))
+        panel <- NULL ## only to get past the lint R
         p <- p + ggplot2::geom_hline(data = subset(hline_data, panel == vpan[1]), mapping = ggplot2::aes_string(yintercept = "z", colour = "couleur", linetype = "type"),
                             alpha = 1, size = 1.2)
 
@@ -415,7 +416,8 @@ ggplot_glm <- function(glmtable, datatable, unitobs, metric = metric, sp, descri
 
         p <- p + ggplot2::geom_line(mapping = ggplot2::aes_string(colour = "courbe"), size = 1.5)
         p <- p + ggplot2::geom_point(mapping = ggplot2::aes_string(colour = "courbe"), size = 3)
-        p <- p + ggplot2::geom_point(mapping = ggplot2::aes_string(colour = catPoint, alpha = ifelse(!is.na(catPoint), 1, 0)), size = 2)
+        alph <- ifelse(!is.na(dgg$catPoint), 1, 0)
+        p <- p + ggplot2::geom_point(mapping = ggplot2::aes_string(colour = "catPoint", alpha = alph), size = 2)
         p <-  p + ggplot2::geom_text(data = tab_text_pent, mapping = ggplot2::aes_string("x", "y", label = "txt"), parse = FALSE, color = col[vpan[1]], fontface = 2, size = 4)
         ggplot2::ggsave(figname, p, width = 15, height = 9, units = "cm")
     }
