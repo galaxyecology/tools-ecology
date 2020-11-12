@@ -240,8 +240,8 @@ calc_numbers_f <- function(obs, obs_type = "", factors = c("observation.unit", "
 
     if (obs_type == "SVR") {
         ## statistics on abundances :
-        res[,"number.max"] <- as.vector(stat_rotations[["nb_max"]])
-        res[,"number.sd"] <- as.vector(stat_rotations[["nb_sd"]])
+        res[, "number.max"] <- as.vector(stat_rotations[["nb_max"]])
+        res[, "number.sd"] <- as.vector(stat_rotations[["nb_sd"]])
 
     }
 
@@ -399,8 +399,6 @@ agregation_f <- function(metric, d_ata, factors, cas_metric,
                          })
            },
            "nbMax" = {
-               ## Recuperation of raw abundances with selections :
-               nb_tmp <- getReducedSVRdata.f(dataName = ".NombresSVR", data = d_ata)
 
               ## Sum by factor cross / rotation :
                nb_tmp2 <- apply(nb_tmp,
@@ -417,8 +415,6 @@ agregation_f <- function(metric, d_ata, factors, cas_metric,
                                  }))
            },
            "nbSD" = {
-               ## Recuperation of raw abundances with selections :
-               nb_tmp <- getReducedSVRdata.f(dataName = ".NombresSVR", data = d_ata)
 
                ## Sum by factor cross / rotation :
                nb_tmp2 <- apply(nb_tmp,
@@ -435,8 +431,6 @@ agregation_f <- function(metric, d_ata, factors, cas_metric,
                                  }))
            },
            "densMax" = {
-               ## Recuperation of raw abundances with selections :
-               dens_tmp <- getReducedSVRdata.f(dataName = ".DensitesSVR", data = d_ata)
 
                ## Sum by factor cross / rotation :
                dens_tmp2 <- apply(dens_tmp,
@@ -453,8 +447,6 @@ agregation_f <- function(metric, d_ata, factors, cas_metric,
                                  }))
            },
            "densSD" = {
-               ## Recuperation of raw abundances with selections :
-               dens_tmp <- getReducedSVRdata.f(dataName = ".DensitesSVR", data = d_ata)
 
                ## Sum by factor cross / rotation :
                dens_tmp2 <- apply(dens_tmp,
@@ -799,7 +791,7 @@ subset_all_tables_f <- function(metrique, tab_metrics, facteurs, selections,
     if (is.element("size.class", colnames(restmp))) {
         if (length(grep("^[[:digit:]]*[-_][[:digit:]]*$", unique(as.character(restmp$size.class)), perl = TRUE)) ==
             length(unique(as.character(restmp$size.class)))) {
-            restmp[,"size.class"] <-
+            restmp[, "size.class"] <-
                 factor(as.character(restmp$size.class),
                        levels = unique(as.character(restmp$size.class))[
                                order(as.numeric(sub("^([[:digit:]]*)[-_][[:digit:]]*$",
@@ -808,7 +800,7 @@ subset_all_tables_f <- function(metrique, tab_metrics, facteurs, selections,
                                                     perl = TRUE)),
                                      na.last = FALSE)])
         }else{
-            restmp[,"size.class"] <- factor(restmp$size.class)
+            restmp[, "size.class"] <- factor(restmp$size.class)
         }
     }
 
