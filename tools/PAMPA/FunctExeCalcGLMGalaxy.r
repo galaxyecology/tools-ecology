@@ -132,7 +132,7 @@ glm_community <- function(metrique, list_fact, list_rand, fact_ana, distrib, tab
     }
 
     ## Suppress unsed 'levels' :
-    tmpd_ata <- drop_levels_f(tmpd_ata)
+    tmpd_ata <- .GlobalEnv$drop_levels_f(tmpd_ata)
 
     ## Automatic choice of distribution if none is selected by user :
     if (distrib == "None") {
