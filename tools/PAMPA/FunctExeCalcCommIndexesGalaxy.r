@@ -63,7 +63,7 @@ calc_biodiv_f <- function(d_ata, unitobs = "observation.unit", code_species = "s
     }
 
     ## Suppress unused factor levels :
-    d_ata <- drop_levels_f(df = d_ata)
+    d_ata <- .GlobalEnv$drop_levels_f(df = d_ata)
 
 
     ## aggregation of data if not already done :
@@ -81,7 +81,7 @@ calc_biodiv_f <- function(d_ata, unitobs = "observation.unit", code_species = "s
 
 ## ##################################################
     ## species richness :
-    d_ata$presence_absence <- pres_abs_f(nombres = d_ata[, nombres], logical = FALSE)
+    d_ata$presence_absence <- .GlobalEnv$pres_abs_f(nombres = d_ata[, nombres], logical = FALSE)
 
     df_biodiv$species_richness <- as.vector(tapply(d_ata$presence_absence,
                                                    d_ata[, unitobs], sum, na.rm = TRUE),

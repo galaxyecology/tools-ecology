@@ -127,7 +127,7 @@ glm_species <- function(metrique, list_fact, list_rand, fact_ana, distrib, tab_m
     }
 
     ## Suppression des 'levels' non utilisés :
-    tmpd_ata <- drop_levels_f(tmpd_ata)
+    tmpd_ata <- .GlobalEnv$drop_levels_f(tmpd_ata)
 
     ## Aide au choix du type d'analyse :
     if (distrib == "None") {
@@ -154,9 +154,9 @@ glm_species <- function(metrique, list_fact, list_rand, fact_ana, distrib, tab_m
     row <- levels(tmpd_ata[, fact_ana])
 
     if (is.element("year", list_f) && ! is.element("year", list_rand)) {
-        tab_sum <- create_res_table(list_rand = list_rand, list_fact = list_fact, row = row, lev = unlist(c("year", lev)), distrib = chose_distrib)
+        tab_sum <- .GlobalEnv$create_res_table(list_rand = list_rand, list_fact = list_fact, row = row, lev = unlist(c("year", lev)), distrib = chose_distrib)
     }else{
-        tab_sum <- create_res_table(list_rand = list_rand, list_fact = list_fact, row = row, lev = lev, distrib = chose_distrib)
+        tab_sum <- .GlobalEnv$create_res_table(list_rand = list_rand, list_fact = list_fact, row = row, lev = lev, distrib = chose_distrib)
     }
     ### creating rate table
     tab_rate <- data.frame(species = row, complete_plan = NA, balanced_plan = NA, NA_proportion_OK = NA, no_residual_dispersion = NA, uniform_residuals = NA, outliers_proportion_OK = NA, no_zero_inflation = NA, observation_factor_ratio_OK = NA, enough_levels_random_effect = NA, rate = NA)
@@ -165,7 +165,7 @@ glm_species <- function(metrique, list_fact, list_rand, fact_ana, distrib, tab_m
 
     for (sp in levels(tmpd_ata[, fact_ana])) {
         cutd_ata <- tmpd_ata[grep(sp, tmpd_ata[, fact_ana]), ]
-        cutd_ata <- drop_levels_f(cutd_ata)
+        cutd_ata <- .GlobalEnv$drop_levels_f(cutd_ata)
 
         res <- ""
         resy <- ""
@@ -200,16 +200,16 @@ glm_species <- function(metrique, list_fact, list_rand, fact_ana, distrib, tab_m
             file_save_glm_sp <- paste("GLM_", sp, ".Rdata", sep = "")
             save(res, file = file_save_glm_sp)
 
-            tab_sum <- sorties_lm_f(obj_lm = res, obj_lmy = resy, tab_sum = tab_sum, fact_ana = fact_ana, cut = sp, col_ana = "analysis", lev = lev, d_ata = cutd_ata, metrique = metrique, list_fact = list_fact, list_rand = list_rand)
+            tab_sum <- .GlobalEnv$sorties_lm_f(obj_lm = res, obj_lmy = resy, tab_sum = tab_sum, fact_ana = fact_ana, cut = sp, col_ana = "analysis", lev = lev, d_ata = cutd_ata, metrique = metrique, list_fact = list_fact, list_rand = list_rand)
 
-            tab_rate[tab_rate[, "species"] == sp, c(2:11)] <- note_glm_f(data = cutd_ata, obj_lm = res, metric = metrique, list_fact = list_fact, details = TRUE)
+            tab_rate[tab_rate[, "species"] == sp, c(2:11)] <- .GlobalEnv$note_glm_f(data = cutd_ata, obj_lm = res, metric = metrique, list_fact = list_fact, details = TRUE)
 
         }else{
             cat("\nCannot compute GLM for species", sp, "Check if one or more factor(s) have only one level, or try with another distribution for the model in advanced settings \n\n")
         }
 
     }
-    note_glms_f(tab_rate = tab_rate, expr_lm = expr_lm, obj_lm = res, file_out = TRUE)
+    .GlobalEnv$note_glms_f(tab_rate = tab_rate, expr_lm = expr_lm, obj_lm = res, file_out = TRUE)
 
     ## simple statistics and infos :
     filename <- "GLMSummaryFull.txt"
