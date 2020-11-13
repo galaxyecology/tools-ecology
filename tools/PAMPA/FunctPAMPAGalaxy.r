@@ -823,6 +823,27 @@ subset_all_tables_f <- function(metrique, tab_metrics, facteurs, selections,
 
 ######################################### end of the function subset_all_tables_f
 
+######################################### start of the function organise_fact called by modeleLineaireWP2.xxx.f in FunctExeCalcGLMxxGalaxy.r
+
+organise_fact <- function(list_rand, list_fact) {
+    if (list_rand[1] != "None") {
+        if (all(is.element(list_fact, list_rand)) || list_fact[1] == "None") {
+            resp_fact <- paste("(1|", paste(list_rand, collapse = ") + (1|"), ")")
+            list_f <- NULL
+            list_fact <- list_rand
+        }else{
+            list_f <- list_fact[!is.element(list_fact, list_rand)]
+            resp_fact <- paste(paste(list_f, collapse = " + "), " + (1|", paste(list_rand, collapse = ") + (1|"), ")")
+            list_fact <- c(list_f, list_rand)
+        }
+    }else{
+        list_f <- list_fact
+        resp_fact <- paste(list_fact, collapse = " + ")
+    }
+    return(list(resp_fact, list_f, list_fact))
+}
+
+######################################### end of the function organise_fact
 
 ######################################### start of the function create_res_table called by modeleLineaireWP2.xxx.f in FunctExeCalcGLMxxGalaxy.r
 create_res_table <- function(list_rand, list_fact, row, lev, distrib) {

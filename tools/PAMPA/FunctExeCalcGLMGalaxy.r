@@ -91,20 +91,10 @@ glm_community <- function(metrique, list_fact, list_rand, fact_ana, distrib, tab
 
     tmpd_ata <- tab_metrics
 
-    if (list_rand[1] != "None") {
-        if (all(is.element(list_fact, list_rand)) || list_fact[1] == "None") {
-            resp_fact <- paste("(1|", paste(list_rand, collapse = ") + (1|"), ")")
-            list_f <- NULL
-            list_fact <- list_rand
-        }else{
-            list_f <- list_fact[!is.element(list_fact, list_rand)]
-            resp_fact <- paste(paste(list_f, collapse = " + "), " + (1|", paste(list_rand, collapse = ") + (1|"), ")")
-            list_fact <- c(list_f, list_rand)
-        }
-    }else{
-        list_f <- list_fact
-        resp_fact <- paste(list_fact, collapse = " + ")
-    }
+    out_fact <- organise_fact(list_rand = list_rand, list_fact = list_fact)
+    resp_fact <- out_fact[[1]]
+    list_f <- out_fact[[2]]
+    list_fact <- out_fact[[3]]
 
     ##Creating model's expression :
     expr_lm <- eval(parse(text = paste(metrique, "~", resp_fact)))
