@@ -91,7 +91,7 @@ glm_community <- function(metrique, list_fact, list_rand, fact_ana, distrib, tab
 
     tmpd_ata <- tab_metrics
 
-    out_fact <- organise_fact(list_rand = list_rand, list_fact = list_fact)
+    out_fact <- .GlobalEnv$organise_fact(list_rand = list_rand, list_fact = list_fact)
     resp_fact <- out_fact[[1]]
     list_f <- out_fact[[2]]
     list_fact <- out_fact[[3]]
@@ -125,18 +125,8 @@ glm_community <- function(metrique, list_fact, list_rand, fact_ana, distrib, tab
     tmpd_ata <- .GlobalEnv$drop_levels_f(tmpd_ata)
 
     ## Automatic choice of distribution if none is selected by user :
-    if (distrib == "None") {
-        switch(class(tmpd_ata[, metrique]),
-              "integer" = {
-                              chose_distrib <- "poisson"
-                          },
-              "numeric" = {
-                              chose_distrib <- "gaussian"
-                          },
-              stop("Selected metric class doesn't fit, you should select an integer or a numeric variable"))
-    }else{
-        chose_distrib <- distrib
-    }
+
+    chose_distrib <- .GlobalEnv$distrib_choice(distrib = distrib, metrique = metrique, data = tmpd_ata)
 
     if (fact_ana != "None" && nlevels(tmpd_ata[, fact_ana]) > 1) {
         ana_cut <- levels(tmpd_ata[, fact_ana])

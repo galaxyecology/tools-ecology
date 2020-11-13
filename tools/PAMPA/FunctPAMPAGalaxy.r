@@ -826,6 +826,13 @@ subset_all_tables_f <- function(metrique, tab_metrics, facteurs, selections,
 ######################################### start of the function organise_fact called by modeleLineaireWP2.xxx.f in FunctExeCalcGLMxxGalaxy.r
 
 organise_fact <- function(list_rand, list_fact) {
+    ## Purpose: organise response factors
+    ## ----------------------------------------------------------------------
+    ## Arguments: list_rand : Analysis random factors list
+    ##            list_fact : Analysis factors list
+    ## ----------------------------------------------------------------------
+    ## Author: Coline ROYAUX 14 november 2020
+
     if (list_rand[1] != "None") {
         if (all(is.element(list_fact, list_rand)) || list_fact[1] == "None") {
             resp_fact <- paste("(1|", paste(list_rand, collapse = ") + (1|"), ")")
@@ -841,6 +848,37 @@ organise_fact <- function(list_rand, list_fact) {
         resp_fact <- paste(list_fact, collapse = " + ")
     }
     return(list(resp_fact, list_f, list_fact))
+}
+
+######################################### end of the function organise_fact
+
+######################################### start of the function organise_fact called by modeleLineaireWP2.xxx.f in FunctExeCalcGLMxxGalaxy.r
+distrib_choice <- function(distrib = distrib, metrique = metrique, data = tmpd_ata) {
+    ## Purpose: choose the right distribution
+    ## ----------------------------------------------------------------------
+    ## Arguments: data : data used for analysis
+    ##            metrique : Chosen metric
+    ##            distrib : distribution law selected by user
+    ## ----------------------------------------------------------------------
+    ## Author: Coline ROYAUX 14 november 2020
+
+    if (distrib == "None") {
+        if (metrique == "presence_absence") {
+            chose_distrib <- "binomial"
+        }else{
+            switch(class(data[, metrique]),
+                  "integer" = {
+                                   chose_distrib <- "poisson"
+                              },
+                  "numeric" = {
+                                   chose_distrib <- "gaussian"
+                              },
+                  stop("Selected metric class doesn't fit, you should select an integer or a numeric variable"))
+        }
+    }else{
+        chose_distrib <- distrib
+    }
+    return(chose_distrib)
 }
 
 ######################################### end of the function organise_fact

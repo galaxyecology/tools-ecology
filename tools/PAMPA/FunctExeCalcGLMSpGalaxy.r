@@ -89,7 +89,7 @@ glm_species <- function(metrique, list_fact, list_rand, fact_ana, distrib, tab_m
 
     tmpd_ata <- tab_metrics
 
-    out_fact <- organise_fact(list_rand = list_rand, list_fact = list_fact)
+    out_fact <- .GlobalEnv$organise_fact(list_rand = list_rand, list_fact = list_fact)
     resp_fact <- out_fact[[1]]
     list_f <- out_fact[[2]]
     list_fact <- out_fact[[3]]
@@ -120,23 +120,9 @@ glm_species <- function(metrique, list_fact, list_rand, fact_ana, distrib, tab_m
     ## Suppression des 'levels' non utilisés :
     tmpd_ata <- .GlobalEnv$drop_levels_f(tmpd_ata)
 
-    ## Aide au choix du type d'analyse :
-    if (distrib == "None") {
-        if (metrique == "presence_absence") {
-            chose_distrib <- "binomial"
-        }else{
-            switch(class(tmpd_ata[, metrique]),
-                  "integer" = {
-                                   chose_distrib <- "poisson"
-                              },
-                  "numeric" = {
-                                   chose_distrib <- "gaussian"
-                              },
-                  stop("Selected metric class doesn't fit, you should select an integer or a numeric variable"))
-        }
-    }else{
-        chose_distrib <- distrib
-    }
+    ## Automatic choice of distribution if none is selected by user :
+
+    chose_distrib <- .GlobalEnv$distrib_choice(distrib = distrib, metrique = metrique, data = tmpd_ata)
 
     ##Create results table :
     lev <- unlist(lapply(list_f, FUN = function(x) {
