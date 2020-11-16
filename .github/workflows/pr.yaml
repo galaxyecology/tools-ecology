@@ -211,7 +211,8 @@ jobs:
           if (length(repo) == 0) {
              break
           }
-          lnt <- lint_dir(repo, relative_path=T, linters=linters, exclusions = list("tools/PAMPA/FunctExeCalcGLMGalaxy.r" = 78))
+          lnt <- lint_dir(repo, relative_path=T, linters=linters, 
+                          exclusions = list("tools/PAMPA/FunctExeCalcGLMGalaxy.r" = 78, "tools/PAMPA/FunctExeCalcGLMSpGalaxy.r" = 76, "tools/PAMPA/FunctExePlotGLMGalaxy.r" = 70, "tools/PAMPA/FunctPAMPAGalaxy.r" = c(493, 966, 1217, 1346)))
           if (length(lnt) > 0) {
             status <- 1
             for (l in lnt) {
