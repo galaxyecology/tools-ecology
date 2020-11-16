@@ -41,8 +41,6 @@ repositories:
       - FunctPAMPAGalaxy.r
       - test-data/Community_metrics_cropped.tabular
       - test-data/Unitobs.tabular
-      - test-data/GLM_table_community_on_Community_metrics_cropped.tabular
-      - test-data/Simple_statistics_on_Community_metrics_cropped.txt
       
   pampa_glmsp:
     description: Compute GLM on population data
@@ -55,8 +53,7 @@ repositories:
       - test-data/Presence_absence_table_sansszcl_cropped.tabular
       - test-data/Unitobs.tabular
       - test-data/GLM_table_population_analysis_on_Presence_absence_sansszcl_cropped.tabular
-      - test-data/Simple_statistics_on_Presence_absence_sansszcl_cropped.txt
-
+      
   pampa_plotglm:
     description: Create a plot from GLM data
     owner: ecology
