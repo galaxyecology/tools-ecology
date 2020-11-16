@@ -91,20 +91,10 @@ glm_community <- function(metrique, list_fact, list_rand, fact_ana, distrib, tab
 
     tmpd_ata <- tab_metrics
 
-    if (list_rand[1] != "None") {
-        if (all(is.element(list_fact, list_rand)) || list_fact[1] == "None") {
-            resp_fact <- paste("(1|", paste(list_rand, collapse = ") + (1|"), ")")
-            list_f <- NULL
-            list_fact <- list_rand
-        }else{
-            list_f <- list_fact[!is.element(list_fact, list_rand)]
-            resp_fact <- paste(paste(list_f, collapse = " + "), " + (1|", paste(list_rand, collapse = ") + (1|"), ")")
-            list_fact <- c(list_f, list_rand)
-        }
-    }else{
-        list_f <- list_fact
-        resp_fact <- paste(list_fact, collapse = " + ")
-    }
+    out_fact <- .GlobalEnv$organise_fact(list_rand = list_rand, list_fact = list_fact)
+    resp_fact <- out_fact[[1]]
+    list_f <- out_fact[[2]]
+    list_fact <- out_fact[[3]]
 
     ##Creating model's expression :
     expr_lm <- eval(parse(text = paste(metrique, "~", resp_fact)))
@@ -132,21 +122,11 @@ glm_community <- function(metrique, list_fact, list_rand, fact_ana, distrib, tab
     }
 
     ## Suppress unsed 'levels' :
-    tmpd_ata <- drop_levels_f(tmpd_ata)
+    tmpd_ata <- .GlobalEnv$drop_levels_f(tmpd_ata)
 
     ## Automatic choice of distribution if none is selected by user :
-    if (distrib == "None") {
-        switch(class(tmpd_ata[, metrique]),
-              "integer" = {
-                              chose_distrib <- "poisson"
-                          },
-              "numeric" = {
-                              chose_distrib <- "gaussian"
-                          },
-              stop("Selected metric class doesn't fit, you should select an integer or a numeric variable"))
-    }else{
-        chose_distrib <- distrib
-    }
+
+    chose_distrib <- .GlobalEnv$distrib_choice(distrib = distrib, metrique = metrique, data = tmpd_ata)
 
     if (fact_ana != "None" && nlevels(tmpd_ata[, fact_ana]) > 1) {
         ana_cut <- levels(tmpd_ata[, fact_ana])
@@ -161,9 +141,9 @@ glm_community <- function(metrique, list_fact, list_rand, fact_ana, distrib, tab
     row <- c("global", ana_cut)
 
     if (is.element("year", list_f) && ! is.element("year", list_rand)) {
-        tab_sum <- create_res_table(list_rand = list_rand, list_fact = list_fact, row = row, lev = unlist(c("year", lev)), distrib = chose_distrib)
+        tab_sum <- .GlobalEnv$create_res_table(list_rand = list_rand, list_fact = list_fact, row = row, lev = unlist(c("year", lev)), distrib = chose_distrib)
     }else{
-        tab_sum <- create_res_table(list_rand = list_rand, list_fact = list_fact, row = row, lev = lev, distrib = chose_distrib)
+        tab_sum <- .GlobalEnv$create_res_table(list_rand = list_rand, list_fact = list_fact, row = row, lev = lev, distrib = chose_distrib)
     }
     ### creating rate table
     tab_rate <- data.frame(analysis = row, complete_plan = NA, balanced_plan = NA, NA_proportion_OK = NA, no_residual_dispersion = NA, uniform_residuals = NA, outliers_proportion_OK = NA, no_zero_inflation = NA, observation_factor_ratio_OK = NA, enough_levels_random_effect = NA, rate = NA)
@@ -171,17 +151,17 @@ glm_community <- function(metrique, list_fact, list_rand, fact_ana, distrib, tab
     ##plural analysis
     for (cut in ana_cut) {
         cutd_ata <- tmpd_ata[grep(cut, tmpd_ata[, fact_ana]), ]
-        cutd_ata <- drop_levels_f(cutd_ata)
+        cutd_ata <- .GlobalEnv$drop_levels_f(cutd_ata)
 
         res <- ""
         resy <- ""
 
         if (list_rand[1] != "None") {
-            res <- tryCatch(glmmTMB(expr_lm, family = chose_distrib, data = cutd_ata), error = function(e) {
+            res <- tryCatch(glmmTMB::glmmTMB(expr_lm, family = chose_distrib, data = cutd_ata), error = function(e) {
                                                                                                            })
             if (is.element("year", list_f) && ! is.element("year", list_rand)) { #Model with year as continuous
                 cutd_ata$year <- as.numeric(cutd_ata$year)
-                resy <- tryCatch(glmmTMB(expr_lm, family = chose_distrib, data = cutd_ata), error = function(e) {
+                resy <- tryCatch(glmmTMB::glmmTMB(expr_lm, family = chose_distrib, data = cutd_ata), error = function(e) {
                                                                                                                 })
                 cutd_ata$year <- as.factor(cutd_ata$year)
             }else{
@@ -209,10 +189,10 @@ glm_community <- function(metrique, list_fact, list_rand, fact_ana, distrib, tab
 
             tab_sum <- sorties_lm_f(obj_lm = res, obj_lmy = resy, tab_sum = tab_sum, metrique = metrique,
                                   fact_ana = fact_ana, cut = cut, col_ana = "analysis", lev = lev, #modSel = iFactGraphSel, list_fact_sel = list_fact_sel,
-                                  list_fact = list_fact,
+                                  list_fact = list_fact, list_rand = list_rand,
                                   d_ata = cutd_ata)
 
-            tab_rate[tab_rate[, "analysis"] == cut, c(2:11)] <- note_glm_f(data = cutd_ata, obj_lm = res, metric = metrique, list_fact = list_fact, details = TRUE)
+            tab_rate[tab_rate[, "analysis"] == cut, c(2:11)] <- .GlobalEnv$note_glm_f(data = cutd_ata, obj_lm = res, metric = metrique, list_fact = list_fact, details = TRUE)
 
         }else{
             cat("\nCannot compute GLM for level", cut, "Check if one or more factor(s) have only one level, or try with another distribution for the model in advanced settings \n\n")
@@ -226,11 +206,13 @@ glm_community <- function(metrique, list_fact, list_rand, fact_ana, distrib, tab
     res_gy <- ""
 
     if (list_rand[1] != "None") {
-        res_g <- glmmTMB(expr_lm, family = chose_distrib, data = tmpd_ata)
+        res_g <- glmmTMB::glmmTMB(expr_lm, family = chose_distrib, data = tmpd_ata)
         if (is.element("year", list_fact) && ! is.element("year", list_rand)) { #Model with year as continuous
+            yr <- tmpd_ata$year
             tmpd_ata$year <- as.numeric(tmpd_ata$year)
-            res_gy <- glmmTMB(expr_lm, family = chose_distrib, data = tmpd_ata)
+            res_gy <- glmmTMB::glmmTMB(expr_lm, family = chose_distrib, data = tmpd_ata)
             tmpd_ata$year <- as.factor(tmpd_ata$year)
+            tmpd_ata$year <- yr
         }else{
             res_gy <- ""
         }
@@ -238,9 +220,10 @@ glm_community <- function(metrique, list_fact, list_rand, fact_ana, distrib, tab
     }else{
         res_g <- glm(expr_lm, data = tmpd_ata, family = chose_distrib)
         if (is.element("year", list_fact)) { #Model with year as continuous
+            yr <- tmpd_ata$year
             tmpd_ata$year <- as.numeric(tmpd_ata$year)
             res_gy <- glm(expr_lm, family = chose_distrib, data = tmpd_ata)
-            tmpd_ata$year <- as.factor(tmpd_ata$year)
+            tmpd_ata$year <- yr
         }else{
             res_gy <- ""
         }
@@ -252,15 +235,14 @@ glm_community <- function(metrique, list_fact, list_rand, fact_ana, distrib, tab
 
     tab_sum <- sorties_lm_f(obj_lm = res_g, obj_lmy = res_gy, tab_sum = tab_sum, metrique = metrique,
                           fact_ana = fact_ana, cut = "global", col_ana = "analysis", lev = lev, #modSel = iFactGraphSel, list_fact_sel = list_fact_sel,
-                          list_fact = list_fact,
+                          list_fact = list_fact, list_rand = list_rand,
                           d_ata = tmpd_ata)
 
-    tab_rate[tab_rate[, "analysis"] == "global", c(2:11)] <- note_glm_f(data = tmpd_ata, obj_lm = res_g, metric = metrique, list_fact = list_fact, details = TRUE)
-    note_glms_f(tab_rate = tab_rate, expr_lm = expr_lm, obj_lm = res_g, file_out = TRUE)
+    tab_rate[tab_rate[, "analysis"] == "global", c(2:11)] <- .GlobalEnv$note_glm_f(data = tmpd_ata, obj_lm = res_g, metric = metrique, list_fact = list_fact, details = TRUE)
+    .GlobalEnv$note_glms_f(tab_rate = tab_rate, expr_lm = expr_lm, obj_lm = res_g, file_out = TRUE)
 
     ## simple statistics and infos :
     filename <- "GLMSummaryFull.txt"
-
     info_stats_f(filename = filename, d_ata = tmpd_ata, agreg_level = aggreg, type = "stat",
                 metrique = metrique, fact_graph = fact_ana, #fact_graph_sel = modSel,
                 list_fact = list_fact)#, list_fact_sel = list_fact_sel)

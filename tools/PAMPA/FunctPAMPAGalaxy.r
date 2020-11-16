@@ -12,11 +12,11 @@
 ####### Define the finest aggregation with the observation table
 
 fact_det_f <- function(obs,
-                       size.class = "size.class",
+                       size_class = "size.class",
                        code_species = "species.code",
                        unitobs = "observation.unit") {
-    if (any(is.element(c(size.class), colnames(obs))) && all(! is.na(obs[, size.class]))) {
-            factors <- c(unitobs, code_species, size.class)
+    if (any(is.element(c(size_class), colnames(obs))) && all(! is.na(obs[, size_class]))) {
+            factors <- c(unitobs, code_species, size_class)
         }else{
             factors <- c(unitobs, code_species)
         }
@@ -45,7 +45,7 @@ create_unitobs <- function(data, year = "year", location = "location", unitobs =
             unitab <- data
     }else{
 
-        unitab <- unite(data, col = "observation.unit", c(year, location))
+        unitab <- tidyr::unite(data, col = "observation.unit", c(year, location))
     }
     return(unitab)
 }
@@ -55,11 +55,11 @@ create_unitobs <- function(data, year = "year", location = "location", unitobs =
 ####### separate unitobs column when existant
 create_year_location <- function(data, year = "year", location = "location", unitobs = "observation.unit") {
     if (all(grepl("[1-2][0|8|9][0-9]{2}_.*", data[, unitobs])) == TRUE) {
-        tab <- separate(data, col = unitobs, into = c(year, location), sep = "_")
+        tab <- tidyr::separate(data, col = unitobs, into = c(year, location), sep = "_")
     }else{
         if (all(grepl("[A-Z]{2}[0-9]{2}.*", data[, unitobs]) == TRUE)) {
-            tab <- separate(data, col = unitobs, into = c("site1", year, "obs"), sep = c(2, 4))
-            tab <- unite(tab, col = location, c("site1", "obs"))
+            tab <- tidyr::separate(data, col = unitobs, into = c("site1", year, "obs"), sep = c(2, 4))
+            tab <- tidyr::unite(tab, col = location, c("site1", "obs"))
         }else{
             tab <- data
         }
@@ -240,8 +240,8 @@ calc_numbers_f <- function(obs, obs_type = "", factors = c("observation.unit", "
 
     if (obs_type == "SVR") {
         ## statistics on abundances :
-        res$number.max <- as.vector(stat_rotations[["nb_max"]])
-        res$number.sd <- as.vector(stat_rotations[["nb_sd"]])
+        res[, "number.max"] <- as.vector(stat_rotations[["nb_max"]])
+        res[, "number.sd"] <- as.vector(stat_rotations[["nb_sd"]])
 
     }
 
@@ -399,8 +399,6 @@ agregation_f <- function(metric, d_ata, factors, cas_metric,
                          })
            },
            "nbMax" = {
-               ## Recuperation of raw abundances with selections :
-               nb_tmp <- getReducedSVRdata.f(dataName = ".NombresSVR", data = d_ata)
 
               ## Sum by factor cross / rotation :
                nb_tmp2 <- apply(nb_tmp,
@@ -417,8 +415,6 @@ agregation_f <- function(metric, d_ata, factors, cas_metric,
                                  }))
            },
            "nbSD" = {
-               ## Recuperation of raw abundances with selections :
-               nb_tmp <- getReducedSVRdata.f(dataName = ".NombresSVR", data = d_ata)
 
                ## Sum by factor cross / rotation :
                nb_tmp2 <- apply(nb_tmp,
@@ -435,8 +431,6 @@ agregation_f <- function(metric, d_ata, factors, cas_metric,
                                  }))
            },
            "densMax" = {
-               ## Recuperation of raw abundances with selections :
-               dens_tmp <- getReducedSVRdata.f(dataName = ".DensitesSVR", data = d_ata)
 
                ## Sum by factor cross / rotation :
                dens_tmp2 <- apply(dens_tmp,
@@ -453,8 +447,6 @@ agregation_f <- function(metric, d_ata, factors, cas_metric,
                                  }))
            },
            "densSD" = {
-               ## Recuperation of raw abundances with selections :
-               dens_tmp <- getReducedSVRdata.f(dataName = ".DensitesSVR", data = d_ata)
 
                ## Sum by factor cross / rotation :
                dens_tmp2 <- apply(dens_tmp,
@@ -799,7 +791,7 @@ subset_all_tables_f <- function(metrique, tab_metrics, facteurs, selections,
     if (is.element("size.class", colnames(restmp))) {
         if (length(grep("^[[:digit:]]*[-_][[:digit:]]*$", unique(as.character(restmp$size.class)), perl = TRUE)) ==
             length(unique(as.character(restmp$size.class)))) {
-            restmp$size.class <-
+            restmp[, "size.class"] <-
                 factor(as.character(restmp$size.class),
                        levels = unique(as.character(restmp$size.class))[
                                order(as.numeric(sub("^([[:digit:]]*)[-_][[:digit:]]*$",
@@ -808,7 +800,7 @@ subset_all_tables_f <- function(metrique, tab_metrics, facteurs, selections,
                                                     perl = TRUE)),
                                      na.last = FALSE)])
         }else{
-            restmp$size.class <- factor(restmp$size.class)
+            restmp[, "size.class"] <- factor(restmp$size.class)
         }
     }
 
@@ -831,6 +823,65 @@ subset_all_tables_f <- function(metrique, tab_metrics, facteurs, selections,
 
 ######################################### end of the function subset_all_tables_f
 
+######################################### start of the function organise_fact called by modeleLineaireWP2.xxx.f in FunctExeCalcGLMxxGalaxy.r
+
+organise_fact <- function(list_rand, list_fact) {
+    ## Purpose: organise response factors
+    ## ----------------------------------------------------------------------
+    ## Arguments: list_rand : Analysis random factors list
+    ##            list_fact : Analysis factors list
+    ## ----------------------------------------------------------------------
+    ## Author: Coline ROYAUX 14 november 2020
+
+    if (list_rand[1] != "None") {
+        if (all(is.element(list_fact, list_rand)) || list_fact[1] == "None") {
+            resp_fact <- paste("(1|", paste(list_rand, collapse = ") + (1|"), ")")
+            list_f <- NULL
+            list_fact <- list_rand
+        }else{
+            list_f <- list_fact[!is.element(list_fact, list_rand)]
+            resp_fact <- paste(paste(list_f, collapse = " + "), " + (1|", paste(list_rand, collapse = ") + (1|"), ")")
+            list_fact <- c(list_f, list_rand)
+        }
+    }else{
+        list_f <- list_fact
+        resp_fact <- paste(list_fact, collapse = " + ")
+    }
+    return(list(resp_fact, list_f, list_fact))
+}
+
+######################################### end of the function organise_fact
+
+######################################### start of the function organise_fact called by modeleLineaireWP2.xxx.f in FunctExeCalcGLMxxGalaxy.r
+distrib_choice <- function(distrib = distrib, metrique = metrique, data = tmpd_ata) {
+    ## Purpose: choose the right distribution
+    ## ----------------------------------------------------------------------
+    ## Arguments: data : data used for analysis
+    ##            metrique : Chosen metric
+    ##            distrib : distribution law selected by user
+    ## ----------------------------------------------------------------------
+    ## Author: Coline ROYAUX 14 november 2020
+
+    if (distrib == "None") {
+        if (metrique == "presence_absence") {
+            chose_distrib <- "binomial"
+        }else{
+            switch(class(data[, metrique]),
+                  "integer" = {
+                                   chose_distrib <- "poisson"
+                              },
+                  "numeric" = {
+                                   chose_distrib <- "gaussian"
+                              },
+                  stop("Selected metric class doesn't fit, you should select an integer or a numeric variable"))
+        }
+    }else{
+        chose_distrib <- distrib
+    }
+    return(chose_distrib)
+}
+
+######################################### end of the function organise_fact
 
 ######################################### start of the function create_res_table called by modeleLineaireWP2.xxx.f in FunctExeCalcGLMxxGalaxy.r
 create_res_table <- function(list_rand, list_fact, row, lev, distrib) {
@@ -913,7 +964,7 @@ create_res_table <- function(list_rand, list_fact, row, lev, distrib) {
 
 ######################################### start of the function sorties_lm_f called by glm_community in FunctExeCalcGLMGalaxy.r
 sorties_lm_f <- function(obj_lm, obj_lmy, tab_sum, #formule,
-                        metrique, fact_ana, cut, col_ana, list_fact, lev = NULL, d_ata,
+                        metrique, fact_ana, cut, col_ana, list_fact, list_rand, lev = NULL, d_ata,
                         log = FALSE, sufixe = NULL) {
     ## Purpose: Form GLM and LM results
     ## ----------------------------------------------------------------------
@@ -926,6 +977,7 @@ sorties_lm_f <- function(obj_lm, obj_lmy, tab_sum, #formule,
     ##            cut : level of separation factor
     ##            col_ana : colname for separation factor in output summary table
     ##            list_fact : Analysis factors list
+    ##            list_rand : Analysis random factors list
     ##            levels : Levels of analysis factors list
     ##            d_ata : d_ata used for analysis
     ##            log : put log on metric ? (boolean)
@@ -1198,19 +1250,19 @@ note_glm_f <- function(data, obj_lm, metric, list_fact, details = FALSE) {
 
     if (nrow(data) - nrow(na.omit(data)) < nrow(data) * 0.1) { # +1 if less than 10% of the lines in the dataframe bares a NA
         rate <- rate + 1
-        detres$NA_proportion_OK <- TRUE
+        detres["NA_proportion_OK"] <- TRUE
     }else{
-        detres$NA_proportion_OK <- FALSE
+        detres["NA_proportion_OK"] <- FALSE
     }
 
     #### Model criterions ####
 
     if (length(grep("quasi", obj_lm$family)) == 0) { #DHARMa doesn't work with quasi distributions
 
-        residuals <- simulateResiduals(obj_lm)
+        residuals <- DHARMa::simulateResiduals(obj_lm)
 
-        capture.output(test_res <- testResiduals(residuals))
-        test_zero <- testZeroInflation(residuals)
+        capture.output(test_res <- DHARMa::testResiduals(residuals))
+        test_zero <- DHARMa::testZeroInflation(residuals)
 
         ## dispersion of residuals
 
@@ -1224,7 +1276,7 @@ note_glm_f <- function(data, obj_lm, metric, list_fact, details = FALSE) {
         ## uniformity of residuals
 
         if (test_res$uniformity$p.value > 0.05) { # +1 if uniformity tests not significative
-            rate <- rate + 1.5
+            rate <- rate + 1
             detres$uniform_residuals <- TRUE
         }else{
             detres$uniform_residuals <- FALSE
@@ -1234,15 +1286,15 @@ note_glm_f <- function(data, obj_lm, metric, list_fact, details = FALSE) {
 
         if (test_res$outliers$p.value > 0.05) { # +0.5 if outliers tests not significative
             rate <- rate + 0.5
-            detres$outliers_proportion_OK <- TRUE
+            detres["outliers_proportion_OK"] <- TRUE
         }else{
-            detres$outliers_proportion_OK <- FALSE
+            detres["outliers_proportion_OK"] <- FALSE
         }
 
         ## Zero inflation test
 
         if (test_zero$p.value > 0.05) { # +1 if zero inflation tests not significative
-            rate <- rate + 1.5
+            rate <- rate + 1
             detres$no_zero_inflation <- TRUE
         }else{
             detres$no_zero_inflation <- FALSE
@@ -1252,9 +1304,9 @@ note_glm_f <- function(data, obj_lm, metric, list_fact, details = FALSE) {
 
         if (length(list_fact) / nrow(na.omit(data)) < 0.1) { # +1 if quantity of factors is less than 10% of the quantity of observations
             rate <- rate + 1
-            detres$observation_factor_ratio_OK <- TRUE
+            detres["observation_factor_ratio_OK"] <- TRUE
         }else{
-            detres$observation_factor_ratio_OK <- FALSE
+            detres["observation_factor_ratio_OK"] <- FALSE
         }
 
         ## less than 10 factors' level on random effect
@@ -1300,6 +1352,9 @@ note_glms_f <- function(tab_rate, expr_lm, obj_lm, file_out = FALSE) {
     ##            file_out : Output as file ? else global rate only
     ## ----------------------------------------------------------------------
     ## Author: Coline ROYAUX, 26 june 2020
+    namefile <- "RatingGLM.txt"
+
+    if (length(grep("quasi", obj_lm$family)) == 0) { #DHARMa doesn't work with quasi distributions
 
     rate_m <- median(na.omit(tab_rate[, "rate"]))
     sum <- summary(obj_lm)
@@ -1323,7 +1378,6 @@ note_glms_f <- function(tab_rate, expr_lm, obj_lm, file_out = FALSE) {
     }
 
     if (file_out) {
-        namefile <- "RatingGLM.txt"
 
         cat("###########################################################################",
             "\n########################### Analysis evaluation ###########################",
@@ -1399,6 +1453,9 @@ note_glms_f <- function(tab_rate, expr_lm, obj_lm, file_out = FALSE) {
 
         return(rate_m)
 
+    }
+    }else{
+        cat("Models with quasi distributions can't be rated for now", file = namefile, append = TRUE)
     }
 }
 
