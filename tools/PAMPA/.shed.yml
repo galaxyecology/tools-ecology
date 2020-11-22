@@ -52,7 +52,6 @@ repositories:
       - FunctPAMPAGalaxy.r
       - test-data/Presence_absence_table_sansszcl_cropped.tabular
       - test-data/Unitobs.tabular
-      - test-data/GLM_table_population_analysis_on_Presence_absence_sansszcl_cropped.tabular
       
   pampa_plotglm:
     description: Create a plot from GLM data
