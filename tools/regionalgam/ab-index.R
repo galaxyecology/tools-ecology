@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 
-args <- commandArgs(trailingOnly=TRUE)
+args <- commandArgs(trailingOnly = TRUE)
 source(args[1])
 
 input <- data.frame(data.table::fread(args[2]))

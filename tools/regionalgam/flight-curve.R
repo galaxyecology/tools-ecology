@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
-args = commandArgs(trailingOnly=TRUE)
+args <- commandArgs(trailingOnly = TRUE)
 source(args[1]) #TODO replace by library(regionalGAM) if available as official package from bioconda
-input = data.frame(data.table::fread(args[2]))
+input <- data.frame(data.table::fread(args[2]))
 dataset1 <- input[,c("SPECIES", "SITE", "YEAR", "MONTH", "DAY", "COUNT")]
 pheno <- flight_curve(dataset1, MinVisit = args[3], MinOccur = args[4])
 
