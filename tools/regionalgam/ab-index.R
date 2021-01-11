@@ -3,8 +3,7 @@
 args = commandArgs(trailingOnly=TRUE)
 source(args[1])
 
-
-input = data.table::fread(args[2])
+input = data.frame(data.table::fread(args[2]))
 pheno = read.table(args[3], header=TRUE,sep="	")
 
 if("TREND" %in% colnames(input)){
