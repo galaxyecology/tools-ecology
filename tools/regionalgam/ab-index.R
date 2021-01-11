@@ -4,7 +4,7 @@ args = commandArgs(trailingOnly=TRUE)
 source(args[1])
 
 
-tryCatch({input = read.table(args[2], header=TRUE,sep=" ")},finally={input = read.table(args[2], header=TRUE,sep=",")})
+input = data.table::fread(args[2])
 pheno = read.table(args[3], header=TRUE,sep="	")
 
 if("TREND" %in% colnames(input)){

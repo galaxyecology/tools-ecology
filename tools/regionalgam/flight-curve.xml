@@ -5,14 +5,15 @@
     </macros>
     <requirements>
         <requirement type="package" version="1.8_28">r-mgcv</requirement>
+        <requirement type="package" version="1.12.2">r-data.table</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
         Rscript '$__tool_directory__/flight-curve.R' 
-            '$__tool_directory__/dennis-gam-initial-functions.R' 
-            '$count_file' 
-            $minvisit 
-            $minoccur 
-            '$output' 
+            '$__tool_directory__/dennis-gam-initial-functions.R'
+            '$count_file'
+            $minvisit
+            $minoccur
+            '$output'
     ]]>
     </command>
     <inputs>
@@ -34,7 +35,7 @@
                     <has_n_columns n="6"/>
                     <has_text_matching expression="&quot;Pyronia&#032;tithonus&quot;&#009;2003&#009;[0-9]&#009;[0-9]&#009;[0-9]&#009;[0-9]"/>
                 </assert_contents>
-            </output>   
+            </output>
         </test>
     </tests>
     <edam_topics>
@@ -50,7 +51,7 @@ This tool is an implementation of the flight_curve function RegionalGAM package:
 
 This function computes the annual phenology on a specific region.
 
-The output tabular file can be used to impute expected count values with the abundance index computation tool. 
+The output tabular file can be used to impute expected count values with the abundance index computation tool.
 
 |
 
