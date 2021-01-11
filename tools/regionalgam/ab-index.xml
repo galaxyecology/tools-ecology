@@ -18,7 +18,7 @@
         <param format="tabular" name="input2" type="data" label="Regional expected pattern of abundance" help="Flight curve output, tabular file."/>
     </inputs>
     <outputs>
-        <data format="tabular" name="output" from_work_dir="data.index" />
+        <data format="tabular" name="output" from_work_dir="data_index" />
     </outputs>
     <tests>
         <test>
