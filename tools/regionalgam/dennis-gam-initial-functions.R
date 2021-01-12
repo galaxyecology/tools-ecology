@@ -1,4 +1,4 @@
-### R-Script Adapted from script provided by the CEH, UK BY: Reto Schmucki [ reto.schmucki@mail.mcgill.ca]
+) > 0### R-Script Adapted from script provided by the CEH, UK BY: Reto Schmucki [ reto.schmucki@mail.mcgill.ca]
 ### DATE: 14 July 2014 function to run two stage model in DENNIS et al. 2013
 
 
@@ -48,9 +48,9 @@ year_day_func <- function(sp_data) {
     count_index <- match(paste(sp_data$SITE, sp_data$DAYNO, sep = "_"), paste(all_day_site$SITE, all_day_site$DAYNO,
         sep = "_"))
     all_day_site$COUNT[count_index] <- sp_data$COUNT
-    site_count_length <- aggregate(sp_data$COUNT, by = list(sp_data$SITE), function(x) list(seq_length(x)))
+    site_count_length <- aggregate(sp_data$COUNT, by = list(sp_data$SITE), function(x) list(seq_along(x)))
     names(site_count_length$x) <- as.character(site_count_length$Group.1)
-    site_countno <- utils::stack(site_count_length$x)
+    site_countno <- utils::stack(site_count_length$x)1
     all_day_site$COUNTNO <- NA
     all_day_site$COUNTNO[count_index] <- site_countno$values  # add count number to ease extraction of single count
 
@@ -213,7 +213,7 @@ flight_curve <- function(your_dataset, GamFamily = "nb", MinVisit = 2, MinOccur 
             }
             sp_data_all$trimDAYNO <- sp_data_all$DAYNO - min(sp_data_all$DAYNO) + 1
             print(paste("Fitting the GAM for", as.character(sp_data_all$SPECIES[1]), "and year",y, "with", length(unique(sp_data_all$SITE)), "sites :", Sys.time()))
-            if (length(unique(sp_data_all$SITE))>1){
+            if (length(unique(sp_data_all$SITE)) > 1) {
                 gam_obj_site <- try(mgcv::gam(COUNT ~ s(trimDAYNO, bs = "cr") + as.factor(SITE) -1,
                     data = sp_data_all, family = GamFamily), silent = TRUE)
             }
@@ -233,8 +233,8 @@ flight_curve <- function(your_dataset, GamFamily = "nb", MinVisit = 2, MinOccur 
                     sp_data_all <- sp_data_all
                 }
                 sp_data_all$trimDAYNO <- sp_data_all$DAYNO - min(sp_data_all$DAYNO) + 1
-                print(paste("Fitting the GAM for",sp_data_all$SPECIES[1], "at year", y, "with", length(unique(sp_data_all$SITE)), "sites :",Sys.time(), "second try"))
-                if (length(unique(sp_data_all$SITE))>1){
+                print(paste("Fitting the GAM for", sp_data_all$SPECIES[1], "at year", y, "with", length(unique(sp_data_all$SITE)), "sites :", Sys.time(), "second try"))
+                if (length(unique(sp_data_all$SITE)) > 1) {
                     gam_obj_site <- try(mgcv::gam(COUNT ~ s(trimDAYNO, bs = "cr") + as.factor(SITE) -1,
                        data = sp_data_all, family = GamFamily), silent = TRUE)
                 }
@@ -258,8 +258,8 @@ flight_curve <- function(your_dataset, GamFamily = "nb", MinVisit = 2, MinOccur 
                     sp_data_all[sp_data_all$trimDAYNO < 60, "FITTED"] <- 0
                     sp_data_all[sp_data_all$trimDAYNO > 305, "FITTED"] <- 0
                     # if infinite number in predict replace with NA.
-                    if (sum(is.infinite(sp_data_all[, "FITTED"]))>0){
-                        print(paste("Error in the flight period for",sp_data_all$SPECIES[1], "at year", y, "weird predicted values"))
+                    if (sum(is.infinite(sp_data_all[, "FITTED"])) > 0) {
+                        print(paste("Error in the flight period for", sp_data_all$SPECIES[1], "at year", y, "weird predicted values"))
                         sp_data_all[, "FITTED"] <- NA
                         sp_data_all[, "COUNT_IMPUTED"] <- NA
                         sp_data_all[is.na(sp_data_all$COUNT), "COUNT_IMPUTED"] <- NA
@@ -291,7 +291,7 @@ flight_curve <- function(your_dataset, GamFamily = "nb", MinVisit = 2, MinOccur 
                 sp_data_all[sp_data_all$trimDAYNO < 60, "FITTED"] <- 0
                 sp_data_all[sp_data_all$trimDAYNO > 305, "FITTED"] <- 0
                 # if infinite number in predict replace with NA.
-                if (sum(is.infinite(sp_data_all[, "FITTED"]))>0){
+                if (sum(is.infinite(sp_data_all[, "FITTED"])) > 0) {
                     print(paste("Error in the flight period for", sp_data_all$SPECIES[1], "at year", y, "weird predicted values"))
                     sp_data_all[, "FITTED"] <- NA
                     sp_data_all[, "COUNT_IMPUTED"] <- NA
@@ -306,12 +306,12 @@ flight_curve <- function(your_dataset, GamFamily = "nb", MinVisit = 2, MinOccur 
                 site_sums <- aggregate(sp_data_all$FITTED, by = list(SITE = sp_data_all$SITE),
                     FUN = sum)
                 # Rename sum column
-                names(site_sums)[names(site_sums) == "x"] = "SITE_YR_FSUM"
+                names(site_sums)[names(site_sums) == "x"] <- "SITE_YR_FSUM"
                 # Add data to sp_data data.frame (ensure merge does not sort the data!)
-                sp_data_all = merge(sp_data_all, site_sums, by = c("SITE"), all = TRUE,
+                sp_data_all <- merge(sp_data_all, site_sums, by = c("SITE"), all = TRUE,
                     sort = FALSE)
                 # Calculate normalized values
-                sp_data_all[, "NM"] = sp_data_all$FITTED/sp_data_all$SITE_YR_FSUM
+                sp_data_all[, "NM"] <- sp_data_all$FITTED/sp_data_all$SITE_YR_FSUM
                 }
             }
             sp_data_filled <- sp_data_all
@@ -349,8 +349,8 @@ flight_curve <- function(your_dataset, GamFamily = "nb", MinVisit = 2, MinOccur 
             sp_data_all <- sp_data_all
         }
         sp_data_all$trimDAYNO <- sp_data_all$DAYNO - min(sp_data_all$DAYNO) + 1
-        print(paste("Fitting the GAM for",sp_data_all$SPECIES[1], "at year", y, ":", Sys.time()))
-        if (length(unique(sp_data_all$SITE))>1){
+        print(paste("Fitting the GAM for", sp_data_all$SPECIES[1], "at year", y, ":", Sys.time()))
+        if (length(unique(sp_data_all$SITE)) > 1) {
             gam_obj_site <- try(mgcv::gam(COUNT ~ s(trimDAYNO, bs = "cr") + as.factor(SITE) -1,
             data = sp_data_all, family = GamFamily), silent = TRUE)
         }
@@ -370,17 +370,17 @@ flight_curve <- function(your_dataset, GamFamily = "nb", MinVisit = 2, MinOccur 
                 sp_data_all <- sp_data_all
             }
             sp_data_all$trimDAYNO <- sp_data_all$DAYNO - min(sp_data_all$DAYNO) + 1
-            print(paste("Fitting the GAM for",sp_data_all$SPECIES[1], "at year", y, "with", length(unique(sp_data_all$SITE)), "sites :",Sys.time(), "second try"))
-            if (length(unique(sp_data_all$SITE))>1){
+            print(paste("Fitting the GAM for", sp_data_all$SPECIES[1], "at year", y, "with", length(unique(sp_data_all$SITE)), "sites :", Sys.time(), "second try"))
+            if (length(unique(sp_data_all$SITE)) > 1) {
                 gam_obj_site <- try(mgcv::bam(COUNT ~ s(trimDAYNO, bs = "cr") + as.factor(SITE) - 1,
                 data = sp_data_all, family = GamFamily), silent = TRUE)
             }
             else {
-                gam_obj_site <- try(mgcv::gam(COUNT ~ s(trimDAYNO, bs = "cr")  -1,
+                gam_obj_site <- try(mgcv::gam(COUNT ~ s(trimDAYNO, bs = "cr") - 1,
                 data = sp_data_all, family = GamFamily), silent = TRUE)
             }
             if (class(gam_obj_site)[1] == "try-error") {
-                print(paste("Error in fitting the flight period for",sp_data_all$SPECIES[1], "at year", y, "no convergence after two trial"))
+                print(paste("Error in fitting the flight period for", sp_data_all$SPECIES[1], "at year", y, "no convergence after two trial"))
                 sp_data_all[, "FITTED"] <- NA
                 sp_data_all[, "COUNT_IMPUTED"] <- NA
                 sp_data_all[is.na(sp_data_all$COUNT), "COUNT_IMPUTED"] <- NA
@@ -395,8 +395,8 @@ flight_curve <- function(your_dataset, GamFamily = "nb", MinVisit = 2, MinOccur 
                 sp_data_all[sp_data_all$trimDAYNO < 60, "FITTED"] <- 0
                 sp_data_all[sp_data_all$trimDAYNO > 305, "FITTED"] <- 0
                 # if infinite number in predict replace with NA.
-                if (sum(is.infinite(sp_data_all[, "FITTED"]))>0){
-                    print(paste("Error in the flight period for",sp_data_all$SPECIES[1], "at year", y, "weird predicted values"))
+                if (sum(is.infinite(sp_data_all[, "FITTED"])) > 0) {
+                    print(paste("Error in the flight period for", sp_data_all$SPECIES[1], "at year", y, "weird predicted values"))
                     sp_data_all[, "FITTED"] <- NA
                     sp_data_all[, "COUNT_IMPUTED"] <- NA
                     sp_data_all[is.na(sp_data_all$COUNT), "COUNT_IMPUTED"] <- NA
@@ -412,10 +412,10 @@ flight_curve <- function(your_dataset, GamFamily = "nb", MinVisit = 2, MinOccur 
                     # Rename sum column
                     names(site_sums)[names(site_sums) == "x"] <- "SITE_YR_FSUM"
                     # Add data to sp_data data.frame (ensure merge does not sort the data!)
-                    sp_data_all = merge(sp_data_all, site_sums, by <- c("SITE"),
+                    sp_data_all <- merge(sp_data_all, site_sums, by <- c("SITE"),
                     all = TRUE, sort = FALSE)
                     # Calculate normalized values
-                    sp_data_all[, "NM"] <- sp_data_all$FITTED/sp_data_all$SITE_YR_FSUM
+                    sp_data_all[, "NM"] <- sp_data_all$FITTED / sp_data_all$SITE_YR_FSUM
                 }
             }
         }
@@ -428,8 +428,8 @@ flight_curve <- function(your_dataset, GamFamily = "nb", MinVisit = 2, MinOccur 
             sp_data_all[sp_data_all$trimDAYNO < 60, "FITTED"] <- 0
             sp_data_all[sp_data_all$trimDAYNO > 305, "FITTED"] <- 0
             # if infinite number in predict replace with NA.
-            if (sum(is.infinite(sp_data_all[, "FITTED"]))>0){
-                print(paste("Error in the flight period for",sp_data_all$SPECIES[1], "at year", y, "weird predicted values"))
+            if (sum(is.infinite(sp_data_all[, "FITTED"])) > 0) {
+                print(paste("Error in the flight period for", sp_data_all$SPECIES[1], "at year", y, "weird predicted values"))
                 sp_data_all[, "FITTED"] <- NA
                 sp_data_all[, "COUNT_IMPUTED"] <- NA
                 sp_data_all[is.na(sp_data_all$COUNT), "COUNT_IMPUTED"] <- NA
@@ -448,7 +448,7 @@ flight_curve <- function(your_dataset, GamFamily = "nb", MinVisit = 2, MinOccur 
                 sp_data_all <- merge(sp_data_all, site_sums, by = c("SITE"), all = TRUE,
                 sort = FALSE)
                 # Calculate normalized values
-                sp_data_all[, "NM"] <- sp_data_all$FITTED/sp_data_all$SITE_YR_FSUM
+                sp_data_all[, "NM"] <- sp_data_all$FITTED / sp_data_all$SITE_YR_FSUM
             }
         }
         sp_data_filled <- sp_data_all
@@ -475,7 +475,7 @@ flight_curve <- function(your_dataset, GamFamily = "nb", MinVisit = 2, MinOccur 
 #' @examples
 #' abundance_index()
 
-abundance_index <- function(your_dataset,flight_pheno) {
+abundance_index <- function(your_dataset, flight_pheno) {
 
 your_dataset$DAYNO <- strptime(paste(your_dataset$DAY, your_dataset$MONTH,
     your_dataset$YEAR, sep = "/"), "%d/%m/%Y")$yday + 1
@@ -487,7 +487,7 @@ sample_year <- unique(dataset$YEAR)
 sample_year <- sample_year[order(sample_year)]
 
 
-if (length(sample_year)>1){
+if (length(sample_year) > 1) {
 
 for (y in sample_year) {
 
@@ -515,11 +515,11 @@ for (y in sample_year) {
     names(pro_count_agg) <- c("SITE", "PROP_PHENO_SAMPLED")
 
     # remove samples outside the monitoring window
-    sp_data_site$COUNT[sp_data_site$nm==0] <- NA
+    sp_data_site$COUNT[sp_data_site$nm == 0] <- NA
 
     # Compute the regional GAM index
 
-    if (length(unique(sp_data_site$SITE)) > 1){
+    if (length(unique(sp_data_site$SITE)) > 1) {
         glm_obj_site <- glm(COUNT ~ factor(SITE) + offset(log(nm)) - 1, data = sp_data_site,
             family = quasipoisson(link = "log"), control = list(maxit = 100))
     } else {
@@ -587,16 +587,16 @@ for (y in sample_year) {
     siteweeknocount <- aggregate(pro_missing_count$COUNT, by = list(pro_missing_count$site_week),
         function(x) sum(!is.na(x)) == 0)
     pro_missing_count <- pro_missing_count[pro_missing_count$site_week %in%
-        siteweeknocount$Group.1[siteweeknocount$x == TRUE], ]
+        siteweeknocount$Group.1[siteweeknocount$x == TRUE],]
     pro_count_agg <- aggregate(pro_missing_count$NM, by = list(pro_missing_count$SITE),
         function(x) 1 - sum(x, na.rm = T))
     names(pro_count_agg) <- c("SITE", "PROP_PHENO_SAMPLED")
 
     # remove samples outside the monitoring window
-    sp_data_site$COUNT[sp_data_site$nm ==0 ] <- NA
+    sp_data_site$COUNT[sp_data_site$nm == 0] <- NA
 
     # Compute the regional GAM index
-    if (length(unique(sp_data_site$SITE)) > 1){
+    if (length(unique(sp_data_site$SITE)) > 1) {
         glm_obj_site <- glm(COUNT ~ factor(SITE) + offset(log(nm)) - 1, data = sp_data_site,
             family = quasipoisson(link = "log"), control = list(maxit = 100))
     } else {
