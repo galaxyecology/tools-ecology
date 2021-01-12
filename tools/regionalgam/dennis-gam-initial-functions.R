@@ -183,7 +183,7 @@ flight_curve <- function(your_dataset, GamFamily = "nb", MinVisit = 2, MinOccur 
 
     flight_pheno <- data.frame()
 
-    your_dataset$DAYNO <- strptime(paste(your_dataset$DAY, your_dataset$MONTH,
+    your_dataset$DAYNO <- strptime(paste(your_dataset$DAY, your_dataset$MONTH, # nolint
         your_dataset$YEAR, sep = "/"), "%d/%m/%Y")$yday + 1
     dataset <- your_dataset[, c("SPECIES", "SITE", "YEAR", "MONTH",
         "DAY", "DAYNO", "COUNT")]
@@ -321,7 +321,7 @@ flight_curve <- function(your_dataset, GamFamily = "nb", MinVisit = 2, MinOccur 
                 sp_data_filled$DAYNO, sep = "_")), ]
             flight_curve <- flight_curve[order(flight_curve$DAYNO), ]
             # bind if exist else create
-            if (is.na(flight_curve$nm[1])) next()
+            if (is.na(flight_curve$nm[1])) next() # nolint
 
             flight_pheno <- rbind(flight_pheno, flight_curve)
 
