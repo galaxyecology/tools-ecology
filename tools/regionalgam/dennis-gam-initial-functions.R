@@ -1,4 +1,4 @@
-) > 0### R-Script Adapted from script provided by the CEH, UK BY: Reto Schmucki [ reto.schmucki@mail.mcgill.ca]
+### R-Script Adapted from script provided by the CEH, UK BY: Reto Schmucki [ reto.schmucki@mail.mcgill.ca]
 ### DATE: 14 July 2014 function to run two stage model in DENNIS et al. 2013
 
 
