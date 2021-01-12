@@ -20,7 +20,7 @@
 
 # FUNCTIONS
 
-year_day_func = function(sp_data) {
+year_day_func <- function(sp_data) {
 
     year <- unique(sp_data$YEAR)
 
@@ -87,7 +87,7 @@ year_day_func = function(sp_data) {
 #' trap_area()
 
 
-trap_area = function(x, y = NULL) {
+trap_area <- function(x, y = NULL) {
     # If y is null and x has multiple columns then set y to x[,2] and x to x[,1]
     if (is.null(y)) {
         if (length(dim(x)) == 2) {
@@ -136,7 +136,7 @@ trap_area = function(x, y = NULL) {
 
 
 
-trap_index = function(sp_data, data_col = "IMP", time_col = "DAYNO", by_col = c("SPECIES", "SITE", "YEAR")) {
+trap_index <- function(sp_data, data_col = "IMP", time_col = "DAYNO", by_col = c("SPECIES", "SITE", "YEAR")) {
 
     # Build output data.frame
     out_obj = unique(sp_data[, by_col])
