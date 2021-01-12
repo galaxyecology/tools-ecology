@@ -50,7 +50,7 @@ year_day_func <- function(sp_data) {
     all_day_site$COUNT[count_index] <- sp_data$COUNT
     site_count_length <- aggregate(sp_data$COUNT, by = list(sp_data$SITE), function(x) list(seq_along(x)))
     names(site_count_length$x) <- as.character(site_count_length$Group.1)
-    site_countno <- utils::stack(site_count_length$x)1
+    site_countno <- utils::stack(site_count_length$x)
     all_day_site$COUNTNO <- NA
     all_day_site$COUNTNO[count_index] <- site_countno$values  # add count number to ease extraction of single count
 
