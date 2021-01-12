@@ -25,7 +25,7 @@ year_day_func <- function(sp_data) {
     year <- unique(sp_data$YEAR)
 
     origin_d <- paste(year, "01-01", sep = "-")
-    if ((year%%4 == 0) & ((year%%100 != 0) | (year%%400 == 0))) {
+    if ((year %% 4 == 0) & ((year %% 100 != 0) | (year %% 400 == 0))) {
         nday <- 366
     } else {
         nday <- 365
@@ -48,7 +48,7 @@ year_day_func <- function(sp_data) {
     count_index <- match(paste(sp_data$SITE, sp_data$DAYNO, sep = "_"), paste(all_day_site$SITE, all_day_site$DAYNO,
         sep = "_"))
     all_day_site$COUNT[count_index] <- sp_data$COUNT
-    site_count_length <- aggregate(sp_data$COUNT, by = list(sp_data$SITE), function(x) list(1:length(x)))
+    site_count_length <- aggregate(sp_data$COUNT, by = list(sp_data$SITE), function(x) list(seq_length(x)))
     names(site_count_length$x) <- as.character(site_count_length$Group.1)
     site_countno <- utils::stack(site_count_length$x)
     all_day_site$COUNTNO <- NA
@@ -161,7 +161,7 @@ trap_index <- function(sp_data, data_col = "IMP", time_col = "DAYNO", by_col = c
 
 #' flight_curve Function
 #' This function compute the flight curve across and years
-#' @param your_dataset A data.frame containing original species count data. The data format is a csv (comma "," separated) with 6 columns with headers, namely "species","transect_id","visit_year","visit_month","visit_day","sp_count"
+#' @param your_dataset A data.frame containing original species count data. The data format is a csv (comma "',"' separated) with 6 columns with headers, namely "species","transect_id","visit_year","visit_month","visit_day","sp_count"
 #' @keywords standardize flight curve
 #' @export
 #' @examples
@@ -170,7 +170,7 @@ trap_index <- function(sp_data, data_col = "IMP", time_col = "DAYNO", by_col = c
 
 flight_curve <- function(your_dataset, GamFamily = "nb", MinVisit = 2, MinOccur = 1) {
 
-    if("mgcv" %in% installed.packages() == "FALSE") {
+    if ("mgcv" %in% installed.packages() == "FALSE") {
         print("mgcv package is not installed.")
         x <- readline("Do you want to install it? Y/N")
         if (x == "Y") {
@@ -201,7 +201,7 @@ flight_curve <- function(your_dataset, GamFamily = "nb", MinVisit = 2, MinOccur 
             dataset_y <- dataset_y[dataset_y$SITE %in% vis$SITE[vis$x >= MinVisit], ]
             nsite <- length(unique(dataset_y$SITE))
             if (nsite < 1) {
-              print(paste("No sites with sufficient visits and occurence, MinOccur:", MinOccur, " MinVisit: ", MinVisit, " for " , dataset$SPECIES[1],"at year", y))
+              print(paste("No sites with sufficient visits and occurence, MinOccur:", MinOccur, " MinVisit: ", MinVisit, " for " , dataset$SPECIES[1], "at year", y))
               next
             }
             # Determine missing days and add to dataset
@@ -212,8 +212,8 @@ flight_curve <- function(your_dataset, GamFamily = "nb", MinVisit = 2, MinOccur 
                 sp_data_all <- sp_data_all
             }
             sp_data_all$trimDAYNO <- sp_data_all$DAYNO - min(sp_data_all$DAYNO) + 1
-            print(paste("Fitting the GAM for",as.character(sp_data_all$SPECIES[1]),"and year",y,"with",length(unique(sp_data_all$SITE)),"sites :",Sys.time()))
-            if(length(unique(sp_data_all$SITE))>1){
+            print(paste("Fitting the GAM for", as.character(sp_data_all$SPECIES[1]), "and year",y, "with", length(unique(sp_data_all$SITE)), "sites :", Sys.time()))
+            if (length(unique(sp_data_all$SITE))>1){
                 gam_obj_site <- try(mgcv::gam(COUNT ~ s(trimDAYNO, bs = "cr") + as.factor(SITE) -1,
                     data = sp_data_all, family = GamFamily), silent = TRUE)
             }
@@ -233,8 +233,8 @@ flight_curve <- function(your_dataset, GamFamily = "nb", MinVisit = 2, MinOccur 
                     sp_data_all <- sp_data_all
                 }
                 sp_data_all$trimDAYNO <- sp_data_all$DAYNO - min(sp_data_all$DAYNO) + 1
-                print(paste("Fitting the GAM for",sp_data_all$SPECIES[1],"at year", y,"with",length(unique(sp_data_all$SITE)),"sites :",Sys.time(),"second try"))
-                if(length(unique(sp_data_all$SITE))>1){
+                print(paste("Fitting the GAM for",sp_data_all$SPECIES[1], "at year", y, "with", length(unique(sp_data_all$SITE)), "sites :",Sys.time(), "second try"))
+                if (length(unique(sp_data_all$SITE))>1){
                     gam_obj_site <- try(mgcv::gam(COUNT ~ s(trimDAYNO, bs = "cr") + as.factor(SITE) -1,
                        data = sp_data_all, family = GamFamily), silent = TRUE)
                 }
@@ -243,7 +243,7 @@ flight_curve <- function(your_dataset, GamFamily = "nb", MinVisit = 2, MinOccur 
                         data = sp_data_all, family = GamFamily), silent = TRUE)
                 }
                 if (class(gam_obj_site)[1] == "try-error") {
-                    print(paste("Error in fitting the flight period for",sp_data_all$SPECIES[1],"at year", y,"no convergence after two trial"))
+                    print(paste("Error in fitting the flight period for", sp_data_all$SPECIES[1], "at year", y, "no convergence after two trial"))
                     sp_data_all[, "FITTED"] <- NA
                     sp_data_all[, "COUNT_IMPUTED"] <- NA
                     sp_data_all[is.na(sp_data_all$COUNT), "COUNT_IMPUTED"] <- NA
@@ -258,8 +258,8 @@ flight_curve <- function(your_dataset, GamFamily = "nb", MinVisit = 2, MinOccur 
                     sp_data_all[sp_data_all$trimDAYNO < 60, "FITTED"] <- 0
                     sp_data_all[sp_data_all$trimDAYNO > 305, "FITTED"] <- 0
                     # if infinite number in predict replace with NA.
-                    if(sum(is.infinite(sp_data_all[, "FITTED"]))>0){
-                        print(paste("Error in the flight period for",sp_data_all$SPECIES[1],"at year", y,"weird predicted values"))
+                    if (sum(is.infinite(sp_data_all[, "FITTED"]))>0){
+                        print(paste("Error in the flight period for",sp_data_all$SPECIES[1], "at year", y, "weird predicted values"))
                         sp_data_all[, "FITTED"] <- NA
                         sp_data_all[, "COUNT_IMPUTED"] <- NA
                         sp_data_all[is.na(sp_data_all$COUNT), "COUNT_IMPUTED"] <- NA
@@ -291,8 +291,8 @@ flight_curve <- function(your_dataset, GamFamily = "nb", MinVisit = 2, MinOccur 
                 sp_data_all[sp_data_all$trimDAYNO < 60, "FITTED"] <- 0
                 sp_data_all[sp_data_all$trimDAYNO > 305, "FITTED"] <- 0
                 # if infinite number in predict replace with NA.
-                if(sum(is.infinite(sp_data_all[, "FITTED"]))>0){
-                    print(paste("Error in the flight period for",sp_data_all$SPECIES[1],"at year", y,"weird predicted values"))
+                if (sum(is.infinite(sp_data_all[, "FITTED"]))>0){
+                    print(paste("Error in the flight period for", sp_data_all$SPECIES[1], "at year", y, "weird predicted values"))
                     sp_data_all[, "FITTED"] <- NA
                     sp_data_all[, "COUNT_IMPUTED"] <- NA
                     sp_data_all[is.na(sp_data_all$COUNT), "COUNT_IMPUTED"] <- NA
@@ -337,7 +337,7 @@ flight_curve <- function(your_dataset, GamFamily = "nb", MinVisit = 2, MinOccur 
         dataset_y <- dataset_y[dataset_y$SITE %in% vis$SITE[vis$x >= MinVisit], ]
         nsite <- length(unique(dataset_y$SITE))
         if (nsite < 1) {
-          stop(paste("No sites with sufficient visits and occurence, MinOccur:", MinOccur, " MinVisit: ", MinVisit, " for " ,dataset$SPECIES[1],"at year", y))
+          stop(paste("No sites with sufficient visits and occurence, MinOccur:", MinOccur, " MinVisit: ", MinVisit, " for " , dataset$SPECIES[1], "at year", y))
         }
         # Determine missing days and add to dataset
         sp_data_all <- year_day_func(dataset_y)
@@ -349,8 +349,8 @@ flight_curve <- function(your_dataset, GamFamily = "nb", MinVisit = 2, MinOccur 
             sp_data_all <- sp_data_all
         }
         sp_data_all$trimDAYNO <- sp_data_all$DAYNO - min(sp_data_all$DAYNO) + 1
-        print(paste("Fitting the GAM for",sp_data_all$SPECIES[1],"at year", y,":",Sys.time()))
-        if(length(unique(sp_data_all$SITE))>1){
+        print(paste("Fitting the GAM for",sp_data_all$SPECIES[1], "at year", y, ":", Sys.time()))
+        if (length(unique(sp_data_all$SITE))>1){
             gam_obj_site <- try(mgcv::gam(COUNT ~ s(trimDAYNO, bs = "cr") + as.factor(SITE) -1,
             data = sp_data_all, family = GamFamily), silent = TRUE)
         }
@@ -370,8 +370,8 @@ flight_curve <- function(your_dataset, GamFamily = "nb", MinVisit = 2, MinOccur 
                 sp_data_all <- sp_data_all
             }
             sp_data_all$trimDAYNO <- sp_data_all$DAYNO - min(sp_data_all$DAYNO) + 1
-            print(paste("Fitting the GAM for",sp_data_all$SPECIES[1],"at year", y,"with",length(unique(sp_data_all$SITE)),"sites :",Sys.time(),"second try"))
-            if(length(unique(sp_data_all$SITE))>1){
+            print(paste("Fitting the GAM for",sp_data_all$SPECIES[1], "at year", y, "with", length(unique(sp_data_all$SITE)), "sites :",Sys.time(), "second try"))
+            if (length(unique(sp_data_all$SITE))>1){
                 gam_obj_site <- try(mgcv::bam(COUNT ~ s(trimDAYNO, bs = "cr") + as.factor(SITE) - 1,
                 data = sp_data_all, family = GamFamily), silent = TRUE)
             }
@@ -380,7 +380,7 @@ flight_curve <- function(your_dataset, GamFamily = "nb", MinVisit = 2, MinOccur 
                 data = sp_data_all, family = GamFamily), silent = TRUE)
             }
             if (class(gam_obj_site)[1] == "try-error") {
-                print(paste("Error in fitting the flight period for",sp_data_all$SPECIES[1],"at year", y,"no convergence after two trial"))
+                print(paste("Error in fitting the flight period for",sp_data_all$SPECIES[1], "at year", y, "no convergence after two trial"))
                 sp_data_all[, "FITTED"] <- NA
                 sp_data_all[, "COUNT_IMPUTED"] <- NA
                 sp_data_all[is.na(sp_data_all$COUNT), "COUNT_IMPUTED"] <- NA
@@ -395,8 +395,8 @@ flight_curve <- function(your_dataset, GamFamily = "nb", MinVisit = 2, MinOccur 
                 sp_data_all[sp_data_all$trimDAYNO < 60, "FITTED"] <- 0
                 sp_data_all[sp_data_all$trimDAYNO > 305, "FITTED"] <- 0
                 # if infinite number in predict replace with NA.
-                if(sum(is.infinite(sp_data_all[, "FITTED"]))>0){
-                    print(paste("Error in the flight period for",sp_data_all$SPECIES[1],"at year", y,"weird predicted values"))
+                if (sum(is.infinite(sp_data_all[, "FITTED"]))>0){
+                    print(paste("Error in the flight period for",sp_data_all$SPECIES[1], "at year", y, "weird predicted values"))
                     sp_data_all[, "FITTED"] <- NA
                     sp_data_all[, "COUNT_IMPUTED"] <- NA
                     sp_data_all[is.na(sp_data_all$COUNT), "COUNT_IMPUTED"] <- NA
@@ -428,8 +428,8 @@ flight_curve <- function(your_dataset, GamFamily = "nb", MinVisit = 2, MinOccur 
             sp_data_all[sp_data_all$trimDAYNO < 60, "FITTED"] <- 0
             sp_data_all[sp_data_all$trimDAYNO > 305, "FITTED"] <- 0
             # if infinite number in predict replace with NA.
-            if(sum(is.infinite(sp_data_all[, "FITTED"]))>0){
-                print(paste("Error in the flight period for",sp_data_all$SPECIES[1],"at year", y,"weird predicted values"))
+            if (sum(is.infinite(sp_data_all[, "FITTED"]))>0){
+                print(paste("Error in the flight period for",sp_data_all$SPECIES[1], "at year", y, "weird predicted values"))
                 sp_data_all[, "FITTED"] <- NA
                 sp_data_all[, "COUNT_IMPUTED"] <- NA
                 sp_data_all[is.na(sp_data_all$COUNT), "COUNT_IMPUTED"] <- NA
@@ -440,15 +440,15 @@ flight_curve <- function(your_dataset, GamFamily = "nb", MinVisit = 2, MinOccur 
                 sp_data_all[is.na(sp_data_all$COUNT), "COUNT_IMPUTED"] <- sp_data_all$FITTED[is.na(sp_data_all$COUNT)]
                 # Define the flight curve from the fitted values and append them over
                 # years (this is one flight curve per year for all site)
-                site_sums = aggregate(sp_data_all$FITTED, by = list(SITE = sp_data_all$SITE),
+                site_sums <- aggregate(sp_data_all$FITTED, by = list(SITE = sp_data_all$SITE),
                 FUN = sum)
                 # Rename sum column
-                names(site_sums)[names(site_sums) == "x"] = "SITE_YR_FSUM"
+                names(site_sums)[names(site_sums) == "x"] <- "SITE_YR_FSUM"
                 # Add data to sp_data data.frame (ensure merge does not sort the data!)
-                sp_data_all = merge(sp_data_all, site_sums, by = c("SITE"), all = TRUE,
+                sp_data_all <- merge(sp_data_all, site_sums, by = c("SITE"), all = TRUE,
                 sort = FALSE)
                 # Calculate normalized values
-                sp_data_all[, "NM"] = sp_data_all$FITTED/sp_data_all$SITE_YR_FSUM
+                sp_data_all[, "NM"] <- sp_data_all$FITTED/sp_data_all$SITE_YR_FSUM
             }
         }
         sp_data_filled <- sp_data_all
@@ -519,7 +519,7 @@ for (y in sample_year) {
 
     # Compute the regional GAM index
 
-    if(length(unique(sp_data_site$SITE))>1){
+    if (length(unique(sp_data_site$SITE)) > 1){
         glm_obj_site <- glm(COUNT ~ factor(SITE) + offset(log(nm)) - 1, data = sp_data_site,
             family = quasipoisson(link = "log"), control = list(maxit = 100))
     } else {
@@ -547,7 +547,7 @@ for (y in sample_year) {
         "site_week"]
 
     ## Compute the regional GAM index
-    print(paste("Compute index for",sp_data_site$SPECIES[1],"at year", y,"for",length(unique(sp_data_site$SITE)),"sites:",Sys.time()))
+    print(paste("Compute index for", sp_data_site$SPECIES[1], "at year", y, "for", length(unique(sp_data_site$SITE)), "sites:", Sys.time()))
     regional_gam_index <- trap_index(sp_data_site, data_col = "COUNT_IMPUTED",
         time_col = "DAYNO", by_col = c("SPECIES", "SITE", "YEAR"))
 
@@ -593,10 +593,10 @@ for (y in sample_year) {
     names(pro_count_agg) <- c("SITE", "PROP_PHENO_SAMPLED")
 
     # remove samples outside the monitoring window
-    sp_data_site$COUNT[sp_data_site$nm==0] <- NA
+    sp_data_site$COUNT[sp_data_site$nm ==0 ] <- NA
 
     # Compute the regional GAM index
-    if(length(unique(sp_data_site$SITE))>1){
+    if (length(unique(sp_data_site$SITE)) > 1){
         glm_obj_site <- glm(COUNT ~ factor(SITE) + offset(log(nm)) - 1, data = sp_data_site,
             family = quasipoisson(link = "log"), control = list(maxit = 100))
     } else {
@@ -624,7 +624,7 @@ for (y in sample_year) {
         "site_week"]
 
     # Compute the regional gam index
-    print(paste("Compute index for",sp_data_site$SPECIES[1],"at year", y,"for",length(unique(sp_data_site$SITE)),"sites:",Sys.time()))
+    print(paste("Compute index for", sp_data_site$SPECIES[1], "at year", y, "for", length(unique(sp_data_site$SITE)), "sites:", Sys.time()))
     regional_gam_index <- trap_index(sp_data_site, data_col = "COUNT_IMPUTED",
         time_col = "DAYNO", by_col = c("SPECIES", "SITE", "YEAR"))
 
