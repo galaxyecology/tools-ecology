@@ -24,20 +24,20 @@ year_day_func <- function(sp_data) {
 
     year <- unique(sp_data$YEAR)
 
-    origin.d <- paste(year, "01-01", sep = "-")
+    origin_d <- paste(year, "01-01", sep = "-")
     if ((year%%4 == 0) & ((year%%100 != 0) | (year%%400 == 0))) {
         nday <- 366
     } else {
         nday <- 365
     }
 
-    date.serie <- as.POSIXlt(seq(as.Date(origin.d), length = nday, by = "day"), format = "%Y-%m-%d")
+    date_serie <- as.POSIXlt(seq(as.Date(origin_d), length = nday, by = "day"), format = "%Y-%m-%d")
 
-    dayno <- as.numeric(julian(date.serie, origin = as.Date(origin.d)) + 1)
-    month <- as.numeric(strftime(date.serie, format = "%m"))
-    week <- as.numeric(strftime(date.serie, format = "%W"))
-    week_day <- as.numeric(strftime(date.serie, format = "%u"))
-    day <- as.numeric(strftime(date.serie, format = "%d"))
+    dayno <- as.numeric(julian(date_serie, origin = as.Date(origin_d)) + 1)
+    month <- as.numeric(strftime(date_serie, format = "%m"))
+    week <- as.numeric(strftime(date_serie, format = "%W"))
+    week_day <- as.numeric(strftime(date_serie, format = "%u"))
+    day <- as.numeric(strftime(date_serie, format = "%d"))
 
     site_list <- sp_data[!duplicated(sp_data$SITE), c("SITE")]
 
@@ -91,8 +91,8 @@ trap_area <- function(x, y = NULL) {
     # If y is null and x has multiple columns then set y to x[,2] and x to x[,1]
     if (is.null(y)) {
         if (length(dim(x)) == 2) {
-            y = x[, 2]
-            x = x[, 1]
+            y <- x[, 2]
+            x <- x[, 1]
         } else {
             stop("ERROR: need to either specifiy both x and y or supply a two column data.frame/matrix to x")
         }
@@ -104,20 +104,20 @@ trap_area <- function(x, y = NULL) {
     }
 
     # Need to exclude any pairs that are NA for either x or y
-    rm_inds = which(is.na(x) | is.na(y))
+    rm_inds <- which(is.na(x) | is.na(y))
     if (length(rm_inds) > 0) {
-        x = x[-rm_inds]
-        y = y[-rm_inds]
+        x <- x[-rm_inds]
+        y <- y[-rm_inds]
     }
 
     # Determine values of trapezoids under curve Get inds
-    inds = 1:(length(x) - 1)
+    inds <- 1:(length(x) - 1)
     # Determine area using trapezoidal rule Area = ( (b1 + b2)/2 ) * h where b1 and b2 are lengths of bases
     # (the parallel sides) and h is the height (the perpendicular distance between two bases)
-    areas = ((y[inds] + y[inds + 1])/2) * diff(x)
+    areas <- ((y[inds] + y[inds + 1])/2) * diff(x)
 
     # total area is sum of all trapezoid areas
-    tot_area = sum(areas)
+    tot_area <- sum(areas)
 
     # Return total area
     return(tot_area)
@@ -139,20 +139,20 @@ trap_area <- function(x, y = NULL) {
 trap_index <- function(sp_data, data_col = "IMP", time_col = "DAYNO", by_col = c("SPECIES", "SITE", "YEAR")) {
 
     # Build output data.frame
-    out_obj = unique(sp_data[, by_col])
+    out_obj <- unique(sp_data[, by_col])
     # Set row.names to be equal to collapsing of output rows (will be unique, you need them to make uploading
     # values back to data.frame will be easier)
-    row.names(out_obj) = apply(out_obj, 1, paste, collapse = "_")
+    row.names(out_obj) <- apply(out_obj, 1, paste, collapse = "_")
 
     # Using this row.names from out_obj above as index in by function to loop through values all unique combs
     # of by_cols and fit trap_area to data
-    ind_dat = by(sp_data[, c(time_col, data_col)], apply(sp_data[, by_col], 1, paste, collapse = "_"), trap_area)
+    ind_dat <- by(sp_data[, c(time_col, data_col)], apply(sp_data[, by_col], 1, paste, collapse = "_"), trap_area)
 
     # Add this data to output object
-    out_obj[names(ind_dat), "SINDEX"] = round(ind_dat/7, 1)
+    out_obj[names(ind_dat), "SINDEX"] <- round(ind_dat/7, 1)
 
     # Set row.names to defaults
-    row.names(out_obj) = NULL
+    row.names(out_obj) <- NULL
 
     # Return output object
     return(out_obj)
@@ -168,15 +168,15 @@ trap_index <- function(sp_data, data_col = "IMP", time_col = "DAYNO", by_col = c
 #' flight_curve()
 
 
-flight_curve <- function(your_dataset, GamFamily = 'nb', MinVisit = 2, MinOccur = 1) {
+flight_curve <- function(your_dataset, GamFamily = "nb", MinVisit = 2, MinOccur = 1) {
 
     if("mgcv" %in% installed.packages() == "FALSE") {
         print("mgcv package is not installed.")
         x <- readline("Do you want to install it? Y/N")
-        if (x == 'Y') {
+        if (x == "Y") {
             install.packages("mgcv")
         }
-        if (x == 'N') {
+        if (x == "N") {
             stop("flight curve can not be computed without the mgcv package, sorry")
         }
     }
@@ -275,7 +275,7 @@ flight_curve <- function(your_dataset, GamFamily = 'nb', MinVisit = 2, MinOccur 
                     # Rename sum column
                     names(site_sums)[names(site_sums) == "x"] <- "SITE_YR_FSUM"
                     # Add data to sp_data data.frame (ensure merge does not sort the data!)
-                    sp_data_all = merge(sp_data_all, site_sums, by <- c("SITE"),
+                    sp_data_all <- merge(sp_data_all, site_sums, by <- c("SITE"),
                         all = TRUE, sort = FALSE)
                     # Calculate normalized values
                     sp_data_all[, "NM"] <- sp_data_all$FITTED/sp_data_all$SITE_YR_FSUM
@@ -303,7 +303,7 @@ flight_curve <- function(your_dataset, GamFamily = 'nb', MinVisit = 2, MinOccur 
                 sp_data_all[is.na(sp_data_all$COUNT), "COUNT_IMPUTED"] <- sp_data_all$FITTED[is.na(sp_data_all$COUNT)]
                 # Define the flight curve from the fitted values and append them over
                 # years (this is one flight curve per year for all site)
-                site_sums = aggregate(sp_data_all$FITTED, by = list(SITE = sp_data_all$SITE),
+                site_sums <- aggregate(sp_data_all$FITTED, by = list(SITE = sp_data_all$SITE),
                     FUN = sum)
                 # Rename sum column
                 names(site_sums)[names(site_sums) == "x"] = "SITE_YR_FSUM"
