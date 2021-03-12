@@ -122,7 +122,7 @@ A tabular file with population data. Must at least contain three or four columns
 +----------------------+--------------+---------+---------+-----+       
 |   observation.unit   | species.code | metric1 | metric2 | ... |            
 +======================+==============+=========+=========+=====+        
-|   location_yearID    | species code |    2    |   0.4   | ... |            
+|   year_locationID    | species code |    2    |   0.4   | ... |            
 +----------------------+--------------+---------+---------+-----+        
 |          ...         |      ...     |   ...   |   ...   | ... |       
 +----------------------+--------------+---------+---------+-----+           
@@ -144,7 +144,7 @@ A tabular file with observation unit data which contains at least as much column
 +-------------------+--------------+---------+--------+------------+-----+       
 | observation.unit  | species.code |  site   |  year  |  habitat   | ... |            
 +===================+==============+=========+========+============+=====+        
-|  location_yearID  | species code | site ID |  2000  | habitatID  | ... |            
+|  year_locationID  | species code | site ID |  2000  | habitatID  | ... |            
 +-------------------+--------------+---------+--------+------------+-----+        
 |        ...        |      ...     |   ...   |   ...  |     ...    | ... |       
 +-------------------+--------------+---------+--------+------------+-----+ 
