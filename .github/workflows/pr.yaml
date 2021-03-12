@@ -175,6 +175,7 @@ jobs:
     strategy:
       matrix:
         r-version: [4.0.1]
+    continue-on-error: true 
     steps:
     # checkout the repository to master
     # and use it as the current working directory
