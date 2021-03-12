@@ -1481,7 +1481,7 @@ info_stats_f <- function(filename, d_ata, agreg_level = c("species", "unitobs"),
 
     ## Open file :
     f_ile <- file(description = filename,
-                 open = "w", encoding = "latin1")
+                 open = "w", encoding = "UTF-8")
 
     ## if error  :
     on.exit(if (exists("filename") &&
