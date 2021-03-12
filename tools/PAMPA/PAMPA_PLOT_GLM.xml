@@ -17,7 +17,7 @@
     </command>
     <inputs>
         <param name="input" type="data" format="tabular" label="Input glm results file" help=""/>
-        <param name="datatable" type="data" format="tabular" label="Data table used for glm" help=""/>
+        <param name="datatable" type="data" format="tabular" label="Metrics data table used for glm" help=""/>
         <param name="unitobstable" type="data" format="tabular" label="Unitobs table used for glm" help=""/>
     </inputs>
     <outputs>
