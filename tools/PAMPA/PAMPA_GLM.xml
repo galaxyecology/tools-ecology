@@ -110,6 +110,8 @@ It allows user to choose composition of the model :
 
 - Allocation of random effect on year and/or site
 
+- (optional) Separation factor to compute several GLMs
+
 |
 
 **Input description**
@@ -120,13 +122,13 @@ A tabular file with community data. Must at least contain two or three columns d
 
 - At least one community metric 
 
-+------------------+---------+---------+-----+       
-| observation.unit | metric1 | metric2 | ... |            
-+==================+=========+=========+=====+        
-|   site_yearID    |    2    |   0.4   | ... |            
-+------------------+---------+---------+-----+        
-|        ...       |   ...   |   ...   | ... |       
-+------------------+---------+---------+-----+           
++----------------------+---------+---------+-----+       
+|   observation.unit   | metric1 | metric2 | ... |            
++======================+=========+=========+=====+        
+|   location_yearID    |    2    |   0.4   | ... |            
++----------------------+---------+---------+-----+        
+|          ...         |   ...   |   ...   | ... |       
++----------------------+---------+---------+-----+           
 
 OR
 
@@ -140,15 +142,15 @@ OR
 
 The first input may be extracted from the 'Calculate community metrics' tool.
 
-A tabular file with unitobs or location data which contains at least as much columns as used response variables and separation factor in addition with the 'observation.unit' or 'location' column.
+A tabular file with observation unit data which contains at least as much columns as used response variables and separation factor in addition with the 'observation.unit' column.
 
-+--------------------------------+---------+--------+------------+-----+       
-| observation.unit OR location   |   site  |  year  |  habitat   | ... |            
-+================================+=========+========+============+=====+        
-|  site_yearID     OR locationID | site ID |  2000  | habitatID  | ... |            
-+--------------------------------+---------+--------+------------+-----+        
-|              ...               |   ...   |   ...  |     ...    | ... |       
-+--------------------------------+---------+--------+------------+-----+ 
++----------------------+---------+--------+------------+-----+       
+|   observation.unit   |   site  |  year  |  habitat   | ... |            
++======================+=========+========+============+=====+        
+|    location_yearID   | site ID |  2000  | habitatID  | ... |            
++----------------------+---------+--------+------------+-----+        
+|          ...         |   ...   |   ...  |     ...    | ... |       
++----------------------+---------+--------+------------+-----+ 
 
 The site may represent the same entity as the location or represent an aggregation of several locations
 
@@ -156,11 +158,13 @@ The site may represent the same entity as the location or represent an aggregati
 
 **Output**
 
-Two text files : 
+Three text files : 
 
-- A first text file with GLM results. When a separation factor is selected, one analysis is computed for every level and the last analysis is on the whole dataset.
+- A first tabular file with GLM results. When a separation factor is selected, one analysis is computed for every level and the last analysis is on the whole dataset.
 
 - A second text file with simple statistics on the whole dataset.
+
+- A third text file with ratings of your analysis based on several criterias.
 
 |
 
