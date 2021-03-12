@@ -125,7 +125,7 @@ A tabular file with community data. Must at least contain two or three columns d
 +----------------------+---------+---------+-----+       
 |   observation.unit   | metric1 | metric2 | ... |            
 +======================+=========+=========+=====+        
-|   location_yearID    |    2    |   0.4   | ... |            
+|   year_locationID    |    2    |   0.4   | ... |            
 +----------------------+---------+---------+-----+        
 |          ...         |   ...   |   ...   | ... |       
 +----------------------+---------+---------+-----+           
@@ -147,7 +147,7 @@ A tabular file with observation unit data which contains at least as much column
 +----------------------+---------+--------+------------+-----+       
 |   observation.unit   |   site  |  year  |  habitat   | ... |            
 +======================+=========+========+============+=====+        
-|    location_yearID   | site ID |  2000  | habitatID  | ... |            
+|    year_locationID   | site ID |  2000  | habitatID  | ... |            
 +----------------------+---------+--------+------------+-----+        
 |          ...         |   ...   |   ...  |     ...    | ... |       
 +----------------------+---------+--------+------------+-----+ 
