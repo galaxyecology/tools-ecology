@@ -45,7 +45,7 @@ Calculate community metrics from abundance data
 
 This tool from PAMPA toolsuite computes community metrics from abundance data:
 
-- Specific richness
+- Species richness / alpha diversity
 - Shannon index
 - Simpson index
 - Pielou index
