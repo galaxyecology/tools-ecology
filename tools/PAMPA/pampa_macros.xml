@@ -15,7 +15,7 @@
     </xml>
     <xml name="Plot_requirements">
         <requirements>
-            <requirement type="package" version="3.1.1">r-ggplot2</requirement>
+            <requirement type="package" version="3.3.3">r-ggplot2</requirement>
             <requirement type="package" version="1.3_25">r-boot</requirement>
         </requirements>    
     </xml>
