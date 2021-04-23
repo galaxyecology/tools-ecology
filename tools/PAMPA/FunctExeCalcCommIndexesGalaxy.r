@@ -136,5 +136,5 @@ table_comm_indexes <- create_year_location(table_comm_indexes)
 #Save dataframe in a tabular format
 
 filename_comm <- "TabCommunityIndexes.tabular"
-write.table(table_comm_indexes, filename_comm, row.names = FALSE, sep = "\t", dec = ".", fileEncoding = "UTF-8")
+write.table(table_comm_indexes, filename_comm, row.names = FALSE, quote = FALSE, sep = "\t", dec = ".", fileEncoding = "UTF-8")
 cat(paste("\nWrite table with Community indexes. \n--> \"", filename_comm, "\"\n", sep = ""))
