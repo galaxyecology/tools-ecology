@@ -257,4 +257,4 @@ glm_community <- function(metrique, list_fact, list_rand, fact_ana, distrib, tab
 
 tab <- glm_community(metrique = metric, list_fact = list_fact, list_rand = list_rand, fact_ana = fact_ana, distrib = distrib, tab_metrics = obs, tab_metrique = aggreg, tab_unitobs = tab_unitobs, nb_name = "number")
 
-write.table(tab, "GLMSummary.tabular", row.names = FALSE, sep = "\t", dec = ".", fileEncoding = "UTF-8")
+write.table(tab, "GLMSummary.tabular", row.names = FALSE, quote = FALSE, sep = "\t", dec = ".", fileEncoding = "UTF-8")
