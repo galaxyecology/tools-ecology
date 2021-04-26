@@ -34,7 +34,7 @@
     </command>
     <inputs>
         <expand macro="pampa_input_GLM"/>
-        <param name="sep" type="data_column" data_ref="input_unitobs" force_select="false" label="Separation factor of your analysis from unitobs file" help= "Choose the field of the separation factor, for each level of this factor, one GLM will be computed."/>
+        <param name="sep" type="data_column" data_ref="input_unitobs" use_header_names="true" force_select="false" label="Separation factor of your analysis from unitobs file" help= "Choose the field of the separation factor, for each level of this factor, one GLM will be computed."/>
         <expand macro="pampa_var_GLM"/>
         <conditional name="settings">
             <expand macro="pampa_advanced_params_select_GLM"/>
