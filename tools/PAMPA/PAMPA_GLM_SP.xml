@@ -119,13 +119,13 @@ A tabular file with population data. Must at least contain three or four columns
 
 - At least one population metric 
 
-+------------------+--------------+---------+---------+-----+       
-| observation.unit | species.code | metric1 | metric2 | ... |            
-+==================+==============+=========+=========+=====+        
-|   site_yearID    | species code |    2    |   0.4   | ... |            
-+------------------+--------------+---------+---------+-----+        
-|        ...       |      ...     |   ...   |   ...   | ... |       
-+------------------+--------------+---------+---------+-----+           
++----------------------+--------------+---------+---------+-----+       
+|   observation.unit   | species.code | metric1 | metric2 | ... |            
++======================+==============+=========+=========+=====+        
+|   year_locationID    | species code |    2    |   0.4   | ... |            
++----------------------+--------------+---------+---------+-----+        
+|          ...         |      ...     |   ...   |   ...   | ... |       
++----------------------+--------------+---------+---------+-----+           
 
 OR
 
@@ -139,15 +139,15 @@ OR
 
 The first input may be extracted from the 'Calculate presence absence' tool.
 
-A tabular file with unitobs or location data which contains at least as much columns as used response variables and separation factor in addition with the 'observation.unit' or 'location' and 'species.code' column.
+A tabular file with observation unit data which contains at least as much columns as used response variables in addition with the 'observation.unit' and 'species.code' column.
 
-+--------------------------------+--------------+---------+--------+------------+-----+       
-| observation.unit OR location   | species.code |  site   |  year  |  habitat   | ... |            
-+================================+==============+=========+========+============+=====+        
-|  site_yearID     OR locationID | species code | site ID |  2000  | habitatID  | ... |            
-+--------------------------------+--------------+---------+--------+------------+-----+        
-|              ...               |      ...     |   ...   |   ...  |     ...    | ... |       
-+--------------------------------+--------------+---------+--------+------------+-----+ 
++-------------------+--------------+---------+--------+------------+-----+       
+| observation.unit  | species.code |  site   |  year  |  habitat   | ... |            
++===================+==============+=========+========+============+=====+        
+|  year_locationID  | species code | site ID |  2000  | habitatID  | ... |            
++-------------------+--------------+---------+--------+------------+-----+        
+|        ...        |      ...     |   ...   |   ...  |     ...    | ... |       
++-------------------+--------------+---------+--------+------------+-----+ 
 
 The site may represent the same entity as the location or represent an aggregation of several locations.
 
@@ -155,11 +155,13 @@ The site may represent the same entity as the location or represent an aggregati
 
 **Output**
 
-Two text files : 
+Three text files : 
 
-- A first text file with GLM results. One analysis per species.
+- A first tabular file with GLM results. One analysis per species.
 
 - A second text file with simple statistics on the whole dataset.
+
+- A third text file with ratings of your analysis based on several criterias.
 
 |
 

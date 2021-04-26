@@ -69,5 +69,5 @@ res <- create_year_location(res)
 
 #Save dataframe in a tabular format
 filename_pres_abs <- "TabPresAbs.tabular"
-write.table(res, filename_pres_abs, row.names = FALSE, sep = "\t", dec = ".", fileEncoding = "UTF-8")
+write.table(res, filename_pres_abs, row.names = FALSE, quote = FALSE, sep = "\t", dec = ".", fileEncoding = "UTF-8")
 cat(paste("\nWrite table with presence/absence. \n--> \"", filename_pres_abs, "\"\n", sep = ""))
