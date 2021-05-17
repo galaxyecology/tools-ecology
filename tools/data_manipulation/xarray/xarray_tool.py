@@ -113,7 +113,9 @@ class XarrayTool ():
         if filter_varname == self.select:
             # filter on values of the selected variable
             if op == 'bi':
-                self.dset = self.dset.where((self.dset <= rl) & (self.dset >= ll))
+                self.dset = self.dset.where(
+                     (self.dset <= rl) & (self.dset >= ll)
+                     )
             elif op == 'le':
                 self.dset = self.dset.where(self.dset <= ll)
             elif op == 'ge':
@@ -206,7 +208,9 @@ class XarrayTool ():
         for row in fcoords.itertuples():
             self.latvalN = row[0]
             self.lonvalE = row[1]
-            self.outfile = (self.outputdir + '/' + self.select + '_' + str(row.Index) + '.tabular')
+            self.outfile = (self.outputdir + '/' +
+                            self.select + '_' +
+                            str(row.Index) + '.tabular')
             self.selection()
 
 
