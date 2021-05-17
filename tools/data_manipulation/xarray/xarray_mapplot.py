@@ -7,7 +7,6 @@
 #                               [--time TIMES]
 #                               [--nrow NROW]
 #                               [--ncol NCOL]
-#                               [--format   FORMAT]
 #                               [--title title]
 #                               [--latitude LATITUDE]
 #                               [--longitude LONGITUDE]
@@ -35,12 +34,11 @@
 #  --cmap CMAP      Specify which colormap to use for plotting
 #  --output OUTPUT  output filename to store resulting image (png format)
 #  --time TIMES     time index from the file for multiple plots ("0 1 2 3")
-#  --format         date format such as %Y (for year) %B (for month), etc.
 #  --title          plot or subplot title
-#  --latitude        variable name for latitude 
+#  --latitude        variable name for latitude
 #  --longitude       variable name for longitude
 #  --land            add land on plot with alpha value [0-1]
-#  --ocean           add oceans on plot with alpha value [0-1] 
+#  --ocean           add oceans on plot with alpha value [0-1]
 #  --coastline       add coastline with alpha value [0-1]
 #  --borders         add country borders with alpha value [0-1]
 #  --xlim            limited geographical area longitudes "x1,x2"
@@ -56,21 +54,22 @@ import argparse
 import warnings
 import ast
 from pathlib import Path
+import cartopy.crs as ccrs
+import cartopy.feature as feature
 
+import xarray as xr
 import matplotlib as mpl
 mpl.use('Agg')
 from matplotlib import pyplot  # noqa: I202,E402
 
-import xarray as xr
-import cartopy.crs as ccrs
-import cartopy.feature as feature
-import cftime
 
 class MapPlotXr ():
     def __init__(self, input, proj, varname, cmap, output, verbose=False,
-                 time=[], format="%B %e, %Y",
-                 title="", latitude="latitude", longitude="longitude", land=0, ocean=0, coastline=0, borders=0,
-                 xlim=[], ylim=[], threshold="", label="", shift=False, range_values=[]):
+                 time=[], title="", latitude="latitude",
+                 longitude="longitude", land=0, ocean=0,
+                 coastline=0, borders=0, xlim=[], ylim=[],
+                 threshold="", label="", shift=False,
+                 range_values=[]):
         self.input = input
         self.proj = proj
         self.varname = varname
@@ -89,12 +88,8 @@ class MapPlotXr ():
         self.shift = shift
         self.xylim_supported = False
         self.colorbar = True
-        if format is None:
-            self.format = ""
-        else:
-            self.format = format.replace('X', '%')
-        if title is None:
-            self.title = ""
+        if title is None or self.title == "":
+            self.title = '%(long_name)s'
         else:
             self.title = title
         if output is None:
@@ -103,9 +98,11 @@ class MapPlotXr ():
             self.output = output
         self.verbose = verbose
         self.dset = xr.open_dataset(self.input, use_cftime=True)
-        
+
         if label == "" or label is None:
-            self.label = self.dset[self.varname].standard_name + ' [' + self.dset[self.varname].units + ']'
+            self.label = self.dset[self.varname].standard_name + \
+                            ' [' + \
+                            self.dset[self.varname].units + ']'
         else:
             self.label = label
         if verbose:
@@ -116,7 +113,6 @@ class MapPlotXr ():
             print("time: ", self.time)
             print("minval, maxval: ", self.range)
             print("title: ", self.title)
-            print("date format: ", self.format)
             print("output: ", self.output)
             print("label: ", self.label)
             print("shift: ", self.shift)
@@ -125,14 +121,12 @@ class MapPlotXr ():
             print("coastline: ", self.coastline)
             print("borders: ", self.borders)
 
-     
     def projection(self):
-        
         if self.proj is None:
             return ccrs.PlateCarree()
-        
+
         proj_dict = ast.literal_eval(self.proj)
-        
+
         user_proj = proj_dict.pop("proj")
         if user_proj == 'PlateCarree':
             self.xylim_supported = True
@@ -203,38 +197,33 @@ class MapPlotXr ():
             return ccrs.OSNI(**proj_dict)
         elif user_proj == 'SouthPolarStereo':
             return ccrs.SouthPolarStereo(**proj_dict)
-     
-        
-    def plot(self, ts=None):
-        if self.title and self.format:
-            title = self.title + "\n" + self.format
-        elif not self.title and self.format:
-            title = self.format
-        elif self.title and not self.format:
-            title = self.title
-        else:
-            title = '%(long_name)s'
 
+    def plot(self, ts=None):
         if self.shift:
             if self.longitude == 'longitude':
-                self.dset = self.dset.assign_coords(longitude=(((self.dset[self.longitude] + 180) % 360) - 180))
+                self.dset = self.dset.assign_coords(
+                                 longitude=(((
+                                        self.dset[self.longitude]
+                                        + 180) % 360) - 180))
             elif self.longitude == 'lon':
-                self.dset = self.dset.assign_coords(lon=(((self.dset[self.lon] + 180) % 360) - 180))
-                
-        fig = pyplot.figure(1, figsize=[20,10])
+                self.dset = self.dset.assign_coords(
+                                 lon=(((self.dset[self.lon]
+                                        + 180) % 360) - 180))
+
+        pyplot.figure(1, figsize=[20, 10])
 
         # Set the projection to use for plotting
         ax = pyplot.subplot(1, 1, 1, projection=self.projection())
         if self.land:
             ax.add_feature(feature.LAND, alpha=self.land)
-        
+
         if self.ocean:
             ax.add_feature(feature.OCEAN, alpha=self.ocean)
         if self.coastline:
             ax.coastlines(resolution='10m', alpha=self.coastline)
         if self.borders:
             ax.add_feature(feature.BORDERS, linestyle=':', alpha=self.borders)
-    
+
         if self.xlim:
             min_lon = min(self.xlim[0], self.xlim[1])
             max_lon = max(self.xlim[0], self.xlim[1])
@@ -247,47 +236,70 @@ class MapPlotXr ():
             max_lat = max(self.ylim[0], self.ylim[1])
         else:
             min_lat = self.dset[self.latitude].min()
-            max_lat = self.dset[self.latitude].max()  
-        
+            max_lat = self.dset[self.latitude].max()
+
         if self.xylim_supported:
             pyplot.xlim(min_lon, max_lon)
             pyplot.ylim(min_lat, max_lat)
-        
+
         # Fix extent
         if self.threshold == "" or self.threshold is None:
             threshold = self.dset[self.varname].min()
         else:
             threshold = float(self.threshold)
-                        
+
         if self.range == []:
-            minval = self.dset[self.varname].min()     
-            maxval = self.dset[self.varname].max()   
+            minval = self.dset[self.varname].min()
+            maxval = self.dset[self.varname].max()
         else:
             minval = self.range[0]
             maxval = self.range[1]
-        
+
         if self.verbose:
             print("minval: ", minval)
             print("maxval: ", maxval)
-            
+
         # pass extent with vmin and vmax parameters
+        proj_t = ccrs.PlateCarree()
         if ts is None:
-            self.dset.where(self.dset[self.varname] > threshold)[self.varname].plot(ax=ax, vmin=minval, vmax=maxval, transform=ccrs.PlateCarree(),\
-                   cmap=self.cmap, cbar_kwargs={'label': self.label})
+            self.dset.where(
+                 self.dset[self.varname] > threshold
+                 )[self.varname].plot(ax=ax,
+                                      vmin=minval,
+                                      vmax=maxval,
+                                      transform=proj_t,
+                                      cmap=self.cmap,
+                                      cbar_kwargs={
+                                         'label': self.label
+                                      })
             pyplot.title(self.title)
             pyplot.savefig(self.output)
         else:
             if self.colorbar:
-                self.dset.where(self.dset[self.varname] > minval)[self.varname].isel(time=ts).plot(ax=ax, vmin=minval, vmax=maxval, \
-                                                                                                   transform=ccrs.PlateCarree(), cmap=self.cmap, \
-                                                                                                   cbar_kwargs={'label': self.label})
+                self.dset.where(
+                     self.dset[self.varname] > threshold
+                     )[self.varname].isel(time=ts).plot(ax=ax,
+                                                        vmin=minval,
+                                                        vmax=maxval,
+                                                        transform=proj_t,
+                                                        cmap=self.cmap,
+                                                        cbar_kwargs={
+                                                          'label': self.label
+                                                        })
             else:
-                self.dset.where(self.dset[self.varname] > minval)[self.varname].isel(time=ts).plot(ax=ax, vmin=minval, vmax=maxval, \
-                                                                                                   transform=ccrs.PlateCarree(), cmap=self.cmap, \
-                                                                                                   add_colorbar=False)
+                self.dset.where(
+                     self.dset[self.varname] > minval
+                     )[self.varname].isel(time=ts).plot(ax=ax,
+                                                        vmin=minval,
+                                                        vmax=maxval,
+                                                        transform=proj_t,
+                                                        cmap=self.cmap,
+                                                        add_colorbar=False)
             pyplot.title(self.title + "(time = " + str(ts) + ')')
-            pyplot.savefig(self.output[:-4] + "_time" + str(ts) + self.output[-4:]) # assume png format
-        
+            pyplot.savefig(self.output[:-4] + "_time" + str(ts) +
+                           self.output[-4:])  # assume png format
+
+
 if __name__ == '__main__':
     warnings.filterwarnings("ignore")
     parser = argparse.ArgumentParser()
@@ -317,10 +329,6 @@ if __name__ == '__main__':
         help='list of times to plot for multiple plots'
     )
     parser.add_argument(
-        '--format',
-        help='format for date/time (default is Month d, yyyy)'
-    )
-    parser.add_argument(
         '--title',
         help='plot title'
     )
@@ -339,7 +347,7 @@ if __name__ == '__main__':
     parser.add_argument(
         '--ocean',
         help='add oceans on plot with alpha value [0-1]'
-    ) 
+    )
     parser.add_argument(
         '--coastline',
         help='add coastline with alpha value [0-1]'
@@ -382,7 +390,7 @@ if __name__ == '__main__':
     if args.time is None:
         time = []
     else:
-        time = list(map(int, args.time.split(",")))        
+        time = list(map(int, args.time.split(",")))
     if args.xlim is None:
         xlim = []
     else:
@@ -390,11 +398,11 @@ if __name__ == '__main__':
     if args.ylim is None:
         ylim = []
     else:
-        ylim = list(map(float, args.ylim.split(",")))       
+        ylim = list(map(float, args.ylim.split(",")))
     if args.range is None:
         range_values = []
     else:
-        range_values = list(map(float, args.range.split(",")))   
+        range_values = list(map(float, args.range.split(",")))
     if args.latitude is None:
         latitude = "latitude"
     else:
@@ -410,26 +418,29 @@ if __name__ == '__main__':
     if args.ocean is None:
         ocean = 0
     else:
-        ocean = float(args.ocean)    
+        ocean = float(args.ocean)
     if args.coastline is None:
         coastline = 0
     else:
-        coastline = float(args.coastline) 
+        coastline = float(args.coastline)
     if args.borders is None:
         borders = 0
     else:
-        borders = float(args.borders) 
-   
-    dset = MapPlotXr(input=args.input, proj=args.proj,varname=args.varname, cmap=args.cmap,
-                output=args.output, verbose=args.verbose, time=time,
-                format=args.format, title=args.title, latitude=latitude, longitude=longitude,
-                land=land, ocean=ocean, coastline=coastline, borders=borders,
-                xlim=xlim, ylim=ylim, threshold=args.threshold, label=args.label, shift=args.shift, range_values=range_values)
+        borders = float(args.borders)
 
-    if dset.time  == []:
+    dset = MapPlotXr(input=args.input, proj=args.proj, varname=args.varname,
+                     cmap=args.cmap, output=args.output, verbose=args.verbose,
+                     time=time, title=args.title,
+                     latitude=latitude, longitude=longitude, land=land,
+                     ocean=ocean, coastline=coastline, borders=borders,
+                     xlim=xlim, ylim=ylim, threshold=args.threshold,
+                     label=args.label, shift=args.shift,
+                     range_values=range_values)
+
+    if dset.time == []:
         dset.plot()
     else:
         for t in dset.time:
             dset.plot(t)
-            dset.shift = False # only shift once
-            dset.colorbar=False
+            dset.shift = False   # only shift once
+            dset.colorbar = False
