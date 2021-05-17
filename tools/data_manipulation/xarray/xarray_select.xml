@@ -284,7 +284,7 @@ A netcdf file (.nc).
 
 Variable tabular file from 'Netcdf Metadate Info'.
 
-Tabular file with coordinates and the following structure : 'lat'	'lon'.
+Tabular file with coordinates (only coordinates, no header!) and the following structure : 'lat'	'lon'.
 
 
 **Outputs**
