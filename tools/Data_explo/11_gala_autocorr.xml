@@ -1,0 +1,72 @@
+<tool id="tool_autocorr" name="Auto-correlation" version="0.0">
+    <description>Show if there is auto-correlation</description>
+    <macros>
+        <import>macro.xml</import>
+    </macros>
+    <expand macro="Explo_requirements"/>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript
+            '$__tool_directory__/Exe11_autocorr.r'
+            '$input'
+            '$variable'
+            '$separator'
+            '$decimal'
+            '$colnames'
+            '$output'
+        ]]>
+        </command>
+        <inputs>
+            <param name="input" type="data" format="txt" label="Input table"/>
+            <param name="variable" label="Select column containing numerical values " type="data_column" data_ref="input" numerical="True" multiple="False"/>
+            <param name="separator" type="text" label="What character is he separator in your dataframe?"/>
+            <param name="decimal" type="text" label="What character marks the decimal in your dataframe?"/>
+            <param name="colnames" type="boolean" label="The first line of your dataframe represents the names of columns ?"/>
+        </inputs>
+        <outputs>
+                <data name="output" from_work_dir="autocorr.png" format="png"/>
+        </outputs>
+        <tests>
+            <test>
+                <param name="input" value="Reel_life_survey_fish_modif2.csv"/>
+                <param name="variable" value="18"/>
+                <param name="separator" value=","/>
+                <param name="decimal" value="."/>
+                <param name="colnames" value="true"/>
+                <output name="output" ftype="png">
+                    <assert_contents>
+                        <has_text text="PNG"/>
+                    </assert_contents>
+                </output>
+            </test>
+        </tests>
+        <expand macro="topic"/>
+        <help><![CDATA[
+==========================
+Calculate Auto-correlation
+==========================
+
+**What it does**
+This tool computes the autocorrelation of a numerical variable:
+- Computes a graph
+
+**Input description**
+A tabular file with observation data. Must at least contain three columns
+whith one numerical variable
+
++------------+
+|   number   |
++============+
+|      4     |
++------------+
+|     ...    |
++------------+
+
+**Output**
+A png file with one graph showing if we have autocorrelation for a variable, if so the bars of the histogram are between the dashed lines (95% confidence intervalle without white noise).
+|
+
+**HELP**
+    ]]></help>
+<expand macro="Explo_bibref"/>   
+            
+</tool>

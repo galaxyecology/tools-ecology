@@ -1,0 +1,37 @@
+<macros>
+    <token name="@VERSION@">0.0.0</token>
+    <xml name="Explo_requirements">
+        <requirements>
+           <requirement type="package" version="3.3.3">r-ggplot2</requirement>   
+        </requirements>
+    </xml>
+
+    <xml name="Explo_bibref">
+       <citations>
+            <citation type="bibtex">
+            @unpublished{
+            title={ A protocol for data exploration to avoid common statistical problems },
+            authors={Alain F. Zuur,  Elena N. Ieno,  Chris S. Elphick},
+            url={https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/j.2041-210X.2009.00001.x}
+            }
+            </citation>
+        </citations>
+    </xml>
+    <xml name="Book_bibref">
+        <citations>
+            <citation type="bibtex">
+            @unpublished{
+            title={ Numerical Ecology with R },
+            author={Daniel Borcard, François Gillet, Pierre Legendre},
+            }
+            </citation>
+        </citations>
+    </xml>
+    <xml name="topic">
+        <edam_topics>
+           <edam_topic>topic_0610</edam_topic>
+           <edam_topic>topic_3050</edam_topic>
+        </edam_topics>
+    </xml>
+</macros>
+
