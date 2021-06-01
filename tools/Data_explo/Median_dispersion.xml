@@ -1,0 +1,83 @@
+<tool id="tool_median_and_dispersion" name="Median and dispersion" version="@VERSION@" profile = "20.01">
+    <description>Calculate the median and the dispersion</description>
+    <macros>
+        <import>macro.xml</import>
+    </macros>
+    <requirements> 
+        <requirement type="package" version="1.1.1">r-cowplot</requirement>
+        <requirement type="package" version="3.3.3">r-ggplot2</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript
+            '$__tool_directory__/GraphMedian_dispersion.r'
+            '$input'
+            '$variable1'
+            '$variable2'
+            '$colnames'
+            '$output_MD'
+        ]]>
+        </command>
+        <inputs>
+            <param name="input" type="data" format="tabular" label="Input table"/>
+            <param name="variable1" label="Select column containing numerical values " type="data_column" data_ref="input" numerical="True" multiple="False"/>
+            <param name="variable2" label="Select column" type="data_column" data_ref="input" multiple="False"/>
+            <param name="colnames" type="boolean" label="The first line of your dataframe represents the names of columns ?"/>
+        </inputs>
+        <outputs>
+            <data name="output_MD" from_work_dir="Med_Disp.png" format="png"/>
+        </outputs>
+        <tests>
+            <test>
+                <param name="input" value="Reel_life_survey_fish_modif2.tabular"/>
+                <param name="variable1" value="18"/>
+                <param name="variable2" value="15"/>
+                <param name="colnames" value="true"/>
+                <output name="output_MD" ftype="png">
+                    <assert_contents>
+                        <has_text text="PNG"/>
+                    </assert_contents>
+                </output>
+            </test>
+            <test>
+                <param name="input" value="data_FrenchBBS.tabular"/>
+                <param name="variable1" value="4"/>
+                <param name="variable2" value="3"/>
+                <param name="colnames" value="true"/>
+                <output name="output_MD" ftype="png">
+                    <assert_contents>
+                        <has_text text="PNG"/>
+                    </assert_contents>
+                </output>
+            </test>
+        </tests>
+        <expand macro="topic"/>
+        <help><![CDATA[
+=======================================
+Calculate the Median and the dispersion
+=======================================
+
+**What it does**
+This tool computes the median of an numerical value (like the abundance) and shows he disperion of this value according to a variable such as sites or species or others:
+- Traces 2 graph
+
+**Input description**
+A tabular file with observation data. Must at least contain two columns
+which associate a numerical value with another variable.
+
++--------------+------------+
+|   variable   |   number   |
++==============+============+
+|   speciesID  |      4     |
++--------------+------------+
+|      ...     |     ...    |
++--------------+------------+
+
+**Output**
+A png file with two graphics one under the other with one for the median and one for the dispersion
+|
+
+
+    ]]></help>
+<expand macro="explo_bibref"/>               
+            
+</tool>

@@ -19,16 +19,14 @@ if(length(args)< 2)
 	long <- as.numeric(args[3])
 	abond <- as.numeric(args[4])
         ind <- as.character(args[5])
-	sep <- as.character(args[6])
-	dec <- as.character(args[7])
-	HR <- args[8]
+	HR <- args[6]
 	
 }
 
 if (HR == "false"){HR <- FALSE} else {HR <- TRUE}
-if(sep=="Xt"){sep <- "\t"}
+
 #####Import data
-Data <- read.table(Table, sep = sep, dec = dec, header = HR, fill = TRUE, encoding = "UTF-8")
+Data <- read.table(Table, sep = "\t", dec = ".", header = HR, fill = TRUE, encoding = "UTF-8")
 collat <- colnames(Data)[lat]
 collong <- colnames(Data)[long]
 colabond <- colnames(Data)[abond]

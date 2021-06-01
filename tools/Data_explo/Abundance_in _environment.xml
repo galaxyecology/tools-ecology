@@ -29,7 +29,7 @@
         </outputs>
         <tests>
             <test>
-                <param name="input" value="Reel_life_survey_fish_modif.csv"/>
+                <param name="input" value="Reel_life_survey_fish_modif.tabular"/>
                 <param name="latitude" value="9"/>
                 <param name="longitude" value="10"/>
                 <param name="abundance" value="18"/>
@@ -41,7 +41,7 @@
                 </output>
             </test>
             <test>
-                <param name="input" value="Reef_Life_Survey_Invertebrates_mp.csv"/>
+                <param name="input" value="Reef_Life_Survey_Invertebrates_mp.tabular"/>
                 <param name="latitude" value="9"/>
                 <param name="longitude" value="10"/>
                 <param name="abundance" value="18"/>

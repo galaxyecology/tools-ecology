@@ -27,7 +27,7 @@
         </outputs>
         <tests>
             <test>
-                <param name="input" value="Reel_life_survey_fish_modif2.csv"/>
+                <param name="input" value="Reel_life_survey_fish_modif2.tabular"/>
                 <param name="variable" value="18"/>
                 <param name="colnames" value="true"/>
                 <output name="output_ND" ftype="png">
@@ -37,7 +37,7 @@
                 </output>
             </test>
             <test>
-                <param name="input" value="Reef_Life_Survey_Invertebrates_mp.csv"/>
+                <param name="input" value="Reef_Life_Survey_Invertebrates_mp.tabular"/>
                 <param name="variable" value="18"/>
                 <param name="colnames" value="true"/>
                 <output name="output_ND" ftype="png">

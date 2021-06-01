@@ -16,15 +16,13 @@ if(length(args)==0)
 }else{
     Table <- args[1]
 	var <- as.numeric(args[2])
-	sep <- as.character(args[3])
-	dec <- as.character(args[4])
-	HR <- args[5]
+	HR <- args[3]
 }
 
 if (HR == "false"){HR <- FALSE} else {HR <- TRUE}
 
 #####Import data
-Data <- read.table(Table, sep = sep, dec = dec, header = HR, fill = TRUE, encoding = "UTF-8")
+Data <- read.table(Table, sep = "\t", dec = ".", header = HR, fill = TRUE, encoding = "UTF-8")
 colvar <- colnames(Data)[var]
 
 
