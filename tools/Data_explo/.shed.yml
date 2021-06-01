@@ -56,3 +56,4 @@ repositories:
       - macro.xml
       - GraphHomogeneity_variance.r
       - test-data/data_FrenchBBS.tabular
+      - test-data/test_bbs2.txt
