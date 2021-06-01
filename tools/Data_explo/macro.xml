@@ -6,7 +6,7 @@
         </requirements>
     </xml>
 
-    <xml name="Explo_bibref">
+    <xml name="explo_bibref">
        <citations>
             <citation type="bibtex">
             @unpublished{
@@ -17,7 +17,7 @@
             </citation>
         </citations>
     </xml>
-    <xml name="Book_bibref">
+    <xml name="book_bibref">
         <citations>
             <citation type="bibtex">
             @unpublished{

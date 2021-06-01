@@ -1,0 +1,68 @@
+<tool id="tool_autocorr" name="Calculate self correlation" version="@VERSION@" profile = "20.01">
+    <description>Show if there is auto-correlation</description>
+    <macros>
+        <import>macro.xml</import>
+    </macros>
+    <expand macro="Explo_requirements"/>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript
+            '$__tool_directory__/GraphAutocorrelation.r'
+            '$input'
+            '$variable'
+            '$colnames'
+            '$output'
+        ]]>
+        </command>
+        <inputs>
+            <param name="input" type="data" format="tabular" label="Input table"/>
+            <param name="variable" label="Select column containing numerical values " type="data_column" data_ref="input" numerical="True" multiple="False"/>
+            <param name="colnames" type="boolean" label="The first line of your dataframe represents the names of columns ?"/>
+        </inputs>
+        <outputs>
+                <data name="output" from_work_dir="autocorr.png" format="png"/>
+        </outputs>
+        <tests>
+            <test>
+                <param name="input" value="Reel_life_survey_fish_modif2.csv"/>
+                <param name="variable" value="18"/>
+                <param name="colnames" value="true"/>
+                <output name="output" ftype="png">
+                    <assert_contents>
+                        <has_text text="PNG"/>
+                    </assert_contents>
+                </output>
+            </test>
+        </tests>
+        <expand macro="topic"/>
+        <help><![CDATA[
+==========================
+Calculate Auto-correlation
+==========================
+
+**What it does**
+This tool computes the autocorrelation of a numerical variable:
+
+- Computes a graph
+
+**Input description**
+A tabular file with observation data. Must at least contain three columns
+whith one numerical variable
+
++------------+
+|   number   |
++============+
+|      4     |
++------------+
+|     ...    |
++------------+
+
+**Output**
+A png file with one graph showing if we have autocorrelation for a variable, if so the bars of the histogram are between the dashed lines (95% confidence intervalle without white noise) as shwon on the following image.
+
+
+.. image::Autocorr.png
+
+    ]]></help>
+<expand macro="explo_bibref"/>   
+            
+</tool>
