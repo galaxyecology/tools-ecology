@@ -16,8 +16,8 @@ repositories:
       - Abundance_in _environment.xml
       - macro.xml
       - GraphAbundance_in _environment.r
-      - test-data/Reel_life_survey_fish_modif.csv
-      - test-data/Reef_Life_Survey_Invertebrates_mp.csv
+      - test-data/Reel_life_survey_fish_modif.tabular
+      - test-data/Reef_Life_Survey_Invertebrates_mp.tabular
       
   tool_normality:
     description: Show the distribution and check its normality
@@ -26,8 +26,8 @@ repositories:
       - Normality_distribution.xml
       - macro.xml
       - GraphNormality_distribution.r
-      - test-data/Reel_life_survey_fish_modif2.csv
-      - test-data/Reef_Life_Survey_Invertebrates_mp.csv
+      - test-data/Reel_life_survey_fish_modif2.tabular
+      - test-data/Reef_Life_Survey_Invertebrates_mp.tabular
       
   tool_autocorr:
     description: Show if there is auto-correlation
@@ -36,5 +36,23 @@ repositories:
       - Autocorrelation.xml
       - macro.xml
       - GraphAutocorrelation.r
-      - test-data/Reel_life_survey_fish_modif2.csv
+      - test-data/Reel_life_survey_fish_modif2.tabular
+      
+  tool_median_and_dispersion:
+    description: Calculate the median and the dispersion
+    owner: ecology
+    include:
+      - Median_dispersion.xml
+      - macro.xml
+      - GraphMedian_dispersion.r
+      - test-data/Reel_life_survey_fish_modif2.tabular
+      - test-data/data_FrenchBBS.tabular
 
+  tool_homogeneity:
+    description: Show the homogeneity of the variance
+    owner: ecology
+    include:
+      - Homogeneity_variance.xml
+      - macro.xml
+      - GraphHomogeneity_variance.r
+      - test-data/data_FrenchBBS.tabular
