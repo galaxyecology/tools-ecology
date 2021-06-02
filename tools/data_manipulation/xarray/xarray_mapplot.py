@@ -88,7 +88,7 @@ class MapPlotXr ():
         self.shift = shift
         self.xylim_supported = False
         self.colorbar = True
-        if title is None or self.title == "":
+        if title is None or title == "":
             self.title = '%(long_name)s'
         else:
             self.title = title
@@ -120,6 +120,8 @@ class MapPlotXr ():
             print("land: ", self.land)
             print("coastline: ", self.coastline)
             print("borders: ", self.borders)
+            print("latitude: ", self.latitude)
+            print("longitude: ", self.longitude)
 
     def projection(self):
         if self.proj is None:
@@ -207,7 +209,7 @@ class MapPlotXr ():
                                         + 180) % 360) - 180))
             elif self.longitude == 'lon':
                 self.dset = self.dset.assign_coords(
-                                 lon=(((self.dset[self.lon]
+                                 lon=(((self.dset[self.longitude]
                                         + 180) % 360) - 180))
 
         pyplot.figure(1, figsize=[20, 10])
