@@ -51,16 +51,18 @@
 #
 
 import argparse
-import warnings
 import ast
+import warnings
 from pathlib import Path
+
 import cartopy.crs as ccrs
 import cartopy.feature as feature
 
-import xarray as xr
 import matplotlib as mpl
 mpl.use('Agg')
 from matplotlib import pyplot  # noqa: I202,E402
+
+import xarray as xr  # noqa: E402
 
 
 class MapPlotXr ():
