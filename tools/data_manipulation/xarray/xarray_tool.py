@@ -144,18 +144,20 @@ class XarrayTool ():
                 self.filter_selection()
 
         self.area_selection()
-        if self.gset.count()>1:
-        # convert to dataframe if several rows and cols
-            self.gset = self.gset.to_dataframe().dropna(how='all').reset_index()
+        if self.gset.count() > 1:
+            # convert to dataframe if several rows and cols
+            self.gset = self.gset.to_dataframe().dropna(how='all'). \
+                        reset_index()
             self.gset.to_csv(self.outfile, header=True, sep='\t')
         else:
             data = {
-                self.latname : [self.gset[self.latname].values],
-                self.lonname : [self.gset[self.lonname].values],
-                self.select : [self.gset.values]
+                self.latname: [self.gset[self.latname].values],
+                self.lonname: [self.gset[self.lonname].values],
+                self.select: [self.gset.values]
             }
 
-            df = pd.DataFrame(data, columns= [self.latname, self.lonname, self.select])
+            df = pd.DataFrame(data, columns=[self.latname, self.lonname,
+                                             self.select])
             df.to_csv(self.outfile, header=True, sep='\t')
 
     def datetime_selection(self):
@@ -178,7 +180,7 @@ class XarrayTool ():
             self.rowfilter(single_filter)
 
     def area_selection(self):
-        
+
         if self.latvalS != "" and self.lonvalW != "":
             # Select geographical area
             self.gset = self.dset.sel({self.latname:
@@ -191,7 +193,8 @@ class XarrayTool ():
                 self.nearest_latvalN = self.latvalN
                 self.nearest_lonvalE = self.lonvalE
             else:
-                self.nearest_location()  # find nearest location without NaN values
+                # find nearest location without NaN values
+                self.nearest_location()
             self.gset = self.dset.sel({self.latname: self.nearest_latvalN,
                                        self.lonname: self.nearest_lonvalE},
                                       method='nearest')
@@ -305,7 +308,8 @@ if __name__ == '__main__':
     )
     parser.add_argument(
         "--no_missing",
-        help="Do not take into account possible null/missing values (only valid for single location)",
+        help="""Do not take into account possible null/missing values
+                (only valid for single location)""",
         action="store_true"
     )
     args = parser.parse_args()
