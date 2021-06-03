@@ -1,0 +1,200 @@
+<tool id="xarray_mapplot" name="NetCDF xarray map plotting" version="0.18.2">
+    <description>Visualize netCDF variables on a geographical map</description>
+    <requirements>
+        <requirement type="package" version="3">python</requirement>
+        <requirement type="package" version="1.5.6">netcdf4</requirement>
+        <requirement type="package" version="0.18.2">xarray</requirement>
+        <requirement type="package" version="0.19.0">cartopy</requirement>
+        <requirement type="package" version="3.4.2">matplotlib</requirement>
+        <requirement type="package" version="1.2">cmcrameri</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+    mkdir output_dir &&
+    echo "Galaxy xarray version @VERSION@" > output_dir/version.txt &&
+    python '$__tool_directory__/xarray_mapplot.py' '$input' '$var'
+    #if $time!=""
+         --time="$time"
+    #end if
+         --latitude="$lat_dim"
+         --longitude="$lon_dim"
+    #if $colorbar_label!=""
+         --label="$colorbar_label"
+    #end if
+    #if $title!=""
+         --title=$title
+    #end if
+    #if $cmap!=""
+         --cmap="$cmap"
+    #end if
+    #if $proj!=""
+         --proj="$proj"
+    #end if
+    #if $land!=""
+         --land="$land"
+    #end if
+    #if $ocean!=""
+         --ocean="$ocean"
+    #end if
+    #if $coastline!=""
+         --coastline="$coastline"
+    #end if
+    #if $borders!=""
+         --borders="$borders"
+    #end if
+    #if $threshold!=""
+         --threshold="$threshold"
+    #end if
+    #if $range!=""
+         --range="$range"
+    #end if
+    #if $xlim!=""
+         --xlim="$xlim"
+    #end if
+    #if $ylim!=""
+         --ylim="$ylim"
+    #end if
+    #if $shift!=""
+         --shift
+    #end if
+           --verbose &&
+    mv *.png output_dir
+    ]]></command>
+    <inputs>
+        <param type="data" name="input" label="Input netcdf file" format="netcdf"/>
+        <param type="data" label="Tabular of variables" name="var_tab" format="tabular" help="Select the tabular file which summarize the available variables and dimensions."/>
+
+        <param name="var" type="select" label="Choose the variable to extract">
+            <options from_dataset="var_tab">
+                <column name="name" index="0"/>
+                <column name="value" index="0"/>
+            </options>
+        </param>
+        <param name="lat_dim" type="select" label="Name of latitude coordinate" >
+            <options from_dataset="var_tab">
+                <column name="value" index="0"/>
+            </options>
+        </param>
+        <param name="lon_dim" type="select" label="Name of longitude coordinate" >
+            <options from_dataset="var_tab">
+                <column name="value" index="0"/>
+            </options>
+        </param>
+        <param name="xlim" type="text" value="" label="longitudes values 'lonW,lonE' for limited geographical area (only available with some projections)" />
+        <param name="ylim" type="text" value="" label="latitudes values 'latS,latN' for limited geographical area (only available with some projections)" />
+        <param name="shift" type="select" display="radio" label="Shift longitudes [0,360] --> [-180,180]"> 
+             <option value="" selected="true">No</option>
+             <option value="Yes">Yes</option>
+        </param>
+        <param name="range" type="text" value="" label="Range of values for plotting e.g. minimum value abd maximum value (minval,maxval) (optional)" />
+        <param name="threshold" type="text" value="" label="Do not plot values below this threshold (optional)" />
+        <param name="borders" type="text" value="" label="Add country borders with alpha value [0-1] (optional)" />
+        <param name="coastline" type="text" value="" label="Add coastline with alpha value [0-1] (optional)" />
+        <param name="ocean" type="text" value="" label="Add ocean with alpha value [0-1] (optional)" />
+        <param name="land" type="text" value="" label="Add land with alpha value [0-1] (optional)" />
+        <param name="title" type="text" value="" label="Specify plot title (optional)" />
+        <param name="colorbar_label" type="text" value="" label="Set a label for colormap (optional)" />
+        <param name="cmap" type="text" value="" label="Specify which colormap to use for plotting (optional)" />
+        <param name="proj" type="text" value="" label="Specify the projection (proj4) on which we draw e.g. {'proj':'PlateCarree'} (optional)" />
+
+    </inputs>
+    <outputs>
+        <collection type="list" name="output_dir" label="Map plots">
+            <discover_datasets pattern="__name_and_ext__" directory="output_dir"/>
+        </collection>
+    </outputs>
+    <tests>
+        <test>
+             <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
+             <param name="var" value="phy"/>
+             <param name="var_tab" value="var_tab_dataset-ibi"/>
+             <conditional name="condi_source_coord">
+                 <param name="coord_source" value="coord_from_stdin"/>
+                  <conditional name="condi_coord">
+                    <param name="coord" value="single"/>
+                    <param name="lat_dim" value="latitude"/>
+                    <param name="lat_val" value="44.0"/>
+                    <param name="lon_dim" value="longitude"/>
+                    <param name="lon_val" value="-2.0"/>
+                  </conditional>
+             </conditional>
+             <output name="simpleoutput" value="Test1.tabular">
+                 <assert_contents>
+                     <has_text_matching expression="0\t2002-12-15\t0.5"/>
+                     <has_text_matching expression="144\t2014-12-15\t0.5"/>
+                 </assert_contents>
+             </output>
+        </test>
+        <test>
+             <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
+             <param name="var_tab" value="var_tab_dataset-ibi"/>
+             <param name="var" value="nh4"/>
+
+             <conditional name="condi_source_coord">
+                 <param name="coord_source" value="coord_from_stdin"/>
+                  <conditional name="condi_coord">
+                    <param name="coord" value="global"/>
+                  </conditional>
+             </conditional>
+             <section name="time">
+                 <conditional name="condi_datetime">
+                     <param name="datetime" value="yes"/>
+                     <conditional name="condi_between">
+                         <param name="comparator" value="sl"/>
+                         <param name="t1" value="2003-12-15" />
+                         <param name="t2" value="2004-12-15" />
+                     </conditional>
+                 </conditional>
+             </section>
+             <repeat name="user_choice">
+                 <param name="dim" value="nh4"/>
+                 <conditional name="condi_between">
+                    <param name="comparator" value="ge"/>
+                    <param name="value" value="50."/>
+                 </conditional>
+             </repeat>
+             <output name="simpleoutput" value="Test2.tabular">
+                 <assert_contents>
+                     <has_text_matching expression="0\t2003-12-15\t0.5"/>
+                     <has_text_matching expression="23\t2004-12-15\t0.5"/>
+                 </assert_contents>
+             </output>
+        </test>
+    </tests>
+    <edam_topics>
+       <edam_topic>topic_0610</edam_topic>
+       <edam_topic>topic_3050</edam_topic>
+    </edam_topics>
+    <help><![CDATA[
+**What it does**
+
+This tool extracts variable values with custom conditions on dimensions.
+
+It can use manualy given coordinates or automaticaly take them from a tabular file to filter informations.
+
+If no values are availables at a coordinate X, the tool will search the closest coordinate with a non NA value.
+
+Filter can be set on every dimension. Available filtering operations are : =, >, <, >=, <=, [interval], ]interval[.
+
+
+
+**Input**
+
+A netcdf file (.nc).
+
+Variable tabular file from 'Netcdf Metadate Info'.
+
+Tabular file with coordinates (only coordinates, no header!) and the following structure : 'lat'	'lon'.
+
+
+**Outputs**
+
+A single output with values for the wanted variable if there is only one coordinate.
+
+A data collection where one file is created for every coordinate, if multiple coordinates from tabular file.
+
+
+-------------------------------------------------
+
+The xarray select tool can be used after the xarray Info.
+    ]]></help>
+</tool>
