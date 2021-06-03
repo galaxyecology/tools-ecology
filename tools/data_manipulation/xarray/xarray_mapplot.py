@@ -90,10 +90,7 @@ class MapPlotXr ():
         self.shift = shift
         self.xylim_supported = False
         self.colorbar = True
-        if title is None or title == "":
-            self.title = '%(long_name)s'
-        else:
-            self.title = title
+        self.title = title
         if output is None:
             self.output = Path(input).stem + '.png'
         else:
@@ -102,7 +99,7 @@ class MapPlotXr ():
         self.dset = xr.open_dataset(self.input, use_cftime=True)
 
         if label == "" or label is None:
-            self.label = self.dset[self.varname].standard_name + \
+            self.label = self.dset[self.varname].long_name + \
                             ' [' + \
                             self.dset[self.varname].units + ']'
         else:
@@ -276,7 +273,8 @@ class MapPlotXr ():
                                       cbar_kwargs={
                                          'label': self.label
                                       })
-            pyplot.title(self.title)
+            if self.title != "" and self.title is not None:
+                pyplot.title(self.title)
             pyplot.savefig(self.output)
         else:
             if self.colorbar:
@@ -299,7 +297,8 @@ class MapPlotXr ():
                                                         transform=proj_t,
                                                         cmap=self.cmap,
                                                         add_colorbar=False)
-            pyplot.title(self.title + "(time = " + str(ts) + ')')
+            if self.title != "" and self.title is not None:
+                pyplot.title(self.title + "(time = " + str(ts) + ')')
             pyplot.savefig(self.output[:-4] + "_time" + str(ts) +
                            self.output[-4:])  # assume png format
 
