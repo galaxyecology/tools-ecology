@@ -40,6 +40,9 @@
            --latvalN $condi_source_coord.condi_coord.lat_val
            --lonname $condi_source_coord.condi_coord.lon_dim
            --lonvalE $condi_source_coord.condi_coord.lon_val
+	    #if $condi_source_coord.condi_coord.no_missing
+	        --no_missing
+	    #end if
         #elif $condi_source_coord.condi_coord.coord=='subregion'
            --latname $condi_source_coord.condi_coord.lat_dim
            --latvalN $condi_source_coord.condi_coord.lat_valN
@@ -101,6 +104,7 @@
                             </options>
                         </param>
                         <param name="lon_val" type="float" value="0" label="Longitude"/>
+                        <param name="no_missing" type="boolean" value="false" label="Remove any null/missing values (only valid for single location and multiple columns)"/>
                     </when>
                     <when value="subregion">
                         <param name="lat_dim" type="select" label="Name of latitude coordinate" >

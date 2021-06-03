@@ -21,7 +21,7 @@ class XarrayTool ():
                  select="", outfile="", outputdir="", latname="",
                  latvalN="", latvalS="", lonname="", lonvalE="",
                  lonvalW="", filter_list="", coords="", time="",
-                 verbose=False
+                 verbose=False, no_missing=False
                  ):
         self.infile = infile
         self.outfile_info = outfile_info
@@ -51,6 +51,7 @@ class XarrayTool ():
         self.time = time
         self.coords = coords
         self.verbose = verbose
+        self.no_missing = no_missing
         # initialization
         self.dset = None
         self.gset = None
@@ -143,9 +144,19 @@ class XarrayTool ():
                 self.filter_selection()
 
         self.area_selection()
-        # convert to dataframe
-        self.gset = self.gset.to_dataframe().dropna(how='all').reset_index()
-        self.gset.to_csv(self.outfile, header=True, sep='\t')
+        if self.gset.count()>1:
+        # convert to dataframe if several rows and cols
+            self.gset = self.gset.to_dataframe().dropna(how='all').reset_index()
+            self.gset.to_csv(self.outfile, header=True, sep='\t')
+        else:
+            data = {
+                self.latname : [self.gset[self.latname].values],
+                self.lonname : [self.gset[self.lonname].values],
+                self.select : [self.gset.values]
+            }
+
+            df = pd.DataFrame(data, columns= [self.latname, self.lonname, self.select])
+            df.to_csv(self.outfile, header=True, sep='\t')
 
     def datetime_selection(self):
         split_filter = self.time.split('#')
@@ -167,6 +178,7 @@ class XarrayTool ():
             self.rowfilter(single_filter)
 
     def area_selection(self):
+        
         if self.latvalS != "" and self.lonvalW != "":
             # Select geographical area
             self.gset = self.dset.sel({self.latname:
@@ -175,7 +187,11 @@ class XarrayTool ():
                                        slice(self.lonvalW, self.lonvalE)})
         elif self.latvalN != "" and self.lonvalE != "":
             # select nearest location
-            self.nearest_location()  # find nearest location without NaN values
+            if self.no_missing:
+                self.nearest_latvalN = self.latvalN
+                self.nearest_lonvalE = self.lonvalE
+            else:
+                self.nearest_location()  # find nearest location without NaN values
             self.gset = self.dset.sel({self.latname: self.nearest_latvalN,
                                        self.lonname: self.nearest_lonvalE},
                                       method='nearest')
@@ -287,13 +303,18 @@ if __name__ == '__main__':
         help="switch on verbose mode",
         action="store_true"
     )
+    parser.add_argument(
+        "--no_missing",
+        help="Do not take into account possible null/missing values (only valid for single location)",
+        action="store_true"
+    )
     args = parser.parse_args()
 
     p = XarrayTool(args.infile, args.info, args.summary, args.select,
                    args.outfile, args.outputdir, args.latname,
                    args.latvalN, args.latvalS, args.lonname,
                    args.lonvalE, args.lonvalW, args.filter,
-                   args.coords, args.time, args.verbose)
+                   args.coords, args.time, args.verbose, args.no_missing)
     if args.info:
         p.info()
     if args.summary:
