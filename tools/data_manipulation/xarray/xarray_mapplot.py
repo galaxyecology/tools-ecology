@@ -58,6 +58,8 @@ from pathlib import Path
 import cartopy.crs as ccrs
 import cartopy.feature as feature
 
+from cmcrameri import cm
+
 import matplotlib as mpl
 mpl.use('Agg')
 from matplotlib import pyplot  # noqa: I202,E402
@@ -121,6 +123,148 @@ class MapPlotXr ():
             print("borders: ", self.borders)
             print("latitude: ", self.latitude)
             print("longitude: ", self.longitude)
+
+    def get_cmap(self):
+        if self.cmap == "batlow":
+            self.cmap = cm.batlow
+        if self.cmap == "batlowW":
+            self.cmap = cm.batlowW
+        if self.cmap == "batlowK":
+            self.cmap = cm.batlowK
+        if self.cmap == "devon":
+            self.cmap = cm.devon
+        if self.cmap == "davos":
+            self.cmap = cm.davos
+        if self.cmap == "oslo":
+            self.cmap = cm.oslo
+        if self.cmap == "lapaz":
+            self.cmap = cm.lapaz
+        if self.cmap == "acton":
+            self.cmap = cm.acton
+        if self.cmap == "lajolla":
+            self.cmap = cm.lajolla
+        if self.cmap == "bilbao":
+            self.cmap = cm.bilbao
+        if self.cmap == "grayC":
+            self.cmap = cm.grayC
+        if self.cmap == "tokyo":
+            self.cmap = cm.tokyo
+        if self.cmap == "turku":
+            self.cmap = cm.turku
+        if self.cmap == "bamako":
+            self.cmap = cm.bamako
+        if self.cmap == "nuuk":
+            self.cmap = cm.nuuk
+        if self.cmap == "hawaii":
+            self.cmap = cm.hawaii
+        if self.cmap == "buda":
+            self.cmap = cm.buda
+        if self.cmap == "imola":
+            self.cmap = cm.imola
+        if self.cmap == "broc":
+            self.cmap = cm.broc
+        if self.cmap == "lisbon":
+            self.cmap = cm.lisbon
+        if self.cmap == "roma":
+            self.cmap = cm.roma
+        if self.cmap == "cork":
+            self.cmap = cm.cork
+        if self.cmap == "tofino":
+            self.cmap = cm.tofino
+        if self.cmap == "bam":
+            self.cmap = cm.bam
+        if self.cmap == "vik":
+            self.cmap = cm.vik
+        if self.cmap == "berlin":
+            self.cmap = cm.berlin
+        if self.cmap == "vanimo":
+            self.cmap = cm.vanimo
+        if self.cmap == "oleron":
+            self.cmap = cm.oleron
+        if self.cmap == "bukavu":
+            self.cmap = cm.bukavu
+        if self.cmap == "fes":
+            self.cmap = cm.fes
+        if self.cmap == "romaO":
+            self.cmap = cm.romaO
+        if self.cmap == "bamO":
+            self.cmap = cm.bamO
+        if self.cmap == "brocO":
+            self.cmap = cm.brocO
+        if self.cmap == "corkO":
+            self.cmap = cm.corkO
+        if self.cmap == "vikO":
+            self.cmap = cm.vikO
+        if self.cmap == "batlow_r":
+            self.cmap = cm.batlow_r
+        if self.cmap == "batlowW_r":
+            self.cmap = cm.batlowW_r
+        if self.cmap == "batlowK_r":
+            self.cmap = cm.batlowK_r
+        if self.cmap == "devon_r":
+            self.cmap = cm.devon_r
+        if self.cmap == "davos_r":
+            self.cmap = cm.davos_r
+        if self.cmap == "oslo_r":
+            self.cmap = cm.oslo_r
+        if self.cmap == "lapaz_r":
+            self.cmap = cm.lapaz_r
+        if self.cmap == "acton_r":
+            self.cmap = cm.acton_r
+        if self.cmap == "lajolla_r":
+            self.cmap = cm.lajolla_r
+        if self.cmap == "bilbao_r":
+            self.cmap = cm.bilbao_r
+        if self.cmap == "grayC_r":
+            self.cmap = cm.grayC_r
+        if self.cmap == "tokyo_r":
+            self.cmap = cm.tokyo_r
+        if self.cmap == "turku_r":
+            self.cmap = cm.turku_r
+        if self.cmap == "bamako_r":
+            self.cmap = cm.bamako_r
+        if self.cmap == "nuuk_r":
+            self.cmap = cm.nuuk_r
+        if self.cmap == "hawaii_r":
+            self.cmap = cm.hawaii_r
+        if self.cmap == "buda_r":
+            self.cmap = cm.buda_r
+        if self.cmap == "imola_r":
+            self.cmap = cm.imola_r
+        if self.cmap == "broc_r":
+            self.cmap = cm.broc_r
+        if self.cmap == "lisbon_r":
+            self.cmap = cm.lisbon_r
+        if self.cmap == "roma_r":
+            self.cmap = cm.roma_r
+        if self.cmap == "cork_r":
+            self.cmap = cm.cork_r
+        if self.cmap == "tofino_r":
+            self.cmap = cm.tofino_r
+        if self.cmap == "bam_r":
+            self.cmap = cm.bam_r
+        if self.cmap == "vik_r":
+            self.cmap = cm.vik_r
+        if self.cmap == "berlin_r":
+            self.cmap = cm.berlin_r
+        if self.cmap == "vanimo_r":
+            self.cmap = cm.vanimo_r
+        if self.cmap == "oleron_r":
+            self.cmap = cm.oleron_r
+        if self.cmap == "bukavu_r":
+            self.cmap = cm.bukavu_r
+        if self.cmap == "fes_r":
+            self.cmap = cm.fes_r
+        if self.cmap == "romaO_r":
+            self.cmap = cm.romaO_r
+        if self.cmap == "bamO_r":
+            self.cmap = cm.bamO_r
+        if self.cmap == "brocO_r":
+            self.cmap = cm.brocO_r
+        if self.cmap == "corkO_r":
+            self.cmap = cm.corkO_r
+        if self.cmap == "vikO_r":
+            self.cmap = cm.vikO_r
 
     def projection(self):
         if self.proj is None:

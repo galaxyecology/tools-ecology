@@ -240,7 +240,7 @@ class XarrayTool ():
             filename = self.coords_info + '/' + c.strip() + '.tabular'
             pd = ds.coords[c].to_pandas()
             pd.index = range(len(pd))
-            pd.to_csv(filename, header=False, sep='\t')
+            pd.to_csv(filename, header=False)
 
 
 if __name__ == '__main__':
