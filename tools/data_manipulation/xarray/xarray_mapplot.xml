@@ -10,10 +10,13 @@
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
     mkdir output_dir &&
+    HOME=`pwd`  &&
+    mkdir -p `pwd`/mlp_tmpdir &&
+    MPLCONFIGDIR=`pwd`/mlp_tmpdir &&
     echo "Galaxy xarray version @VERSION@" > output_dir/version.txt &&
     python '$__tool_directory__/xarray_mapplot.py' '$input' '$var'
-    #if $time!=""
-         --time="$time"
+    #if $time_idx!=""
+         --time="$time_idx"
     #end if
          --latitude="$lat_dim"
          --longitude="$lon_dim"
@@ -79,8 +82,9 @@
                 <column name="value" index="0"/>
             </options>
         </param>
-        <param name="xlim" type="text" value="" label="longitudes values 'lonW,lonE' for limited geographical area (only available with some projections)" />
-        <param name="ylim" type="text" value="" label="latitudes values 'latS,latN' for limited geographical area (only available with some projections)" />
+        <param name="time_idx" type="text" value="" label="List of time indices such as 0,1,... (optional)" />
+        <param name="xlim" type="text" value="" label="longitudes values 'lonW,lonE' for limited geographical area (optional and only available with some projections)" />
+        <param name="ylim" type="text" value="" label="latitudes values 'latS,latN' for limited geographical area (optional and only available with some projections)" />
         <param name="shift" type="select" display="radio" label="Shift longitudes [0,360] --> [-180,180]"> 
              <option value="" selected="true">No</option>
              <option value="Yes">Yes</option>

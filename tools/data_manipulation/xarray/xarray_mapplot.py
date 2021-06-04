@@ -377,7 +377,7 @@ if __name__ == '__main__':
     )
     parser.add_argument(
         '--label',
-        help='set a label for colormap'
+        help='set a label for colorbar'
     )
     parser.add_argument(
         '--shift',
