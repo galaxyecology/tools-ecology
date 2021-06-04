@@ -238,8 +238,9 @@ class XarrayTool ():
         ds = xr.open_dataset(self.infile)
         for c in ds.coords:
             filename = self.coords_info + '/' + c.strip() + '.tabular'
-            ds.coords[c].to_pandas().to_csv(filename, header=False,
-                                            index=False, sep='\t')
+            pd = ds.coords[c].to_pandas()
+            pd.index = range(len(pd))
+            pd.to_csv(filename, header=False, sep='\t')
 
 
 if __name__ == '__main__':
