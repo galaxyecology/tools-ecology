@@ -21,7 +21,7 @@ class XarrayTool ():
                  select="", outfile="", outputdir="", latname="",
                  latvalN="", latvalS="", lonname="", lonvalE="",
                  lonvalW="", filter_list="", coords="", time="",
-                 verbose=False, no_missing=False
+                 verbose=False, no_missing=False, coords_info=None
                  ):
         self.infile = infile
         self.outfile_info = outfile_info
@@ -55,6 +55,7 @@ class XarrayTool ():
         # initialization
         self.dset = None
         self.gset = None
+        self.coords_info = coords_info
         if self.verbose:
             print("infile: ", self.infile)
             print("outfile_info: ", self.outfile_info)
@@ -72,6 +73,7 @@ class XarrayTool ():
             print("filter: ", self.filter)
             print("time: ", self.time)
             print("coords: ", self.coords)
+            print("coords_info: ", self.coords_info)
 
     def info(self):
         f = open(self.outfile_info, 'w')
@@ -232,6 +234,13 @@ class XarrayTool ():
                             str(row.Index) + '.tabular')
             self.selection()
 
+    def get_coords_info(self):
+        ds = xr.open_dataset(self.infile)
+        for c in ds.coords:
+            filename = self.coords_info + '/' + c.strip() + '.tabular'
+            ds.coords[c].to_pandas().to_csv(filename, header=False,
+                                            index=False, sep='\t')
+
 
 if __name__ == '__main__':
     warnings.filterwarnings("ignore")
@@ -283,6 +292,11 @@ if __name__ == '__main__':
              'for geographical selection'
     )
     parser.add_argument(
+        '--coords_info',
+        help='output-folder where for each coordinate, coordinate values '
+             ' are being printed in the corresponding outputfile'
+    )
+    parser.add_argument(
         '--filter',
         nargs="*",
         help='Filter list variable#operator#value_s#value_e'
@@ -318,7 +332,8 @@ if __name__ == '__main__':
                    args.outfile, args.outputdir, args.latname,
                    args.latvalN, args.latvalS, args.lonname,
                    args.lonvalE, args.lonvalW, args.filter,
-                   args.coords, args.time, args.verbose, args.no_missing)
+                   args.coords, args.time, args.verbose,
+                   args.no_missing, args.coords_info)
     if args.info:
         p.info()
     if args.summary:
@@ -327,3 +342,5 @@ if __name__ == '__main__':
         p.selection_from_coords()
     elif args.select:
         p.selection()
+    elif args.coords_info:
+        p.get_coords_info()
