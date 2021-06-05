@@ -118,7 +118,7 @@
                         </param>
                         <param name="lon_val" type="float" value="0" label="Longitude"/>
                         <param name="no_missing" type="boolean" value="false" label="Do not handle null/missing values (only valid for single location and multiple columns)"/>
-                        <param name="tolerance" optional="true" label="Maximum distance between original and selected value for inexact matches"/>
+                        <param name="tolerance" type="float" optional="true" label="Maximum distance between original and selected value for inexact matches"/>
                     </when>
                     <when value="subregion">
                         <param name="lat_dim" type="select" label="Name of latitude coordinate" >
