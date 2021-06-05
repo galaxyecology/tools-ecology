@@ -77,7 +77,7 @@
             <param name="coord_source" type="select" label="Source of coordinates">
                 <option value="coord_from_stdin">Manually enter coordinates</option>
                 <option value="coord_from_file">Use coordinates from input file</option>
-                <option value="tolerance">Maximum distance between original and selected value for inexact matches e.g. abs(index[indexer] - target) <= tolerance</option>
+                <option value="tolerance"><![CDATA[Maximum distance between original and selected value for inexact matches e.g. abs(index[indexer] - target) <= tolerance]]></option>
             </param>
 
             <when value="coord_from_file">
