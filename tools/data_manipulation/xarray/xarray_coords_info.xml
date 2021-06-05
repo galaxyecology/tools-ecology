@@ -1,4 +1,4 @@
-<tool id="xarray_coords_info" name="NetCDF xarray Coordinate Info" version="@TOOL_VERSION">
+<tool id="xarray_coords_info" name="NetCDF xarray Coordinate Info" version="@TOOL_VERSION+galaxy@VERSION_SUFFIX@">
     <description>Get values for each coordinate of a Netcdf file</description>
     <macros>
         <import>macros.xml</import>
@@ -12,7 +12,7 @@
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
         mkdir output_dir &&
-        echo "Galaxy xarray version 0.18.2" > output_dir/version.tabular &&
+        echo "Galaxy xarray version @TOOL_VERSION@" > output_dir/version.tabular &&
         python3 '$__tool_directory__/xarray_tool.py' '$input' --coords_info output_dir
     ]]></command>
     <inputs>

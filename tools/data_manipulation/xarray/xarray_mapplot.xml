@@ -1,4 +1,4 @@
-<tool id="xarray_mapplot" name="NetCDF xarray map plotting" profile="20.05" version="@TOOL_VERSION@">
+<tool id="xarray_mapplot" name="NetCDF xarray map plotting" profile="20.05" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@">
     <description>Visualize netCDF variables on a geographical map</description>
     <macros>
         <import>macros.xml</import>
@@ -15,7 +15,7 @@
     mkdir output_dir &&
     mkdir -p `pwd`/mlp_tmpdir &&
     MPLCONFIGDIR=`pwd`/mlp_tmpdir &&
-    echo "Galaxy xarray version 0.18.2" > output_dir/version.txt &&
+    echo "Galaxy xarray version @TOOL_VERSION@" > output_dir/version.txt &&
     python '$__tool_directory__/xarray_mapplot.py' '$input' '$var'
     #if $condi_datetime.datetime=="yes"
          --time="$condi_datetime.time_values"
@@ -67,7 +67,7 @@
     <inputs>
         <param type="data" name="input" label="Input netcdf file" format="netcdf"/>
         <param type="data" label="Tabular of variables" name="var_tab" format="tabular" help="Select the tabular file which summarize the available variables and dimensions."/>
-        <param name="var" type="select" label="Choose the variable to extract">
+        <param name="var" type="select" label="Choose the variable to plot">
             <options from_dataset="var_tab">
                 <column name="name" index="0"/>
                 <column name="value" index="0"/>
@@ -288,8 +288,9 @@
              <param name="ocean" value="0.1"/>                         
              <param name="coastline" value="0.2"/>                         
              <param name="borders" value="0.5"/>                         
-             <output_collection name="output_dir">
-                 <element name="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133_time50.png"/>
+             <output_collection name="output_dir" type="list" count="2">
+                 <element name="plot" file="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133_time50.png"/>
+                 <element name="tool_version" file="version.txt"/>
              </output_collection>
         </test>
         <test>
@@ -308,9 +309,10 @@
              <param name="ocean" value="0.1"/>                         
              <param name="coastline" value="0.2"/>                         
              <param name="borders" value="0.5"/>                         
-             <output_collection name="output_dir">
-                 <element name="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133_time0.png"/>
-                 <element name="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133_time1.png"/>
+             <output_collection name="output_dir" type="list" count="3">
+                 <element name="plot_time0" file="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133_time0.png"/>
+                 <element name="plot_time1" file="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133_time1.png"/>
+                 <element name="tool_version" file="version.txt"/>
              </output_collection>
                                                                                                                 
         </test>

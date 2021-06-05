@@ -1,4 +1,4 @@
-<tool id="xarray_select" name="NetCDF xarray Selection" version="@TOOL_VERSION@">
+<tool id="xarray_select" name="NetCDF xarray Selection" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@">
     <description>extracts variable values with custom conditions on dimensions</description>
     <macros>
         <import>macros.xml</import>
@@ -13,7 +13,7 @@
     <command detect_errors="exit_code"><![CDATA[
     mkdir output_dir &&
     #if $condi_source_coord.coord_source=="coord_from_file"
-       echo "Galaxy Panoply version \t 0.18.2" > output_dir/version.tabular &&
+       echo "Galaxy Panoply version \t @TOOL_VERSION@" > output_dir/version.tabular &&
     #end if
     python '$__tool_directory__/xarray_tool.py' '$input' --select '$var'
            --verbose

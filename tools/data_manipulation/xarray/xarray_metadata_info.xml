@@ -1,4 +1,4 @@
-<tool id="xarray_metadata_info" name="NetCDF xarray Metadata Info" version="@TOOL_VERSION@">
+<tool id="xarray_metadata_info" name="NetCDF xarray Metadata Info" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@">
     <description>summarize content of a Netcdf file</description>
     <macros>
         <import>macros.xml</import>
