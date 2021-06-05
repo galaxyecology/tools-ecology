@@ -94,7 +94,7 @@
                         <column name="value" index="0"/>
                     </options>
                 </param>
-                <param type="float" name="tolerance" optional="true" label="![CDATA[Maximum distance between original and selected value for inexact matches e.g. abs(index[indexer] - target) <= tolerance]]"/>
+                <param type="float" name="tolerance" optional="true" label="Maximum distance between original and selected value for inexact matches e.g. abs(original, index) is lower or equal to tolerance"/>
             </when>
 
             <when value="coord_from_stdin">
@@ -118,7 +118,7 @@
                         </param>
                         <param name="lon_val" type="float" value="0" label="Longitude"/>
                         <param name="no_missing" type="boolean" value="false" label="Do not handle null/missing values (only valid for single location and multiple columns)"/>
-                        <param name="tolerance" type="float" optional="true" label="![CDATA[Maximum distance between original and selected value for inexact matches e.g. abs(index[indexer] - target) <= tolerance]]"/>
+                        <param name="tolerance" type="float" optional="true" label="![CDATA[Maximum distance between original and selected value for inexact matches e.g. abs(original, index) is lower or equal to tolerance"/>
                     </when>
                     <when value="subregion">
                         <param name="lat_dim" type="select" label="Name of latitude coordinate" >
