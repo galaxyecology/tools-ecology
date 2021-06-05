@@ -36,6 +36,9 @@
          --coords '$coord_tabular'
          --latname '$condi_source_coord.lat_dim' --lonname '$condi_source_coord.lon_dim'
          --outputdir output_dir
+         #if $condi_source_coord.tolerance
+             --tolerance $condi_source_coord.tolerance
+         #endif
     #else
          --outfile 'final.tabular'
         #if $condi_source_coord.condi_coord.coord=='single'
@@ -46,6 +49,9 @@
 	    #if $condi_source_coord.condi_coord.no_missing
 	        --no_missing
 	    #end if
+            #if $condi_source_coord.condi_coord.tolerance
+                --tolerance $condi_source_coord.condi_coord.tolerance
+            #endif
         #elif $condi_source_coord.condi_coord.coord=='subregion'
            --latname $condi_source_coord.condi_coord.lat_dim
            --latvalN $condi_source_coord.condi_coord.lat_valN
@@ -71,6 +77,7 @@
             <param name="coord_source" type="select" label="Source of coordinates">
                 <option value="coord_from_stdin">Manually enter coordinates</option>
                 <option value="coord_from_file">Use coordinates from input file</option>
+                <option value="tolerance">Maximum distance between original and selected value for inexact matches e.g. abs(index[indexer] - target) <= tolerance</option>
             </param>
 
             <when value="coord_from_file">

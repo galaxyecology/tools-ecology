@@ -21,8 +21,8 @@ class XarrayTool ():
                  select="", outfile="", outputdir="", latname="",
                  latvalN="", latvalS="", lonname="", lonvalE="",
                  lonvalW="", filter_list="", coords="", time="",
-                 verbose=False, no_missing=False, coords_info=None
-                 ):
+                 verbose=False, no_missing=False, coords_info=None,
+                 tolerance=None):
         self.infile = infile
         self.outfile_info = outfile_info
         self.outfile_summary = outfile_summary
@@ -30,6 +30,10 @@ class XarrayTool ():
         self.outfile = outfile
         self.outputdir = outputdir
         self.latname = latname
+        if tolerance != "" and tolerance is not None:
+            self.tolerance = float(tolerance)
+        else:
+            self.tolerance = -1
         if latvalN != "" and latvalN is not None:
             self.latvalN = float(latvalN)
         else:
@@ -197,9 +201,15 @@ class XarrayTool ():
             else:
                 # find nearest location without NaN values
                 self.nearest_location()
-            self.gset = self.dset.sel({self.latname: self.nearest_latvalN,
-                                       self.lonname: self.nearest_lonvalE},
-                                      method='nearest')
+            if self.tolerance > 0:
+                self.gset = self.dset.sel({self.latname: self.nearest_latvalN,
+                                           self.lonname: self.nearest_lonvalE},
+                                          method='nearest',
+                                          tolerance=self.tolerance)
+            else:
+                self.gset = self.dset.sel({self.latname: self.nearest_latvalN,
+                                           self.lonname: self.nearest_lonvalE},
+                                          method='nearest')
         else:
             self.gset = self.dset
 
@@ -288,6 +298,11 @@ if __name__ == '__main__':
         help='West longitude value'
     )
     parser.add_argument(
+        '--tolerance',
+        help='Maximum distance between original and selected value for '
+             ' inexact matches e.g. abs(index[indexer] - target) <= tolerance'
+    )
+    parser.add_argument(
         '--coords',
         help='Input file containing Latitude and Longitude'
              'for geographical selection'
@@ -334,7 +349,7 @@ if __name__ == '__main__':
                    args.latvalN, args.latvalS, args.lonname,
                    args.lonvalE, args.lonvalW, args.filter,
                    args.coords, args.time, args.verbose,
-                   args.no_missing, args.coords_info)
+                   args.no_missing, args.coords_info, args.tolerance)
     if args.info:
         p.info()
     if args.summary:
