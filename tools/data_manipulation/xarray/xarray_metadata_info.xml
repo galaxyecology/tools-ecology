@@ -3,6 +3,7 @@
     <macros>
         <import>macros.xml</import>
     </macros>
+    <expand macro="edam_ontology"/>
     <requirements>
         <requirement type="package" version="3">python</requirement>
         <requirement type="package" version="1.5.6">netcdf4</requirement>
@@ -46,10 +47,6 @@
              </output>
         </test>
     </tests>
-    <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
-    </edam_topics>
     <help><![CDATA[
 **What it does**
 
@@ -85,5 +82,5 @@ The Netcdf Info tool use the netcdf functions : https://www.unidata.ucar.edu/sof
 
 Run this tool before considering using Netcdf Read.
     ]]></help>
-
+    <expand macro="citations"/>
 </tool>

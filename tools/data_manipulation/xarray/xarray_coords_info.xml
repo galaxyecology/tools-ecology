@@ -3,6 +3,7 @@
     <macros>
         <import>macros.xml</import>
     </macros>
+    <expand macro="edam_ontology"/>
     <requirements>
         <requirement type="package" version="3">python</requirement>
         <requirement type="package" version="1.5.6">netcdf4</requirement>
@@ -27,18 +28,14 @@
         <test>
              <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
               <output_collection name="output_dir" type="list" count="5">
-                <element name="time" file="time.tabular" />
-                <element name="latitude" file="latitude.tabular" />
-                <element name="longitude" file="longitude.tabular" />
-                <element name="depth" file="depth.tabular" />
-                <element name="version" file="version.tabular" />
+                <element name="time" file="time.tabular" ftype="tabular"/>
+                <element name="latitude" file="latitude.tabular" ftype="tabular"/>
+                <element name="longitude" file="longitude.tabular" ftype="tabular"/>
+                <element name="depth" file="depth.tabular" ftype="tabular"/>
+                <element name="version" file="version.tabular" ftype="tabular"/>
             </output_collection>
         </test>
     </tests>
-    <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
-    </edam_topics>
     <help><![CDATA[
 **What it does**
 
@@ -52,5 +49,5 @@ A netcdf file (xxx.nc).
 --------------------------------
 
     ]]></help>
-
+    <expand macro="citations"/>
 </tool>

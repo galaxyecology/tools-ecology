@@ -4,6 +4,7 @@
 
 import argparse
 import csv
+import os
 import warnings
 
 import geopandas as gdp
@@ -239,15 +240,17 @@ class XarrayTool ():
         for row in fcoords.itertuples():
             self.latvalN = row[0]
             self.lonvalE = row[1]
-            self.outfile = (self.outputdir + '/' +
+            self.outfile = (os.path.join(self.outputdir,
                             self.select + '_' +
-                            str(row.Index) + '.tabular')
+                            str(row.Index) + '.tabular'))
             self.selection()
 
     def get_coords_info(self):
         ds = xr.open_dataset(self.infile)
         for c in ds.coords:
-            filename = self.coords_info + '/' + c.strip() + '.tabular'
+            filename = os.path.join(self.coords_info,
+                                    c.strip() +
+                                    '.tabular')
             pd = ds.coords[c].to_pandas()
             pd.index = range(len(pd))
             pd.to_csv(filename, header=False, sep='\t')

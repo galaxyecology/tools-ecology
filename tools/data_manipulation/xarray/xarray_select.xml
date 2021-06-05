@@ -3,6 +3,7 @@
     <macros>
         <import>macros.xml</import>
     </macros>
+    <expand macro="edam_ontology"/>
     <requirements>
         <requirement type="package" version="3">python</requirement>
         <requirement type="package" version="1.5.6">netcdf4</requirement>
@@ -13,7 +14,7 @@
     <command detect_errors="exit_code"><![CDATA[
     mkdir output_dir &&
     #if $condi_source_coord.coord_source=="coord_from_file"
-       echo "Galaxy xarray version \t @TOOL_VERSION@" > output_dir/version.tabular &&
+       echo "Galaxy xarray version @TOOL_VERSION@" > output_dir/version.tabular &&
     #end if
     python '$__tool_directory__/xarray_tool.py' '$input' --select '$var'
            --verbose
@@ -279,10 +280,6 @@
              </output>
         </test>
     </tests>
-    <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
-    </edam_topics>
     <help><![CDATA[
 **What it does**
 
@@ -316,4 +313,5 @@ A data collection where one file is created for every coordinate, if multiple co
 
 The xarray select tool can be used after the xarray Info.
     ]]></help>
+    <expand macro="citations"/>
 </tool>
