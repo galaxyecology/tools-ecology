@@ -125,7 +125,7 @@ class MapPlotXr ():
             print("longitude: ", self.longitude)
 
     def get_cmap(self, cmap):
-        if cmap[0:3]=='cm.':
+        if cmap[0:3] == 'cm.':
             self.cmap = cm.__dict__[cmap[3:]]
         else:
             self.cmap = cmap

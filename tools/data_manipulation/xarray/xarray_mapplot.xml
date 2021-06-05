@@ -106,7 +106,7 @@
         <param name="threshold" type="float"  optional="true" label="Do not plot values below this threshold (optional)" />
         <param name="borders" type="float" optional="true" label="Add country borders with alpha value [0-1] (optional)" />
         <param name="coastline" type="float" optional="true" label="Add coastline with alpha value [0-1] (optional)" />
-        <param name="ocean" type=float" optional="true" label="Add ocean with alpha value [0-1] (optional)" />
+        <param name="ocean" type="float" optional="true" label="Add ocean with alpha value [0-1] (optional)" />
         <param name="land" type="float" optional="true" label="Add land with alpha value [0-1] (optional)" />
         <param name="title" type="text" optional="true" label="Specify plot title (optional)" />
         <param name="colorbar_label" type="text"  optional="true" label="Set a label for colormap (optional)" />
