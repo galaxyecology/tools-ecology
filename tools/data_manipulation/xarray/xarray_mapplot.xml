@@ -6,7 +6,7 @@
     <requirements>
         <requirement type="package" version="3">python</requirement>
         <requirement type="package" version="1.5.6">netcdf4</requirement>
-        <requirement type="package" version="0.18.2">xarray</requirement>
+        <requirement type="package" version="@TOOL_VERSION@">xarray</requirement>
         <requirement type="package" version="0.19.0">cartopy</requirement>
         <requirement type="package" version="3.4.2">matplotlib</requirement>
         <requirement type="package" version="1.2">cmcrameri</requirement>
@@ -20,10 +20,10 @@
     #if $condi_datetime.datetime=="yes"
          --time="$condi_datetime.time_values"
     #end if
-         --latitude="$lat_dim"
-         --longitude="$lon_dim"
+         --latitude='$lat_dim'
+         --longitude='$lon_dim'
     #if $colorbar_label
-         --label="$colorbar_label"
+         --label='$colorbar_label'
     #end if
     #if $title
          --title=$title
@@ -61,7 +61,8 @@
     #if $shift
          --shift
     #end if
-           --verbose &&
+         --output plot.png
+         --verbose &&
     mv *.png output_dir
     ]]></command>
     <inputs>
@@ -263,7 +264,14 @@
             <option value="terrain">terrain</option>
             <option value="winter">winter</option>
         </param>
-        <param name="proj" type="text" optional="true" label="Specify the projection (proj4) on which we draw e.g. {'proj':'PlateCarree'} (optional)" />
+        <param name="proj" type="text" optional="true" label='Specify the projection (proj4) on which we draw e.g. {"proj":"PlateCarree"} with double quote (optional)'>
+            <sanitizer>
+                <valid initial="string.ascii_letters,string.digits,string.punctuation,string.whitespace">
+                    <add value="{" />
+                    <add value="}" />
+                </valid>
+            </sanitizer>
+        </param>
 
     </inputs>
     <outputs>
@@ -280,17 +288,18 @@
              <param name="lon_dim" value="longitude"/>
              <conditional name="condi_datetime">
                  <param name="datetime" value="yes"/>
+                 <param name="time_tab" value="time.tabular"/>
                  <param name="time_values" value="50"/>
              </conditional>
              <param name="cmap" value="cm.devon_r"/>   
-             <param name="proj" value="{'proj':'PlateCarree'}"/>    
+             <param name="proj" value='{"proj":"PlateCarree"}'/>    
              <param name="land" value="0.1"/>                         
              <param name="ocean" value="0.1"/>                         
              <param name="coastline" value="0.2"/>                         
              <param name="borders" value="0.5"/>                         
              <output_collection name="output_dir" type="list" count="2">
-                 <element name="plot" file="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133_time50.png"/>
-                 <element name="tool_version" file="version.txt"/>
+                 <element name="plot_time50" ftype='png' file="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133_time50.png"/>
+                 <element name="version" ftype='txt' file="version.txt"/>
              </output_collection>
         </test>
         <test>
@@ -301,18 +310,19 @@
              <param name="lon_dim" value="longitude"/>
              <conditional name="condi_datetime">
                  <param name="datetime" value="yes"/>
+                 <param name="time_tab" value="time.tabular"/>
                  <param name="time_values" value="0,1"/>
              </conditional>
              <param name="cmap" value="Greens"/>   
-             <param name="proj" value="{'proj':'PlateCarree'}"/>    
+             <param name="proj" value='{"proj":"PlateCarree"}'/>    
              <param name="land" value="0.1"/>                         
              <param name="ocean" value="0.1"/>                         
              <param name="coastline" value="0.2"/>                         
              <param name="borders" value="0.5"/>                         
              <output_collection name="output_dir" type="list" count="3">
-                 <element name="plot_time0" file="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133_time0.png"/>
-                 <element name="plot_time1" file="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133_time1.png"/>
-                 <element name="tool_version" file="version.txt"/>
+                 <element name="plot_time0" ftype="png" file="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133_time0.png"/>
+                 <element name="plot_time1" ftype="png" file="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133_time1.png"/>
+                 <element name="version" ftype="txt" file="version.txt"/>
              </output_collection>
                                                                                                                 
         </test>

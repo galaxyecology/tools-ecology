@@ -2,22 +2,27 @@
 #
 #  Apply operations on selected variables
 # - scale
-# one can also select the range of time (for timeseries) to apply these operations over the range only
-# when a range of time is selected and when scaling, one can choose to save the entire timeseries or
+# one can also select the range of time (for timeseries)
+# to apply these operations over the range only
+# when a range of time is selected and when scaling, one
+# can choose to save the entire timeseries or
 # the selected range only.
-# when scaling, one can add additional filters on dimensions (typically used to filter over latitudes and longitudes)
+# when scaling, one can add additional filters on dimensions
+# (typically used to filter over latitudes and longitudes)
 
 
 import argparse
-import ast
 import warnings
-from pathlib import Path
 
 import xarray as xr  # noqa: E402
 
 
 class netCDF2netCDF ():
-    def __init__(self, infile, varname, scale="", output="output.netcdf", write_all=False, filter_list="", verbose=False):
+    def __init__(self, infile, varname, scale="",
+                 output="output.netcdf",
+                 write_all=False,
+                 filter_list="",
+                 verbose=False):
         self.infile = infile
         self.verbose = verbose
         self.varname = varname
@@ -29,7 +34,7 @@ class netCDF2netCDF ():
         else:
             self.scale = float(scale)
         if output is None:
-            self.output="output.netcdf"
+            self.output = "output.netcdf"
         else:
             self.output = output
         # initialization
@@ -42,7 +47,7 @@ class netCDF2netCDF ():
             print("scale: ", self.scale)
             print("write_all: ", self.write_all)
             print("output: ", self.output)
-            
+
     def dimension_selection(self, single_filter):
         split_filter = single_filter.split('#')
         dimension_varname = split_filter[0]
@@ -57,14 +62,16 @@ class netCDF2netCDF ():
             self.selection[dimension_varname] = slice(ll, None)
         elif (op == 'is'):
             self.selection[dimension_varname] = ll
-             
+
     def filter_selection(self):
         for single_filter in self.filter:
             self.dimension_selection(single_filter)
         if self.write_all:
-            self.ds[self.varname] = self.ds[self.varname].isel(self.selection)*self.scale
+            self.ds[self.varname] = \
+                self.ds[self.varname].isel(self.selection)*self.scale
         else:
-            self.dset = self.ds[self.varname].isel(self.selection)*self.scale
+            self.dset = \
+                self.ds[self.varname].isel(self.selection)*self.scale
 
     def compute(self):
         if self.dset is None:
@@ -81,7 +88,7 @@ class netCDF2netCDF ():
             self.ds.to_netcdf(self.output)
         else:
             self.dset.to_netcdf(self.output)
-                
+
 
 if __name__ == '__main__':
     warnings.filterwarnings("ignore")
@@ -117,6 +124,10 @@ if __name__ == '__main__':
         action="store_true")
     args = parser.parse_args()
 
-    dset = netCDF2netCDF(infile=args.input, varname=args.varname, scale=args.scale, output=args.output, filter_list=args.filter, write_all=args.write_all, verbose=args.verbose)
+    dset = netCDF2netCDF(infile=args.input, varname=args.varname,
+                         scale=args.scale, output=args.output,
+                         filter_list=args.filter,
+                         write_all=args.write_all,
+                         verbose=args.verbose)
     dset.compute()
     dset.save()

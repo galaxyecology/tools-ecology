@@ -6,14 +6,14 @@
     <requirements>
         <requirement type="package" version="3">python</requirement>
         <requirement type="package" version="1.5.6">netcdf4</requirement>
-        <requirement type="package" version="0.18.2">xarray</requirement>
+        <requirement type="package" version="@TOOL_VERSION@">xarray</requirement>
         <requirement type="package" version="0.9.0">geopandas</requirement>
         <requirement type="package" version="1.7.1">shapely</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
     mkdir output_dir &&
     #if $condi_source_coord.coord_source=="coord_from_file"
-       echo "Galaxy Panoply version \t @TOOL_VERSION@" > output_dir/version.tabular &&
+       echo "Galaxy xarray version \t @TOOL_VERSION@" > output_dir/version.tabular &&
     #end if
     python '$__tool_directory__/xarray_tool.py' '$input' --select '$var'
            --verbose

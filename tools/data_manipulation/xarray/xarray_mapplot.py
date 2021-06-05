@@ -75,7 +75,11 @@ class MapPlotXr ():
                  threshold="", label="", shift=False,
                  range_values=[]):
         self.input = input
-        self.proj = proj
+        print("PROJ", proj)
+        if proj != "" and proj is not None:
+            self.proj = proj.replace('X', ':')
+        else:
+            self.proj = proj
         self.varname = varname
         self.get_cmap(cmap)
         self.time = time
@@ -100,17 +104,13 @@ class MapPlotXr ():
         self.verbose = verbose
         self.dset = xr.open_dataset(self.input, use_cftime=True)
 
-        if label == "" or label is None:
-            self.label = self.dset[self.varname].long_name + \
-                            ' [' + \
-                            self.dset[self.varname].units + ']'
-        else:
-            self.label = label
+        self.label = {}
+        if label != "" and label is not None:
+            self.label['label'] = label
         if verbose:
             print("input: ", self.input)
             print("proj: ", self.proj)
             print("varname: ", self.varname)
-            print("cmap: ", self.cmap)
             print("time: ", self.time)
             print("minval, maxval: ", self.range)
             print("title: ", self.title)
@@ -123,6 +123,8 @@ class MapPlotXr ():
             print("borders: ", self.borders)
             print("latitude: ", self.latitude)
             print("longitude: ", self.longitude)
+            print("xlim: ", self.xlim)
+            print("ylim: ", self.ylim)
 
     def get_cmap(self, cmap):
         if cmap[0:3] == 'cm.':
@@ -278,9 +280,8 @@ class MapPlotXr ():
                                       vmax=maxval,
                                       transform=proj_t,
                                       cmap=self.cmap,
-                                      cbar_kwargs={
-                                         'label': self.label
-                                      })
+                                      cbar_kwargs=self.label
+                                      )
             if self.title != "" and self.title is not None:
                 pyplot.title(self.title)
             pyplot.savefig(self.output)
@@ -293,9 +294,8 @@ class MapPlotXr ():
                                                         vmax=maxval,
                                                         transform=proj_t,
                                                         cmap=self.cmap,
-                                                        cbar_kwargs={
-                                                          'label': self.label
-                                                        })
+                                                        cbar_kwargs=self.label
+                                                        )
             else:
                 self.dset.where(
                      self.dset[self.varname] > minval
@@ -454,4 +454,4 @@ if __name__ == '__main__':
         for t in dset.time:
             dset.plot(t)
             dset.shift = False   # only shift once
-            dset.colorbar = False
+            dset.colorbar = True
