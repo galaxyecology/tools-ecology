@@ -1,5 +1,8 @@
-<tool id="xarray_select" name="NetCDF xarray Selection" version="0.18.2">
+<tool id="xarray_select" name="NetCDF xarray Selection" version="@TOOL_VERSION@">
     <description>extracts variable values with custom conditions on dimensions</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
     <requirements>
         <requirement type="package" version="3">python</requirement>
         <requirement type="package" version="1.5.6">netcdf4</requirement>
@@ -37,8 +40,8 @@
          --latname '$condi_source_coord.lat_dim' --lonname '$condi_source_coord.lon_dim'
          --outputdir output_dir
          #if $condi_source_coord.tolerance
-             --tolerance $condi_source_coord.tolerance
-         #endif
+             --tolerance '$condi_source_coord.tolerance'
+         #end if
     #else
          --outfile 'final.tabular'
         #if $condi_source_coord.condi_coord.coord=='single'
@@ -50,8 +53,8 @@
 	        --no_missing
 	    #end if
             #if $condi_source_coord.condi_coord.tolerance
-                --tolerance $condi_source_coord.condi_coord.tolerance
-            #endif
+                --tolerance '$condi_source_coord.condi_coord.tolerance'
+            #end if
         #elif $condi_source_coord.condi_coord.coord=='subregion'
            --latname $condi_source_coord.condi_coord.lat_dim
            --latvalN $condi_source_coord.condi_coord.lat_valN
@@ -77,7 +80,6 @@
             <param name="coord_source" type="select" label="Source of coordinates">
                 <option value="coord_from_stdin">Manually enter coordinates</option>
                 <option value="coord_from_file">Use coordinates from input file</option>
-                <option value="tolerance">Maximum distance between original and selected value for inexact matches e.g. abs(index[indexer] - target) <= tolerance</option>
             </param>
 
             <when value="coord_from_file">
@@ -92,6 +94,7 @@
                         <column name="value" index="0"/>
                     </options>
                 </param>
+                <param type="float" name="tolerance" optional="true" label="Maximum distance between original and selected value for inexact matches"/>
             </when>
 
             <when value="coord_from_stdin">
@@ -115,6 +118,7 @@
                         </param>
                         <param name="lon_val" type="float" value="0" label="Longitude"/>
                         <param name="no_missing" type="boolean" value="false" label="Do not handle null/missing values (only valid for single location and multiple columns)"/>
+                        <param name="tolerance" optional="true" label="Maximum distance between original and selected value for inexact matches"/>
                     </when>
                     <when value="subregion">
                         <param name="lat_dim" type="select" label="Name of latitude coordinate" >
@@ -224,13 +228,13 @@
              <param name="var_tab" value="var_tab_dataset-ibi"/>
              <conditional name="condi_source_coord">
                  <param name="coord_source" value="coord_from_stdin"/>
-                  <conditional name="condi_coord">
-                    <param name="coord" value="single"/>
-                    <param name="lat_dim" value="latitude"/>
-                    <param name="lat_val" value="44.0"/>
-                    <param name="lon_dim" value="longitude"/>
-                    <param name="lon_val" value="-2.0"/>
-                  </conditional>
+                 <conditional name="condi_coord">
+                     <param name="coord" value="single"/>
+                     <param name="lat_dim" value="latitude"/>
+                     <param name="lat_val" value="44.0"/>
+                     <param name="lon_dim" value="longitude"/>
+                     <param name="lon_val" value="-2.0"/>
+                 </conditional>
              </conditional>
              <output name="simpleoutput" value="Test1.tabular">
                  <assert_contents>
@@ -246,9 +250,9 @@
 
              <conditional name="condi_source_coord">
                  <param name="coord_source" value="coord_from_stdin"/>
-                  <conditional name="condi_coord">
-                    <param name="coord" value="global"/>
-                  </conditional>
+                 <conditional name="condi_coord">
+                     <param name="coord" value="global"/>
+                 </conditional>
              </conditional>
              <section name="time">
                  <conditional name="condi_datetime">
@@ -263,8 +267,8 @@
              <repeat name="user_choice">
                  <param name="dim" value="nh4"/>
                  <conditional name="condi_between">
-                    <param name="comparator" value="ge"/>
-                    <param name="value" value="50."/>
+                     <param name="comparator" value="ge"/>
+                     <param name="value" value="50."/>
                  </conditional>
              </repeat>
              <output name="simpleoutput" value="Test2.tabular">

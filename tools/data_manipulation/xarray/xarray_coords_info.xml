@@ -1,5 +1,8 @@
-<tool id="xarray_coords_info" name="NetCDF xarray Coordinate Info" version="0.18.2">
+<tool id="xarray_coords_info" name="NetCDF xarray Coordinate Info" version="@TOOL_VERSION"">
     <description>Get values for each coordinate of a Netcdf file</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
     <requirements>
         <requirement type="package" version="3">python</requirement>
         <requirement type="package" version="1.5.6">netcdf4</requirement>

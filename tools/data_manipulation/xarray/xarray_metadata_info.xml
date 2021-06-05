@@ -1,5 +1,8 @@
-<tool id="xarray_metadata_info" name="NetCDF xarray Metadata Info" version="0.18.2">
+<tool id="xarray_metadata_info" name="NetCDF xarray Metadata Info" version="@TOOL_VERSION@">
     <description>summarize content of a Netcdf file</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
     <requirements>
         <requirement type="package" version="3">python</requirement>
         <requirement type="package" version="1.5.6">netcdf4</requirement>
