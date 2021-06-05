@@ -26,7 +26,7 @@
     <tests>
         <test>
              <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
-              <output_collection name="output_dir">
+              <output_collection name="output_dir" type="list" count="5">
                 <element name="time" file="time.tabular" />
                 <element name="latitude" file="latitude.tabular" />
                 <element name="longitude" file="longitude.tabular" />
