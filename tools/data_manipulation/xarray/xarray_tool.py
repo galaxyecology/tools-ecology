@@ -4,6 +4,7 @@
 
 import argparse
 import csv
+import os
 import warnings
 
 import geopandas as gdp
@@ -21,8 +22,8 @@ class XarrayTool ():
                  select="", outfile="", outputdir="", latname="",
                  latvalN="", latvalS="", lonname="", lonvalE="",
                  lonvalW="", filter_list="", coords="", time="",
-                 verbose=False
-                 ):
+                 verbose=False, no_missing=False, coords_info=None,
+                 tolerance=None):
         self.infile = infile
         self.outfile_info = outfile_info
         self.outfile_summary = outfile_summary
@@ -30,6 +31,10 @@ class XarrayTool ():
         self.outfile = outfile
         self.outputdir = outputdir
         self.latname = latname
+        if tolerance != "" and tolerance is not None:
+            self.tolerance = float(tolerance)
+        else:
+            self.tolerance = -1
         if latvalN != "" and latvalN is not None:
             self.latvalN = float(latvalN)
         else:
@@ -51,9 +56,11 @@ class XarrayTool ():
         self.time = time
         self.coords = coords
         self.verbose = verbose
+        self.no_missing = no_missing
         # initialization
         self.dset = None
         self.gset = None
+        self.coords_info = coords_info
         if self.verbose:
             print("infile: ", self.infile)
             print("outfile_info: ", self.outfile_info)
@@ -71,6 +78,7 @@ class XarrayTool ():
             print("filter: ", self.filter)
             print("time: ", self.time)
             print("coords: ", self.coords)
+            print("coords_info: ", self.coords_info)
 
     def info(self):
         f = open(self.outfile_info, 'w')
@@ -143,9 +151,21 @@ class XarrayTool ():
                 self.filter_selection()
 
         self.area_selection()
-        # convert to dataframe
-        self.gset = self.gset.to_dataframe().dropna(how='all').reset_index()
-        self.gset.to_csv(self.outfile, header=True, sep='\t')
+        if self.gset.count() > 1:
+            # convert to dataframe if several rows and cols
+            self.gset = self.gset.to_dataframe().dropna(how='all'). \
+                        reset_index()
+            self.gset.to_csv(self.outfile, header=True, sep='\t')
+        else:
+            data = {
+                self.latname: [self.gset[self.latname].values],
+                self.lonname: [self.gset[self.lonname].values],
+                self.select: [self.gset.values]
+            }
+
+            df = pd.DataFrame(data, columns=[self.latname, self.lonname,
+                                             self.select])
+            df.to_csv(self.outfile, header=True, sep='\t')
 
     def datetime_selection(self):
         split_filter = self.time.split('#')
@@ -167,6 +187,7 @@ class XarrayTool ():
             self.rowfilter(single_filter)
 
     def area_selection(self):
+
         if self.latvalS != "" and self.lonvalW != "":
             # Select geographical area
             self.gset = self.dset.sel({self.latname:
@@ -175,10 +196,21 @@ class XarrayTool ():
                                        slice(self.lonvalW, self.lonvalE)})
         elif self.latvalN != "" and self.lonvalE != "":
             # select nearest location
-            self.nearest_location()  # find nearest location without NaN values
-            self.gset = self.dset.sel({self.latname: self.nearest_latvalN,
-                                       self.lonname: self.nearest_lonvalE},
-                                      method='nearest')
+            if self.no_missing:
+                self.nearest_latvalN = self.latvalN
+                self.nearest_lonvalE = self.lonvalE
+            else:
+                # find nearest location without NaN values
+                self.nearest_location()
+            if self.tolerance > 0:
+                self.gset = self.dset.sel({self.latname: self.nearest_latvalN,
+                                           self.lonname: self.nearest_lonvalE},
+                                          method='nearest',
+                                          tolerance=self.tolerance)
+            else:
+                self.gset = self.dset.sel({self.latname: self.nearest_latvalN,
+                                           self.lonname: self.nearest_lonvalE},
+                                          method='nearest')
         else:
             self.gset = self.dset
 
@@ -208,10 +240,20 @@ class XarrayTool ():
         for row in fcoords.itertuples():
             self.latvalN = row[0]
             self.lonvalE = row[1]
-            self.outfile = (self.outputdir + '/' +
+            self.outfile = (os.path.join(self.outputdir,
                             self.select + '_' +
-                            str(row.Index) + '.tabular')
+                            str(row.Index) + '.tabular'))
             self.selection()
+
+    def get_coords_info(self):
+        ds = xr.open_dataset(self.infile)
+        for c in ds.coords:
+            filename = os.path.join(self.coords_info,
+                                    c.strip() +
+                                    '.tabular')
+            pd = ds.coords[c].to_pandas()
+            pd.index = range(len(pd))
+            pd.to_csv(filename, header=False, sep='\t')
 
 
 if __name__ == '__main__':
@@ -259,9 +301,19 @@ if __name__ == '__main__':
         help='West longitude value'
     )
     parser.add_argument(
+        '--tolerance',
+        help='Maximum distance between original and selected value for '
+             ' inexact matches e.g. abs(index[indexer] - target) <= tolerance'
+    )
+    parser.add_argument(
         '--coords',
         help='Input file containing Latitude and Longitude'
              'for geographical selection'
+    )
+    parser.add_argument(
+        '--coords_info',
+        help='output-folder where for each coordinate, coordinate values '
+             ' are being printed in the corresponding outputfile'
     )
     parser.add_argument(
         '--filter',
@@ -287,13 +339,20 @@ if __name__ == '__main__':
         help="switch on verbose mode",
         action="store_true"
     )
+    parser.add_argument(
+        "--no_missing",
+        help="""Do not take into account possible null/missing values
+                (only valid for single location)""",
+        action="store_true"
+    )
     args = parser.parse_args()
 
     p = XarrayTool(args.infile, args.info, args.summary, args.select,
                    args.outfile, args.outputdir, args.latname,
                    args.latvalN, args.latvalS, args.lonname,
                    args.lonvalE, args.lonvalW, args.filter,
-                   args.coords, args.time, args.verbose)
+                   args.coords, args.time, args.verbose,
+                   args.no_missing, args.coords_info, args.tolerance)
     if args.info:
         p.info()
     if args.summary:
@@ -302,3 +361,5 @@ if __name__ == '__main__':
         p.selection_from_coords()
     elif args.select:
         p.selection()
+    elif args.coords_info:
+        p.get_coords_info()

@@ -1,0 +1,53 @@
+<tool id="xarray_coords_info" name="NetCDF xarray Coordinate Info" version="@TOOL_VERSION+galaxy@VERSION_SUFFIX@">
+    <description>Get values for each coordinate of a Netcdf file</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+    <expand macro="edam_ontology"/>
+    <requirements>
+        <requirement type="package" version="3">python</requirement>
+        <requirement type="package" version="1.5.6">netcdf4</requirement>
+        <requirement type="package" version="@TOOL_VERSION@">xarray</requirement>
+        <requirement type="package" version="0.9.0">geopandas</requirement>
+        <requirement type="package" version="1.7.1">shapely</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        mkdir output_dir &&
+        echo "Galaxy xarray version @TOOL_VERSION@" > output_dir/version.tabular &&
+        python3 '$__tool_directory__/xarray_tool.py' '$input' --coords_info output_dir
+    ]]></command>
+    <inputs>
+        <param type="data" name="input" label="Netcdf file" format="netcdf,h5" help="Netcdf file you need to extract coordinate values."/>
+    </inputs>
+    <outputs>
+        <collection type="list" name="output_dir" label="Coordinates">
+            <discover_datasets pattern="__name_and_ext__" visible="true" directory="output_dir"/>
+        </collection>
+    </outputs>
+    <tests>
+        <test>
+             <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
+              <output_collection name="output_dir" type="list" count="5">
+                <element name="time" file="time.tabular" ftype="tabular"/>
+                <element name="latitude" file="latitude.tabular" ftype="tabular"/>
+                <element name="longitude" file="longitude.tabular" ftype="tabular"/>
+                <element name="depth" file="depth.tabular" ftype="tabular"/>
+                <element name="version" file="version.tabular" ftype="tabular"/>
+            </output_collection>
+        </test>
+    </tests>
+    <help><![CDATA[
+**What it does**
+
+The tool will generate a collection containing one file per coordinate. Each file contains the values of the 
+corresponding coordinate. The output of this tool is usually used as input to other tools.
+
+**Input**
+
+A netcdf file (xxx.nc).
+
+--------------------------------
+
+    ]]></help>
+    <expand macro="citations"/>
+</tool>
