@@ -16,7 +16,7 @@
     mkdir output_dir &&
     mkdir -p `pwd`/mlp_tmpdir &&
     MPLCONFIGDIR=`pwd`/mlp_tmpdir &&
-    echo "Galaxy xarray version @TOOL_VERSION@" > output_dir/version.tabular &&
+    echo "Galaxy xarray version @TOOL_VERSION@" > $version &&
     python '$__tool_directory__/xarray_mapplot.py' '$input' '$var'
     #if $condi_datetime.datetime=="yes"
          --time="$condi_datetime.time_values"
@@ -121,6 +121,7 @@
 
     </inputs>
     <outputs>
+        <data name="version" format="tabular" label="Tool version"/>
         <collection type="list" name="output_dir" label="Map plots">
             <discover_datasets pattern="__name_and_ext__" directory="output_dir"/>
         </collection>
@@ -143,10 +144,10 @@
              <param name="ocean" value="0.1"/>                         
              <param name="coastline" value="0.2"/>                         
              <param name="borders" value="0.5"/>                         
-             <output_collection name="output_dir" type="list" count="2">
+             <output_collection name="output_dir" type="list" count="1">
                  <element name="plot_time50" ftype='png' file="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133_time50.png"/>
-                 <element name="version" ftype='tabular' file="version.tabular"/>
              </output_collection>
+             <output name="version" ftype='tabular' file="version.tabular"/>
         </test>
         <test>
              <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
@@ -165,12 +166,11 @@
              <param name="ocean" value="0.1"/>                         
              <param name="coastline" value="0.2"/>                         
              <param name="borders" value="0.5"/>                         
-             <output_collection name="output_dir" type="list" count="3">
+             <output_collection name="output_dir" type="list" count="2">
                  <element name="plot_time0" ftype="png" file="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133_time0.png"/>
                  <element name="plot_time1" ftype="png" file="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133_time1.png"/>
-                 <element name="version" ftype="tabular" file="version.tabular"/>
              </output_collection>
-                                                                                                                
+             <output name="version" ftype="tabular" file="version.tabular"/>
         </test>
     </tests>
     <help><![CDATA[
