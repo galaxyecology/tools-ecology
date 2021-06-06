@@ -40,7 +40,7 @@
             </options>
         </param>
 
-        <repeat name="user_choice" title="additional filter" help="Use this option to filter on the selected dataset">
+        <repeat name="user_choice" title="additional filter" min="0" max="20" help="Use this option to filter on the selected dataset">
             <param name="dim" type="select" label="Dimensions">
                 <options from_dataset="var_tab">
                     <column name="value" index="0"/>
@@ -95,10 +95,8 @@
             </conditional>
         </repeat>
         <param type="float" name="scale" optional="true" help="scale factor (float) to apply to selection (optional)"/>
-        <param name="write_all" type="select"  optional="true" display="radio" label="Write all to new netCDF file or selection only"> 
-             <option value="" selected="true">No</option>
-             <option value="Yes">Yes</option>
-        </param>
+        
+        <param name="write_all" type="boolean" value="false" label="Write all variables to new netCDF file"/>
     </inputs>
     <outputs>
         <data name="output_netcdf" format="netcdf"/>
