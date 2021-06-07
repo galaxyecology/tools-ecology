@@ -101,9 +101,9 @@ This tool from PAMPA toolsuite computes Generalized Linear Models on population 
 
 It allows user to choose composition of the model :
 
-- Interest variable among numeric or integer variables of the input file
+- Response variable among numeric or integer variables of the input file
 
-- Response variables among year, site and/or habitat
+- Explanatory variables among year, site and/or habitat
 
 - Allocation of random effect on year and/or site
 
@@ -139,7 +139,7 @@ OR
 
 The first input may be extracted from the 'Calculate presence absence' tool.
 
-A tabular file with observation unit data which contains at least as much columns as used response variables in addition with the 'observation.unit' and 'species.code' column.
+A tabular file with observation unit data which contains at least as much columns as used explanatory variables in addition with the 'observation.unit' and 'species.code' column.
 
 +-------------------+--------------+---------+--------+------------+-----+       
 | observation.unit  | species.code |  site   |  year  |  habitat   | ... |            
