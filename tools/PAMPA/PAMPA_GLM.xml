@@ -104,9 +104,9 @@ This tool from PAMPA toolsuite computes Generalized Linear Models on community d
 
 It allows user to choose composition of the model :
 
-- Interest variable among numeric or integer variables of the input file
+- Response variable among numeric or integer variables of the input file
 
-- Response variables among year, site and/or habitat
+- Explanatory variables among year, site and/or habitat
 
 - Allocation of random effect on year and/or site
 
