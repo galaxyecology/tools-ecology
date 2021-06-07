@@ -54,10 +54,10 @@
     <xml name="pampa_input_GLM">
         <param name="input_metric" type="data" format="tabular" label="Input metrics file" help="Metrics data file, with location, year, and metrics informations that can be used as interest variable."/>
         <param name="input_unitobs" type="data" format="tabular" label="Unitobs informations file" help="Unitobs file, with all informations available about unitobs."/>
-        <param name="varint" type="data_column" data_ref="input_metric" use_header_names="true" label="Interest variable from metrics file" help= "Choose the field of the interest variable."/>
+        <param name="varint" type="data_column" data_ref="input_metric" use_header_names="true" label="Response variable from metrics file" help= "Choose the field of the response variable."/>
     </xml>
     <xml name="pampa_var_GLM">
-        <param name="varrep" type="select" label="Response variables" help= "Choose the response variables you want to include in your analysis." multiple="true">
+        <param name="varrep" type="select" label="Explanatory variables" help= "Choose the explanatory variables you want to include in your analysis." multiple="true">
             <option selected="true" value="year">Year</option>
             <option selected="true" value="site">Site</option>
             <option selected="true" value="habitat">Habitat</option>
