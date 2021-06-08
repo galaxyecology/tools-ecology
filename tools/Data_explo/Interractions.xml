@@ -1,0 +1,85 @@
+<tool id="ecology_interractions" name="Interractions between variables" version="@VERSION@" profile = "20.01">
+    <description>Show the interractions between variables</description>
+    <macros>
+        <import>macro.xml</import>
+    </macros>
+    <requirements> 
+        <requirement type="package" version="1.1.1">r-cowplot</requirement>
+        <requirement type="package" version="3.3.3">r-ggplot2</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript
+            '$__tool_directory__/graph_interractions.r'
+            '$input'
+            '$colnames'
+            '$variable1'
+            '$variable2'
+            '$species'
+            '$variable4'
+            '$output'
+            '$plots'
+        ]]>
+        </command>
+        <inputs>
+            <expand macro="explo_input"/>
+            <param name="variable1" label="Select column containing numerical values " type="data_column" data_ref="input" numerical="True"/>
+            <param name="variable2" label="Select column containing numerical values " type="data_column" data_ref="input" numerical="True"/>
+            <param name="species" label="Select column containing species " type="data_column" data_ref="input" numerical="False"/>
+            <param name="variable4" label="Select column " type="data_column" data_ref="input"/>
+        </inputs>
+        <outputs>
+            <data name="output" from_work_dir="species.txt" format="txt"/>
+            <collection type="list" name="plots">
+                <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" visible="false" format="png"/>
+            </collection>
+        </outputs>
+        <tests>
+            <test>
+                <param name="input" value="Reel_life_survey_fish_modif2.tabular"/>
+                <param name="colnames" value="true"/>
+                <param name="variable1" value="18"/>
+                <param name="variable2" value="12"/>
+                <param name="species" value="15"/>
+                <param name="variable4" value="6"/>
+                <output name="output" value="species.txt"/>
+                <output_collection name="plots" type="list" count="1">
+                    <element name="interraction" ftype="png">
+                        <assert_contents>
+                            <has_text text="PNG"/>
+                        </assert_contents>
+                    </element>
+                </output_collection>
+            </test>
+        </tests>
+        <expand macro="topic"/>
+        <help><![CDATA[
+=============================================
+Calculate the interractions between variables
+=============================================
+
+**What it does**
+This tool computes the interractions between variables :
+- Computes multiple scatterplots
+
+**Input description**
+A tabular file with observation data. Must at least contain four columns
+which associate two numerical variables and two other variables.
+
++----------+-----------+--------------+------------+
+|  number1 | variable  | species.code |   number2  |
++==========+===========+==============+============+
+|    2     |    var    |   speciesID  |      4     |
++----------+-----------+--------------+------------+
+|  ...     |    ...    |      ...     |     ...    |
++----------+-----------+--------------+------------+
+
+**Output**
+A  png file with multiple graphs showing the interractions between two variables.
+|
+
+
+    ]]></help>
+
+<expand macro="book_bibref"/>    
+            
+</tool>

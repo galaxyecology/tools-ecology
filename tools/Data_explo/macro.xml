@@ -5,7 +5,10 @@
            <requirement type="package" version="3.3.3">r-ggplot2</requirement>   
         </requirements>
     </xml>
-
+    <xml name="explo_input">
+       <param name="input" type="data" format="tabular" label="Input table"/>
+       <param name="colnames" type="boolean" label="The first line of your dataframe represents the names of columns ?"/>
+    </xml>
     <xml name="explo_bibref">
        <citations>
             <citation type="bibtex">

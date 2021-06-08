@@ -1,0 +1,87 @@
+<tool id="ecology_rare" name="Rarefaction curve" version="@VERSION@" profile = "20.01">
+    <description>Plot the rarefaction curve</description>
+    <macros>
+        <import>macro.xml</import>
+    </macros>
+    <requirements> 
+        <requirement type="package" version="3.3.3">r-ggplot2</requirement>
+        <requirement type="package" version="2.5_7">r-vegan</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript
+            '$__tool_directory__/graph_rarefaction.r'
+            '$input'
+            '$colnames'
+            '$abundance'
+            '$species'
+            '$number'
+            '$output_rare'
+            '$plots'
+        ]]>
+        </command>
+        <inputs>
+            <expand macro="explo_input"/>
+            <param name="abundance" label="Select column containing abundances " type="data_column" data_ref="input" numerical="True"/> 
+            <param name="species" label="Select column containing species " type="data_column" data_ref="input" numerical="False"/>
+            <param name="number" label="Select a number for the rarefaction indice" type="text"/>
+        </inputs>
+        <outputs>
+            <data name="output_rare" from_work_dir="Data.tabular" format="tabular"/>
+            <collection type="list" name="plots">
+                <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" visible="false" format="png"/>
+            </collection>
+        </outputs>
+	<tests>
+            <test>
+                <param name="input" value="Reel_life_survey_fish_modif2.tabular"/>
+                <param name="colnames" value="true"/>
+                <param name="abundance" value="18"/>
+                <param name="species" value="15"/>
+                <param name="number" value="200"/>
+                <output name="output_rare" value="Data.tabular"/>
+		<output_collection name="plots" type="list" count="1">
+                    <element name="rarefaction" ftype="png">
+                        <assert_contents>
+                            <has_text text="PNG"/>
+                        </assert_contents>
+                    </element>
+                </output_collection>   
+            </test>
+	</tests>
+	<expand macro="topic"/>
+	<help><![CDATA[
+=====================
+Plots the rarefaction
+=====================
+
+**What it does**
+This tool computes the rarefaction curves of species:
+- Computes one or multiple graphs
+
+**Input description**
+A tabular file with observation data. Must at least contain two columns
+which associate abundance and species ID.
+And one numeric value for the rarefaction indice must be entered
+
++--------------+------------+
+| species.code |   number   |
++==============+============+
+|   speciesID  |      4     |
++--------------+------------+
+|      ...     |     ...    |
++--------------+------------+
+
+**Output**
+A png file with one or multiple graphs showing the rarefaction curves for each species according to one rarefaction indice that you chose.
+|
+
+**HELP**
+
+Warning : If there are more than 30 species in your data you will have one graph for each species and not all the curves on one graph.
+    ]]></help>
+    
+<citations>
+    
+</citations>
+            
+</tool>

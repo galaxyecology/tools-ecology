@@ -1,4 +1,4 @@
-<tool id="tool_autocorr" name="Calculate self correlation" version="@VERSION@" profile = "20.01">
+<tool id="ecology_autocorr" name="Calculate self correlation" version="@VERSION@" profile = "20.01">
     <description>Show if there is auto-correlation</description>
     <macros>
         <import>macro.xml</import>
@@ -6,17 +6,16 @@
     <expand macro="Explo_requirements"/>
     <command detect_errors="exit_code"><![CDATA[
         Rscript
-            '$__tool_directory__/GraphAutocorrelation.r'
+            '$__tool_directory__/graph_autocorrelation.r'
             '$input'
-            '$variable'
             '$colnames'
+            '$variable'
             '$output'
         ]]>
         </command>
         <inputs>
-            <param name="input" type="data" format="tabular" label="Input table"/>
-            <param name="variable" label="Select column containing numerical values " type="data_column" data_ref="input" numerical="True" multiple="False"/>
-            <param name="colnames" type="boolean" label="The first line of your dataframe represents the names of columns ?"/>
+            <expand macro="explo_input"/>
+            <param name="variable" label="Select column containing numerical values " type="data_column" data_ref="input" numerical="True"/>
         </inputs>
         <outputs>
                 <data name="output" from_work_dir="autocorr.png" format="png"/>
@@ -24,8 +23,8 @@
         <tests>
             <test>
                 <param name="input" value="Reel_life_survey_fish_modif2.tabular"/>
-                <param name="variable" value="18"/>
                 <param name="colnames" value="true"/>
+                <param name="variable" value="18"/>
                 <output name="output" ftype="png">
                     <assert_contents>
                         <has_text text="PNG"/>
