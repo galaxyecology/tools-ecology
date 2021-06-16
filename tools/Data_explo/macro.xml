@@ -9,6 +9,30 @@
        <param name="input" type="data" format="tabular" label="Input table"/>
        <param name="colnames" type="boolean" label="The first line of your dataframe represents the names of columns ?"/>
     </xml>
+    <xml name="explo_filter_colli">
+        <filter> method['type'] == 'collinearity'</filter>
+    </xml>
+    <xml name="explo_filter_pca">
+        <filter> method['type'] == 'pca'</filter>
+    </xml>
+    <xml name="explo_filter_vif">
+        <filter> method['type'] == 'vif'</filter>
+    </xml>
+    <xml name="explo_filter_interr">
+        <filter> method['type'] == 'interr'</filter>
+    </xml>
+    <xml name="explo_filter_autocorr">
+        <filter> method['type'] == 'autocorr'</filter>
+    </xml>
+    <xml name="explo_filter_abund">
+        <filter> method['type'] == 'abund'</filter>
+    </xml>
+    <xml name="explo_filter_pres_abs">
+        <filter> method['type'] == 'pres_abs'</filter>
+    </xml>
+    <xml name="explo_filter_rare">
+        <filter> method['type'] == 'rare'</filter>
+    </xml>
     <xml name="explo_bibref">
        <citations>
             <citation type="bibtex">
