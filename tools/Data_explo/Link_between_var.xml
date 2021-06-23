@@ -1,10 +1,6 @@
-<tool id="ecology_link" name="Link between variables and themselves" version="@VERSION@" profile="20.01">
+<tool id="ecology_link" name="Variables exploration" version="@VERSION@" profile="20.01">
     <description> 
-        - Show the collinearity among the covariates
-        - Plot a PCA
-        - Compute the variance inflation factor (VIF)
-        - Show if there is auto-correlation
-        - Show the interractions between variables
+        Shows interaction, correlation, colinearity and variance inflation factor (vif)
     </description>
     <macros>
         <import>macro.xml</import>
@@ -176,6 +172,11 @@
 Calculate links between variables
 =================================
 
+- Show the collinearity among the covariates
+- Plot a PCA
+- Compute the variance inflation factor (VIF)
+- Show if there is auto-correlation
+- Show the interractions between variables
 
 
 ===========================

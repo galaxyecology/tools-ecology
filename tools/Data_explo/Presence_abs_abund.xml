@@ -1,8 +1,6 @@
-<tool id="ecology_presence_abs_abund" name="Presence abscence and abundance in environment" version="@VERSION@" profile="20.01">
+<tool id="ecology_presence_abs_abund" name="Presence-absence and abundance" version="@VERSION@" profile="20.01">
     <description> 
-        - Show the abundance according to the location 
-        - Show if a species is present or not and in which proportion
-        - Plot the rarefaction curve
+        Presence-absence and abundance in an environment
     </description>
     <macros>
         <import>macro.xml</import>
@@ -115,6 +113,9 @@
 Computes the presence absence and abundance of species 
 ======================================================
 
+- Show the abundance according to the location 
+- Show if a species is present or not and in which proportion
+- Plot the rarefaction curve
 
 ==================
 Maps the abundance 

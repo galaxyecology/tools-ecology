@@ -23,7 +23,10 @@ if (length(args) == 0) {
     var <- as.numeric(args[5])
 }
 
-if (hr == "false") {hr <- FALSE} else {hr <- TRUE}
+if (hr == "false") {
+  hr <- FALSE} else {
+  hr <- TRUE
+}
 
 #####Import data
 data <- read.table(table, sep = "\t", dec = ".", header = hr, fill = TRUE, encoding = "UTF-8")
@@ -44,7 +47,7 @@ testlevene <- function(data, col1, col2) {
 
     return(tb_levene)
     }
-levene <-capture.output(testlevene(data = data, col1 = colvar, col2 = colspe))
+levene <- capture.output(testlevene(data = data, col1 = colvar, col2 = colspe))
 
 cat("\nwrite table with levene test. \n--> \"", paste(levene, "\"\n", sep = ""), file = "levene.txt", sep = "", append = TRUE)
 
@@ -54,11 +57,10 @@ homog_var <- function(data, col1, col2, col3, mult) {
     data[, col1] <- as.factor(data[, col1])
     if (mult) {
             for (spe in unique(data[, col2])) {
-             data.cut <- data[data[, col2] == spe, ]
-             graph_2 <- ggplot2::ggplot(data.cut, ggplot2::aes_string(x = col1, y = col3, color = col1)) +
+             data_cut <- data[data[, col2] == spe, ]
+             graph_2 <- ggplot2::ggplot(data_cut, ggplot2::aes_string(x = col1, y = col3, color = col1)) +
              ggplot2::geom_boxplot() +
-             ggplot2::theme(legend.position = "none", axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5, hjust = 1), 
-              panel.background = ggplot2::element_rect(fill = "#d9d4c5", colour = "#d9d4c5", linetype = "solid"),
+             ggplot2::theme(legend.position = "none", axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5, hjust = 1), panel.background = ggplot2::element_rect(fill = "#d9d4c5", colour = "#d9d4c5", linetype = "solid"),
               panel.grid.major = ggplot2::element_line(linetype = "solid", colour = "white"),
               panel.grid.minor = ggplot2::element_line(linetype = "solid", colour = "white"))
 
@@ -72,8 +74,8 @@ homog_var <- function(data, col1, col2, col3, mult) {
     #Put multiple panels
     graph_2 <- graph_1 + ggplot2::facet_grid(rows = ggplot2::vars(data[, col2]), scales = "free") +
       ggplot2::theme(panel.background = ggplot2::element_rect(fill = "#d9d4c5", colour = "#d9d4c5", linetype = "solid"),
-          panel.grid.major = ggplot2::element_line(linetype = 'solid', colour = "white"),
-          panel.grid.minor = ggplot2::element_line(linetype = 'solid', colour = "white"))
+          panel.grid.major = ggplot2::element_line(linetype = "solid", colour = "white"),
+          panel.grid.minor = ggplot2::element_line(linetype = "solid", colour = "white"))
 
     ggplot2::ggsave("Homogeneity.png", graph_2, width = 16, height = 9, units = "cm")
         }
@@ -111,7 +113,7 @@ return(graph2)
 graph_fin <- function(graph1, graph2) {
   graph <- cowplot::plot_grid(graph1, graph2, ncol = 2, nrow = 1)
 
-  ggplot2::ggsave("Normal_distribution.png", graph, width = 10, height = 7, units ="cm")
+  ggplot2::ggsave("Normal_distribution.png", graph, width = 10, height = 7, units = "cm")
 }
 
 mult <- ifelse(length(unique(data[, colspe])) == 2, FALSE, TRUE)

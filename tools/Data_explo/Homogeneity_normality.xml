@@ -1,7 +1,6 @@
-<tool id="ecology_test" name="Homogeneity and normality" version="@VERSION@" profile="20.01">
+<tool id="ecology_homogeneity_normality" name="Homogeneity and normality" version="@VERSION@" profile="20.01">
     <description> 
-        - Show the homogeneity of the variance
-        - Show the distribution and check its normality
+        - Checks the homogeneity of the variance and the normality of the distribution
     </description>
     <macros>
         <import>macro.xml</import>

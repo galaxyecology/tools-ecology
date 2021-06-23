@@ -1,4 +1,4 @@
-#Rscript
+#rscript
 
 ################################################
 ##    Link between variables and themselves   ##
@@ -10,13 +10,13 @@
 #               faraway
 #               dplyr
 #               GGally
-#               FactoMineR
+#               FactoMiner
 #               factoextra
 #               ggcorrplot
 
 #####Load arguments
 
-args <- commandArgs(trailingOnly = TRUE)
+args <- commandArgs(trailingOnly = TrUE)
 
 if (length(args) == 0) {
     stop("This tool needs at least one argument")
@@ -35,12 +35,15 @@ if (length(args) == 0) {
     var4 <- as.numeric(args[12])
 }
 
-if (hr == "false") {hr <- FALSE} else {hr <- TRUE}
+if (hr == "false") {
+  hr <- FALSE} else {
+  hr <- TrUE
+}
 
 #####Import data
-data <- read.table(table, sep = "\t", dec = ".", header = hr, fill = TRUE, encoding = "UTF-8")
+data <- read.table(table, sep = "\t", dec = ".", header = hr, fill = TrUE, encoding = "UTF-8")
 if (vif | pca) {
-data.active <- data[col]
+data_active <- data[col]
 #Define the active individuals and the active variables for the PCA
 }
 
@@ -50,8 +53,8 @@ colspe <- colnames(data)[spe]
 
 if (colli) {
 data_num <- data[col]
-data_num$species <- data[ , spe]
-data_num <- data_num[grep("^$", data_num$spe, invert = TRUE), ]
+data_num$species <- data[, spe]
+data_num <- data_num[grep("^$", data_num$spe, invert = TrUE), ]
 }
 
 if (interr | auto) {
@@ -77,11 +80,11 @@ acf_df <- function(data, var) {
 tb <- data.frame(acf = acf_tb(data, var)$acf, lag = acf_tb(data, var)$lag)
 
   return(tb) # Lag: intervalle temporel entre mesures, fréquence à laquelle on mesure l'auto corrélation.
-                                           # ACF: indépendance temporelle 
+# ACF: indépendance temporelle
 }
 
 autocorr <- function(var1, var2) {
-  cat("\nACF\n", var2$acf, file = "acf.txt", fill = 1, append = TRUE)
+  cat("\nACF\n", var2$acf, file = "acf.txt", fill = 1, append = TrUE)
   graph <- ggplot2::ggplot() +
   ggplot2::geom_bar(ggplot2::aes(x = var2$lag, y = var2$acf), stat = "identity", position = "identity", fill = "midnightblue") +
   ggplot2::geom_hline(mapping = ggplot2::aes(yintercept = qnorm((1 + 0.95) / 2) / sqrt(var1$n.used)),
@@ -105,11 +108,11 @@ return(graph)
 
 # Put multiple panels
 interraction <- function(data, var1, var2, var3, var4) {
-  cat("\nSpecies\n", spe, file = "Species.txt", fill = 1, append = TRUE)
+  cat("\nSpecies\n", spe, file = "Species.txt", fill = 1, append = TrUE)
   if (mult1) {
       for (spe in unique(data[, var3])) {
-      data.cut <- data[data[, var3] == spe, ]
-      mult_graph <- graph(data.cut, var1, var2, var3) + ggplot2::facet_grid(cols = ggplot2::vars(data.cut[, var4]), scales = "free") +
+      data_cut <- data[data[, var3] == spe, ]
+      mult_graph <- graph(data_cut, var1, var2, var3) + ggplot2::facet_grid(cols = ggplot2::vars(data_cut[, var4]), scales = "free") +
       cowplot::background_grid(major = "xy", minor = "none") +
       cowplot::panel_border() + ggplot2::ggtitle("Interractions")
 
@@ -119,7 +122,7 @@ interraction <- function(data, var1, var2, var3, var4) {
     mult_graph <- graph(data, var1, var2, var3) + ggplot2::facet_grid(rows = ggplot2::vars(data[, var3]), cols = ggplot2::vars(data[, var4]), scales = "free") +
     cowplot::background_grid(major = "xy", minor = "none") +
     cowplot::panel_border() + ggplot2::ggtitle("Interractions")
-  
+
     ggplot2::ggsave("interraction.png", mult_graph)
   }
 }
@@ -127,18 +130,18 @@ interraction <- function(data, var1, var2, var3, var4) {
 ####Collinearity among covariates####
 # Create the plots
 
-Coli <- function(data, var){
+coli <- function(data, var) {
   if (mult2) {
-    cat("\nThere is not enough data on these species they appear too few times in the tabular-file\n", file = "Data.txt", fill = 1, append = TRUE)
+    cat("\nThere is not enough data on these species they appear too few times in the tabular-file\n", file = "Data.txt", fill = 1, append = TrUE)
     for (spe in unique(data$species)) {
       nb_spe <- sum(data$species == spe)
       if (nb_spe <= 2) {
-      cat(spe, file = "Data.txt", fill = 1, append = TRUE)
+      cat(spe, file = "Data.txt", fill = 1, append = TrUE)
       }else{
-      data.cut <- data[data$species == spe, ]
-      nb <- ncol(data.cut)
-      data.num <- data.cut[, -nb]
-      graph <- GGally::ggpairs(data.num, ggplot2::aes(color = data.cut$species),
+      data_cut <- data[data$species == spe, ]
+      nb <- ncol(data_cut)
+      data_num <- data_cut[, -nb]
+      graph <- GGally::ggpairs(data_num, ggplot2::aes(color = data_cut$species),
       lower = list(continuous = "points"), axisLabels = "internal")
 
       ggplot2::ggsave(paste("collinarity_of_", spe, ".png"), graph, width = 20, height = 15)
@@ -147,8 +150,8 @@ Coli <- function(data, var){
 
   }else{
     nb <- ncol(data)
-    data.cut <- data[, -nb]
-    graph <- GGally::ggpairs(data.cut, ggplot2::aes(color = data[, var]),
+    data_cut <- data[, -nb]
+    graph <- GGally::ggpairs(data_cut, ggplot2::aes(color = data[, var]),
     lower = list(continuous = "points"), axisLabels = "internal") +
   ggplot2::scale_colour_manual(values = c("#00AFBB", "#E7B800", "#FC4E07")) +
   ggplot2::scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))
@@ -159,11 +162,11 @@ Coli <- function(data, var){
 
 ####PCA method####
 
-plot_PCA <- function(data) {
+plot_pca <- function(data) {
   #Correlation circle
   graph_corr <- factoextra::fviz_pca_var(active_data(data), col.var = "cos2",
                            gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
-                           repel = TRUE #Avoid text overlap
+                           repel = TrUE #Avoid text overlap
                            )
   ggplot2::ggsave("Pca_circle.png", graph_corr)
 }
@@ -172,7 +175,7 @@ plot_qual <- function(data) {
   #PCA results for variables
   var <- factoextra::get_pca_var(active_data(data))
 
-  #Representation quality
+  #representation quality
   graph_quality <- ggcorrplot::ggcorrplot(var$cos2[!apply(var$cos2, 1, anyNA), ], method = "circle",
   ggtheme = ggplot2::theme_gray,
   colors = c("#00AFBB", "#E7B800", "#FC4E07"))
@@ -190,9 +193,9 @@ myvif <- function(mod) {
     assign <- assign[-1]
   } else warning("No intercept: vifs may not be sensible.")
   terms <- labels(terms(mod))
-  n.terms <- length(terms)
-  if (n.terms < 2) stop("The model contains fewer than 2 terms")
-  if (length(assign) > dim(v)[1] ) {
+  n_terms <- length(terms)
+  if (n_terms < 2) stop("The model contains fewer than 2 terms")
+  if (length(assign) > dim(v)[1]) {
      diag(tmp_cor) <- 0
      if (any(tmp_cor == 1.0)) {
         return("Sample size is too small, 100% collinearity is present")
@@ -200,20 +203,20 @@ myvif <- function(mod) {
         return("Sample size is too small")
      }
   }
-  R <- cov2cor(v)
-  detR <- det(R)
-  result <- matrix(0, n.terms, 3)
+  r <- cov2cor(v)
+  detr <- det(r)
+  result <- matrix(0, n_terms, 3)
   rownames(result) <- terms
   colnames(result) <- c("GVIF", "Df", "GVIF^(1/2Df)")
-  for (term in 1:n.terms) {
+  for (term in 1:n_terms) {
     subs <- which(assign == term)
-    result[term, 1] <- det(as.matrix(R[subs, subs])) * det(as.matrix(R[-subs, -subs])) / detR
+    result[term, 1] <- det(as.matrix(r[subs, subs])) * det(as.matrix(r[-subs, -subs])) / detr
     result[term, 2] <- length(subs)
   }
   if (all(result[, 2] == 1)) {
     result <- data.frame(GVIF = result[, 1])
   } else {
-    result[, 3] <- result[, 1]^(1/(2 * result[, 2]))
+    result[, 3] <- result[, 1] ^ (1 / (2 * result[, 2]))
   }
   invisible(result)
 }
@@ -231,7 +234,7 @@ corvif2 <- function(dataz) {
     lm_mod  <- lm(form, dataz)
 
     return(myvif(lm_mod))
-}            
+}
 
 #Autocorrelation
 if (auto) {
@@ -242,40 +245,40 @@ autocorr(var1 = obj1, var2 = obj2)
 
 if (interr) {
 #Interractions
-mult1 <- ifelse(length(unique(data[, colspe])) <= 6, FALSE, TRUE)
+mult1 <- ifelse(length(unique(data[, colspe])) <= 6, FALSE, TrUE)
 interraction(data, var1 = colvar, var2 = colvar2, var3 = colspe, var4 = colvar4)
 }
 
 #Collinearity
 if (colli) {
-mult2 <- ifelse(length(unique(data[, spe])) < 3, FALSE, TRUE)
-Coli(data = data_num, var = spe)
+mult2 <- ifelse(length(unique(data[, spe])) < 3, FALSE, TrUE)
+coli(data = data_num, var = spe)
 }
 
 #PCA
 if (pca) {
 active_data <- function(data) {
   #Calcul of PCA for the active data
-  res.pca <- FactoMineR::PCA(data, graph = FALSE)
+  res_pca <- FactoMiner::PCA(data, graph = FALSE)
 
-return(res.pca)
+return(res_pca)
 }
 
 #eigenvalue
-eig.val <- capture.output(factoextra::get_eigenvalue(active_data(data.active)))
+eig_val <- capture.output(factoextra::get_eigenvalue(active_data(data_active)))
 
-cat("\nwrite table with eigenvalue. \n--> \"", paste(eig.val, "\"\n", sep = ""), file = "valeurs.txt", sep = "", append = TRUE)
+cat("\nwrite table with eigenvalue. \n--> \"", paste(eig_val, "\"\n", sep = ""), file = "valeurs.txt", sep = "", append = TrUE)
 
-plot_PCA(data.active)
-plot_qual(data.active)
+plot_pca(data_active)
+plot_qual(data_active)
 }
 
 #VIF
 if (vif) {
 #Compute 2 tables#
-tb_corr <- as.data.frame(corvif1(dataz = data.active))
+tb_corr <- as.data.frame(corvif1(dataz = data_active))
 tb_corr <- cbind(x = rownames(tb_corr), tb_corr)
-tb_vif <- corvif2(dataz = data.active)
+tb_vif <- corvif2(dataz = data_active)
 
 write.table(tb_corr, "corr.tabular", row.names = FALSE, quote = FALSE, sep = "\t", dec = ".", fileEncoding = "UTF-8")
 
