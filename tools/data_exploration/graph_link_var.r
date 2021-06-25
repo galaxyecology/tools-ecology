@@ -16,7 +16,7 @@
 
 #####Load arguments
 
-args <- commandArgs(trailingOnly = TrUE)
+args <- commandArgs(trailingOnly = TRUE)
 
 if (length(args) == 0) {
     stop("This tool needs at least one argument")
@@ -37,11 +37,11 @@ if (length(args) == 0) {
 
 if (hr == "false") {
   hr <- FALSE}else {
-  hr <- TrUE
+  hr <- TRUE
 }
 
 #####Import data
-data <- read.table(table, sep = "\t", dec = ".", header = hr, fill = TrUE, encoding = "UTF-8")
+data <- read.table(table, sep = "\t", dec = ".", header = hr, fill = TRUE, encoding = "UTF-8")
 if (vif | pca) {
 data_active <- data[col]
 #Define the active individuals and the active variables for the PCA
@@ -245,13 +245,13 @@ autocorr(var1 = obj1, var2 = obj2)
 
 if (interr) {
 #Interractions
-mult1 <- ifelse(length(unique(data[, colspe])) <= 6, FALSE, TrUE)
+mult1 <- ifelse(length(unique(data[, colspe])) <= 6, FALSE, TRUE)
 interraction(data, var1 = colvar, var2 = colvar2, var3 = colspe, var4 = colvar4)
 }
 
 #Collinearity
 if (colli) {
-mult2 <- ifelse(length(unique(data[, spe])) < 3, FALSE, TrUE)
+mult2 <- ifelse(length(unique(data[, spe])) < 3, FALSE, TRUE)
 coli(data = data_num, var = spe)
 }
 
