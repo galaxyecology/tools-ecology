@@ -16,7 +16,7 @@
 
 #####Load arguments
 
-args <- commandArgs(trailingOnly = TRUE)
+args <- commandArgs(trailingOnly = TrUE)
 
 if (length(args) == 0) {
     stop("This tool needs at least one argument")
@@ -36,12 +36,12 @@ if (length(args) == 0) {
 }
 
 if (hr == "false") {
-  hr <- FALSE} else {
-  hr <- TRUE
+  hr <- FALSE}else {
+  hr <- TrUE
 }
 
 #####Import data
-data <- read.table(table, sep = "\t", dec = ".", header = hr, fill = TRUE, encoding = "UTF-8")
+data <- read.table(table, sep = "\t", dec = ".", header = hr, fill = TrUE, encoding = "UTF-8")
 if (vif | pca) {
 data_active <- data[col]
 #Define the active individuals and the active variables for the PCA
@@ -54,7 +54,7 @@ colspe <- colnames(data)[spe]
 if (colli) {
 data_num <- data[col]
 data_num$species <- data[, spe]
-data_num <- data_num[grep("^$", data_num$spe, invert = TRUE), ]
+data_num <- data_num[grep("^$", data_num$spe, invert = TrUE), ]
 }
 
 if (interr | auto) {
@@ -84,7 +84,7 @@ tb <- data.frame(acf = acf_tb(data, var)$acf, lag = acf_tb(data, var)$lag)
 }
 
 autocorr <- function(var1, var2) {
-  cat("\nACF\n", var2$acf, file = "acf.txt", fill = 1, append = TRUE)
+  cat("\nACF\n", var2$acf, file = "acf.txt", fill = 1, append = TrUE)
   graph <- ggplot2::ggplot() +
   ggplot2::geom_bar(ggplot2::aes(x = var2$lag, y = var2$acf), stat = "identity", position = "identity", fill = "midnightblue") +
   ggplot2::geom_hline(mapping = ggplot2::aes(yintercept = qnorm((1 + 0.95) / 2) / sqrt(var1$n.used)),
@@ -108,7 +108,7 @@ return(graph)
 
 # Put multiple panels
 interraction <- function(data, var1, var2, var3, var4) {
-  cat("\nSpecies\n", spe, file = "Species.txt", fill = 1, append = TRUE)
+  cat("\nSpecies\n", spe, file = "Species.txt", fill = 1, append = TrUE)
   if (mult1) {
       for (spe in unique(data[, var3])) {
       data_cut <- data[data[, var3] == spe, ]
@@ -132,11 +132,11 @@ interraction <- function(data, var1, var2, var3, var4) {
 
 coli <- function(data, var) {
   if (mult2) {
-    cat("\nThere is not enough data on these species they appear too few times in the tabular-file\n", file = "Data.txt", fill = 1, append = TRUE)
+    cat("\nThere is not enough data on these species they appear too few times in the tabular-file\n", file = "Data.txt", fill = 1, append = TrUE)
     for (spe in unique(data$species)) {
       nb_spe <- sum(data$species == spe)
       if (nb_spe <= 2) {
-      cat(spe, file = "Data.txt", fill = 1, append = TRUE)
+      cat(spe, file = "Data.txt", fill = 1, append = TrUE)
       }else{
       data_cut <- data[data$species == spe, ]
       nb <- ncol(data_cut)
@@ -166,7 +166,7 @@ plot_pca <- function(data) {
   #Correlation circle
   graph_corr <- factoextra::fviz_pca_var(active_data(data), col.var = "cos2",
                            gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
-                           repel = TRUE #Avoid text overlap
+                           repel = TrUE #Avoid text overlap
                            )
   ggplot2::ggsave("Pca_circle.png", graph_corr)
 }
@@ -245,13 +245,13 @@ autocorr(var1 = obj1, var2 = obj2)
 
 if (interr) {
 #Interractions
-mult1 <- ifelse(length(unique(data[, colspe])) <= 6, FALSE, TRUE)
+mult1 <- ifelse(length(unique(data[, colspe])) <= 6, FALSE, TrUE)
 interraction(data, var1 = colvar, var2 = colvar2, var3 = colspe, var4 = colvar4)
 }
 
 #Collinearity
 if (colli) {
-mult2 <- ifelse(length(unique(data[, spe])) < 3, FALSE, TRUE)
+mult2 <- ifelse(length(unique(data[, spe])) < 3, FALSE, TrUE)
 coli(data = data_num, var = spe)
 }
 
@@ -267,7 +267,7 @@ return(res_pca)
 #eigenvalue
 eig_val <- capture.output(factoextra::get_eigenvalue(active_data(data_active)))
 
-cat("\nwrite table with eigenvalue. \n--> \"", paste(eig_val, "\"\n", sep = ""), file = "valeurs.txt", sep = "", append = TRUE)
+cat("\nwrite table with eigenvalue. \n--> \"", paste(eig_val, "\"\n", sep = ""), file = "valeurs.txt", sep = "", append = TrUE)
 
 plot_pca(data_active)
 plot_qual(data_active)

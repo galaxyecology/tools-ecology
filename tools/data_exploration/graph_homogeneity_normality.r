@@ -24,7 +24,7 @@ if (length(args) == 0) {
 }
 
 if (hr == "false") {
-  hr <- FALSE} else {
+  hr <- FALSE}else {
   hr <- TRUE
 }
 
