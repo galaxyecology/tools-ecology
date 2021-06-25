@@ -54,7 +54,7 @@ colspe <- colnames(data)[spe]
 if (colli) {
 data_num <- data[col]
 data_num$species <- data[, spe]
-data_num <- data_num[grep("^$", data_num$spe, invert = TrUE), ]
+data_num <- data_num[grep("^$", data_num$spe, invert = TRUE), ]
 }
 
 if (interr | auto) {
