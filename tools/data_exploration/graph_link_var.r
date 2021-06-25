@@ -36,7 +36,8 @@ if (length(args) == 0) {
 }
 
 if (hr == "false") {
-  hr <- FALSE}else {
+  hr <- FALSE
+}else{
   hr <- TRUE
 }
 
@@ -84,7 +85,7 @@ tb <- data.frame(acf = acf_tb(data, var)$acf, lag = acf_tb(data, var)$lag)
 }
 
 autocorr <- function(var1, var2) {
-  cat("\nACF\n", var2$acf, file = "acf.txt", fill = 1, append = TrUE)
+  cat("\nACF\n", var2$acf, file = "acf.txt", fill = 1, append = TRUE)
   graph <- ggplot2::ggplot() +
   ggplot2::geom_bar(ggplot2::aes(x = var2$lag, y = var2$acf), stat = "identity", position = "identity", fill = "midnightblue") +
   ggplot2::geom_hline(mapping = ggplot2::aes(yintercept = qnorm((1 + 0.95) / 2) / sqrt(var1$n.used)),
@@ -108,7 +109,7 @@ return(graph)
 
 # Put multiple panels
 interraction <- function(data, var1, var2, var3, var4) {
-  cat("\nSpecies\n", spe, file = "Species.txt", fill = 1, append = TrUE)
+  cat("\nSpecies\n", spe, file = "Species.txt", fill = 1, append = TRUE)
   if (mult1) {
       for (spe in unique(data[, var3])) {
       data_cut <- data[data[, var3] == spe, ]
@@ -132,11 +133,11 @@ interraction <- function(data, var1, var2, var3, var4) {
 
 coli <- function(data, var) {
   if (mult2) {
-    cat("\nThere is not enough data on these species they appear too few times in the tabular-file\n", file = "Data.txt", fill = 1, append = TrUE)
+    cat("\nThere is not enough data on these species they appear too few times in the tabular-file\n", file = "Data.txt", fill = 1, append = TRUE)
     for (spe in unique(data$species)) {
       nb_spe <- sum(data$species == spe)
       if (nb_spe <= 2) {
-      cat(spe, file = "Data.txt", fill = 1, append = TrUE)
+      cat(spe, file = "Data.txt", fill = 1, append = TRUE)
       }else{
       data_cut <- data[data$species == spe, ]
       nb <- ncol(data_cut)
@@ -166,7 +167,7 @@ plot_pca <- function(data) {
   #Correlation circle
   graph_corr <- factoextra::fviz_pca_var(active_data(data), col.var = "cos2",
                            gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
-                           repel = TrUE #Avoid text overlap
+                           repel = TRUE #Avoid text overlap
                            )
   ggplot2::ggsave("Pca_circle.png", graph_corr)
 }
@@ -267,7 +268,7 @@ return(res_pca)
 #eigenvalue
 eig_val <- capture.output(factoextra::get_eigenvalue(active_data(data_active)))
 
-cat("\nwrite table with eigenvalue. \n--> \"", paste(eig_val, "\"\n", sep = ""), file = "valeurs.txt", sep = "", append = TrUE)
+cat("\nwrite table with eigenvalue. \n--> \"", paste(eig_val, "\"\n", sep = ""), file = "valeurs.txt", sep = "", append = TRUE)
 
 plot_pca(data_active)
 plot_qual(data_active)

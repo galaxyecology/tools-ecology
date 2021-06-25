@@ -21,7 +21,8 @@ if (length(args) == 0) {
 }
 
 if (hr == "false") {
-  hr <- FALSE}else {
+  hr <- FALSE
+}else{
   hr <- TRUE
 }
 
@@ -56,10 +57,10 @@ return(graph_dispersion)
 }
 
 #The 2 graph
-MD <- function(med, disp) {
+med_disp <- function(med, disp) {
   graph <- cowplot::plot_grid(med, disp, ncol = 1, nrow = 2, vjust = -5,  scales = "free")
 
   ggplot2::ggsave("Med_Disp.png", graph, width = 12, height = 20, units = "cm")
 }
 
-MD(med = graph_median(data, var1 = colvar1), disp = dispersion(data, var1 = colvar1, var2 = colvar2))
+med_disp(med = graph_median(data, var1 = colvar1), disp = dispersion(data, var1 = colvar1, var2 = colvar2))
