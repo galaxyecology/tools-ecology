@@ -1,7 +1,5 @@
 <tool id="ecology_link" name="Variables exploration" version="@VERSION@" profile="20.01">
-    <description> 
-        Shows interaction, correlation, colinearity and variance inflation factor (vif)
-    </description>
+    <description>Shows interaction, correlation, colinearity and variance inflation factor (vif)</description>
     <macros>
         <import>macro.xml</import>
     </macros>
@@ -91,23 +89,23 @@
                     <option value="autocorr">Autocorrelation of one selected numerical variable </option>
                 </param>
                 <when value="collinearity">
-                    <param name="species" label="Select column containing species for collinearity " type="data_column" data_ref="input" numerical="False"/>
-                    <param name="columns" label="Select columns containing numerical values " type="data_column" data_ref="input" numerical="True" multiple="True"/>
+                    <param name="species" label="Select column containing species for collinearity" type="data_column" data_ref="input" numerical="False"/>
+                    <param name="columns" label="Select columns containing numerical values" type="data_column" data_ref="input" numerical="True" multiple="True"/>
                 </when>
                 <when value="vif">
-                    <param name="columns" label="Select columns containing numerical values " type="data_column" data_ref="input" numerical="True" multiple="True"/>
+                    <param name="columns" label="Select columns containing numerical values" type="data_column" data_ref="input" numerical="True" multiple="True"/>
                 </when>
                 <when value="pca">
-                    <param name="columns" label="Select columns containing numerical values " type="data_column" data_ref="input" numerical="True" multiple="True"/>
+                    <param name="columns" label="Select columns containing numerical values" type="data_column" data_ref="input" numerical="True" multiple="True"/>
                 </when>
                 <when value="interr">
-                    <param name="variable" label="Select column containing numerical values " type="data_column" data_ref="input" numerical="True"/>
-                    <param name="variable2" label="Select column containing numerical values " type="data_column" data_ref="input" numerical="True"/>
-                    <param name="species" label="Select column containing species " type="data_column" data_ref="input" numerical="False" help="This parameter allows you to divide your scatterplot according to species"/>
-                    <param name="variable3" label="Select column " type="data_column" data_ref="input" help="This parameter allows you to divide your scatterplot once more"/>
+                    <param name="variable" label="Select column containing numerical values" type="data_column" data_ref="input" numerical="True"/>
+                    <param name="variable2" label="Select column containing numerical values" type="data_column" data_ref="input" numerical="True"/>
+                    <param name="species" label="Select column containing species" type="data_column" data_ref="input" numerical="False" help="This parameter allows you to divide your scatterplot according to species"/>
+                    <param name="variable3" label="Select column" type="data_column" data_ref="input" help="This parameter allows you to divide your scatterplot once more"/>
                 </when>
                 <when value="autocorr">
-                    <param name="variable" label="Select column containing numerical values " type="data_column" data_ref="input" numerical="True"/>
+                    <param name="variable" label="Select column containing numerical values" type="data_column" data_ref="input" numerical="True"/>
                 </when>
             </conditional>
         </inputs>
@@ -348,7 +346,6 @@ A png file with one graph showing if we have autocorrelation for a variable, if 
 .. image::Autocorr.png
 
     ]]></help>
-<expand macro="explo_bibref"/>  
-<!--<expand macro="book_bibref"/>-->
-           
+    <expand macro="explo_bibref"/>  
+    <!--<expand macro="book_bibref"/>-->    
 </tool>
