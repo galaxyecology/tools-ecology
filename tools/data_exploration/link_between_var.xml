@@ -144,7 +144,7 @@
                 <param name="autcorr" value="false"/>
                 <param name="species" value="15"/>
                 <param name="columns" value="12,17,18"/>
-                <output name="output_acp" value="Missing_species.txt"/>
+                <output name="output_coli" value="Missing_species.txt"/>
                 <output_collection name="plots" type="list" count="3">
                     <element name="collinarity_of_Blenniidae" ftype="png">
                         <assert_contents>
