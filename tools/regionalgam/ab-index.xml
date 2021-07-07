@@ -3,12 +3,14 @@
     <macros>
         <import>regionalgam_macros.xml</import>
     </macros>
-    <expand macro="rg_r_requirements"/>
+    <requirements>
+        <requirement type="package" version="1.12.2">r-data.table</requirement>
+    </requirements>
     <command detect_errors="exit_code"><![CDATA[
         Rscript '$__tool_directory__/ab-index.R'
-            '$__tool_directory__/dennis-gam-initial-functions.R' 
-            '$count_file' '$input2' 
-            '$output' 
+            '$__tool_directory__/dennis-gam-initial-functions.R'
+            '$count_file' '$input2'
+            '$output'
     ]]>
     </command>
     <inputs>
@@ -16,7 +18,7 @@
         <param format="tabular" name="input2" type="data" label="Regional expected pattern of abundance" help="Flight curve output, tabular file."/>
     </inputs>
     <outputs>
-        <data format="tabular" name="output" from_work_dir="data.index" />
+        <data format="tabular" name="output" from_work_dir="data_index" />
     </outputs>
     <tests>
         <test>
