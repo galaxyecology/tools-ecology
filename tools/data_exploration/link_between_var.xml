@@ -19,7 +19,7 @@
             '$__tool_directory__/graph_link_var.r'
             '$input'
             '$colnames'
-            #if $method.type=='collinearity':
+            #if $method.explo_type=='collinearity':
               'TRUE'
               'FALSE'
               'FALSE'
@@ -30,7 +30,7 @@
               ''
               ''
               ''
-            #elif $method.type=='vif':
+            #elif $method.explo_type=='vif':
               'FALSE'
               'TRUE'
               'FALSE'
@@ -41,7 +41,7 @@
               ''
               ''
               ''
-            #elif $method.type=='pca':
+            #elif $method.explo_type=='pca':
               'FALSE'
               'FALSE'
               'TRUE'
@@ -52,7 +52,7 @@
               ''
               ''
               ''
-            #elif $method.type=='interr':
+            #elif $method.explo_type=='interr':
               'FALSE'
               'FALSE'
               'FALSE'
@@ -81,7 +81,7 @@
         <inputs>
             <expand macro="explo_input"/>
             <conditional name="method">
-                <param name="type" type="select" label="Variables links exploration">
+                <param name="explo_type" type="select" label="Variables links exploration">
                     <option value="collinearity">Collinearity between selected numerical variables for each species</option>
                     <option value="vif">Variance inflation factor (vif) on selected numerical variables</option>
                     <option value="pca">Principal component analysis (pca) on selected numerical variables</option>
