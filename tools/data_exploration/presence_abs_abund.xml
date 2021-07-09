@@ -5,10 +5,9 @@
     <macros>
         <import>macro.xml</import>
     </macros>
-    <requirements>
-        <requirement type="package" version="3.3.3">r-ggplot2</requirement>   
+    <expand macro="requirements">
         <requirement type="package" version="2.5_7">r-vegan</requirement>
-    </requirements>
+    </expand>
     <command detect_errors="exit_code"><![CDATA[
         Rscript
             '$__tool_directory__/graph_pres_abs_abund.r'
@@ -47,68 +46,68 @@
             #end if
             '$abundance'
         ]]>
-        </command>
-        <inputs>
-            <expand macro="explo_input"/>
+    </command>
+    <inputs>
+        <expand macro="explo_input" />
+        <conditional name="method">
+            <param name="type" type="select" label="Variables presence, absence and abundance" display="radio">
+                <option value="abund">Map of the abunance in the environment </option>
+                <option value="pres_abs">Presence and absence count of species according their locations</option>
+                <option value="rare">Rarefaction of species</option>
+            </param>
+            <when value="abund">
+                <param name="latitude" label="Select column containing latitudes " type="data_column" data_ref="input" numerical="True" />
+                <param name="longitude" label="Select column containing longitudes" type="data_column" data_ref="input" numerical="True" />
+                <param name="individual" type="text" label="The abundance of what are you computing ?" help="This parameter allows you to write in the title of the graph the abundance of which species or community, that you want to compute." />
+            </when>
+            <when value="pres_abs">
+                <param name="site" label="Select column containing sites " type="data_column" data_ref="input" />
+                <param name="species" label="Select column containing species " type="data_column" data_ref="input" numerical="False" />
+            </when>
+            <when value="rare">
+                <param name="number" label="Write a number for the rarefaction indice" type="text" />
+                <param name="species" label="Select column containing species " type="data_column" data_ref="input" numerical="False" />
+            </when>
+        </conditional>
+        <param name="abundance" label="Select column containing abundances " type="data_column" data_ref="input" numerical="True" />
+    </inputs>
+    <outputs>
+        <data name="output_abund" from_work_dir="Data_abund.txt" format="txt" label="Data used">
+            <expand macro="explo_filter_abund" />
+        </data>
+        <data name="output_pres_abs" from_work_dir="Locations.txt" format="txt" label="Locations used">
+            <expand macro="explo_filter_pres_abs" />
+        </data>
+        <data name="output_rare" from_work_dir="Rare.tabular" format="tabular" label="Rare indice">
+            <expand macro="explo_filter_rare" />
+        </data>
+        <collection type="list" name="plots">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" visible="false" format="png" />
+        </collection>
+    </outputs>
+    <tests>
+        <test>
+            <param name="input" value="Reel_life_survey_fish_modif2.tabular" />
+            <param name="colnames" value="true" />
             <conditional name="method">
-                <param name="type" type="select" label="Variables presence, absence and abundance" display="radio">
-                    <option value="abund">Map of the abunance in the environment </option>
-                    <option value="pres_abs">Presence and absence count of species according their locations</option>
-                    <option value="rare">Rarefaction of species</option>
-                </param>
-                <when value="abund">
-                    <param name="latitude" label="Select column containing latitudes " type="data_column" data_ref="input" numerical="True"/>
-                    <param name="longitude" label="Select column containing longitudes" type="data_column" data_ref="input" numerical="True"/>
-                    <param name="individual" type="text" label="The abundance of what are you computing ?" help="This parameter allows you to write in the title of the graph the abundance of which species or community, that you want to compute."/>
-                </when>
-                <when value="pres_abs">
-                    <param name="site" label="Select column containing sites " type="data_column" data_ref="input"/>
-                    <param name="species" label="Select column containing species " type="data_column" data_ref="input" numerical="False"/>
-                </when>
-                <when value="rare">              
-                    <param name="number" label="Write a number for the rarefaction indice" type="text"/>
-                    <param name="species" label="Select column containing species " type="data_column" data_ref="input" numerical="False"/>
-                </when>
-            </conditional> 
-            <param name="abundance" label="Select column containing abundances " type="data_column" data_ref="input" numerical="True"/> 
-        </inputs>
-        <outputs>
-            <data name="output_abund" from_work_dir="Data_abund.txt" format="txt" label="Data used">
-                <expand macro="explo_filter_abund"/>
-            </data>
-            <data name="output_pres_abs" from_work_dir="Locations.txt" format="txt" label="Locations used">
-                <expand macro="explo_filter_pres_abs"/>
-            </data>
-            <data name="output_rare" from_work_dir="Rare.tabular" format="tabular" label="Rare indice">
-                <expand macro="explo_filter_rare"/>
-            </data>
-            <collection type="list" name="plots">
-                <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" visible="false" format="png"/>
-            </collection>
-        </outputs>
-        <tests>
-            <test>
-                <param name="input" value="Reel_life_survey_fish_modif2.tabular"/>
-                <param name="colnames" value="true"/>
-                <param name="abund" value="true"/>
-                <param name="presabs" value="false"/>
-                <param name="rare" value="false"/>
-                <param name="latitute" value="9"/>
-                <param name="longitude" value="10"/>
-                <param name="individual" value="fishes"/>
-                <param name="abundance" value="18"/>
-                <output name="output_abund" value="Data_used.txt"/>
-                <output_collection name="plots" type="list" count="1">
-                    <element name="mappy" ftype="png">
-                        <assert_contents>
-                            <has_text text="PNG"/>
-                        </assert_contents>
-                    </element>
-                </output_collection>
-            </test>
-        </tests>
-        <expand macro="topic"/>
-        <help><![CDATA[
+                <param name="abund" value="true" />
+                <param name="latitute" value="9" />
+                <param name="longitude" value="10" />
+                <param name="individual" value="fishes" />
+            </conditional>
+            <param name="abundance" value="18" />
+            <output name="output_abund" value="Data_used.txt" />
+            <output_collection name="plots" type="list" count="1">
+                <element name="mappy" ftype="png">
+                    <assert_contents>
+                        <has_text text="PNG" />
+                    </assert_contents>
+                </element>
+            </output_collection>
+        </test>
+    </tests>
+    <expand macro="topic" />
+    <help><![CDATA[
 ======================================================
 Computes the presence absence and abundance of species 
 ======================================================
@@ -212,7 +211,7 @@ A png file with one or multiple graphs showing the rarefaction curves for each s
 
 Warning : If there are more than 30 species in your data you will have one graph for each species and not all the curves on one graph.
 
-    ]]></help>
-<expand macro="book_bibref"/>
-            
+    ]]>    </help>
+    <expand macro="book_bibref" />
+
 </tool>

@@ -1,45 +1,43 @@
 <macros>
-    <token name="@VERSION@">0.0.0</token>
-    <xml name="Explo_requirements">
+    <token name="@VERSION@">0.0.1</token>
+    <xml name="requirements">
         <requirements>
-           <requirement type="package" version="3.3.3">r-ggplot2</requirement>   
+            <requirement type="package" version="3.3.5">r-ggplot2</requirement>
+            <yield />
         </requirements>
     </xml>
     <xml name="explo_input">
-       <param name="input" type="data" format="tabular" label="Input table"/>
-       <param name="colnames" type="boolean" label="The first line of your dataframe represents the names of columns ?"/>
+        <param name="input" type="data" format="tabular" label="Input table" />
+        <param name="colnames" type="boolean" label="The first line of your dataframe represents the names of columns ?" />
     </xml>
     <xml name="explo_filter_colli">
-        <filter> method['type'] == 'collinearity'</filter>
+        <filter>method['type'] == 'collinearity'</filter>
     </xml>
     <xml name="explo_filter_pca">
-        <filter> method['type'] == 'pca'</filter>
+        <filter>method['type'] == 'pca'</filter>
     </xml>
     <xml name="explo_filter_vif">
-        <filter> method['type'] == 'vif'</filter>
+        <filter>method['type'] == 'vif'</filter>
     </xml>
     <xml name="explo_filter_interr">
-        <filter> method['type'] == 'interr'</filter>
+        <filter>method['type'] == 'interr'</filter>
     </xml>
     <xml name="explo_filter_autocorr">
-        <filter> method['type'] == 'autocorr'</filter>
+        <filter>method['type'] == 'autocorr'</filter>
     </xml>
     <xml name="explo_filter_abund">
-        <filter> method['type'] == 'abund'</filter>
+        <filter>method['type'] == 'abund'</filter>
     </xml>
     <xml name="explo_filter_pres_abs">
-        <filter> method['type'] == 'pres_abs'</filter>
+        <filter>method['type'] == 'pres_abs'</filter>
     </xml>
     <xml name="explo_filter_rare">
-        <filter> method['type'] == 'rare'</filter>
+        <filter>method['type'] == 'rare'</filter>
     </xml>
     <xml name="explo_bibref">
-       <citations>
+        <citations>
             <citation type="bibtex">
-            @unpublished{
-            title={ A protocol for data exploration to avoid common statistical problems },
-            authors={Alain F. Zuur,  Elena N. Ieno,  Chris S. Elphick},
-            url={https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/j.2041-210X.2009.00001.x}
+            @unpublished{ title={ A protocol for data exploration to avoid common statistical problems }, authors={Alain F. Zuur,  Elena N. Ieno,  Chris S. Elphick}, url={https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/j.2041-210X.2009.00001.x}
             }
             </citation>
         </citations>
@@ -47,17 +45,15 @@
     <xml name="book_bibref">
         <citations>
             <citation type="bibtex">
-            @unpublished{
-            title={ Numerical Ecology with R },
-            author={Daniel Borcard, François Gillet, Pierre Legendre},
+            @unpublished{ title={ Numerical Ecology with R }, author={Daniel Borcard, François Gillet, Pierre Legendre},
             }
             </citation>
         </citations>
     </xml>
     <xml name="topic">
         <edam_topics>
-           <edam_topic>topic_0610</edam_topic>
-           <edam_topic>topic_3050</edam_topic>
+            <edam_topic>topic_0610</edam_topic>
+            <edam_topic>topic_3050</edam_topic>
         </edam_topics>
     </xml>
 </macros>

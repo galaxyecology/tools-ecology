@@ -3,10 +3,9 @@
     <macros>
         <import>macro.xml</import>
     </macros>
-    <requirements> 
+    <expand macro="requirements">
         <requirement type="package" version="1.1.1">r-cowplot</requirement>
-        <requirement type="package" version="3.3.3">r-ggplot2</requirement>
-    </requirements>
+    </expand>
     <command detect_errors="exit_code"><![CDATA[
         Rscript
             '$__tool_directory__/graph_median_dispersion.r'
@@ -16,41 +15,41 @@
             '$variable2'
             '$output_md'
         ]]>
-        </command>
-        <inputs>
-            <expand macro="explo_input"/>
-            <param name="variable1" label="Select a column containing numerical values (such as the abundance) " type="data_column" data_ref="input" numerical="True"/>
-            <param name="variable2" label="Select a column according which you want to see the dispersion of the numerical value" type="data_column" data_ref="input"/>
-        </inputs>
-        <outputs>
-            <data name="output_md" from_work_dir="Med_Disp.png" format="png"/>
-        </outputs>
-        <tests>
-            <test>
-                <param name="input" value="Reel_life_survey_fish_modif2.tabular"/>
-                <param name="colnames" value="true"/>
-                <param name="variable1" value="18"/>
-                <param name="variable2" value="15"/>
-                <output name="output_md" ftype="png">
-                    <assert_contents>
-                        <has_text text="PNG"/>
-                    </assert_contents>
-                </output>
-            </test>
-            <test>
-                <param name="input" value="data_frenchbbs.tabular"/>
-                <param name="colnames" value="true"/>
-                <param name="variable1" value="4"/>
-                <param name="variable2" value="3"/>
-                <output name="output_md" ftype="png">
-                    <assert_contents>
-                        <has_text text="PNG"/>
-                    </assert_contents>
-                </output>
-            </test>
-        </tests>
-        <expand macro="topic"/>
-        <help><![CDATA[
+    </command>
+    <inputs>
+        <expand macro="explo_input" />
+        <param name="variable1" label="Select a column containing numerical values (such as the abundance) " type="data_column" data_ref="input" numerical="True" />
+        <param name="variable2" label="Select a column according which you want to see the dispersion of the numerical value" type="data_column" data_ref="input" />
+    </inputs>
+    <outputs>
+        <data name="output_md" from_work_dir="Med_Disp.png" format="png" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="input" value="Reel_life_survey_fish_modif2.tabular" />
+            <param name="colnames" value="true" />
+            <param name="variable1" value="18" />
+            <param name="variable2" value="15" />
+            <output name="output_md" ftype="png">
+                <assert_contents>
+                    <has_text text="PNG" />
+                </assert_contents>
+            </output>
+        </test>
+        <test>
+            <param name="input" value="data_frenchbbs.tabular" />
+            <param name="colnames" value="true" />
+            <param name="variable1" value="4" />
+            <param name="variable2" value="3" />
+            <output name="output_md" ftype="png">
+                <assert_contents>
+                    <has_text text="PNG" />
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <expand macro="topic" />
+    <help><![CDATA[
 =======================================
 Calculate the Median and the dispersion
 =======================================
@@ -75,7 +74,7 @@ which associate a numerical value with another variable.
 A png file with two graphics one under the other with one for the median and one for the dispersion like the following image
 
 .. image::test_bbs.png
-    ]]></help>
-<expand macro="explo_bibref"/>               
-            
+    ]]>    </help>
+    <expand macro="explo_bibref" />
+
 </tool>
