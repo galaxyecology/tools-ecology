@@ -1,4 +1,4 @@
-#rscript
+#Rscript
 
 ################################################
 ##    Link between variables and themselves   ##
