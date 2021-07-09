@@ -142,7 +142,7 @@ coli <- function(data, var) {
       data_cut <- data[data$species == spe, ]
       nb <- ncol(data_cut)
       data_num <- data_cut[, -nb]
-      graph <- GGally::ggpairs(data_num, ggplot2::aes(color = data_cut$species),
+      graph <- ggally::ggpairs(data_num, ggplot2::aes(color = data_cut$species),
       lower = list(continuous = "points"), axisLabels = "internal")
 
       ggplot2::ggsave(paste("collinarity_of_", spe, ".png"), graph, width = 20, height = 15)
@@ -152,7 +152,7 @@ coli <- function(data, var) {
   }else{
     nb <- ncol(data)
     data_cut <- data[, -nb]
-    graph <- GGally::ggpairs(data_cut, ggplot2::aes(color = data[, var]),
+    graph <- ggally::ggpairs(data_cut, ggplot2::aes(color = data[, var]),
     lower = list(continuous = "points"), axisLabels = "internal") +
   ggplot2::scale_colour_manual(values = c("#00AFBB", "#E7B800", "#FC4E07")) +
   ggplot2::scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))
