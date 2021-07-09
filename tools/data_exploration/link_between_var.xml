@@ -4,7 +4,7 @@
         <import>macro.xml</import>
     </macros>
     <requirements>
-        <requirement type="package" version="4.0">r-base</requirement>
+        <requirement type="package" version="4.1">r-base</requirement>
         <requirement type="package" version="1.1.1">r-cowplot</requirement>
         <requirement type="package" version="3.3.3">r-ggplot2</requirement>
         <requirement type="package" version="2.1.2">r-ggally</requirement>
