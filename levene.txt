@@ -1,8 +1,0 @@
-
-write table with levene test. 
---> "Levene's Test for Homogeneity of Variance (center = median)"
-       Df F value    Pr(>F)    "
-group   1   22.02 3.145e-06 ***"
-      848                      "
----"
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1"
