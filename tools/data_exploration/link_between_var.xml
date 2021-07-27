@@ -1,5 +1,5 @@
 <tool id="ecology_link_between_var" name="Variables exploration" version="@VERSION@" profile="20.01">
-    <description>Shows interaction, correlation, colinearity and variance inflation factor (vif) for biodiversity abundance data</description>
+    <description>Shows interaction, correlation, colinearity, produces a PCA and computes VIF for biodiversity abundance data</description>
     <macros>
         <import>macro.xml</import>
     </macros>
@@ -108,10 +108,10 @@
         </conditional>
     </inputs>
     <outputs>
-        <data name="output_coli" from_work_dir="Data.txt" format="txt" label="Missing species">
+        <data name="output_coli" from_work_dir="Data.txt" format="txt" label="Collinearity analysis - Missing species">
             <expand macro="explo_filter_colli"/>
         </data>
-        <data name="output_acp" from_work_dir="valeurs.txt" format="txt" label="Eigen values">
+        <data name="output_acp" from_work_dir="valeurs.txt" format="txt" label="PCA (Principal Component Analysis) - Eigen values">
             <expand macro="explo_filter_pca"/>
         </data>
         <data name="output_vif" from_work_dir="vif.tabular" format="tabular" label="Your VIF tabular">
@@ -120,10 +120,10 @@
         <data name="output_corr" from_work_dir="corr.tabular" format="tabular" label="Correlation matrix">
             <expand macro="explo_filter_vif"/>
         </data>
-        <data name="output_interr" from_work_dir="Species.txt" format="txt" label="Species in data">
+        <data name="output_interr" from_work_dir="Species.txt" format="txt" label="Interactions analysis - Species in data">
             <expand macro="explo_filter_interr"/>
         </data>
-        <data name="output_autocorr" from_work_dir="acf.txt" format="txt" label="Acf table">
+        <data name="output_autocorr" from_work_dir="acf.txt" format="txt" label="Autocorrelation analysis - ACF table">
             <expand macro="explo_filter_autocorr"/>
         </data>
         <collection type="list" name="plots">
@@ -163,30 +163,22 @@
     <expand macro="topic"/>
     <help><![CDATA[
 =================================
-Calculate links between variables
+Determine links between variables
 =================================
 
 - Show the collinearity among the covariates
-- Plot a PCA
-- Compute the variance inflation factor (VIF)
+- Plot a Pincipal Component Analysis (PCA)
+- Compute the Variance Inflation Factor (VIF)
 - Show if there is auto-correlation
-- Show the interractions between variables
+- Show the interactions between variables
 
+**Collinearity between selected numerical variables for each species**
 
-=============
-CoLlinearity
-=============
+This tool shows if multiple numerical variables shows colinearity or not between one another.
 
-**What it does**
+Input description :
 
-This tool shows if multiple numerical variables are colinear or not with one another:
-
-- One graph or multiple graphs.
-
-**Input description**
-
-A tabular file with observation data. Must at least contain three columns
-which associate species and multiple numerical variable.
+A tabular file with observation data. Must at least contain three columns, species and multiple numerical variable.
 
 +-------------+------------+---------------+
 |   number1   |   number2  | species.code  |
@@ -196,105 +188,67 @@ which associate species and multiple numerical variable.
 |     ...     |     ...    |      ...      |
 +-------------+------------+---------------+
 
-**Output**
+Output description :
 
-A  png file with one graph containing multiple correlation plots and the correlation value between each variables.
+A png file with one plot containing multiple correlation plots and the correlation values between each variables.
 
-|
-
-**HELP**
-
-Warning : When there are more than 3 species in the data this tool shows a graph for each specie.
+Warning : When there are more than 3 species in the data this tool shows one plot for each species.
 
 
-===
-VIF
-===
+**Variance Inflation Factor (VIF) on selected numerical variables**
+
+This tool calculates the correlation matrix and the Variance Inflation Factor between each pair of the selected numerical variables.
+
+Input description:
+
+A tabular file with observation data. Must at least contain two columns of numerical variables.
 
 
-**What it does**
+Output description :
 
-This tool calculates th variance inflation factor according to 2 numerical variables:
+Two tabulars :
 
-- Computes the VIF
+- One with VIF values for each pair, it measures how much the behavior (variance) of an independent variable is influenced, or inflated, by its interaction/correlation with the other independent variables. A large VIF on an independent variable indicates a highly collinear relationship to the other variable that should be considered or adjusted for in the structure of the model and selection of independent variable.
 
-**Input description**
-
-A tabular file with observation data. Must at least contain three columns
-which associate at least 2 numerical variables.
-
-+----------+-----------+
-| number 1 |  number 2 |
-+==========+===========+
-|    4     |     2     |
-+----------+-----------+
-|  ...     |    ...    |
-+----------+-----------+
+- One containing the correlation matrix.
 
 
-**Output**
+**Principal Component Analysis (PCA) on selected numerical variables**
 
-Two tabulars one containing the VIF :
+This tool computes a Principal Component Analysis.
 
-- The VIF measures how much the behavior (variance) of an independent variable is influenced, or inflated, by its interaction/correlation with the other independent variables.
+Input description:
 
-- A large VIF on an independent variable indicates a highly collinear relationship to the other variable that should be considered or adjusted for in the structure of the model and selection of independent variable.
+A tabular file with observation data with numerical variables.
 
-The other tabular contains the correlation marix.
+Output description:
 
+Two png files with plots. The first one is showing the PCA plot :
 
-===
-PCA 
-===
+- The positively correlated variables are grouped together.
 
-**What it does**
+- The negatively ones are on opposite sides of the plot's origin.
 
-This tool computes a principal composante analisys :
+- the distance between the variables and the origin calculates the quality of the representation of the variables. The variables far from the origin are well represented by the PCA. 
 
-- Computes 2 graphs
-
-**Input description**
-
-A tabular file with observation data. 
-whith numerical variables.
-
-+----------+-----------+--------------+
-|variable 1| variable 2| species.code |
-+==========+===========+==============+
-|    2     |     4     |   speciesID  |
-+----------+-----------+--------------+
-|  ...     |    ...    |      ...     |
-+----------+-----------+--------------+
-
-**Output**
-
-A png file with 2 graphs. The first one is a showing a circle with the correlation between variables :
-
-- The poisitively correlated variables are grouped together.
-
-- The negatively ones are on opposite sides of the graph's origin.
-
-- the distance between the variables and th origin calculates the quality of the representation of the variables. The variables far from the orignin are well represented by the PCA.  
-
-The second graph is the oe bout the quality :
+The quality of the representation is also calculated and represented with the cos2 determined with colors : 
 
 - A high cos2 indicates a good representation of the variable. In this case, the variable is near the circumference of the correlation circle.
 
 - A low cos2 indicates that the variable is not perfectly represented. In this case, the variable is near the center of the circle.
 
-======
-Interr
-======
+The second plot is about the quality of the PCA, it represents the correlation between dimensions of the PCA and the selected variables.
 
-**What it does**
+A text file containing eigen values of the PCA.
 
-This tool computes the interactions between variables :
-- Computes multiple scatterplots
 
-**Input description**
+**Interactions between two selected numerical variables**
 
-A tabular file with observation data. Must at least contain four columns
-which associate two numerical variables and two other variables.
+This tool represents the interactions between variables through multiple scatterplots.
+
+Input description:
+
+A tabular file with observation data. Must at least contain four columns two numerical variables, any other variables and species.
 
 +----------+-----------+--------------+------------+
 |  number1 | variable  | species.code |   number2  |
@@ -304,44 +258,28 @@ which associate two numerical variables and two other variables.
 |  ...     |    ...    |      ...     |     ...    |
 +----------+-----------+--------------+------------+
 
-**Output**
+Output description:
 
-A  png file with multiple graphs showing the interactions between two variables.
-|
- 
-.. image::scattplot.png
+PNG files (one per species) with plots showing the interactions between the two numerical variables for each separation factor.
 
-========
-Autocorr
-========
-
-**What it does**
-
-This tool computes the autocorrelation of a numerical variable:
-
-- Computes a graph
-
-**Input description**
-
-A tabular file with observation data. Must at least contain three columns
-whith one numerical variable
-
-+------------+
-|   number   |
-+============+
-|      4     |
-+------------+
-|     ...    |
-+------------+
-
-**Output**
-
-A png file with one graph showing if we have autocorrelation for a variable, if so the bars of the histogram are between the dashed lines (95% confidence intervalle without white noise) as shwon on the following image.
+A text file with a recap of the species column used for the analysis.
 
 
-.. image::Autocorr.png
+**Autocorrelation of one selected numerical variable**
+
+This tool computes the ACF (Auto-Correlation Function) and represents the autocorrelation of a numerical variable.
+
+Input description:
+
+A tabular file with observation data. Must at least contain one column with a numerical variable.
+
+
+Output description:
+
+A png file with one plot showing the autocorrelation for a variable. If the bars of the histogram are strictly confined between the dashed lines (representing 95% confidence interval without white noise), there is auto-correlation.
+
+A text file containing the ACF values.
 
     ]]></help>
     <expand macro="explo_bibref"/>
-    <!--<expand macro="book_bibref"/>-->
 </tool>

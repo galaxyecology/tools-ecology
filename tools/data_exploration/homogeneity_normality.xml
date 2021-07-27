@@ -24,7 +24,7 @@
     </command>
     <inputs>
         <expand macro="explo_input"/>
-        <param name="date" label="Select column containing temporal data" type="data_column" data_ref="input" use_header_names="true"/>
+        <param name="date" label="Select column containing temporal data (year, date, ...)" type="data_column" data_ref="input" use_header_names="true"/>
         <param name="species" label="Select column containing species" type="data_column" data_ref="input" use_header_names="true"/>
         <param name="variable" label="Select column containing numerical values (like abundances)" type="data_column" data_ref="input" numerical="true" use_header_names="true"/>
     </inputs>
@@ -64,34 +64,42 @@
     </tests>
     <expand macro="topic"/>
     <help><![CDATA[
-=================================
-Compute Homogeneity and normality
-=================================
+===============================================================
+Checks homogeneity of variance (homoscedasticity) and normality
+===============================================================
+
 
 **What it does**
 
-This tool checks homogeneity of variances (Levene test) on factors for every species represented by multiple boxplots and the normal distribution of a numerical value represented by two plots.
+
+This tool checks homogeneity of variances (Levene test) for every species and represents it through multiple boxplots and the normal distribution (Kolmogorov-Smirnov test) represented by a distribution histogram and a Q-Q plot.
+
+If the levene test is significant (P-value in column Pr < 0.5 and at least one * at the end of the 4th line), variances aren't homogeneous, the hypothesis of *homoscedasticity is rejected*.
+
+If the K-S test is significant (p-value < 0.5), your numerical variable *isn't* normally distributed, the hypothesis of *normality is rejected*.
+
 
 **Input description**
 
-A tabular file with observation data. Must at least contain three columns which associates year, species, abundance and a factor.
+A tabular file with observation data. Must at least contain three columns temporal referential (year, date, ...), species and a numerical factor.
 
-+----------+-----------+----------------+
-|   date   |   number  |  species.code  |
-+==========+===========+================+
-|   year   |     4     |    speciesID   |
-+----------+-----------+----------------+
-|  ...     |    ...    |       ...      |
-+----------+-----------+----------------+
++----------+-----------+-----------+
+|   date   |   number  |  species  |
++==========+===========+===========+
+|   year   |     4     | speciesID |
++----------+-----------+-----------+
+|  ...     |    ...    |    ...    |
++----------+-----------+-----------+
 
 **Output**
 
 A text output that summarizes the result of the performed Levene test for homogeneity of variances (homoscedasticity).
+
+A text output that summarizes the result of the performed Kolmogrov-Smirnov test for normality.
+
 Multiple PNG files representing the homogeneity of variances for each species at each time point of the study.
-One PNG file representing the distribution of the data as in the following image.
 
-.. image::Norm_distrib.png
-
+One PNG file representing the distribution of the data.
     ]]>    </help>
     <expand macro="explo_bibref"/>
 

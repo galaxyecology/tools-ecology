@@ -94,7 +94,7 @@ graph_hist <- function(data, var1) {
   graph_hist <- ggplot2::ggplot(data) +
   ggplot2::geom_histogram(ggplot2::aes_string(x = var1), binwidth = 2, color = "black", fill = "white") +
   ggplot2::geom_density(ggplot2::aes_string(var1), alpha = 0.12, fill = "red") +
-  ggplot2::ggtitle("Distribution 1")
+  ggplot2::ggtitle("Distribution histogram")
 
 return(graph_hist)
 }
@@ -109,7 +109,7 @@ return(graph_mean)
 
 #Adding a QQplot
 graph_qqplot <- function(data, var1) {
-  graph2 <- ggpubr::ggqqplot(data, var1, color = "midnightblue") + ggplot2::ggtitle("Distribution 2")
+  graph2 <- ggpubr::ggqqplot(data, var1, color = "midnightblue") + ggplot2::ggtitle("Q-Q plot")
 
 return(graph2)
 }

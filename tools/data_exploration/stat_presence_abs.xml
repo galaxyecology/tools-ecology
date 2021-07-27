@@ -23,13 +23,13 @@
     <inputs>
         <expand macro="explo_input"/>
         <param name="variable1" label="Select a column containing numerical values (such as the abundance) " type="data_column" data_ref="input" numerical="true" use_header_names="true"/>
-        <param name="species" label="Select the column of the x-axis variable for dispersion plot and to see the correlation between absences" type="data_column" data_ref="input" use_header_names="true"/>
+         <param name="species" label="Select the column of the x-axis : most commonly species" type="data_column" data_ref="input" use_header_names="true" help= "Variable for dispersion plot and to see the correlation between zeros"/>
         <param name="location" label="Select column containing locations " type="data_column" data_ref="input" use_header_names="true"/>
-        <param name="time" label="Select column containing dates " type="data_column" data_ref="input" use_header_names="true"/>
+        <param name="time" label="Select column containing temporal data (year, date, ...) " type="data_column" data_ref="input" use_header_names="true"/>
     </inputs>
     <outputs>
-        <data name="output_md" from_work_dir="Med_Disp.png" format="png"/>
-        <data name="output_0" from_work_dir="0_pb.png" format="png"/>
+        <data name="output_md" from_work_dir="Med_Disp.png" format="png" label="Boxplot and dispersion plot"/>
+        <data name="output_0" from_work_dir="0_pb.png" format="png" label="Absence-correlation plot"/>
     </outputs>
     <tests>
         <test>
@@ -51,20 +51,25 @@
     </tests>
     <expand macro="topic"/>
     <help><![CDATA[
-====================================================================
-Calculate the Median, the dispersion and correlation between absence
-====================================================================
+===================================================================================================================
+Create a boxplot, visualize the dispersion of a numeric variable and visualize correlation between species absences
+===================================================================================================================
+
 
 **What it does**
-This tool computes:
 
-- The median of an numerical value (like the abundance) and shows the dispersion of this value according to a variable such as sites or species or others
 
-- If there is a correlation among species using the presence of zeros in a numerical value
+This tool creates:
+
+- A boxplot of a numerical value (like the abundance) and a dispersion plot of this value according to a variable such as species.
+
+- A correlation plot using the presence of zeros in the numerical value. Handy to see if there is a correlation between the absence of two species and suggest a co-dependency.
+
+Don't use datasets with too much species, it won't be readable.
 
 **Input description**
-A tabular file with observation data. Must at least contain two columns
-which associate a numerical value with another variable.
+
+A tabular file with observation data. Must at least contain four columns a numerical value (ex: abundance), a temporal referential (year, date, ...), locations and species.
 
 +-------------+------------+---------------+-------------+
 |   number    |    time    | species.code  |   location  |
@@ -75,13 +80,8 @@ which associate a numerical value with another variable.
 +-------------+------------+---------------+-------------+
 
 **Output**
-Two png files: 
 
-- Two graphics one under the other with one for the median and one for the dispersion like the image underneath
-
-- One graphic, a corrplot.
-
-.. image::test_bbs.png
+Two png files containing the three plots.
     ]]>    </help>
     <expand macro="explo_bibref"/>
 

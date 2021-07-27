@@ -76,7 +76,7 @@ colvar4 <- colnames(data)[var4]
 ####Independence of the observations####
 
 acf_tb <- function(data, var) {
-obj <- acf(data[, var])
+obj <- acf(data[, var], na.action = na.pass)
   return(obj)
 }
 

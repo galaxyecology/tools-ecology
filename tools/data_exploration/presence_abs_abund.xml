@@ -1,5 +1,5 @@
 <tool id="ecology_presence_abs_abund" name="Presence-absence and abundance" version="@VERSION@" profile="20.01">
-    <description>in a spatial environment</description>
+    <description>Community abundance map, presence barplot and rarefaction curves</description>
     <macros>
         <import>macro.xml</import>
     </macros>
@@ -50,7 +50,7 @@
         <conditional name="method">
             <param name="type" type="select" label="Variables presence, absence and abundance" display="radio">
                 <option value="abund">Abundance map in the environment </option>
-                <option value="pres_abs">Presence and absence count of taxon according to their locations</option>
+                <option value="pres_abs">Presence count of taxons (barplot)</option>
                 <option value="rare">Rarefaction curve of species</option>
             </param>
             <when value="abund">
@@ -60,8 +60,8 @@
                 <param name="species" label="Select column containing taxon " type="data_column" data_ref="input" numerical="false" use_header_names="true"/>
             </when>
             <when value="pres_abs">
-                <param name="site" label="Select column containing sites " type="data_column" data_ref="input" use_header_names="true"/>
-                <param name="species" label="Select column containing species " type="data_column" data_ref="input" numerical="false" use_header_names="true"/>
+                <param name="site" label="Select column containing your separation variable" type="data_column" help="ex : location, protection status, ..." data_ref="input" use_header_names="true"/>
+                <param name="species" label="Select column containing taxon " type="data_column" data_ref="input" numerical="false" use_header_names="true"/>
             </when>
             <when value="rare">
                 <param name="number" label="Size of subsamples" type="text" help="Rarefaction curves are calculated over random subsamples, you can choose the size you want depending on your data and the analysis you need. Should be smaller than the size of your community"/>
@@ -112,59 +112,51 @@
     </tests>
     <expand macro="topic"/>
     <help><![CDATA[
-======================================================
-Computes the presence absence and abundance of species 
-======================================================
+=============================================================================
+Map of community abundance, presence barplot of taxons and rarefaction curves
+=============================================================================
 
-- Show the abundance according to the location 
-- Show if a species is present or not and in which proportion
-- Plot the rarefaction curve
-
-==================
-Maps the abundance 
-==================
+**Map of community abundance** 
 
 
-**What it does**
-
-This tool computes the abundances of species according to there locations data:
-
-- Maps the abundance
-
-**Input description**
-
-A tabular file with observation data. Must at least contain three columns
-which associate abundance, latitude and longitude or 'abundance', 'latitude' and 'longitude' with species ID.
-
-+----------+-----------+--------------+------------+
-| latitude | longitude | species.code |   number   |
-+==========+===========+==============+============+
-| lat      |long       |   speciesID  |      4     |
-+----------+-----------+--------------+------------+
-|  ...     |    ...    |      ...     |     ...    |
-+----------+-----------+--------------+------------+
-
-**Output**
-
-A png file with every abundance dots for each location such as the image following
-
-.. image::envi_abond.png
+This tool computes abundances of each taxon for each location and plots it according to longitude and latitude. Size of dots permits to get information on the abundance found at the location. Under 10 taxons, colors represents the different taxons and over 10 taxons it represents the abundance as well. 
+Handy to get spatialized view of your abundances and see if some locations can pull results in a certain direction.
 
 
-=====================================
-Count the presence absence of species
-=====================================
+Input description : 
 
-**What it does**
 
-This tool computes the number of appearances of each specie, it counts it presence absence, according to a variable (location for instance):
+A tabular file with observation data. Must at least contain four columns abundance, latitude, longitude and taxon (any taxon level : species, family, ...).
 
-- Computes one graph
 
-**Input description**
++----------+-----------+---------+------------+
+| latitude | longitude |  taxon  |   number   |
++==========+===========+=========+============+
+| lat      |long       | taxonID |      4     |
++----------+-----------+---------+------------+
+|  ...     |    ...    |   ...   |     ...    |
++----------+-----------+---------+------------+
 
-A tabular file with observation data. Must at least contain two columns
-which associate species with a variable.
+
+Output description :
+
+
+A png file with every abundance dots for each location, a map without base.
+A text file containing the geographical range of the data.
+
+
+**Presence count of taxons (barplot)**
+
+
+This tool computes the number of presence of each taxon according to a separation factor (ex: location, protection status, ...) and produces a barplot representing the relative presence count of each taxon. Handy to see the most ubiquitous taxons in the studied community. 
+If more than 40 different taxons in the separations, plots are hard to read properly so they won't be produced. In that case you can cut your data into smaller parts to get several readable representations for one separation.
+
+
+Input description :
+
+
+A tabular file with observation data. Must at least contain three columns species, abundance and the separation variable.
+
 
 +--------------+------------+------------+
 | species.code |  variable  |    number  |
@@ -175,46 +167,39 @@ which associate species with a variable.
 +--------------+------------+------------+
 
 
-**Output**
-
-A  png file with one graphic showing barplots according to the variable divided in multiple colors according to species.
-
-.. image::fish_test.png
+Output description :
 
 
-=====================
-Plots the rarefaction
-=====================
+A png file with barplots separated according to the variable and with multiple parts in different colors according to the different taxons.
 
-**What it does**
 
-This tool computes the rarefaction curves of species:
+**Rarefaction curve of species**
 
-- Computes one or multiple graphs
 
-**Input description**
+This tool computes the rarefaction curves of each species. Permits you to assess species richness according to the number of samples. If there are more than 30 species in your data you will have one plot for each species and not all the curves on one plot.
+Using the R function rarefy (https://www.rdocumentation.org/packages/vegan/versions/2.4-2/topics/rarefy).
 
-A tabular file with observation data. Must at least contain two columns
-which associate abundance and species ID.
-And one numeric value for the rarefaction indice must be entered
 
-+--------------+------------+
-| species.code |   number   |
-+==============+============+
-|   speciesID  |      4     |
-+--------------+------------+
-|      ...     |     ...    |
-+--------------+------------+
+Input description :
 
-**Output**
 
-A png file with one or multiple graphs showing the rarefaction curves for each species according to one rarefaction indice that you chose.
-|
+A tabular file with observation data. Must at least contain two columns abundance and species.
+A numeric value for the rarefaction indice (number of subsamples) must be entered.
 
-**HELP**
 
-Warning : If there are more than 30 species in your data you will have one graph for each species and not all the curves on one graph.
++-----------+------------+
+|  species  |   number   |
++===========+============+
+| speciesID |      4     |
++-----------+------------+
+|    ...    |     ...    |
++-----------+------------+
 
+
+Output description : 
+
+
+A png file with one or multiple plots showing the rarefaction curves for each species according to the chosen rarefaction indice.
     ]]>    </help>
     <expand macro="book_bibref"/>
 
