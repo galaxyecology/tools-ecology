@@ -83,11 +83,11 @@ homog_var <- function(data, col1, col2, col3, mult) {
 }
 
 ####Normality of the distribution####
-# Shapiro Wilk test
+# Kolmogorov-Smirnov test
 
-shapiro <- capture.output(shapiro.test(data[, var]))
+ks <- capture.output(ks.test(x = data[, var], y = 'pnorm', alternative = 'two.sided'))
 
-cat("\nwrite table with shapiro wilk test. \n--> \"", paste(shapiro, "\"\n", sep = ""), file = "shapiro.txt", sep = "", append = TRUE)
+cat("\nwrite table with Kolmogorov-Smirnov test. \n--> \"", paste(ks, "\"\n", sep = ""), file = "ks.txt", sep = "", append = TRUE)
 
 #Histogramm with distribution line
 graph_hist <- function(data, var1) {
