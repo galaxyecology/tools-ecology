@@ -46,13 +46,10 @@ if (presabs) {
 colloc <- colnames(data)[loc]
 }
 
-if (presabs | rarefaction) {
+if (presabs | rarefaction | abundance) {
+colabond <- colnames(data)[abond]
 colspe <- colnames(data)[spe]
 data <- data[grep("^$", data[, colspe], invert = TRUE), ]
-}
-
-if (abundance | presabs | rarefaction) {
-colabond <- colnames(data)[abond]
 }
 
 #####Your analysis
@@ -62,32 +59,42 @@ colabond <- colnames(data)[abond]
 ##Representation of the environment##
 
 ## Mapping
-graph_map <- function(data, long, lat, abond, ind) {
-  cat("\nAbunbance\n", abond, file = "Data_abund.txt", fill = 1, append = TRUE)
-  mappy <- ggplot2::ggplot(data, ggplot2::aes_string(x = collong, y = collat, cex = colabond, color = colabond)) +
-  ggplot2::geom_point() + ggplot2::ggtitle(paste("Abundance of", ind, "in the environment")) + ggplot2::xlab("Longitude") + ggplot2::ylab("Latitude")
-  ggplot2::ggsave("mappy.png", mappy, width = 15, height = 9, units = "cm")
+graph_map <- function(data, collong, collat, colabond, ind, colspe) {
+  cat("\nCoordinates range\n\nLatitude from ", min(data[, collat], na.rm = TRUE), " to ", max(data[, collat], na.rm = TRUE), "\nLongitude from ", min(data[, collong], na.rm = TRUE), " to ", max(data[, collong], na.rm = TRUE), file = "Data_abund.txt", fill = 1, append = TRUE)
+  if (mult0) {
+    mappy <- ggplot2::ggplot(data, ggplot2::aes_string(x = collong, y = collat, cex = colabond, color = colspe)) +
+    ggplot2::geom_point() + ggplot2::ggtitle(paste("Abundance of", ind, "in the environment")) + ggplot2::xlab("Longitude") + ggplot2::ylab("Latitude")  + ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5, hjust = 1), legend.text = ggplot2::element_text(size = 8)) + ggplot2::guides(cex = ggplot2::guide_legend(reverse = TRUE))
+
+  }else{
+    mappy <- ggplot2::ggplot(data, ggplot2::aes_string(x = collong, y = collat, cex = colabond, color = colabond)) +
+    ggplot2::geom_point() + ggplot2::ggtitle(paste("Abundance of", ind, "in the environment")) + ggplot2::xlab("Longitude") + ggplot2::ylab("Latitude")  + ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5, hjust = 1), legend.text = ggplot2::element_text(size = 8)) + ggplot2::guides(cex = ggplot2::guide_legend(reverse = TRUE))
+  }
+  ggplot2::ggsave("mappy.png", mappy, width = 20, height = 9, units = "cm")
 }
 
 ####Presence absence abundance####
 
 ## Histogram
 graph_hist <- function(data, col1, col2, col3) {
-  cat("\nLocations\n", data[, col1], file = "Locations.txt", fill = 1, append = TRUE)
+  cat("\nLocations\n", unique(data[, col1]), file = "Locations.txt", fill = 1, append = TRUE)
   if (mult1) {
     for (loc in unique(data[, col1])) {
       data_cut <- data[data[, col1] == loc, ]
       data_cut <- data_cut[data_cut[, col3] > 0, ]
-      top <- nrow(data_cut)
-      var <- nchar(as.character(round(top * 0.1, digits = 0)))
-      step <- round(top * 0.1, digits = ifelse(var == 1, 1, -var + 1))
-      graph <- ggplot2::ggplot(data_cut) +
-      ggplot2::geom_bar(ggplot2::aes_string(x = col1, fill = col2)) +
-      ggplot2::scale_y_continuous(breaks = seq(from = 0, to = top, by = step)) +
-      ggplot2::theme(plot.title = ggplot2::element_text(color = "black", size = 12, face = "bold")) +
-      ggplot2::ggtitle("Number of presence absence")
+      if (length(unique(data_cut[, col2])) <= 40) {
+        top <- nrow(data_cut)
+        var <- nchar(as.character(round(top * 0.1, digits = 0)))
+        step <- round(top * 0.1, digits = ifelse(var == 1, 1, -var + 1))
+        graph <- ggplot2::ggplot(data_cut) +
+        ggplot2::geom_bar(ggplot2::aes_string(x = col1, fill = col2)) +
+        ggplot2::scale_y_continuous(breaks = seq(from = 0, to = top, by = step)) +
+        ggplot2::theme(plot.title = ggplot2::element_text(color = "black", size = 12, face = "bold")) +
+        ggplot2::ggtitle("Number of presence")
 
-      ggplot2::ggsave(paste("number_in_", loc, ".png"), graph)
+        ggplot2::ggsave(paste("number_in_", loc, ".png"), graph)
+      }else{
+        cat(paste0("\n", loc, " had more than 40 species and plot isn't readable please select a higher taxon level or cut your data"))
+      }
     }
   }else{
   top <- nrow(data)
@@ -162,7 +169,8 @@ rare <- function(data, spe, abond, rare, num) {
 
 if (abundance) {
 #Maps
-graph_map(data, long = long, lat = lat, abond = abond, ind = ind)
+mult0 <- ifelse(length(unique(data[, colspe])) > 10, FALSE, TRUE)
+graph_map(data, collong = collong, collat = collat, colabond = colabond, ind = ind, colspe = colspe)
 }
 
 if (presabs) {

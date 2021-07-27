@@ -1,0 +1,98 @@
+<tool id="ecology_homogeneity_normality" name="Homoscedasticity and normality" version="@VERSION@" profile="20.01">
+    <description>Checks the homogeneity of the variance and the normality of the distribution
+    </description>
+    <macros>
+        <import>macro.xml</import>
+    </macros>
+    <expand macro="Explo_requirements">
+        <requirement type="package" version="3.0_10">r-car</requirement>
+        <requirement type="package" version="1.1.1">r-cowplot</requirement>
+        <requirement type="package" version="0.4.0">r-ggpubr</requirement>
+    </expand>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript
+            '$__tool_directory__/graph_homogeneity_normality.r'
+            '$input'
+            '$colnames'
+            '$date'
+            '$species'
+            '$variable'
+            '$output_levene'
+            '$output_shapiro'
+            '$plots'
+        ]]>
+    </command>
+    <inputs>
+        <expand macro="explo_input"/>
+        <param name="date" label="Select column containing temporal data" type="data_column" data_ref="input" use_header_names="true"/>
+        <param name="species" label="Select column containing species" type="data_column" data_ref="input" use_header_names="true"/>
+        <param name="variable" label="Select column containing numerical values (like abundances)" type="data_column" data_ref="input" numerical="true" use_header_names="true"/>
+    </inputs>
+    <outputs>
+        <data name="output_levene" from_work_dir="levene.txt" format="txt"/>
+        <data name="output_shapiro" from_work_dir="shapiro.txt" format="txt"/>
+        <collection type="list" name="plots">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" visible="false" format="png"/>
+        </collection>
+    </outputs>
+    <tests>
+        <test>
+            <param name="input" value="data_frenchbbs.tabular"/>
+            <param name="colnames" value="true"/>
+            <param name="date" value="2"/>
+            <param name="species" value="3"/>
+            <param name="variable" value="4"/>
+            <output name="output_levene" value="levene.txt"/>
+            <output name="output_shapiro">
+                <assert_contents>
+                    <has_n_lines n="8"/>
+                </assert_contents>
+            </output>
+            <output_collection name="plots" type="list" count="2">
+                <element name="Homogeneity" ftype="png">
+                    <assert_contents>
+                        <has_text text="PNG"/>
+                    </assert_contents>
+                </element>
+                <element name="Normal_distribution" ftype="png">
+                    <assert_contents>
+                        <has_text text="PNG"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+        </test>
+    </tests>
+    <expand macro="topic"/>
+    <help><![CDATA[
+=================================
+Compute Homogeneity and normality
+=================================
+
+**What it does**
+
+This tool checks homogeneity of variances (Levene test) on factors for every species represented by multiple boxplots and the normal distribution of a numerical value represented by two plots.
+
+**Input description**
+
+A tabular file with observation data. Must at least contain three columns which associates year, species, abundance and a factor.
+
++----------+-----------+----------------+
+|   date   |   number  |  species.code  |
++==========+===========+================+
+|   year   |     4     |    speciesID   |
++----------+-----------+----------------+
+|  ...     |    ...    |       ...      |
++----------+-----------+----------------+
+
+**Output**
+
+A text output that summarizes the result of the performed Levene test for homogeneity of variances (homoscedasticity).
+Multiple PNG files representing the homogeneity of variances for each species at each time point of the study.
+One PNG file representing the distribution of the data as in the following image.
+
+.. image::Norm_distrib.png
+
+    ]]>    </help>
+    <expand macro="explo_bibref"/>
+
+</tool>

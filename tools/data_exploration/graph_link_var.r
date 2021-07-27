@@ -41,6 +41,10 @@ if (hr == "false") {
   hr <- TRUE
 }
 
+if (length(col) == 1) {
+stop("Please select two or more numerical columns")
+}
+
 #####Import data
 data <- read.table(table, sep = "\t", dec = ".", header = hr, fill = TRUE, encoding = "UTF-8")
 if (vif | pca) {
@@ -115,14 +119,14 @@ interraction <- function(data, var1, var2, var3, var4) {
       data_cut <- data[data[, var3] == spe, ]
       mult_graph <- graph(data_cut, var1, var2, var3) + ggplot2::facet_grid(cols = ggplot2::vars(data_cut[, var4]), scales = "free") +
       cowplot::background_grid(major = "xy", minor = "none") +
-      cowplot::panel_border() + ggplot2::ggtitle("Interractions")
+      cowplot::panel_border() + ggplot2::ggtitle("Interactions")
 
-      ggplot2::ggsave(paste("interraction_of_", spe, ".png"), mult_graph, width = 10, height = 7)
+      ggplot2::ggsave(paste("interaction_of_", spe, ".png"), mult_graph, width = 10, height = 7)
       }
     }else{
     mult_graph <- graph(data, var1, var2, var3) + ggplot2::facet_grid(rows = ggplot2::vars(data[, var3]), cols = ggplot2::vars(data[, var4]), scales = "free") +
     cowplot::background_grid(major = "xy", minor = "none") +
-    cowplot::panel_border() + ggplot2::ggtitle("Interractions")
+    cowplot::panel_border() + ggplot2::ggtitle("Interactions")
 
     ggplot2::ggsave("interraction.png", mult_graph)
   }
@@ -145,7 +149,7 @@ coli <- function(data, var) {
       graph <- GGally::ggpairs(data_num, ggplot2::aes(color = data_cut$species),
       lower = list(continuous = "points"), axisLabels = "internal")
 
-      ggplot2::ggsave(paste("collinarity_of_", spe, ".png"), graph, width = 20, height = 15)
+      ggplot2::ggsave(paste0("collinarity_of_", spe, ".png"), graph, width = 20, height = 15)
       }
   }
 
@@ -260,7 +264,7 @@ coli(data = data_num, var = spe)
 if (pca) {
 active_data <- function(data) {
   #Calcul of PCA for the active data
-  res_pca <- FactoMiner::PCA(data, graph = FALSE)
+  res_pca <- FactoMineR::PCA(data, graph = FALSE)
 
 return(res_pca)
 }
