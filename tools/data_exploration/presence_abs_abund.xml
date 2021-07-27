@@ -1,0 +1,206 @@
+<tool id="ecology_presence_abs_abund" name="Presence-absence and abundance" version="@VERSION@" profile="20.01">
+    <description>Community abundance map, presence barplot and rarefaction curves</description>
+    <macros>
+        <import>macro.xml</import>
+    </macros>
+    <expand macro="Explo_requirements">
+        <requirement type="package" version="2.5_7">r-vegan</requirement>
+    </expand>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript
+            '$__tool_directory__/graph_pres_abs_abund.r'
+            '$input'
+            '$colnames'
+            #if $method.type=='abund':
+              'TRUE'
+              'FALSE'
+              'FALSE'
+              '$method.latitude'
+              '$method.longitude'
+              '$method.individual'
+              ''
+              ''
+              '$method.species'
+            #elif $method.type=='pres_abs':
+              'FALSE'
+              'TRUE'
+              'FALSE'
+              ''
+              ''
+              ''
+              '$method.site'
+              ''
+              '$method.species'
+            #else:
+              'FALSE'
+              'FALSE'
+              'TRUE'
+              ''
+              ''
+              ''
+              ''
+              '$method.number'
+              '$method.species'
+            #end if
+            '$abundance'
+        ]]>
+    </command>
+    <inputs>
+        <expand macro="explo_input"/>
+        <conditional name="method">
+            <param name="type" type="select" label="Variables presence, absence and abundance" display="radio">
+                <option value="abund">Abundance map in the environment </option>
+                <option value="pres_abs">Presence count of taxons (barplot)</option>
+                <option value="rare">Rarefaction curve of species</option>
+            </param>
+            <when value="abund">
+                <param name="latitude" label="Select column containing latitudes " type="data_column" data_ref="input" numerical="true" use_header_names="true"/>
+                <param name="longitude" label="Select column containing longitudes" type="data_column" data_ref="input" numerical="true" use_header_names="true"/>
+                <param name="individual" type="text" label="What do you study in this analysis ?" help="Simply allows you to use any name you want in your plot's title (ex : ''Bats'', ''Chiroptera'')"/>
+                <param name="species" label="Select column containing taxon " type="data_column" data_ref="input" numerical="false" use_header_names="true"/>
+            </when>
+            <when value="pres_abs">
+                <param name="site" label="Select column containing your separation variable" type="data_column" help="ex : location, protection status, ..." data_ref="input" use_header_names="true"/>
+                <param name="species" label="Select column containing taxon " type="data_column" data_ref="input" numerical="false" use_header_names="true"/>
+            </when>
+            <when value="rare">
+                <param name="number" label="Size of subsamples" type="text" help="Rarefaction curves are calculated over random subsamples, you can choose the size you want depending on your data and the analysis you need. Should be smaller than the size of your community"/>
+                <param name="species" label="Select column containing species " type="data_column" data_ref="input" numerical="false" use_header_names="true"/>
+            </when>
+        </conditional>
+        <param name="abundance" label="Select column containing abundances " type="data_column" data_ref="input" numerical="true" use_header_names="true"/>
+    </inputs>
+    <outputs>
+        <data name="output_abund" from_work_dir="Data_abund.txt" format="txt" label="Data used">
+            <expand macro="explo_filter_abund"/>
+        </data>
+        <data name="output_pres_abs" from_work_dir="Locations.txt" format="txt" label="Locations used">
+            <expand macro="explo_filter_pres_abs"/>
+        </data>
+        <data name="output_rare" from_work_dir="Rare.tabular" format="tabular" label="Rare indice">
+            <expand macro="explo_filter_rare"/>
+        </data>
+        <collection type="list" name="plots">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" visible="false" format="png"/>
+        </collection>
+    </outputs>
+    <tests>
+        <test>
+            <param name="input" value="Reel_life_survey_fish_modif2.tabular"/>
+            <param name="colnames" value="true"/>
+            <conditional name="method">
+                <param name="abund" value="true"/>
+                <param name="latitute" value="9"/>
+                <param name="longitude" value="10"/>
+                <param name="individual" value="fishes"/>
+                <param name="species" value="15"/>
+            </conditional>
+            <param name="abundance" value="18"/>
+            <output name="output_abund">
+                <assert_contents>
+                    <has_n_lines n="12"/>
+                </assert_contents>
+            </output>
+            <output_collection name="plots" type="list" count="1">
+                <element name="mappy" ftype="png">
+                    <assert_contents>
+                        <has_text text="PNG"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+        </test>
+    </tests>
+    <expand macro="topic"/>
+    <help><![CDATA[
+=============================================================================
+Map of community abundance, presence barplot of taxons and rarefaction curves
+=============================================================================
+
+**Map of community abundance** 
+
+
+This tool computes abundances of each taxon for each location and plots it according to longitude and latitude. Size of dots permits to get information on the abundance found at the location. Under 10 taxons, colors represents the different taxons and over 10 taxons it represents the abundance as well. 
+Handy to get spatialized view of your abundances and see if some locations can pull results in a certain direction.
+
+
+Input description : 
+
+
+A tabular file with observation data. Must at least contain four columns abundance, latitude, longitude and taxon (any taxon level : species, family, ...).
+
+
++----------+-----------+---------+------------+
+| latitude | longitude |  taxon  |   number   |
++==========+===========+=========+============+
+| lat      |long       | taxonID |      4     |
++----------+-----------+---------+------------+
+|  ...     |    ...    |   ...   |     ...    |
++----------+-----------+---------+------------+
+
+
+Output description :
+
+
+A png file with every abundance dots for each location, a map without base.
+A text file containing the geographical range of the data.
+
+
+**Presence count of taxons (barplot)**
+
+
+This tool computes the number of presence of each taxon according to a separation factor (ex: location, protection status, ...) and produces a barplot representing the relative presence count of each taxon. Handy to see the most ubiquitous taxons in the studied community. 
+If more than 40 different taxons in the separations, plots are hard to read properly so they won't be produced. In that case you can cut your data into smaller parts to get several readable representations for one separation.
+
+
+Input description :
+
+
+A tabular file with observation data. Must at least contain three columns species, abundance and the separation variable.
+
+
++--------------+------------+------------+
+| species.code |  variable  |    number  |
++==============+============+============+
+|   speciesID  |    site    |      4     |
++--------------+------------+------------+
+|      ...     |     ...    |     ...    |
++--------------+------------+------------+
+
+
+Output description :
+
+
+A png file with barplots separated according to the variable and with multiple parts in different colors according to the different taxons.
+
+
+**Rarefaction curve of species**
+
+
+This tool computes the rarefaction curves of each species. Permits you to assess species richness according to the number of samples. If there are more than 30 species in your data you will have one plot for each species and not all the curves on one plot.
+Using the R function rarefy (https://www.rdocumentation.org/packages/vegan/versions/2.4-2/topics/rarefy).
+
+
+Input description :
+
+
+A tabular file with observation data. Must at least contain two columns abundance and species.
+A numeric value for the rarefaction indice (number of subsamples) must be entered.
+
+
++-----------+------------+
+|  species  |   number   |
++===========+============+
+| speciesID |      4     |
++-----------+------------+
+|    ...    |     ...    |
++-----------+------------+
+
+
+Output description : 
+
+
+A png file with one or multiple plots showing the rarefaction curves for each species according to the chosen rarefaction indice.
+    ]]>    </help>
+    <expand macro="book_bibref"/>
+
+</tool>

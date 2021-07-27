@@ -1,0 +1,14 @@
+categories:
+    - Ecology
+owner: ecology
+remote_repository_url: https://github.com/Marie59/Data_explo_tools
+long_description: |
+  Explore data through multiple statistical tools
+type: unrestricted
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrapper for data exploration tool: {{ tool_name }}."
+suite:
+  name: "data_exploration"
+  description: "A suite of data exploration tools"
+  type: repository_data_exploration

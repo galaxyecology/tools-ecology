@@ -1,0 +1,285 @@
+<tool id="ecology_link_between_var" name="Variables exploration" version="@VERSION@" profile="20.01">
+    <description>Shows interaction, correlation, colinearity, produces a PCA and computes VIF for biodiversity abundance data</description>
+    <macros>
+        <import>macro.xml</import>
+    </macros>
+    <expand macro="Explo_requirements">
+        <requirement type="package" version="4.1">r-base</requirement>
+        <requirement type="package" version="1.1.1">r-cowplot</requirement>
+        <requirement type="package" version="2.1.2">r-ggally</requirement>
+        <requirement type="package" version="3.0_11">r-car</requirement>
+        <requirement type="package" version="1.0.7">r-dplyr</requirement>
+        <requirement type="package" version="0.1.3">r-ggcorrplot</requirement>
+        <requirement type="package" version="2.4">r-factominer</requirement>
+        <requirement type="package" version="1.0.7">r-factoextra</requirement>
+    </expand>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript
+            '$__tool_directory__/graph_link_var.r'
+            '$input'
+            '$colnames'
+            #if $method.type == 'collinearity':
+              'TRUE'
+              'FALSE'
+              'FALSE'
+              'FALSE'
+              'FALSE'
+              '$method.species'
+              '$method.columns'
+              ''
+              ''
+              ''
+            #elif $method.type == 'vif':
+              'FALSE'
+              'TRUE'
+              'FALSE'
+              'FALSE'
+              'FALSE'
+              ''
+              '$method.columns'
+              ''
+              ''
+              ''
+            #elif $method.type == 'pca':
+              'FALSE'
+              'FALSE'
+              'TRUE'
+              'FALSE'
+              'FALSE'
+              ''
+              '$method.columns'
+              ''
+              ''
+              ''
+            #elif $method.type == 'interr':
+              'FALSE'
+              'FALSE'
+              'FALSE'
+              'TRUE'
+              'FALSE'
+              '$method.species'
+              ''
+              '$method.variable'
+              '$method.variable2'
+              '$method.variable3'
+            #else:
+              'FALSE'
+              'FALSE'
+              'FALSE'
+              'FALSE'
+              'TRUE'
+              ''
+              ''
+              '$method.variable'
+              ''
+              ''
+            #end if
+        ]]>
+        </command>
+    <inputs>
+        <expand macro="explo_input"/>
+        <conditional name="method">
+            <param name="type" type="select" label="Variables links exploration">
+                <option value="collinearity">Collinearity between selected numerical variables for each species</option>
+                <option value="vif">Variance inflation factor (vif) on selected numerical variables</option>
+                <option value="pca">Principal component analysis (pca) on selected numerical variables</option>
+                <option value="interr">Interactions between 2 selected numerical variables</option>
+                <option value="autocorr">Autocorrelation of one selected numerical variable</option>
+            </param>
+            <when value="collinearity">
+                <param name="species" type="data_column" data_ref="input" numerical="false" label="Select column containing species" use_header_names="true"/>
+                 <param name="columns" type="data_column" data_ref="input" numerical="true" multiple="true" label="Select columns containing numerical values" help="Select at least two columns" use_header_names="true"/>
+            </when>
+            <when value="vif">
+                <param name="columns" type="data_column" data_ref="input" numerical="true" multiple="true" label="Select columns containing numerical values" use_header_names="true"/>
+            </when>
+            <when value="pca">
+                <param name="columns" type="data_column" data_ref="input" numerical="true" multiple="true" label="Select columns containing numerical values" use_header_names="true"/>
+            </when>
+            <when value="interr">
+                <param name="variable" type="data_column" data_ref="input" numerical="true" label="Select column containing numerical values for x-axis" use_header_names="true"/>
+                <param name="variable2" type="data_column" data_ref="input" numerical="true" label="Select column containing numerical values for y-axis" use_header_names="true"/>
+                <param name="species" type="data_column" data_ref="input" numerical="false" label="Select column containing species" help="This parameter allows you to divide your scatterplot according to species" use_header_names="true"/>
+                <param name="variable3" type="data_column" data_ref="input" label="Select column" help="This parameter allows you to divide your scatterplot once more" use_header_names="true"/>
+            </when>
+            <when value="autocorr">
+                <param name="variable" type="data_column" data_ref="input" numerical="true" label="Select column containing numerical values" use_header_names="true"/>
+            </when>
+        </conditional>
+    </inputs>
+    <outputs>
+        <data name="output_coli" from_work_dir="Data.txt" format="txt" label="Collinearity analysis - Missing species">
+            <expand macro="explo_filter_colli"/>
+        </data>
+        <data name="output_acp" from_work_dir="valeurs.txt" format="txt" label="PCA (Principal Component Analysis) - Eigen values">
+            <expand macro="explo_filter_pca"/>
+        </data>
+        <data name="output_vif" from_work_dir="vif.tabular" format="tabular" label="Your VIF tabular">
+            <expand macro="explo_filter_vif"/>
+        </data>
+        <data name="output_corr" from_work_dir="corr.tabular" format="tabular" label="Correlation matrix">
+            <expand macro="explo_filter_vif"/>
+        </data>
+        <data name="output_interr" from_work_dir="Species.txt" format="txt" label="Interactions analysis - Species in data">
+            <expand macro="explo_filter_interr"/>
+        </data>
+        <data name="output_autocorr" from_work_dir="acf.txt" format="txt" label="Autocorrelation analysis - ACF table">
+            <expand macro="explo_filter_autocorr"/>
+        </data>
+        <collection type="list" name="plots">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" visible="false" format="png"/>
+            <filter>method['type'] != 'vif'</filter>
+        </collection>
+    </outputs>
+    <tests>
+        <test>
+            <param name="input" value="Reel_life_survey_fish_modif2.tabular"/>
+            <param name="colnames" value="true"/>
+            <conditional name="method">
+                <param name="type" value="collinearity"/>
+                <param name="species" value="15"/>
+                <param name="columns" value="12,17,18"/>
+            </conditional>
+            <output name="output_coli" value="Missing_species.txt"/>
+            <output_collection name="plots" type="list" count="3">
+                <element name="collinarity_of_Blenniidae" ftype="png">
+                    <assert_contents>
+                        <has_text text="PNG"/>
+                    </assert_contents>
+                </element>
+                <element name="collinarity_of_Gobiidae" ftype="png">
+                    <assert_contents>
+                        <has_text text="PNG"/>
+                    </assert_contents>
+                </element>
+                <element name="collinarity_of_Tripterygiidae" ftype="png">
+                    <assert_contents>
+                        <has_text text="PNG"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+        </test>
+    </tests>
+    <expand macro="topic"/>
+    <help><![CDATA[
+=================================
+Determine links between variables
+=================================
+
+- Show the collinearity among the covariates
+- Plot a Pincipal Component Analysis (PCA)
+- Compute the Variance Inflation Factor (VIF)
+- Show if there is auto-correlation
+- Show the interactions between variables
+
+**Collinearity between selected numerical variables for each species**
+
+This tool shows if multiple numerical variables shows colinearity or not between one another.
+
+Input description :
+
+A tabular file with observation data. Must at least contain three columns, species and multiple numerical variable.
+
++-------------+------------+---------------+
+|   number1   |   number2  | species.code  |
++=============+============+===============+
+|      2      |      4     |   speciesID   |
++-------------+------------+---------------+
+|     ...     |     ...    |      ...      |
++-------------+------------+---------------+
+
+Output description :
+
+A png file with one plot containing multiple correlation plots and the correlation values between each variables.
+
+Warning : When there are more than 3 species in the data this tool shows one plot for each species.
+
+
+**Variance Inflation Factor (VIF) on selected numerical variables**
+
+This tool calculates the correlation matrix and the Variance Inflation Factor between each pair of the selected numerical variables.
+
+Input description:
+
+A tabular file with observation data. Must at least contain two columns of numerical variables.
+
+
+Output description :
+
+Two tabulars :
+
+- One with VIF values for each pair, it measures how much the behavior (variance) of an independent variable is influenced, or inflated, by its interaction/correlation with the other independent variables. A large VIF on an independent variable indicates a highly collinear relationship to the other variable that should be considered or adjusted for in the structure of the model and selection of independent variable.
+
+- One containing the correlation matrix.
+
+
+**Principal Component Analysis (PCA) on selected numerical variables**
+
+This tool computes a Principal Component Analysis.
+
+Input description:
+
+A tabular file with observation data with numerical variables.
+
+Output description:
+
+Two png files with plots. The first one is showing the PCA plot :
+
+- The positively correlated variables are grouped together.
+
+- The negatively ones are on opposite sides of the plot's origin.
+
+- the distance between the variables and the origin calculates the quality of the representation of the variables. The variables far from the origin are well represented by the PCA. 
+
+The quality of the representation is also calculated and represented with the cos2 determined with colors : 
+
+- A high cos2 indicates a good representation of the variable. In this case, the variable is near the circumference of the correlation circle.
+
+- A low cos2 indicates that the variable is not perfectly represented. In this case, the variable is near the center of the circle.
+
+The second plot is about the quality of the PCA, it represents the correlation between dimensions of the PCA and the selected variables.
+
+A text file containing eigen values of the PCA.
+
+
+**Interactions between two selected numerical variables**
+
+This tool represents the interactions between variables through multiple scatterplots.
+
+Input description:
+
+A tabular file with observation data. Must at least contain four columns two numerical variables, any other variables and species.
+
++----------+-----------+--------------+------------+
+|  number1 | variable  | species.code |   number2  |
++==========+===========+==============+============+
+|    2     |    var    |   speciesID  |      4     |
++----------+-----------+--------------+------------+
+|  ...     |    ...    |      ...     |     ...    |
++----------+-----------+--------------+------------+
+
+Output description:
+
+PNG files (one per species) with plots showing the interactions between the two numerical variables for each separation factor.
+
+A text file with a recap of the species column used for the analysis.
+
+
+**Autocorrelation of one selected numerical variable**
+
+This tool computes the ACF (Auto-Correlation Function) and represents the autocorrelation of a numerical variable.
+
+Input description:
+
+A tabular file with observation data. Must at least contain one column with a numerical variable.
+
+
+Output description:
+
+A png file with one plot showing the autocorrelation for a variable. If the bars of the histogram are strictly confined between the dashed lines (representing 95% confidence interval without white noise), there is auto-correlation.
+
+A text file containing the ACF values.
+
+    ]]></help>
+    <expand macro="explo_bibref"/>
+</tool>

@@ -1,0 +1,106 @@
+<tool id="ecology_homogeneity_normality" name="Homoscedasticity and normality" version="@VERSION@" profile="20.01">
+    <description>Checks the homogeneity of the variance and the normality of the distribution
+    </description>
+    <macros>
+        <import>macro.xml</import>
+    </macros>
+    <expand macro="Explo_requirements">
+        <requirement type="package" version="3.0_10">r-car</requirement>
+        <requirement type="package" version="1.1.1">r-cowplot</requirement>
+        <requirement type="package" version="0.4.0">r-ggpubr</requirement>
+    </expand>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript
+            '$__tool_directory__/graph_homogeneity_normality.r'
+            '$input'
+            '$colnames'
+            '$date'
+            '$species'
+            '$variable'
+            '$output_levene'
+            '$output_ks'
+            '$plots'
+        ]]>
+    </command>
+    <inputs>
+        <expand macro="explo_input"/>
+        <param name="date" label="Select column containing temporal data (year, date, ...)" type="data_column" data_ref="input" use_header_names="true"/>
+        <param name="species" label="Select column containing species" type="data_column" data_ref="input" use_header_names="true"/>
+        <param name="variable" label="Select column containing numerical values (like abundances)" type="data_column" data_ref="input" numerical="true" use_header_names="true"/>
+    </inputs>
+    <outputs>
+        <data name="output_levene" from_work_dir="levene.txt" format="txt" label="Levene test - Homoscedasticity"/>
+        <data name="output_ks" from_work_dir="ks.txt" format="txt" label="Kolmogorov-Smirnov test - Normality"/>
+        <collection type="list" name="plots">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" visible="false" format="png"/>
+        </collection>
+    </outputs>
+    <tests>
+        <test>
+            <param name="input" value="data_frenchbbs.tabular"/>
+            <param name="colnames" value="true"/>
+            <param name="date" value="2"/>
+            <param name="species" value="3"/>
+            <param name="variable" value="4"/>
+            <output name="output_levene" value="levene.txt"/>
+            <output name="output_ks">
+                <assert_contents>
+                    <has_n_lines n="9"/>
+                </assert_contents>
+            </output>
+            <output_collection name="plots" type="list" count="2">
+                <element name="Homogeneity" ftype="png">
+                    <assert_contents>
+                        <has_text text="PNG"/>
+                    </assert_contents>
+                </element>
+                <element name="Normal_distribution" ftype="png">
+                    <assert_contents>
+                        <has_text text="PNG"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+        </test>
+    </tests>
+    <expand macro="topic"/>
+    <help><![CDATA[
+===============================================================
+Checks homogeneity of variance (homoscedasticity) and normality
+===============================================================
+
+
+**What it does**
+
+
+This tool checks homogeneity of variances (Levene test) for every species and represents it through multiple boxplots and the normal distribution (Kolmogorov-Smirnov test) represented by a distribution histogram and a Q-Q plot.
+
+If the levene test is significant (P-value in column Pr < 0.5 and at least one * at the end of the 4th line), variances aren't homogeneous, the hypothesis of *homoscedasticity is rejected*.
+
+If the K-S test is significant (p-value < 0.5), your numerical variable *isn't* normally distributed, the hypothesis of *normality is rejected*.
+
+
+**Input description**
+
+A tabular file with observation data. Must at least contain three columns temporal referential (year, date, ...), species and a numerical factor.
+
++----------+-----------+-----------+
+|   date   |   number  |  species  |
++==========+===========+===========+
+|   year   |     4     | speciesID |
++----------+-----------+-----------+
+|  ...     |    ...    |    ...    |
++----------+-----------+-----------+
+
+**Output**
+
+A text output that summarizes the result of the performed Levene test for homogeneity of variances (homoscedasticity).
+
+A text output that summarizes the result of the performed Kolmogrov-Smirnov test for normality.
+
+Multiple PNG files representing the homogeneity of variances for each species at each time point of the study.
+
+One PNG file representing the distribution of the data.
+    ]]>    </help>
+    <expand macro="explo_bibref"/>
+
+</tool>
