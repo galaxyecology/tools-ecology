@@ -19,7 +19,7 @@ if (length(args) == 0) {
     var <- as.numeric(args[3])
     spe <- as.numeric(args[4])
     loc <- as.numeric(args[5])
-    time <-as.numeric(args[6])
+    time <- as.numeric(args[6])
 }
 
 if (hr == "false") {
@@ -75,28 +75,32 @@ med_disp <- function(med, disp) {
 #### Zero problem in data ####
 
 #Put data in form
-makeTableAnalyse <- function(data, var, spe, var2, var3) {
+make_table_analyse <- function(data, var, spe, var2, var3) {
     tab <- reshape(data
-                  , v.names = var     
+                  , v.names = var
                   , idvar = c(var2, var3)
                   , timevar = spe
                   , direction = "wide")
-    tab[is.na(tab)] <- 0 ###### remplace les na par des 0 / replace NAs by 0 
+    tab[is.na(tab)] <- 0 ###### remplace les na par des 0 / replace NAs by 0
 
     colnames(tab) <- sub(var, "", colnames(tab))### remplace le premier pattern "abond." par le second "" / replace the column names "abond." by ""
     return(tab)
 }
-data_num <- makeTableAnalyse(data, colvar, colspe, colloc, coltime)
+data_num <- make_table_analyse(data, colvar, colspe, colloc, coltime)
 nb_spe <- length(unique(data[, spe]))
 nb_col <- ncol(data_num) - nb_spe + 1
 data_num <- data_num[, nb_col:ncol(data_num)]
 
 #Presence of zeros in the data
-mat_corr <- function(data) {cor(data)}
-p.mat <- function(data) {ggcorrplot::cor_pmat(data)} # compute a matrix of correlation p-values
+mat_corr <- function(data) {
+  cor(data)
+}
+p_mat <- function(data) {
+  ggcorrplot::cor_pmat(data)
+} # compute a matrix of correlation p-values
 
 graph_corr <- function(data_num) {
-  graph <- ggcorrplot::ggcorrplot(mat_corr(data_num), method = "circle", p.mat = p.mat(data_num), #barring the no significant coefficient
+  graph <- ggcorrplot::ggcorrplot(mat_corr(data_num), method = "circle", p.mat = p_mat(data_num), #barring the no significant coefficient
   ggtheme = ggplot2::theme_gray, colors = c("#00AFBB", "#E7B800", "#FC4E07"))
 
   ggplot2::ggsave("0_pb.png", graph)
