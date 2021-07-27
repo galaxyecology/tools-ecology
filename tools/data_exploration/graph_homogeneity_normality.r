@@ -85,7 +85,7 @@ homog_var <- function(data, col1, col2, col3, mult) {
 ####Normality of the distribution####
 # Kolmogorov-Smirnov test
 
-ks <- capture.output(ks.test(x = data[, var], y = 'pnorm', alternative = 'two.sided'))
+ks <- capture.output(ks.test(x = data[, var], y = "pnorm", alternative = "two.sided"))
 
 cat("\nwrite table with Kolmogorov-Smirnov test. \n--> \"", paste(ks, "\"\n", sep = ""), file = "ks.txt", sep = "", append = TRUE)
 
