@@ -14,7 +14,7 @@ make_table_analyse <- function(data, var, spe, var2, var3) {
                   , idvar = c(var2, var3)
                   , timevar = spe
                   , direction = "wide")
-    tab[is.na(tab)] <- 0 ###### remplace les na par des 0 / replace NAs by 0 
+    tab[is.na(tab)] <- 0 ###### remplace les na par des 0 / replace NAs by 0
 
     colnames(tab) <- sub(paste0(var, "."), "", colnames(tab))### remplace le premier pattern "abond." par le second "" / replace the column names "abond." by ""
     return(tab)

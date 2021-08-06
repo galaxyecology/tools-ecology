@@ -77,13 +77,13 @@ if (!is.na(lat)) {
 }
 
 
-data_full <- cbind(data_xy[match(data_spe[, 1], data_xy[, "site"]),], data_spe)
+data_full <- cbind(data_xy[match(data_spe[, 1], data_xy[, "site"]), ], data_spe)
 
 if (sepa) {
   data_meth <- data[, c(var, date, loc)]
   colnames(data_meth) <- c(colvar, "date", "site")
   data_meth <- unique(data_meth)
-  data_full2 <- cbind(data_meth[match(data_spe[, 1], data_meth[, "site"]),], data_spe)
+  data_full2 <- cbind(data_meth[match(data_spe[, 1], data_meth[, "site"]), ], data_spe)
 }
 
 if (!is.na(lat)) {
@@ -95,7 +95,7 @@ if (!is.na(lat)) {
 # Data with only species and their abundance
 data_spe <- data_spe[, -1]
 
-#####Your analysis 
+#####Your analysis
 
 # Computation beta.div {adespatial}
 # Beta.div on Hellinger-transformed species data
@@ -108,14 +108,14 @@ write(beta, "LCBD.txt")
 scbd <- capture.output(data_beta$SCBD[data_beta$SCBD >= mean(data_beta$SCBD)])
 write(scbd, "SCBD.txt")
 
-##1st fonction 
+##1st fonction
 beta_div_ext <- function(data_beta, data_xy, data_env) {
    data_beta_ext <- data.frame(data_xy, data_env, LCBD = data_beta$LCBD * 100, p.LCBD = data_beta$p.LCBD, signif = data_beta$p.LCBD < 0.05)
 
   graph_beta_ext <- ggplot2::ggplot(data = data_beta_ext, ggplot2::aes(x = latitude, y = longitude, size = LCBD, col = signif)) +
-	ggplot2::geom_point() +
-	ggplot2::scale_colour_manual(values = c("grey56", "black"), labels = c("Non significant", "Significant"), name = "Significance at 0.05") +
-	ggplot2::xlab("Longitude") + ggplot2::ylab("Latitude")
+  ggplot2::geom_point() +
+  ggplot2::scale_colour_manual(values = c("grey56", "black"), labels = c("Non significant", "Significant"), name = "Significance at 0.05") +
+  ggplot2::xlab("Longitude") + ggplot2::ylab("Latitude")
 
   ggplot2::ggsave("Beta_diversity_ext.png", graph_beta_ext)
 }
@@ -149,7 +149,6 @@ compute_lcbd <- function(data_spe, data_full) {
 
   time <- ggplot2::ggplot() + ggplot2::geom_pointrange(ggplot2::aes(x = year, y = mean_time, ymin = mean_time - sd_time, ymax = mean_time + sd_time), data = data)
   time <- time + ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90), axis.line.y = ggplot2::element_line(size = 0.5)) + ggplot2::ylab("mean LCBD")
- # time <- time + ggplot2::scale_y_continuous(limits = c(0.9, 1.6))
 
   ggplot2::ggsave("Time.png", time)
 }
@@ -188,7 +187,7 @@ make_scbd_uvc <- function(data_spe, data, z) {
 
 # Function to make a radar plot
 
-coord_radar <- function (theta = "x", start = 0, direction = 1) {
+coord_radar <- function(theta = "x", start = 0, direction = 1) {
   theta <- match.arg(theta, c("x", "y"))
   r <- if (theta == "x") "y" else "x"
   ggplot2::ggproto("CordRadar", ggplot2::coord_polar(theta = theta, start = start,
@@ -197,11 +196,11 @@ coord_radar <- function (theta = "x", start = 0, direction = 1) {
 }
 
 # Make the radar plot
-radar_plot <- function(scbd_UVC_TC) {
-  UVC_rd_plot_data <- scbd_UVC_TC %>%
+radar_plot <- function(scbd_uvc_tc) {
+  uvc_rd_plot_data <- scbd_uvc_tc %>%
     rename(scbd_score = ".")
 
-  rad_uvc <- ggplot2::ggplot(UVC_rd_plot_data, ggplot2::aes(x = species, y = scbd_score, group = Methode)) +
+  rad_uvc <- ggplot2::ggplot(uvc_rd_plot_data, ggplot2::aes(x = species, y = scbd_score, group = Methode)) +
     ggplot2::geom_line() +
     ggplot2::geom_point(size = 3) +
     coord_radar() +
@@ -229,6 +228,6 @@ if (sepa) {
 
 ##SCBD
 
-scbd_UVC_TC <- make_scbd_uvc(data_spe, data_full, z = "TC")
+scbd_uvc_tc <- make_scbd_uvc(data_spe, data_full, z = "TC")
 
-radar_plot(scbd_UVC_TC)
+radar_plot(scbd_uvc_tc)
