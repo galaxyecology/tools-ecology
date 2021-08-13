@@ -84,7 +84,7 @@ data_beta <- adespatial::beta.div(data_spe, method = "hellinger", nperm = 9999)
 save(data_beta, file = "beta_diversity.Rdata")
 cat("##############################################################################",
     "\n########################### Beta Diversity Summary ###########################",
-    "\n##############################################################################", 
+    "\n##############################################################################",
     "\n\n### All data ###",
     "\nBeta diversity: ", data_beta$beta[[2]], 
     "\nSum of Squares: ", data_beta$beta[[1]], 
