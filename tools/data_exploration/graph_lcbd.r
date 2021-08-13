@@ -86,7 +86,7 @@ cat("###########################################################################
     "\n########################### Beta Diversity Summary ###########################",
     "\n##############################################################################",
     "\n\n### All data ###",
-    "\nBeta diversity: ", data_beta$beta[[2]], 
+    "\nBeta diversity: ", data_beta$beta[[2]],
     "\nSum of Squares: ", data_beta$beta[[1]], 
     "\n\n### Vector of Local Contributions to Beta Diversity (LCBD) for the sites each date ###", 
     "\n", capture.output(data_beta$LCBD), 
