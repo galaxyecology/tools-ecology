@@ -87,13 +87,13 @@ cat("###########################################################################
     "\n##############################################################################",
     "\n\n### All data ###",
     "\nBeta diversity: ", data_beta$beta[[2]],
-    "\nSum of Squares: ", data_beta$beta[[1]], 
-    "\n\n### Vector of Local Contributions to Beta Diversity (LCBD) for the sites each date ###", 
-    "\n", capture.output(data_beta$LCBD), 
+    "\nSum of Squares: ", data_beta$beta[[1]],
+    "\n\n### Vector of Local Contributions to Beta Diversity (LCBD) for the sites each date ###",
+    "\n", capture.output(data_beta$LCBD),
     "\n\n### Vector of P-values associated with the LCBD indices ###",
-    "\n", capture.output(data_beta$p.LCBD), 
+    "\n", capture.output(data_beta$p.LCBD),
     "\n\n### Vector of Corrected P-values for the LCBD indices, Holm correction ###",
-    "\n", capture.output(data_beta$p.adj), 
+    "\n", capture.output(data_beta$p.adj),
     "\n\n### Vector of Species contributions to beta diversity (SCBD) ###",
     "\n", capture.output(data_beta$SCBD), file = "LCBD.txt", fill = 1, append = TRUE)
 
