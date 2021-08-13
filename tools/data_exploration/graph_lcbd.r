@@ -26,7 +26,7 @@ if (length(args) < 2) {
     date <- as.numeric(args[6])
     map <- as.logical(args[7])
     sepa <- as.logical(args[8])
-    not <- as.logical(args[9]) 
+    not <- as.logical(args[9])
     lat <- as.numeric(args[10])
     long <- as.numeric(args[11])
     var <- as.numeric(args[12])
