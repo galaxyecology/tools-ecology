@@ -90,36 +90,25 @@
                 <param name="colnames" value="true"/>
                 <param name="abundance" value="18"/>
                 <param name="location" value="20"/>
-                <conditional name="graph">
-                    <param name="map" value="true"/>
-                    <param name="latitude" value="9"/>
-                    <param name="longitude" value="10"/>
-                </conditional>
                 <param name="species" value="15"/>
                 <param name="date" value="11"/>
                 <param name="rdata" value="false"/>
                 <conditional name="method">
-                    <param name="type" value="Separation"/>
-                    <param name="variable" value="16"/>
+                    <param name="type" value="Nothing"/>
                 </conditional>
                 <output name="output_lcbd">
                     <assert_contents>
                         <has_n_lines n="186"/>
                     </assert_contents>
                 </output>
-                <output name="output_scbd" value="SCBD.tabular"/>
-                <output_collection name="plots" type="list" count="4">
+                <output name="output_scbd" value="SCBD.txt"/>
+                <output_collection name="plots" type="list" count="3">
                     <element name="LCBD_sites_time" ftype="png">
                         <assert_contents>
                             <has_text text="PNG"/>
                         </assert_contents>
                     </element>
                     <element name="Mean_LCBD_through_time" ftype="png">
-                        <assert_contents>
-                            <has_text text="PNG"/>
-                        </assert_contents>
-                    </element>
-                    <element name="LCBD_per_Taxon_through_time" ftype="png">
                         <assert_contents>
                             <has_text text="PNG"/>
                         </assert_contents>
