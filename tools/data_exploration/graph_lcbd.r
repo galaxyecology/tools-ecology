@@ -150,7 +150,6 @@ compute_lcbd <- function(data_beta, data_spe, data_num) {
 ## Choose another graph
 #######################
 compute_lcbd2 <- function(data_beta, data_spe, data_num) {
-  #lcbd_site <- adespatial::beta.div(data_spe, "hellinger", nperm = 999)
 
 #############
   mat_lcbd_site <- data.frame(data_spe, LCBD = data_beta$LCBD * 100, p.LCBD = data_beta$p.LCBD, signif = data_beta$p.LCBD < 0.05, site = data_num[, colloc], date = data_num[, coldate], variable = data_num[, colvar])
