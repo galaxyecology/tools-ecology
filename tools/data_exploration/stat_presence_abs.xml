@@ -17,6 +17,7 @@
             '$species'
             '$location'
             '$time'
+            '$__tool_directory__/functions.r'
             '$output_md'
         ]]>
     </command>

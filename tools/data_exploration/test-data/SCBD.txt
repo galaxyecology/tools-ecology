@@ -1,0 +1,4 @@
+    Blenniidae       Gobiidae   Scorpaenidae Tripterygiidae    Plesiopidae 
+    0.13452280     0.12622864     0.05950360     0.15163110     0.07035376 
+    Apogonidae  Nototheniidae 
+    0.06153987     0.14519360 

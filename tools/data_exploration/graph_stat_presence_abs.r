@@ -20,6 +20,7 @@ if (length(args) == 0) {
     spe <- as.numeric(args[4])
     loc <- as.numeric(args[5])
     time <- as.numeric(args[6])
+    source(args[7])
 }
 
 if (hr == "false") {
@@ -37,7 +38,6 @@ colloc <- colnames(data)[loc]
 coltime <- colnames(data)[time]
 
 data <- data[grep("^$", data[, spe], invert = TRUE), ]
-time <- as.integer(substring(data[, time], first = 1, last = 4))
 
 #####Your analysis
 
@@ -75,17 +75,7 @@ med_disp <- function(med, disp) {
 #### Zero problem in data ####
 
 #Put data in form
-make_table_analyse <- function(data, var, spe, var2, var3) {
-    tab <- reshape(data
-                  , v.names = var
-                  , idvar = c(var2, var3)
-                  , timevar = spe
-                  , direction = "wide")
-    tab[is.na(tab)] <- 0 ###### remplace les na par des 0 / replace NAs by 0
 
-    colnames(tab) <- sub(var, "", colnames(tab))### remplace le premier pattern "abond." par le second "" / replace the column names "abond." by ""
-    return(tab)
-}
 data_num <- make_table_analyse(data, colvar, colspe, colloc, coltime)
 nb_spe <- length(unique(data[, spe]))
 nb_col <- ncol(data_num) - nb_spe + 1
