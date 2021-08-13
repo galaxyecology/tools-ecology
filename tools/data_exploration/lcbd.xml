@@ -1,5 +1,5 @@
-<tool id="tool_beta" name="Local contributions to beta diversity" version="@VERSION@" profile="20.01">
-    <description>Computes beta diversity</description>
+<tool id="ecology_beta_diversity" name="Local Contributions to Beta Diversity (LCBD)" version="@VERSION@" profile="20.01">
+    <description>Computes a measure of beta diversity, SCBD and representations</description>
     <macros>
         <import>macro.xml</import>
     </macros>
@@ -13,55 +13,61 @@
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
         Rscript
-         '$__tool_directory__/graph_lcbd.r'
+        '$__tool_directory__/graph_lcbd.r'
           '$input'
           '$colnames'
           '$abundance'
           '$location'
-          #if $graph.map == 'true':
-            '$graph.latitude'
-            '$graph.longitude'
-          #else:
-            ''
-            ''
-          #end if
           '$species'
           '$date'
-          #if $method.type == 'Separation':
+          #if $method.type == 'Graph':
             'TRUE'
             'FALSE'
+            'FALSE'
+            '$method.latitude'
+            '$method.longitude'
+            ''
+          #elif $method.type == 'Separation':
+            'FALSE'
+            'TRUE'
+            'FALSE'
+            ''
+            ''
             '$method.variable'
           #elif $method.type == 'Nothing':
             'FALSE'
+            'FALSE'
             'TRUE'
+            ''
+            ''
             ''
           #end if
          '$__tool_directory__/functions.r'
           '$output_lcbd'
           '$output_scbd'
           '$plots'
+           #if $rdata=='true'
+             '$output_beta'
+           #end if
         ]]>
         </command>
         <inputs>
             <expand macro="explo_input"/>
             <param name="abundance" label="Select column with abundances" type="data_column" data_ref="input" numerical="true" multiple="false" use_header_names="true"/>
             <param name="location" label="Select column with locations" type="data_column" data_ref="input" multiple="false" use_header_names="true"/>
-            <param name="species" label="Select column containing species" type="data_column" data_ref="input" multiple="false" use_header_names="true"/>
+            <param name="species" label="Select column containing taxon" type="data_column" data_ref="input" multiple="false" use_header_names="true"/>
             <param name="date" label="Select column containing dates" type="data_column" data_ref="input" multiple="false" use_header_names="true"/>
-            <conditional name="graph">
-                <param name="map" label="Would you like a spatialized representation ?" type="boolean"/>
-                <when value="true">
-                    <param name="latitude" label="Select column containing latitudes" type="data_column" data_ref="input" multiple="false" use_header_names="true"/>
-                    <param name="longitude" label="Select column containing longitudes" type="data_column" data_ref="input" multiple="false" use_header_names="true"/>
-                </when>
-                <when value="false">
-                </when>
-            </conditional>
+            <param name="rdata" type="boolean" checked="yes" label="Beta diversity object as .Rdata output ?"/>
             <conditional name="method">
-                <param name="type" type="select" label="Other LCBD">
-                    <option value="Separation">Separation to construct a new lcbd graph</option>
+                <param name="type" type="select" label="Other LCBD : spatialized representation or xy plot.">
                     <option value="Nothing">Don't want to do another graph</option>
+                    <option value="Graph">Spatialized representation</option>
+                    <option value="Separation">Separation to construct a new lcbd graph</option>
                 </param>
+                <when value="Graph">
+                    <param name="latitude" label="Select column containing latitudes in decimal degrees" type="data_column" numerical="true" data_ref="input" multiple="false" use_header_names="true"/>
+                    <param name="longitude" label="Select column containing longitudes in decimal degrees" type="data_column" numerical="true" data_ref="input" multiple="false" use_header_names="true"/>
+                </when>
                 <when value="Separation">
                     <param name="variable" type="data_column" data_ref="input" label="Select a column to make another graph according to the separation of the variable you choose" use_header_names="true"/>
                 </when>
@@ -71,6 +77,9 @@
         <outputs>
             <data name="output_lcbd" from_work_dir="LCBD.txt" format="txt" label="LCBD"/>
             <data name="output_scbd" from_work_dir="SCBD.txt" format="txt" label="Which species have a SCBD larger than the mean SCBD?"/>
+            <data name="output_beta" from_work_dir="beta_diversity.Rdata" format="Rdata" label="Beta diversity, LCDB, SCBD - R object">
+                <filter>rdata</filter>
+            </data>
             <collection type="list" name="plots">
                 <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" visible="false" format="png"/>
             </collection>
@@ -88,34 +97,34 @@
                 </conditional>
                 <param name="species" value="15"/>
                 <param name="date" value="11"/>
+                <param name="rdata" value="false"/>
                 <conditional name="method">
                     <param name="type" value="Separation"/>
                     <param name="variable" value="16"/>
                 </conditional>
-                <output name="output_lcbd" value="LCBD.txt"/>
-                <output name="output_scbd" value="SCBD.txt"/>
-                <output_collection name="plots" type="list" count="5">
-                    <element name="Beta_diversity_ext" ftype="png">
+                <output name="output_lcbd">
+                    <assert_contents>
+                        <has_n_lines n="186"/>
+                    </assert_contents>
+                </output>
+                <output name="output_scbd" value="SCBD.tabular"/>
+                <output_collection name="plots" type="list" count="4">
+                    <element name="LCBD_sites_time" ftype="png">
                         <assert_contents>
                             <has_text text="PNG"/>
                         </assert_contents>
                     </element>
-                    <element name="Spatio_temp" ftype="png">
+                    <element name="Mean_LCBD_through_time" ftype="png">
                         <assert_contents>
                             <has_text text="PNG"/>
                         </assert_contents>
                     </element>
-                    <element name="Time" ftype="png">
+                    <element name="LCBD_per_Taxon_through_time" ftype="png">
                         <assert_contents>
                             <has_text text="PNG"/>
                         </assert_contents>
                     </element>
-                    <element name="Taxon" ftype="png">
-                        <assert_contents>
-                            <has_text text="PNG"/>
-                        </assert_contents>
-                    </element>
-                    <element name="Radar_plot" ftype="png">
+                    <element name="SCBD_Species_Radar_plot" ftype="png">
                         <assert_contents>
                             <has_text text="PNG"/>
                         </assert_contents>
@@ -125,16 +134,22 @@
         </tests>
         <expand macro="topic"/>  
         <help><![CDATA[
-=======================
-Computes beta diversity 
-=======================
+=======================================================================================
+Computes measures of beta diversity : Species and Local Contributions to Beta Diversity 
+=======================================================================================
 
 **What it does**
 
-This tool computes the beta diversity of the data :
+This tool computes Species and Local Contributions to Beta Diversity (SCBD and LCBD) with Hellinger method and 9999 permutations from a species occurence file :
 
-- Computes two tables : LCBD comparative indicators of the ecological uniqueness of the sites and SCBD degree of variation of individual species across the study area
-- 3, 4 or 5 graph according to what you choose
+- **Creates two text files** : LCBD comparative indicators of the ecological uniqueness of the sites and SCBD degree of variation for individual species across the study area. The LCBD represents the degree of uniqueness of the sites in their taxonomic compositions. The "Beta diversity" value represents the total LCBD, hence if it equals 1, there is no taxon in common in sites, each site is entirely unique and if it equals 0, each site is identical in terms of their taxon composition.
+
+- 3, 4 or 5 plots according to what you choose : 
+    - A plot representing LCBD repartition according to sites and date ; ⚠️ hard to read over 40 dates and/or 70 sites
+    - A plot representing mean LCDB and confidence intervals for each date ; ⚠️ hard to read over 40 dates
+    - A radar plot representing  SCDB for each taxon ; ⚠️ hard to read over 80 taxons but every taxon is alphabetically classified clockwise on the radar plot so it should be easy to find the correspondance over this number
+    - If you choose to get a spatialized representation, a map of LCBD values according to longitudes and latitudes ;
+    - If you choose to get an additional LCBD representation, a plot of LCBD values through time for each values of the separation factor you chose. ⚠️ hard to read over 40 dates and/or 70 levels
 
 
 **Input description**
@@ -150,10 +165,11 @@ which associate abundance, sites, dates and species ID.
 |    ...     |    ...    |      ...     |    ...     |
 +------------+-----------+--------------+------------+
 
+If you choose to get a spatialized representation of the LCBD, you'll need to have two columns with your spatial coordinates latitude and longitude in decimal degrees.
 
 **Output**
 
-A text and png files. The text file contains a table with information on the beta diversity and the png file shows multiple graph according to one type of variable in order to vizualize the beta diversity.
+A text and png files. The text file contains a table with information on the beta diversity and the png files shows multiple plots according to one type of variable in order to vizualize the beta diversity.
 |
 
     ]]></help>

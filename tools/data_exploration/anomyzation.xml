@@ -1,0 +1,71 @@
+<tool id="tool_anonymization" name="Spatial coordinates anonymization" version="@VERSION@" profile="20.01">
+    <description> 
+        without loss of the spatial relationships
+    </description>
+    <macros>
+        <import>macro.xml</import>
+    </macros>
+    <requirements> 
+        <requirement  type="package" version="0.8.1">r-tangles</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript
+            '$__tool_directory__/funct_anomy.r'
+            '$input'
+            '$colnames'
+            '$latitude'
+            '$longitude'
+            '$output'
+        ]]>
+        </command>
+        <inputs>
+            <expand macro="explo_input"/>
+            <param name="latitude" label="Select column containing latitudes in decimal degrees" type="data_column" numerical="true" data_ref="input" multiple="false" use_header_names="true"/>
+            <param name="longitude" label="Select column containing longitudes in decimal degrees" type="data_column" numerical="true" data_ref="input" multiple="false" use_header_names="true"/>
+        </inputs>
+        <outputs>
+            <data name="output" from_work_dir="anonym_data.tabular" format="tabular"/>
+        </outputs>
+        <tests>
+            <test>
+                <param name="input" value="Reel_life_survey_fish_modif.tabular"/>
+                <param name="colnames" value="true"/>
+                <param name="latitude" value="9"/>
+                <param name="longitude" value="10"/>
+                <output name="output">
+                    <assert_contents>
+                        <has_n_lines n="290"/>
+                    </assert_contents>
+                </output>
+            </test>
+        </tests>
+        <help><![CDATA[
+=====================================================
+Anonymization of the spatial coordinates of your data
+=====================================================
+
+
+**What it does**
+
+This tool anonymizes (random with 3 levels of abstraction) longitude and latitude decimal degrees coordinates of a tabular file without loss of the spatial relationships within the data. Handy to allow the sharing of sensitive data regarding threatened species or human activities for instance. 
+
+Input description :
+
+A tabular file with observation data. Must at least contain two columns, latitudes and longitudes.
+
++-------------+------------+
+|   latitude  |  longitude |
++=============+============+
+|      2      |      4     | 
++-------------+------------+
+|     ...     |     ...    |
++-------------+------------+
+
+Output description :
+
+A tabular file with your original data file with its longitude and latitude replaced by anonymized longitudes and latitudes.
+
+    ]]></help>   
+    <citations>
+    </citations>               
+</tool>
