@@ -1,4 +1,4 @@
-<tool id="xarray_coords_info" name="NetCDF xarray Coordinate Info" version="@TOOL_VERSION+galaxy@VERSION_SUFFIX@">
+<tool id="xarray_coords_info" name="NetCDF xarray Coordinate Info" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@">
     <description>Get values for each coordinate of a Netcdf file</description>
     <macros>
         <import>macros.xml</import>
