@@ -11,7 +11,7 @@ library(sangerseqR, quietly = TRUE)
 
 #####Load arguments
 
-args <- commandArgs(trailingOnly=TRUE)
+args <- commandArgs(trailingOnly = TRUE)
 
 if (length(args) == 0) {
     stop("This tool needs at least one argument")
