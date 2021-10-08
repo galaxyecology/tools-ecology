@@ -5,18 +5,17 @@
 ############################################
 
 #####Packages
-#library(edgeR)
+
 library(CrispRVariants, quietly = TRUE)
 library(sangerseqR, quietly = TRUE)
 
 #####Load arguments
 
-args = commandArgs(trailingOnly=TRUE)
+args <- commandArgs(trailingOnly=TRUE)
 
-if (length(args)==0) 
-{
+if (length(args) == 0) {
     stop("This tool needs at least one argument")
-}else{
+} else {
     file <- args[1]
     filename <- args[2]
     tr <- as.logical(args[3])
@@ -27,11 +26,10 @@ if (length(args)==0)
 
 ##### Conversion
 
-if(grepl("^.+\\.[aA][bB][1i]$", filename)) {
+if (grepl("^.+\\.[aA][bB][1i]$", filename)) {
     nfile <- sub("^(.+)\\.[aA][bB][1i]$", "\\1", filename)
 } else {
     nfile <- filename
 }
 
 CrispRVariants::abifToFastq(nfile, file, "output.fastq", trim = tr, cutoff = co, min_seq_len = min_seq, offset = os)
-
