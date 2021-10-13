@@ -1,8 +1,9 @@
-<tool id="ab1_fastq_converter" name="ab1 to FASTQ converter" version="0.0">
-    <description></description> 
+<tool id="ab1_fastq_converter" name="ab1 to FASTQ converter" version="@VERSION@">
+    <description></description>
+    <token name="@VERSION@">1.20.0</token>
     <requirements>
         <requirement type="package" version="1.28.0">bioconductor-sangerseqr</requirement>
-        <requirement type="package" version="1.20.0">bioconductor-crisprvariants</requirement>
+        <requirement type="package" version="@VERSION@">bioconductor-crisprvariants</requirement>
     </requirements>
     <version_command><![CDATA[
 echo $(R --version | grep version | grep -v GNU)", sangerseqR version" $(R --vanilla --slave -e "library(sangerseqR); cat(sessionInfo()\\$otherPkgs\$sangerseqR\$Version)" 2> /dev/null | grep -v -i "WARNING: ")", CrispRVariants version" $(R --vanilla --slave -e "library(CrispRVariants); cat(sessionInfo()\\$otherPkgs\$CrispRVariants\$Version)" 2> /dev/null | grep -v -i "WARNING: ")
