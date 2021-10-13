@@ -1,4 +1,4 @@
-<tool id="ab1_fastq_converter" name="ab1 to FASTQ conversion" version="0.0">
+<tool id="ab1_fastq_converter" name="ab1 to FASTQ converter" version="0.0">
     <description></description> 
     <requirements>
         <requirement type="package" version="1.28.0">bioconductor-sangerseqr</requirement>
