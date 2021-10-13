@@ -1,0 +1,76 @@
+<tool id="ab1_fastq_converter" name="ab1 to FASTQ converter" version="@VERSION@">
+    <description></description>
+    <macros>
+        <import>ab1fastq_macros.xml</import>
+    </macros>
+    <requirements>
+        <requirement type="package" version="1.28.0">bioconductor-sangerseqr</requirement>
+        <requirement type="package" version="@VERSION@">bioconductor-crisprvariants</requirement>
+    </requirements>
+    <version_command><![CDATA[
+echo $(R --version | grep version | grep -v GNU)", sangerseqR version" $(R --vanilla --slave -e "library(sangerseqR); cat(sessionInfo()\\$otherPkgs\$sangerseqR\$Version)" 2> /dev/null | grep -v -i "WARNING: ")", CrispRVariants version" $(R --vanilla --slave -e "library(CrispRVariants); cat(sessionInfo()\\$otherPkgs\$CrispRVariants\$Version)" 2> /dev/null | grep -v -i "WARNING: ")
+    ]]></version_command>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript
+         '$__tool_directory__/ab1_fastq.R'
+         '$input'
+         '${input.display_name}'
+         #if $tr.trim=='true'
+           'TRUE'
+           '$tr.cutoff'
+           '$tr.minseq'
+           '$tr.offset'
+         #else
+           'FALSE'
+           '0.05'
+           '20'
+           '33'
+         #end if
+         '$output'
+    ]]>
+    </command>
+    <inputs>
+        <param name="input" type="data" format="ab1" label="Input ab1 file"/>
+        <conditional name="tr">
+            <param name="trim" type="select" label="Do you want trim ends according to quality scores ?">
+                <option value="false" selected="true">No, use full sequences.</option>
+                <option value="true">Yes, trim low-quality ends.</option>
+            </param>
+            <when value="false">
+            </when>
+            <when value="true">
+                <param name="cutoff" type="float" value="0.05" min="0" max="1" label="Probability cutoff you want to use to trim"/>
+                <param name="minseq" type="integer" value="20" min="0" label="Minimum sequence length to allow the trim"/>
+                <param name="offset" type="float" value="33" min="0" label="Phred offset for quality scores"/>
+            </when>
+        </conditional>
+    </inputs>
+    <outputs>
+        <data name="output" from_work_dir="output.fastq" format="fastq" label="${input.display_name}.fastq"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="input" value="test_file.AB1"/>
+            <param name="trim" value="false"/>
+            <output name="output" value="out_file.fastq"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+============================
+Convert ab1 files into FASTQ
+============================
+
+.ab1, .AB1 or .abi files are common sanger sequencing outputs, this tool permits you to convert it into fastq so it can be used into many galaxy tools.
+
+This tool can also trim ends of your sequence based on the quality statistics.
+    ]]></help>
+    <citations>
+        <citation type="bibtex">
+        @published{testdata,
+        title={ Test data from: 'MATK-F.1392427.C05.AB1' Dianyuea gen. nov. (Salicaceae: Scyphostegioideae) from southwestern China },
+        author={Dianyuea C. Shang, S. Liao , Z. X. Zhang},
+        doi={https://doi.org/10.5061/dryad.b331s}
+        }
+        </citation>
+    </citations>
+</tool>
