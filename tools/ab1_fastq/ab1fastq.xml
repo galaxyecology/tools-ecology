@@ -1,6 +1,8 @@
 <tool id="ab1_fastq_converter" name="ab1 to FASTQ converter" version="@VERSION@">
     <description></description>
-    <token name="@VERSION@">1.20.0</token>
+    <macros>
+        <import>ab1fastq_macros.xml</import>
+    </macros>
     <requirements>
         <requirement type="package" version="1.28.0">bioconductor-sangerseqr</requirement>
         <requirement type="package" version="@VERSION@">bioconductor-crisprvariants</requirement>
