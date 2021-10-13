@@ -1,5 +1,5 @@
 categories:
-    - 
+    - converters
 description: Tool to convert ab1 files into FASTQ files
 name: ab1fastq 
 owner: ecology 
