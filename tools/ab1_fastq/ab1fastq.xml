@@ -65,12 +65,7 @@ Convert ab1 files into FASTQ
 This tool can also trim ends of your sequence based on the quality statistics.
     ]]></help>
     <citations>
-        <citation type="bibtex">
-        @published{testdata,
-        title={ Test data from: 'MATK-F.1392427.C05.AB1' Dianyuea gen. nov. (Salicaceae: Scyphostegioideae) from southwestern China },
-        author={Dianyuea C. Shang, S. Liao , Z. X. Zhang},
-        doi={https://doi.org/10.5061/dryad.b331s}
-        }
-        </citation>
+        <citation type="doi">10.1038/nbt.3628</citation>
+        <citation type="doi">10.5061/dryad.b331s</citation>
     </citations>
 </tool>
