@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eml:eml xmlns:eml="eml://ecoinformatics.org/eml-2.1.1" xmlns:stmml="http://www.xml-cml.org/schema/stmml" xmlns:sw="eml://ecoinformatics.org/software-2.1.1" xmlns:cit="eml://ecoinformatics.org/literature-2.1.1" xmlns:ds="eml://ecoinformatics.org/dataset-2.1.1" xmlns:prot="eml://ecoinformatics.org/protocol-2.1.1" xmlns:doc="eml://ecoinformatics.org/documentation-2.1.1" xmlns:res="eml://ecoinformatics.org/resource-2.1.1" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="eml://ecoinformatics.org/eml-2.1.1 ~/development/eml/eml.xsd" packageId="pyrenees" system="knb" scope="system">
+  <dataset>
+    <title>Forêts anciennes des Pyrénées</title>
+    <creator>
+      <individualName>
+        <surName>Wilfried Heintz</surName>
+      </individualName>
+      <organizationName>INRAE, UMR DYNAFOR</organizationName>
+      <positionName>Engineer</positionName>
+      <address>
+        <deliveryPoint>24 chemin de Borde Rouge CS 52627</deliveryPoint>
+        <city>Castanet-Tolosan</city>
+        <postalCode>31326</postalCode>
+        <country>France</country>
+      </address>
+      <phone>(+33)561285516</phone>
+      <electronicMailAddress>wilfried.heintz@inrae.fr</electronicMailAddress>
+    </creator>
+    <creator>
+      <individualName>
+        <surName>Wilfried Heintz</surName>
+      </individualName>
+      <organizationName>INRAE, UMR DYNAFOR</organizationName>
+      <positionName>Engineer</positionName>
+      <address>
+        <deliveryPoint>24 chemin de Borde Rouge CS 52627</deliveryPoint>
+        <city>Castanet-Tolosan</city>
+        <postalCode>31326</postalCode>
+        <country>France</country>
+      </address>
+      <phone>(+33)561285516</phone>
+      <electronicMailAddress>wilfried.heintz@inrae.fr</electronicMailAddress>
+    </creator>
+    <pubDate>2020-03-26</pubDate>
+    <abstract>
+      <para>Cartographie de l'occupation ancienne du sol du massif des Pyrénées réalisée à partir de la digitalisation des minutes de cartes d'Etat Major. (2012-04-01)</para>
+    </abstract>
+    <keywordSet>
+      <keyword keywordType="theme">Occupation du sol</keyword>
+      <keyword keywordType="theme">Forêts anciennes</keyword>
+      <keyword keywordType="theme">Digitalisation</keyword>
+      <keyword keywordType="theme">Pyrénées</keyword>
+      <keyword keywordType="theme">Minutes d'Etat Major</keyword>
+      <keywordThesaurus>GENERAL</keywordThesaurus>
+    </keywordSet>
+    <intellectualRights>
+      <para>This work is licensed under the Creative Commons Attribution 4.0 International License.To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/.</para>
+    </intellectualRights>
+    <coverage>
+      <!--No geographic description provided-->
+      <!--Geographic coverage-->
+      <geographicCoverage>
+        <geographicDescription>Massif des Pyrénées</geographicDescription>
+        <boundingCoordinates>
+          <westBoundingCoordinate>-1,7055252</westBoundingCoordinate>
+          <eastBoundingCoordinate>3,1811955</eastBoundingCoordinate>
+          <northBoundingCoordinate>43,5254599</northBoundingCoordinate>
+          <southBoundingCoordinate>42,2299506</southBoundingCoordinate>
+        </boundingCoordinates>
+      </geographicCoverage>
+      <!--Temporal coverage-->
+      <temporalCoverage>
+        <rangeOfDates>
+          <beginDate>
+            <calendarDate>1840</calendarDate>
+          </beginDate>
+          <endDate>
+            <calendarDate>1880</calendarDate>
+          </endDate>
+        </rangeOfDates>
+      </temporalCoverage>
+    </coverage>
+    <contact>
+      <individualName>
+        <surName>Wilfried Heintz</surName>
+      </individualName>
+      <organizationName>INRAE, UMR DYNAFOR</organizationName>
+      <positionName>Engineer</positionName>
+      <address>
+        <deliveryPoint>24 chemin de Borde Rouge CS 52627</deliveryPoint>
+        <city>Castanet-Tolosan</city>
+        <postalCode>31326</postalCode>
+        <country>France</country>
+      </address>
+      <phone>(+33)561285516</phone>
+      <electronicMailAddress>wilfried.heintz@inrae.fr</electronicMailAddress>
+    </contact>
+    <spatialVector
+          id="NTLSP014">
+      <entityName>EMPyreneesValid_L93_CDDAudreyGrel_DYNAFOR_v24042013</entityName>
+      <entityDescription>Fichier shapefile de cartographie de l'occupation ancienne du sol du massif des Pyrénées réalisée à partir de la digitalisation des minutes de cartes d'Etat Major</entityDescription>
+      <physical>
+        <objectName>EMPyreneesValid_L93_CDDAudreyGrel_DYNAFOR_v24042013.zip</objectName>
+        <size
+          unit="bytes">33789289</size>
+        <authentication
+              method="MD5">f064c472ccd083f5f8b454e83f0937ec</authentication>
+        <dataFormat>
+          <externallyDefinedFormat>
+            <formatName>Shapefile</formatName>
+          </externallyDefinedFormat>
+        </dataFormat>
+        <distribution>
+          <online>
+            <url
+          function="download">https://agroenvgeo.data.inra.fr/geonetwork/srv/fre/catalog.search#/metadata/pyrenees</url>
+          </online>
+        </distribution>
+      </physical>
+      <attributeList>
+        <attribute
+            id="FID">
+          <attributeName>ID</attributeName>
+          <attributeDefinition>Internal ID</attributeDefinition>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <textDomain>
+                  <definition>SDuno</definition>
+                </textDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+        </attribute>
+        <attribute
+            id="occ">
+          <attributeName>duno</attributeName>
+          <attributeDefinition>duno</attributeDefinition>
+          <storageType
+          typeSystem="http://www.esri.com/metadata/esriprof80.html">Geometry</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <textDomain>
+                  <definition>Duno</definition>
+                </textDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+        </attribute>
+        <attribute
+            id="AREA">
+          <attributeName>doute</attributeName>
+          <attributeDefinition>duno</attributeDefinition>
+          <storageType
+          typeSystem="http://www.w3.org/2001/XMLSchema-datatypes">float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>meter</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute
+            id="CARTE">
+          <attributeName>Carte</attributeName>
+          <attributeDefinition>duno</attributeDefinition>
+          <storageType
+          typeSystem="http://www.w3.org/2001/XMLSchema-datatypes">float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>meter</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute
+            id="Shape_Area">
+          <attributeName>Shape_Area</attributeName>
+          <attributeDefinition>Duno</attributeDefinition>
+          <storageType
+          typeSystem="http://www.w3.org/2001/XMLSchema-datatypes">integer</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <textDomain>
+                  <definition>Unique identifiers.</definition>
+                </textDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+        </attribute>
+      </attributeList>
+      <geometry>3D Polygon</geometry>
+      <geometricObjectCount>91380</geometricObjectCount>
+      <spatialReference>
+        <horizCoordSysDef
+              name="RGF93">
+          <projCoordSys>
+            <geogCoordSys
+                name="RGF93_Lambert_93">
+              <datum
+                name="Reseau_Geodesique_Francais_1993"/>
+              <spheroid
+                denomFlatRatio="298.257222101" name="GRS_1980"
+                semiAxisMajor="6378137"/>
+              <primeMeridian
+                longitude="0" name="Greenwich"/>
+              <unit
+              name="degree"/>
+            </geogCoordSys>
+            <projection
+                name="Lambert_Conformal_Conic_2SP">
+              <parameter
+                name="latitude_of_origin"
+                value="46.5"/>
+              <parameter
+                name="central_meridian"
+                value="3"/>
+              <parameter
+                name="standard_parallel_1"
+                value="44"/>
+              <parameter
+                name="standard_parallel_2"
+                value="49"/>
+              <parameter
+                name="false_easting"
+                value="700000"/>
+              <parameter
+                name="false_northing"
+                value="6600000"/>
+              <unit name="meter"/>
+            </projection>
+          </projCoordSys>
+        </horizCoordSysDef>
+      </spatialReference>
+      <horizontalAccuracy>
+        <accuracyReport>Unknown</accuracyReport>
+      </horizontalAccuracy>
+      <verticalAccuracy>
+        <accuracyReport>Unknown</accuracyReport>
+      </verticalAccuracy>
+    </spatialVector>
+  </dataset>
+</eml:eml>

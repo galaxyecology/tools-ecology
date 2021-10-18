@@ -1,0 +1,45 @@
+<tool id="xmlstarlet" name="xmlstarlet" version="3.12.0+galaxy1">
+    <description>convert a metadata XML file in one standard to another</description>
+    <requirements>
+        <requirement type="package" version="1.6.1">xmlstarlet</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+xmlstarlet tr '$xsl' '$input' > '$output'
+    ]]>
+    </command>
+    <inputs>
+        <param name="input" type="data" format="xml" label="input xml file to convert" help="A xml file corresponding to a xsd schema you want to convert in another." />
+        <param name="xsl" type="data" format="xml" label="input xsl convertion file" help="A xsl file describing the mapping between a first xsd specification to another." />
+    </inputs>
+    <outputs>
+        <data name="output" format="xml" label="${tool.name} on ${on_string}: Converted xml" />
+    </outputs>
+    <tests>
+        <!-- Ensure conversion works -->
+        <test expect_num_outputs="1">
+            <param name="input" value="input_standardx.xml" ftype="xml"/>
+            <param name="xsl" value="standardx2standardy.xsl" ftype="xsl"/>
+            <output name="output" file="output_standardy.xml" />
+        </test>
+    </tests>
+    <help>
+
+.. class:: infomark
+
+**What it does**
+
+This tool convert a xml file to another using a xsl coversion file to specify the translation to be done, from a wsd schema to another.
+
+-----
+
+**Inputs**
+
+A xml metadata file using a standard (for exemple EML, ISO19115,...) and a xsl file describing the mapping between the standard terms from input file and terms of the searched output standard.
+
+-----
+
+**Outputs**
+
+A xml metadata file using a new standard (for example ISO19115, EML, ...).
+   </help>
+</tool>
