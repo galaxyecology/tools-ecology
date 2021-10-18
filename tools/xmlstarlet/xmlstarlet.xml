@@ -18,7 +18,7 @@ xmlstarlet tr '$xsl' '$input' > '$output'
         <!-- Ensure conversion works -->
         <test expect_num_outputs="1">
             <param name="input" value="input_standardx.xml" ftype="xml"/>
-            <param name="xsl" value="standardx2standardy.xsl" ftype="xsl"/>
+            <param name="xsl" value="standardx2standardy.xsl" ftype="xml"/>
             <output name="output" file="output_standardy.xml" />
         </test>
     </tests>
