@@ -42,4 +42,9 @@ A xml metadata file using a standard (for exemple EML, ISO19115,...) and a xsl f
 
 A xml metadata file using a new standard (for example ISO19115, EML, ...).
    </help>
+   <citations>
+       <citation type="url">
+           http://xmlstar.sourceforge.net/overview.php
+       </citation>
+   </citations>
 </tool>
