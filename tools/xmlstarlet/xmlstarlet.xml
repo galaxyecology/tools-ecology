@@ -43,8 +43,12 @@ A xml metadata file using a standard (for exemple EML, ISO19115,...) and a xsl f
 A xml metadata file using a new standard (for example ISO19115, EML, ...).
    </help>
    <citations>
-       <citation type="url">
-           http://xmlstar.sourceforge.net/overview.php
-       </citation>
+       <citation type="bibtex">@ARTICLE{Kim07aninterior-point,
+       author = {Mikhail Grushinskiy},
+       title = {XMLStarlet Command Line XML Toolkit},
+       howpublished = "\url{http://xmlstar.sourceforge.net/}",
+       year = {2021},
+       note = "{online; accessed 08-November-2021}"
+       }</citation>
    </citations>
 </tool>
