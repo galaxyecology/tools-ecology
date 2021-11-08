@@ -1,4 +1,4 @@
-<tool id="xmlstarlet" name="xmlstarlet" version="3.12.0+galaxy1">
+<tool id="xmlstarlet" name="xmlstarlet" version="1.6.1">
     <description>convert a metadata XML file in one standard to another</description>
     <requirements>
         <requirement type="package" version="1.6.1">xmlstarlet</requirement>
