@@ -17,9 +17,9 @@ xmlstarlet tr '$xsl' '$input' > '$output'
     <tests>
         <!-- Ensure conversion works -->
         <test expect_num_outputs="1">
-            <param name="input" value="input_standardx.xml" ftype="xml"/>
-            <param name="xsl" value="standardx2standardy.xsl" ftype="xml"/>
-            <output name="output" file="output_standardy.xml" />
+            <param name="input" value="input_standardiso19115.xml" ftype="xml"/>
+            <param name="xsl" value="iso2eml_all_in_one.xsl " ftype="xml"/>
+            <output name="output" file="output_standardEML.xml" />
         </test>
     </tests>
     <help>
