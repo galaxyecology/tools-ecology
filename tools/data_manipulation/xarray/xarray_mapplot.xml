@@ -103,7 +103,7 @@
        </conditional>
         <param name="xlim" type="text" optional="true" label="longitudes values 'lonW,lonE' for limited geographical area (optional and only available with some projections)" />
         <param name="ylim" type="text" value=""  optional="true" label="latitudes values 'latS,latN' for limited geographical area (optional and only available with some projections)" />
-        <param name="shift" type="select"  optional="true" display="radio" label="Shift longitudes [0,360] --> [-180,180]"> 
+        <param name="shift" type="select"  display="radio" label="Shift longitudes [0,360] --> [-180,180]"> 
              <option value="" selected="true">No</option>
              <option value="Yes">Yes</option>
         </param>
