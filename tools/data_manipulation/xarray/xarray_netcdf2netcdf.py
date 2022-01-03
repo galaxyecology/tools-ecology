@@ -76,12 +76,9 @@ class netCDF2netCDF ():
     def compute(self):
         if self.dset is None:
             self.ds = xr.open_dataset(self.infile)
-            if self.filter:
-                self.filter_selection()
-                if self.verbose:
-                    print(self.selection)
-            elif self.write_all is not None:
-                self.dset = self.ds[self.varname]
+            self.filter_selection()
+            if self.verbose:
+                print(self.selection)
 
     def save(self):
         if self.write_all:
