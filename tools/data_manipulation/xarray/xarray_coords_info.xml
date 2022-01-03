@@ -13,9 +13,9 @@
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
         mkdir output_dir &&
-        echo "Galaxy xarray version @TOOL_VERSION@" > output_dir/version.tabular &&
+        echo "Galaxy xarray version @TOOL_VERSION@"> output_dir/version.tabular &&
         python3 '$__tool_directory__/xarray_tool.py' '$input' --coords_info output_dir
-    ]]></command>
+    ]]>    </command>
     <inputs>
         <param type="data" name="input" label="Netcdf file" format="netcdf,h5" help="Netcdf file you need to extract coordinate values."/>
     </inputs>
@@ -26,8 +26,8 @@
     </outputs>
     <tests>
         <test>
-             <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
-              <output_collection name="output_dir" type="list" count="5">
+            <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
+            <output_collection name="output_dir" type="list" count="5">
                 <element name="time" file="time.tabular" ftype="tabular"/>
                 <element name="latitude" file="latitude.tabular" ftype="tabular"/>
                 <element name="longitude" file="longitude.tabular" ftype="tabular"/>
@@ -36,6 +36,7 @@
             </output_collection>
         </test>
     </tests>
+    
     <help><![CDATA[
 **What it does**
 
@@ -46,8 +47,14 @@ corresponding coordinate. The output of this tool is usually used as input to ot
 
 A netcdf file (xxx.nc).
 
+**Outputs**
+
+An output file is generated for each coordinate and each file contains the value of the corresponding coordinate.
+
+
 --------------------------------
 
-    ]]></help>
+Run this tool before considering using Netcdf Xarray operation.
+    ]]>    </help>
     <expand macro="citations"/>
 </tool>

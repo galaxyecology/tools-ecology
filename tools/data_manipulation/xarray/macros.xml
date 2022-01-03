@@ -30,7 +30,7 @@
         <param name="ocean" type="float" optional="true" label="Add ocean with alpha value [0-1] (optional)" />
         <param name="land" type="float" optional="true" label="Add land with alpha value [0-1] (optional)" />
         <param name="title" type="text" optional="true" label="Specify plot title (optional)" />
-        <param name="colorbar_label" type="text"  optional="true" label="Set a label for colormap (optional)" />
+        <param name="colorbar_label" type="text" optional="true" label="Set a label for colormap (optional)" />
         <param name="cmap" type="select" optional="true" label="Specify which colormap to use for plotting (optional)">
             <option value="cm.batlow">batlow</option>
             <option value="cm.batlowW">batlowW</option>

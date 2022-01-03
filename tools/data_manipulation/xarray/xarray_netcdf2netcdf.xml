@@ -28,7 +28,7 @@
     #end if
            --verbose
            --output '$output_netcdf'
-    ]]></command>
+    ]]>    </command>
     <inputs>
         <param type="data" name="input" label="Input netcdf file" format="netcdf"/>
         <param type="data" label="Tabular of variables" name="var_tab" format="tabular" help="Select the tabular file which summarize the available variables and dimensions."/>
@@ -95,7 +95,7 @@
             </conditional>
         </repeat>
         <param type="float" name="scale" optional="true" help="scale factor (float) to apply to selection (optional)"/>
-        
+
         <param name="write_all" type="boolean" value="false" label="Write all variables to new netCDF file"/>
     </inputs>
     <outputs>
@@ -103,71 +103,71 @@
     </outputs>
     <tests>
         <test>
-             <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
-             <param name="var_tab" value="var_tab_dataset-ibi"/>
-             <param name="var" value="chl"/>
-             <repeat name="user_choice">
-                 <param name="dim" value="time"/>
-                 <conditional name="condi_between">
-                     <param name="comparator" value="sl"/>
-                     <param name="t1" value="10"/>
-                     <param name="t2" value="12"/>
-                 </conditional>
-             </repeat>
-             <repeat name="user_choice">
-                 <param name="dim" value="latitude"/>
-                 <param name="dim_tab" value="latitude.tabular"/>
-                 <conditional name="condi_between">
-                     <param name="comparator" value="sl"/>
-                     <param name="t1" value="5"/>
-                     <param name="t2" value="10"/>
-                 </conditional>
-             </repeat>
-             <repeat name="user_choice">
-                 <param name="dim" value="longitude"/>
-                 <param name="dim_tab" value="longitude.tabular"/>
-                 <conditional name="condi_between">
-                     <param name="comparator" value="sl"/>
-                     <param name="t1" value="4"/>
-                     <param name="t2" value="10"/>
-                 </conditional>
-             </repeat>
-             <param name="scale" value="1000.5"/>
-             <output name="output_netcdf" file="small.netcdf" compare="sim_size" delta="1000"/>
+            <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
+            <param name="var_tab" value="var_tab_dataset-ibi"/>
+            <param name="var" value="chl"/>
+            <repeat name="user_choice">
+                <param name="dim" value="time"/>
+                <conditional name="condi_between">
+                    <param name="comparator" value="sl"/>
+                    <param name="t1" value="10"/>
+                    <param name="t2" value="12"/>
+                </conditional>
+            </repeat>
+            <repeat name="user_choice">
+                <param name="dim" value="latitude"/>
+                <param name="dim_tab" value="latitude.tabular"/>
+                <conditional name="condi_between">
+                    <param name="comparator" value="sl"/>
+                    <param name="t1" value="5"/>
+                    <param name="t2" value="10"/>
+                </conditional>
+            </repeat>
+            <repeat name="user_choice">
+                <param name="dim" value="longitude"/>
+                <param name="dim_tab" value="longitude.tabular"/>
+                <conditional name="condi_between">
+                    <param name="comparator" value="sl"/>
+                    <param name="t1" value="4"/>
+                    <param name="t2" value="10"/>
+                </conditional>
+            </repeat>
+            <param name="scale" value="1000.5"/>
+            <output name="output_netcdf" file="small.netcdf" compare="sim_size" delta="1000"/>
         </test>
         <test>
-             <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
-             <param name="var_tab" value="var_tab_dataset-ibi"/>
-             <param name="var" value="chl"/>
-             <repeat name="user_choice">
-                 <param name="dim" value="time"/>
-                 <conditional name="condi_between">
-                     <param name="comparator" value="sl"/>
-                     <param name="t1" value="10"/>
-                     <param name="t2" value="12"/>
-                 </conditional>
-             </repeat>
-             <repeat name="user_choice">
-                 <param name="dim" value="latitude"/>
-                 <param name="dim_tab" value="latitude.tabular"/>
-                 <conditional name="condi_between">
-                     <param name="comparator" value="sl"/>
-                     <param name="t1" value="5"/>
-                     <param name="t2" value="10"/>
-                 </conditional>
-             </repeat>
-             <repeat name="user_choice">
-                 <param name="dim" value="longitude"/>
-                 <param name="dim_tab" value="longitude.tabular"/>
-                 <conditional name="condi_between">
-                     <param name="comparator" value="sl"/>
-                     <param name="t1" value="4"/>
-                     <param name="t2" value="10"/>
-                 </conditional>
-             </repeat>
-             <param name="scale" value="1000.5"/>
-             <param name="write_all" value="Yes"/> 
-             <output name="output_netcdf" file="all.netcdf" compare="sim_size" delta="1000"/>
+            <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
+            <param name="var_tab" value="var_tab_dataset-ibi"/>
+            <param name="var" value="chl"/>
+            <repeat name="user_choice">
+                <param name="dim" value="time"/>
+                <conditional name="condi_between">
+                    <param name="comparator" value="sl"/>
+                    <param name="t1" value="10"/>
+                    <param name="t2" value="12"/>
+                </conditional>
+            </repeat>
+            <repeat name="user_choice">
+                <param name="dim" value="latitude"/>
+                <param name="dim_tab" value="latitude.tabular"/>
+                <conditional name="condi_between">
+                    <param name="comparator" value="sl"/>
+                    <param name="t1" value="5"/>
+                    <param name="t2" value="10"/>
+                </conditional>
+            </repeat>
+            <repeat name="user_choice">
+                <param name="dim" value="longitude"/>
+                <param name="dim_tab" value="longitude.tabular"/>
+                <conditional name="condi_between">
+                    <param name="comparator" value="sl"/>
+                    <param name="t1" value="4"/>
+                    <param name="t2" value="10"/>
+                </conditional>
+            </repeat>
+            <param name="scale" value="1000.5"/>
+            <param name="write_all" value="Yes"/>
+            <output name="output_netcdf" file="all.netcdf" compare="sim_size" delta="1000"/>
         </test>
     </tests>
     <help><![CDATA[
@@ -185,6 +185,6 @@ over latitudes and longitudes)
 -------------------------------------------------
 
 The xarray select tool can be used after the xarray Info and xarray Coord.
-    ]]></help>
+    ]]>    </help>
     <expand macro="citations"/>
 </tool>
