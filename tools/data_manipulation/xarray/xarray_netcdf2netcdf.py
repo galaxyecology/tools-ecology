@@ -109,7 +109,9 @@ class netCDF2netCDF ():
                 print(self.selection)
 
     def save(self):
-        if self.varname != 'None' and self.varname is not None and not self.write_all:
+        if self.varname != 'None' and \
+            self.varname is not None and \
+                not self.write_all:
             self.dset[self.varname].to_netcdf(self.output)
         else:
             self.dset.to_netcdf(self.output)
