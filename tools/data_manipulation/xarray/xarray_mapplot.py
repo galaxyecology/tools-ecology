@@ -74,7 +74,12 @@ class MapPlotXr ():
                  coastline=0, borders=0, xlim=[], ylim=[],
                  threshold="", label="", shift=False,
                  range_values=[]):
-        self.input = input
+
+        li = list(input.split(","))
+        if len(li) > 1:
+            self.input = li
+        else:
+            self.input = input
         print("PROJ", proj)
         if proj != "" and proj is not None:
             self.proj = proj.replace('X', ':')
@@ -98,11 +103,17 @@ class MapPlotXr ():
         self.colorbar = True
         self.title = title
         if output is None:
-            self.output = Path(input).stem + '.png'
+            if type(self.input) is list:
+                self.output = Path(self.input[0]).stem + '.png'
+            else:
+                self.output = Path(self.input).stem + '.png'
         else:
             self.output = output
         self.verbose = verbose
-        self.dset = xr.open_dataset(self.input, use_cftime=True)
+        if type(self.input) is list:
+            self.dset = xr.open_mfdataset(self.input, use_cftime=True)
+        else:
+            self.dset = xr.open_dataset(self.input, use_cftime=True)
 
         self.label = {}
         if label != "" and label is not None:

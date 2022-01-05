@@ -1,9 +1,9 @@
 xarray.Dataset {
 dimensions:
+	time = 145 ;
 	depth = 1 ;
 	latitude = 97 ;
 	longitude = 103 ;
-	time = 145 ;
 
 variables:
 	float32 phy(time, depth, latitude, longitude) ;

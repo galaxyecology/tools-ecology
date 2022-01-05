@@ -21,12 +21,24 @@ class netCDF2netCDF ():
     def __init__(self, infile, varname, scale="",
                  output="output.netcdf",
                  write_all=False,
+                 keep_attributes=True,
                  filter_list="",
                  verbose=False):
-        self.infile = infile
+        li = list(infile.split(","))
+        if len(li) > 1:
+            self.infile = li
+        else:
+            self.infile = infile
         self.verbose = verbose
-        self.varname = varname
+        if varname != 'None' or varname is not None:
+            li = list(varname.split(","))
+            self.varname = li
+        else:
+            self.varname = varname
         self.write_all = write_all
+        self.keep_attributes = keep_attributes
+        if self.keep_attributes:
+            xr.set_options(keep_attrs=True)
         self.filter = filter_list
         self.selection = {}
         if scale == "" or scale is None:
@@ -46,6 +58,7 @@ class netCDF2netCDF ():
             print("filter_list: ", self.filter)
             print("scale: ", self.scale)
             print("write_all: ", self.write_all)
+            print("keep_attributes: ", self.keep_attributes)
             print("output: ", self.output)
 
     def dimension_selection(self, single_filter):
@@ -66,23 +79,38 @@ class netCDF2netCDF ():
     def filter_selection(self):
         for single_filter in self.filter:
             self.dimension_selection(single_filter)
-        if self.write_all:
-            self.ds[self.varname] = \
-                self.ds[self.varname].isel(self.selection)*self.scale
+
+        # End-user has selected a variable
+        if self.varname != 'None' and self.varname is not None:
+            if self.write_all:
+                for var in self.varname:
+                    self.ds[var] = \
+                        self.ds[var].isel(self.selection)*self.scale
+                self.dset = self.ds
+            else:
+                self.dset = \
+                    self.ds.isel(self.selection)
+                for var in self.varname:
+                    self.dset[var] = \
+                        self.dset[var]*self.scale
+        # End-user has NOT selected a variable
         else:
             self.dset = \
-                self.ds[self.varname].isel(self.selection)*self.scale
+                self.ds.isel(self.selection)
 
     def compute(self):
         if self.dset is None:
-            self.ds = xr.open_dataset(self.infile)
+            if type(self.infile) is list:
+                self.ds = xr.open_mfdataset(self.infile)
+            else:
+                self.ds = xr.open_dataset(self.infile)
             self.filter_selection()
             if self.verbose:
                 print(self.selection)
 
     def save(self):
-        if self.write_all:
-            self.ds.to_netcdf(self.output)
+        if self.varname != 'None' and self.varname is not None and not self.write_all:
+            self.dset[self.varname].to_netcdf(self.output)
         else:
             self.dset.to_netcdf(self.output)
 
@@ -116,6 +144,10 @@ if __name__ == '__main__':
         help="write all data to netCDF",
         action="store_true")
     parser.add_argument(
+        "--keep_attributes",
+        help="Keep all attributes",
+        action="store_true")
+    parser.add_argument(
         "-v", "--verbose",
         help="switch on verbose mode",
         action="store_true")
@@ -123,8 +155,9 @@ if __name__ == '__main__':
 
     dset = netCDF2netCDF(infile=args.input, varname=args.varname,
                          scale=args.scale, output=args.output,
-                         filter_list=args.filter,
                          write_all=args.write_all,
+                         keep_attributes=args.keep_attributes,
+                         filter_list=args.filter,
                          verbose=args.verbose)
     dset.compute()
     dset.save()

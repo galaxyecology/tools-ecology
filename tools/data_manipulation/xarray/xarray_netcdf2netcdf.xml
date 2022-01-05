@@ -5,13 +5,16 @@
     </macros>
     <expand macro="edam_ontology"/>
     <requirements>
-        <requirement type="package" version="3">python</requirement>
-        <requirement type="package" version="1.5.6">netcdf4</requirement>
         <requirement type="package" version="@TOOL_VERSION@">xarray</requirement>
+        <requirement type="package" version="3">python</requirement>
+        <requirement type="package" version="1.5.8">netcdf4</requirement>
+        <requirement type="package" version="2021.12.0">dask</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
     mkdir output_dir &&
-    python '$__tool_directory__/xarray_netcdf2netcdf.py' '$input' '$var'
+    python '$__tool_directory__/xarray_netcdf2netcdf.py'
+          '$input'
+          '$variable.var'
            --filter
     #for $i,$uc in enumerate($user_choice)
         #if $uc.condi_between.comparator=="sl"
@@ -20,27 +23,34 @@
              '${uc.dim}#${uc.condi_between.comparator}#${uc.condi_between.value}'
         #end if
     #end for
-    #if $scale
-        --scale '$scale'
+    #if $variable.scale
+        --scale '$variable.scale'
     #end if
-    #if $write_all
+    #if ($variable.write_all) or (str($variable.var) == 'None')
          --write_all
+    #end if
+    #if $variable.keep_attributes
+         --keep_attributes
     #end if
            --verbose
            --output '$output_netcdf'
     ]]>    </command>
     <inputs>
-        <param type="data" name="input" label="Input netcdf file" format="netcdf"/>
-        <param type="data" label="Tabular of variables" name="var_tab" format="tabular" help="Select the tabular file which summarize the available variables and dimensions."/>
+        <param type="data" name="input" multiple="true" min="1" label="Input netcdf file" format="netcdf"/>
+        <param type="data" label="Metadata Infos" name="var_tab" format="tabular" help="Select the tabular file which summarize the available variables and dimensions."/>
+	<section name="variable">
+            <param name="var" type="select" multiple="true" label="Choose variables to extract">
+                <options from_dataset="var_tab">
+                    <column name="name" index="0"/>
+                    <column name="value" index="0"/>
+                </options>
+            </param>
+            <param type="float" name="scale" optional="true" help="scale factor (float) to apply to the selected variable (optional and only if a variable is selected)"/>
+            <param name="write_all" type="boolean" checked="false" label="Write all variables to new netCDF file (only if a variable is selected)"/>
+            <param name="keep_attributes" type="boolean" checked="true" label="Keep all attributes (only if a variable is selected)"/>
+        </section>
 
-        <param name="var" type="select" label="Choose the variable to extract">
-            <options from_dataset="var_tab">
-                <column name="name" index="0"/>
-                <column name="value" index="0"/>
-            </options>
-        </param>
-
-        <repeat name="user_choice" title="additional filter" min="0" max="20" help="Use this option to filter on the selected dataset">
+        <repeat name="user_choice" title="Filter by coordinate values" min="0" max="20" help="Use this option to filter on the values of the selected coordinate">
             <param name="dim" type="select" label="Dimensions">
                 <options from_dataset="var_tab">
                     <column name="value" index="0"/>
@@ -94,9 +104,7 @@
                 </when>
             </conditional>
         </repeat>
-        <param type="float" name="scale" optional="true" help="scale factor (float) to apply to selection (optional)"/>
 
-        <param name="write_all" type="boolean" value="false" label="Write all variables to new netCDF file"/>
     </inputs>
     <outputs>
         <data name="output_netcdf" format="netcdf"/>
@@ -105,7 +113,9 @@
         <test>
             <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
             <param name="var_tab" value="var_tab_dataset-ibi"/>
-            <param name="var" value="chl"/>
+	    <section name="variable">
+                <param name="var" value="chl"/>
+            </section>
             <repeat name="user_choice">
                 <param name="dim" value="time"/>
                 <conditional name="condi_between">
@@ -138,7 +148,12 @@
         <test>
             <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
             <param name="var_tab" value="var_tab_dataset-ibi"/>
-            <param name="var" value="chl"/>
+	    <section name="variable">
+                <param name="var" value="chl"/>
+                <param name="scale" value="1000.5"/>
+                <param name="write_all" value="true"/>
+                <param name="keep_attribute" value="false"/>
+            </section>
             <repeat name="user_choice">
                 <param name="dim" value="time"/>
                 <conditional name="condi_between">
@@ -165,8 +180,6 @@
                     <param name="t2" value="10"/>
                 </conditional>
             </repeat>
-            <param name="scale" value="1000.5"/>
-            <param name="write_all" value="Yes"/>
             <output name="output_netcdf" file="all.netcdf" compare="sim_size" delta="1000"/>
         </test>
     </tests>
