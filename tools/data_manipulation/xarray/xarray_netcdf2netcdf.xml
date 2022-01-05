@@ -38,7 +38,7 @@
     <inputs>
         <param type="data" name="input" multiple="true" min="1" label="Input netcdf file" format="netcdf"/>
         <param type="data" label="Metadata Infos" name="var_tab" format="tabular" help="Select the tabular file which summarize the available variables and dimensions."/>
-	<section name="variable">
+	<section name="variable" title="Select variables">
             <param name="var" type="select" multiple="true" label="Choose variables to extract">
                 <options from_dataset="var_tab">
                     <column name="name" index="0"/>
