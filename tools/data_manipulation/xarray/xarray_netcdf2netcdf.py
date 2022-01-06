@@ -83,7 +83,7 @@ class netCDF2netCDF ():
         if self.varname == 'None' or self.varname is None:
             self.dset = \
                 self.ds.isel(self.selection)
-        else:   
+        else:
             if self.write_all:
                 for var in self.varname:
                     self.ds[var] = \
