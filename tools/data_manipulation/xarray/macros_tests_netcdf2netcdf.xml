@@ -91,9 +91,10 @@
                         <param name="by_click" value="isel_list"/>
                         <repeat name="user_choice">
                             <param name="dim" value="time"/>
+                            <param name="dim_tab" value="time.tabular"/>
                             <conditional name="condi_between">
                                 <param name="comparator" value="to"/>
-                                <param name="t2" value="12"/>
+                                <param name="value" value="12"/>
                             </conditional>
                         </repeat>
                         <repeat name="user_choice">
@@ -101,7 +102,7 @@
                             <param name="dim_tab" value="latitude.tabular"/>
                             <conditional name="condi_between">
                                 <param name="comparator" value="is"/>
-                                <param name="t1" value="5"/>
+                                <param name="value" value="5"/>
                             </conditional>
                         </repeat>
                         <repeat name="user_choice">
@@ -109,7 +110,7 @@
                             <param name="dim_tab" value="longitude.tabular"/>
                             <conditional name="condi_between">
                                 <param name="comparator" value="is"/>
-                                <param name="t1" value="4"/>
+                                <param name="value" value="4"/>
                             </conditional>
                         </repeat>
                     </conditional>
@@ -124,9 +125,10 @@
                         <param name="by_click" value="isel"/>
                         <repeat name="user_choice">
                             <param name="dim" value="time"/>
+                            <param name="dim_tab" value="time.tabular"/>
                             <conditional name="condi_between">
                                 <param name="comparator" value="to"/>
-                                <param name="t2" value="12"/>
+                                <param name="value" value="12"/>
                             </conditional>
                         </repeat>
                         <repeat name="user_choice">
@@ -134,7 +136,7 @@
                             <param name="dim_tab" value="latitude.tabular"/>
                             <conditional name="condi_between">
                                 <param name="comparator" value="is"/>
-                                <param name="t1" value="5"/>
+                                <param name="value" value="5"/>
                             </conditional>
                         </repeat>
                         <repeat name="user_choice">
@@ -142,7 +144,7 @@
                             <param name="dim_tab" value="longitude.tabular"/>
                             <conditional name="condi_between">
                                 <param name="comparator" value="is"/>
-                                <param name="t1" value="4"/>
+                                <param name="value" value="4"/>
                             </conditional>
                         </repeat>
                     </conditional>
