@@ -86,7 +86,7 @@ class netCDF2netCDF ():
             self.selection[dimension_varname] = ll
             if self.sel:
                 rl = split_filter[3]      
-                self.selection['method'] = r1
+                self.selection['method'] = rl
 
     def filter_selection(self):
         for single_filter in self.filter:
