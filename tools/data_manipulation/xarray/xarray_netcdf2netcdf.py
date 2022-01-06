@@ -30,11 +30,11 @@ class netCDF2netCDF ():
         else:
             self.infile = infile
         self.verbose = verbose
-        if varname != 'None' or varname is not None:
+        if varname == 'None' or varname is None:
+            self.varname = varname
+        else:
             li = list(varname.split(","))
             self.varname = li
-        else:
-            self.varname = varname
         self.write_all = write_all
         self.keep_attributes = keep_attributes
         if self.keep_attributes:
@@ -80,8 +80,12 @@ class netCDF2netCDF ():
         for single_filter in self.filter:
             self.dimension_selection(single_filter)
 
+        if self.varname == 'None' or self.varname is None:
+        # End-user has NOT selected a variable
+            self.dset = \
+                self.ds.isel(self.selection)
+        else:
         # End-user has selected a variable
-        if self.varname != 'None' and self.varname is not None:
             if self.write_all:
                 for var in self.varname:
                     self.ds[var] = \
@@ -93,10 +97,6 @@ class netCDF2netCDF ():
                 for var in self.varname:
                     self.dset[var] = \
                         self.dset[var]*self.scale
-        # End-user has NOT selected a variable
-        else:
-            self.dset = \
-                self.ds.isel(self.selection)
 
     def compute(self):
         if self.dset is None:

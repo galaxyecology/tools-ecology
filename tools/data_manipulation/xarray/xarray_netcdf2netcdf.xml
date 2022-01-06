@@ -2,6 +2,8 @@
     <description>manipulate xarray from netCDF and save back to netCDF</description>
     <macros>
         <import>macros.xml</import>
+        <import>macros_netcdf2netcdf.xml</import>
+        <import>macros_tests_netcdf2netcdf.xml</import>
     </macros>
     <expand macro="edam_ontology"/>
     <requirements>
@@ -16,11 +18,13 @@
           '$input'
           '$variable.var'
            --filter
-    #for $i,$uc in enumerate($user_choice)
-        #if $uc.condi_between.comparator=="sl"
-             '${uc.dim}#${uc.condi_between.comparator}#${uc.condi_between.t1}#${uc.condi_between.t2}'
-        #else
-             '${uc.dim}#${uc.condi_between.comparator}#${uc.condi_between.value}'
+    #for $i,$uc in enumerate($subset_coords.tsel.user_choice)
+        #if $subset_coords.tsel.by_click == "isel_list" or $subset_coords.tsel.by_click == "isel"
+            #if $uc.condi_between.comparator == "sl"
+                 '${uc.dim}#${uc.condi_between.comparator}#${uc.condi_between.t1}#${uc.condi_between.t2}'
+            #else
+                 '${uc.dim}#${uc.condi_between.comparator}#${uc.condi_between.value}'
+            #end if
         #end if
     #end for
     #if $variable.scale
@@ -38,151 +42,14 @@
     <inputs>
         <param type="data" name="input" multiple="true" min="1" label="Input netcdf file" format="netcdf"/>
         <param type="data" label="Metadata Infos" name="var_tab" format="tabular" help="Select the tabular file which summarize the available variables and dimensions."/>
-	<section name="variable" title="Select variables">
-            <param name="var" type="select" multiple="true" label="Choose variables to extract">
-                <options from_dataset="var_tab">
-                    <column name="name" index="0"/>
-                    <column name="value" index="0"/>
-                </options>
-            </param>
-            <param type="float" name="scale" optional="true" help="scale factor (float) to apply to the selected variable (optional and only if a variable is selected)"/>
-            <param name="write_all" type="boolean" checked="false" label="Write all variables to new netCDF file (only if a variable is selected)"/>
-            <param name="keep_attributes" type="boolean" checked="true" label="Keep all attributes (only if a variable is selected)"/>
-        </section>
-
-        <repeat name="user_choice" title="Filter by coordinate values" min="0" max="20" help="Use this option to filter on the values of the selected coordinate">
-            <param name="dim" type="select" label="Dimensions">
-                <options from_dataset="var_tab">
-                    <column name="value" index="0"/>
-                </options>
-            </param>
-            <param type="data" label="Tabular containing values of this dimension" name="dim_tab" format="tabular" help="File containing values for this dimension."/>
-            <conditional name="condi_between">
-                <param name="comparator" type="select" label="Comparator">
-                    <option value="is">is</option>
-                    <option value="from">from</option>
-                    <option value="to">to</option>
-                    <option value="sl">slice(threshold1,threshold2)</option>
-                </param>
-                <when value="sl">
-                    <param name="t1" type="select" multiple="false" label="Choose the start value for slice">
-                        <options from_dataset="dim_tab">
-                            <column name="name" index="1"/>
-                            <column name="value" index="0"/>
-                        </options>
-                    </param>
-                    <param name="t2" type="select" multiple="false" label="Choose the end value for slice">
-                        <options from_dataset="dim_tab">
-                            <column name="name" index="1"/>
-                            <column name="value" index="0"/>
-                        </options>
-                    </param>
-                </when>
-                <when value="is">
-                    <param name="value" type="select" multiple="false" label="Choose the value to select">
-                        <options from_dataset="dim_tab">
-                            <column name="name" index="1"/>
-                            <column name="value" index="0"/>
-                        </options>
-                    </param>
-                </when>
-                <when value="to">
-                    <param name="value" type="select" multiple="false" label="Choose the end value">
-                        <options from_dataset="dim_tab">
-                            <column name="name" index="1"/>
-                            <column name="value" index="0"/>
-                        </options>
-                    </param>
-                </when>
-                <when value="from">
-                    <param name="value" type="select" multiple="false" label="Choose the start value">
-                        <options from_dataset="dim_tab">
-                            <column name="name" index="1"/>
-                            <column name="value" index="0"/>
-                        </options>
-                    </param>
-                </when>
-            </conditional>
-        </repeat>
-
+        <expand macro="section_variables"/>
+        <expand macro="section_coords"/>
+        <expand macro="section_where"/>
     </inputs>
     <outputs>
         <data name="output_netcdf" format="netcdf"/>
     </outputs>
-    <tests>
-        <test>
-            <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
-            <param name="var_tab" value="var_tab_dataset-ibi"/>
-	    <section name="variable">
-                <param name="var" value="chl"/>
-            </section>
-            <repeat name="user_choice">
-                <param name="dim" value="time"/>
-                <conditional name="condi_between">
-                    <param name="comparator" value="sl"/>
-                    <param name="t1" value="10"/>
-                    <param name="t2" value="12"/>
-                </conditional>
-            </repeat>
-            <repeat name="user_choice">
-                <param name="dim" value="latitude"/>
-                <param name="dim_tab" value="latitude.tabular"/>
-                <conditional name="condi_between">
-                    <param name="comparator" value="sl"/>
-                    <param name="t1" value="5"/>
-                    <param name="t2" value="10"/>
-                </conditional>
-            </repeat>
-            <repeat name="user_choice">
-                <param name="dim" value="longitude"/>
-                <param name="dim_tab" value="longitude.tabular"/>
-                <conditional name="condi_between">
-                    <param name="comparator" value="sl"/>
-                    <param name="t1" value="4"/>
-                    <param name="t2" value="10"/>
-                </conditional>
-            </repeat>
-            <param name="scale" value="1000.5"/>
-            <output name="output_netcdf" file="small.netcdf" compare="sim_size" delta="1000"/>
-        </test>
-        <test>
-            <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
-            <param name="var_tab" value="var_tab_dataset-ibi"/>
-	    <section name="variable">
-                <param name="var" value="chl"/>
-                <param name="scale" value="1000.5"/>
-                <param name="write_all" value="true"/>
-                <param name="keep_attribute" value="false"/>
-            </section>
-            <repeat name="user_choice">
-                <param name="dim" value="time"/>
-                <conditional name="condi_between">
-                    <param name="comparator" value="sl"/>
-                    <param name="t1" value="10"/>
-                    <param name="t2" value="12"/>
-                </conditional>
-            </repeat>
-            <repeat name="user_choice">
-                <param name="dim" value="latitude"/>
-                <param name="dim_tab" value="latitude.tabular"/>
-                <conditional name="condi_between">
-                    <param name="comparator" value="sl"/>
-                    <param name="t1" value="5"/>
-                    <param name="t2" value="10"/>
-                </conditional>
-            </repeat>
-            <repeat name="user_choice">
-                <param name="dim" value="longitude"/>
-                <param name="dim_tab" value="longitude.tabular"/>
-                <conditional name="condi_between">
-                    <param name="comparator" value="sl"/>
-                    <param name="t1" value="4"/>
-                    <param name="t2" value="10"/>
-                </conditional>
-            </repeat>
-            <output name="output_netcdf" file="all.netcdf" compare="sim_size" delta="1000"/>
-        </test>
-    </tests>
+    <expand macro="section_tests"/>
     <help><![CDATA[
 **What it does**
 

@@ -1,0 +1,151 @@
+<macros>
+    <xml name="coord_range">
+        <repeat name="user_choice" title="Filter by coordinate values" min="0" max="20" help="Use this option to filter on the values of the selected coordinate">
+            <param name="dim" type="select" label="Dimensions">
+                <options from_dataset="var_tab">
+                    <column name="value" index="0"/>
+                </options>
+            </param>
+            <conditional name="condi_between">
+                <param name="comparator" type="select" label="Comparator">
+                    <option value="is">is</option>
+                    <option value="from">from</option>
+                    <option value="to">to</option>
+                    <option value="sl">slice(threshold1,threshold2)</option>
+                </param>
+                <when value="sl">
+                    <param name="t1" type="text" value="" label="Choose the start value for slice"/>
+                    <param name="t2" type="text" value="" label="Choose the end value for slice"/>
+                </when>
+                <when value="to">
+                    <param name="value" type="text" value="" label="Choose the end value"/>
+                </when>
+                <when value="from">
+                    <param name="value" type="text" value="" label="Choose the start value"/>
+                </when>
+                <when value="is">
+                    <param name="value" type="text" value="" label="Choose the value to select"/>
+                    <yield />
+                </when>
+            </conditional>
+        </repeat>
+    </xml>
+    <xml name="section_variables">
+        <section name="variable" title="Select variables">
+            <param name="var" type="select" multiple="true" label="Choose variables to extract">
+                <options from_dataset="var_tab">
+                    <column name="name" index="0"/>
+                    <column name="value" index="0"/>
+                </options>
+            </param>
+            <param type="float" name="scale" optional="true" help="scale factor (float) to apply to the selected variable (optional and only if a variable is selected)"/>
+            <param name="write_all" type="boolean" checked="false" label="Write all variables to new netCDF file (only if a variable is selected)"/>
+            <param name="keep_attributes" type="boolean" checked="true" label="Keep all attributes (only if a variable is selected)"/>
+        </section>
+    </xml>
+    <xml name="section_coords">
+        <section name="subset_coords" title="Subset by coordinates">
+            <conditional name="tsel">
+                <param name="by_click" type="select" optional="true" label="Coordinate values">
+                    <option value="sel">Coordinate values (sel)</option>
+                    <option value="isel">Coordinate indices (isel)</option>
+                    <option value="isel_list" selected="true">Coordinate values from list</option>
+                </param>
+                <when value="sel">
+                    <expand macro="coord_range">
+                        <param name="method" type="select" multiple="false" label="Choose selection method">
+                            <option value="None">only exact matches</option>
+                            <option value="nearest">use nearest valid index value</option>
+                            <option value="pad">propagate last valid index value forward</option>
+                            <option value="backfill">propagate next valid index value backward</option>
+                        </param>
+                    </expand>
+                </when>
+                <when value="isel">
+                    <expand macro="coord_range"/>
+                </when>
+                <when value="isel_list">
+                    <repeat name="user_choice" title="Filter by coordinate values" min="0" max="20" help="Use this option to filter on the values of the selected coordinate">
+                        <param name="dim" type="select" label="Dimensions">
+                            <options from_dataset="var_tab">
+                                <column name="value" index="0"/>
+                            </options>
+                        </param>
+                        <param type="data" label="Tabular containing values of this dimension" name="dim_tab" format="tabular" help="File containing values for this dimension."/>
+                        <conditional name="condi_between">
+                            <param name="comparator" type="select" label="Comparator">
+                                <option value="is">is</option>
+                                <option value="from">from</option>
+                                <option value="to">to</option>
+                                <option value="sl">slice(threshold1,threshold2)</option>
+                            </param>
+                            <when value="sl">
+                                <param name="t1" type="select" multiple="false" label="Choose the start value for slice">
+                                    <options from_dataset="dim_tab">
+                                        <column name="name" index="1"/>
+                                        <column name="value" index="0"/>
+                                    </options>
+                                </param>
+                                <param name="t2" type="select" multiple="false" label="Choose the end value for slice">
+                                    <options from_dataset="dim_tab">
+                                        <column name="name" index="1"/>
+                                        <column name="value" index="0"/>
+                                    </options>
+                                </param>
+                            </when>
+                            <when value="is">
+                                <param name="value" type="select" multiple="false" label="Choose the value to select">
+                                    <options from_dataset="dim_tab">
+                                        <column name="name" index="1"/>
+                                        <column name="value" index="0"/>
+                                    </options>
+                                </param>
+                            </when>
+                            <when value="to">
+                                <param name="value" type="select" multiple="false" label="Choose the end value">
+                                    <options from_dataset="dim_tab">
+                                        <column name="name" index="1"/>
+                                        <column name="value" index="0"/>
+                                    </options>
+                                </param>
+                            </when>
+                            <when value="from">
+                                <param name="value" type="select" multiple="false" label="Choose the start value">
+                                    <options from_dataset="dim_tab">
+                                        <column name="name" index="1"/>
+                                        <column name="value" index="0"/>
+                                    </options>
+                                </param>
+                            </when>
+                        </conditional>
+                    </repeat>
+                </when>
+            </conditional>
+        </section>
+    </xml>
+    <xml name="section_where">
+        <section name="mask_values" title="Mask by values">
+            <repeat name="user_mask" title="Mask field values" min="0" max="20" help="Use this option to mask where field variables have certain values">
+                <conditional name="condi_where">
+                    <param name="build_where" type="select" multiple="false" label="Build where statement">
+                        <option value="parenthesis">( ) add parenthesis</option>
+                        <option value="expr">new expression</option>
+                        <option value="and">AND between two expressions</option>
+                        <option value="or">OR between two expressions</option>
+                    </param>
+                    <when value="parenthesis"/>
+                    <when value="and"/>
+                    <when value="or"/>
+                    <when value="expression">
+                        <param name="where_var" type="select" multiple="false" label="Select variables for mask (where)">
+                            <options from_dataset="var_tab">
+                                <column name="name" index="0"/>
+                                <column name="value" index="0"/>
+                            </options>
+                        </param>
+                    </when>
+                </conditional>
+            </repeat>
+        </section>
+    </xml>
+</macros>
