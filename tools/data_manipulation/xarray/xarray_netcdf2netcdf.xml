@@ -19,14 +19,17 @@
           '$variable.var'
            --filter
     #for $i,$uc in enumerate($subset_coords.tsel.user_choice)
-        #if $subset_coords.tsel.by_click == "isel_list" or $subset_coords.tsel.by_click == "isel"
-            #if $uc.condi_between.comparator == "sl"
-                 '${uc.dim}#${uc.condi_between.comparator}#${uc.condi_between.t1}#${uc.condi_between.t2}'
-            #else
-                 '${uc.dim}#${uc.condi_between.comparator}#${uc.condi_between.value}'
-            #end if
+        #if $uc.condi_between.comparator == "sl"
+            '${uc.dim}#${uc.condi_between.comparator}#${uc.condi_between.t1}#${uc.condi_between.t2}'
+        #elif $subset_coords.tsel.by_click == "sel" and $uc.condi_between.method != 'None'
+            '${uc.dim}#${uc.condi_between.comparator}#${uc.condi_between.value}#${uc.condi_between.method}'
+        #else
+            '${uc.dim}#${uc.condi_between.comparator}#${uc.condi_between.value}'
         #end if
     #end for
+    #if $subset_coords.tsel.by_click == "sel"
+        --selection
+    #end if
     #if $variable.scale
         --scale '$variable.scale'
     #end if
