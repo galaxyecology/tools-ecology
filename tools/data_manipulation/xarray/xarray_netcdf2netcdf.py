@@ -81,11 +81,9 @@ class netCDF2netCDF ():
             self.dimension_selection(single_filter)
 
         if self.varname == 'None' or self.varname is None:
-        # End-user has NOT selected a variable
             self.dset = \
                 self.ds.isel(self.selection)
-        else:
-        # End-user has selected a variable
+        else:   
             if self.write_all:
                 for var in self.varname:
                     self.ds[var] = \
