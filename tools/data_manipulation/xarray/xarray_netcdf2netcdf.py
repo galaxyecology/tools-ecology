@@ -85,7 +85,7 @@ class netCDF2netCDF ():
         elif (op == 'is'):
             self.selection[dimension_varname] = ll
             if self.sel:
-                rl = split_filter[3]      
+                rl = split_filter[3]
                 self.selection['method'] = rl
 
     def filter_selection(self):
@@ -101,19 +101,19 @@ class netCDF2netCDF ():
                     self.ds.isel(self.selection)
         else:
             if self.write_all:
-                for var in self.varname:     
-                    if self.sel:      
+                for var in self.varname:
+                    if self.sel:
                         self.ds[var] = \
-                            self.ds[var].sel(self.selection)*self.scale  
-                    else:      
+                            self.ds[var].sel(self.selection)*self.scale
+                    else:
                         self.ds[var] = \
                             self.ds[var].isel(self.selection)*self.scale
                 self.dset = self.ds
-            else: 
-                if self.sel:      
+            else:
+                if self.sel:
                     self.dset = \
                         self.ds.sel(self.selection)
-                else:      
+                else:
                     self.dset = \
                         self.ds.isel(self.selection)
                 for var in self.varname:
