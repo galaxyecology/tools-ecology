@@ -43,6 +43,7 @@ class netCDF2netCDF ():
             xr.set_options(keep_attrs=True)
         self.filter = filter_list
         self.selection = {}
+        self.method = {}
         if scale == "" or scale is None:
             self.scale = 1
         else:
@@ -63,6 +64,19 @@ class netCDF2netCDF ():
             print("keep_attributes: ", self.keep_attributes)
             print("sel: ", self.sel)
             print("output: ", self.output)
+
+    def apply_selection(self):
+        self.dset = self.ds
+        for key in self.selection:
+            if 'slice' in str(self.selection[key]):
+                self.dset = self.dset.sel(
+                    {key : self.selection[key]}
+                    )
+            else:
+                self.dset = self.dset.sel(
+                    {key : self.selection[key]}, 
+                    method=self.method[key]
+                    )
 
     def dimension_selection(self, single_filter):
         split_filter = single_filter.split('#')
@@ -86,39 +100,25 @@ class netCDF2netCDF ():
             self.selection[dimension_varname] = ll
             if self.sel:
                 rl = split_filter[3]
-                self.selection['method'] = rl
+                if 'None' in rl:
+                    self.method[dimension_varname] = None
+                else:
+                    self.method[dimension_varname] = rl
 
     def filter_selection(self):
         for single_filter in self.filter:
             self.dimension_selection(single_filter)
 
-        if self.varname == 'None' or self.varname is None:
-            if self.sel:
-                self.dset = \
-                    self.ds.sel(self.selection)
-            else:
-                self.dset = \
-                    self.ds.isel(self.selection)
+        if self.sel:
+            self.apply_selection()
         else:
-            if self.write_all:
-                for var in self.varname:
-                    if self.sel:
-                        self.ds[var] = \
-                            self.ds[var].sel(self.selection)*self.scale
-                    else:
-                        self.ds[var] = \
-                            self.ds[var].isel(self.selection)*self.scale
-                self.dset = self.ds
-            else:
-                if self.sel:
-                    self.dset = \
-                        self.ds.sel(self.selection)
-                else:
-                    self.dset = \
-                        self.ds.isel(self.selection)
-                for var in self.varname:
-                    self.dset[var] = \
-                        self.dset[var]*self.scale
+            self.dset = \
+                self.ds.isel(self.selection)
+
+        if self.varname != 'None' and self.varname is not None:  
+            for var in self.varname:                    
+                self.dset[var] = \
+                    self.dset[var]*self.scale
 
     def compute(self):
         if self.dset is None:
