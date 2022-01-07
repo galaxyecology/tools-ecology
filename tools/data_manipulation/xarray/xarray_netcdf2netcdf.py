@@ -70,11 +70,11 @@ class netCDF2netCDF ():
         for key in self.selection:
             if 'slice' in str(self.selection[key]):
                 self.dset = self.dset.sel(
-                    {key : self.selection[key]}
+                    {key:self.selection[key]}
                     )
             else:
                 self.dset = self.dset.sel(
-                    {key : self.selection[key]}, 
+                    {key:self.selection[key]},
                     method=self.method[key]
                     )
 
@@ -115,8 +115,8 @@ class netCDF2netCDF ():
             self.dset = \
                 self.ds.isel(self.selection)
 
-        if self.varname != 'None' and self.varname is not None:  
-            for var in self.varname:                    
+        if self.varname != 'None' and self.varname is not None:
+            for var in self.varname:
                 self.dset[var] = \
                     self.dset[var]*self.scale
 
