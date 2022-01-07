@@ -70,11 +70,11 @@ class netCDF2netCDF ():
         for key in self.selection:
             if 'slice' in str(self.selection[key]):
                 self.dset = self.dset.sel(
-                    {key:self.selection[key]}
+                    {key: self.selection[key]}
                     )
             else:
                 self.dset = self.dset.sel(
-                    {key:self.selection[key]},
+                    {key: self.selection[key]},
                     method=self.method[key]
                     )
 
