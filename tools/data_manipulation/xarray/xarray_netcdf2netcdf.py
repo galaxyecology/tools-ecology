@@ -12,8 +12,8 @@
 
 
 import argparse
-import warnings
 import re
+import warnings
 from pathlib import Path
 
 import xarray as xr  # noqa: E402
