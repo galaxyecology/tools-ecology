@@ -13,6 +13,8 @@
 
 import argparse
 import warnings
+import re
+from pathlib import Path
 
 import xarray as xr  # noqa: E402
 
@@ -23,8 +25,18 @@ class netCDF2netCDF ():
                  write_all=False,
                  keep_attributes=True,
                  filter_list="",
+                 where_config="",
+                 other="",
                  sel=False,
+                 drop=False,
                  verbose=False):
+        self.drop = drop
+        if Path(where_config).exists():
+            f = open(where_config)
+            self.where = f.read().replace("\n", "")
+        else:
+            self.where = ""
+        self.other = other
         self.sel = sel
         li = list(infile.split(","))
         if len(li) > 1:
@@ -126,6 +138,25 @@ class netCDF2netCDF ():
                 self.ds = xr.open_mfdataset(self.infile)
             else:
                 self.ds = xr.open_dataset(self.infile)
+            if self.where != "":
+                if self.drop:
+                    if self.verbose:
+                        print("Where with drop=True")
+                    self.ds = self.ds.where(
+                        self.eval_where(self.where),
+                        drop=True
+                        )
+                elif self.other is not None and self.other != "":
+                    if self.verbose:
+                        print("Where with  other=", float(self.other))
+                    self.ds = self.ds.where(
+                        self.eval_where(self.where),
+                        other=float(self.other)
+                        )
+                else:
+                    self.ds = self.ds.where(
+                        self.eval_where(self.where)
+                        )
             self.filter_selection()
             if self.verbose:
                 print(self.selection)
@@ -137,6 +168,36 @@ class netCDF2netCDF ():
             self.dset[self.varname].to_netcdf(self.output)
         else:
             self.dset.to_netcdf(self.output)
+
+    def is_float(self, element) -> bool:
+        try:
+            float(element)
+            return True
+        except ValueError:
+            return False
+
+    def eval_where(self, where_condition):
+        eval_cond = None
+        list_names = list(set(
+                        list(self.ds.keys()) +
+                        list(self.ds.coords.keys()))
+                        )
+        wcond = where_condition
+        check_cond = where_condition
+        for var in list_names:
+            wcond = wcond.replace(var, ' self.ds.' + var + ' ')
+            check_cond = check_cond.replace(var, '')
+        to_remove = "[><=&|()]"
+        check_cond = re.sub(to_remove, "", check_cond).replace("!", "")
+        check_cond = re.sub(' +', ' ', check_cond).strip()
+        list_flt = check_cond.split(" ")
+        no_convert = False
+        for num in list_flt:
+            if not self.is_float(num):
+                no_convert = True
+        if not no_convert:
+            eval_cond = eval(wcond)
+        return eval_cond
 
 
 if __name__ == '__main__':
@@ -156,12 +217,20 @@ if __name__ == '__main__':
         help='Filter list variable#operator#value_s#value_e'
     )
     parser.add_argument(
+        '--where',
+        help='filename with where condition to be evaluated'
+    )
+    parser.add_argument(
         '--output',
         help='Output filename to store the resulting netCDF file'
     )
     parser.add_argument(
         '--scale',
         help='scale factor to apply to selection (float)'
+    )
+    parser.add_argument(
+        '--other',
+        help='Value to use for locations where condition is False (float)'
     )
     parser.add_argument(
         "--write_all",
@@ -179,6 +248,10 @@ if __name__ == '__main__':
         "--selection",
         help="select by values",
         action="store_true")
+    parser.add_argument(
+        "--drop",
+        help="drop values where condition is not met",
+        action="store_true")
     args = parser.parse_args()
 
     print("args.selection", args.selection)
@@ -188,6 +261,8 @@ if __name__ == '__main__':
                          sel=args.selection,
                          keep_attributes=args.keep_attributes,
                          filter_list=args.filter,
+                         where_config=args.where,
+                         drop=args.drop, other=args.other,
                          verbose=args.verbose)
     dset.compute()
     dset.save()

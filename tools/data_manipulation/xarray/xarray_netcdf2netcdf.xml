@@ -39,6 +39,14 @@
     #if $variable.keep_attributes
          --keep_attributes
     #end if
+    #if str($mask_values.mask_condi.mask_option) == 'drop'
+        --drop
+    #elif str($mask_values.mask_condi.mask_option) == 'other'
+        --other '$mask_values.mask_condi.set_other'
+    #end if
+    #if str($mask_values.where_condition) != ""
+        --where '$mask_values.where_condition'
+    #end if
            --verbose
            --output '$output_netcdf'
     ]]>    </command>

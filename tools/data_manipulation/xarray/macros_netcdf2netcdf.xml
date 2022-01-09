@@ -124,7 +124,7 @@
         </section>
     </xml>
     <xml name="section_where">
-        <section name="mask_values" title="Mask by values">
+        <section name="mask_values" title="Advanced options to mask by values">
             <conditional name="mask_condi">
                 <param name="mask_option" type="select" multiple="false" label="Option for masked values">
                     <option value="keep" selected="true">Fill with NA</option>
@@ -132,12 +132,12 @@
                     <option value="other">Set constant</option>
                 </param>
                 <when value="keep"/>
-            <when value="drop"/>
-        <when value="other">
-            <param name="set_other" type="float" value="0" label="Value to use for locations in this object where cond is False." />
-        </when>
-    </conditional>
-    <param name="where_condition" type="text" value="" label="Where expression" />
-</section>
-</xml>
+                <when value="drop"/>
+                <when value="other">
+                    <param name="set_other" type="float" value="0" label="Value to use for locations in this object where cond is False." />
+                </when>
+            </conditional>
+            <param name="where_condition" type="data" optional="true" format="txt" label="file containing a where expression" />
+        </section>
+    </xml>
 </macros>
