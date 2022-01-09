@@ -1,4 +1,4 @@
-<tool id="xarray_select" name="NetCDF xarray Selection" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@">
+<tool id="xarray_select" name="NetCDF xarray Selection" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>extracts variable values with custom conditions on dimensions</description>
     <macros>
         <import>macros.xml</import>

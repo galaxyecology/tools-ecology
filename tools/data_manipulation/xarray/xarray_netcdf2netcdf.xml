@@ -1,4 +1,4 @@
-<tool id="xarray_netcdf2netcdf" name="NetCDF xarray operations" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@">
+<tool id="xarray_netcdf2netcdf" name="NetCDF xarray operations" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>manipulate xarray from netCDF and save back to netCDF</description>
     <macros>
         <import>macros.xml</import>

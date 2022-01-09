@@ -1,6 +1,7 @@
 <macros>
     <token name="@TOOL_VERSION@">0.20.2</token>
     <token name="@VERSION_SUFFIX@">0</token>
+    <token name="@PROFILE@">20.05</token>
     <xml name="edam_ontology">
         <edam_topics>
             <edam_topic>topic_0610</edam_topic>

@@ -1,4 +1,4 @@
-<tool id="xarray_mapplot" name="NetCDF xarray map plotting" profile="20.05" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@">
+<tool id="xarray_mapplot" name="NetCDF xarray map plotting" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>Visualize netCDF variables on a geographical map</description>
     <macros>
         <import>macros.xml</import>
