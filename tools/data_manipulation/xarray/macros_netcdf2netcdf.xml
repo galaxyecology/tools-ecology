@@ -125,27 +125,19 @@
     </xml>
     <xml name="section_where">
         <section name="mask_values" title="Mask by values">
-            <repeat name="user_mask" title="Mask field values" min="0" max="20" help="Use this option to mask where field variables have certain values">
-                <conditional name="condi_where">
-                    <param name="build_where" type="select" multiple="false" label="Build where statement">
-                        <option value="parenthesis">( ) add parenthesis</option>
-                        <option value="expr">new expression</option>
-                        <option value="and">AND between two expressions</option>
-                        <option value="or">OR between two expressions</option>
-                    </param>
-                    <when value="parenthesis"/>
-                    <when value="and"/>
-                    <when value="or"/>
-                    <when value="expression">
-                        <param name="where_var" type="select" multiple="false" label="Select variables for mask (where)">
-                            <options from_dataset="var_tab">
-                                <column name="name" index="0"/>
-                                <column name="value" index="0"/>
-                            </options>
-                        </param>
-                    </when>
-                </conditional>
-            </repeat>
-        </section>
-    </xml>
+            <conditional name="mask_condi">
+                <param name="mask_option" type="select" multiple="false" label="Option for masked values">
+                    <option value="keep" selected="true">Fill with NA</option>
+                    <option value="drop">Drop values</option>
+                    <option value="other">Set constant</option>
+                </param>
+                <when value="keep"/>
+            <when value="drop"/>
+        <when value="other">
+            <param name="set_other" type="float" value="0" label="Value to use for locations in this object where cond is False." />
+        </when>
+    </conditional>
+    <param name="where_condition" type="text" value="" label="Where expression" />
+</section>
+</xml>
 </macros>

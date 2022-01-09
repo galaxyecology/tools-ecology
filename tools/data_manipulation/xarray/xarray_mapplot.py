@@ -19,6 +19,7 @@
 #                               [--range "valmin,valmax"]
 #                               [--threshold VAL]
 #                               [--label label-colorbar]
+#                               [--config config-file]
 #                               [--shift]
 #                               [-v]
 #                               input varname
@@ -46,6 +47,8 @@
 #  --range           "valmin,valmax" for plotting
 #  --threshold       do not plot values below threshold
 #  --label           set a label for colormap
+#  --config          plotting parameters are passed via a config file
+#                    (overwrite other plotting options)
 #  --shift           shift longitudes if specified
 #  -v, --verbose    switch on verbose mode
 #
@@ -72,21 +75,31 @@ class MapPlotXr ():
                  time=[], title="", latitude="latitude",
                  longitude="longitude", land=0, ocean=0,
                  coastline=0, borders=0, xlim=[], ylim=[],
-                 threshold="", label="", shift=False,
-                 range_values=[]):
+                 threshold="", label="", config_file="",
+                 shift=False, range_values=[]):
 
         li = list(input.split(","))
         if len(li) > 1:
             self.input = li
         else:
             self.input = input
-        print("PROJ", proj)
+
         if proj != "" and proj is not None:
-            self.proj = proj.replace('X', ':')
+            if Path(proj).exists():
+                f = open(proj)
+                sdict = ''.join(
+                    f.read().replace("\n", "").split('{')[1].split('}')[0]
+                    )
+                tmp = ast.literal_eval('{' + sdict.strip() + '}')
+                self.proj = tmp
+            else:
+                tmp = proj.replace('X', ':')
+                self.proj = ast.literal_eval(tmp)
         else:
             self.proj = proj
         self.varname = varname
-        self.get_cmap(cmap)
+        if cmap != 'None' and cmap is not None:
+            self.get_cmap(cmap)
         self.time = time
         self.latitude = latitude
         self.longitude = longitude
@@ -110,6 +123,46 @@ class MapPlotXr ():
         else:
             self.output = output
         self.verbose = verbose
+        if config_file != "" and config_file is not None:
+            with open(config_file) as f:
+                sdict = ''.join(
+                    f.read().replace("\n", "").split('{')[1].split('}')[0]
+                    )
+                tmp = ast.literal_eval('{' + sdict.strip() + '}')
+                for key in tmp:
+                    if key == 'time':
+                        time = tmp[key]
+                        self.time = list(map(int, time.split(",")))
+                    if key == 'cmap':
+                        self.get_cmap(tmp[key])
+                    if key == 'latitude':
+                        self.latitude = tmp[key]
+                    if key == 'longitude':
+                        self.longitude = tmp[key]
+                    if key == 'land':
+                        self.land = float(tmp[key])
+                    if key == 'ocean':
+                        self.ocean = float(tmp[key])
+                    if key == 'coastline':
+                        self.coastline = float(tmp[key])
+                    if key == 'borders':
+                        self.borders = float(tmp[key])
+                    if key == 'xlim':
+                        xlim = tmp[key]
+                        self.xlim = list(map(float, xlim.split(",")))
+                    if key == 'ylim':
+                        self.ylim = tmp[key]
+                        self.ylim = list(map(float, ylim.split(",")))
+                    if key == 'range':
+                        range_values = tmp[key]
+                        self.range = list(map(float, range_values.split(",")))
+                    if key == 'threshold':
+                        self.threshold = float(tmp[key])
+                    if key == 'label':
+                        label = tmp[key]
+                    if key == 'title':
+                        self.title = tmp[key]
+
         if type(self.input) is list:
             self.dset = xr.open_mfdataset(self.input, use_cftime=True)
         else:
@@ -147,8 +200,7 @@ class MapPlotXr ():
         if self.proj is None:
             return ccrs.PlateCarree()
 
-        proj_dict = ast.literal_eval(self.proj)
-
+        proj_dict = self.proj
         user_proj = proj_dict.pop("proj")
         if user_proj == 'PlateCarree':
             self.xylim_supported = True
@@ -235,7 +287,8 @@ class MapPlotXr ():
         pyplot.figure(1, figsize=[20, 10])
 
         # Set the projection to use for plotting
-        ax = pyplot.subplot(1, 1, 1, projection=self.projection())
+        self.oproj = self.projection()
+        ax = pyplot.subplot(1, 1, 1, projection=self.oproj)
         if self.land:
             ax.add_feature(feature.LAND, alpha=self.land)
 
@@ -399,6 +452,10 @@ if __name__ == '__main__':
         help='set a label for colorbar'
     )
     parser.add_argument(
+        '--config',
+        help='pass plotting parameters via a config file'
+    )
+    parser.add_argument(
         '--shift',
         help='shift longitudes if specified',
         action="store_true"
@@ -456,8 +513,8 @@ if __name__ == '__main__':
                      latitude=latitude, longitude=longitude, land=land,
                      ocean=ocean, coastline=coastline, borders=borders,
                      xlim=xlim, ylim=ylim, threshold=args.threshold,
-                     label=args.label, shift=args.shift,
-                     range_values=range_values)
+                     label=args.label, config_file=args.config,
+                     shift=args.shift, range_values=range_values)
 
     if dset.time == []:
         dset.plot()
