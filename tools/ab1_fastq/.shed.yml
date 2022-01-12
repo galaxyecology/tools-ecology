@@ -1,0 +1,11 @@
+categories:
+    - converters
+description: Tool to convert ab1 files into FASTQ files
+name: ab1fastq 
+owner: ecology 
+remote_repository_url: https://github.com/ColineRoyaux/Galaxy_tool_projects/tree/main/ab1_fastq
+type: unrestricted
+
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "{{ tool_name }}"
