@@ -1,0 +1,263 @@
+<macros>
+    <xml name="section_tests">
+        <tests>
+            <test>
+                <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
+                <param name="var_tab" value="var_tab_dataset-ibi"/>
+                <section name="variable">
+                    <param name="var" value="chl"/>
+                    <param name="scale" value="1000.5"/>
+                </section>
+                <section name="subset_coords">
+                    <conditional name="tsel">
+                        <param name="by_click" value="isel_list"/>
+                        <repeat name="user_choice">
+                            <param name="dim" value="time"/>
+                            <conditional name="condi_between">
+                                <param name="comparator" value="sl"/>
+                                <param name="t1" value="10"/>
+                                <param name="t2" value="12"/>
+                            </conditional>
+                        </repeat>
+                        <repeat name="user_choice">
+                            <param name="dim" value="latitude"/>
+                            <param name="dim_tab" value="latitude.tabular"/>
+                            <conditional name="condi_between">
+                                <param name="comparator" value="sl"/>
+                                <param name="t1" value="5"/>
+                                <param name="t2" value="10"/>
+                            </conditional>
+                        </repeat>
+                        <repeat name="user_choice">
+                            <param name="dim" value="longitude"/>
+                            <param name="dim_tab" value="longitude.tabular"/>
+                            <conditional name="condi_between">
+                                <param name="comparator" value="sl"/>
+                                <param name="t1" value="4"/>
+                                <param name="t2" value="10"/>
+                            </conditional>
+                        </repeat>
+                    </conditional>
+                </section>
+                <output name="output_netcdf" file="small.netcdf" compare="sim_size" delta="1000"/>
+            </test>
+            <test>
+                <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
+                <param name="var_tab" value="var_tab_dataset-ibi"/>
+                <section name="variable">
+                    <param name="var" value="chl"/>
+                    <param name="scale" value="1000.5"/>
+                    <param name="write_all" value="true"/>
+                    <param name="keep_attribute" value="false"/>
+                </section>
+                <section name="subset_coords">
+                    <conditional name="tsel">
+                        <param name="by_click" value="isel_list"/>
+                        <repeat name="user_choice">
+                            <param name="dim" value="time"/>
+                            <conditional name="condi_between">
+                                <param name="comparator" value="sl"/>
+                                <param name="t1" value="10"/>
+                                <param name="t2" value="12"/>
+                            </conditional>
+                        </repeat>
+                        <repeat name="user_choice">
+                            <param name="dim" value="latitude"/>
+                            <param name="dim_tab" value="latitude.tabular"/>
+                            <conditional name="condi_between">
+                                <param name="comparator" value="sl"/>
+                                <param name="t1" value="5"/>
+                                <param name="t2" value="10"/>
+                            </conditional>
+                        </repeat>
+                        <repeat name="user_choice">
+                            <param name="dim" value="longitude"/>
+                            <param name="dim_tab" value="longitude.tabular"/>
+                            <conditional name="condi_between">
+                                <param name="comparator" value="sl"/>
+                                <param name="t1" value="4"/>
+                                <param name="t2" value="10"/>
+                            </conditional>
+                        </repeat>
+                    </conditional>
+                </section>
+                <output name="output_netcdf" file="all.netcdf" compare="sim_size" delta="1000"/>
+            </test>
+            <test>
+                <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
+                <param name="var_tab" value="var_tab_dataset-ibi"/>
+                <section name="subset_coords">
+                    <conditional name="tsel">
+                        <param name="by_click" value="isel_list"/>
+                        <repeat name="user_choice">
+                            <param name="dim" value="time"/>
+                            <param name="dim_tab" value="time.tabular"/>
+                            <conditional name="condi_between">
+                                <param name="comparator" value="to"/>
+                                <param name="value" value="12"/>
+                            </conditional>
+                        </repeat>
+                        <repeat name="user_choice">
+                            <param name="dim" value="latitude"/>
+                            <param name="dim_tab" value="latitude.tabular"/>
+                            <conditional name="condi_between">
+                                <param name="comparator" value="is"/>
+                                <param name="value" value="5"/>
+                            </conditional>
+                        </repeat>
+                        <repeat name="user_choice">
+                            <param name="dim" value="longitude"/>
+                            <param name="dim_tab" value="longitude.tabular"/>
+                            <conditional name="condi_between">
+                                <param name="comparator" value="is"/>
+                                <param name="value" value="4"/>
+                            </conditional>
+                        </repeat>
+                    </conditional>
+                </section>
+                <output name="output_netcdf" file="small_all_variables.netcdf" compare="sim_size" delta="500"/>
+            </test>
+            <test>
+                <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
+                <param name="var_tab" value="var_tab_dataset-ibi"/>
+                <section name="subset_coords">
+                    <conditional name="tsel">
+                        <param name="by_click" value="isel"/>
+                        <repeat name="user_choice">
+                            <param name="dim" value="time"/>
+                            <param name="dim_tab" value="time.tabular"/>
+                            <conditional name="condi_between">
+                                <param name="comparator" value="to"/>
+                                <param name="value" value="12"/>
+                            </conditional>
+                        </repeat>
+                        <repeat name="user_choice">
+                            <param name="dim" value="latitude"/>
+                            <param name="dim_tab" value="latitude.tabular"/>
+                            <conditional name="condi_between">
+                                <param name="comparator" value="is"/>
+                                <param name="value" value="5"/>
+                            </conditional>
+                        </repeat>
+                        <repeat name="user_choice">
+                            <param name="dim" value="longitude"/>
+                            <param name="dim_tab" value="longitude.tabular"/>
+                            <conditional name="condi_between">
+                                <param name="comparator" value="is"/>
+                                <param name="value" value="4"/>
+                            </conditional>
+                        </repeat>
+                    </conditional>
+                </section>
+                <output name="output_netcdf" file="small_all_variables.netcdf" compare="sim_size" delta="500"/>
+            </test>
+            <test>
+                <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
+                <param name="var_tab" value="var_tab_dataset-ibi"/>
+                <section name="variable">
+                    <param name="var" value="chl,nh4"/>
+                </section>
+                <output name="output_netcdf" file="chl_nh4.netcdf" compare="sim_size" delta="500"/>
+            </test>
+            <test>
+                <param name="input" value="data_to_20040615.nc,data_from_20040615.nc"/>
+                <param name="var_tab" value="var_tab_dataset-ibi"/>
+                <section name="variable">
+                    <param name="var" value="nh4"/>
+                </section>
+                <output name="output_netcdf" file="chl_alltimes.nc" compare="sim_size" delta="500"/>
+            </test>
+            <test>
+                <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
+                <param name="var_tab" value="var_tab_dataset-ibi"/>
+                <section name="subset_coords">
+                    <conditional name="tsel">
+                        <param name="by_click" value="sel"/>
+                        <repeat name="user_choice">
+                            <param name="dim" value="latitude"/>
+                            <param name="dim_tab" value="latitude.tabular"/>
+                            <conditional name="condi_between">
+                                <param name="comparator" value="sl"/>
+                                <param name="t1" value="44.5"/>
+                                <param name="t2" value="45.0"/>
+                            </conditional>
+                        </repeat>
+                        <repeat name="user_choice">
+                            <param name="dim" value="longitude"/>
+                            <param name="dim_tab" value="longitude.tabular"/>
+                            <conditional name="condi_between">
+                                <param name="comparator" value="is"/>
+                                <param name="value" value="-3.5"/>
+                                <param name="method" value="nearest"/>
+                            </conditional>
+                        </repeat>
+                    </conditional>
+                </section>
+                <output name="output_netcdf" file="select_by_values.netcdf" compare="sim_size" delta="500"/>
+            </test>
+            <test>
+                <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
+                <param name="var_tab" value="var_tab_dataset-ibi"/>
+                <section name="variable">
+                    <param name="var" value="chl,phy"/>
+                </section>
+                <section name="mask_values">
+                    <conditional name="mask_condi">
+                        <param name="mask_option" value="other"/>
+                        <param name="set_other" value="1000"/>
+                    </conditional>
+                    <param name="where_condition" ftype="txt" value="where_condition.txt"/>
+                </section>
+                <output name="output_netcdf" file="chl_phy_where.netcdf" compare="sim_size" delta="500"/>
+            </test>
+            <test>
+                <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
+                <param name="var_tab" value="var_tab_dataset-ibi"/>
+                <section name="variable">
+                    <param name="var" value="chl"/>
+                    <param name="scale" value="1000.5"/>
+                    <param name="write_all" value="true"/>
+                    <param name="keep_attribute" value="true"/>
+                </section>
+                <section name="subset_coords">
+                    <conditional name="tsel">
+                        <param name="by_click" value="isel_list"/>
+                        <repeat name="user_choice">
+                            <param name="dim" value="time"/>
+                            <conditional name="condi_between">
+                                <param name="comparator" value="sl"/>
+                                <param name="t1" value="10"/>
+                                <param name="t2" value="12"/>
+                            </conditional>
+                        </repeat>
+                        <repeat name="user_choice">
+                            <param name="dim" value="latitude"/>
+                            <param name="dim_tab" value="latitude.tabular"/>
+                            <conditional name="condi_between">
+                                <param name="comparator" value="sl"/>
+                                <param name="t1" value="0"/>
+                                <param name="t2" value="10"/>
+                            </conditional>
+                        </repeat>
+                        <repeat name="user_choice">
+                            <param name="dim" value="longitude"/>
+                            <param name="dim_tab" value="longitude.tabular"/>
+                            <conditional name="condi_between">
+                                <param name="comparator" value="sl"/>
+                                <param name="t1" value="1"/>
+                                <param name="t2" value="20"/>
+                            </conditional>
+                        </repeat>
+                    </conditional>
+                </section>
+                <section name="mask_values">
+                    <conditional name="mask_condi">
+                        <param name="mask_option" value="drop"/>
+                    </conditional>
+                    <param name="where_condition" ftype="txt" value="where_condition_simple.txt"/>
+                </section>
+                <output name="output_netcdf" file="chl_where_drop.netcdf" compare="sim_size" delta="500"/>
+            </test>
+        </tests>
+    </xml>
+</macros>

@@ -19,6 +19,7 @@
 #                               [--range "valmin,valmax"]
 #                               [--threshold VAL]
 #                               [--label label-colorbar]
+#                               [--config config-file]
 #                               [--shift]
 #                               [-v]
 #                               input varname
@@ -46,6 +47,8 @@
 #  --range           "valmin,valmax" for plotting
 #  --threshold       do not plot values below threshold
 #  --label           set a label for colormap
+#  --config          plotting parameters are passed via a config file
+#                    (overwrite other plotting options)
 #  --shift           shift longitudes if specified
 #  -v, --verbose    switch on verbose mode
 #
@@ -68,45 +71,95 @@ import xarray as xr  # noqa: E402
 
 
 class MapPlotXr ():
-    def __init__(self, input, proj, varname, cmap, output, verbose=False,
-                 time=[], title="", latitude="latitude",
-                 longitude="longitude", land=0, ocean=0,
-                 coastline=0, borders=0, xlim=[], ylim=[],
-                 threshold="", label="", shift=False,
-                 range_values=[]):
-        self.input = input
-        print("PROJ", proj)
-        if proj != "" and proj is not None:
-            self.proj = proj.replace('X', ':')
+    def __init__(self, input, varname, output, verbose=False,
+                 config_file="", proj="", shift=False):
+
+        li = list(input.split(","))
+        if len(li) > 1:
+            self.input = li
         else:
-            self.proj = proj
+            self.input = input
+
+        if proj != "" and proj is not None and Path(proj).exists():
+            f = open(proj)
+            sdict = ''.join(
+                f.read().replace("\n", "").split('{')[1].split('}')[0]
+                )
+            self.proj = '{' + sdict.strip() + '}'
+        else:
+            self.proj = None
         self.varname = varname
-        self.get_cmap(cmap)
-        self.time = time
-        self.latitude = latitude
-        self.longitude = longitude
-        self.land = land
-        self.ocean = ocean
-        self.coastline = coastline
-        self.borders = borders
-        self.xlim = xlim
-        self.ylim = ylim
-        self.range = range_values
-        self.threshold = threshold
         self.shift = shift
         self.xylim_supported = False
         self.colorbar = True
-        self.title = title
         if output is None:
-            self.output = Path(input).stem + '.png'
+            if type(self.input) is list:
+                self.output = Path(self.input[0]).stem + '.png'
+            else:
+                self.output = Path(self.input).stem + '.png'
         else:
             self.output = output
         self.verbose = verbose
-        self.dset = xr.open_dataset(self.input, use_cftime=True)
-
         self.label = {}
-        if label != "" and label is not None:
-            self.label['label'] = label
+        self.time = []
+        self.xlim = []
+        self.ylim = []
+        self.range = []
+        self.latitude = "latitude"
+        self.longitude = "longitude"
+        self.land = 0
+        self.ocean = 0
+        self.coastline = 0
+        self.borders = 0
+        self.cmap = "coolwarm"
+        self.threshold = ""
+        self.title = ""
+
+        if config_file != "" and config_file is not None:
+            with open(config_file) as f:
+                sdict = ''.join(
+                    f.read().replace("\n", "").split('{')[1].split('}')[0]
+                    )
+                tmp = ast.literal_eval('{' + sdict.strip() + '}')
+                for key in tmp:
+                    if key == 'time':
+                        time = tmp[key]
+                        self.time = list(map(int, time.split(",")))
+                    if key == 'cmap':
+                        self.get_cmap(tmp[key])
+                    if key == 'latitude':
+                        self.latitude = tmp[key]
+                    if key == 'longitude':
+                        self.longitude = tmp[key]
+                    if key == 'land':
+                        self.land = float(tmp[key])
+                    if key == 'ocean':
+                        self.ocean = float(tmp[key])
+                    if key == 'coastline':
+                        self.coastline = float(tmp[key])
+                    if key == 'borders':
+                        self.borders = float(tmp[key])
+                    if key == 'xlim':
+                        xlim = tmp[key]
+                        self.xlim = list(map(float, xlim.split(",")))
+                    if key == 'ylim':
+                        ylim = tmp[key]
+                        self.ylim = list(map(float, ylim.split(",")))
+                    if key == 'range':
+                        range_values = tmp[key]
+                        self.range = list(map(float, range_values.split(",")))
+                    if key == 'threshold':
+                        self.threshold = float(tmp[key])
+                    if key == 'label':
+                        self.label['label'] = tmp[key]
+                    if key == 'title':
+                        self.title = tmp[key]
+
+        if type(self.input) is list:
+            self.dset = xr.open_mfdataset(self.input, use_cftime=True)
+        else:
+            self.dset = xr.open_dataset(self.input, use_cftime=True)
+
         if verbose:
             print("input: ", self.input)
             print("proj: ", self.proj)
@@ -137,7 +190,6 @@ class MapPlotXr ():
             return ccrs.PlateCarree()
 
         proj_dict = ast.literal_eval(self.proj)
-
         user_proj = proj_dict.pop("proj")
         if user_proj == 'PlateCarree':
             self.xylim_supported = True
@@ -318,74 +370,21 @@ if __name__ == '__main__':
         'input',
         help='input filename with geographical coordinates (netCDF format)'
     )
-
     parser.add_argument(
         '--proj',
-        help='Specify the projection on which we draw'
+        help='Config file with the projection on which we draw'
     )
     parser.add_argument(
         'varname',
         help='Specify which variable to plot (case sensitive)'
     )
     parser.add_argument(
-        '--cmap',
-        help='Specify which colormap to use for plotting'
-    )
-    parser.add_argument(
         '--output',
         help='output filename to store resulting image (png format)'
     )
     parser.add_argument(
-        '--time',
-        help='list of times to plot for multiple plots'
-    )
-    parser.add_argument(
-        '--title',
-        help='plot title'
-    )
-    parser.add_argument(
-        '--latitude',
-        help='variable name for latitude'
-    )
-    parser.add_argument(
-        '--longitude',
-        help='variable name for longitude'
-    )
-    parser.add_argument(
-        '--land',
-        help='add land on plot with alpha value [0-1]'
-    )
-    parser.add_argument(
-        '--ocean',
-        help='add oceans on plot with alpha value [0-1]'
-    )
-    parser.add_argument(
-        '--coastline',
-        help='add coastline with alpha value [0-1]'
-    )
-    parser.add_argument(
-        '--borders',
-        help='add country borders with alpha value [0-1]'
-    )
-    parser.add_argument(
-        '--xlim',
-        help='limited geographical area longitudes "x1,x2"'
-    )
-    parser.add_argument(
-        '--ylim',
-        help='limited geographical area latitudes "y1,y2"'
-    )
-    parser.add_argument(
-        '--range',
-        help='min and max values for plotting "minval,maxval"'
-    )
-    parser.add_argument(
-        '--threshold',
-        help='do not plot values below threshold'
-    )
-    parser.add_argument(
-        '--label',
-        help='set a label for colorbar'
+        '--config',
+        help='pass plotting parameters via a config file'
     )
     parser.add_argument(
         '--shift',
@@ -398,55 +397,10 @@ if __name__ == '__main__':
         action="store_true")
     args = parser.parse_args()
 
-    if args.time is None:
-        time = []
-    else:
-        time = list(map(int, args.time.split(",")))
-    if args.xlim is None:
-        xlim = []
-    else:
-        xlim = list(map(float, args.xlim.split(",")))
-    if args.ylim is None:
-        ylim = []
-    else:
-        ylim = list(map(float, args.ylim.split(",")))
-    if args.range is None:
-        range_values = []
-    else:
-        range_values = list(map(float, args.range.split(",")))
-    if args.latitude is None:
-        latitude = "latitude"
-    else:
-        latitude = args.latitude
-    if args.longitude is None:
-        longitude = "longitude"
-    else:
-        longitude = args.longitude
-    if args.land is None:
-        land = 0
-    else:
-        land = float(args.land)
-    if args.ocean is None:
-        ocean = 0
-    else:
-        ocean = float(args.ocean)
-    if args.coastline is None:
-        coastline = 0
-    else:
-        coastline = float(args.coastline)
-    if args.borders is None:
-        borders = 0
-    else:
-        borders = float(args.borders)
-
-    dset = MapPlotXr(input=args.input, proj=args.proj, varname=args.varname,
-                     cmap=args.cmap, output=args.output, verbose=args.verbose,
-                     time=time, title=args.title,
-                     latitude=latitude, longitude=longitude, land=land,
-                     ocean=ocean, coastline=coastline, borders=borders,
-                     xlim=xlim, ylim=ylim, threshold=args.threshold,
-                     label=args.label, shift=args.shift,
-                     range_values=range_values)
+    dset = MapPlotXr(input=args.input, varname=args.varname,
+                     output=args.output, verbose=args.verbose,
+                     config_file=args.config, proj=args.proj,
+                     shift=args.shift)
 
     if dset.time == []:
         dset.plot()
