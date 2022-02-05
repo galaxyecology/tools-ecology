@@ -4,7 +4,7 @@
         <requirement type="package" version="1.6.1">xmlstarlet</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
-xmlstarlet tr '$xsl' '$input' > '$output'
+xml tr '$xsl' '$input' > '$output'
     ]]>
     </command>
     <inputs>
