@@ -51,12 +51,12 @@
       <!--No geographic description provided-->
       <!--Geographic coverage-->
       <geographicCoverage>
-        <geographicDescription>Massif des Pyrénées</geographicDescription>
+        <geographicDescription>No geographic description provided.</geographicDescription>
         <boundingCoordinates>
-          <westBoundingCoordinate>-1,7055252</westBoundingCoordinate>
-          <eastBoundingCoordinate>3,1811955</eastBoundingCoordinate>
-          <northBoundingCoordinate>43,5254599</northBoundingCoordinate>
-          <southBoundingCoordinate>42,2299506</southBoundingCoordinate>
+          <westBoundingCoordinate>311090.112199999</westBoundingCoordinate>
+          <eastBoundingCoordinate>714654.00</eastBoundingCoordinate>
+          <northBoundingCoordinate>6269615.00</northBoundingCoordinate>
+          <southBoundingCoordinate>6137120.9254</southBoundingCoordinate>
         </boundingCoordinates>
       </geographicCoverage>
       <!--Temporal coverage-->
@@ -86,159 +86,5 @@
       <phone>(+33)561285516</phone>
       <electronicMailAddress>wilfried.heintz@inrae.fr</electronicMailAddress>
     </contact>
-    <spatialVector
-          id="NTLSP014">
-      <entityName>EMPyreneesValid_L93_CDDAudreyGrel_DYNAFOR_v24042013</entityName>
-      <entityDescription>Fichier shapefile de cartographie de l'occupation ancienne du sol du massif des Pyrénées réalisée à partir de la digitalisation des minutes de cartes d'Etat Major</entityDescription>
-      <physical>
-        <objectName>EMPyreneesValid_L93_CDDAudreyGrel_DYNAFOR_v24042013.zip</objectName>
-        <size
-          unit="bytes">33789289</size>
-        <authentication
-              method="MD5">f064c472ccd083f5f8b454e83f0937ec</authentication>
-        <dataFormat>
-          <externallyDefinedFormat>
-            <formatName>Shapefile</formatName>
-          </externallyDefinedFormat>
-        </dataFormat>
-        <distribution>
-          <online>
-            <url
-          function="download">https://agroenvgeo.data.inra.fr/geonetwork/srv/fre/catalog.search#/metadata/pyrenees</url>
-          </online>
-        </distribution>
-      </physical>
-      <attributeList>
-        <attribute
-            id="FID">
-          <attributeName>ID</attributeName>
-          <attributeDefinition>Internal ID</attributeDefinition>
-          <measurementScale>
-            <nominal>
-              <nonNumericDomain>
-                <textDomain>
-                  <definition>SDuno</definition>
-                </textDomain>
-              </nonNumericDomain>
-            </nominal>
-          </measurementScale>
-        </attribute>
-        <attribute
-            id="occ">
-          <attributeName>duno</attributeName>
-          <attributeDefinition>duno</attributeDefinition>
-          <storageType
-          typeSystem="http://www.esri.com/metadata/esriprof80.html">Geometry</storageType>
-          <measurementScale>
-            <nominal>
-              <nonNumericDomain>
-                <textDomain>
-                  <definition>Duno</definition>
-                </textDomain>
-              </nonNumericDomain>
-            </nominal>
-          </measurementScale>
-        </attribute>
-        <attribute
-            id="AREA">
-          <attributeName>doute</attributeName>
-          <attributeDefinition>duno</attributeDefinition>
-          <storageType
-          typeSystem="http://www.w3.org/2001/XMLSchema-datatypes">float</storageType>
-          <measurementScale>
-            <ratio>
-              <unit>
-                <standardUnit>meter</standardUnit>
-              </unit>
-              <numericDomain>
-                <numberType>real</numberType>
-              </numericDomain>
-            </ratio>
-          </measurementScale>
-        </attribute>
-        <attribute
-            id="CARTE">
-          <attributeName>Carte</attributeName>
-          <attributeDefinition>duno</attributeDefinition>
-          <storageType
-          typeSystem="http://www.w3.org/2001/XMLSchema-datatypes">float</storageType>
-          <measurementScale>
-            <ratio>
-              <unit>
-                <standardUnit>meter</standardUnit>
-              </unit>
-              <numericDomain>
-                <numberType>real</numberType>
-              </numericDomain>
-            </ratio>
-          </measurementScale>
-        </attribute>
-        <attribute
-            id="Shape_Area">
-          <attributeName>Shape_Area</attributeName>
-          <attributeDefinition>Duno</attributeDefinition>
-          <storageType
-          typeSystem="http://www.w3.org/2001/XMLSchema-datatypes">integer</storageType>
-          <measurementScale>
-            <nominal>
-              <nonNumericDomain>
-                <textDomain>
-                  <definition>Unique identifiers.</definition>
-                </textDomain>
-              </nonNumericDomain>
-            </nominal>
-          </measurementScale>
-        </attribute>
-      </attributeList>
-      <geometry>3D Polygon</geometry>
-      <geometricObjectCount>91380</geometricObjectCount>
-      <spatialReference>
-        <horizCoordSysDef
-              name="RGF93">
-          <projCoordSys>
-            <geogCoordSys
-                name="RGF93_Lambert_93">
-              <datum
-                name="Reseau_Geodesique_Francais_1993"/>
-              <spheroid
-                denomFlatRatio="298.257222101" name="GRS_1980"
-                semiAxisMajor="6378137"/>
-              <primeMeridian
-                longitude="0" name="Greenwich"/>
-              <unit
-              name="degree"/>
-            </geogCoordSys>
-            <projection
-                name="Lambert_Conformal_Conic_2SP">
-              <parameter
-                name="latitude_of_origin"
-                value="46.5"/>
-              <parameter
-                name="central_meridian"
-                value="3"/>
-              <parameter
-                name="standard_parallel_1"
-                value="44"/>
-              <parameter
-                name="standard_parallel_2"
-                value="49"/>
-              <parameter
-                name="false_easting"
-                value="700000"/>
-              <parameter
-                name="false_northing"
-                value="6600000"/>
-              <unit name="meter"/>
-            </projection>
-          </projCoordSys>
-        </horizCoordSysDef>
-      </spatialReference>
-      <horizontalAccuracy>
-        <accuracyReport>Unknown</accuracyReport>
-      </horizontalAccuracy>
-      <verticalAccuracy>
-        <accuracyReport>Unknown</accuracyReport>
-      </verticalAccuracy>
-    </spatialVector>
   </dataset>
 </eml:eml>
