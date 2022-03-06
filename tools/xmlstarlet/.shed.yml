@@ -1,11 +1,10 @@
 categories:
-    - converters
+    - Convert Formats
 description: Tool to convert a xml file from one metadata standard to another
 name: xmlstarlet 
 owner: ecology 
 remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/main/tools-ecology/tools/xmlstarlet
 type: unrestricted
-
 auto_tool_repositories:
   name_template: "{{ tool_id }}"
   description_template: "{{ tool_name }}"
