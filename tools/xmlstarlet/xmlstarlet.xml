@@ -4,7 +4,7 @@
         <requirement type="package" version="1.6.1">xmlstarlet</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
-xmlstarlet tr '$xsl' '$input' > '$output'
+xml tr '$xsl' '$input' > '$output'
     ]]>
     </command>
     <inputs>
@@ -18,7 +18,7 @@ xmlstarlet tr '$xsl' '$input' > '$output'
         <!-- Ensure conversion works -->
         <test expect_num_outputs="1">
             <param name="input" value="input_standardiso19115.xml" ftype="xml"/>
-            <param name="xsl" value="iso2eml_all_in_one.xsl " ftype="xml"/>
+            <param name="xsl" value="iso2eml_all_in_one.xsl" ftype="xml"/>
             <output name="output" file="output_standardEML.xml" />
         </test>
     </tests>
@@ -28,7 +28,7 @@ xmlstarlet tr '$xsl' '$input' > '$output'
 
 **What it does**
 
-This tool convert a xml file to another using a xsl coversion file to specify the translation to be done, from a wsd schema to another.
+This tool converts a xml file to another using a xsl coversion file to specify the translation to be done, from a wsd schema to another.
 
 -----
 
