@@ -18,7 +18,7 @@
     ]]>
     </command>
     <inputs>
-        <param name="infile" type="data" format="tabular,csv" label="csv file"/>
+        <param name="infile" type="data" multiple="true" format="tabular,csv" label="Input biodiversity data file(s)"/>
     </inputs>
     <outputs>
         <data name="outfile" format="txt" />
@@ -30,7 +30,7 @@
 
 `MetaShARK <https://github.com/earnaud/MetaShARK-v2>`_ is a R Shiny App to automate metadata creation in Ecological Metadata Language (E>
 
-Example input file (csv)::
+Example input file (csv ot tabular)::
 
 "ID"    "x"     "y"     "test"
 01      -60.291838      46.328137       2
