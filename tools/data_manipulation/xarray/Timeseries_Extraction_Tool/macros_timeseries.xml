@@ -1,0 +1,22 @@
+<macros>
+    <xml name="config_series">
+        <configfiles>
+            <configfile name="series_customization"><![CDATA[
+{
+#if $condi_datetime.datetime=="yes"
+"start_time":"$condi_datetime.time_start_value",
+"end_time":"$condi_datetime.time_end_value",
+#end if
+#if $xlim
+"xlim":'$xlim',
+#end if
+#if $ylim
+"ylim":'$ylim',
+#end if
+}
+            ]]>
+            </configfile>
+        </configfiles>
+   
+    </xml>
+</macros>

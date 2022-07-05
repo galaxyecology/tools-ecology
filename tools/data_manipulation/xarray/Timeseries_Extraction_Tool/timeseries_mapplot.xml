@@ -1,0 +1,81 @@
+<tool id="timeseries_extraction" name="NetCDF_timeseries_Extractor" version="0.1.0+galaxy0" python_template_version="3.5" profile="21.05">
+    <description>Extract time series for a netCDF dataset in a .csv file </description>
+    <macros>
+        <import>macros.xml</import>
+        <import>macros_timeseries.xml</import>
+    </macros>
+    <expand macro="edam_ontology"/>
+    <requirements>
+        <requirement type="package" version="@TOOL_VERSION@">xarray</requirement>
+        <requirement type="package" version="3">python</requirement>
+        <requirement type="package" version="1.5.6">netcdf4</requirement>
+        <requirement type="package" version="3.4.2">matplotlib</requirement>
+        <requirement type="package" version="2021.12.0">dask</requirement>
+        <requirement type="package" version="0.13.1">pandas</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+    mkdir output_dir &&
+    mkdir -p `pwd`/mlp_tmpdir &&
+    MPLCONFIGDIR=`pwd`/mlp_tmpdir &&
+    echo "Galaxy xarray version @TOOL_VERSION@" > $version &&
+    python '$__tool_directory__/timeseries.py' '$input' '$var'
+    --config '$series_customization' 
+         --output timeseries.csv
+         --verbose &&
+    mv *.csv output_dir
+    ]]></command>
+    <expand macro="config_series"/>
+    <inputs>
+        <param type="data" name="input" label="Input netcdf file" format="netcdf"  help="Select the input netCDF file."/>
+        <param type="data" label="Tabular of variables" name="var_tab" format="tabular" help="Select the tabular file which summarize the available variables and dimensions."/>
+         <conditional name="condi_datetime">
+            <param name="datetime" type="select" label="Datetime selection" help="Use this option to set the start and end values for plotting.s">
+                <option value="no">No</option>
+                <option value="yes">Yes</option>
+            </param>
+            <when value="no"></when>
+            <when value="yes">
+                <param type="data" label="Tabular of time values" name="time_tab" format="tabular" help="File containing time values(for plotting start values.)"/>
+                <param name="time_start_value" type="select" multiple="false" label="Choose the  times to plot">
+                    <options from_dataset="time_tab">
+                        <column name="name" index="1"/>
+                        <column name="value" index="0"/>
+                    </options>
+                </param>
+                <param type="data" label="Tabular of time values" name="time_tab" format="tabular" help="File containing time values(for plotting end values.)"/>
+                <param name="time_end_value" type="select" multiple="false" label="Choose the  times to plot">
+                    <options from_dataset="time_tab">
+                        <column name="name" index="1"/>
+                        <column name="value" index="0"/>
+                    </options>
+                </param>
+            </when>
+        </conditional>
+        <param name="xlim" type="text" optional="true" label="longitude value for limited geographical area " />
+        <param name="ylim" type="text" value=""  optional="true" label="latitude value for limited geographical area" />
+    </inputs>
+    <outputs>
+        <data name="version" format="tabular" label="Tool version"/>
+        <collection type="list" name="output_dir" label="TimeSeries">
+            <discover_datasets pattern="__name_and_ext__" directory="output_dir"/>
+        </collection>
+    </outputs>
+    <tests>
+        <test>
+            <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
+            <param name="var" value="chl"/>
+            <param name="var_tab" value="var_tab_dataset-ibi"/>
+            <param name="xlim" value='18.75'/>
+            <param name="ylim" value='72.50'/>
+            <conditional name="condi_datetime">
+                <param name="datetime" value="yes"/>
+                <param name="time_tab" value="time.tabular"/>
+                <param name="time_start_values" value="0"/>
+                <param name="time_end_values" value="15"/>
+            </conditional>                    
+            <output_collection name="output_dir" type="list" count="1">
+                 <element name="timeseries0" ftype="csv" file="time_series.csv"/>
+            </output_collection>
+            <output name="version" ftype="tabular" file="version.tabular"/>
+        </test>
+    </tests>
