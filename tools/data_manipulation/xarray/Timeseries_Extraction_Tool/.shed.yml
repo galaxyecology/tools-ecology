@@ -1,0 +1,18 @@
+categories:
+    - Ecology
+owner: ecology
+remote_repository_url: https://github.com/Quickbeasts51429/tools-ecology/tree/timeseries_tool/tools/data_manipulation/xarray/Timeseries_Extraction_Tool
+homepage_url: http://xarray.pydata.org
+long_description: |
+  xarray (formerly xray) is an open source project and Python package that makes working with
+  labelled multi-dimensional arrays simple, efficient, and fun!
+  xarray integrates with Dask to support parallel computations and streaming computation on datasets
+  that don’t fit into memory.
+type: unrestricted
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrapper for xarray tool: {{ tool_name }}."
+suite:
+  name: "suite_xarray"
+  description: "A suite of xarray tools"
+  type: repository_suite_definition
