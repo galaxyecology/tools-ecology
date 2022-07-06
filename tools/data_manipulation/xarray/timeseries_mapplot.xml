@@ -28,7 +28,13 @@
     <inputs>
         <param type="data" name="input" label="Input netcdf file" format="netcdf"  help="Select the input netCDF file."/>
         <param type="data" label="Tabular of variables" name="var_tab" format="tabular" help="Select the tabular file which summarize the available variables and dimensions."/>
-         <conditional name="condi_datetime">
+        <param name="var" type="select" label="Choose the variable to plot">
+            <options from_dataset="var_tab">
+                <column name="name" index="0"/>
+                <column name="value" index="0"/>
+            </options>
+        </param>
+        <conditional name="condi_datetime">
             <param name="datetime" type="select" label="Datetime selection" help="Use this option to set the start and end values for plotting.s">
                 <option value="no">No</option>
                 <option value="yes">Yes</option>
