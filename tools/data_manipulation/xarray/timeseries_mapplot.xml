@@ -85,3 +85,5 @@
             <output name="version" ftype="tabular" file="version.tabular"/>
         </test>
     </tests>
+    <help><![CDATA[ Extracts time series for a given variable in a .csv format file. This file can be used to plot the timeseries easily. ]]></help> 
+    </tool> 
