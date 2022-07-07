@@ -51,23 +51,23 @@ class TimeSeries ():
         self.xlim = ""
         self.ylim = ""
 
-         if config_file != "" and config_file is not None:
-            with open(config_file) as f:
-                sdict = ''.join(
-                    f.read().replace("\n", "").split('{')[1].split('}')[0]
-                    )
-                tmp = ast.literal_eval('{' + sdict.strip() + '}')
-                for key in tmp:
-                    if key == 'time_start_value':  
-                        time_start_value = tmp[key]
-                        self.time_start_value = list(map(int, time_start_value.split(",")))
-                    if key == 'time_end_value':  
-                        time_end_value = tmp[key]
-                        self.time_end_value = list(map(int, time_end_value.split(",")))
-                    if key == 'xlim': 
-                        self.xlim = tmp[key]
-                    if key == 'ylim':
-                        self.ylim = tmp[key]
+        if config_file != "" and config_file is not None:
+             with open(config_file) as f:
+                 sdict = ''.join(
+                     f.read().replace("\n", "").split('{')[1].split('}')[0]
+                     )
+                 tmp = ast.literal_eval('{' + sdict.strip() + '}')
+                     for key in tmp:
+                         if key == 'time_start_value':  
+                             time_start_value = tmp[key]
+                             self.time_start_value = list(map(int, time_start_value.split(",")))
+                         if key == 'time_end_value':  
+                             time_end_value = tmp[key]
+                             self.time_end_value = list(map(int, time_end_value.split(",")))
+                         if key == 'xlim': 
+                             self.xlim = tmp[key]
+                         if key == 'ylim':
+                             self.ylim = tmp[key]
                    
  
         if type(self.input) is list:
