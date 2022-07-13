@@ -16,9 +16,9 @@
 #
 # optional arguments:
 #  -h, --help                 show this help message and exit
-#  --output OUTPUT            output filename to store resulting image (png format)
-#  --start_time STARTTIME     starting time index from the file for multiple plots ("0 1 2 3")
-#  --end_time ENDTIME         ending time index from the file for multiple plots ("0 1 2 3")
+#  --output OUTPUT            output filename to store resulting timeseries file (csv format)
+#  --start_time STARTTIME     starting time index for timeseries ("0 1 2 3")
+#  --end_time ENDTIME         ending time index for timeseries ("0 1 2 3")
 #  --xlim                     limited geographical point longitudes "x1"
 #  --ylim                     limited geographical point latitudes "y1"
 #  --config                   extraction parameters are passed via a config file
@@ -52,22 +52,22 @@ class TimeSeries ():
         self.ylim = ""
 
         if config_file != "" and config_file is not None:
-             with open(config_file) as f:
-                 sdict = ''.join(
-                     f.read().replace("\n", "").split('{')[1].split('}')[0]
-                     )
-                 tmp = ast.literal_eval('{' + sdict.strip() + '}')
-                     for key in tmp:
-                         if key == 'time_start_value':  
-                             time_start_value = tmp[key]
-                             self.time_start_value = list(map(int, time_start_value.split(",")))
-                         if key == 'time_end_value':  
-                             time_end_value = tmp[key]
-                             self.time_end_value = list(map(int, time_end_value.split(",")))
-                         if key == 'xlim': 
-                             self.xlim = tmp[key]
-                         if key == 'ylim':
-                             self.ylim = tmp[key]
+            with open(config_file) as f:
+                sdict = ''.join(
+                    f.read().replace("\n", "").split('{')[1].split('}')[0]
+                    )
+                tmp = ast.literal_eval('{' + sdict.strip() + '}')
+                for key in tmp:
+                    if key == 'time_start_value':  
+                        time_start_value = tmp[key]
+                        self.time_start_value = list(map(int, time_start_value.split(",")))
+                    if key == 'time_end_value':  
+                        time_end_value = tmp[key]
+                        self.time_end_value = list(map(int, time_end_value.split(",")))
+                    if key == 'xlim': 
+                        self.xlim = tmp[key]
+                    if key == 'ylim':
+                        self.ylim = tmp[key]
                    
  
         if type(self.input) is list:
@@ -84,7 +84,7 @@ class TimeSeries ():
             print("xlim: ", self.xlim)
             print("ylim: ", self.ylim)
             
-    def plot(self, varname):
+    def plot(self):
         lon_c = float(self.xlim)
         lat_c = float(self.ylim)            
         sq_diff_lat = (lat - lat_c)**2
@@ -96,10 +96,10 @@ class TimeSeries ():
         dt = np.arange(0, data.variables['time'].size)
         self.output = df
         for time_index in dt:
-        df.iloc[time_index] = temp[time_index,min_index_lat ,min_index_lon]
+            df.iloc[time_index] = temp[time_index,min_index_lat ,min_index_lon]
 
         # Saving the time series into a csv
-        self.output.to_csv('timeseries.csv')
+        self.output.to_csv('Timeseries.csv')
         
 
 if __name__ == '__main__':
@@ -130,6 +130,4 @@ if __name__ == '__main__':
     dset = TimeSeries(input=args.input, varname=args.varname,
                      output=args.output, verbose=args.verbose,
                      config_file=args.config)
-
-    
-            
+    dset.plot()
