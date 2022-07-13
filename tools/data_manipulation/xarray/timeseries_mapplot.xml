@@ -1,4 +1,4 @@
-<tool id="timeseries_extraction" name="NetCDF_timeseries_Extractor" version="0.1.0+galaxy0" python_template_version="3.5" profile="21.05">
+<tool id="timeseries_extraction" name="NetCDF_timeseries_Extractor" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>Extract time series for a netCDF dataset in a .csv file </description>
     <macros>
         <import>macros.xml</import>
@@ -28,7 +28,7 @@
     <inputs>
         <param type="data" name="input" label="Input netcdf file" format="netcdf"  help="Select the input netCDF file."/>
         <param type="data" label="Tabular of variables" name="var_tab" format="tabular" help="Select the tabular file which summarize the available variables and dimensions."/>
-        <param name="var" type="select" label="Choose the variable to plot">
+        <param name="var" type="select" label="Choose the variable to extract">
             <options from_dataset="var_tab">
                 <column name="name" index="0"/>
                 <column name="value" index="0"/>
@@ -57,7 +57,7 @@
                 </param>
             </when>
         </conditional>
-        <param name="xlim" type="text" optional="true" label="longitude value for limited geographical area " />
+        <param name="xlim" type="text" value ="" optional="true" label="longitude value for limited geographical area " />
         <param name="ylim" type="text" value=""  optional="true" label="latitude value for limited geographical area" />
     </inputs>
     <outputs>
@@ -77,7 +77,7 @@
                 <param name="datetime" value="yes"/>
                 <param name="time_tab" value="time.tabular"/>
                 <param name="time_start_values" value="0"/>
-                <param name="time_end_values" value="15"/>
+                <param name="time_end_values" value="1"/>
             </conditional>                    
             <output_collection name="output_dir" type="list" count="1">
                  <element name="timeseries0" ftype="csv" file="time_series.csv"/>
