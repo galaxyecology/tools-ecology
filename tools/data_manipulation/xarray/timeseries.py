@@ -119,13 +119,13 @@ class TimeSeries ():
             lat_c = float(self.lat_value)
         if self.lat_value and self.lon_value:
             self.df = self.dset.sel({self.lat_name: lat_c,
-	                             self.lon_name: lon_c},
+                                     self.lon_name: lon_c},
                                     method='nearest')
         else:
             self.df = self.dset
         if self.time_start_value or self.time_end_value:
             self.df = self.df.sel({self.time_name: slice(self.time_start_value,
-	                                                 self.time_end_value)})
+                                                         self.time_end_value)})
         # Saving the time series into a tabular
         self.df = self.df[self.varname].squeeze().to_dataframe().dropna()
         self.df.to_csv(self.save, sep='\t')
