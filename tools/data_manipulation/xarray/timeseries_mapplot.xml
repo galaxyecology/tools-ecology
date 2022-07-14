@@ -1,4 +1,4 @@
-<tool id="timeseries_extraction" name="NetCDF_timeseries_Extractor" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
+<tool id="timeseries_extraction" name="NetCDF_timeseries_Extractor" version="0.1.0+galaxy0" python_template_version="3.5" profile="21.05">
     <description>Extract time series for a netCDF dataset in a .csv file </description>
     <macros>
         <import>macros.xml</import>
@@ -8,10 +8,11 @@
     <requirements>
         <requirement type="package" version="@TOOL_VERSION@">xarray</requirement>
         <requirement type="package" version="3">python</requirement>
-        <requirement type="package" version="1.5.6">netcdf4</requirement>
-        <requirement type="package" version="3.4.2">matplotlib</requirement>
-        <requirement type="package" version="2021.12.0">dask</requirement>
-        <requirement type="package" version="0.13.1">pandas</requirement>
+        <requirement type="package" version="1.6.0">netcdf4</requirement>
+        <requirement type="package" version="3.5.2">matplotlib</requirement>
+        <requirement type="package" version="2022.7.0">dask</requirement>
+        <requirement type="package" version="2022.3.0">xarray</requirement>
+        <requirement type="package" version="1.4.3">pandas</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
     mkdir output_dir &&
@@ -28,7 +29,7 @@
     <inputs>
         <param type="data" name="input" label="Input netcdf file" format="netcdf"  help="Select the input netCDF file."/>
         <param type="data" label="Tabular of variables" name="var_tab" format="tabular" help="Select the tabular file which summarize the available variables and dimensions."/>
-        <param name="var" type="select" label="Choose the variable to extract">
+        <param name="var" type="select" label="Choose the variable to plot">
             <options from_dataset="var_tab">
                 <column name="name" index="0"/>
                 <column name="value" index="0"/>
@@ -41,6 +42,12 @@
             </param>
             <when value="no"></when>
             <when value="yes">
+                <param name="time_name" type="select" label="Choose the name for date and time values">
+                    <options from_dataset="var_tab">
+                        <column name="name" index="0"/>
+                        <column name="value" index="0"/>
+                    </options>
+                </param>
                 <param type="data" label="Tabular of time values" name="time_tab" format="tabular" help="File containing time values(for plotting start values.)"/>
                 <param name="time_start_value" type="select" multiple="false" label="Choose the beginning date/time to plot">
                     <options from_dataset="time_tab">
@@ -57,8 +64,20 @@
                 </param>
             </when>
         </conditional>
-        <param name="xlim" type="text" value ="" optional="true" label="longitude value for limited geographical area " />
-        <param name="ylim" type="text" value=""  optional="true" label="latitude value for limited geographical area" />
+        <param name="lon_value" type="text" optional="true" label="longitude value for limited geographical area " />
+        <param name="lat_value" type="text" value=""  optional="true" label="latitude value for limited geographical area" />
+        <param name="lon_name" type="select" label="Choose the name for longitudes" optional="true">
+            <options from_dataset="var_tab">
+                <column name="name" index="0"/>
+                <column name="value" index="0"/>
+            </options>
+        </param>
+        <param name="lon_name" type="select" label="Choose the name for latitudes" optional="true">
+            <options from_dataset="var_tab">
+                <column name="name" index="0"/>
+                <column name="value" index="0"/>
+            </options>
+        </param>
     </inputs>
     <outputs>
         <data name="version" format="tabular" label="Tool version"/>
@@ -71,13 +90,13 @@
             <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
             <param name="var" value="chl"/>
             <param name="var_tab" value="var_tab_dataset-ibi"/>
-            <param name="xlim" value='18.75'/>
-            <param name="ylim" value='72.50'/>
+            <param name="lon" value='18.75'/>
+            <param name="lat" value='72.50'/>
             <conditional name="condi_datetime">
                 <param name="datetime" value="yes"/>
                 <param name="time_tab" value="time.tabular"/>
                 <param name="time_start_values" value="0"/>
-                <param name="time_end_values" value="1"/>
+                <param name="time_end_values" value="15"/>
             </conditional>                    
             <output_collection name="output_dir" type="list" count="1">
                  <element name="timeseries0" ftype="csv" file="time_series.csv"/>

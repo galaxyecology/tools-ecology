@@ -1,11 +1,7 @@
 #!/usr/bin/env python3
 #
 #
-# usage:  netCDF_timeseries.py [-h] [--output OUTPUT]
-#                               [--start_time STARTTIME]
-#                               [--end_time ENDTIME]
-#                               [--xlim "x1"]
-#                               [--ylim "y1"]
+# usage:  netCDF_timeseries.py [-h] [--output output.png] [--save timeseries.tabular]
 #                               [--config config-file]
 #                               [-v]
 #                               input varname
@@ -16,24 +12,30 @@
 #
 # optional arguments:
 #  -h, --help                 show this help message and exit
-#  --output OUTPUT            output filename to store resulting timeseries file (csv format)
-#  --start_time STARTTIME     starting time index for timeseries ("0 1 2 3")
-#  --end_time ENDTIME         ending time index for timeseries ("0 1 2 3")
-#  --xlim                     limited geographical point longitudes "x1"
-#  --ylim                     limited geographical point latitudes "y1"
+#  --output output.png        output filename to store resulting image (png format)
+#  --save timeseries.tabular  output filename to store resulting timeseries (tabular format)
 #  --config                   extraction parameters are passed via a config file
-#                             (overwrite other extraction options)
 #  -v, --verbose               switch on verbose mode
 #
 import argparse
 import ast
 import warnings
-from pathlib import Path
-import netCDF4
-import xarray as xr
-import pandas as pd
+
+import matplotlib as mpl
+mpl.use('Agg')
+
+import matplotlib.pyplot as plt   # noqa: I202,E402
+from matplotlib.dates import DateFormatter # noqa: I202,E402
+
+import numpy as np # noqa: I202,E402
+
+import pandas as pd # noqa: I202,E402
+
+import xarray as xr  # noqa: I202,E402
+
+
 class TimeSeries ():
-    def __init__(self, input, varname, output, verbose=False,
+    def __init__(self, input, varname, output, save, verbose=False,
                  config_file=""):
 
         li = list(input.split(","))
@@ -44,13 +46,26 @@ class TimeSeries ():
 
         self.varname = varname
         self.xylim_supported = True
-        self.output = output
+        if output == "" or output is None:
+            self.output = "Timeseries.png"
+        else:
+            self.output = output
+        if save == "" or save is None:
+            self.save = "Timeseries.tabular"
+        else:
+            self.save = save
         self.verbose = verbose
-        self.time_start_value = []
-        self.time_start_end = []
-        self.xlim = ""
-        self.ylim = ""
-
+        self.time_start_value = ""
+        self.time_end_value = ""
+        self.lon_value = ""
+        self.lat_value = ""
+        self.lat_name = 'lat'
+        self.lon_name = 'lon'
+        self.time_name = 'time'
+        self.title = ''
+        self.xlabel = ''
+        self.ylabel = ''
+        self.format_date = ''
         if config_file != "" and config_file is not None:
             with open(config_file) as f:
                 sdict = ''.join(
@@ -59,47 +74,76 @@ class TimeSeries ():
                 tmp = ast.literal_eval('{' + sdict.strip() + '}')
                 for key in tmp:
                     if key == 'time_start_value':  
-                        time_start_value = tmp[key]
-                        self.time_start_value = list(map(int, time_start_value.split(",")))
+                        self.time_start_value = tmp[key]
                     if key == 'time_end_value':  
-                        time_end_value = tmp[key]
-                        self.time_end_value = list(map(int, time_end_value.split(",")))
-                    if key == 'xlim': 
-                        self.xlim = tmp[key]
-                    if key == 'ylim':
-                        self.ylim = tmp[key]
-                   
- 
+                        self.time_end_value = tmp[key]
+                    if key == 'lon_value': 
+                        self.lon_value = tmp[key]
+                    if key == 'lat_value':
+                        self.lat_value = tmp[key]
+                    if key == 'lon_name': 
+                        self.lon_name = tmp[key]
+                    if key == 'lat_name':
+                        self.lat_name = tmp[key]
+                    if key == 'time_name':
+                        self.time_name = tmp[key]
+                    if key == 'title':
+                        self.title = tmp[key]
+                    if key == 'xlabel':
+                        self.xlabel = tmp[key]
+                    if key == 'ylabel':
+                        self.ylabel = tmp[key]
+                    if key == 'format_date':
+                        self.format_date = tmp[key]
+                        self.format_date = self.format_date.replace('X', '%')
+                        
         if type(self.input) is list:
-            self.dset = xr.open_mfdataset(self.input,r, use_cftime=True)
+            self.dset = xr.open_mfdataset(self.input, use_cftime=True)
         else:
-            self.dset = xr.open_dataset(self.input,r, use_cftime=True)
+            self.dset = xr.open_dataset(self.input, use_cftime=True)
 
         if verbose:
             print("input: ", self.input)
             print("varname: ", self.varname)
-            print("time_start_value: ", self.time_start_value)
-            print("time_end_value: ", self.time_end_value)
+            if self.time_start_value:
+                print("time_start_value: ", self.time_start_value)
+            if self.time_end_value:
+                print("time_end_value: ", self.time_end_value)
             print("output: ", self.output)
-            print("xlim: ", self.xlim)
-            print("ylim: ", self.ylim)
-            
-    def plot(self):
-        lon_c = float(self.xlim)
-        lat_c = float(self.ylim)            
-        sq_diff_lat = (lat - lat_c)**2
-        sq_diff_lon = (lon - lon_c)**2
-        min_index_lat = sq_diff_lat.argmin()
-        min_index_lon = sq_diff_lon.argmin()
-        date_range = pd.date_range(start = starting_date, end = ending_date)
-        df = pd.DataFrame(0, columns = ['varname'], index = date_range)
-        dt = np.arange(0, data.variables['time'].size)
-        self.output = df
-        for time_index in dt:
-            df.iloc[time_index] = temp[time_index,min_index_lat ,min_index_lon]
+            if self.lon_value:
+                print(self.lon_name, self.lon_value)
+            if self.lat_value:
+                print(self.lat_name, self.lat_value)
 
-        # Saving the time series into a csv
-        self.output.to_csv('Timeseries.csv')
+    def plot(self):
+        if self.lon_value:
+            lon_c = float(self.lon_value)   
+        if self.lat_value:
+            lat_c = float(self.lat_value) 
+        if self.lat_value and self.lon_value:
+            self.df = self.dset.sel({self.lat_name : lat_c, self.lon_name:lon_c}, 
+                                method='nearest')
+        else:
+            self.df = self.dset
+        if self.time_start_value or self.time_end_value:
+            self.df = self.df.sel({self.time_name: slice(self.time_start_value, self.time_end_value)})
+        # Saving the time series into a tabular
+        self.df = self.df[self.varname].squeeze().to_dataframe().dropna()
+        self.df.to_csv(self.save, sep='\t')
+        # Plot the time series into png image
+        fig = plt.figure(figsize=(15, 5))
+        ax = plt.subplot(111)
+        self.df[self.varname].plot(ax=ax)        
+        if self.title:
+            plt.title(self.title)
+        if self.xlabel:
+            plt.xlabel(self.xlabel)
+        if self.ylabel:
+            plt.ylabel(self.ylabel)
+        if self.format_date:
+            ax.xaxis.set_major_formatter(DateFormatter(self.format_date))
+        fig.tight_layout()
+        fig.savefig(self.output)
         
 
 if __name__ == '__main__':
@@ -115,7 +159,11 @@ if __name__ == '__main__':
     )
     parser.add_argument(
         '--output',
-        help='output filename to store resulting csv file (csv format)'
+        help='output filename to store resulting image (png format)'
+    )
+    parser.add_argument(
+        '--save',
+        help='save resulting tabular file (tabular format) into filename'
     )
     parser.add_argument(
         '--config',
@@ -128,6 +176,6 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     dset = TimeSeries(input=args.input, varname=args.varname,
-                     output=args.output, verbose=args.verbose,
+                     output=args.output, save=args.save, verbose=args.verbose,
                      config_file=args.config)
     dset.plot()
