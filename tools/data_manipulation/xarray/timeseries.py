@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 #
 #
-# usage:  netCDF_timeseries.py [-h] [--output output.png] [--save timeseries.tabular]
+# usage:  netCDF_timeseries.py [-h] [--output output.png]
+#                               [--save timeseries.tabular]
 #                               [--config config-file]
 #                               [-v]
 #                               input varname
@@ -12,10 +13,10 @@
 #
 # optional arguments:
 #  -h, --help                 show this help message and exit
-#  --output output.png        output filename to store resulting image (png format)
-#  --save timeseries.tabular  output filename to store resulting timeseries (tabular format)
-#  --config                   extraction parameters are passed via a config file
-#  -v, --verbose               switch on verbose mode
+#  --output output.png        filename to store image (png format)
+#  --save timeseries.tabular  filename to store timeseries (tabular format)
+#  --config                   config file extract parameters
+#  -v, --verbose              switch on verbose mode
 #
 import argparse
 import ast
@@ -25,11 +26,7 @@ import matplotlib as mpl
 mpl.use('Agg')
 
 import matplotlib.pyplot as plt   # noqa: I202,E402
-from matplotlib.dates import DateFormatter # noqa: I202,E402
-
-import numpy as np # noqa: I202,E402
-
-import pandas as pd # noqa: I202,E402
+from matplotlib.dates import DateFormatter   # noqa: I202,E402
 
 import xarray as xr  # noqa: I202,E402
 
@@ -73,15 +70,15 @@ class TimeSeries ():
                     )
                 tmp = ast.literal_eval('{' + sdict.strip() + '}')
                 for key in tmp:
-                    if key == 'time_start_value':  
+                    if key == 'time_start_value':
                         self.time_start_value = tmp[key]
-                    if key == 'time_end_value':  
+                    if key == 'time_end_value':
                         self.time_end_value = tmp[key]
-                    if key == 'lon_value': 
+                    if key == 'lon_value':
                         self.lon_value = tmp[key]
                     if key == 'lat_value':
                         self.lat_value = tmp[key]
-                    if key == 'lon_name': 
+                    if key == 'lon_name':
                         self.lon_name = tmp[key]
                     if key == 'lat_name':
                         self.lat_name = tmp[key]
@@ -96,7 +93,7 @@ class TimeSeries ():
                     if key == 'format_date':
                         self.format_date = tmp[key]
                         self.format_date = self.format_date.replace('X', '%')
-                        
+
         if type(self.input) is list:
             self.dset = xr.open_mfdataset(self.input, use_cftime=True)
         else:
@@ -117,23 +114,25 @@ class TimeSeries ():
 
     def plot(self):
         if self.lon_value:
-            lon_c = float(self.lon_value)   
+            lon_c = float(self.lon_value)
         if self.lat_value:
-            lat_c = float(self.lat_value) 
+            lat_c = float(self.lat_value)
         if self.lat_value and self.lon_value:
-            self.df = self.dset.sel({self.lat_name : lat_c, self.lon_name:lon_c}, 
-                                method='nearest')
+            self.df = self.dset.sel({self.lat_name: lat_c,
+	                             self.lon_name: lon_c},
+                                    method='nearest')
         else:
             self.df = self.dset
         if self.time_start_value or self.time_end_value:
-            self.df = self.df.sel({self.time_name: slice(self.time_start_value, self.time_end_value)})
+            self.df = self.df.sel({self.time_name: slice(self.time_start_value,
+	                                                 self.time_end_value)})
         # Saving the time series into a tabular
         self.df = self.df[self.varname].squeeze().to_dataframe().dropna()
         self.df.to_csv(self.save, sep='\t')
         # Plot the time series into png image
         fig = plt.figure(figsize=(15, 5))
         ax = plt.subplot(111)
-        self.df[self.varname].plot(ax=ax)        
+        self.df[self.varname].plot(ax=ax)
         if self.title:
             plt.title(self.title)
         if self.xlabel:
@@ -144,7 +143,7 @@ class TimeSeries ():
             ax.xaxis.set_major_formatter(DateFormatter(self.format_date))
         fig.tight_layout()
         fig.savefig(self.output)
-        
+
 
 if __name__ == '__main__':
     warnings.filterwarnings("ignore")
@@ -176,6 +175,6 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     dset = TimeSeries(input=args.input, varname=args.varname,
-                     output=args.output, save=args.save, verbose=args.verbose,
-                     config_file=args.config)
+                      output=args.output, save=args.save, verbose=args.verbose,
+                      config_file=args.config)
     dset.plot()
