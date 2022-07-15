@@ -3,10 +3,10 @@
         <configfiles>
             <configfile name="series_customization"><![CDATA[
 {
-#if $time_name
-"time_name":'$time_name',
-#end if
 #if $condi_datetime.datetime=="yes"
+#if $condi_datetime.time_name
+"time_name":'$condi_datetime.time_name',
+#end if
 "time_start_value":"$condi_datetime.time_start_value",
 "time_end_value":"$condi_datetime.time_end_value",
 #end if
@@ -21,6 +21,18 @@
 #end if
 #if $lat_name
 "lat_name":'$lat_name',
+#end if
+#if str($adv.format_date).strip()
+"format_date":'$adv.format_date',
+#end if
+#if str($adv.title).strip()
+"title":'$adv.title',
+#end if
+#if str($adv.xlabel).strip()
+"xlabel":'$adv.xlabel',
+#end if
+#if str($adv.ylabel).strip()
+"ylabel":'$adv.ylabel',
 #end if
 }
             ]]>

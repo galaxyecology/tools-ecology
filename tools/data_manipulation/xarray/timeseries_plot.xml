@@ -1,5 +1,5 @@
-<tool id="timeseries_extraction" name="NetCDF_timeseries_Extractor" version="0.1.0+galaxy0" python_template_version="3.5" profile="21.05">
-    <description>Extract time series for a netCDF dataset in a .csv file </description>
+<tool id="timeseries_extraction" name="NetCDF timeseries Extractor" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" python_template_version="3.5" profile="@PROFILE@">
+    <description>Extract and plot time series</description>
     <macros>
         <import>macros.xml</import>
         <import>macros_timeseries.xml</import>
@@ -11,19 +11,18 @@
         <requirement type="package" version="1.6.0">netcdf4</requirement>
         <requirement type="package" version="3.5.2">matplotlib</requirement>
         <requirement type="package" version="2022.7.0">dask</requirement>
-        <requirement type="package" version="2022.3.0">xarray</requirement>
         <requirement type="package" version="1.4.3">pandas</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
     mkdir output_dir &&
     mkdir -p `pwd`/mlp_tmpdir &&
     MPLCONFIGDIR=`pwd`/mlp_tmpdir &&
-    echo "Galaxy xarray version @TOOL_VERSION@" > $version &&
     python '$__tool_directory__/timeseries.py' '$input' '$var'
     --config '$series_customization' 
-         --output timeseries.csv
+         --output timeseries.png
+	 --save $timeseries_tabular
          --verbose &&
-    mv *.csv output_dir
+    mv timeseries.png $timeseries_plot
     ]]></command>
     <expand macro="config_series"/>
     <inputs>
@@ -36,7 +35,7 @@
             </options>
         </param>
         <conditional name="condi_datetime">
-            <param name="datetime" type="select" label="Datetime selection" help="Use this option to set the start and end values for plotting.s">
+            <param name="datetime" type="select" label="Datetime selection" help="Use this option to set the start and end values for plotting.">
                 <option value="no">No</option>
                 <option value="yes">Yes</option>
             </param>
@@ -64,26 +63,30 @@
                 </param>
             </when>
         </conditional>
-        <param name="lon_value" type="text" optional="true" label="longitude value for limited geographical area " />
         <param name="lat_value" type="text" value=""  optional="true" label="latitude value for limited geographical area" />
+        <param name="lat_name" type="select" label="Choose the name for latitudes" optional="true">
+            <options from_dataset="var_tab">
+                <column name="name" index="0"/>
+                <column name="value" index="0"/>
+            </options>
+        </param>
+        <param name="lon_value" type="text" optional="true" label="longitude value for limited geographical area " />
         <param name="lon_name" type="select" label="Choose the name for longitudes" optional="true">
             <options from_dataset="var_tab">
                 <column name="name" index="0"/>
                 <column name="value" index="0"/>
             </options>
         </param>
-        <param name="lon_name" type="select" label="Choose the name for latitudes" optional="true">
-            <options from_dataset="var_tab">
-                <column name="name" index="0"/>
-                <column name="value" index="0"/>
-            </options>
-        </param>
+        <section name="adv" title="Advanced Plotting Options" expanded="false">
+            <param name="title" type="text" value="" label="Plot title" />
+            <param name="xlabel" type="text" value="" label="Label for x-axis" />
+            <param name="ylabel" type="text" value="" label="Label for y-axis" />
+            <param name="format_date" type="text" value="" label="format date/time for plotting" />
+        </section>
     </inputs>
     <outputs>
-        <data name="version" format="tabular" label="Tool version"/>
-        <collection type="list" name="output_dir" label="TimeSeries">
-            <discover_datasets pattern="__name_and_ext__" directory="output_dir"/>
-        </collection>
+        <data name="timeseries_tabular" format="tabular" label="Timeseries table"/>
+        <data name="timeseries_plot" format="png" label="Timeseries plot"/>
     </outputs>
     <tests>
         <test>
