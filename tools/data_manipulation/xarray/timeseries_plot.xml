@@ -93,6 +93,24 @@
             <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
             <param name="var" value="chl"/>
             <param name="var_tab" value="var_tab_dataset-ibi"/>
+            <param name="lon" value='-5.0'/>
+            <param name="lat" value='43.50'/>
+            <conditional name="condi_datetime">
+                <param name="datetime" value="no"/>
+            </conditional>                    
+            <section name="adv" title="Advanced Plotting Options">
+                <param name="title" value="Timeseries of Chlorophyll concentration"/>
+                <param name="format_date" value="%Y"/>
+                <param name="xlabel" value="Year"/>
+                <param name="ylabel" value="Chl"/>
+            </section>
+            <output name="timeseries_tabular" ftype="tabular" file="time_series_customized.tabular"/>
+            <output name="timeseries_plot" ftype="png" file="time_series_customized.png"/>
+        </test>
+        <test>
+            <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
+            <param name="var" value="chl"/>
+            <param name="var_tab" value="var_tab_dataset-ibi"/>
             <param name="lon" value='18.75'/>
             <param name="lat" value='72.50'/>
             <conditional name="condi_datetime">
@@ -101,10 +119,8 @@
                 <param name="time_start_values" value="0"/>
                 <param name="time_end_values" value="15"/>
             </conditional>                    
-            <output_collection name="output_dir" type="list" count="1">
-                 <element name="timeseries0" ftype="csv" file="time_series.csv"/>
-            </output_collection>
-            <output name="version" ftype="tabular" file="version.tabular"/>
+            <output name="timeseries_tabular" ftype="tabular" file="time_series.tabular"/>
+            <output name="timeseries_plot" ftype="png" file="time_series.png"/>
         </test>
     </tests>
     <help><![CDATA[ Extracts time series for a given variable in a .csv format file. This file can be used to plot the timeseries easily. ]]></help> 
