@@ -98,7 +98,7 @@
             <conditional name="condi_datetime">
                 <param name="datetime" value="no"/>
             </conditional>                    
-            <section name="adv" title="Advanced Plotting Options">
+            <section name="adv">
                 <param name="plot_title" value="Timeseries of Chlorophyll concentration"/>
                 <param name="format_date" value="%Y"/>
                 <param name="xlabel" value="Year"/>
