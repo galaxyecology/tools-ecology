@@ -78,7 +78,7 @@
             </options>
         </param>
         <section name="adv" title="Advanced Plotting Options" expanded="false">
-            <param name="title" type="text" value="" label="Plot title" />
+            <param name="plot_title" type="text" value="" label="Plot title" />
             <param name="xlabel" type="text" value="" label="Label for x-axis" />
             <param name="ylabel" type="text" value="" label="Label for y-axis" />
             <param name="format_date" type="text" value="" label="format date/time for plotting" />
@@ -99,7 +99,7 @@
                 <param name="datetime" value="no"/>
             </conditional>                    
             <section name="adv" title="Advanced Plotting Options">
-                <param name="title" value="Timeseries of Chlorophyll concentration"/>
+                <param name="plot_title" value="Timeseries of Chlorophyll concentration"/>
                 <param name="format_date" value="%Y"/>
                 <param name="xlabel" value="Year"/>
                 <param name="ylabel" value="Chl"/>

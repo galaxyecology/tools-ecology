@@ -25,8 +25,8 @@
 #if str($adv.format_date).strip()
 "format_date":'$adv.format_date',
 #end if
-#if str($adv.title).strip()
-"title":'$adv.title',
+#if str($adv.plot_title).strip()
+"title":'$adv.plot_title',
 #end if
 #if str($adv.xlabel).strip()
 "xlabel":'$adv.xlabel',
