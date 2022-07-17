@@ -4,16 +4,20 @@
             <configfile name="series_customization"><![CDATA[
 {
 #if $condi_datetime.datetime=="yes"
-#if $condi_datetime.time_name
+#if str($condi_datetime.time_name).strip()
 "time_name":'$condi_datetime.time_name',
 #end if
+#if str($condi_datetime.time_start_value).strip()
 "time_start_value":"$condi_datetime.time_start_value",
+#end if
+#if str($condi_datetime.time_end_value).strip()
 "time_end_value":"$condi_datetime.time_end_value",
 #end if
-#if $lon_value
+#end if
+#if str($lon_value).strip()
 "lon_value":'$lon_value',
 #end if
-#if $lat_value
+#if str($lat_value).strip()
 "lat_value":'$lat_value',
 #end if
 #if $lon_name

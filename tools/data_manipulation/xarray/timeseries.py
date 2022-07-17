@@ -22,6 +22,8 @@ import argparse
 import ast
 import warnings
 
+import cftime  # noqa: F401
+
 import matplotlib as mpl
 mpl.use('Agg')
 
@@ -127,8 +129,8 @@ class TimeSeries ():
             self.df = self.df.sel({self.time_name: slice(self.time_start_value,
                                                          self.time_end_value)})
         # Saving the time series into a tabular
-        self.df = self.df[self.varname].squeeze().to_dataframe().dropna()
-        self.df.to_csv(self.save, sep='\t')
+        self.df = self.df[self.varname].squeeze().to_dataframe()
+        self.df.dropna().to_csv(self.save, sep='\t')
         # Plot the time series into png image
         fig = plt.figure(figsize=(15, 5))
         ax = plt.subplot(111)
