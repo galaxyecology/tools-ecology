@@ -10,7 +10,7 @@
         <requirement type="package" version="1.8.2">shapely</requirement>
         <requirement type="package" version="1.6.0">netcdf4</requirement>
         <requirement type="package" version="1.4.3">pandas</requirement>
-        <requirement type="package" version="0.11.1">geopandas</requirement>
+        <requirement type="package" version="0.7.0">geopandas</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
     mkdir output_dir &&
