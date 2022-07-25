@@ -17,6 +17,7 @@ class XarrayInfo ():
         self.outfile_info = outfile_info
         self.outfile_summary = outfile_summary
         self.coords_info = coords_info
+        self.verbose = verbose
         # initialization
         self.dset = None
         self.gset = None
