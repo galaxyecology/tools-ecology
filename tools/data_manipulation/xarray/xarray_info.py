@@ -7,8 +7,6 @@ import csv
 import os
 import warnings
 
-import pandas as pd
-
 import xarray as xr
 
 

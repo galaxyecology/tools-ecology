@@ -3,7 +3,6 @@
 # - select data and save results in csv file for further post-processing
 
 import argparse
-import csv
 import os
 import warnings
 
@@ -287,9 +286,9 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     p = XarraySelect(args.infile, args.select, args.outfile, args.outputdir,
-                   args.latname, args.latvalN, args.latvalS, args.lonname,
-                   args.lonvalE, args.lonvalW, args.filter,
-                   args.coords, args.time, args.verbose,
-                   args.no_missing, args.tolerance)
+                     args.latname, args.latvalN, args.latvalS, args.lonname,
+                     args.lonvalE, args.lonvalW, args.filter,
+                     args.coords, args.time, args.verbose,
+                     args.no_missing, args.tolerance)
     if args.select:
         p.selection()
