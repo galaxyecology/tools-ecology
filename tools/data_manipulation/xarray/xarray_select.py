@@ -17,16 +17,13 @@ from shapely.ops import nearest_points
 import xarray as xr
 
 
-class XarrayTool ():
-    def __init__(self, infile, outfile_info="", outfile_summary="",
-                 select="", outfile="", outputdir="", latname="",
-                 latvalN="", latvalS="", lonname="", lonvalE="",
-                 lonvalW="", filter_list="", coords="", time="",
-                 verbose=False, no_missing=False, coords_info=None,
+class XarraySelect ():
+    def __init__(self, infile, select="", outfile="", outputdir="",
+                 latname="", latvalN="", latvalS="", lonname="",
+                 lonvalE="", lonvalW="", filter_list="", coords="",
+                 time="", verbose=False, no_missing=False,
                  tolerance=None):
         self.infile = infile
-        self.outfile_info = outfile_info
-        self.outfile_summary = outfile_summary
         self.select = select
         self.outfile = outfile
         self.outputdir = outputdir
@@ -60,11 +57,8 @@ class XarrayTool ():
         # initialization
         self.dset = None
         self.gset = None
-        self.coords_info = coords_info
         if self.verbose:
             print("infile: ", self.infile)
-            print("outfile_info: ", self.outfile_info)
-            print("outfile_summary: ", self.outfile_summary)
             print("outfile: ", self.outfile)
             print("select: ", self.select)
             print("outfile: ", self.outfile)
@@ -78,38 +72,6 @@ class XarrayTool ():
             print("filter: ", self.filter)
             print("time: ", self.time)
             print("coords: ", self.coords)
-            print("coords_info: ", self.coords_info)
-
-    def info(self):
-        f = open(self.outfile_info, 'w')
-        ds = xr.open_dataset(self.infile)
-        ds.info(f)
-        f.close()
-
-    def summary(self):
-        f = open(self.outfile_summary, 'w')
-        ds = xr.open_dataset(self.infile)
-        writer = csv.writer(f, delimiter='\t')
-        header = ['VariableName', 'NumberOfDimensions']
-        for idx, val in enumerate(ds.dims.items()):
-            header.append('Dim' + str(idx) + 'Name')
-            header.append('Dim' + str(idx) + 'Size')
-        writer.writerow(header)
-        for name, da in ds.data_vars.items():
-            line = [name]
-            line.append(len(ds[name].shape))
-            for d, s in zip(da.shape, da.sizes):
-                line.append(s)
-                line.append(d)
-            writer.writerow(line)
-        for name, da in ds.coords.items():
-            line = [name]
-            line.append(len(ds[name].shape))
-            for d, s in zip(da.shape, da.sizes):
-                line.append(s)
-                line.append(d)
-            writer.writerow(line)
-        f.close()
 
     def rowfilter(self, single_filter):
         split_filter = single_filter.split('#')
@@ -245,16 +207,6 @@ class XarrayTool ():
                             str(row.Index) + '.tabular'))
             self.selection()
 
-    def get_coords_info(self):
-        ds = xr.open_dataset(self.infile)
-        for c in ds.coords:
-            filename = os.path.join(self.coords_info,
-                                    c.strip() +
-                                    '.tabular')
-            pd = ds.coords[c].to_pandas()
-            pd.index = range(len(pd))
-            pd.to_csv(filename, header=False, sep='\t')
-
 
 if __name__ == '__main__':
     warnings.filterwarnings("ignore")
@@ -263,14 +215,6 @@ if __name__ == '__main__':
     parser.add_argument(
         'infile',
         help='netCDF input filename'
-    )
-    parser.add_argument(
-        '--info',
-        help='Output filename where metadata information is stored'
-    )
-    parser.add_argument(
-        '--summary',
-        help='Output filename where data summary information is stored'
     )
     parser.add_argument(
         '--select',
@@ -311,11 +255,6 @@ if __name__ == '__main__':
              'for geographical selection'
     )
     parser.add_argument(
-        '--coords_info',
-        help='output-folder where for each coordinate, coordinate values '
-             ' are being printed in the corresponding outputfile'
-    )
-    parser.add_argument(
         '--filter',
         nargs="*",
         help='Filter list variable#operator#value_s#value_e'
@@ -347,19 +286,10 @@ if __name__ == '__main__':
     )
     args = parser.parse_args()
 
-    p = XarrayTool(args.infile, args.info, args.summary, args.select,
-                   args.outfile, args.outputdir, args.latname,
-                   args.latvalN, args.latvalS, args.lonname,
+    p = XarraySelect(args.infile, args.select, args.outfile, args.outputdir,
+                   args.latname, args.latvalN, args.latvalS, args.lonname,
                    args.lonvalE, args.lonvalW, args.filter,
                    args.coords, args.time, args.verbose,
-                   args.no_missing, args.coords_info, args.tolerance)
-    if args.info:
-        p.info()
-    if args.summary:
-        p.summary()
-    if args.coords:
-        p.selection_from_coords()
-    elif args.select:
+                   args.no_missing, args.tolerance)
+    if args.select:
         p.selection()
-    elif args.coords_info:
-        p.get_coords_info()

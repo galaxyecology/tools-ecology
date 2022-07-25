@@ -17,7 +17,7 @@
     #if $condi_source_coord.coord_source=="coord_from_file"
        echo "Galaxy xarray version @TOOL_VERSION@"> output_dir/version.tabular &&
     #end if
-    python '$__tool_directory__/xarray_tool.py' '$input' --select '$var'
+    python '$__tool_directory__/xarray_select.py' '$input' --select '$var'
            --verbose
            --filter
     #for $i,$uc in enumerate($user_choice)
