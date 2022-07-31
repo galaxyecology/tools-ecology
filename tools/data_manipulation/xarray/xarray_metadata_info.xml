@@ -6,13 +6,12 @@
     <expand macro="edam_ontology"/>
     <requirements>
         <requirement type="package" version="@TOOL_VERSION@">xarray</requirement>
-        <requirement type="package" version="3">python</requirement>
-        <requirement type="package" version="1.5.6">netcdf4</requirement>
-        <requirement type="package" version="0.9.0">geopandas</requirement>
-        <requirement type="package" version="1.7.1">shapely</requirement>
+        <requirement type="package" version="3.10">python</requirement>
+        <requirement type="package" version="1.6.0">netcdf4</requirement>
+        <requirement type="package" version="1.4.3">pandas</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
-        python3 '$__tool_directory__/xarray_tool.py' '$input' --info '$info' --summary '$output'
+        python3 '$__tool_directory__/xarray_info.py' '$input' --info '$info' --summary '$output'
     ]]>    </command>
     <inputs>
         <param type="data" name="input" label="Netcdf file" format="netcdf,h5" help="Netcdf file you need information about."/>

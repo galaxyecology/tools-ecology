@@ -6,15 +6,14 @@
     <expand macro="edam_ontology"/>
     <requirements>
         <requirement type="package" version="@TOOL_VERSION@">xarray</requirement>
-        <requirement type="package" version="3">python</requirement>
-        <requirement type="package" version="1.5.6">netcdf4</requirement>
-        <requirement type="package" version="0.9.0">geopandas</requirement>
-        <requirement type="package" version="1.7.1">shapely</requirement>
+        <requirement type="package" version="3.10">python</requirement>
+        <requirement type="package" version="1.6.0">netcdf4</requirement>
+        <requirement type="package" version="1.4.3">pandas</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
         mkdir output_dir &&
         echo "Galaxy xarray version @TOOL_VERSION@"> output_dir/version.tabular &&
-        python3 '$__tool_directory__/xarray_tool.py' '$input' --coords_info output_dir
+        python3 '$__tool_directory__/xarray_info.py' '$input' --coords_info output_dir
     ]]>    </command>
     <inputs>
         <param type="data" name="input" label="Netcdf file" format="netcdf,h5" help="Netcdf file you need to extract coordinate values."/>

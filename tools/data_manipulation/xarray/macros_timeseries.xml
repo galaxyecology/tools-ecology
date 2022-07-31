@@ -1,0 +1,47 @@
+<macros>
+    <xml name="config_series">
+        <configfiles>
+            <configfile name="series_customization"><![CDATA[
+{
+#if $condi_datetime.datetime=="yes"
+#if str($condi_datetime.time_name).strip()
+"time_name":'$condi_datetime.time_name',
+#end if
+#if str($condi_datetime.time_start_value).strip()
+"time_start_value":"$condi_datetime.time_start_value",
+#end if
+#if str($condi_datetime.time_end_value).strip()
+"time_end_value":"$condi_datetime.time_end_value",
+#end if
+#end if
+#if str($lon_value).strip()
+"lon_value":'$lon_value',
+#end if
+#if str($lat_value).strip()
+"lat_value":'$lat_value',
+#end if
+#if $lon_name
+"lon_name":'$lon_name',
+#end if
+#if $lat_name
+"lat_name":'$lat_name',
+#end if
+#if str($adv.format_date).strip()
+"format_date":'$adv.format_date',
+#end if
+#if str($adv.plot_title).strip()
+"title":'$adv.plot_title',
+#end if
+#if str($adv.xlabel).strip()
+"xlabel":'$adv.xlabel',
+#end if
+#if str($adv.ylabel).strip()
+"ylabel":'$adv.ylabel',
+#end if
+}
+            ]]>
+            </configfile>
+        </configfiles>
+   
+    </xml>
+</macros>
