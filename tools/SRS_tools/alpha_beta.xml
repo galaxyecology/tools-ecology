@@ -79,7 +79,7 @@
                 <option value="envi_bil">Your already have the files in ENVI BIL format</option>
             </param>
             <when value="zipper">
-                <param name="input" type="data" format="data" multiple="true" label="Input data"/>
+                <param name="input" type="data" format="zip" multiple="true" label="Input data"/>
             </when>
             <when value="envi_bil">
                 <param name="input_raster" type="data" format="bil" label="Input raster" help="It can be the raw data in bil or the PCA raster layer in bil"/>
