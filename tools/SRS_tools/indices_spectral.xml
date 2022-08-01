@@ -51,7 +51,7 @@
                 <option value="envi_bil">You already have the files ENVI BIL</option>
             </param>
             <when value="zipper">
-                <param name="input" type="data" format="data" multiple="true" label="Input data"/>
+                <param name="input" type="data" format="zip" multiple="true" label="Input data"/>
             </when>
             <when value="envi_bil">
                 <param name="input_raster" type="data" format="bil" label="Input raster"/>
