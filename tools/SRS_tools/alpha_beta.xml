@@ -29,15 +29,20 @@
         <requirement type="package" version="3.2.2">r-filesstrings</requirement>  
     </expand>
     <command detect_errors="exit_code"><![CDATA[ 
+        #import re 
         #if $method.origin == 'envi_bil': 
-          cp '$input_raster' '${input_raster.element_identifier}' &&
-          cp '$input_header' '${input_header.element_identifier}' &&
-        #end if 
+          #set input_raster = $method.input_raster
+          #set input_raster_identifier = re.sub('[^\s\w\-]', '_', str($input_raster.element_identifier)) 
+          #set input_header = $method.input_header
+          #set input_header_identifier = re.sub('[^\s\w\-]+[^.hdr]', '_', str($input_header.element_identifier)) 
+          ln '${input_raster}' '${input_raster_identifier}' &&
+          ln '${input_header}' '${input_header_identifier}' &&
+        #end if
         Rscript
             '$__tool_directory__/alpha_beta.r'
              #if $method.origin == 'envi_bil':
-              '$method.input_raster.element_identifier'
-              '$method.input_header.element_identifier'
+              '$input_raster_identifier' 
+              '$input_header_identifier'
               ''
             #else:
               ''

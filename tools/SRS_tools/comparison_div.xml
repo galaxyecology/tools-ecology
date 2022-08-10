@@ -27,16 +27,21 @@
         <requirement type="package" version="1.0">r-dissutils</requirement>  
         <requirement type="package" version="3.2.2">r-filesstrings</requirement>  
     </expand>
-    <command detect_errors="exit_code"><![CDATA[ 
+    <command detect_errors="exit_code"><![CDATA[
+        #import re 
         #if $method.type == 'envi_bil': 
-          cp '$input_raster' '${input_raster.element_identifier}' &&
-          cp '$input_header' '${input_header.element_identifier}' &&
+          #set input_raster = $method.input_raster
+          #set input_raster_identifier = re.sub('[^\s\w\-]', '_', str($input_raster.element_identifier)) 
+          #set input_header = $method.input_header
+          #set input_header_identifier = re.sub('[^\s\w\-]+[^.hdr]', '_', str($input_header.element_identifier)) 
+          ln '${input_raster}' '${input_raster_identifier}' &&
+          ln '${input_header}' '${input_header_identifier}' &&
         #end if
         Rscript
             '$__tool_directory__/comparison_div.r'
              #if $method.type == 'envi_bil':
-              '$method.input_raster.element_identifier'
-              '$method.input_header.element_identifier'
+              '$input_raster_identifier' 
+              '$input_header_identifier'
               ''
             #else:
               ''
@@ -44,6 +49,7 @@
               '$method.input'
             #end if
             '$input_plot'
+            '$choice'
             '$output_div'
             '$output_beta'
             '$plots'
@@ -94,10 +100,10 @@
             </output>
             <output name="output_beta">
                 <assert_contents>
-                    <has_n_lines n="0"/>
+                    <has_n_lines n="25"/>
                 </assert_contents>
             </output>
-            <output_collection name="plots" type="list" count="0"/>
+            <output_collection name="plots" type="list" count="1"/>
         </test>
     </tests>
     <help><![CDATA[

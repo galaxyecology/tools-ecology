@@ -17,9 +17,9 @@ args <- commandArgs(trailingOnly = TRUE)
 
 if (length(args) < 1) {
     stop("This tool needs at least 1 argument")
-}else{
+}else {
     input_data <- args[1]
-}   
+}
 
 ##------------------------------------------##
 ##      Read ISO 19139 from a file or url   ##
@@ -38,5 +38,4 @@ md <- geometa::readISO19139("results/meta.xml")
 
 
 # validate iso
-cat("\nValidation of metadata according to ISO 19139\n", md$validate(), file = "Metadata_validation.txt", fill = 1, append = F)
-
+cat("\nValidation of metadata according to ISO 19139\n", md$validate(), file = "Metadata_validation.txt", fill = 1, append = FALSE)

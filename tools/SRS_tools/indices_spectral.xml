@@ -17,17 +17,23 @@
         <requirement type="package" version="3.3.6">r-ggplot2</requirement>
         <requirement type="package" version="3.99_0.9">r-xml</requirement>  
         <requirement type="package" version="2.2.0">r-zip</requirement>
+        <requirement type="package" version="1.0.9">r-dplyr</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[ 
+         #import re 
         #if $method.type == 'envi_bil': 
-          cp '$input_raster' '${input_raster.element_identifier}' &&
-          cp '$input_header' '${input_header.element_identifier}' &&
+          #set input_raster = $method.input_raster
+          #set input_raster_identifier = re.sub('[^\s\w\-]', '_', str($input_raster.element_identifier)) 
+          #set input_header = $method.input_header
+          #set input_header_identifier = re.sub('[^\s\w\-]+[^.hdr]', '_', str($input_header.element_identifier)) 
+          ln '${input_raster}' '${input_raster_identifier}' &&
+          ln '${input_header}' '${input_header_identifier}' &&
         #end if 
         Rscript
             '$__tool_directory__/indices_spectral.r'
              #if $method.type == 'envi_bil':
-              '$method.input_raster.element_identifier'
-              '$method.input_header.element_identifier'
+              '$input_raster_identifier' 
+              '$input_header_identifier'
               ''
             #else:
               ''
@@ -64,6 +70,7 @@
             <option value="ARVI">ARVI</option>
             <option value="BAI">BAI</option>
             <option value="BAIS2">BAIS2</option>
+            <option value="CCCI">CCCI</option>
             <option value="CHL_RE">CHL RE</option>
             <option value="CRI1">CRI1</option>
             <option value="CRI2">CRI2</option>
@@ -82,9 +89,11 @@
             <option value="nBR_RAW">nBR_RAW</option>
             <option value="NDI_45">NDI_45</option>
             <option value="NDII">NDII</option>
+            <option value="NDSI">NDSI</option>
             <option value="NDVI">NDVI</option>
             <option value="NDVI_G">NDVI_G</option>
             <option value="NDVI705">NDVI705</option>
+            <option value="NDWI">NDWI</option>
             <option value="NDWI1">NDWI1</option>
             <option value="NDWI2">NDWI2</option>
             <option value="PSRI">PSRI</option>
@@ -167,6 +176,89 @@ Finally, you can choose whether or not you want to have the raster layer of your
 - One png plot for the vizualisation of the chosen indice.
 
 - Opionnnal, the raster layer in a zip file.
+
+**Additionnal informations**
+
+This tools allows you to compute one of GEO BON EBV 'Canopy Chlorophyll Content' (https://portal.geobon.org/ebv-detail?id=13). This EBV is computed by GEO BON on the Netherlands, here you can compute it on which ever Sentinel 2 data you want by chosing to calculate the indice CCI.
+
+**Indices description**
+
++-------------------+---------------------------------------------------------+
+|    Abbreviation   |                    Name                                 |
++===================+=========================================================+ 
+|  ARI              |Anthocyanin reflectance index                            |
++-------------------+---------------------------------------------------------+
+|  ARVI             |Atmospherically Resistant Vegetation Index               |
++-------------------+---------------------------------------------------------+
+|  BAI              |Burn Area Index                                          |
++-------------------+---------------------------------------------------------+
+|  BAIS2            |Burned Area Index for Sentinel 2                         |
++-------------------+---------------------------------------------------------+
+|  CCCI             |Canopy Chlorophyll Content Index                         |
++-------------------+---------------------------------------------------------+
+|  CHL_RE           |Chlorophyll Red-Edge ?                                   |
++-------------------+---------------------------------------------------------+
+|  EVI              |Enhanced Vegetation Index                                |
++-------------------+---------------------------------------------------------+
+|  GRVI1            |Green Ratio Vegetation Index                             |
++-------------------+---------------------------------------------------------+
+|  GNDVI            |Green Normalized Difference Vegetation Index             |
++-------------------+---------------------------------------------------------+
+|  IRECI            |Inverted Red-Edge Chlorophyll Index                      |
++-------------------+---------------------------------------------------------+
+|  LAI SAVI         |Leaf Area Index Soil Adjusted Vegetation Index ?         |
++-------------------+---------------------------------------------------------+
+|  MCARI            |Modified Chlorophyll Absorption in Reflectance Index     |
++-------------------+---------------------------------------------------------+
+|  mNDVI705         |Modified NDVI 705                                        |
++-------------------+---------------------------------------------------------+
+|  MSAVI2           |Modified Soil Adjusted Vegetation Index 2                |
++-------------------+---------------------------------------------------------+
+|  MSI              |Moisture Stress Index                                    |
++-------------------+---------------------------------------------------------+
+|  mSR705           |Modified Simple Ratio 705                                |
++-------------------+---------------------------------------------------------+
+|  MTCI             |MERIS Terrestrial Chlorophyll Index                      |
++-------------------+---------------------------------------------------------+
+|  NBR_RAW          |Normalized Burn Ratio RAW                                |
++-------------------+---------------------------------------------------------+
+|  NDI_45           |                                                         |
++-------------------+---------------------------------------------------------+
+|  NDII             |Normalized Difference 819/1600 NDII                      |
++-------------------+---------------------------------------------------------+
+|  NDSI             |Normalized Difference Snow Index                         |
++-------------------+---------------------------------------------------------+
+|  NDVI             |Normalized Difference Vegetation Index                   |
++-------------------+---------------------------------------------------------+
+|  NDVI_G           |                                                         |
++-------------------+---------------------------------------------------------+
+|  NDVI705          |NDVI 705                                                 |
++-------------------+---------------------------------------------------------+
+|  NDWI             |Normalized Difference Water Index                        |
++-------------------+---------------------------------------------------------+
+|  NDWI1            |NDMI ? Normalized Difference Moisture Index ?            |
++-------------------+---------------------------------------------------------+
+|  NDWI2            |                                                         |
++-------------------+---------------------------------------------------------+
+|  PSRI             |Plant Senescing Reflectance Index                        |
++-------------------+---------------------------------------------------------+
+|  PSRI_NIR         |                                                         |
++-------------------+---------------------------------------------------------+
+|  RE_NDVI          |Red Edge NDVI ?                                          |
++-------------------+---------------------------------------------------------+
+|  RE_NDWI          |Red Edge NDWI                                            |
++-------------------+---------------------------------------------------------+
+|  S2REP            |Sentinel 2 Red-Edge Position                             |
++-------------------+---------------------------------------------------------+
+|  SAVI             |Soil Adjusted Vegetation Index                           |
++-------------------+---------------------------------------------------------+
+|  SIPI             |Structure Intensive Pigment Index 1                      |
++-------------------+---------------------------------------------------------+
+|  SR               |Simple Ratio ?                                           |
++-------------------+---------------------------------------------------------+
+|  CR_SWIR          |CR short wave infrared                                   |
++-------------------+---------------------------------------------------------+
+
     ]]>    </help>
         <expand macro="SRS_prosailref"/>
 </tool>

@@ -24,14 +24,14 @@ args <- commandArgs(trailingOnly = TRUE)
 
 if (length(args) < 1) {
     stop("This tool needs at least 1 argument")
-}else{
+}else {
     data_raster <- args[1]
     data_header <- args[2]
     data <- args[3]
     source(args[4])
     source(args[5])
     source(args[6])
-    indice_choice <- args[7]
+    indice_choice <- strsplit(args[7], ",")[[1]]
     source(args[8])
     output_raster <- as.character(args[9])
 
@@ -47,57 +47,73 @@ if (data != "") {
   unzip(data, exdir = "data_dir")
 
   # Read raster
-  data_raster <-list.files("data_dir/results/Reflectance", pattern = "_Refl")
+  data_raster <- list.files("data_dir/results/Reflectance", pattern = "_Refl")
   data_raster <- file.path("data_dir/results/Reflectance", data_raster[1])
-  Refl <- raster::brick(data_raster)
-  Refl2 <- raster::raster(data_raster)
-} else{
+  refl <- raster::brick(data_raster)
+  refl2 <- raster::raster(data_raster)
+} else {
   # Read raster
-  Refl <- raster::brick(data_raster)
-  Refl2 <- raster::raster(data_raster)
+  refl <- raster::brick(data_raster)
+  refl2 <- raster::raster(data_raster)
 }
 # get raster band name and clean format. Expecting band name and wavelength to be documented in image
-HDR_Refl <- read_ENVI_header(get_HDR_name(data_raster))
-SensorBands <- HDR_Refl$wavelength
-# compute a set of spectral indices defined by IndexList from S2 data
-IndexList <- indice_choice
-# ReflFactor = 10000 when reflectance is coded as INT16
-Refl <- raster::aggregate(Refl, fact = 10)
-Indices <- ComputeSpectralIndices_Raster(Refl = Refl, SensorBands = SensorBands,
-                                                  Sel_Indices = indice_choice,
-                                                  ReflFactor = 10000, StackOut=F)
+hdr_refl <- read_envi_header(get_hdr_name(data_raster))
+sensorbands <- hdr_refl$wavelength
+# compute a set of spectral indices defined by indexlist from S2 data
+# reflFactor = 10000 when reflectance is coded as INT16
+refl <- raster::aggregate(refl, fact = 10)
+#indexlist <- c(indice_choice)
 
 # Convert raster to SpatialPointsDataFrame
-Refl2 <- raster::aggregate(Refl2, fact = 10)
-r_pts <- convert_raster(Refl2)                       
-
+refl2 <- raster::aggregate(refl2, fact = 10)
+r_pts <- convert_raster(refl2)                       
+table_ind <- r_pts
 # create directory for Spectral indices
 results_site_path <- "RESULTS"
-SI_path <- file.path(results_site_path, 'SpectralIndices')
-dir.create(path = SI_path, showWarnings = FALSE, recursive = TRUE)
+si_path <- file.path(results_site_path, "SpectralIndices")
+dir.create(path = si_path, showWarnings = FALSE, recursive = TRUE)
 # Save spectral indices
-for (SpIndx in names(Indices$SpectralIndices)) {
-  Index_Path <- file.path(SI_path, paste(basename(data_raster), '_', SpIndx, sep = ''))
-  spec_indices <- stars::write_stars(stars::st_as_stars(Indices$SpectralIndices[[SpIndx]]), dsn = Index_Path, driver = "ENVI", type = 'Float32')
-  
+
+#for (ind in indice_choice) {
+indices <- lapply(indice_choice, function(x) {
+  indices_list <- computespectralindices_raster(refl = refl, sensorbands = sensorbands,
+                                                  sel_indices = x,
+                                                  reflfactor = 10000, stackout = FALSE)
+
+#index_list <- lapply(indice_choice, function(SpIndx){
+  index_path <- file.path(si_path, paste(basename(data_raster), "_", x, sep = ""))
+  spec_indices <- stars::write_stars(stars::st_as_stars(indices_list$spectralindices[[1]]), dsn = index_path, driver = "ENVI", type = "Float32")
+
   # write band name in HDR
-  HDR <- read_ENVI_header(get_HDR_name(Index_Path))
-  HDR$`band names` <- SpIndx
-  HDR_name <- write_ENVI_header(HDR = HDR, HDRpath = get_HDR_name(Index_Path))
+  hdr <- read_envi_header(get_hdr_name(index_path))
+  hdr$`band names` <- x
+  write_envi_header(hdr = hdr, hdrpath = get_hdr_name(index_path))
+  # Writting the tabular and the plot
+  r_pts[, x] <- as.data.frame(sapply(spec_indices, c))
+  plot_indices(data = r_pts, titre = x)
+  return(r_pts)
+})
+
+new_table <- as.data.frame(indices)
+new_table <- new_table[, !grepl("longitude", names(new_table))]
+new_table <- new_table[, !grepl("latitude", names(new_table))]
+new_table <- new_table[, !grepl(basename(data_raster), names(new_table))]
+
+table_ind <- cbind(table_ind, new_table)
+if (length(indice_choice) == 1) {
+  colnames(table_ind) <- c(basename(data_raster), "longitude", "latitude", indice_choice)
 }
+
+write.table(table_ind, file = "Spec_Index.tabular", sep = "\t", dec = ".", na = " ", row.names = FALSE, col.names = TRUE, quote = FALSE)
 
 # Get the raster layer of the indice as an output
 if (output_raster == "Y") {
 raster_zip <- file.path("raster.zip")
-zip::zip(raster_zip, Index_Path)
+zip::zip(raster_zip, index_path)
 
 header_zip <- file.path("header.zip")
-zip::zip(header_zip, get_HDR_name(Index_Path))
+zip::zip(header_zip, get_HDR_name(index_path))
 }
 
-  # Writting the tabular and the plot
-  spec_indices <- as.data.frame(spec_indices)
-  r_pts[, indice_choice] <- spec_indices[, 3]
-  plot_indices(data = r_pts, titre = indice_choice)
 
-write.table(r_pts, file = "Spec_Index.tabular", sep = "\t", dec = ".", na = " ", row.names = F, col.names = T, quote = FALSE)
+
