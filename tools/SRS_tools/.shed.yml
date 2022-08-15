@@ -11,4 +11,4 @@ auto_tool_repositories:
 suite:
   name: "Sentinel_2A"
   description: "A suite of indicators for remote sensing data"
-  type: repository_Sentinel_2A
+  type: unrestricted
