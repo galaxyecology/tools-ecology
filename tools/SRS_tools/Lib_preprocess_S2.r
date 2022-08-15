@@ -28,7 +28,7 @@ adjust_envi_hdr <- function(dsn, bands, sensor = "Unknown", stretch = FALSE) {
   hdr$`band names` <- bands$bandname
   if (length(bands$wavelength) == length(bands$bandname)) {
     hdr$wavelength <- bands$wavelength
-  }else{
+  }else {
     hdr$wavelength <- NULL
   }
   if (stretch == TRUE) {
@@ -188,7 +188,7 @@ extract_from_s2_l2a <- function(path_dir_s2, path_vector = NULL, s2source = "SAF
       }
     }
     if (!diffxstart == 0) {
-      if (diffxstart > 0){
+      if (diffxstart > 0) {
         stack_20m <- stack_20m[, (1 + diffxstart):dim(stack_20m)[1], , ]
       }else if (diffxstart < 0) {
         stack_10m <- stack_10m[, (1 - diffxstart):dim(stack_10m)[1], , ]
@@ -230,8 +230,6 @@ extract_from_s2_l2a <- function(path_dir_s2, path_vector = NULL, s2source = "SAF
 
 
     names(s2_stack$attr) <- namebands
-    # s2_stack <- c(stack_10m,stack_20m,along="band")
-    # s2_stack <- s2_stack[,,, reorder_bands]
   }else if (length(s2_bands$s2bands_10m) > 0) {
     s2_stack <- stack_10m
     namebands <- names(s2_bands$s2bands_10m)
@@ -241,17 +239,7 @@ extract_from_s2_l2a <- function(path_dir_s2, path_vector = NULL, s2source = "SAF
     namebands <- names(s2_bands$s2bands_20m)
     names(s2_stack$attr) <- namebands
   }
-  #
-  # if (length(s2_bands$s2bands_10m)>0){
-  #   s2_stack <- stack_10m
-  #   if (length(s2_bands$s2bands_20m)>0){
-  #     for (band20 in names(s2_bands$s2bands_20m)){
-  #       s2_stack[[band20]] <- stack_20m[[band20]]
-  #     }
-  #   }
-  # } else {
-  #   s2_stack <- stack_20m
-  # }
+
   listout <- list("s2_stack" = s2_stack, "s2_bands" = s2_bands, "path_vector" = path_vector,
                   "namebands" = namebands)
   return(listout)
@@ -312,7 +300,6 @@ get_bb_from_fullimage <- function(path_raster) {
 get_bb_from_vector <- function(path_raster, path_vector, buffer = 0) {
 
   Raster <- raster::raster(path_raster)
-  # xmin <- xmax <- ymin <- ymax <- c()
   # extract BB coordinates from vector
   bb_vector <- rgeos::gbuffer(spgeom = as(sf::st_read(dsn = path_vector, quiet = TRUE), "Spatial"),
                               width = buffer, byid = TRUE)
@@ -396,8 +383,8 @@ get_s2_bands <- function(path_dir_s2, s2source = "SAFE", resolution = 10, fre_sr
     message("- SAFE (atmospheric correction: Sen2Cor)")
     s2bands_10m <- s2bands_20m <- granule <- mtdfile <- metadata_MSI <- metadata_lasrc <- NULL
     listbands <- list("s2bands_10m" = s2bands_10m, "s2bands_20m" = s2bands_20m, "GRANULE" = granule,
-                      "metadata"= mtdfile, "metadata_MSI" = metadata_MSI,
-                      "metadata_lasrc"= metadata_lasrc)
+                      "metadata" = mtdfile, "metadata_MSI" = metadata_MSI,
+                      "metadata_lasrc" = metadata_lasrc)
   }
   return(listbands)
 }
@@ -597,7 +584,6 @@ get_tile <- function(prodname) {
 #" @export
 get_date <- function(prodname) {
   prodname <- basename(prodname)
-  # dateacq <- gsub("T.*", "", gsub(".*L1C_", "", gsub(".*L2A_", "", prodname)))
   dateacq <- as.Date(gsub("T.*", "", gsub(".*_20", "20", prodname)), format = "%Y%m%d")
   return(dateacq)
 }
@@ -698,9 +684,9 @@ get_s2_l2a_image <- function(l2a_path, spatial_extent, dateacq,
   time_interval <- as.Date(c(dateacq, dateacq))
   # get list S2 products corresponding to study area and date of interest using sen2r package
   if (googlecloud == TRUE) {
-    server = c("scihub", "gcloud")
+    server <- c("scihub", "gcloud")
   } else if (googlecloud == FALSE) {
-    server = "scihub"
+    server <- "scihub"
   }
   list_safe <- sen2r::s2_list(spatial_extent = sf::st_read(dsn = spatial_extent),
                               time_interval = time_interval,
@@ -734,74 +720,6 @@ get_s2_l2a_image <- function(l2a_path, spatial_extent, dateacq,
     }
   }
 
-  # # Check if atmospheric corrections needed
-  # # get product name
-  # prodname <- attr(list_safe, which = "name")
-  # for (imgname in prodname){
-  #   s2level <- get_s2_level(imgname)
-  #   if (s2level=="L1C"){
-  #     # define/create L1C directory if not defined
-  #     if (is.null(l1c_path)){
-  #       l1c_path <- l2a_path
-  #     }
-  #     dir.create(path = l1c_path,showWarnings = FALSE, recursive = TRUE)
-  #     # download S2 L1C data from copernicus hub or Google cloud
-  #     whichimg <- grep(x = list_safe, pattern =imgname)
-  #     # prodname <- get_s2_l1c_image(list_safe[whichimg], l1c_path,spatial_extent,time_interval,googlecloud=googlecloud)
-  #     datepattern <- gsub(pattern = "-", replacement = "", x = dateacq)
-  #     pathl2a <- s2_from_l1c_to_l2a(prodname = imgname, l1c_path =l1c_path, l2a_path = l2a_path,
-  #                                   datepattern = datepattern, tmp_path=NULL)
-  #   }
-  # }
-  # pathl2a <- list.files(path = l2a_path, pattern = datepattern, full.names = TRUE)
-
-  # for (imgname in prodname){
-  #   ii <- ii + 1
-  #   if (s2level[ii]=="L2A"){
-  #     # Directly download S2A file
-  #     if (googlecloud==TRUE){
-  #       list_safe_ggc <- sen2r::s2_list(spatial_extent = sf::st_read(dsn = spatial_extent),
-  #                                       time_interval = time_interval,
-  #                                       server = "gcloud")
-  #       # imgname <- attr(list_safe_ggc, which = "name")
-  #       message(file.path(l2a_path,imgname))
-  #       sen2r::s2_download(list_safe_ggc, outdir=l2a_path)
-  #     } else if (googlecloud==FALSE){
-  #       sen2r::s2_download(list_safe, outdir=l2a_path)
-  #     }
-  #     pathl2a <- list.files(path = l2a_path, pattern = datepattern, full.names = TRUE)
-  #
-  #
-  #
-  # ii <- 0
-  # for (imgname in prodname){
-  #   ii <- ii + 1
-  #   if (s2level[ii]=="L2A"){
-  #     # Directly download S2A file
-  #     if (googlecloud==TRUE){
-  #       list_safe_ggc <- sen2r::s2_list(spatial_extent = sf::st_read(dsn = spatial_extent),
-  #                                       time_interval = time_interval,
-  #                                       server = "gcloud")
-  #       # imgname <- attr(list_safe_ggc, which = "name")
-  #       message(file.path(l2a_path,imgname))
-  #       sen2r::s2_download(list_safe_ggc, outdir=l2a_path)
-  #     } else if (googlecloud==FALSE){
-  #       sen2r::s2_download(list_safe, outdir=l2a_path)
-  #     }
-  #     pathl2a <- list.files(path = l2a_path, pattern = datepattern, full.names = TRUE)
-  #
-  #   } else if (s2level=="L1C"){
-  #     # define/create L1C directory if not defined
-  #     if (is.null(l1c_path)){
-  #       l1c_path <- file.path(l2a_path, "L1C")
-  #     }
-  #     dir.create(path = l1c_path,showWarnings = FALSE, recursive = TRUE)
-  #     # download S2 L1C data from copernicus hub or Google cloud
-  #     prodname <- get_s2_l1c_image(list_safe, l1c_path,spatial_extent,time_interval,googlecloud=googlecloud)
-  #     pathl2a <- s2_from_l1c_to_l2a(prodname = prodname, l1c_path =l1c_path, l2a_path = l2a_path,
-  #                                   datepattern = datepattern, tmp_path=NULL)
-  #   }
-  # }
   return(prodfullpath)
 }
 
@@ -961,20 +879,6 @@ read_s2bands <- function(s2_bands, path_vector = NULL,
     gc()
   }
 
-  # # adjust size to initial vector footprint without buffer
-  # # --> buffer is needed in order to ensure that extraction following
-  # # footprint of vector matches for images of different spatial resolution
-  # # get bounding box corresponding to footprint of image or image subset
-  # bb_xycoords <- get_bb(path_raster = tmpfile[[1]],
-  #                       path_vector = path_vector, buffer = 0)
-  #
-  # # prepare reading data for extent defined by bounding box
-  # nxoff <- bb_xycoords$UL$col
-  # nyoff <- bb_xycoords$UL$row
-  # nxsize <- bb_xycoords$UR$col-bb_xycoords$UL$col+1
-  # nysize <- bb_xycoords$LR$row-bb_xycoords$UR$row+1
-  # nbufxsize <- resampling*nxsize
-  # nbufysize <- resampling*nysize
   stack_s2 <- stars::read_stars(tmpfile, along = "band", proxy = TRUE)
   return(stack_s2)
 }
@@ -989,7 +893,7 @@ read_s2bands <- function(s2_bands, path_vector = NULL,
 #" @importFrom stars read_stars
 #" @importFrom sf st_bbox st_read st_crop
 #" @export
-read_raster <- function(path_raster, path_vector = NULL, bbpix = NULL){
+read_raster <- function(path_raster, path_vector = NULL, bbpix = NULL) {
   # get bounding box corresponding to footprint of image or image subset
   if (is.null(bbpix)) {
     bb_xycoords <- get_bb(path_raster = path_raster,
@@ -1026,7 +930,7 @@ read_raster <- function(path_raster, path_vector = NULL, bbpix = NULL){
 #" @importFrom sp spTransform
 #" @importFrom raster projection
 #" @export
-reproject_shp = function(path_vector_init,newprojection, path_vector_reproj) {
+reproject_shp <- function(path_vector_init, newprojection, path_vector_reproj) {
 
   dir_vector_init <- dirname(path_vector_init)
   # shapefile extension
@@ -1073,63 +977,16 @@ s2_from_l1c_to_l2a <- function(prodname, l1c_path, l2a_path, datepattern, tmp_pa
   if (is.null(tmp_path)) {
     tmp_path <- tempdir(check = TRUE)
   }
-  tmp_prodlist <-prodname
+  tmp_prodlist <- prodname
   # perform Sen2Cor atmospheric corrections
-  binPath <- sen2r::load_binpaths()
+  binpath <- sen2r::load_binpaths()
   # 2- open a command prompt and directly run sen2cor with following command line
-  cmd <- paste(binPath$sen2cor,
+  cmd <- paste(binpath$sen2cor,
                "--output_dir", R.utils::getAbsolutePath(l2a_path),
                R.utils::getAbsolutePath(file.path(l1c_path, prodname)), sep = " ")
   system(cmd)
   pathl2a <- list.files(path = l2a_path, pattern = datepattern, full.names = TRUE)
 
-  # # Ready when parameterization of sen2cor with sen2r will be ok
-  # pathl2a <- tryCatch(
-  #   # first attempt: run sen2cor directly from sen2r
-  #   {
-  #     l2aFile <- sen2r::sen2cor(l1c_prodlist = prodname,
-  #                               l1c_dir = l1c_path, outdir = l2a_path ,
-  #                               proc_dir = tmp_path, tmpdir = tmp_path,
-  #                               rmtmp = TRUE, gipp = NA,
-  #                               use_dem = TRUE, #allows topographic correction
-  #                               tiles = NA, parallel = TRUE, #goes faster,
-  #                               kill_errored = FALSE, overwrite = TRUE,
-  #                               .log_message = NA, .log_output = NA)
-  #   },
-  #   # if fails then try system command
-  #   error=function(cond) {
-  #     message("error while calling sen2cor from sen2r:")
-  #     message(cond)
-  #     message("running sen2cor directly with system command using default parameters")
-  #     # 1- identify where sen2cor is located
-  #     binPath <- sen2r::load_binpaths()
-  #     # 2- open a command prompt and directly run sen2cor with following command line
-  #     cmd <- paste(binPath$sen2cor,
-  #                  "--output_dir", R.utils::getAbsolutePath(l2a_path),
-  #                  R.utils::getAbsolutePath(file.path(l1c_path, prodname)),sep = " ")
-  #     system(cmd)
-  #     pathl2a <- list.files(path = l2a_path, pattern = datepattern, full.names = TRUE)
-  #     return(pathl2a)
-  #   },
-  #   # if small size for final image, possible problem with sen2r::sen2cor, then re-run
-  #   finally = {
-  #     if (dir_size(l2aFile)/dir_size(file.path(l1c_path, prodname)) < 0.5){
-  #       # delete L2A file showing very small size
-  #       unlink(x = l2aFile, recursive = TRUE)
-  #       message("L2A file seems unabnormally small, process must have failed")
-  #       message("running sen2cor directly with system command using default parameters")
-  #       # 1- identify where sen2cor is located
-  #       binPath <- sen2r::load_binpaths()
-  #       # 2- open a command prompt and directly run sen2cor with following command line
-  #       cmd <- paste(binPath$sen2cor,
-  #                    "--output_dir", R.utils::getAbsolutePath(l2a_path),
-  #                    R.utils::getAbsolutePath(file.path(l1c_path, prodname)),sep = " ")
-  #       system(cmd)
-  #       pathl2a <- list.files(path = l2a_path, pattern = datepattern, full.names = TRUE)
-  #     }
-  #   return(pathl2a)
-  #   }
-  # )
   return(pathl2a)
 }
 
@@ -1236,7 +1093,6 @@ save_reflectance_s2 <- function(s2_stars, refl_path, format = "ENVI", datatype =
   listbands_bis <- c("B2", "B3", "B4", "B5", "B6", "B7", "B8", "B8A", "B11", "B12")
   if (!is.null(MTD_MSI) && is.null(mtd_lasrc)) {
     # read XML file containing info about geometry of acquisition
-    # s2xml <- XML::xml(MTD)
     s2xml <- XML::xmlToList(MTD_MSI)
     xml_offset <- s2xml$General_Info$Product_Image_Characteristics$BOA_ADD_offset_VALUES_LIST
     bands <- lapply(s2xml$General_Info$Product_Image_Characteristics$Spectral_Information_List, "[[", 4)
@@ -1257,7 +1113,6 @@ save_reflectance_s2 <- function(s2_stars, refl_path, format = "ENVI", datatype =
     }
   } else if (!is.null(mtd_lasrc)) {
     # read XML file containing info about geometry of acquisition
-    # s2xml <- XML::xml(MTD)
     s2xml <- XML::xmlToList(mtd_lasrc)
     attributes_lasrc <- s2xml$bands[[14]]$.attrs
     attributes_lasrc_df <- data.frame(attributes_lasrc)
@@ -1287,7 +1142,7 @@ save_reflectance_s2 <- function(s2_stars, refl_path, format = "ENVI", datatype =
   stars_spectral$wavelength <- wl_s2[stars_spectral$bandname]
 
   sortedwl <- names(wl_s2)
-  reorder <- match(sortedwl,stars_spectral$bandname)
+  reorder <- match(sortedwl, stars_spectral$bandname)
   elim <- which(is.na(reorder))
   if (length(elim) > 0) {
     reorder <- reorder[-elim]
@@ -1308,11 +1163,11 @@ save_reflectance_s2 <- function(s2_stars, refl_path, format = "ENVI", datatype =
   } else {
     message("applying offset to reflectance data")
     if (is.null(mtd_lasrc) || uniqueoffset == 0) {
-      offsetS2 = function(x) (round(x + uniqueoffset) * (10000 / boa_quantval))
-      s2_stars2 <- stars::st_apply(X = s2_stars2, MARGIN = "band", FUN = offsetS2)
+      offsets2 <- function(x) (round(x + uniqueoffset) * (10000 / boa_quantval))
+      s2_stars2 <- stars::st_apply(X = s2_stars2, MARGIN = "band", FUN = offsets2)
     } else {
-      offsetS2 = function(x) (round(10000 * ((x + uniqueoffset * boa_quantval) / boa_quantval)))
-      s2_stars2 <- stars::st_apply(X = s2_stars2, MARGIN = "band", FUN = offsetS2)
+      offsets2 <- function(x) (round(10000 * ((x + uniqueoffset * boa_quantval) / boa_quantval)))
+      s2_stars2 <- stars::st_apply(X = s2_stars2, MARGIN = "band", FUN = offsets2)
     }
   }
   write_stack_s2(stars_s2 = s2_stars2, stars_spectral = stars_spectral, refl_path = refl_path,
@@ -1442,9 +1297,9 @@ write_rasterstack_envi <- function(stackobj, stackpath, bands, datatype = "INT2S
   hdr$`z plot range` <- NULL
   hdr$`data ignore value` <- "-Inf"
   hdr$`coordinate system string` <- read.table(paste(stackpath, ".prj", sep = ""))
-  proj <- strsplit(x = strsplit(x = projection(stackobj), split = " " )[[1]][1], split = "=")[[1]][2]
-  zone <- strsplit(x = strsplit(x = projection(stackobj), split = " " )[[1]][2], split = "=")[[1]][2]
-  datum <- strsplit(x = strsplit(x = projection(stackobj), split = " " )[[1]][3], split = "=")[[1]][2]
+  proj <- strsplit(x = strsplit(x = projection(stackobj), split = " ")[[1]][1], split = "=")[[1]][2]
+  zone <- strsplit(x = strsplit(x = projection(stackobj), split = " ")[[1]][2], split = "=")[[1]][2]
+  datum <- strsplit(x = strsplit(x = projection(stackobj), split = " ")[[1]][3], split = "=")[[1]][2]
   oldproj <- hdr$`map info`
   newproj <- gsub(pattern = "projection", replacement = proj, x = oldproj)
   newproj <- paste(newproj, zone, datum, sep = ", ")
@@ -1482,7 +1337,7 @@ write_stack_s2 <- function(stars_s2, stars_spectral, refl_path, format = "ENVI",
   sizeobj <- 2 * dim(stars_s2)[1] * dim(stars_s2)[2] * dim(stars_s2)[3] / (1024**2)
   nbchunks <- ceiling(sizeobj / maxchunk)
   stars::write_stars(obj = stars_s2,
-                     dsn=refl_path,
+                     dsn = refl_path,
                      driver =  format,
                      type = datatype,
                      chunk_size = c(dim(stars_s2)[1], ceiling(dim(stars_s2)[2] / nbchunks)),
@@ -1494,353 +1349,3 @@ write_stack_s2 <- function(stars_s2, stars_spectral, refl_path, format = "ENVI",
   }
   return(invisible())
 }
-
-#" #" This function crops and resamples S2 bands based on OGR from vector file
-#" #" only resamples if CropExtent= FALSE
-#" #" only crops if resample = FALSE
-#" #"
-#" #" @param s2_bands list. list of S2 bands obtained from get_s2_bands
-#" #" @param Vector_path path for a vector file
-#" #" @param resample boolean. resample 20m bands to 10m if TRUE
-#" #" @param interpolation character. method for resampling. default = "bilinear"
-#" #"
-#" #" @return FullStack list. contains stack of S2 bands
-#" #"
-#" #" @importFrom raster raster
-#" #" @export
-#" Crop_n_resample_S2 <- function(s2_bands,Vector_path = NULL, s2source = "SAFE",
-#"                                resampleRaster = FALSE, interpolation = "bilinear"){
-#"
-#"   # if SAFE L2A product obtained from PEPS, SCIHUB, or
-#"   if (s2source == "SAFE") {
-#"     # get bounding box for 10 and 20 m bands
-#"     # if 10m bands available
-#"     BB_XYcoordinates_10m <- list()
-#"     if (length(s2_bands$s2bands_10m)>0){
-#"       # get extent corresponding to CropExtent
-#"       if (!is.null(Vector_path)){
-#"         # get raster coordinates corresponding to CropExtent
-#"         Raster <- raster::raster(s2_bands$s2bands_10m[[1]])
-#"         BB_XYcoordinates_10m <- get_bb_from_OGR(Raster = Raster,Vector = Vector_path,
-#"                                                 buffer = 50)
-#"       } else if (is.null(Vector_path)){
-#"         # get raster coordinates corresponding to Full image
-#"         Raster <- raster::raster(s2_bands$s2bands_10m[[1]])
-#"         BB_XYcoordinates_10m[["UL"]] <- data.frame("row"=1, "col"=1)
-#"         BB_XYcoordinates_10m[["UR"]] <- data.frame("row"=1, "col"=dim(Raster)[2])
-#"         BB_XYcoordinates_10m[["LL"]] <- data.frame("row"=dim(Raster)[1], "col"=1)
-#"         BB_XYcoordinates_10m[["LR"]] <- data.frame("row"=dim(Raster)[1], "col"=dim(Raster)[2])
-#"       }
-#"     }
-#"     # get extent corresponding to CropExtent
-#"     if (!is.null(Vector_path)){
-#"       # get raster coordinates corresponding to CropExtent
-#"       Raster <- raster::raster(s2_bands$s2bands_20m[[1]])
-#"       BB_XYcoordinates_20m <- get_bb_from_OGR(Raster = Raster, Vector = Vector_path,
-#"                                               buffer = 50)
-#"     } else if (is.null(Vector_path)){
-#"       # get raster coordinates corresponding to Full image
-#"
-#"       Raster <- raster::raster(s2_bands$s2bands_20m[[1]])
-#"       BB_XYcoordinates_20m <- list()
-#"       BB_XYcoordinates_20m[["UL"]] <- data.frame("row"=1, "col"=1)
-#"       BB_XYcoordinates_20m[["UR"]] <- data.frame("row"=1, "col"=dim(Raster)[2])
-#"       BB_XYcoordinates_20m[["LL"]] <- data.frame("row"=dim(Raster)[1], "col"=1)
-#"       BB_XYcoordinates_20m[["LR"]] <- data.frame("row"=dim(Raster)[1], "col"=dim(Raster)[2])
-#"     }
-#"
-#"     # prepare reading data for extent defined by bounding box
-#"     nxoff <- BB_XYcoordinates_20m$UL$col
-#"     nyoff <- BB_XYcoordinates_20m$UL$row
-#"     nxsize <- BB_XYcoordinates_20m$UR$col-BB_XYcoordinates_20m$UL$col+1
-#"     nysize <- BB_XYcoordinates_20m$LR$row-BB_XYcoordinates_20m$UR$row+1
-#"     # extract data and resample if required
-#"     if (resampleRaster==FALSE){
-#"       nbufxsize <- nxsize
-#"       nbufysize <- nysize
-#"       stack_20m <- stars::read_stars(s2_bands$s2bands_20m,
-#"                                      RasterIO = list(nxoff = nxoff, nyoff = nyoff, nxsize = nxsize, nysize = nysize,
-#"                                                      nbufxsize = nbufxsize, nbufysize = nbufysize), proxy = FALSE)
-#"     } else {
-#"       nbufxsize <- 2*nxsize
-#"       nbufysize <- 2*nysize
-#"       stack_20m <- stars::read_stars(s2_bands$s2bands_20m,
-#"                                      RasterIO = list(nxoff = nxoff, nyoff = nyoff, nxsize = nxsize, nysize = nysize,
-#"                                                      nbufxsize = nbufxsize, nbufysize = nbufysize, resample=interpolation), proxy = FALSE)
-#"     }
-#"     names(stack_20m) <- names(s2_bands$s2bands_20m)
-#"
-#"     # if 10m bands
-#"     if (length(s2_bands$s2bands_10m)>0){
-#"       # prepare reading data for extent defined by bounding box
-#"       nxoff <- BB_XYcoordinates_10m$UL$col
-#"       nyoff <- BB_XYcoordinates_10m$UL$row
-#"       nxsize <- BB_XYcoordinates_10m$UR$col-BB_XYcoordinates_10m$UL$col+1
-#"       nysize <- BB_XYcoordinates_10m$LR$row-BB_XYcoordinates_10m$UR$row+1
-#"       # extract data and resample if required
-#"       nbufxsize <- nxsize
-#"       nbufysize <- nysize
-#"       stack_10m <- stars::read_stars(s2_bands$s2bands_10m,
-#"                                      RasterIO = list(nxoff = nxoff, nyoff = nyoff,
-#"                                                      nxsize = nxsize, nysize = nysize), proxy = FALSE)
-#"       names(stack_10m) <- names(s2_bands$s2bands_10m)
-#"     }
-#"
-#"     # adjust size to initial vector footprint without buffer
-#"     if (!is.null(Vector_path)){
-#"       stack_20m <- st_crop(x = stack_20m, y = st_bbox(st_read(dsn = Vector_path,quiet = T)),crop = TRUE)
-#"       if (length(s2_bands$s2bands_10m)>0){
-#"         stack_10m <- st_crop(x = stack_10m, y = st_bbox(st_read(dsn = Vector_path,quiet = T)),crop = TRUE)
-#"       }
-#"     }
-#"
-#"     # get full stack
-#"     FullStack <- stack_20m
-#"     if (length(s2_bands$s2bands_10m)>0){
-#"       for (band10 in names(s2_bands$s2bands_10m)){
-#"         FullStack[[band10]] <- stack_10m[[band10]]
-#"       }
-#"     }
-#"
-#"   } else if (s2source =="LaSRC") {
-#"     # get extent corresponding to CropExtent
-#"     BB_XYcoordinates_10m <- list()
-#"     if (!is.null(Vector_path)){
-#"       # get raster coordinates corresponding to CropExtent
-#"       # Raster <- raster::raster(s2_bands$s2bands_10m[[1]])
-#"       Raster <- raster(s2_bands$s2bands_10m[[1]])
-#"       BB_XYcoordinates_10m <- get_bb_from_OGR(Raster = Raster,Vector = Vector_path,
-#"                                               buffer = 50)
-#"     } else if (is.null(Vector_path)){
-#"       # get raster coordinates corresponding to Full image
-#"       Raster <- raster::raster(s2_bands$s2bands_10m[[1]])
-#"       BB_XYcoordinates_10m[["UL"]] <- data.frame("row"=1, "col"=1)
-#"       BB_XYcoordinates_10m[["UR"]] <- data.frame("row"=1, "col"=dim(Raster)[2])
-#"       BB_XYcoordinates_10m[["LL"]] <- data.frame("row"=dim(Raster)[1], "col"=1)
-#"       BB_XYcoordinates_10m[["LR"]] <- data.frame("row"=dim(Raster)[1], "col"=dim(Raster)[2])
-#"     }
-#"
-#"     # prepare reading data for extent defined by bounding box
-#"     nxoff <- BB_XYcoordinates_10m$UL$col
-#"     nyoff <- BB_XYcoordinates_10m$UL$row
-#"     nxsize <- BB_XYcoordinates_10m$UR$col-BB_XYcoordinates_10m$UL$col+1
-#"     nysize <- BB_XYcoordinates_10m$LR$row-BB_XYcoordinates_10m$UR$row+1
-#"     # extract data and resample if required
-#"     #nbufxsize <- nxsize
-#"     #nbufysize <- nysize
-#"
-#"     stack_10m <- stars::read_stars(s2_bands$s2bands_10m,
-#"                                    RasterIO = list(nxoff = nxoff, nyoff = nyoff,
-#"                                                    nxsize = nxsize, nysize = nysize),
-#"                                                    proxy = FALSE)
-#"     names(stack_10m) <- names(s2_bands$s2bands_10m)
-#"
-#"     # adjust size to initial vector footprint without buffer
-#"     if (!is.null(Vector_path)){
-#"         stack_10m <- st_crop(x = stack_10m, y = st_bbox(st_read(dsn = Vector_path,quiet = T)),crop = TRUE)
-#"     }
-#"     # get full stack
-#"     FullStack <- stack_10m
-#"   }
-#"   return(FullStack)
-#" }
-
-
-#" #" Short description of the function
-#" #"
-#" #" @param raster_stack Typeof(raster_stack).
-#" #" @param cloud_mask character. Path of the mask corresponding to the image
-#" #"
-#" #" @return raster_mask
-#" #" @export
-#"
-#" cloudMask <- function(raster_stack, cloud_mask){
-#"   # mask 1/ based on cloud mask layer 2/ based on Band02 (blue) 3/ based on band08
-#"   cloud_mask[cloud_mask != 0] <- NA
-#"   raster_mask <- mask(raster_stack, cloud_mask)
-#"   raster_mask[raster_stack$B02 >500 ] <- NA
-#"   raster_mask[raster_stack$B08 <1500 ] <- NA
-#"   return(raster_mask)
-#" }
-#"
-#"
-#" #" Short description of the function
-#" #"
-#" #" @param bands Typeof().
-#" #" @param study_frame_buffer character. Path of the mask corresponding to the image
-#" #"
-#" #" @return bands_buffer_crop
-#" #" @export
-#" Crop <- function(bands, study_frame_buffer){
-#"   bands_buffer_crop <- crop(bands, study_frame_buffer)
-#"   return(bands_buffer_crop)
-#" }
-#"
-#"
-#" #" Short description of the function
-#" #"
-#" #" @param dirs
-#" #" @param list_band
-#" #" @param fileend
-#" #"
-#" #" @return bands_buffer_crop
-#" #" @export
-#" FindFiles <- function(dirs, list_band, fileend){
-#"   pattern <- file.path(list_band, fileend)
-#"   path_B <- list.files(dirs, recursive=TRUE, pattern = pattern, full.names =TRUE)
-#"   raster_band <- raster(path_B)
-#"   return(raster_band)
-#" }
-#"
-#" #" Short description of the function
-#" #"
-#" #" @param buffer_crop
-#" #"
-#" #" @return To_10m
-#" #" @export
-#" To10m <- function(buffer_crop){
-#"   To_10m <- disaggregate(buffer_crop,2, method="bilinear")
-#"   return(To_10m)
-#" }
-
-
-#" #" Extract areas corresponding to vector layer from Time series
-#" #" the Time series is expected to be a list of individual files, or a stack with ENVI BIL format
-#" #" @param TimeSeriesPath character. vector containing path for each element of time series
-#" #" @param Dates character. vector corresponding to the date of each element of time series
-#" #" @param Vector OGR from vector layer
-#" #" If columns are not named, 1st=row, 2nd=col.
-#" #" @param MaxRAM numeric. Maximum memory use at block reading.
-#" #" It constrains the maximum number rows of a block
-#" #"
-#" #" @return ExtractTS list. list of elements extractted from vector layer for each date of the TS
-#" #" @importFrom progress progress_bar
-#" #" @export
-#" Extract_from_TS_ENVI <- function(TimeSeriesPath, Dates,Vector){
-#"   # explore time series using tools developed for biodivMapR
-#"   # first get coordinates of pixels corresponding to samples
-#"   XY0 <- extract_pixels_coordinates.From.OGR(TimeSeriesPath[1],Vector)
-#"   # add each polygon in the shapefile to the XY list
-#"   nbPolygons <- 0
-#"   XY <- list()
-#"   for (ii in 1:length(XY0)){
-#"     nbPolygons <- nbPolygons+1
-#"     XY[[nbPolygons]] <- XY0[[ii]]
-#"   }
-#"   Name_Plot <- Vector$id
-#"   ExtractTS <- list()
-#"
-#"   pb <- progress_bar$new(
-#"     format = "Extracting vector layer from Time Series [:bar] :percent in :elapsedfull",
-#"     total = length(TimeSeriesPath), clear = FALSE, width= 100)
-#"
-#"   dd <- 0
-#"   for (TSind in TimeSeriesPath){
-#"     dd <- dd+1
-#"     pb$tick()
-#"     ExtractTS[[Dates[dd]]] <- list()
-#"     for (ip in 1:nbPolygons){
-#"       # if only one polygon in the shapefile and if the polyon is not included in the Raster_SpectralSpecies
-#"       if (length(XY[[ip]]$col)==0){
-#"         # if list of individual plots provided
-#"         if (length(Name_Plot)==nbPolygons){
-#"           message(paste("Polygon named",Name_Plot[ip], "is out of the raster"))
-#"           # Set name to NA
-#"           Name_Plot[ip] <- NA
-#"         }
-#"       } else {
-#"         ExtractTS[[Dates[[dd]]]][[Name_Plot[ip]]] <- extract.big_raster(TSind, XY[[ip]])
-#"       }
-#"     }
-#"   }
-#"   return(ExtractTS)
-#" }
-
-# # Extracts pixels coordinates from raster corresponding to an area defined by a vector
-# # @param Path.Raster path for the raster file. !! BIL expected
-# # @param OGR.Vector  OGR for the vector file obtained from readOGR
-# # @return colrow list of coordinates of pixels corresponding to each polygon in shp
-# extract_pixels_coordinates.From.OGR = function(Path.Raster,OGR.Vector){
-#   # read raster info
-#   Raster <- raster(Path.Raster, band = 1)
-#   # for each polygon or point in the shapefile
-#   colrow <- list()
-#   # extract pixel coordinates from raster based on vector
-#   if (OGR.Vector@class[1]=="SpatialPointsDataFrame"){
-#     XY <- raster::cellFromXY (Raster,OGR.Vector)
-#     colrow[[1]] <- ind2sub(Raster, xY)
-#
-#   } else if  (OGR.Vector@class[1]=="SpatialPolygonsDataFrame"){
-#     XY <- raster::cellFromPolygon (Raster,OGR.Vector)
-#     for (i in 1:length(XY)){
-#       colrow[[i]] <- ind2sub(Raster, xY[[i]])
-#     }
-#   }
-#   return(colrow)
-# }
-#
-
-
-#" #" Extract bands of sparse pixels in image data cube
-#" #" @param impath character. Path to the image cube
-#" #" @param rowcol matrix or data.frame with two columns: row, col.
-#" #" If columns are not named, 1st=row, 2nd=col.
-#" #" @param MaxRAM numeric. Maximum memory use at block reading.
-#" #" It constrains the maximum number rows of a block
-#" #"
-#" #" @return matrix. Rows are corresponding to the samples, columns are the bands.
-#" #" @importFrom raster brick
-#" #" @import stars
-#" #" @export
-#" extract.big_raster <- function(impath, rowcol, MaxRAM=.50){
-#"
-#"   if(!is.data.frame(rowcol)){
-#"     rowcol <- as.data.frame(rowcol)
-#"   }
-#"
-#"   if(!all(c("row", "col") %in% colnames(rowcol))){
-#"     warning("Columns row,col not found in rowcol argument. The two first columns are considered as row, col respectively.")
-#"     colnames(rowcol)[1:2]= c("row", "col")
-#"   }
-#"
-#"   metarast <- raster(impath)
-#"   # updated raster package: do not use brick with 2D raster
-#"   if (nbands(metarast)>1){
-#"     rasterInfo <- raster::brick(impath)
-#"   } else{
-#"     rasterInfo <- metarast
-#"   }
-#"
-#"   # nbytes = as.numeric(substring(dataType(rasterInfo), 4, 4))
-#"   # stars converts automatically values to numeric
-#"   nbytes <- 8
-#"   ImgSizeGb <- prod(dim(rasterInfo))*nbytes/2^30
-#"   LineSizeGb <- prod(dim(rasterInfo)[2:3])*nbytes/2^30
-#"   LinesBlock <- floor(MaxRAM/LineSizeGb)
-#"   rowcol$rowInBlock <- ((rowcol$row-1) %% LinesBlock)+1  # row in block number
-#"   rowcol$block <- floor((rowcol$row-1)/LinesBlock)+1  # block number
-#"   rowcol$sampleIndex <- 1:nrow(rowcol)  # sample index to reorder result
-#"
-#"   sampleList = lapply(unique(rowcol$block), function(iblock){
-#"     rc <- rowcol[rowcol$block==iblock,]
-#"     rr <- range(rc$row)
-#"     nysize <- diff(rr)+1
-#"     nxsize <- max(rc$col)
-#"     # stars data cube dimension order is x*y*band
-#"     ipix_stars <- (rc$rowInBlock-min(rc$rowInBlock))*nxsize+rc$col
-#"     # get driver
-#"     driver <- attr(rgdal::GDALinfo(impath, returnStats = FALSE), "driver")
-#"     values <- read_stars(impath, RasterIO =list(nxsize=nxsize, nyoff=rr[1], nysize=nysize), proxy = FALSE, driver=driver)[[1]]
-#"     values <- matrix(values, nrow=nysize*nxsize)
-#"     res <- cbind(rc$sampleIndex, values[ipix_stars, ])
-#"     rm("values")
-#"     gc()
-#"     return(res)
-#"   })
-#"
-#"   samples = do.call(rbind, sampleList)
-#"   samples = samples[order(samples[,1]),2:ncol(samples)]
-#"
-#"   return(samples)
-#" }
-

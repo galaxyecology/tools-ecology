@@ -1,4 +1,4 @@
-<tool id="SRS_process_data" name="Compare diversity indicators" version="@VERSION@" profile = "20.01">
+<tool id="srs_process_data" name="Compare diversity indicators" version="@VERSION@" profile = "20.01">
     <description>with remote sensing data</description>
     <macros>
         <import>macro.xml</import>
@@ -50,6 +50,8 @@
             #end if
             '$input_plot'
             '$choice'
+            '$__tool_directory__/functions.r'
+            '$typepca'
             '$output_div'
             '$output_beta'
             '$plots'
@@ -73,6 +75,10 @@
         <param name="choice" type="select" label="Do you want to compute beta diversity (needs mutliple locations) ?" display="radio">
             <option value="Y">Yes</option>
             <option value="N">No</option>
+        </param>
+        <param name="typepca" type="select" label="Do you want to do a PCA or a SPCA ?" display="radio" help="If you choose PCA there is no rescaling of the data as oppposed as if you choose SPCA">
+            <option value="SPCA">SPCA</option>
+            <option value="PCA">PCA</option>
         </param>
     </inputs>
     <outputs>

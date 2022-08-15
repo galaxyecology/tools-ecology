@@ -62,11 +62,10 @@ sensorbands <- hdr_refl$wavelength
 # compute a set of spectral indices defined by indexlist from S2 data
 # reflFactor = 10000 when reflectance is coded as INT16
 refl <- raster::aggregate(refl, fact = 10)
-#indexlist <- c(indice_choice)
 
 # Convert raster to SpatialPointsDataFrame
 refl2 <- raster::aggregate(refl2, fact = 10)
-r_pts <- convert_raster(refl2)                       
+r_pts <- convert_raster(refl2)
 table_ind <- r_pts
 # create directory for Spectral indices
 results_site_path <- "RESULTS"
@@ -91,7 +90,7 @@ indices <- lapply(indice_choice, function(x) {
   # Writting the tabular and the plot
   r_pts[, x] <- as.data.frame(sapply(spec_indices, c))
   plot_indices(data = r_pts, titre = x)
-  return(r_pts)
+  return(r_pts, index_path)
 })
 
 new_table <- as.data.frame(indices)
@@ -109,11 +108,8 @@ write.table(table_ind, file = "Spec_Index.tabular", sep = "\t", dec = ".", na = 
 # Get the raster layer of the indice as an output
 if (output_raster == "Y") {
 raster_zip <- file.path("raster.zip")
-zip::zip(raster_zip, index_path)
+zip::zip(raster_zip, indices[2])
 
 header_zip <- file.path("header.zip")
-zip::zip(header_zip, get_HDR_name(index_path))
+zip::zip(header_zip, get_hdr_name(indices[2]))
 }
-
-
-

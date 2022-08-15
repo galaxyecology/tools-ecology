@@ -1,4 +1,4 @@
-<tool id="SRS_diversity_maps" name="Map diversity" version="@VERSION@" profile = "20.01">
+<tool id="srs_diversity_maps" name="Map diversity" version="@VERSION@" profile = "20.01">
     <description>from  remote sensing data</description>
     <macros>
         <import>macro.xml</import>
@@ -49,6 +49,7 @@
               ''
               '$method.input'
             #end if
+            '$typepca'
             #if $method_div.type == 'alpha':
               'TRUE'
               'FALSE'
@@ -91,6 +92,10 @@
                 <param name="input_header" type="data" format="hdr" label="Input header"/>
             </when>
         </conditional>
+        <param name="typepca" type="select" label="Do you want to do a PCA or a SPCA ?" display="radio" help="If you choose PCA there is no rescaling of the data as oppposed as if you choose SPCA">
+            <option value="SPCA">SPCA</option>
+            <option value="PCA">PCA</option>
+        </param>
         <conditional name="method_div">
             <param name="type" type="select" label="Alpha, beta, functional diversity and comparison plot and map" display="radio">
                 <option value="alpha">Alpha diversity map</option>

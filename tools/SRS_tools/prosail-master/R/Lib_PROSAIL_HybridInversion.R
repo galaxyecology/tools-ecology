@@ -31,8 +31,8 @@
 #" @importFrom raster raster brick blockSize readStart readStop getValues writeStart writeStop writeValues
 #" @import rgdal
 #" @export
-apply_prosail_inversion <- function(raster_path,  hybridmodel,  pathout, 
-                                    selectedbands,  bandname, 
+apply_prosail_inversion <- function(raster_path,  hybridmodel,  pathout,
+                                    selectedbands,  bandname,
                                     maskraster = FALSE, multiplyingfactor = 10000) {
 
   # explain which biophysical variables will be computed
@@ -106,7 +106,6 @@ apply_prosail_inversion <- function(raster_path,  hybridmodel,  pathout,
         blockval <- blockval / multiplyingfactor
         modelsvr_estimate <- list()
         for (modind in 1:length(hybridmodel[[parm]])) {
-          # print(c(i, modind))
           pb$tick()
           modelsvr_estimate[[modind]] <- predict(hybridmodel[[parm]][[modind]],  blockval)
         }
@@ -188,10 +187,10 @@ prosail_hybrid_apply <- function(regressionmodels, refl) {
   if (!ncol(refl) == nbfeatures && nrow(refl) == nbfeatures) {
     refl <- t(refl)
   }
-  nbensemble <- length( regressionmodels)
+  nbensemble <- length(regressionmodels)
   estimatedval <- list()
   pb <- progress_bar$new(
-    format = "Applying SVR models [:bar] :percent in :elapsed", 
+    format = "Applying SVR models [:bar] :percent in :elapsed",
     total = nbensemble,  clear = FALSE,  width = 100)
   for (i in 1:nbensemble) {
     pb$tick()
@@ -228,7 +227,6 @@ prosail_hybrid_apply <- function(regressionmodels, refl) {
 prosail_hybrid_train <- function(brf_lut, inputvar, figplot = FALSE, nbensemble = 20, withreplacement = FALSE) {
 
   x <- y <- ymean <- ystdmin <- ystdmax <- NULL
-  # library(dplyr)
   # split the LUT into nbensemble subsets
   nbsamples <- length(inputvar)
   if (dim(brf_lut)[2] == nbsamples) {
@@ -252,7 +250,7 @@ prosail_hybrid_train <- function(brf_lut, inputvar, figplot = FALSE, nbensemble 
   predictedyall <- list()
   tunedmodelyall <- list()
   pb <- progress_bar$new(
-    format = "Training SVR on subsets [:bar] :percent in :elapsed", 
+    format = "Training SVR on subsets [:bar] :percent in :elapsed",
     total = nbensemble,  clear = FALSE,  width = 100)
   for (i in 1:nbensemble) {
     pb$tick()
@@ -262,8 +260,6 @@ prosail_hybrid_train <- function(brf_lut, inputvar, figplot = FALSE, nbensemble 
     trainingset$Y <- inputvar[subsets[i][[1]]]
     # liquidSVM
     r1 <- tryCatch.W.E(tunedmodel <- liquidSVM::svmRegression(trainingset$X,  trainingset$Y))
-    # reset.warnings()
-    # tunedmodel <- liquidSVM::svmRegression(trainingset$X,  trainingset$Y)
     if (!is.null(r1$warning)) {
       msg <- r1$warning$message
       valgamma <- str_split(string = msg, pattern = "gamma=")[[1]][2]
@@ -287,17 +283,18 @@ prosail_hybrid_train <- function(brf_lut, inputvar, figplot = FALSE, nbensemble 
     # predict for full brf_lut
     for (i in 1:nbensemble) {
       tunedmodely <- stats::predict(modelssvr[[i]],  brf_lut)
-      tunedmodelyall = cbind(tunedmodelyall, matrix(tunedmodely, ncol = 1))
+      tunedmodelyall <- cbind(tunedmodelyall, matrix(tunedmodely, ncol = 1))
     }
     # plot prediction
     df <- data.frame(x = rep(1:nbsamples, nbensemble),  y = as.numeric(matrix(tunedmodelyall, ncol = 1)))
-    df_summary <- df %>% dplyr::group_by(x) %>%
-      summarize( ymin = min(y), ystdmin = mean(y) - sd(y), 
-                 ymax = max(y), ystdmax = mean(y) + sd(y), 
+    df_summary <- df %>% 
+     dplyr::group_by(x) %>%
+      summarize(ymin = min(y), ystdmin = mean(y) - sd(y),
+                 ymax = max(y), ystdmax = mean(y) + sd(y),
                  ymean = mean(y))
     par(mar = rep(.1,  4))
-    p <- ggplot(df_summary,  aes(x = inputvar,  y = ymean))  + 
-      geom_point(size = 2)  + 
+    p <- ggplot(df_summary,  aes(x = inputvar,  y = ymean))  +
+      geom_point(size = 2)  +
       geom_errorbar(aes(ymin = ystdmin,  ymax = ystdmax))
     meanpredict <- rowMeans(matrix(as.numeric(tunedmodelyall), ncol = nbensemble))
     print(p)
@@ -312,7 +309,6 @@ prosail_hybrid_train <- function(brf_lut, inputvar, figplot = FALSE, nbensemble 
 #" @return list of the content of the hdr file
 #" @export
 read_envi_header <- function(hdrpath) {
-  # header <- paste(header,  collapse = "\n")
   if (!grepl(".hdr$",  hdrpath)) {
     stop("File extension should be .hdr")
   }
@@ -341,8 +337,8 @@ read_envi_header <- function(hdrpath) {
 
   for (i in rev(seq_along(l))) {
     hdr <- c(
-      hdr [seq_len(l [i] - 1)], 
-      paste(hdr [l [i]:r [i]],  collapse = "\n"), 
+      hdr [seq_len(l [i] - 1)],
+      paste(hdr [l [i]:r [i]],  collapse = "\n"),
       hdr [-seq_len(r [i])]
     )
   }
@@ -353,8 +349,8 @@ read_envi_header <- function(hdrpath) {
 
   ## process numeric values
   tmp <- names(hdr) %in% c(
-    "samples",  "lines",  "bands",  "header offset",  "data type", 
-    "byte order",  "default bands",  "data ignore value", 
+    "samples",  "lines",  "bands",  "header offset",  "data type",
+    "byte order",  "default bands",  "data ignore value",
     "wavelength",  "fwhm",  "data gain values"
   )
   hdr [tmp] <- lapply(hdr [tmp],  function(x) {
@@ -380,7 +376,7 @@ split_line <- function(x,  separator,  trim_blank  = TRUE) {
   tmp <- regexpr(separator,  x)
   key <- substr(x,  1,  tmp - 1)
   value <- substr(x,  tmp  +  1,  nchar(x))
-  if (trim_blank ) {
+  if (trim_blank) {
     blank_pattern <- "^[[:blank:]]*([^[:blank:]] + .*[^[:blank:]] + )[[:blank:]]*$"
     key <- sub(blank_pattern,  "\\1",  key)
     value <- sub(blank_pattern,  "\\1",  value)
@@ -417,12 +413,12 @@ split_line <- function(x,  separator,  trim_blank  = TRUE) {
 #" @return modelssvr list. regression models trained for the retrieval of inputvar based on brf_lut
 #" @export
 
-train_prosail_inversion <- function(minval = NULL, maxval = NULL, 
-                                    typedistrib = NULL, gaussiandistrib = NULL, parmset = NULL, 
-                                    nbsamples = 2000, nbsamplesperrun = 100, nbmodels = 20, replacement = TRUE, 
-                                    sailversion = "4SAIL", 
-                                    parms2estimate = "lai", bands2select = NULL, noiselevel = NULL, 
-                                    specprospect = NULL,  specsoil = NULL,  specatm = NULL, 
+train_prosail_inversion <- function(minval = NULL, maxval = NULL,
+                                    typedistrib = NULL, gaussiandistrib = NULL, parmset = NULL,
+                                    nbsamples = 2000, nbsamplesperrun = 100, nbmodels = 20, replacement = TRUE,
+                                    sailversion = "4SAIL",
+                                    parms2estimate = "lai", bands2select = NULL, noiselevel = NULL,
+                                    specprospect = NULL,  specsoil = NULL,  specatm = NULL,
                                     path_results = "./", figplot = FALSE, force4lowlai = TRUE) {
 
   ###===================================================================###
@@ -440,18 +436,18 @@ train_prosail_inversion <- function(minval = NULL, maxval = NULL,
   }
   # define distribution for parameters to be sampled
   if (is.null(typedistrib)) {
-    typedistrib <- data.frame("CHL" = "Uniform",  "CAR" = "Uniform", "EWT" = "Uniform", "ANT" = "Uniform", "LMA" = "Uniform", "N" = "Uniform",  "BROWN" = "Uniform", 
+    typedistrib <- data.frame("CHL" = "Uniform",  "CAR" = "Uniform", "EWT" = "Uniform", "ANT" = "Uniform", "LMA" = "Uniform", "N" = "Uniform",  "BROWN" = "Uniform",
                               "psoil" = "Uniform", "LIDFa" = "Uniform",  "lai" = "Uniform", "q" = "Uniform", "tto" = "Uniform", "tts" = "Uniform",  "psi" = "Uniform")
   }
   if (is.null(gaussiandistrib)) {
     gaussiandistrib <- list("Mean" = NULL, "Std" = NULL)
   }
   if (is.null(minval)) {
-    minval <- data.frame("CHL" = 10, "CAR" = 0, "EWT" = 0.01, "ANT" = 0, "LMA" = 0.005, "N" = 1.0, "psoil" = 0.0,  "BROWN" = 0.0, 
+    minval <- data.frame("CHL" = 10, "CAR" = 0, "EWT" = 0.01, "ANT" = 0, "LMA" = 0.005, "N" = 1.0, "psoil" = 0.0,  "BROWN" = 0.0,
                          "LIDFa" = 20,  "lai" = 0.5, "q"=0.1, "tto" = 0, "tts" = 20,  "psi" = 80)
   }
   if (is.null(maxval)) {
-    maxval <- data.frame("CHL" = 75, "CAR" = 15, "EWT" = 0.03, "ANT" = 2, "LMA" = 0.03, "N" = 2.0,  "psoil" = 1.0,  "BROWN" = 0.5, 
+    maxval <- data.frame("CHL" = 75, "CAR" = 15, "EWT" = 0.03, "ANT" = 2, "LMA" = 0.03, "N" = 2.0,  "psoil" = 1.0,  "BROWN" = 0.5,
                          "LIDFa" = 70,  "lai" = 7, "q"=0.2, "tto" = 5, "tts" = 30,  "psi" = 110)
   }
   # define min and max values
@@ -461,14 +457,14 @@ train_prosail_inversion <- function(minval = NULL, maxval = NULL,
   }
   # produce input parameters distribution
   if (sailversion == "4SAIL") {
-    inputprosail <- get_distribution_input_prosail(minval, maxval, parmset, nbsamples, 
-                                                   typedistrib = typedistrib, 
-                                                   Mean = gaussiandistrib$Mean, Std = gaussiandistrib$Std, 
+    inputprosail <- get_distribution_input_prosail(minval, maxval, parmset, nbsamples,
+                                                   typedistrib = typedistrib,
+                                                   Mean = gaussiandistrib$Mean, Std = gaussiandistrib$Std,
                                                    force4lowlai = force4lowlai)
   } else if (sailversion == "4SAIL2") {
-    inputprosail <- get_distribution_input_prosail2(minval, maxval, parmset, nbsamples, 
-                                                    typedistrib = typedistrib, 
-                                                    Mean = gaussiandistrib$Mean, Std = gaussiandistrib$Std, 
+    inputprosail <- get_distribution_input_prosail2(minval, maxval, parmset, nbsamples,
+                                                    typedistrib = typedistrib,
+                                                    Mean = gaussiandistrib$Mean, Std = gaussiandistrib$Std,
                                                     force4lowlai = force4lowlai)
   }
   if (sailversion == "4SAIL2") {
@@ -494,11 +490,11 @@ train_prosail_inversion <- function(minval = NULL, maxval = NULL,
   # write parameters LUT
   output <- matrix(unlist(inputprosail),  ncol = length(inputprosail),  byrow = FALSE)
   filename <- file.path(path_results, "PROSAIL_LUT_InputParms.txt")
-  write.table(x = format(output,  digits = 3), file = filename, append = FALSE,  quote = FALSE, 
+  write.table(x = format(output,  digits = 3), file = filename, append = FALSE,  quote = FALSE,
               col.names = names(inputprosail),  row.names = FALSE, sep = "\t")
   # Write BRF LUT corresponding to parameters LUT
   filename <- file.path(path_results, "PROSAIL_LUT_reflectance.txt")
-  write.table(x = format(t(brf_lut),  digits = 5), file = filename, append = FALSE,  quote = FALSE, 
+  write.table(x = format(t(brf_lut),  digits = 5), file = filename, append = FALSE,  quote = FALSE,
               col.names = specprospect$lambda,  row.names = FALSE, sep = "\t")
 
   # Which bands will be used for inversion?
@@ -517,9 +513,9 @@ train_prosail_inversion <- function(minval = NULL, maxval = NULL,
   }
 
   # produce LIT with noise
-  brf_lut_Noise <- list()
+  brf_lut_noise <- list()
   for (parm in parms2estimate) {
-    brf_lut_Noise[[parm]] <- brf_lut[bands2select[[parm]], ] + brf_lut[bands2select[[parm]], ] * matrix(rnorm(nrow(brf_lut[bands2select[[parm]], ]) * ncol(brf_lut[bands2select[[parm]], ]), 
+    brf_lut_noise[[parm]] <- brf_lut[bands2select[[parm]], ] + brf_lut[bands2select[[parm]], ] * matrix(rnorm(nrow(brf_lut[bands2select[[parm]], ]) * ncol(brf_lut[bands2select[[parm]], ]),
                                                                                                         0, noiselevel[[parm]]), nrow = nrow(brf_lut[bands2select[[parm]], ]))
   }
 
@@ -527,11 +523,11 @@ train_prosail_inversion <- function(minval = NULL, maxval = NULL,
   ###                     PERFORM HYBRID INVERSION                      ###
   ###===================================================================###
   # train SVR for each variable and each run
-  modelsvr = list()
+  modelsvr <- list()
   for (parm in parms2estimate) {
     colparm <- which(parm == names(inputprosail))
     inputvar <- inputprosail[[colparm]]
-    modelsvr[[parm]] <- prosail_hybrid_train(brf_lut = brf_lut_Noise[[parm]], inputvar = inputvar, 
+    modelsvr[[parm]] <- prosail_hybrid_train(brf_lut = brf_lut_noise[[parm]], inputvar = inputvar,
                                              figplot = figplot, nbensemble = nbmodels, withreplacement = replacement)
   }
   return(modelsvr)
@@ -545,8 +541,8 @@ train_prosail_inversion <- function(minval = NULL, maxval = NULL,
 #" @return None
 #" @importFrom stringr str_count
 #" @export
-write_envi_header <- function(hdr,  hdrpath) {
-  h <- lapply(hdr,  function(x) {
+write_envi_header <- function(hdr, hdrpath) {
+  h <- lapply(hdr, function(x) {
     if (length(x) > 1 || (is.character(x) && stringr::str_count(x,  "\\w + ") > 1)) {
       x <- paste0("{",  paste(x,  collapse = ","),  "}")
     }

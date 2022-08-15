@@ -81,6 +81,11 @@
             <citation type="doi">doi.org/10.5281/zenodo.5907920</citation>
         </citations>
     </xml>
+    <xml name="SRS_vegetpheno">
+        <citations>
+            <citation type="doi">doi.org/10.1016/j.rse.2013.09.022</citation>
+        </citations>
+    </xml>
     <xml name="topic">
         <edam_topics>
            <edam_topic>topic_0610</edam_topic>

@@ -43,7 +43,7 @@ if (data_raster == "") {
 # Read raster
 copndvi <- raster::raster(data_raster)
 
-copndvilr <- raster::reclassify(copndvi, cbind(252, 255, NA), right=TRUE)
+copndvilr <- raster::reclassify(copndvi, cbind(252, 255, NA), right = TRUE)
 
 #Resample using raster::aggregate and a linear factor of 10
 copndvilr <- raster::aggregate(copndvilr, fact = 20)

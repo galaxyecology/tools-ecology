@@ -1,4 +1,4 @@
-<tool id="SRS_preprocess_S2" name="Preprocess sentinel 2 data" version="@VERSION@" profile = "20.01">
+<tool id="srs_preprocess_s2" name="Preprocess sentinel 2 data" version="@VERSION@" profile = "20.01">
     <description>read, crop, resample and write it as a raster stack.</description>
     <macros>
         <import>macro.xml</import>

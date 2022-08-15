@@ -1,4 +1,4 @@
-<tool id="SRS_spectral_indices" name="Compute spectral indices" version="@VERSION@" profile = "20.01">
+<tool id="srs_spectral_indices" name="Compute spectral indices" version="@VERSION@" profile = "20.01">
     <description>as NDVI from remote sensing data</description>
     <macros>
         <import>macro.xml</import>

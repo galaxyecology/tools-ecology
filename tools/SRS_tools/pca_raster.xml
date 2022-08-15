@@ -1,4 +1,4 @@
-<tool id="SRS_PCA" name="Compute a PCA raster" version="@VERSION@" profile = "20.01">
+<tool id="srs_PCA" name="Compute a PCA raster" version="@VERSION@" profile = "20.01">
     <description>from remote sensing data</description>
     <macros>
         <import>macro.xml</import>
@@ -71,9 +71,9 @@
                 <param name="input_header" type="data" format="hdr" label="Input raster header"/>
             </when>
         </conditional>
-        <param name="type" type="select" label="Do you want to do a PCA or a SPCA ?" display="radio">
-            <option value="PCA">PCA</option>
+        <param name="type" type="select" label="Do you want to do a PCA or a SPCA ?" display="radio" help="If you choose PCA there is no rescaling of the data as oppposed as if you choose SPCA">
             <option value="SPCA">SPCA</option>
+            <option value="PCA">PCA</option>
         </param>
     </inputs>
     <outputs>

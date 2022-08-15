@@ -52,48 +52,10 @@ if (data_raster == "") {
   input_header_file <- file.path(getwd(), rasterheader, fsep = "/")
 }
 
-# path for the Mask raster corresponding to image to process
-# expected to be in ENVI HDR format, 1 band, integer 8bits
-# expected values in the raster: 0 = masked, 1 = selected
-# set to FALSE if no mask available
-input_mask_file <- FALSE
-
-# relative or absolute path for the Directory where results will be stored
-# For each image processed, a subdirectory will be created after its name
-output_dir <- "RESULTS"
-
-# SPATIAL RESOLUTION
-# resolution of spatial units for alpha and beta diversity maps (in pixels), relative to original image
-# if Res.Map = 10 for images with 10 m spatial resolution, then spatial units will be 10 pixels x 10m = 100m x 100m surfaces
-# rule of thumb: spatial units between 0.25 and 4 ha usually match with ground data
-# too small window_size results in low number of pixels per spatial unit, hence limited range of variation of diversity in the image
-window_size <- 10
-
-# PCA FILTERING: Set to TRUE if you want second filtering based on PCA outliers to be processed. Slower
-filterpca <- TRUE
-
-# type of PCA:
-# PCA: no rescaling of the data
-# SPCA: rescaling of the data
-typepca <-type
-
-
-################################################################################
-##                    DEFINE PARAMETERS FOR METHOD                            ##
-################################################################################
-nbcpu <- 4
-maxram <- 0.5
-nbclusters <- 50
-
 ################################################################################
 ##                              PROCESS IMAGE                                 ##
 ################################################################################
 # 1- Filter data in order to discard non vegetated / shaded / cloudy pixels
-ndvi_thresh <- 0.5
-blue_thresh <- 500
-nir_thresh  <- 1500
-continuum_removal <- TRUE
-
 print("PERFORM PCA ON RASTER")
 pca_output <- biodivMapR::perform_PCA(Input_Image_File = input_image_file, Input_Mask_File = input_mask_file,
                           Output_Dir = output_dir, TypePCA = typepca, FilterPCA = filterpca, nbCPU = nbcpu, MaxRAM = maxram)

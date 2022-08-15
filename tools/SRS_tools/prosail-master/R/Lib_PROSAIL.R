@@ -3,8 +3,8 @@
 # Lib_PROSAIL.R
 # ============================================================================= =
 # PROGRAMMERS:
-# Jean-Baptiste FERET <jb.feret@teledetection.fr > 
-# Florian de BOISSIEU <fdeboiss@gmail.com > 
+# Jean-Baptiste FERET <jb.feret@teledetection.fr >
+# Florian de BOISSIEU <fdeboiss@gmail.com >
 # Copyright 2019 / 11 Jean-Baptiste FERET
 # ============================================================================= =
 # This Library includes functions dedicated to PROSAIL simulation
@@ -37,7 +37,7 @@ compute_brf  <- function(rdot, rsot, tts, specatm_sensor) {
   skyl <- 0.847 - 1.61 * sin((90 - tts) * rd) +  1.04 * sin((90 - tts) * rd) * sin((90 - tts) * rd) # diffuse radiation (Francois et al.,  2002)
   pardiro <- (1 - skyl) * Es
   pardifo <- skyl * Ed
-  brf <- (rdot*pardifo + rsot*pardiro) / (pardiro + pardifo)
+  brf <- (rdot * pardifo + rsot * pardiro) / (pardiro + pardifo)
   return(brf)
 }
 
@@ -86,31 +86,31 @@ compute_brf  <- function(rdot, rsot, tts, specatm_sensor) {
 #" rddt: bi-hemispherical reflectance factor
 #" @import prospect
 #" @export
-pro4sail  <- function(spec_sensor, input_prospect = NULL, N = 1.5, CHL = 40.0, 
-                     CAR = 8.0, ANT = 0.0, BROWN = 0.0, EWT = 0.01, 
-                     LMA = 0.008, PROT = 0.0, CBC = 0.0, alpha = 40.0, 
-                     typelidf = 2, LIDFa = NULL, LIDFb = NULL, lai = NULL, 
-                     q = NULL, tts = NULL, tto = NULL, psi = NULL, rsoil = NULL, 
-                     fraction_brown = 0.0,  diss = 0.0,  Cv = 1, Zeta = 1, 
+pro4sail  <- function(spec_sensor, input_prospect = NULL, N = 1.5, CHL = 40.0,
+                     CAR = 8.0, ANT = 0.0, BROWN = 0.0, EWT = 0.01,
+                     LMA = 0.008, PROT = 0.0, CBC = 0.0, alpha = 40.0,
+                     typelidf = 2, LIDFa = NULL, LIDFb = NULL, lai = NULL,
+                     q = NULL, tts = NULL, tto = NULL, psi = NULL, rsoil = NULL,
+                     fraction_brown = 0.0,  diss = 0.0,  Cv = 1, Zeta = 1,
                      sailversion = "4SAIL", brownvegetation = NULL) {
 
   ############################ #
   #	LEAF OPTICAL PROPERTIES	##
   ############################ #
   if (is.null(input_prospect)) {
-    input_prospect = data.frame("CHL" = CHL, "CAR" = CAR, "ANT" = ANT, "BROWN" = BROWN, "EWT" = EWT, 
+    input_prospect <- data.frame("CHL" = CHL, "CAR" = CAR, "ANT" = ANT, "BROWN" = BROWN, "EWT" = EWT,
                                 "LMA" = LMA, "PROT" = PROT, "CBC" = CBC, "N" = N, "alpha" = alpha)
   }
-  greenvegetation <- prospect::PROSPECT(SpecPROSPECT = spec_sensor, 
-                                        N = input_prospect$N[1], 
-                                        CHL = input_prospect$CHL[1], 
-                                        CAR = input_prospect$CAR[1], 
-                                        ANT = input_prospect$ANT[1], 
-                                        BROWN = input_prospect$BROWN[1], 
-                                        EWT = input_prospect$EWT[1], 
-                                        LMA = input_prospect$LMA[1], 
-                                        PROT = input_prospect$PROT[1], 
-                                        CBC = input_prospect$CBC[1], 
+  greenvegetation <- prospect::PROSPECT(SpecPROSPECT = spec_sensor,
+                                        N = input_prospect$N[1],
+                                        CHL = input_prospect$CHL[1],
+                                        CAR = input_prospect$CAR[1],
+                                        ANT = input_prospect$ANT[1],
+                                        BROWN = input_prospect$BROWN[1],
+                                        EWT = input_prospect$EWT[1],
+                                        LMA = input_prospect$LMA[1],
+                                        PROT = input_prospect$PROT[1],
+                                        CBC = input_prospect$CBC[1],
                                         alpha = input_prospect$alpha[1])
 
   if (sailversion  ==  "4SAIL2") {
@@ -152,16 +152,16 @@ pro4sail  <- function(spec_sensor, input_prospect = NULL, N = 1.5, CHL = 40.0,
         # if all PROSPECT parameters have at least 2 elements
         } else if (unique(lengths(input_prospect)) >= 2) {
           # compute leaf optical properties
-          brownvegetation <- prospect::PROSPECT(SpecPROSPECT = spec_sensor, 
-                                                N = input_prospect$N[2], 
-                                                CHL = input_prospect$CHL[2], 
-                                                CAR = input_prospect$CAR[2], 
-                                                ANT = input_prospect$ANT[2], 
-                                                BROWN = input_prospect$BROWN[2], 
-                                                EWT = input_prospect$EWT[2], 
-                                                LMA = input_prospect$LMA[2], 
-                                                PROT = input_prospect$PROT[2], 
-                                                CBC = input_prospect$CBC[2], 
+          brownvegetation <- prospect::PROSPECT(SpecPROSPECT = spec_sensor,
+                                                N = input_prospect$N[2],
+                                                CHL = input_prospect$CHL[2],
+                                                CAR = input_prospect$CAR[2],
+                                                ANT = input_prospect$ANT[2],
+                                                BROWN = input_prospect$BROWN[2],
+                                                EWT = input_prospect$EWT[2],
+                                                LMA = input_prospect$LMA[2],
+                                                PROT = input_prospect$PROT[2],
+                                                CBC = input_prospect$CBC[2],
                                                 alpha = input_prospect$alpha[2])
           if (unique(lengths(input_prospect)) > 2) {
             message("4SAIL2 needs two sets of optical properties for green and brown vegetation")
@@ -183,12 +183,12 @@ pro4sail  <- function(spec_sensor, input_prospect = NULL, N = 1.5, CHL = 40.0,
 
   if (sailversion  ==  "4SAIL") {
     # run 4SAIL
-    ref <- fourSAIL(leafoptics = greenvegetation, 
+    ref <- foursail(leafoptics = greenvegetation,
                     typelidf,  LIDFa,  LIDFb,  lai,  q,  tts,  tto,  psi,  rsoil)
   } else if (sailversion  ==  "4SAIL2") {
     # run 4SAIL2
-    ref <- foursail2(leafgreen = greenvegetation,  leafbrown = brownvegetation, 
-                     typelidf,  LIDFa,  LIDFb,  lai,  q,  tts,  tto,  psi,  rsoil, 
+    ref <- foursail2(leafgreen = greenvegetation,  leafbrown = brownvegetation,
+                     typelidf,  LIDFa,  LIDFb,  lai,  q,  tts,  tto,  psi,  rsoil,
                      fraction_brown,  diss,  Cv,  Zeta)
   }
   return(ref)
@@ -218,7 +218,7 @@ pro4sail  <- function(spec_sensor, input_prospect = NULL, N = 1.5, CHL = 40.0,
 #" rddt: bi-hemispherical reflectance factor
 #" @export
 
-fourSAIL  <- function(leafoptics,  typelidf = 2,  LIDFa = NULL,  LIDFb = NULL,  lai = NULL, 
+foursail  <- function(leafoptics,  typelidf = 2,  LIDFa = NULL,  LIDFb = NULL,  lai = NULL,
                       q = NULL,  tts = NULL,  tto = NULL,  psi = NULL,  rsoil = NULL) {
 
   ############################## #
@@ -314,7 +314,7 @@ fourSAIL  <- function(leafoptics,  typelidf = 2,  LIDFa = NULL,  LIDFb = NULL,  
   sigf <- ddf * rho + ddb * tau
   att <- 1 - sigf
   m2 <- (att + sigb) * (att - sigb)
-  m2[which(m2 <= 0)] = 0
+  m2[which(m2 <= 0)] <- 0
   m <- sqrt(m2)
 
   sb <- sdb * rho + sdf * tau
@@ -424,7 +424,7 @@ fourSAIL  <- function(leafoptics,  typelidf = 2,  LIDFa = NULL,  LIDFb = NULL,  
         y1 <- y2
         f1 <- f2
       }
-      tsstoo = f1
+      tsstoo <- f1
     }
     #	Bidirectional reflectance
     #	Single scattering contribution
@@ -480,9 +480,9 @@ fourSAIL  <- function(leafoptics,  typelidf = 2,  LIDFa = NULL,  LIDFb = NULL,  
 #" alfadt: canopy absorptance for hemispherical diffuse incident flux
 #" @export
 
-foursail2  <- function(leafgreen,  leafbrown, 
-                       typelidf = 2, LIDFa = NULL, LIDFb = NULL, 
-                       lai = NULL,  hot = NULL, tts = NULL, tto = NULL, psi = NULL, rsoil = NULL, 
+foursail2  <- function(leafgreen,  leafbrown,
+                       typelidf = 2, LIDFa = NULL, LIDFb = NULL,
+                       lai = NULL,  hot = NULL, tts = NULL, tto = NULL, psi = NULL, rsoil = NULL,
                        fraction_brown = 0.5,  diss = 0.5,  Cv = 1, Zeta = 1) {
 
   #	This version does not include non-Lambertian soil properties.
@@ -504,7 +504,7 @@ foursail2  <- function(leafgreen,  leafbrown,
     litab <- foliar_distrib$litab
   }
 
-  if (lai<0) {
+  if (lai < 0) {
     message("Please define positive LAI value")
     rddt <- rsdt <- rdot <- rsost <- rsot <- rsoil
     alfast <- alfadt <- 0 * rsoil
@@ -647,7 +647,7 @@ foursail2  <- function(leafgreen,  leafbrown,
       fint <- (ca - exp(-alf)) * .05
       s2 <- 0.0
       for (istep in 1:20) {
-        if (istep<20) {
+        if (istep < 20) {
           x2 <- -log(ca - istep * fint) / alf
         } else {
           x2 <- 1.0
@@ -683,10 +683,10 @@ foursail2  <- function(leafgreen,  leafbrown,
     which_ncs <- which(m > 0.01)
     which_cs <- which(m <= 0.01)
 
-    tdd <- rdd <- tsd <- rsd <- tdo <- rdo <- 0*m
+    tdd <- rdd <- tsd <- rsd <- tdo <- rdo <- 0 * m
     rsod <- 0 * m
     if (length(which_ncs) > 0) {
-      resncs <- nonconservativescattering(m[which_ncs], lai2, att[which_ncs], sigb[which_ncs], 
+      resncs <- nonconservativescattering(m[which_ncs], lai2, att[which_ncs], sigb[which_ncs],
                                           ks, ko, sf[which_ncs], sb[which_ncs], vf[which_ncs], vb[which_ncs], tss, too)
       tdd[which_ncs] <- resncs$tdd
       rdd[which_ncs] <- resncs$rdd
@@ -697,7 +697,7 @@ foursail2  <- function(leafgreen,  leafbrown,
       rsod[which_ncs] <- resncs$rsod
     }
     if (length(which_cs) > 0) {
-      rescs <- conservativescattering(m[which_cs], lai2, att[which_cs], sigb[which_cs], 
+      rescs <- conservativescattering(m[which_cs], lai2, att[which_cs], sigb[which_cs],
                                       ks, ko, sf[which_cs], sb[which_cs], vf[which_cs], vb[which_cs], tss, too)
       tdd[which_cs] <- rescs$tdd
       rdd[which_cs] <- rescs$rdd
@@ -740,10 +740,10 @@ foursail2  <- function(leafgreen,  leafbrown,
     which_ncs <- which(m > 0.01)
     which_cs <- which(m <= 0.01)
 
-    tdd <- rdd <- tsd <- rsd <- tdo <- rdo <- 0*m
+    tdd <- rdd <- tsd <- rsd <- tdo <- rdo <- 0 * m
     rsod <- 0 * m
     if (length(which_ncs) > 0) {
-      resncs <- nonconservativescattering(m[which_ncs], lai1, att[which_ncs], sigb[which_ncs], 
+      resncs <- nonconservativescattering(m[which_ncs], lai1, att[which_ncs], sigb[which_ncs],
                                           ks, ko, sf[which_ncs], sb[which_ncs], vf[which_ncs], vb[which_ncs], tss, too)
       tdd[which_ncs] <- resncs$tdd
       rdd[which_ncs] <- resncs$rdd
@@ -754,7 +754,7 @@ foursail2  <- function(leafgreen,  leafbrown,
       rsod[which_ncs] <- resncs$rsod
     }
     if (length(which_cs) > 0) {
-      rescs <- conservativescattering(m[which_cs], lai1, att[which_cs], sigb[which_cs], 
+      rescs <- conservativescattering(m[which_cs], lai1, att[which_cs], sigb[which_cs],
                                       ks, ko, sf[which_cs], sb[which_cs], vf[which_cs], vb[which_cs], tss, too)
       tdd[which_cs] <- rescs$tdd
       rdd[which_cs] <- rescs$rdd
@@ -819,7 +819,7 @@ foursail2  <- function(leafgreen,  leafbrown,
     alfast <- alfas + tup * alfad
     alfadt <- alfad * (1. + tddc * rddsoil / rn)
   }
-  my_list <- list("rdot" = rdot, "rsot" = rsot, "rddt" = rddt, "rsdt" = rsdt, 
+  my_list <- list("rdot" = rdot, "rsot" = rsot, "rddt" = rddt, "rsdt" = rsdt,
                   "alfast" = alfast,  "alfadt" = alfadt)
   return(my_list)
 }
@@ -863,15 +863,15 @@ nonconservativescattering <- function(m, lai, att, sigb, ks, ko, sf, sb, vf, vb,
   Qv <- (vf * rinf + vb) * j2ko
 
   tdd <- (1. - rinf2) * e1 / denom
-  rdd <- rinf*(1. - e2) / denom
+  rdd <- rinf * (1. - e2) / denom
   tsd <- (Ps - re * Qs) / denom
   rsd <- (Qs - re * Ps) / denom
   tdo <- (Pv - re * Qv) / denom
   rdo <- (Qv - re * Pv) / denom
 
   z <- jfunc2(ks, ko, lai)
-  g1 <- (z-j1ks*too) / (ko + m)
-  g2 <- (z-j1ko*tss) / (ks + m)
+  g1 <- (z - j1ks * too) / (ko + m)
+  g2 <- (z - j1ko * tss) / (ks + m)
 
   tv1 <- (vf * rinf + vb) * g1
   tv2 <- (vf + vb * rinf) * g2
@@ -882,8 +882,8 @@ nonconservativescattering <- function(m, lai, att, sigb, ks, ko, sf, sb, vf, vb,
 
   # Multiple scattering contribution to bidirectional canopy reflectance
   rsod <- (t1 + t2 - t3) / (1. - rinf2)
-  my_list <- list("tdd" = tdd,  "rdd" = rdd,  "tsd" = tsd, 
-                  "rsd" = rsd,  "tdo" = tdo,  "rdo" = rdo, 
+  my_list <- list("tdd" = tdd,  "rdd" = rdd,  "tsd" = tsd,
+                  "rsd" = rsd,  "tdo" = tdo,  "rdo" = rdo,
                   "rsod" = rsod)
   return(my_list)
 }
@@ -922,17 +922,17 @@ conservativescattering <- function(m, lai, att, sigb, ks, ko, sf, sb, vf, vb, ts
   cko <- (vb * (ko - att) - vf * sigb) / dno
   dks <- (-sf * (ks + att) - sb * sigb) / dns
   dko <- (-vf * (ko + att) - vb * sigb) / dno
-  ho <- (sf*cko + sb*dko) / (ko + ks)
+  ho <- (sf * cko + sb * dko) / (ko + ks)
 
-  rsd <- cks*(1-tss*tdd)-dks*rdd
-  rdo <- cko*(1-too*tdd)-dko*rdd
-  tsd <- dks*(tss-tdd)-cks*tss*rdd
-  tdo <- dko*(too-tdd)-cko*too*rdd
+  rsd <- cks * (1 - tss * tdd) - dks * rdd
+  rdo <- cko * (1 - too * tdd) - dko * rdd
+  tsd <- dks * (tss - tdd) - cks * tss * rdd
+  tdo <- dko * (too - tdd) - cko * too * rdd
   # Multiple scattering contribution to bidirectional canopy reflectance
-  rsod <- ho*(1-tss*too)-cko*tsd*too-dko*rsd
+  rsod <- ho * (1 - tss * too) - cko * tsd * too - dko * rsd
 
-  my_list <- list("tdd" = tdd,  "rdd" = rdd,  "tsd" = tsd, 
-                  "rsd" = rsd,  "tdo" = tdo,  "rdo" = rdo, 
+  my_list <- list("tdd" = tdd,  "rdd" = rdd,  "tsd" = tsd,
+                  "rsd" = rsd,  "tdo" = tdo,  "rdo" = rdo,
                   "rsod" = rsod)
   return(my_list)
 }
@@ -958,10 +958,10 @@ campbell  <- function(ala) {
   n <- length(litab)
   tl1 <- tx1 * (pi / 180)
   tl2 <- tx2 * (pi / 180)
-  excent <- exp(-1.6184e-5 * ala**3 + 2.1145e-3 * ala**2-1.2390e-1 * ala + 3.2491)
+  excent <- exp(-1.6184e-5 * ala**3 + 2.1145e-3 * ala**2 - 1.2390e-1 * ala + 3.2491)
   sum0 <- 0
 
-  freq = c()
+  freq <- c()
   for (i in 1:n) {
     x1 <- excent / (sqrt(1. + excent**2. * tan(tl1[i])**2))
     x2 <- excent / (sqrt(1. + excent**2. * tan(tl2[i])**2))
@@ -972,10 +972,10 @@ campbell  <- function(ala) {
       alpha2 <- alpha**2
       x12 <- x1**2
       x22 <- x2**2
-      alpx1   = 0 * alpha2
-      alpx2   = 0 * alpha2
-      almx1   = 0 * alpha2
-      almx2   = 0 * alpha2
+      alpx1 <- 0 * alpha2
+      alpx2 <- 0 * alpha2
+      almx1 <- 0 * alpha2
+      almx2 <- 0 * alpha2
       if (excent > 1) {
         alpx1 <- sqrt(alpha2[excent > 1] + x12[excent > 1])
         alpx2[excent > 1] <- sqrt(alpha2[excent > 1] + x22[excent > 1])
@@ -985,13 +985,13 @@ campbell  <- function(ala) {
         almx1 <- sqrt(alpha2 - x12)
         almx2 <- sqrt(alpha2 - x22)
         dum <- x1 * almx1 + alpha2 * asin(x1 / alpha)
-        freq[i] <- abs(dum-(x2 * almx2 + alpha2 * asin(x2 / alpha)))
+        freq[i] <- abs(dum - (x2 * almx2 + alpha2 * asin(x2 / alpha)))
       }
     }
   }
   sum0 <- sum(freq)
   freq0 <- freq / sum0
-  foliar_distrib <- list("lidf" = freq0, "litab" =litab)
+  foliar_distrib <- list("lidf" = freq0, "litab" = litab)
   return(foliar_distrib)
 }
 
@@ -1018,8 +1018,8 @@ campbell  <- function(ala) {
 #" @return foliar_distrib list. lidf and litab
 #" @export
 dladgen  <- function(a, b) {
-  litab = c(5., 15., 25., 35., 45., 55., 65., 75., 81., 83., 85., 87., 89.)
-  freq = c()
+  litab <- c(5., 15., 25., 35., 45., 55., 65., 75., 81., 83., 85., 87., 89.)
+  freq <- c()
   for (i1 in 1:8) {
     t <- i1 * 10
     freq[i1] <- dcum(a, b, t)
@@ -1032,7 +1032,7 @@ dladgen  <- function(a, b) {
   for (i in 13:2) {
     freq[i] <- freq[i] - freq[i - 1]
   }
-  foliar_distrib <- list("lidf" = freq, "litab" =litab)
+  foliar_distrib <- list("lidf" = freq, "litab" = litab)
   return(foliar_distrib)
 }
 
@@ -1072,7 +1072,7 @@ dcum <- function(a, b, t) {
 jfunc1 <- function(k, l, t) {
   # J1 function with avoidance of singularity problem
   del <- (k - l) * t
-  jout = 0 * l
+  jout <- 0 * l
   jout[which(abs(del) > 1e-3)] <- (exp(-l[which(abs(del) > 1e-3)] * t) - exp(-k * t)) / (k - l[which(abs(del) > 1e-3)])
   jout[which(abs(del) <= 1e-3)] <- 0.5 * t * (exp(-k * t) + exp(-l[which(abs(del) <= 1e-3)] * t)) * (1 - del[which(abs(del) <= 1e-3)] * del[which(abs(del) <= 1e-3)] / 12)
   return(jout)
@@ -1143,7 +1143,7 @@ volscatt  <- function(tts, tto, psi, ttl) {
   costo <- cos(rd * tto)
   sints <- sin(rd * tts)
   sinto <- sin(rd * tto)
-  cospsi <- cos(rd*psi)
+  cospsi <- cos(rd * psi)
   psir <- rd * psi
   costl <- cos(rd * ttl)
   sintl <- sin(rd * ttl)
@@ -1177,11 +1177,11 @@ volscatt  <- function(tts, tto, psi, ttl) {
     bts <- pi
     ds <- cs
   }
-  chi_s <- 2. / pi*((bts - pi * .5) * cs + sin(bts) * ss)
+  chi_s <- 2. / pi * ((bts - pi * .5) * cs + sin(bts) * ss)
   if (abs(cosbto) < 1) {
     bto <- acos(cosbto)
     doo <- so
-  } else if(tto < 90) {
+  } else if (tto < 90) {
     bto <- pi
     doo <- co
   } else {
