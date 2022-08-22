@@ -48,6 +48,7 @@
             '$choice'
             '$output_indices'
             '$plots'
+            '$output_raster'
         ]]>
     </command>
     <inputs>
@@ -116,12 +117,10 @@
         <collection type="list" name="plots" label="${input_indice} plot">
             <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" visible="false" format="png"/>
         </collection>
-        <data name="output_raster" from_work_dir="raster.zip" format="zip" label="${input_indice} raster">
-            <filter> choice == 'Y'</filter>
-        </data>
-        <data name="output_header" from_work_dir="header.zip" format="zip" label="${input_indice} header">
-            <filter> choice == 'Y'</filter>
-        </data>
+        <collection type="list" name="output_raster" label="${input_indice} raster">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)" directory="SpectralIndices/" visible="false" recurse="true" format="bil,hdr"/>
+                <filter> choice == 'Y'</filter>
+        </collection>
     </outputs>
     <tests>
         <test>

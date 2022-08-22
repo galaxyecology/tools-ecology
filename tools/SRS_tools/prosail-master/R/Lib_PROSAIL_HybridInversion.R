@@ -105,7 +105,7 @@ apply_prosail_inversion <- function(raster_path,  hybridmodel,  pathout,
       if (length(selectpixels) > 0) {
         blockval <- blockval / multiplyingfactor
         modelsvr_estimate <- list()
-        for (modind in 1:length(hybridmodel[[parm]])) {
+        for (modind in 1:seq_along(hybridmodel[[parm]])) {
           pb$tick()
           modelsvr_estimate[[modind]] <- predict(hybridmodel[[parm]][[modind]],  blockval)
         }
@@ -117,7 +117,7 @@ apply_prosail_inversion <- function(raster_path,  hybridmodel,  pathout,
         mean_estimatefull[selectpixels] <- mean_estimate
         std_estimatefull[selectpixels] <- std_estimate
       } else {
-        for (modind in 1:length(hybridmodel[[parm]])) {
+        for (modind in 1:seq_along(hybridmodel[[parm]])) {
           pb$tick()
         }
       }
@@ -287,7 +287,7 @@ prosail_hybrid_train <- function(brf_lut, inputvar, figplot = FALSE, nbensemble 
     }
     # plot prediction
     df <- data.frame(x = rep(1:nbsamples, nbensemble),  y = as.numeric(matrix(tunedmodelyall, ncol = 1)))
-    df_summary <- df %>% 
+    df_summary <- df %>%
      dplyr::group_by(x) %>%
       summarize(ymin = min(y), ystdmin = mean(y) - sd(y),
                  ymax = max(y), ystdmax = mean(y) + sd(y),
@@ -444,11 +444,11 @@ train_prosail_inversion <- function(minval = NULL, maxval = NULL,
   }
   if (is.null(minval)) {
     minval <- data.frame("CHL" = 10, "CAR" = 0, "EWT" = 0.01, "ANT" = 0, "LMA" = 0.005, "N" = 1.0, "psoil" = 0.0,  "BROWN" = 0.0,
-                         "LIDFa" = 20,  "lai" = 0.5, "q"=0.1, "tto" = 0, "tts" = 20,  "psi" = 80)
+                         "LIDFa" = 20,  "lai" = 0.5, "q" = 0.1, "tto" = 0, "tts" = 20,  "psi" = 80)
   }
   if (is.null(maxval)) {
     maxval <- data.frame("CHL" = 75, "CAR" = 15, "EWT" = 0.03, "ANT" = 2, "LMA" = 0.03, "N" = 2.0,  "psoil" = 1.0,  "BROWN" = 0.5,
-                         "LIDFa" = 70,  "lai" = 7, "q"=0.2, "tto" = 5, "tts" = 30,  "psi" = 110)
+                         "LIDFa" = 70,  "lai" = 7, "q" = 0.2, "tto" = 5, "tts" = 30,  "psi" = 110)
   }
   # define min and max values
   # fixed parameters
@@ -484,7 +484,7 @@ train_prosail_inversion <- function(minval = NULL, maxval = NULL,
   }
 
   # generate LUT of BRF corresponding to inputprosail,  for a sensor
-  brf_lut <- Generate_LUT_BRF(sailversion = sailversion, inputprosail = inputprosail, 
+  brf_lut <- Generate_LUT_BRF(sailversion = sailversion, inputprosail = inputprosail,
                               specprospect = specprospect, specsoil = specsoil, specatm = specatm)
 
   # write parameters LUT

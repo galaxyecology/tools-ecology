@@ -24,7 +24,7 @@
 adjust_envi_hdr <- function(dsn, bands, sensor = "Unknown", stretch = FALSE) {
 
   # Edit hdr file to add metadata
-  hdr <- read_ENVI_header(get_hdr_name(dsn))
+  hdr <- read_envi_header(get_hdr_name(dsn))
   hdr$`band names` <- bands$bandname
   if (length(bands$wavelength) == length(bands$bandname)) {
     hdr$wavelength <- bands$wavelength
@@ -299,15 +299,15 @@ get_bb_from_fullimage <- function(path_raster) {
 #" @export
 get_bb_from_vector <- function(path_raster, path_vector, buffer = 0) {
 
-  Raster <- raster::raster(path_raster)
+  data_raster <- raster::raster(path_raster)
   # extract BB coordinates from vector
   bb_vector <- rgeos::gbuffer(spgeom = as(sf::st_read(dsn = path_vector, quiet = TRUE), "Spatial"),
                               width = buffer, byid = TRUE)
   # extract BB coordinates from raster
-  bb_raster <- rgeos::bbox2SP(bbox = bbox(Raster))
+  bb_raster <- rgeos::bbox2SP(bbox = bbox(data_raster))
   # compute intersection
-  Intersect <- rgeos::gIntersection(bb_vector, bb_raster)
-  bbext <- raster::extent(Intersect)
+  intersect <- rgeos::gIntersection(bb_vector, bb_raster)
+  bbext <- raster::extent(intersect)
   xmin <- bbext[1]
   xmax <- bbext[2]
   ymin <- bbext[3]
@@ -324,8 +324,8 @@ get_bb_from_vector <- function(path_raster, path_vector, buffer = 0) {
   # get coordinates for corners of bounding box
   bb_xycoords <- list()
   for (corner in names(corners)) {
-    ex_df <- as.data.frame(raster::extract(Raster, corners[[corner]], cellnumbers = TRUE))
-    colrow <- ind2sub(Raster, ex_df$cell)
+    ex_df <- as.data.frame(raster::extract(data_raster, corners[[corner]], cellnumbers = TRUE))
+    colrow <- ind2sub(data_raster, ex_df$cell)
     bb_xycoords[[corner]] <- data.frame("row" = colrow$row, "col" = colrow$col)
   }
   return(bb_xycoords)
@@ -381,9 +381,9 @@ get_s2_bands <- function(path_dir_s2, s2source = "SAFE", resolution = 10, fre_sr
     message("- LaSRC (atmospheric correction: LaSRC)")
     message("- THEIA (atmospheric correction: MAJA)")
     message("- SAFE (atmospheric correction: Sen2Cor)")
-    s2bands_10m <- s2bands_20m <- granule <- mtdfile <- metadata_MSI <- metadata_lasrc <- NULL
+    s2bands_10m <- s2bands_20m <- granule <- mtdfile <- metadata_msi <- metadata_lasrc <- NULL
     listbands <- list("s2bands_10m" = s2bands_10m, "s2bands_20m" = s2bands_20m, "GRANULE" = granule,
-                      "metadata" = mtdfile, "metadata_MSI" = metadata_MSI,
+                      "metadata" = mtdfile, "metadata_MSI" = metadata_msi,
                       "metadata_lasrc" = metadata_lasrc)
   }
   return(listbands)
@@ -462,7 +462,7 @@ get_s2_bands_from_lasrc <- function(path_dir_s2, resolution = 10) {
   b10m_standard <- c("B02", "B03", "B04", "B05", "B06", "B07", "B08", "B8A", "B11", "B12")
   # Define path for bands
   s2bands_10m <- s2bands_20m <- list()
-  for (i in 1:length(b10m)) {
+  for (i in 1:seq_along(b10m)) {
     s2bands_10m[[b10m_standard[i]]] <- file.path(path_dir_s2,
                                                  list.files(path_dir_s2,
                                                             pattern = paste(b10m[i], ".tif", sep = "")))
@@ -675,7 +675,7 @@ get_s2_l1c_image <- function(list_safe, l1c_path, path_vector, time_interval,
 
 #" @export
 get_s2_l2a_image <- function(l2a_path, spatial_extent, dateacq,
-                             deletel1c = FALSE, Sen2Cor = TRUE,
+                             deletel1c = FALSE, sen2cor = TRUE,
                              googlecloud = FALSE) {
 
   # Needs to be updated: define path for L1c data
@@ -696,11 +696,10 @@ get_s2_l2a_image <- function(l2a_path, spatial_extent, dateacq,
   # name all products
   prodname <- attr(list_safe, which = "name")
   prodfullpath <- file.path(l2a_path, prodname)
-  if (Sen2Cor == TRUE) {
+  if (sen2cor == TRUE) {
     for (imgname in prodname) {
       s2level <- get_s2_level(imgname)
       if (s2level == "L1C") {
-        # prodname <- get_s2_l1c_image(list_safe[whichimg], l1c_path,spatial_extent,time_interval,googlecloud=googlecloud)
         datepattern <- gsub(pattern = "-", replacement = "", x = dateacq)
         pathl2a <- s2_from_l1c_to_l2a(prodname = imgname, l1c_path = l2a_path, l2a_path = l2a_path,
                                       datepattern = datepattern, tmp_path = NULL)
@@ -727,9 +726,9 @@ get_s2_l2a_image <- function(l2a_path, spatial_extent, dateacq,
 #"
 #" @param Raster image raster object
 #" @param image_index coordinates corresponding to the raster
-ind2sub <- function(Raster, image_index) {
-  c <- ((image_index - 1) %% Raster@ncols) + 1
-  r <- floor((image_index - 1) / Raster@ncols) + 1
+ind2sub <- function(data_raster, image_index) {
+  c <- ((image_index - 1) %% data_raster@ncols) + 1
+  r <- floor((image_index - 1) / data_raster@ncols) + 1
   my_list <- list("col" = c, "row" = r)
   return(my_list)
 }
@@ -753,8 +752,8 @@ mosaic_rasters <- function(list_rasters, dst_mosaic, stretch = FALSE) {
   # convert hdr to ENVI format
   raster::hdr(raster(dst_mosaic), format = "ENVI")
   # add info to hdr based on initial rasters
-  hdr_init <- read_ENVI_header(get_hdr_name(list_rasters[1]))
-  hdr <- read_ENVI_header(get_hdr_name(dst_mosaic))
+  hdr_init <- read_envi_header(get_hdr_name(list_rasters[1]))
+  hdr <- read_envi_header(get_hdr_name(dst_mosaic))
   hdr$`band names` <- hdr_init$`band names`
   hdr$wavelength <- hdr_init$wavelength
   if (stretch == TRUE) {
@@ -774,8 +773,7 @@ mosaic_rasters <- function(list_rasters, dst_mosaic, stretch = FALSE) {
 #"
 #" @return list of the content of the hdr file
 #" @export
-read_ENVI_header <- function(hdrpath) {
-  # header <- paste(header, collapse = "\n")
+read_envi_header <- function(hdrpath) {
   if (!grepl(".hdr$", hdrpath)) {
     stop("File extension should be .hdr")
   }
@@ -1068,7 +1066,7 @@ save_cloud_s2 <- function(s2_stars, cloud_path, s2source = "SAFE",
 #" @export
 save_reflectance_s2 <- function(s2_stars, refl_path, format = "ENVI", datatype = "Int16",
                                 s2sat = NULL, tile_s2 = NULL, dateacq_s2 = NULL,
-                                MTD = NULL, MTD_MSI = NULL, mtd_lasrc = NULL,
+                                mtd = NULL, mtd_msi = NULL, mtd_lasrc = NULL,
                                 maxchunk = 256) {
   # identify if S2A or S2B, if possible
   s2mission <- check_s2mission(s2sat = s2sat, tile_s2 = tile_s2, dateacq_s2 = dateacq_s2)
@@ -1091,9 +1089,9 @@ save_reflectance_s2 <- function(s2_stars, refl_path, format = "ENVI", datatype =
 
   # apply offset when necessary
   listbands_bis <- c("B2", "B3", "B4", "B5", "B6", "B7", "B8", "B8A", "B11", "B12")
-  if (!is.null(MTD_MSI) && is.null(mtd_lasrc)) {
+  if (!is.null(mtd_msi) && is.null(mtd_lasrc)) {
     # read XML file containing info about geometry of acquisition
-    s2xml <- XML::xmlToList(MTD_MSI)
+    s2xml <- XML::xmlToList(mtd_msi)
     xml_offset <- s2xml$General_Info$Product_Image_Characteristics$BOA_ADD_offset_VALUES_LIST
     bands <- lapply(s2xml$General_Info$Product_Image_Characteristics$Spectral_Information_List, "[[", 4)
     if (!is.null(xml_offset) && !is.null(bands)) {
@@ -1159,7 +1157,7 @@ save_reflectance_s2 <- function(s2_stars, refl_path, format = "ENVI", datatype =
     message("Warning: BOA offset differs between bands.")
     message("offset will not be applied to the final S2 reflectance raster")
     message("check metadata file to identify the offset applied on each band")
-    print(MTD_MSI)
+    print(mtd_msi)
   } else {
     message("applying offset to reflectance data")
     if (is.null(mtd_lasrc) || uniqueoffset == 0) {
@@ -1173,15 +1171,15 @@ save_reflectance_s2 <- function(s2_stars, refl_path, format = "ENVI", datatype =
   write_stack_s2(stars_s2 = s2_stars2, stars_spectral = stars_spectral, refl_path = refl_path,
                  format = format, datatype = datatype, sensor = sensor, maxchunk = maxchunk)
   # save metadata file as well if available
-  if (!is.null(MTD)) {
-    if (file.exists(MTD)) {
-      file.copy(from = MTD, to = file.path(dirname(refl_path), basename(MTD)), overwrite = TRUE)
+  if (!is.null(mtd)) {
+    if (file.exists(mtd)) {
+      file.copy(from = mtd, to = file.path(dirname(refl_path), basename(mtd)), overwrite = TRUE)
     }
   }
   # save metadata file as well if available
-  if (!is.null(MTD_MSI)) {
-    if (file.exists(MTD_MSI)) {
-      file.copy(from = MTD_MSI, to = file.path(dirname(refl_path), basename(MTD_MSI)), overwrite = TRUE)
+  if (!is.null(mtd_msi)) {
+    if (file.exists(mtd_msi)) {
+      file.copy(from = mtd_msi, to = file.path(dirname(refl_path), basename(mtd_msi)), overwrite = TRUE)
     }
   }
   # save LaSRC metadata file as well if available
@@ -1284,7 +1282,7 @@ write_rasterstack_envi <- function(stackobj, stackpath, bands, datatype = "INT2S
   r <- raster::writeRaster(x = stackobj, filename = stackpath, format = "Ehdr", overwrite = TRUE, datatype = datatype)
   raster::hdr(r, format = "ENVI")
   # Edit hdr file to add metadata
-  hdr <- read_ENVI_header(get_hdr_name(stackpath))
+  hdr <- read_envi_header(get_hdr_name(stackpath))
   hdr$`band names` <- bands$bandname
   if (length(bands$wavelength) == length(bands$bandname)) {
     hdr$wavelength <- bands$wavelength

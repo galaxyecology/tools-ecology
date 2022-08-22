@@ -5,16 +5,16 @@
 # PROGRAMMERS:
 # Jean-Baptiste FERET <jb.feret@teledetection.fr >
 # Florian de BOISSIEU <fdeboiss@gmail.com >
-# Copyright 2019 / 11 Jean-Baptiste FERET
+# copyright 2019 / 11 Jean-Baptiste FERET
 # ============================================================================= =
 # This Library includes functions dedicated to PROSAIL simulation
 # SAIL versions available are 4SAIL and 4SAIL2
 # ============================================================================= =
 
-#" Computes bidirectional reflectance factor based on outputs from PROSAIL and sun position
+#" computes bidirectional reflectance factor based on outputs from PROSAIL and sun position
 #"
 #" The direct and diffuse light are taken into account as proposed by:
-#" Francois et al. (2002) Conversion of 400-1100 nm vegetation albedo
+#" Francois et al. (2002) conversion of 400-1100 nm vegetation albedo
 #" measurements into total shortwave broadband albedo using a canopy
 #" radiative transfer model,  Agronomie
 #" Es = direct
@@ -31,12 +31,12 @@ compute_brf  <- function(rdot, rsot, tts, specatm_sensor) {
   ############################## #
   ##	direct  /  diffuse light	##
   ############################## #
-  Es <- specatm_sensor$Direct_Light
-  Ed <- specatm_sensor$Diffuse_Light
+  es <- specatm_sensor$Direct_Light
+  ed <- specatm_sensor$Diffuse_Light
   rd <- pi / 180
   skyl <- 0.847 - 1.61 * sin((90 - tts) * rd) +  1.04 * sin((90 - tts) * rd) * sin((90 - tts) * rd) # diffuse radiation (Francois et al.,  2002)
-  pardiro <- (1 - skyl) * Es
-  pardifo <- skyl * Ed
+  pardiro <- (1 - skyl) * es
+  pardifo <- skyl * ed
   brf <- (rdot * pardifo + rsot * pardiro) / (pardiro + pardifo)
   return(brf)
 }
@@ -56,10 +56,10 @@ compute_brf  <- function(rdot, rsot, tts, specatm_sensor) {
 #" @param CBC numeric. NonProtCarbon-based constituent content (g.cm-2)
 #" @param alpha numeric. Solid angle for incident light at surface of leaf (simulation of roughness)
 #" @param typelidf numeric. Type of leaf inclination distribution function
-#" @param LIDFa numeric.
+#" @param lidfa numeric.
 #" if typelidf  == 1,  controls the average leaf slope
 #" if typelidf  == 2,  corresponds to average leaf angle
-#" @param LIDFb numeric.
+#" @param lidfb numeric.
 #" if typelidf  == 1,  unused
 #" if typelidf  == 2,  controls the distribution"s bimodality
 #" @param lai numeric. Leaf Area Index
@@ -70,9 +70,9 @@ compute_brf  <- function(rdot, rsot, tts, specatm_sensor) {
 #" @param rsoil numeric. Soil reflectance
 #" @param fraction_brown numeric. Fraction of brown leaf area
 #" @param diss numeric. Layer dissociation factor
-#" @param Cv numeric. vertical crown cover percentage
+#" @param cv numeric. vertical crown cover percentage
 #" = % ground area covered with crowns as seen from nadir direction
-#" @param Zeta numeric. Tree shape factor
+#" @param zeta numeric. Tree shape factor
 #" = ratio of crown diameter to crown height
 #" @param sailversion character. choose between 4SAIL and 4SAIL2
 #" @param brownvegetation list. Defines optical properties for brown vegetation,  if not NULL
@@ -89,9 +89,9 @@ compute_brf  <- function(rdot, rsot, tts, specatm_sensor) {
 pro4sail  <- function(spec_sensor, input_prospect = NULL, N = 1.5, CHL = 40.0,
                      CAR = 8.0, ANT = 0.0, BROWN = 0.0, EWT = 0.01,
                      LMA = 0.008, PROT = 0.0, CBC = 0.0, alpha = 40.0,
-                     typelidf = 2, LIDFa = NULL, LIDFb = NULL, lai = NULL,
+                     typelidf = 2, lidfa = NULL, lidfb = NULL, lai = NULL,
                      q = NULL, tts = NULL, tto = NULL, psi = NULL, rsoil = NULL,
-                     fraction_brown = 0.0,  diss = 0.0,  Cv = 1, Zeta = 1,
+                     fraction_brown = 0.0,  diss = 0.0,  cv = 1, zeta = 1,
                      sailversion = "4SAIL", brownvegetation = NULL) {
 
   ############################ #
@@ -184,12 +184,12 @@ pro4sail  <- function(spec_sensor, input_prospect = NULL, N = 1.5, CHL = 40.0,
   if (sailversion  ==  "4SAIL") {
     # run 4SAIL
     ref <- foursail(leafoptics = greenvegetation,
-                    typelidf,  LIDFa,  LIDFb,  lai,  q,  tts,  tto,  psi,  rsoil)
+                    typelidf,  lidfa,  lidfb,  lai,  q,  tts,  tto,  psi,  rsoil)
   } else if (sailversion  ==  "4SAIL2") {
     # run 4SAIL2
     ref <- foursail2(leafgreen = greenvegetation,  leafbrown = brownvegetation,
-                     typelidf,  LIDFa,  LIDFb,  lai,  q,  tts,  tto,  psi,  rsoil,
-                     fraction_brown,  diss,  Cv,  Zeta)
+                     typelidf,  lidfa,  lidfb,  lai,  q,  tts,  tto,  psi,  rsoil,
+                     fraction_brown,  diss,  cv,  zeta)
   }
   return(ref)
 }
@@ -198,10 +198,10 @@ pro4sail  <- function(spec_sensor, input_prospect = NULL, N = 1.5, CHL = 40.0,
 #" @param leafoptics list. Includes leaf optical properties (reflectance and transmittance)
 #" and corresponding spectral bands
 #" @param typelidf numeric. Type of leaf inclination distribution function
-#" @param LIDFa numeric.
+#" @param lidfa numeric.
 #" if typelidf  == 1,  controls the average leaf slope
 #" if typelidf  == 2,  corresponds to average leaf angle
-#" @param LIDFb numeric.
+#" @param lidfb numeric.
 #" if typelidf  == 1,  unused
 #" if typelidf  == 2,  controls the distribution"s bimodality
 #" @param lai numeric. Leaf Area Index
@@ -218,7 +218,7 @@ pro4sail  <- function(spec_sensor, input_prospect = NULL, N = 1.5, CHL = 40.0,
 #" rddt: bi-hemispherical reflectance factor
 #" @export
 
-foursail  <- function(leafoptics,  typelidf = 2,  LIDFa = NULL,  LIDFb = NULL,  lai = NULL,
+foursail  <- function(leafoptics,  typelidf = 2,  lidfa = NULL,  lidfb = NULL,  lai = NULL,
                       q = NULL,  tts = NULL,  tto = NULL,  psi = NULL,  rsoil = NULL) {
 
   ############################## #
@@ -239,12 +239,12 @@ foursail  <- function(leafoptics,  typelidf = 2,  LIDFa = NULL,  LIDFb = NULL,  
 
   #	Generate leaf angle distribution from average leaf angle (ellipsoidal) or (a, b) parameters
   if (typelidf == 1) {
-    foliar_distrib <- dladgen(LIDFa, LIDFb)
+    foliar_distrib <- dladgen(lidfa, lidfb)
     lidf <- foliar_distrib$lidf
     litab <- foliar_distrib$litab
 
   } else if (typelidf == 2) {
-    foliar_distrib <- campbell(LIDFa)
+    foliar_distrib <- campbell(lidfa)
     lidf <- foliar_distrib$lidf
     litab <- foliar_distrib$litab
   }
@@ -272,7 +272,7 @@ foursail  <- function(leafoptics,  typelidf = 2,  LIDFa = NULL,  LIDFb = NULL,  
     ftau <- resvolscatt$ftau
 
     #********************************************************************************
-    #*                   SUITS SYSTEM COEFFICIENTS
+    #*                   SUITS SYSTEM coEFFICIENTS
     #*
     #*	ks  : Extinction coefficient for direct solar flux
     #*	ko  : Extinction coefficient for direct observed flux
@@ -359,17 +359,17 @@ foursail  <- function(leafoptics,  typelidf = 2,  LIDFa = NULL,  LIDFb = NULL,  
     j1ko <- jfunc1(ko, m, lai)
     j2ko <- jfunc2(ko, m, lai)
 
-    Ps <- (sf + sb * rinf) * j1ks
-    Qs <- (sf * rinf + sb) * j2ks
-    Pv <- (vf + vb * rinf) * j1ko
-    Qv <- (vf * rinf + vb) * j2ko
+    ps <- (sf + sb * rinf) * j1ks
+    qs <- (sf * rinf + sb) * j2ks
+    pv <- (vf + vb * rinf) * j1ko
+    qv <- (vf * rinf + vb) * j2ko
 
     rdd <- rinf * (1. - e2) / denom
     tdd <- (1. - rinf2) * e1 / denom
-    tsd <- (Ps - re * Qs) / denom
-    rsd <- (Qs - re * Ps) / denom
-    tdo <- (Pv - re * Qv) / denom
-    rdo <- (Qv - re * Pv) / denom
+    tsd <- (ps - re * qs) / denom
+    rsd <- (qs - re * ps) / denom
+    tdo <- (pv - re * qv) / denom
+    rdo <- (qv - re * pv) / denom
 
     tss <- exp(-ks * lai)
     too <- exp(-ko * lai)
@@ -381,7 +381,7 @@ foursail  <- function(leafoptics,  typelidf = 2,  LIDFa = NULL,  LIDFb = NULL,  
     tv2 <- (vf + vb * rinf) * g2
     t1 <- tv1 * (sf + sb * rinf)
     t2 <- tv2 * (sf * rinf + sb)
-    t3 <- (rdo * Qs + tdo * Ps) * rinf
+    t3 <- (rdo * qs + tdo * ps) * rinf
 
     #	Multiple scattering contribution to bidirectional canopy reflectance
     rsod <- (t1 + t2 - t3) / (1. - rinf2)
@@ -452,10 +452,10 @@ foursail  <- function(leafoptics,  typelidf = 2,  LIDFa = NULL,  LIDFb = NULL,  
 #" @param leafgreen list. includes relfectance and transmittance for vegetation #1 (e.g. green vegetation)
 #" @param leafbrown list. includes relfectance and transmittance for vegetation #2 (e.g. brown vegetation)
 #" @param typelidf numeric. Type of leaf inclination distribution function
-#" @param LIDFa numeric.
+#" @param lidfa numeric.
 #" if typelidf  == 1,  controls the average leaf slope
 #" if typelidf  == 2,  corresponds to average leaf angle
-#" @param LIDFb numeric.
+#" @param lidfb numeric.
 #" if typelidf  == 1,  unused
 #" if typelidf  == 2,  controls the distribution"s bimodality
 #" @param lai numeric. Leaf Area Index
@@ -466,9 +466,9 @@ foursail  <- function(leafoptics,  typelidf = 2,  LIDFa = NULL,  LIDFb = NULL,  
 #" @param rsoil numeric. Soil reflectance
 #" @param fraction_brown numeric. Fraction of brown leaf area
 #" @param diss numeric. Layer dissociation factor
-#" @param Cv numeric. vertical crown cover percentage
+#" @param cv numeric. vertical crown cover percentage
 #" = % ground area covered with crowns as seen from nadir direction
-#" @param Zeta numeric. Tree shape factor
+#" @param zeta numeric. Tree shape factor
 #" = ratio of crown diameter to crown height
 #"
 #" @return list. rdot, rsot, rddt, rsdt
@@ -481,9 +481,9 @@ foursail  <- function(leafoptics,  typelidf = 2,  LIDFa = NULL,  LIDFb = NULL,  
 #" @export
 
 foursail2  <- function(leafgreen,  leafbrown,
-                       typelidf = 2, LIDFa = NULL, LIDFb = NULL,
+                       typelidf = 2, lidfa = NULL, lidfb = NULL,
                        lai = NULL,  hot = NULL, tts = NULL, tto = NULL, psi = NULL, rsoil = NULL,
-                       fraction_brown = 0.5,  diss = 0.5,  Cv = 1, Zeta = 1) {
+                       fraction_brown = 0.5,  diss = 0.5,  cv = 1, zeta = 1) {
 
   #	This version does not include non-Lambertian soil properties.
   #	original codes do,  and only need to add the following variables as input
@@ -494,12 +494,12 @@ foursail2  <- function(leafgreen,  leafbrown,
 
   #	Generate leaf angle distribution from average leaf angle (ellipsoidal) or (a, b) parameters
   if (typelidf == 1) {
-    foliar_distrib <- dladgen(LIDFa, LIDFb)
+    foliar_distrib <- dladgen(lidfa, lidfb)
     lidf <- foliar_distrib$lidf
     litab <- foliar_distrib$litab
 
   } else if (typelidf == 2) {
-    foliar_distrib <- campbell(LIDFa)
+    foliar_distrib <- campbell(lidfa)
     lidf <- foliar_distrib$lidf
     litab <- foliar_distrib$litab
   }
@@ -524,19 +524,19 @@ foursail2  <- function(leafgreen,  leafbrown,
     dso <- sqrt(tants * tants + tanto * tanto - 2.0 * tants * tanto * cospsi)
 
     # Clumping effects
-    Cs <- Co <- 1.0
-    if (Cv <= 1.0) {
-      Cs <- 1.0 - (1.0 - Cv)^(1.0 / cts)
-      Co <- 1.0 - (1.0 - Cv)^(1.0 / cto)
+    cs <- co <- 1.0
+    if (cv <= 1.0) {
+      cs <- 1.0 - (1.0 - cv)^(1.0 / cts)
+      co <- 1.0 - (1.0 - cv)^(1.0 / cto)
     }
     overlap <- 0.0
-    if (Zeta > 0.0) {
-      overlap <- min(Cs * (1.0 - Co), Co * (1.0 - Cs)) * exp(-dso / Zeta)
+    if (zeta > 0.0) {
+      overlap <- min(cs * (1.0 - co), co * (1.0 - cs)) * exp(-dso / zeta)
     }
-    fcd <- Cs * Co + overlap
-    fcs <- (1.0 - Cs) * Co - overlap
-    fod <- Cs * (1.0 - Co) - overlap
-    fos <- (1.0 - Cs) * (1.0 - Co) + overlap
+    fcd <- cs * co + overlap
+    fcs <- (1.0 - cs) * co - overlap
+    fod <- cs * (1.0 - co) - overlap
+    fos <- (1.0 - cs) * (1.0 - co) + overlap
     fcdc <- 1.0 - (1.0 - fcd)^(0.5 / cts + 0.5 / cto)
 
     #	Part depending on diss,  fraction_brown,  and leaf optical properties
@@ -570,7 +570,7 @@ foursail2  <- function(leafgreen,  leafbrown,
 
     # Weighted sums over LIDF
 
-    for (i in 1:length(litab)) {
+    for (i in 1:seq_along(litab)) {
       ttl <- litab[i]
       ctl <- cos(rd * ttl)
       # SAIL volscatt function gives interception coefficients
@@ -765,7 +765,7 @@ foursail2  <- function(leafgreen,  leafbrown,
       rsod[which_cs] <- rescs$rsod
     }
 
-    # Combine with bottom layer reflectances and transmittances (adding method)
+    # combine with bottom layer reflectances and transmittances (adding method)
     rn <- 1.0 - rdd * rddb
     tup <- (tss * rsdb + tsd * rddb) / rn
     tdn <- (tsd + tss * rsdb * rdd) / rn
@@ -789,15 +789,15 @@ foursail2  <- function(leafgreen,  leafbrown,
     tddt <- tdd * tddb / rn
 
     # Apply clumping effects to vegetation layer
-    rddcb <- Cv * rddt_b
-    rddct <- Cv * rddt_t
-    tddc <- 1 - Cv + Cv * tddt
-    rsdc <- Cs * rsdt
-    tsdc <- Cs * tsdt
-    rdoc <- Co * rdot
-    tdoc <- Co * tdot
-    tssc <- 1 - Cs + Cs * tsst
-    tooc <- 1 - Co + Co * toot
+    rddcb <- cv * rddt_b
+    rddct <- cv * rddt_t
+    tddc <- 1 - cv + cv * tddt
+    rsdc <- cs * rsdt
+    tsdc <- cs * tsdt
+    rdoc <- co * rdot
+    tdoc <- co * tdot
+    tssc <- 1 - cs + cs * tsst
+    tooc <- 1 - co + co * toot
 
     # New weight function fcdc for crown contribution (W. Verhoef,  22-05-08)
     rsoc <- fcdc * rsot
@@ -857,17 +857,17 @@ nonconservativescattering <- function(m, lai, att, sigb, ks, ko, sf, sb, vf, vb,
   j1ko <- jfunc1(ko, m, lai)
   j2ko <- jfunc2(ko, m, lai)
 
-  Ps <- (sf + sb * rinf) * j1ks
-  Qs <- (sf * rinf + sb) * j2ks
-  Pv <- (vf + vb * rinf) * j1ko
-  Qv <- (vf * rinf + vb) * j2ko
+  ps <- (sf + sb * rinf) * j1ks
+  qs <- (sf * rinf + sb) * j2ks
+  pv <- (vf + vb * rinf) * j1ko
+  qv <- (vf * rinf + vb) * j2ko
 
   tdd <- (1. - rinf2) * e1 / denom
   rdd <- rinf * (1. - e2) / denom
-  tsd <- (Ps - re * Qs) / denom
-  rsd <- (Qs - re * Ps) / denom
-  tdo <- (Pv - re * Qv) / denom
-  rdo <- (Qv - re * Pv) / denom
+  tsd <- (ps - re * qs) / denom
+  rsd <- (qs - re * ps) / denom
+  tdo <- (pv - re * qv) / denom
+  rdo <- (qv - re * pv) / denom
 
   z <- jfunc2(ks, ko, lai)
   g1 <- (z - j1ks * too) / (ko + m)
@@ -878,7 +878,7 @@ nonconservativescattering <- function(m, lai, att, sigb, ks, ko, sf, sb, vf, vb,
 
   t1 <- tv1 * (sf + sb * rinf)
   t2 <- tv2 * (sf * rinf + sb)
-  t3 <- (rdo * Qs + tdo * Ps) * rinf
+  t3 <- (rdo * qs + tdo * ps) * rinf
 
   # Multiple scattering contribution to bidirectional canopy reflectance
   rsod <- (t1 + t2 - t3) / (1. - rinf2)
@@ -942,7 +942,7 @@ conservativescattering <- function(m, lai, att, sigb, ks, ko, sf, sb, vf, vb, ts
 
 
 
-#" Computes the leaf angle distribution function value (freq)
+#" computes the leaf angle distribution function value (freq)
 #"
 #" Ellipsoidal distribution function characterised by the average leaf
 #" inclination angle in degree (ala)
@@ -995,7 +995,7 @@ campbell  <- function(ala) {
   return(foliar_distrib)
 }
 
-#" Computes the leaf angle distribution function value (freq)
+#" computes the leaf angle distribution function value (freq)
 #"
 #" Using the original bimodal distribution function initially proposed in SAIL
 #"  references
@@ -1013,7 +1013,7 @@ campbell  <- function(ala) {
 #" Extremophile 	0		  1
 #" Spherical 	    -0.35 -0.15
 #" Uniform        0     0
-#" requirement: ||LIDFa||  +  ||LIDFb|| < 1
+#" requirement: ||lidfa||  +  ||lidfb|| < 1
 #"
 #" @return foliar_distrib list. lidf and litab
 #" @export
@@ -1120,7 +1120,7 @@ jfunc4 <- function(m, t) {
 }
 
 
-#" Compute volume scattering functions and interception coefficients
+#" compute volume scattering functions and interception coefficients
 #" for given solar zenith,  viewing zenith,  azimuth and leaf inclination angle.
 #"
 #" @param tts numeric. solar zenith
@@ -1191,7 +1191,7 @@ volscatt  <- function(tts, tto, psi, ttl) {
   chi_o <- 2. / pi * ((bto - pi * .5) * co + sin(bto) * so)
 
   #c ..............................................................................
-  #c   Computation of auxiliary azimut angles bt1,  bt2,  bt3 used
+  #c   computation of auxiliary azimut angles bt1,  bt2,  bt3 used
   #c   for the computation of the bidirectional scattering coefficient w
   #c .............................................................................
 

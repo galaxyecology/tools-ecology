@@ -95,7 +95,6 @@ if (alpha == TRUE || beta == TRUE || all == TRUE) {
   alpha_div <- biodivMapR::map_alpha_div(Input_Image_File = input_image_file, Output_Dir = output_dir, TypePCA = typepca, window_size = window_size, nbCPU = nbcpu, MaxRAM = maxram, Index_Alpha = index_alpha, nbclusters = nbclusters)
 
   alpha_path <- file.path(output_dir, image_name, typepca, "ALPHA", "Shannon_10_Fullres.zip")
-
   alpha_raster <- raster::raster(alpha_path)
   get_alpha <- convert_raster(alpha_raster)
 

@@ -29,7 +29,7 @@ if (length(args) < 1) {
     data_raster <- args[1]
     rasterheader <- args[2]
     data <- args[3]
-    type <- as.character(args[4])
+    typepca <- as.character(args[4])
     source(args[5])
 }
 
@@ -61,7 +61,7 @@ pca_output <- biodivMapR::perform_PCA(Input_Image_File = input_image_file, Input
                           Output_Dir = output_dir, TypePCA = typepca, FilterPCA = filterpca, nbCPU = nbcpu, MaxRAM = maxram)
 
 
-pca_path <- file.path(output_dir, basename(data_raster), type, "PCA", "OutputPCA_8_PCs")
+pca_path <- file.path(output_dir, basename(data_raster), typepca, "PCA", "OutputPCA_8_PCs")
 pca_raster <- raster::raster(pca_path)
 get_pca <- convert_raster(pca_raster)
 
@@ -69,12 +69,7 @@ colnames(get_pca) <- c("PCA", "longitude", "latitude")
 plot_indices(get_pca, titre = "PCA")
 
 write.table(get_pca, file = "PCA.tabular", sep = "\t", dec = ".", na = " ", row.names = FALSE, col.names = TRUE, quote = FALSE)
-
-pca_files <- file.path("RESULTS", basename(data_raster), type, "PCA")
-pca_raster <- list.files(pca_files, pattern = "Output")
-data_raster <- file.path(pca_files, pca_raster[1])
-data_header <- file.path(pca_files, pca_raster[2])
-zip_raster <- file.path("PCA.zip")
-zip_header <- file.path("PCA_header.zip")
-zip::zip(zip_raster, data_raster)
-zip::zip(zip_header, data_header)
+#### Get the raster layer files
+pca_files <- file.path("RESULTS", basename(data_raster), typepca, "PCA")
+to_dir_short <- output_dir
+file.copy(pca_files, to_dir_short) #copy files from long to short paths

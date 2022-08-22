@@ -52,7 +52,6 @@
             '$type'
             '$__tool_directory__/functions.r'
             '$output_raster'
-            '$output_header'
             '$output_pca'
             '$plots'
         ]]>
@@ -77,8 +76,9 @@
         </param>
     </inputs>
     <outputs>
-        <data name="output_raster" from_work_dir="PCA.zip" format="zip" label="PCA raster"/>
-        <data name="output_header" from_work_dir="PCA_header.zip" format="zip" label="PCA header"/>
+        <collection type="list" name="output_raster" label="PCA raster">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)" directory="RESULTS/" visible="false" recurse="true" format="bil,hdr"/>
+        </collection>
         <data name="output_pca" from_work_dir="PCA.tabular" format="tabular" label="PCA tabular"/>
         <collection type="list" name="plots" label="PCA plot">
             <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" visible="false" format="png"/>
