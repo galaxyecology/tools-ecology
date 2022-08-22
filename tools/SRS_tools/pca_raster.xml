@@ -90,16 +90,7 @@
             <param name="input_raster" value="S2A_Subset"/>
             <param name="input_header" value="S2A_Subset.hdr"/>
             <param name="type" value="PCA"/>
-            <output name="output_raster">
-                <assert_contents>
-                    <has_size value="29222614" delta="10000"/>
-                </assert_contents>
-            </output>
-            <output name="output_header">
-                <assert_contents>
-                    <has_size value="773" delta="100"/>
-                </assert_contents>
-            </output>
+            <output_collection name="output_raster" type="list" count="5"/>
             <output name="output_pca">
                 <assert_contents>
                     <has_n_lines n="960435"/>
