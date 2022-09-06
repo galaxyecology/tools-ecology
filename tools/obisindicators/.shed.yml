@@ -1,0 +1,14 @@
+categories:
+    - Ecology
+owner: ecology
+remote_repository_url: https://github.com/Marie59/Sentinel_2A/obisindicators
+long_description: |
+  Compute biodiveristy indicators from OBIS
+type: unrestricted
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrapper for obisindicators tool: {{ tool_name }}."
+suite:
+  name: "obisindicators"
+  description: "A tool for generating indicators from OBIS"
+  type: unrestricted
