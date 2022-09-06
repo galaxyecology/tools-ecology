@@ -65,7 +65,7 @@
                 <param name="input_header" type="data" format="hdr" label="Input raster header"/>
             </when>
         </conditional>
-        <param name="input_indice" type="select" label="Input the type of indice you want" multiple="TRUE">
+        <param name="input_indice" type="select" label="Input the type of indice you want" multiple="true">
             <option value="ARI1">ARI1</option>
             <option value="ARI2">ARI2</option>
             <option value="ARVI">ARVI</option>

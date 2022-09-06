@@ -39,17 +39,17 @@
     </outputs>
     <tests>
         <test>
-            <param name="input" value="S2A_MSIL2A_20200316T063621_N0214_R120_T42TUR_20200316T110820.zip"/>
+            <param name="input" value="S2A_MSIL2A_20200306T015621_N0214_R117_T51JXN_20200306T034744.zip"/>
             <param name="source_s2" value="SAFE"/>
             <output name="output" value="Mission.csv"/>
             <output name="output_refl">
                 <assert_contents>
-                    <has_size value="165252823" delta="100"/>
+                    <has_size value="12923807" delta="100"/>
                 </assert_contents>
             </output>
             <output name="output_cloud">
                 <assert_contents>
-                    <has_size value="362095" delta="100"/>
+                    <has_size value="235912" delta="100"/>
                 </assert_contents>
             </output>
         </test>

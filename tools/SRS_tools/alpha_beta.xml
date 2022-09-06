@@ -50,17 +50,17 @@
               '$method.input'
             #end if
             '$typepca'
-            #if $method_div.type == 'alpha':
+            #if $type == 'alpha':
               'TRUE'
               'FALSE'
               'FALSE'
               'FALSE'
-            #else if $method_div.type == 'beta':
+            #else if $type == 'beta':
               'FALSE'
               'TRUE'
               'FALSE'
               'FALSE'
-            #else if $method_div.type == 'funct':
+            #else if $type == 'funct':
               'FALSE'
               'FALSE'
               'TRUE'
@@ -96,26 +96,24 @@
             <option value="SPCA">SPCA</option>
             <option value="PCA">PCA</option>
         </param>
-        <conditional name="method_div">
-            <param name="type" type="select" label="Alpha, beta, functional diversity and comparison plot and map" display="radio">
-                <option value="alpha">Alpha diversity map</option>
-                <option value="beta">Beta diversity map</option>
-                <option value="funct">Functional diversity map</option>
-                <option value="all">All of the above</option>
-             </param>
-        </conditional>
+        <param name="type" type="select" label="Alpha, beta, functional diversity and comparison plot and map" display="radio">
+            <option value="alpha">Alpha diversity map</option>
+            <option value="beta">Beta diversity map</option>
+            <option value="funct">Functional diversity map</option>
+            <option value="all">All of the above</option>
+        </param>
     </inputs>
     <outputs>
         <data name="output_alpha" from_work_dir="alpha.tabular" format="tabular" label="Alpha diversity">
-            <filter> method_div['type'] == 'alpha' or  method_div['type'] == 'all'</filter>
+            <filter> type == 'alpha' or  type == 'all'</filter>
         </data>
         <data name="output_beta" from_work_dir="beta.tabular" format="tabular" label="Beta diversity">
-            <filter> method_div['type'] == 'beta' or  method_div['type'] == 'all'</filter>
+            <filter> type == 'beta' or  type == 'all'</filter>
         </data>
         <data name="output_funct" from_work_dir="Functionnal.tabular" format="tabular" label="Functionnal diversity">
-            <filter> method_div['type'] == 'funct' or  method_div['type'] == 'all'</filter>
+            <filter> type == 'funct' or  type == 'all'</filter>
         </data>
-        <collection type="list" name="plots" label="${method_div.type} plot">
+        <collection type="list" name="plots" label="${type} plot">
             <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" visible="false" format="png"/>
         </collection>
     </outputs>
