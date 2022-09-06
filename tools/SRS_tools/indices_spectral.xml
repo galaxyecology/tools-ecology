@@ -178,7 +178,7 @@ Finally, you can choose whether or not you want to have the raster layer of your
 
 **Additionnal informations**
 
-This tools allows you to compute one of GEO BON EBV 'Canopy Chlorophyll Content' (https://portal.geobon.org/ebv-detail?id=13). This EBV is computed by GEO BON on the Netherlands, here you can compute it on which ever Sentinel 2 data you want by chosing to calculate the indice CCI.
+This tools allows you to compute one of GEO BON EBV 'Canopy Chlorophyll Content' (https://portal.geobon.org/ebv-detail?id=13). This EBV is computed by GEO BON on the Netherlands, here you can compute it on which ever Sentinel 2 data you want by chosing to calculate the indice CCI. When you chose your data you have to select a cloud cover smaller than 10% (you can selct this character directly on the different platforms wher you can download Sentinel 2 data).
 
 **Indices description**
 

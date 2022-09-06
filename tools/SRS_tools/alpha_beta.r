@@ -94,7 +94,10 @@ if (alpha == TRUE || beta == TRUE || all == TRUE) {
   index_alpha <- c("Shannon")
   alpha_div <- biodivMapR::map_alpha_div(Input_Image_File = input_image_file, Output_Dir = output_dir, TypePCA = typepca, window_size = window_size, nbCPU = nbcpu, MaxRAM = maxram, Index_Alpha = index_alpha, nbclusters = nbclusters)
 
-  alpha_path <- file.path(output_dir, image_name, typepca, "ALPHA", "Shannon_10_Fullres.zip")
+  alpha_zip <- file.path(output_dir, image_name, typepca, "ALPHA", "Shannon_10_Fullres.zip")
+  alpha_path <- file.path(output_dir, image_name, typepca, "ALPHA")
+  unzip(alpha_zip, exdir = alpha_path)
+  alpha_path <- file.path(output_dir, image_name, typepca, "ALPHA", "Shannon_10_Fullres")
   alpha_raster <- raster::raster(alpha_path)
   get_alpha <- convert_raster(alpha_raster)
 
@@ -129,14 +132,17 @@ selected_features <- read.table(sel_pc)[[1]]
 ## path for selected components
 
 if (funct == TRUE || all == TRUE) {
-mapper <- biodivMapR::map_functional_div(Original_Image_File = input_image_file, Functional_File = pca_files,  Selected_Features = selected_features, Output_Dir = output_dir, window_size = window_size, nbCPU = nbcpu, MaxRAM = maxram, TypePCA = typepca)
+  mapper <- biodivMapR::map_functional_div(Original_Image_File = input_image_file, Functional_File = pca_files,  Selected_Features = selected_features, Output_Dir = output_dir, window_size = window_size, nbCPU = nbcpu, MaxRAM = maxram, TypePCA = typepca)
 
-funct_path <- file.path(output_dir, image_name, typepca, "FUNCTIONAL", "FunctionalDiversity_Map_MeanFilter_Fullres.zip")
-funct_raster <- raster::raster(funct_path)
-get_funct <- convert_raster(funct_raster)
+  funct_zip <- file.path(output_dir, image_name, typepca, "FUNCTIONAL", "FunctionalDiversity_Map_MeanFilter_Fullres.zip")
+  funct_path <- file.path(output_dir, image_name, typepca, "FUNCTIONAL")
+  unzip(funct_zip, exdir = funct_path)
+  funct_path <- file.path(output_dir, image_name, typepca, "FUNCTIONAL", "FunctionalDiversity_Map_MeanFilter_Fullres")
+  funct_raster <- raster::raster(funct_path)
+  get_funct <- convert_raster(funct_raster)
 
-colnames(get_funct) <- c("Functionnal", "longitude", "latitude")
-plot_indices(get_funct, titre = "Functionnal")
+  colnames(get_funct) <- c("Functionnal", "longitude", "latitude")
+  plot_indices(get_funct, titre = "Functionnal")
 
-write.table(get_funct, file = "Functionnal.tabular", sep = "\t", dec = ".", na = " ", row.names = FALSE, col.names = TRUE, quote = FALSE)
+  write.table(get_funct, file = "Functionnal.tabular", sep = "\t", dec = ".", na = " ", row.names = FALSE, col.names = TRUE, quote = FALSE)
 }
