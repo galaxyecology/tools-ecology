@@ -1,5 +1,5 @@
-<tool id="SRS_obisindicators" name="Ocean biodiversity indicators" version="@VERSION@" profile = "20.01">
-    <description>from remote sensing data</description>
+<tool id="obisindicators" name="Ocean biodiversity indicators" version="@VERSION@" profile = "20.01">
+    <description>from OBIS</description>
     <macros>
         <import>macro.xml</import>
     </macros>
