@@ -123,4 +123,3 @@
 #' @source \url{https://obis.org/data/access}
 #' @concept data
 "occ_2010s"
-

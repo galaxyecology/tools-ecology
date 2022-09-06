@@ -34,7 +34,7 @@ if (length(args) < 4) {
     source(args[9])
     source(args[10])
     source(args[11])
-}   
+}
 
 if (hr == "false") {
   hr <- FALSE
@@ -75,7 +75,7 @@ idx <- calc_indicators(occ)
 write.table(idx, file = "Index.csv", sep = ",", dec = ".", na = " ", col.names = TRUE, row.names = FALSE, quote = FALSE)
 
 #add cell geometries to the indicators table (idx)
-grid_idx <-sf::st_wrap_dateline(dggridR::dgcellstogrid(dggs, idx$cell))
+grid_idx <- sf::st_wrap_dateline(dggridR::dgcellstogrid(dggs, idx$cell))
 colnames(grid_idx) <- c("cell", "geometry")
 
 grid <- dplyr::left_join(grid_idx,
@@ -84,7 +84,7 @@ grid <- dplyr::left_join(grid_idx,
 
 #Plot maps of indicators
 #Let’s look at the resulting indicators in map form.
-# ES(50)
+#Indice ES(50)
 es_50_map <- gmap_indicator(grid, "es", label = "ES(50)", crs = crs)
 es_50 <- ggplot2::ggsave("ES_50.png", es_50_map, scale = 0.38, width = 12, height = 7, units = "in", dpi = 300, limitsize = TRUE)
 

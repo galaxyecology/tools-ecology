@@ -48,11 +48,11 @@ calc_indicators <- function(df, esn = 50) {
     dplyr::mutate(n = sum(ni)) %>%
     dplyr::group_by(cell, species) %>%
     dplyr::mutate(
-      hi = -(ni/n*log(ni/n)),
-      si = (ni/n)^2,
-      qi = ni/n,
+      hi = -(ni / n * log(ni / n)),
+      si = (ni / n)^2,
+      qi = ni / n,
       esi = dplyr::case_when(
-        n-ni >= esn ~ 1-exp(gsl::lngamma(n-ni+1)+gsl::lngamma(n-esn+1)-gsl::lngamma(n-ni-esn+1)-gsl::lngamma(n+1)),
+        n - ni >= esn ~ 1 - exp(gsl::lngamma(n - ni + 1) + gsl::lngamma(n - esn + 1) - gsl::lngamma(n - ni - esn + 1) - gsl::lngamma(n + 1)),
         n >= esn ~ 1
       )
     ) %>%
@@ -67,6 +67,6 @@ calc_indicators <- function(df, esn = 50) {
       .groups = "drop") %>%
     dplyr::mutate(
       hill_1   = exp(shannon),
-      hill_2   = 1/simpson,
-      hill_inf = 1/maxp)
+      hill_2   = 1 / simpson,
+      hill_inf = 1 / maxp)
 }
