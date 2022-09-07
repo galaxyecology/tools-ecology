@@ -150,14 +150,14 @@ betapco <- labdsv::pco(mat_bc_dist, k = 3)
 # is defined by the name of the shapefile
 
 nbsamples <- shpname <- c()
-for (i in 1:seq_along(path_vector)) {
+for (i in 1:length(path_vector)) {
   shp <- path_vector[i]
   nbsamples[i] <- length(rgdal::readOGR(shp, verbose = FALSE))
   shpname[i] <- tools::file_path_sans_ext(basename(shp))
 }
 
 type_vegetation <- c()
-for (i in 1: seq_along(nbsamples)) {
+for (i in 1: length(nbsamples)) {
   for (j in 1:nbsamples[i]) {
     type_vegetation <- c(type_vegetation, shpname[i])
   }
