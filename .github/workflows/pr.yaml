@@ -199,9 +199,9 @@ jobs:
           if (length(repo) == 0) {
              break
           }
-          lnt <- lint_dir(repo, relative_path=T, linters=linters, exclusions=list("tools/SRS_tools/comparison_div.r"=153, "tools/SRS_tools/comparison_div.r"=160, "tools/SRS_tools/Lib_preprocess_S2.r"=76, "tools/SRS_tools/Lib_preprocess_S2.r"=77, 
-          "tools/SRS_tools/Lib_preprocess_S2.r"=79, "tools/SRS_tools/Lib_preprocess_S2.r"=80, "tools/SRS_tools/Lib_preprocess_S2.r"=81, "tools/SRS_tools/Lib_preprocess_S2.r"=84, "tools/SRS_tools/Lib_preprocess_S2.r"=85,
-          "tools/SRS_tools/Lib_preprocess_S2.r"=86, "tools/SRS_tools/prosail-master/R/Lib_PROSAIL.R"=89, "tools/SRS_tools/prosail-master/R/Lib_PROSAIL.R"=90, "tools/SRS_tools/prosail-master/R/Lib_PROSAIL.R"=91, "tools/SRS_tools/prosail-master/R/Lib_SpectralIndices.R"=140))
+          lnt <- lint_dir(repo, relative_path=T, linters=linters, exclusions=list("tools/SRS_tools/comparison_div.r"=153, "tools/SRS_tools/comparison_div.r"=160,
+          "tools/SRS_tools/prosail-master/R/Lib_PROSAIL.R"=89, "tools/SRS_tools/prosail-master/R/Lib_PROSAIL.R"=90, "tools/SRS_tools/prosail-master/R/Lib_PROSAIL.R"=91,
+          "tools/SRS_tools/prosail-master/R/Lib_SpectralIndices.R"=140))
           if (length(lnt) > 0) {
             status <- 1
             for (l in lnt) {
