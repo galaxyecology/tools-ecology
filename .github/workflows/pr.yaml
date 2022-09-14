@@ -200,7 +200,7 @@ jobs:
              break
           }
           lnt <- lint_dir(repo, relative_path=T, linters=linters, exclusions=list("tools/SRS_tools/comparison_div.r"=153, "tools/SRS_tools/comparison_div.r"=160,
-          "tools/SRS_tools/prosail-master/R/Lib_PROSAIL.R"=89, "tools/SRS_tools/prosail-master/R/Lib_PROSAIL.R"=90, "tools/SRS_tools/prosail-master/R/Lib_PROSAIL.R"=91,
+          "tools/SRS_tools/prosail-master/R/Lib_PROSAIL.R"= c(89, 90, 91),
           "tools/SRS_tools/prosail-master/R/Lib_SpectralIndices.R"=140))
           if (length(lnt) > 0) {
             status <- 1
