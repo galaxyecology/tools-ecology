@@ -71,20 +71,6 @@ check_s2mission <- function(s2sat, tile_s2, dateacq_s2) {
       message("Defining central wavelength of spectral bands based on S2A")
       s2mission <- "2A"
     }
-#  } else if (!is.null(tile_s2) & !is.null(dateacq_s2)){
-#    if (sen2r::check_scihub_connection()==T){
-#      tileOK <- sen2r::s2_list(tile = tile_s2,time_interval = as.Date(dateacq_s2))
-#      s2mission <- sen2r::safe_getMetadata(tileOK, "mission")[[1]]
-#      if (is.null(s2mission)){
-#        message("Could not identify if image from Sentinel-2A or -2B")
-#        message("Defining central wavelength of spectral bands based on S2A")
-#        s2mission <- "2A"
-#      }
-#    } else {
-#      message("Could not identify if image from Sentinel-2A or -2B")
-#      message("Defining central wavelength of spectral bands based on S2A")
-#      s2mission <- "2A"
-#    }
   }else {
     message("Could not identify if image from Sentinel-2A or -2B")
     message("Defining central wavelength of spectral bands based on S2A")
