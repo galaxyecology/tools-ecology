@@ -158,65 +158,6 @@ jobs:
         name: 'Python linting output'
         path: pylint_report.txt
 
-  lintr:
-    name: Lint R scripts
-    needs: setup
-    if: ${{ needs.setup.outputs.repository-list != '' }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-20.04]
-        r-version: ['4.0.1']
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 1
-    - uses: r-lib/actions/setup-r@master
-      with:
-        r-version: ${{ matrix.r-version }}
-    - name: Cache R packages
-      uses: actions/cache@v2
-      with:
-        path: ${{ env.R_LIBS_USER }}
-        key: r_cache_${{ matrix.os }}_${{ matrix.r-version }}
-    - name: Install non-R lintr dependencies
-      run: sudo apt-get install libcurl4-openssl-dev
-    - name: Install lintr
-      run: |
-        install.packages('remotes')
-        remotes::install_cran("lintr")
-      shell: Rscript {0}
-    - name: Save repositories to file
-      run: echo '${{ needs.setup.outputs.repository-list }}' > repository_list.txt
-    - name: lintr
-      run: |
-        library(lintr)
-        linters <- linters_with_defaults(line_length_linter = NULL, cyclocomp_linter = NULL, object_usage_linter = NULL)
-        con <- file("repository_list.txt", "r")
-        status <- 0
-        while (TRUE) {
-          repo <- readLines(con, n = 1)
-          if (length(repo) == 0) {
-             break
-          }
-          lnt <- lint_dir(repo, relative_path=T, linters=linters, exclusions=list("tools/SRS_tools/comparison_div.r"=c(153, 160)))
-          if (length(lnt) > 0) {
-            status <- 1
-            for (l in lnt) {
-              rel_path <- paste(repo, l$filename, sep="/")
-              write(paste(paste(rel_path, l$line_number, l$column_number, sep=":"), l$message), stderr())
-              write(paste(paste(rel_path, l$line_number, l$column_number, sep=":"), l$message), "rlint_report.txt", append=TRUE)
-            }
-          }
-        }
-        quit(status = status)
-      shell: Rscript {0}
-    - uses: actions/upload-artifact@v2
-      if: ${{ failure() }}
-      with:
-        name: 'R linting output'
-        path: rlint_report.txt
-
   file_sizes:
     name: Check file sizes
     needs: setup
