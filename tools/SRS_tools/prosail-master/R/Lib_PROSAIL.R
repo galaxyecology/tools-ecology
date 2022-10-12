@@ -45,15 +45,15 @@ compute_brf  <- function(rdot, rsot, tts, specatm_sensor) {
 #" @param spec_sensor list. Includes optical constants required for PROSPECT
 #" refractive index,  specific absorption coefficients and corresponding spectral bands
 #" @param input_prospect  list. PROSPECT input variables
-#" @param N numeric. Leaf structure parameter
-#" @param CHL numeric. Chlorophyll content (microg.cm-2)
-#" @param CAR numeric. Carotenoid content (microg.cm-2)
-#" @param ANT numeric. Anthocyain content (microg.cm-2)
-#" @param BROWN numeric. Brown pigment content (Arbitrary units)
-#" @param EWT numeric. Equivalent Water Thickness (g.cm-2)
-#" @param LMA numeric. Leaf Mass per Area (g.cm-2)
-#" @param PROT numeric. protein content  (g.cm-2)
-#" @param CBC numeric. NonProtCarbon-based constituent content (g.cm-2)
+#" @param n numeric. Leaf structure parameter
+#" @param chl numeric. chlorophyll content (microg.cm-2)
+#" @param car numeric. carotenoid content (microg.cm-2)
+#" @param ant numeric. anthocyain content (microg.cm-2)
+#" @param brown numeric. brown pigment content (Arbitrary units)
+#" @param ewt numeric. Equivalent Water Thickness (g.cm-2)
+#" @param lma numeric. Leaf Mass per Area (g.cm-2)
+#" @param prot numeric. protein content  (g.cm-2)
+#" @param cbc numeric. nonprotcarbon-based constituent content (g.cm-2)
 #" @param alpha numeric. Solid angle for incident light at surface of leaf (simulation of roughness)
 #" @param typelidf numeric. Type of leaf inclination distribution function
 #" @param lidfa numeric.
@@ -75,9 +75,9 @@ compute_brf  <- function(rdot, rsot, tts, specatm_sensor) {
 #" @param zeta numeric. Tree shape factor
 #" = ratio of crown diameter to crown height
 #" @param sailversion character. choose between 4SAIL and 4SAIL2
-#" @param brownvegetation list. Defines optical properties for brown vegetation,  if not NULL
+#" @param brownvegetation list. Defines optical properties for brown vegetation,  if not nULL
 #" - WVL,  reflectance,  Transmittance
-#" - Set to NULL if use PROSPECT to generate it
+#" - Set to nULL if use PROSPECT to generate it
 #"
 #" @return list. rdot, rsot, rddt, rsdt
 #" rdot: hemispherical-directional reflectance factor in viewing direction
@@ -86,31 +86,31 @@ compute_brf  <- function(rdot, rsot, tts, specatm_sensor) {
 #" rddt: bi-hemispherical reflectance factor
 #" @import prospect
 #" @export
-pro4sail  <- function(spec_sensor, input_prospect = NULL, N = 1.5, CHL = 40.0,
-                     CAR = 8.0, ANT = 0.0, BROWN = 0.0, EWT = 0.01,
-                     LMA = 0.008, PROT = 0.0, CBC = 0.0, alpha = 40.0,
-                     typelidf = 2, lidfa = NULL, lidfb = NULL, lai = NULL,
-                     q = NULL, tts = NULL, tto = NULL, psi = NULL, rsoil = NULL,
+pro4sail  <- function(spec_sensor, input_prospect = nULL, n = 1.5, chl = 40.0,
+                     car = 8.0, ant = 0.0, brown = 0.0, ewt = 0.01,
+                     lma = 0.008, prot = 0.0, cbc = 0.0, alpha = 40.0,
+                     typelidf = 2, lidfa = nULL, lidfb = nULL, lai = nULL,
+                     q = nULL, tts = nULL, tto = nULL, psi = nULL, rsoil = nULL,
                      fraction_brown = 0.0,  diss = 0.0,  cv = 1, zeta = 1,
-                     sailversion = "4SAIL", brownvegetation = NULL) {
+                     sailversion = "4SAIL", brownvegetation = nULL) {
 
   ############################ #
   #	LEAF OPTICAL PROPERTIES	##
   ############################ #
   if (is.null(input_prospect)) {
-    input_prospect <- data.frame("CHL" = CHL, "CAR" = CAR, "ANT" = ANT, "BROWN" = BROWN, "EWT" = EWT,
-                                "LMA" = LMA, "PROT" = PROT, "CBC" = CBC, "N" = N, "alpha" = alpha)
+    input_prospect <- data.frame("chl" = chl, "car" = car, "ant" = ant, "brown" = brown, "ewt" = ewt,
+                                "lma" = lma, "prot" = prot, "cbc" = cbc, "n" = n, "alpha" = alpha)
   }
   greenvegetation <- prospect::PROSPECT(SpecPROSPECT = spec_sensor,
-                                        N = input_prospect$N[1],
-                                        CHL = input_prospect$CHL[1],
-                                        CAR = input_prospect$CAR[1],
-                                        ANT = input_prospect$ANT[1],
-                                        BROWN = input_prospect$BROWN[1],
-                                        EWT = input_prospect$EWT[1],
-                                        LMA = input_prospect$LMA[1],
-                                        PROT = input_prospect$PROT[1],
-                                        CBC = input_prospect$CBC[1],
+                                        n = input_prospect$n[1],
+                                        chl = input_prospect$chl[1],
+                                        car = input_prospect$car[1],
+                                        ant = input_prospect$ant[1],
+                                        brown = input_prospect$brown[1],
+                                        ewt = input_prospect$ewt[1],
+                                        lma = input_prospect$lma[1],
+                                        prot = input_prospect$prot[1],
+                                        cbc = input_prospect$cbc[1],
                                         alpha = input_prospect$alpha[1])
 
   if (sailversion  ==  "4SAIL2") {
@@ -153,15 +153,15 @@ pro4sail  <- function(spec_sensor, input_prospect = NULL, N = 1.5, CHL = 40.0,
         } else if (unique(lengths(input_prospect)) >= 2) {
           # compute leaf optical properties
           brownvegetation <- prospect::PROSPECT(SpecPROSPECT = spec_sensor,
-                                                N = input_prospect$N[2],
-                                                CHL = input_prospect$CHL[2],
-                                                CAR = input_prospect$CAR[2],
-                                                ANT = input_prospect$ANT[2],
-                                                BROWN = input_prospect$BROWN[2],
-                                                EWT = input_prospect$EWT[2],
-                                                LMA = input_prospect$LMA[2],
-                                                PROT = input_prospect$PROT[2],
-                                                CBC = input_prospect$CBC[2],
+                                                n = input_prospect$n[2],
+                                                chl = input_prospect$chl[2],
+                                                car = input_prospect$car[2],
+                                                ant = input_prospect$ant[2],
+                                                brown = input_prospect$brown[2],
+                                                ewt = input_prospect$ewt[2],
+                                                lma = input_prospect$lma[2],
+                                                prot = input_prospect$prot[2],
+                                                cbc = input_prospect$cbc[2],
                                                 alpha = input_prospect$alpha[2])
           if (unique(lengths(input_prospect)) > 2) {
             message("4SAIL2 needs two sets of optical properties for green and brown vegetation")
@@ -218,8 +218,8 @@ pro4sail  <- function(spec_sensor, input_prospect = NULL, N = 1.5, CHL = 40.0,
 #" rddt: bi-hemispherical reflectance factor
 #" @export
 
-foursail  <- function(leafoptics,  typelidf = 2,  lidfa = NULL,  lidfb = NULL,  lai = NULL,
-                      q = NULL,  tts = NULL,  tto = NULL,  psi = NULL,  rsoil = NULL) {
+foursail  <- function(leafoptics,  typelidf = 2,  lidfa = nULL,  lidfb = nULL,  lai = nULL,
+                      q = nULL,  tts = nULL,  tto = nULL,  psi = nULL,  rsoil = nULL) {
 
   ############################## #
   #	LEAF OPTICAL PROPERTIES	##
@@ -272,7 +272,7 @@ foursail  <- function(leafoptics,  typelidf = 2,  lidfa = NULL,  lidfb = NULL,  
     ftau <- resvolscatt$ftau
 
     #********************************************************************************
-    #*                   SUITS SYSTEM coEFFICIENTS
+    #*                   SUITS SYSTEM coEFFICIEnTS
     #*
     #*	ks  : Extinction coefficient for direct solar flux
     #*	ko  : Extinction coefficient for direct observed flux
@@ -481,8 +481,8 @@ foursail  <- function(leafoptics,  typelidf = 2,  lidfa = NULL,  lidfb = NULL,  
 #" @export
 
 foursail2  <- function(leafgreen,  leafbrown,
-                       typelidf = 2, lidfa = NULL, lidfb = NULL,
-                       lai = NULL,  hot = NULL, tts = NULL, tto = NULL, psi = NULL, rsoil = NULL,
+                       typelidf = 2, lidfa = nULL, lidfb = nULL,
+                       lai = nULL,  hot = nULL, tts = nULL, tto = nULL, psi = nULL, rsoil = nULL,
                        fraction_brown = 0.5,  diss = 0.5,  cv = 1, zeta = 1) {
 
   #	This version does not include non-Lambertian soil properties.
@@ -799,7 +799,7 @@ foursail2  <- function(leafgreen,  leafbrown,
     tssc <- 1 - cs + cs * tsst
     tooc <- 1 - co + co * toot
 
-    # New weight function fcdc for crown contribution (W. Verhoef,  22-05-08)
+    # new weight function fcdc for crown contribution (W. Verhoef,  22-05-08)
     rsoc <- fcdc * rsot
     tssooc <- fcd * tsstoo + fcs * toot + fod * tsst + fos
     # Canopy absorptance for black background (W. Verhoef,  02-03-04)
@@ -907,7 +907,7 @@ nonconservativescattering <- function(m, lai, att, sigb, ks, ko, sf, sb, vf, vb,
 #" @export
 conservativescattering <- function(m, lai, att, sigb, ks, ko, sf, sb, vf, vb, tss, too) {
 
-  # Near or complete conservative scattering
+  # near or complete conservative scattering
   j4 <- jfunc4(m, lai)
   amsig <- att - sigb
   apsig <- att + sigb
@@ -1002,7 +1002,7 @@ campbell  <- function(ala) {
 #"  ----------
 #"  (Verhoef1998) Verhoef,  Wout. Theory of radiative transfer models applied
 #"  in optical remote sensing of vegetation canopies.
-#"  Nationaal Lucht en Ruimtevaartlaboratorium,  1998.
+#"  nationaal Lucht en Ruimtevaartlaboratorium,  1998.
 #"  http: /  / library.wur.nl / WebQuery / clc / 945481.
 #" @param a controls the average leaf slope
 #" @param b controls the distribution"s bimodality

@@ -137,7 +137,7 @@ computecr <- function(wlmin,  wlmax,  wltarget,  boundaries,  target) {
 #"
 #" @return numeric. band numbers of original sensor corresponding to S2
 #" @export
-computespectralindices_fromexpression <- function(refl,  sensorbands,  expressindex,  listbands,  reflfactor = 1, nameindex = NULL) {
+spectralindices_fromexpression <- function(refl,  sensorbands,  expressindex,  listbands,  reflfactor = 1, nameindex = NULL) {
 
   # define which bands to be used in the spectral index
   bands <- get_closest_bands(sensorbands, listbands)
