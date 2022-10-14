@@ -5,15 +5,14 @@
     </macros>
     <expand macro="topic"/>
     <expand macro="SRS_requirements">
-            <!--<requirement type="package" version="3.0.0">r-dggridR</requirement>-->
-            <requirement type="package" version="2.0.3">r-magrittr</requirement>
-            <requirement type="package" version="1.0.9">r-dplyr</requirement>
-            <requirement type="package" version="1.0_7">r-sf</requirement>
-            <requirement type="package" version="2.1_7.1">r-gsl</requirement>
-            <requirement type="package" version="0.1.0">r-rnaturalearth</requirement>
-            <requirement type="package" version="0.1.0">r-rnaturalearthdata</requirement>
-            <requirement type="package" version="0.6.2">r-viridis</requirement>
-            <requirement type="package" version="2.4.2">r-remotes</requirement>
+        <requirement type="package" version="2.0.3">r-magrittr</requirement>
+        <requirement type="package" version="1.0.9">r-dplyr</requirement>
+        <requirement type="package" version="1.0_7">r-sf</requirement>
+        <requirement type="package" version="2.1_7.1">r-gsl</requirement>
+        <requirement type="package" version="0.1.0">r-rnaturalearth</requirement>
+        <requirement type="package" version="0.1.0">r-rnaturalearthdata</requirement>
+        <requirement type="package" version="0.6.2">r-viridis</requirement>
+        <requirement type="package" version="2.4.2">r-remotes</requirement>
     </expand>
     <command detect_errors="exit_code"><![CDATA[
         Rscript
@@ -99,12 +98,9 @@ Calculates biodiversity indicators and maps them
 
 **What it does**
 
-
 This tool calculates the number of records, species richness, Simpson index, Shannon index, Hurlbert index (n = 50), and Hill numbers for each cell.
 
-
 **Input description**
-
 
 A tabular file with observation data. Must at least contain four columns longitude, latitude, taxon (any taxon level : species, family, ...) and records.
 
@@ -122,6 +118,6 @@ A tabular file with observation data. Must at least contain four columns longitu
 - A text output that summarizes in a tabular the results of all the indicators.
 
 - Multiple PNG files representing the indicators on a map (according to the choice of map made).
-    ]]>    </help>
-        <expand macro="SRS_bibref"/>
+    ]]></help>
+    <expand macro="SRS_bibref"/>
 </tool>
