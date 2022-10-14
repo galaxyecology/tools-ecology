@@ -1,5 +1,5 @@
-<tool id="srs_metadata" name="Validate ISO 19139 metadata documents" version="@VERSION@" profile = "20.01">
-    <description>from files or Urls.</description>
+<tool id="srs_metadata" name="Validate ISO 19139" version="@VERSION@" profile="20.01">
+    <description>metadata documents</description>
     <macros>
         <import>macro.xml</import>
     </macros>
