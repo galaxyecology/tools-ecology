@@ -9,6 +9,6 @@ auto_tool_repositories:
   name_template: "{{ tool_id }}"
   description_template: "Wrapper for spatial remote sensing tool: {{ tool_name }}."
 suite:
-  name: "Sentinel_2A"
+  name: "sentinel_2a"
   description: "A suite of indicators for remote sensing data"
   type: unrestricted
