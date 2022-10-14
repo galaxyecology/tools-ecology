@@ -1,5 +1,5 @@
-<tool id="srs_diversity_maps" name="Map diversity" version="@VERSION@" profile = "20.01">
-    <description>from  remote sensing data</description>
+<tool id="srs_diversity_maps" name="Map diversity" version="@VERSION@" profile="20.01">
+    <description>from remote sensing data</description>
     <macros>
         <import>macro.xml</import>
     </macros>
@@ -180,6 +180,6 @@ In order to get such input we advise to use the tool preprocessing sentinel 2 da
 
 - Three png graph for each indice 
 
-    ]]>    </help>
-        <expand macro="SRS_BDMRref"/>
+    ]]></help>
+    <expand macro="SRS_BDMRref"/>
 </tool>
