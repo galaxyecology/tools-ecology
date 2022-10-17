@@ -16,7 +16,6 @@
     <xml name="SRS_input">
        <param name="input" type="data" format="tabular,csv,txt" label="Input table"/>
        <param name="colnames" type="boolean" label="First line is a header line" checked="true"/>
-       <param name="separator" type="text" label="What character is the separator in your data? (Mostlikely a comma for a csv file and t for a tabular)"/>      
     </xml>
     <xml name="SRS_bibref">
        <citations>
