@@ -34,6 +34,10 @@
     </command>
     <inputs>
         <expand macro="SRS_input"/>
+        <param name="separator" type="select" label="What character is the separator in your data? (Mostlikely a comma for a csv file and t for a tabular)" display="radio">
+            <option value=",">comma : ,</option>  
+            <option value="t">tabulation : \t</option>     
+        </param> 
         <param name="longitude" label="Select column containing the decimal value of the longitude " type="data_column" data_ref="input" numerical="true" use_header_names="true"/>
         <param name="latitude" label="Select column containing the decimal value of the latitude " type="data_column" data_ref="input" numerical="true" use_header_names="true"/>
         <param name="species" label="Select column containing the species " type="data_column" data_ref="input" use_header_names="true"/>
