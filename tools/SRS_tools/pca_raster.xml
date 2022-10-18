@@ -4,6 +4,7 @@
         <import>macro.xml</import>
     </macros>
     <expand macro="SRS_requirements">
+        <requirement type="package" version="4.1.3">r-base</requirement>
         <requirement type="package" version="0.62.0">r-matrixStats</requirement> 
         <requirement type="package" version="1.25.0">r-future</requirement>
         <requirement type="package" version="1.9.0">r-future.apply</requirement>
