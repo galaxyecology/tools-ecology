@@ -5,25 +5,24 @@
     </macros>
     <expand macro="SRS_requirements">
         <requirement type="package" version="4.1">r-base</requirement> 
-        <requirement type="package" version="0.62.0">r-matrixStats</requirement> 
+        <requirement type="package" version="0.62.0">r-matrixstats</requirement> 
+        <requirement type="package" version="1.0.2">r-matlab</requirement>
+        <requirement type="package" version="0.31">r-xfun</requirement>
+        <requirement type="package" version="2.4.2">r-remotes</requirement> 
         <requirement type="package" version="0.51.2">r-rastervis</requirement>
         <requirement type="package" version="1.25.0">r-future</requirement>
         <requirement type="package" version="1.9.0">r-future.apply</requirement>
         <requirement type="package" version="3.3.6">r-ggplot2</requirement>
-        <requirement type="package" version="0.31">r-xfun</requirement>
         <requirement type="package" version="2.11.0">r-mapview</requirement>
         <requirement type="package" version="0.1.0">r-leafpop</requirement>
-        <requirement type="package" version="1.1_3">r-rcolorbrewer</requirement>
         <requirement type="package" version="2.0_1">r-labdsv</requirement>
         <requirement type="package" version="2.3">r-gridextra</requirement>
         <requirement type="package" version="1.14.2">r-data.table</requirement>
         <requirement type="package" version="2.0.9">r-ecodist</requirement>
         <requirement type="package" version="13.3">r-fields</requirement>
         <requirement type="package" version="0.4.6">r-geometry</requirement>
-        <requirement type="package" version="1.0.2">r-matlab</requirement>
         <requirement type="package" version="0.4_4">r-snow</requirement>
         <requirement type="package" version="2.6_2">r-vegan</requirement>
-        <requirement type="package" version="2.4.2">r-remotes</requirement> 
         <requirement type="package" version="3.0.0">r-emstreer</requirement>
         <requirement type="package" version="1.6.1">r-mmand</requirement>
         <requirement type="package" version="1.0">r-dissutils</requirement>  
