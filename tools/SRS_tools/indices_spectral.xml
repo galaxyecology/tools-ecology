@@ -14,7 +14,7 @@
         <requirement type="package" version="1.4.0">r-stringr</requirement>
         <requirement type="package" version="2.3.8">r-pracma</requirement> 
         <requirement type="package" version="0.1_7">r-expint</requirement> 
-        <requirement type="package" version="0.62.0">r-matrixStats</requirement> 
+        <requirement type="package" version="0.62.0">r-matrixstats</requirement> 
         <requirement type="package" version="3.3.6">r-ggplot2</requirement>
         <requirement type="package" version="3.99_0.9">r-xml</requirement>  
         <requirement type="package" version="2.2.0">r-zip</requirement>
