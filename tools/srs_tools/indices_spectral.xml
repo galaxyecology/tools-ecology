@@ -1,0 +1,264 @@
+<tool id="srs_spectral_indices" name="Compute spectral indices" version="@VERSION@" profile = "20.01">
+    <description>as NDVI from remote sensing data</description>
+    <macros>
+        <import>macro.xml</import>
+    </macros>
+    <requirements>
+        <requirement type="package" version="4.2.1">r-base</requirement>
+        <requirement type="package" version="2.12.0">r-r.utils</requirement>
+        <requirement type="package" version="3.5_21">r-raster</requirement>
+        <requirement type="package" version="1.5_0">r-sp</requirement>
+        <requirement type="package" version="1.5_32">r-rgdal</requirement>
+        <requirement type="package" version="0.2_5.2">r-rasterdiv</requirement>
+        <requirement type="package" version="0.5_5">r-stars</requirement>
+        <requirement type="package" version="1.4.1">r-stringr</requirement>
+        <requirement type="package" version="2.4.2">r-pracma</requirement> 
+        <requirement type="package" version="0.1_7">r-expint</requirement> 
+        <requirement type="package" version="0.62.0">r-matrixstats</requirement> 
+        <requirement type="package" version="3.3.6">r-ggplot2</requirement>
+        <requirement type="package" version="3.99_0.11">r-xml</requirement>  
+        <requirement type="package" version="2.2.1">r-zip</requirement>
+        <requirement type="package" version="1.0.10">r-dplyr</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[ 
+         #import re 
+        #if $method.type == 'envi_bil': 
+          #set input_raster = $method.input_raster
+          #set input_raster_identifier = re.sub('[^\s\w\-]', '_', str($input_raster.element_identifier)) 
+          #set input_header = $method.input_header
+          #set input_header_identifier = re.sub('[^\s\w\-]+[^.hdr]', '_', str($input_header.element_identifier)) 
+          ln '${input_raster}' '${input_raster_identifier}' &&
+          ln '${input_header}' '${input_header_identifier}' &&
+        #end if 
+        Rscript
+            '$__tool_directory__/indices_spectral.r'
+             #if $method.type == 'envi_bil':
+              '$input_raster_identifier' 
+              '$input_header_identifier'
+              ''
+            #else:
+              ''
+              ''
+              '$method.input'
+            #end if
+            '$__tool_directory__/prosail-master/R/Lib_PROSAIL.R'
+            '$__tool_directory__/prosail-master/R/Lib_SpectralIndices.R'
+            '$__tool_directory__/prosail-master/R/Lib_PROSAIL_HybridInversion.R'
+            '$input_indice'
+            '$__tool_directory__/functions.r'
+            '$choice'
+            '$output_indices'
+            '$plots'
+            '$output_raster'
+        ]]>
+    </command>
+    <inputs>
+        <conditional name="method">
+            <param name="type" type="select" label="In which format are your data ?" help="You can directly take the Reflectance output from the tool 'Preprocessing sentinel 2 data'">
+                <option value="zipper">The data you are using are in a zip folder Reflectance</option>
+                <option value="envi_bil">You already have the files ENVI BIL</option>
+            </param>
+            <when value="zipper">
+                <param name="input" type="data" format="zip" multiple="true" label="Input data"/>
+            </when>
+            <when value="envi_bil">
+                <param name="input_raster" type="data" format="bil" label="Input raster"/>
+                <param name="input_header" type="data" format="hdr" label="Input raster header"/>
+            </when>
+        </conditional>
+        <param name="input_indice" type="select" label="Input the type of indice you want" multiple="true">
+            <option value="ARI1">ARI1</option>
+            <option value="ARI2">ARI2</option>
+            <option value="ARVI">ARVI</option>
+            <option value="BAI">BAI</option>
+            <option value="BAIS2">BAIS2</option>
+            <option value="CCCI">CCCI</option>
+            <option value="CHL_RE">CHL RE</option>
+            <option value="CRI1">CRI1</option>
+            <option value="CRI2">CRI2</option>
+            <option value="EVI">EVI</option>
+            <option value="EVI2">EVI2</option>
+            <option value="GRVI1">GRVI1</option>
+            <option value="GNDVI">GNDVI</option>
+            <option value="IRECI">IRECI</option>
+            <option value="LAI_SAVI">LAI SAVI</option>
+            <option value="MCARI">MCARI</option>
+            <option value="mNDVI705">mNDVI705</option>
+            <option value="MSAVI2">MSAVI2</option>
+            <option value="MSI">MSI</option>
+            <option value="mSR705">mSR705</option>
+            <option value="MTCI">MTCI</option>
+            <option value="nBR_RAW">nBR_RAW</option>
+            <option value="NDI_45">NDI_45</option>
+            <option value="NDII">NDII</option>
+            <option value="NDSI">NDSI</option>
+            <option value="NDVI">NDVI</option>
+            <option value="NDVI_G">NDVI_G</option>
+            <option value="NDVI705">NDVI705</option>
+            <option value="NDWI">NDWI</option>
+            <option value="NDWI1">NDWI1</option>
+            <option value="NDWI2">NDWI2</option>
+            <option value="PSRI">PSRI</option>
+            <option value="PSRI_NIR">PSRI_NIR</option>
+            <option value="RE_NDVI">RE_NDVI</option>
+            <option value="RE_NDWI">RE_NDWI</option>
+            <option value="S2REP">S2REP</option>
+            <option value="SAVI">SAVI</option>
+            <option value="SIPI">SIPI</option>
+            <option value="SR">SR</option>
+            <option value="CR_SWIR">CR_SWIR</option>
+        </param>
+        <param name="choice" type="select" label="Do you want the raster layer of the indice as an output ?" display="radio">
+            <option value="N">No</option>
+            <option value="Y">Yes</option>
+        </param>
+    </inputs>
+    <outputs>
+        <data name="output_indices" from_work_dir="Spec_Index.tabular" format="tabular" label="${input_indice} tabular"/>
+        <collection type="list" name="plots" label="${input_indice} plot">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" visible="false" format="png"/>
+        </collection>
+        <collection type="list" name="output_raster" label="${input_indice} raster">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)" directory="SpectralIndices/" visible="false" recurse="true" format="bil,hdr"/>
+                <filter> choice == 'Y'</filter>
+        </collection>
+    </outputs>
+    <tests>
+        <test>
+            <param name="type" value="envi_bil"/>
+            <param name="input_raster" value="S2A_Subset"/>
+            <param name="input_header" value="S2A_Subset.hdr"/>
+            <param name="input_indice" value="NDVI"/>
+            <param name="choice" value="N"/>
+            <output name="output_indices" value="NDVI.tabular"/>
+            <output_collection name="plots" type="list" count="1"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+=========================================================================
+Computes biodiversity spectral indices from satellite remote sensing data 
+=========================================================================
+
+
+**What it does**
+
+This tool estimates vegetation properties (leaf and canopy) from sensor measurements. You can choose which vegetation property you want to compute.
+
+**Input description**
+
+It expects an image file as input, with a specific data format. ENVI HDR image with BIL interleave required.
+The image is an ENVI raster including :
+
+- A binary file (which has no extension here).
+
+- A header file (with .hdr extension).
+
+The header file is a text file including all necessary metadata which can be read with a text editor. It includes image dimensions, projection, and the name and central wavelength for each spectral band.
+
+In order to get such input we advise to use the tool preprocessing sentinel 2 data. If you did so you can directly enter the "Reflectance" output from this tool and thus select the otpion "The data you are using are in a zip folder Reflectance". 
+
+⚠️ If you do not use this Reflectance folder make sure that your data are respectively in bil and hdr format in the datatypes.
+
+Finally, you can choose whether or not you want to have the raster layer of your indice.
+
++--------------+----------+---------------+
+|      BIL     |    HDR   |Spectral indice|
++==============+==========+===============+
+| raster stack | Metadata |     NDVI      |
++--------------+----------+---------------+
+|      ...     |    ...   |      ...      |
++--------------+----------+---------------+
+
+**Output**
+
+- One tabular with 3 columns : longitude, latitude and the chosen indice. 
+
+- One png plot for the vizualisation of the chosen indice.
+
+- Opionnnal, the raster layer in a zip file.
+
+**Additionnal informations**
+
+This tools allows you to compute one of GEO BON EBV 'Canopy Chlorophyll Content' (https://portal.geobon.org/ebv-detail?id=13). This EBV is computed by GEO BON on the Netherlands, here you can compute it on which ever Sentinel 2 data you want by chosing to calculate the indice CCI. When you chose your data you have to select a cloud cover smaller than 10% (you can selct this character directly on the different platforms wher you can download Sentinel 2 data).
+
+**Indices description**
+
++-------------------+---------------------------------------------------------+
+|    Abbreviation   |                    Name                                 |
++===================+=========================================================+ 
+|  ARI              |Anthocyanin reflectance index                            |
++-------------------+---------------------------------------------------------+
+|  ARVI             |Atmospherically Resistant Vegetation Index               |
++-------------------+---------------------------------------------------------+
+|  BAI              |Burn Area Index                                          |
++-------------------+---------------------------------------------------------+
+|  BAIS2            |Burned Area Index for Sentinel 2                         |
++-------------------+---------------------------------------------------------+
+|  CCCI             |Canopy Chlorophyll Content Index                         |
++-------------------+---------------------------------------------------------+
+|  CHL_RE           |Chlorophyll Red-Edge ?                                   |
++-------------------+---------------------------------------------------------+
+|  EVI              |Enhanced Vegetation Index                                |
++-------------------+---------------------------------------------------------+
+|  GRVI1            |Green Ratio Vegetation Index                             |
++-------------------+---------------------------------------------------------+
+|  GNDVI            |Green Normalized Difference Vegetation Index             |
++-------------------+---------------------------------------------------------+
+|  IRECI            |Inverted Red-Edge Chlorophyll Index                      |
++-------------------+---------------------------------------------------------+
+|  LAI SAVI         |Leaf Area Index Soil Adjusted Vegetation Index ?         |
++-------------------+---------------------------------------------------------+
+|  MCARI            |Modified Chlorophyll Absorption in Reflectance Index     |
++-------------------+---------------------------------------------------------+
+|  mNDVI705         |Modified NDVI 705                                        |
++-------------------+---------------------------------------------------------+
+|  MSAVI2           |Modified Soil Adjusted Vegetation Index 2                |
++-------------------+---------------------------------------------------------+
+|  MSI              |Moisture Stress Index                                    |
++-------------------+---------------------------------------------------------+
+|  mSR705           |Modified Simple Ratio 705                                |
++-------------------+---------------------------------------------------------+
+|  MTCI             |MERIS Terrestrial Chlorophyll Index                      |
++-------------------+---------------------------------------------------------+
+|  NBR_RAW          |Normalized Burn Ratio RAW                                |
++-------------------+---------------------------------------------------------+
+|  NDI_45           |                                                         |
++-------------------+---------------------------------------------------------+
+|  NDII             |Normalized Difference 819/1600 NDII                      |
++-------------------+---------------------------------------------------------+
+|  NDSI             |Normalized Difference Snow Index                         |
++-------------------+---------------------------------------------------------+
+|  NDVI             |Normalized Difference Vegetation Index                   |
++-------------------+---------------------------------------------------------+
+|  NDVI_G           |                                                         |
++-------------------+---------------------------------------------------------+
+|  NDVI705          |NDVI 705                                                 |
++-------------------+---------------------------------------------------------+
+|  NDWI             |Normalized Difference Water Index                        |
++-------------------+---------------------------------------------------------+
+|  NDWI1            |NDMI ? Normalized Difference Moisture Index ?            |
++-------------------+---------------------------------------------------------+
+|  NDWI2            |                                                         |
++-------------------+---------------------------------------------------------+
+|  PSRI             |Plant Senescing Reflectance Index                        |
++-------------------+---------------------------------------------------------+
+|  PSRI_NIR         |                                                         |
++-------------------+---------------------------------------------------------+
+|  RE_NDVI          |Red Edge NDVI ?                                          |
++-------------------+---------------------------------------------------------+
+|  RE_NDWI          |Red Edge NDWI                                            |
++-------------------+---------------------------------------------------------+
+|  S2REP            |Sentinel 2 Red-Edge Position                             |
++-------------------+---------------------------------------------------------+
+|  SAVI             |Soil Adjusted Vegetation Index                           |
++-------------------+---------------------------------------------------------+
+|  SIPI             |Structure Intensive Pigment Index 1                      |
++-------------------+---------------------------------------------------------+
+|  SR               |Simple Ratio ?                                           |
++-------------------+---------------------------------------------------------+
+|  CR_SWIR          |CR short wave infrared                                   |
++-------------------+---------------------------------------------------------+
+
+    ]]>    </help>
+        <expand macro="SRS_prosailref"/>
+</tool>

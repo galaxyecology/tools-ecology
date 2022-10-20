@@ -1,0 +1,103 @@
+<tool id="srs_preprocess_s2" name="Preprocess sentinel 2 data" version="@VERSION@" profile="20.01">
+    <description>read, crop, resample and write it as a raster stack</description>
+    <macros>
+        <import>macro.xml</import>
+    </macros>
+    <requirements>
+        <requirement type="package" version="4.2.1">r-base</requirement>
+        <requirement type="package" version="1.0_7">r-sf</requirement>
+        <requirement type="package" version="0.5_9">r-rgeos</requirement>
+        <requirement type="package" version="0.5_5">r-stars</requirement>
+        <requirement type="package" version="1.4.1">r-stringr</requirement>
+        <requirement type="package" version="1.2.3">r-jqr</requirement>
+        <requirement type="package" version="2.1.2">r-protolite</requirement>
+        <requirement type="package" version="1.5.3">r-sen2r</requirement>
+        <requirement type="package" version="1.2.2">r-progress</requirement>
+        <requirement type="package" version="2.0.3.2">r-gdalutils</requirement>
+        <requirement type="package" version="1.0.3">r-fasterize</requirement> 
+        <requirement type="package" version="3.99_0.11">r-xml</requirement> 
+        <requirement type="package" version="1.3.3">r-xml2</requirement>
+        <requirement type="package" version="2.2.1">r-zip</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript
+            '$__tool_directory__/preprocess_S2.r'
+            '$input'
+            '$__tool_directory__/Lib_preprocess_S2.r'
+            '$source_s2'
+            '$output'
+            '$output_refl'
+            '$output_cloud'
+        ]]>
+    </command>
+    <inputs>
+        <param name="input" type="data" format="data" multiple="true" label="Input data"/>
+        <param name="source_s2" type="select" label="Where does your data come from ?">
+            <option value="SAFE">From Scihub or Peps</option>
+            <option value="THEIA">From Theia</option>
+        </param>     
+    </inputs>
+    <outputs>
+        <data name="output" from_work_dir="Mission.csv" format="csv" label="Mission source"/>
+        <data name="output_refl" from_work_dir="Refl.zip" format="zip" label="Reflectance"/>
+        <data name="output_cloud" from_work_dir="Cloud.zip" format="zip" label="Cloud Mask"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="input" value="S2A_MSIL2A_20200306T015621_N0214_R117_T51JXN_20200306T034744.zip"/>
+            <param name="source_s2" value="SAFE"/>
+            <output name="output" value="Mission.csv"/>
+            <output name="output_refl">
+                <assert_contents>
+                    <has_size value="12923807" delta="100"/>
+                </assert_contents>
+            </output>
+            <output name="output_cloud">
+                <assert_contents>
+                    <has_size value="235912" delta="100"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+==========================
+Preprocess Sentinel 2 data
+==========================
+
+
+**What it does**
+
+The goal of this tool (using the package preprocS2) is to provide a common framework for the preprocessing of Level-2A Sentinel-2 images (does not work yet for Level 1C).
+Sentinel-2 L2A images can be produced or obtained from various data hubs or atmospheric correction methods. PreprocS2 provides a unique function to read, crop, resample the original image directory, and write it as a raster stack.
+
+**Input description**
+
+A zip folder with Sentinel 2 data. 
+These data can be dowloaded on 3 different platforms: 
+
+- Copernicus Open Access Hub, Scihub, which provides complete, free and open access to Sentinel-2 data : https://scihub.copernicus.eu/dhus/#/home
+
+- PEPS, la 'Plateforme d'Exploitation de Produits Sentinel' : https://peps.cnes.fr/rocket/#/search
+
+- Theia : https://theia.cnes.fr/atdistrib/rocket/#/search
+
+For each of those 3 platforms you will need to create an account.
+
+You need to select from where you dowloaded your data in order for the tool to know the format of the folder once it unzips it.
+
++----------+----------+
+|   ZIP    |  Source  |
++==========+==========+
+|folder.zip|Character |
++----------+----------+
+|   ...    |    ...   |
++----------+----------+
+
+**Output**
+
+A zip folder containing the refelctance data with a raster stack pile in BIL format (no extension), a header with the metadata (.hdr extension) and 2 other files in .xml.
+
+A zip folder containing the cloud mask with the 2 files for the raw data (.RAW) and 2 files containing the metadata (.hdr).
+    ]]>    </help>
+        <expand macro="SRS_S2ref"/>
+</tool>

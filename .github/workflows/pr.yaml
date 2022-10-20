@@ -2,7 +2,7 @@ name: Galaxy Tool Linting and Tests for push and PR
 on: [push, pull_request]
 env:
   GALAXY_FORK: galaxyproject
-  GALAXY_BRANCH: release_22.01
+  GALAXY_BRANCH: release_22.05
   MAX_CHUNKS: 4
   MAX_FILE_SIZE: 20M
 concurrency:
@@ -229,6 +229,8 @@ jobs:
       with:
         path: ~/.planemo
         key: planemo_cache_py_${{ matrix.python-version }}_gxy_${{ needs.setup.outputs.galaxy-head-sha }}
+    - name: update conda
+      run: 'conda update -n base -c defaults conda'
     - name: Planemo test
       uses: galaxyproject/planemo-ci-action@v1
       id: test

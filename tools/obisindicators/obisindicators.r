@@ -13,7 +13,8 @@
 #               viridis
 #               dggridr
 library(magrittr)
-remotes::install_github("r-barnes/dggridR")
+
+## remotes::install_github("r-barnes/dggridR")
 #####Load arguments
 
 args <- commandArgs(trailingOnly = TRUE)

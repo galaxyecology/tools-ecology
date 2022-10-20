@@ -1,15 +1,16 @@
 <macros>
     <token name="@VERSION@">0.0.1</token>
-    <xml name="SRS_requirements">
+    <xml name="requirements">
         <requirements>
-           <requirement type="package" version="3.3.6">r-ggplot2</requirement>
-           <yield />
+            <requirement type="package" version="4.2.1">r-base</requirement>
+            <requirement type="package" version="3.3.6">r-ggplot2</requirement>
+            <yield />
         </requirements>
     </xml>
     <xml name="SRS_input">
        <param name="input" type="data" format="tabular,csv,txt" label="Input table"/>
        <param name="colnames" type="boolean" label="First line is a header line" checked="true"/>
-       <param name="separator" type="text" label="What character is the separator in your data? (Mostlikely a comma for a csv file and t for a tabular)"/>      
+       <param name="separator" type="text" label="What character is the separator in your data? (Mostlikely a comma for a csv file and t for a tabular)"/>
     </xml>
     <xml name="SRS_bibref">
        <citations>
