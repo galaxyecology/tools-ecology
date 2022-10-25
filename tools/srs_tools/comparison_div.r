@@ -90,8 +90,6 @@ kmeans_info <- biodivMapR::map_spectral_species(Input_Image_File = input_image_f
 ################################################################################
 ##          COMPUTE ALPHA AND BETA DIVERSITY FROM FIELD PLOTS                 ##
 ################################################################################
-## read selected features from dimensionality reduction
-selected_features <- read.table(sel_pc)[[1]]
 ## path for selected components
 
 # location of the directory where shapefiles used for validation are saved
@@ -106,7 +104,7 @@ name_vector <- tools::file_path_sans_ext(basename(path_vector))
 path_spectralspecies <- kmeans_info$SpectralSpecies
 # get diversity indicators corresponding to shapefiles (no partitioning of spectral dibversity based on field plots so far...)
 
-biodiv_indicators <- biodivMapR::diversity_from_plots(Raster_SpectralSpecies = path_spectralspecies, Plots = path_vector, nbclusters = nbclusters, Raster_Functional = pca_files, Selected_Features = selected_features)
+biodiv_indicators <- biodivMapR::diversity_from_plots(Raster_SpectralSpecies = path_spectralspecies, Plots = path_vector, nbclusters = nbclusters, Raster_Functional = pca_files, Selected_Features = FALSE)
 
 shannon_rs <- c(biodiv_indicators$Shannon)[[1]]
 fric <- c(biodiv_indicators$FunctionalDiversity$FRic)
