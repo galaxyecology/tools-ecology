@@ -1,5 +1,0 @@
-
-Validation of metadata according to ISO 19139
- 
-TRUE
- according to ISO 19139 XML schemas! 
