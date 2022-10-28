@@ -1,0 +1,91 @@
+<tool id="cb_dissim" name="Dissimilarity" version="@VERSION@" profile = "20.01">
+    <description>indicator</description>
+    <macros>
+        <import>macro.xml</import>
+    </macros>
+    <expand macro="cb_requirements">
+        <requirement type="package" version="2.16">r-rmarkdown</requirement>
+        <requirement type="package" version="0.2.4">r-officedown</requirement>
+        <requirement type="package" version="2.6_2">r-vegan</requirement>
+        <requirement type="package" version="3.3.6">r-ggplot2</requirement>
+    </expand>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript
+            '$__tool_directory__/cb_dissimilarity.r'
+            '$input_data'
+            '$choice'
+            '$choice_date'
+            '$output_eco'
+            '$plots_bf'
+            '$plots_bm'
+            '$plots'
+        ]]>
+    </command>
+    <inputs>
+        <param name="input_data" type="data" format="Rdata" label="Input clean Rdata"/>
+        <param name="choice" type="select" label="Do you have data after the year 2021 ?" display="radio">
+            <option value="N">No</option>
+            <option value="Y">Yes</option>
+        </param>
+        <param name="choice_date" type="text" label="Until when do you have data (write only the YEAR) ?" help="Example write : 2022 "/>
+    </inputs>
+    <outputs>
+        <data name="output_eco" from_work_dir="bret_egmp_basq_qecb.RDS" format="Rdata" label="Dissim Rdata"/>
+        <collection type="list" name="plots_bf" label="Bloc fixe et bloc mobile face sup plot">
+            <discover_datasets pattern="bm(?P&lt;designation&gt;.+)\.png" visible="false" format="png"/>
+        </collection>
+        <collection type="list" name="plots_bm" label="Bloc mobile face sup et face inf plot">
+            <discover_datasets pattern="fs(?P&lt;designation&gt;.+)\.png" visible="false" format="png"/>
+        </collection><!--&lowbar; pour underscore-->
+        <collection type="list" name="plots" label="Distance plot">
+            <discover_datasets pattern="distance(?P&lt;designation&gt;.+)\.png" visible="false" format="png"/>
+        </collection>
+    </outputs>
+    <tests>
+        <test>
+            <param name="input_data" value="qecbnato0.Rdata"/>
+            <param name="choice" value="Y"/>
+            <param name="choice_date" value="2022"/>
+            <output name="output_eco">
+                <assert_contents>
+                    <has_size n="295"/>
+                </assert_contents>
+            </output>
+            <output_collection name="plots_bf" type="list" count="23"/>
+            <output_collection name="plots_bm" type="list" count="23"/>
+            <output_collection name="plots" type="list" count="2"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+=======================
+Dissimilarity indicator
+=======================
+
+
+**What it does**
+
+This tool computes the the Boulder Field Ecological Quality Index (BFEQ) based on biotic and abiotic variables that respond to the disturbance "boulder turning".
+
+**Input description**
+
+One input files in Rdata format.
+
++----------------+
+|      Rdata     |
++================+
+|   clean Rdata  |
++----------------+
+|       ...      |
++----------------+
+
+
+**Output**
+
+- .RDS file 1 of them to use as an input for diversity index 
+- Multiple png plots one for each of the locations
+
+
+
+    ]]>    </help>
+        <expand macro="cb_bibref"/>
+</tool>

@@ -1,0 +1,170 @@
+---
+params:
+   Site: v
+title: "Indice Visuel de Retournement des blocs (IVR) - suivi 2014-2022"
+#author: "Jonathan Richir, Christian Kerbiriou, Pauline Poisson, Maud Bernard, Juliette Delavenne, Isabelle Le Viol"
+#date: "30 Avril 2021"
+output: 
+  #word_document:
+    #reference_docx: word_template.docx
+  officedown::rdocx_document
+---
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE
+  , message = FALSE
+  , warning = FALSE
+  )
+
+df <- indic
+df_full <- indic_full
+
+df1 <- df %>% dplyr::filter(df$Site == v)
+df1 <- droplevels(df1)
+```
+
+# Contexte
+
+Mieux comprendre les effets des changements globaux et locaux sur les habitats marins, et l’efficacité des mesures de gestion adoptées sous-entend de disposer de suivis standardisés et d’indicateurs robustes et sensibles reflétant l’état des habitats. 
+
+L’habitat « Champs de blocs médiolittoraux » abrite une forte diversité de micro-habitats et d’espèces de par sa forte hétérogénéité structurelle et sa position intermédiaire sur l’estran, qui en font un des habitats les plus diversifiés du médiolittoral et à fort intérêt écologique, le long de la façade Manche-Atlantique française. Il est aussi un habitat très attractif pour la pratique de pêche à pied de loisir, qui via le remaniement des blocs, peut impacter les communautés. 
+
+Ainsi, l’habitat « Champs de blocs médiolittoraux » a-t-il fait l’objet de plusieurs initiatives nationales et locales (dont LIFE+ « Expérimentation pour une gestion durable et concertée de la pêche à pied récréative en France » 2013-2017) pour mieux évaluer son état et le mettre en relation avec la pression de pêche à pied en vue d’adapter la gestion locale, notamment à travers le réseau d’Aires Marines Protégées (Natura 2000, PNM, PNR etc.). 
+
+Ces projets ont en particulier permis de développer un réseau d’acteurs-trices de terrain-gestionnaires impliqué-e-s et des outils d’évaluation de l’état écologique et de la pression de pêche à pied: (1) l’Indicateur Visuel de Retournement des blocs (IVR) - objet du présent rapport - qui s’apparente à un indicateur « paysager » pour évaluer la pression de pêche sur la base de critères architecturaux; (2) L’indice de Qualité Écologique des Champs de Blocs (QECB) basé sur des variables biotiques et abiotiques qui répondent à la perturbation « retournement des blocs ».
+
+
+# Application et calcul de l'Indicateur Visuel de Retournement des blocs (IVR)
+
+Basé sur les proportions de blocs « retournés « et « non retournés » et variant entre 0 et 5, cet indicateur peut être appliqué très rapidement et plusieurs fois dans l'année par le-la gestionnaire. 
+
+Pour son application, cinq quadrats de 25m^2^ sont répartis à l’échelle du champ de blocs. Dans chaque quadrat, les blocs retournables à dominance d'algues brunes et/ou rouges (blocs « bruns/rouges »), et les blocs retournables à dominance d'algues vertes opportunistes ou de roche nue (blocs « blancs/verts ») sont dénombrés. 
+
+Le rapport, par quadrat, entre le nombre de blocs « bruns/rouges » ou le nombre de blocs « blancs/verts » sur le nombre total de blocs comptés donnent deux valeurs de pourcentage (qui additionnées égalent 100%). A partir de ces pourcentages, la valeur de l'IVR peut être déterminée pour chaque quadrat.
+
+Dans sa version originale, ces plages de pourcentages étaient transformées en des équivalents entiers numériques allant de 0 à 5 comme suit:
+
+- IVR 0: présence quasi-exclusive de blocs « bruns/rouges » (entre 95% et 100%), pas de bloc ou de rares blocs retournés par les pêcheurs à pied (entre 0% et <5%);
+- IVR 1: forte dominance des blocs « bruns/rouges » (entre 75% et <95%) et faible représentation des blocs « blancs/verts » (entre 5% et <25%);
+- IVR 2: dominance des blocs « bruns/rouges » (entre 55% et <75%) mais bonne proportion de blocs « blancs/verts » (entre 25% et <45%);
+- IVR 3: représentation équivalente de blocs « bruns/rouges » (entre 35% et <55%) et des blocs « blancs/verts » (entre 45% et <65%);
+- IVR 4: faible représentation des blocs « bruns/rouges » (entre 15% et <35%) et dominance des blocs « blancs/verts » (entre 65% et <85%);
+- IVR 5: très faible représentation des blocs « bruns/rouges » (entre 0% et <15%) et très forte dominance des blocs « blancs/verts » (entre 85% et 100%).
+
+<br>
+
+![](CB_ivr.tif){width=1000}
+
+Légende de la figure. Photos de champs de blocs caractéristiques aux valeurs d'IVR allant de 0 (en haut à gauche, champ de blocs non impacté) à 5 (en bas à droite, très forte pression de pêche à pied) (© Maud Bernard).
+
+Cependant, passer d'une variable continue allant de 0% à 100% à une variable discrète ne contenant qu'un nombre réduit de valeurs réelles (de 0 à 5) peut-être considéré comme une simplification, justifiable, des observations de terrain. Afin de conserver cette dimension de continuité de la fréquence d'occurrence des blocs « bruns/rouges » vs « blancs/verts », une alternative consiste à considérer ces valeurs calculées de pourcentages, et à les diviser par 20 pour ainsi en revenir à une échelle de valeurs continues cette fois, toujours comprises entre 0 et 5. A chacune des 6 classes de valeurs continues d'indice IVR ainsi obtenues peut lui être associé un code couleur, allant du bleu pour une occurrence inférieure à 5% des blocs « blancs/verts » à rouge pour une occurrence supérieure à 85% des blocs « blancs/verts ».
+
+```{r}
+
+ivr_scale <- data.frame(matrix(NA, nrow = 6, ncol = 3))
+colnames(ivr_scale) <- c("Occurrence des blocs blancs/verts", "Valeur d'IVR",  "Signification")
+
+ivr_scale$`Occurrence des blocs blancs/verts` <- c(
+  "entre 0% et <5%",
+  "entre 5% et <25%",
+  "entre 25% et <45%",
+  "entre 45% et <65%",
+  "entre 65% et <85%",
+  "entre 85% et 100%")
+ivr_scale$`Valeur d'IVR` <- c(
+  "0 = IVR < 0.25",
+  "0.25 = IVR < 1.25",
+  "1.25 = IVR < 2.25",
+  "2.25 = IVR < 3.25",
+  "3.25 = IVR < 4.25",
+  "4.25 = IVR = 5")
+ivr_scale$Signification <- c("Pas de bloc ou de rares blocs retournés", "Faible représentation des blocs blancs/verts", "Bonne proportion de blocs blancs/verts", "Représentation équivalente de blocs bruns/rouges et blancs/verts", "Dominance des blocs blancs/verts", "Très forte dominance des blocs blancs/verts")
+
+#ivr_scale
+
+```
+
+```{r}
+library(magrittr)
+
+qu_tbl <- flextable::flextable(ivr_scale)
+qu_tbl <- flextable::bg(qu_tbl, i = 1, bg = "#1A1AE8")
+qu_tbl <- flextable::bg(qu_tbl, i = 2, bg = "#04F5F5")
+qu_tbl <- flextable::bg(qu_tbl, i = 3, bg = "#18E125")
+qu_tbl <- flextable::bg(qu_tbl, i = 4, bg = "#FAFA15")
+qu_tbl <- flextable::bg(qu_tbl, i = 5, bg = "#F59404")
+qu_tbl <- flextable::bg(qu_tbl, i = 6, bg = "#FF0000")
+
+qu_tbl %>% flextable::autofit() %>% flextable::fit_to_width(7)
+
+```
+
+Légende de la table. Pourcentages de blocs « blancs/verts », exprimés en une échelle continue de valeurs équivalentes d'IVR allant de 0 à 5.
+
+
+# Observations pour le suivi du site `r unique(df1$Site_bis)`
+
+Les observations des taux de retournement/non retournement de blocs de vingt-quatre champs distribués le long de la façade Manche-Atlantique française sont stockées dans la base de données ESTAMP (http://www.pecheapied-loisir.fr/base-de-donnees-estamp/), hébergée par l'Office Français de la Biodiversité, créée dans le cadre du projet LIFE+ Pêche à Pied de Loisir, et que vous avez contribué à enrichir de vos observations. L'évolution des valeurs médianes de l'indice IVR: au site `r unique(df1$Site.bis)` et tous champs de blocs confondus, pour la période de suivi 2014-2017, est représentée graphiquement sur les deux figures ci-dessous. A des fins de comparaisons entre la précédente échelle discrète et la nouvelle échelle continue de valeurs d'IVR, et des distributions associées des valeurs d'indice en escalier ou continues, les deux représentations graphiques sont données.
+
+Selon l'échelle discrète de valeurs de l'IVR, les valeurs médianes au site `r unique(df1$Site.bis)` (points noirs) sont comprises entre un minimum égal à `r min(df1$ivr.med, na.rm = T)` et un maximum égal à `r max(df1$ivr.med, na.rm = T)`. Les valeurs individuelles, par quadrat (barres), sont quant à elles comprises entre un minimum égal à `r min(df1$ivr.min, na.rm = T)` et un maximum égal à `r max(df1$ivr.max, na.rm = T)`. Selon l'échelle continue de valeurs de l'IVR, les valeurs médianes sont comprises entre un minimum égal à `r round(min(df1$fr.r.med/20, na.rm = T), digits = 2)` et un maximum égal à `r round(max(df1$fr.r.med/20, na.rm = T), digits = 2)`. Les valeurs individuelles, par quadrat (barres), sont quant à elles comprises entre un minimum égal à `r round(min(df1$fr.r.min/20, na.rm = T), digits = 2)` et un maximum égal à `r round(max(df1$fr.r.max/20, na.rm = T), digits = 2)`.
+
+```{r}
+
+par(mar = c(5, 5, 4, 2) + 0.1)
+
+  ggplot2::ggplot() +
+  ggplot2::geom_pointrange(ggplot2::aes(x = df1$Date, y = df1$fr.r.moy / 20, ymin = df1$fr.r.moy / 20 - df1$fr.r.et / 20, ymax = df1$fr.r.moy / 20 + df1$fr.r.et / 20), col = "black") +
+  ggplot2::xlab("Date") +
+  ggplot2::ylab("IVR") +
+  ggplot2::ggtitle(unique(df1$Site)) +
+  ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5, hjust = 1), legend.position = "none")
+```
+
+```{r}
+
+par(mar = c(5, 5, 4, 2) + 0.1)
+
+  ggplot2::ggplot() +
+  ggplot2::geom_point(ggplot2::aes(x = df$Date, y = df$fr.r.moy / 20), col = "grey") +
+  ggplot2::geom_rect(ggplot2::aes(xmin = as.Date("2013-01-01", origin = "1970-01-01"), xmax = as.Date("2023-01-01", origin = "1970-01-01"), ymin = - 0.5, ymax = 5 / 20, fill = "red"), alpha = 0.3) +
+  ggplot2::geom_rect(ggplot2::aes(xmin = as.Date("2013-01-01", origin = "1970-01-01"), xmax = as.Date("2023-01-01", origin = "1970-01-01"), ymin = 5 / 20, ymax = 25 / 20, fill = "orange"), alpha = 0.3) +
+  ggplot2::geom_rect(ggplot2::aes(xmin = as.Date("2013-01-01", origin = "1970-01-01"), xmax = as.Date("2023-01-01", origin = "1970-01-01"), ymin = 25 / 20, ymax = 45 / 20, fill = "gold"), alpha = 0.3) +
+  ggplot2::geom_rect(ggplot2::aes(xmin = as.Date("2013-01-01", origin = "1970-01-01"), xmax = as.Date("2023-01-01", origin = "1970-01-01"), ymin = 45 / 20, ymax = 65 / 20, fill = "yellow"), alpha = 0.3) +
+  ggplot2::geom_rect(ggplot2::aes(xmin = as.Date("2013-01-01", origin = "1970-01-01"), xmax = as.Date("2023-01-01", origin = "1970-01-01"), ymin = 65 / 20, ymax = 85 / 20, fill = "green"), alpha = 0.3) +
+  ggplot2::geom_rect(ggplot2::aes(xmin = as.Date("2013-01-01", origin = "1970-01-01"), xmax = as.Date("2023-01-01", origin = "1970-01-01"), ymin = 85 / 20, ymax = 5.5, fill = "blue"), alpha = 0.3) +
+  ggplot2::geom_pointrange(ggplot2::aes(x = df1$Date, y = df1$fr.r.moy / 20, ymin = df1$fr.r.moy / 20 - df1$fr.r.et / 20, ymax = df1$fr.r.moy / 20 + df1$fr.r.et / 20), col = "black") +
+  ggplot2::xlab("Date") +
+  ggplot2::ylab("IVR") +
+  ggplot2::ggtitle(unique(df1$Site)) +
+  ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5, hjust = 1), legend.position = "none")
+
+```
+
+Légende des figures. Evolution temporelle de la valeur mediane de l'IVR au site `r unique(df1$Site.bis)` (points noirs), en comparaison à celles des vingt-trois autres champs de blocs suivis le long de la façade Manche-Atlantique française (points gris). Les barres représentent la distribution des valeurs individuelles d'IVR par quadrat au site `r unique(df1$Site.bis)` (n = `r sort(unique(df1$nb.))`) entre valeurs minimums et maximums. Graphique du haut - La distribution en escalier des valeurs médianes de l'IVR reflète le caractère discret de l'échelle utilisée. Graphique du bas - Le découpage horizontal de la fenêtre graphique représente les 5 classes d'occurrence de retournement des blocs mobiles, de quasi-inexistant en bleu à dominant en rouge, ramenée sur une échelle continue de 0 à 5.
+
+Ces valeurs propres au site `r unique(df1$Site.bis)` peuvent être resituées par rapport aux autres valeurs médianes de l'IVR obtenues pour les vingt-trois autres sites suivis sur la période 2014-2017 à l’échelle de la façade Manche-Atlantique française (points gris). Tous sites confondus, la pression de pêche à pied est très variable dans le temps et dans l'espace, ce qui se traduit par une distribution des valeurs médianes de l'IVR occupant toute la fenêtre graphique. 
+
+
+# Continuité du suivi du site `r unique(df1$Site_bis)`
+
+Ce bref rapport présente l'évolution de la valeur de l'indice IVR au site `r unique(df1$Site.bis)`, suivi de `r min(unique(df1$Annee), na.rm = T)` à `r max(unique(df1$Annee), na.rm = T)`, et la resitue par rapport aux valeurs IVR des vingt-trois autres champs de blocs suivis  de 2014 à 2017 sur la façade Manche-Atlantique française. Il illustre l'évolution dans le temps de la pression de la pêche à pied, et rappelle la nécessité de continuer d'en évaluer l'impact, que les observations récoltées traduisent du maintien d'une faible pression de pêche, d'une diminution de cette dernière au fil du temps, au plus préoccupant d'un retournement dommageable d'un grand nombre de blocs.
+
+Au nom du Groupe de Travail Champs de Blocs, nous espérons pouvoir continuer à compter sur vous pour participer à ces suivis; et bien évidemment, si vous avez la possibilité dès le printemps prochain de retourner sur le terrain effectuer de nouveaux relevés, ceux-ci, très utiles, permettront d'évaluer les tendances observées graphiquement ci-dessus sur une plus longue période.
+
+
+# Remerciements et bibliographie
+
+Le projet est financé, à daté du 15 avril 2021, par une convention OFB Muséum national d'Histoire naturelle (MNHN) dans le cadre du Life Marha (LIFE 16 IPE FR001). Le Groupe de Travail Champs de Blocs remercie tous les participants au projet.
+
+Contacts : jonathan.richir@mnhn.fr (post-doctorant MNHN, en charge du projet), isabelle.le-viol@mnhn.fr (responsable MNHN du projet), christian.kerbiriou@mnhn.fr (responsable MNHN du projet), pour le Groupe de Travail.
+
+Littérature conseillée:
+
+- Bernard M., (2012). Les habitats rocheux intertidaux sous l’influence d’activités anthropiques : structure, dynamique et enjeux de conservation. Sciences agricoles. Université de Bretagne occidentale - Brest. NNT : 2012BRES0010. 423 pp. Thèse disponible sur https://tel.archives-ouvertes.fr/tel-00720611/.
+
+- Verbeke G., Maison E. (2013). Fiche S8. Définition d’indicateurs de perturbations des champs de blocs, dans : La gestion de la pêche de loisir dans les aires marines protégées, Recueil d’expériences des gestionnaires. Coll. « Cahiers techniques », Montpellier, Aten, n°87: 63-66. Fiche disponible sur http://ct87.espaces-naturels.fr/.
+
+<br>
+
+![](logo_merged.png){width=1000}
