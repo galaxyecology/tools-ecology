@@ -127,18 +127,18 @@ par(mar = c(5, 5, 4, 2) + 0.1)
 
   ggplot2::ggplot() +
   ggplot2::geom_point(ggplot2::aes(x = df$Date, y = df$fr.r.moy / 20), col = "grey") +
-  ggplot2::geom_rect(ggplot2::aes(xmin = as.Date("2013-01-01", origin = "1970-01-01"), xmax = as.Date("2023-01-01", origin = "1970-01-01"), ymin = - 0.5, ymax = 5 / 20, fill = "red"), alpha = 0.3) +
-  ggplot2::geom_rect(ggplot2::aes(xmin = as.Date("2013-01-01", origin = "1970-01-01"), xmax = as.Date("2023-01-01", origin = "1970-01-01"), ymin = 5 / 20, ymax = 25 / 20, fill = "orange"), alpha = 0.3) +
-  ggplot2::geom_rect(ggplot2::aes(xmin = as.Date("2013-01-01", origin = "1970-01-01"), xmax = as.Date("2023-01-01", origin = "1970-01-01"), ymin = 25 / 20, ymax = 45 / 20, fill = "gold"), alpha = 0.3) +
-  ggplot2::geom_rect(ggplot2::aes(xmin = as.Date("2013-01-01", origin = "1970-01-01"), xmax = as.Date("2023-01-01", origin = "1970-01-01"), ymin = 45 / 20, ymax = 65 / 20, fill = "yellow"), alpha = 0.3) +
-  ggplot2::geom_rect(ggplot2::aes(xmin = as.Date("2013-01-01", origin = "1970-01-01"), xmax = as.Date("2023-01-01", origin = "1970-01-01"), ymin = 65 / 20, ymax = 85 / 20, fill = "green"), alpha = 0.3) +
-  ggplot2::geom_rect(ggplot2::aes(xmin = as.Date("2013-01-01", origin = "1970-01-01"), xmax = as.Date("2023-01-01", origin = "1970-01-01"), ymin = 85 / 20, ymax = 5.5, fill = "blue"), alpha = 0.3) +
+  ggplot2::geom_rect(ggplot2::aes(xmin = min(df$Date), xmax = max(df$Date), ymin = - 0.5, ymax = 5 / 20, fill = "#FF0000"), alpha = 0.3) +
+  ggplot2::geom_rect(ggplot2::aes(xmin = min(df$Date), xmax = max(df$Date), ymin = 5 / 20, ymax = 25 / 20, fill = "#F59404"), alpha = 0.3) +
+  ggplot2::geom_rect(ggplot2::aes(xmin = min(df$Date), xmax = max(df$Date), ymin = 25 / 20, ymax = 45 / 20, fill = "#FAFA15"), alpha = 0.3) +
+  ggplot2::geom_rect(ggplot2::aes(xmin = min(df$Date), xmax = max(df$Date), ymin = 45 / 20, ymax = 65 / 20, fill = "#18E125"), alpha = 0.3) +
+  ggplot2::geom_rect(ggplot2::aes(xmin = min(df$Date), xmax = max(df$Date), ymin = 65 / 20, ymax = 85 / 20, fill = "#04F5F5"), alpha = 0.3) +
+  ggplot2::geom_rect(ggplot2::aes(xmin = min(df$Date), xmax = max(df$Date), ymin = 85 / 20, ymax = 5.5, fill = "#1A1AE8"), alpha = 0.3) +
+  ggplot2::scale_fill_manual(values = c("#F59404", "#FAFA15", "#FF0000", "#04F5F5", "#18E125", "#1A1AE8")) +
   ggplot2::geom_pointrange(ggplot2::aes(x = df1$Date, y = df1$fr.r.moy / 20, ymin = df1$fr.r.moy / 20 - df1$fr.r.et / 20, ymax = df1$fr.r.moy / 20 + df1$fr.r.et / 20), col = "black") +
   ggplot2::xlab("Date") +
   ggplot2::ylab("IVR") +
-  ggplot2::ggtitle(unique(df1$Site)) +
+  ggplot2::ggtitle(unique(df1$Site_bis)) +
   ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5, hjust = 1), legend.position = "none")
-
 ```
 
 Légende des figures. Evolution temporelle de la valeur mediane de l'IVR au site `r unique(df1$Site.bis)` (points noirs), en comparaison à celles des vingt-trois autres champs de blocs suivis le long de la façade Manche-Atlantique française (points gris). Les barres représentent la distribution des valeurs individuelles d'IVR par quadrat au site `r unique(df1$Site.bis)` (n = `r sort(unique(df1$nb.))`) entre valeurs minimums et maximums. Graphique du haut - La distribution en escalier des valeurs médianes de l'IVR reflète le caractère discret de l'échelle utilisée. Graphique du bas - Le découpage horizontal de la fenêtre graphique représente les 5 classes d'occurrence de retournement des blocs mobiles, de quasi-inexistant en bleu à dominant en rouge, ramenée sur une échelle continue de 0 à 5.

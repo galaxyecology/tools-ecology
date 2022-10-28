@@ -90,8 +90,8 @@ ivr <- ivr %>% tidyr::separate(date_fiche, c("Year", "Month", "Day"), sep = "-",
 
 # Name for data analysis
 ivr <- tibble::add_column(ivr, Site = ivr$zone.habitat, .after = "ID.Fiche")
-ivr$Site <- gsub(pattern = " \\(champ de blocs\\)", replacement = "", ivr$Site) 
-ivr$Site <- gsub(pattern = " \\(champ blocs\\)", replacement = "", ivr$Site) 
+ivr$Site <- gsub(pattern = " \\(champ de blocs\\)", replacement = "", ivr$Site)
+ivr$Site <- gsub(pattern = " \\(champ blocs\\)", replacement = "", ivr$Site)
 
 for (x in seq_along(ivr$Site)) {
   if (grepl(pattern = "Locmariaquer", ivr$Site[x]) == TRUE) {
@@ -138,12 +138,11 @@ for (x in seq_along(ivr$Site)) {
     ivr$Site[x] <- "FINS_Mousterlin"
  } else if (grepl(pattern = "Nicolas", ivr$Site[x]) == TRUE) {
     ivr$Site[x] <- "FINS_StNicolasGlenan"
- }   
+ }
 if (grepl(pattern = "Roz", ivr$site[x]) == TRUE) {
     ivr$Site[x] <- "FINS_AnseRoz"
 }
 }
-
 
 # Name for report/plot
 
@@ -186,8 +185,6 @@ ivr$Numero.Quadrat <- as.integer(ivr$Numero.Quadrat)
 ## save the final, commplete ivr df.
 
 ivr <- ivr[, c(19:54, 1:18)]
-
-#saveRDS(ivr, "ivr.RDS")
 
 
 ## percentage of unturned vs overturned boulders and IVR previous 0-5 discrete scale values calculation
@@ -240,7 +237,7 @@ ivr_val_qu_$blocs.retournes.fr. <- ifelse(is.nan(ivr_val_qu_$blocs.retournes.fr.
 
 
 # ivr for loop by quadrat.
-for (i in 1:nrow(ivr_val_qu_)) {
+for (i in 1:seq_len(nrow(ivr_val_qu_))) {
   if (ivr_val_qu_$Nb.Blocs.Non.Retournes[i] == 0 && ivr_val_qu_$Nb.Blocs.Retournes[i] == 0) {
     ivr_ <- NA
   }else {
@@ -267,7 +264,6 @@ rm(i, ivr_)
 # reorder variables for logical purpose
 ivr_val_qu_ <- ivr_val_qu_[, c(1:56, 58, 57, 59)]
 indic_full <- ivr_val_qu_
-#saveRDS(ivr_val_qu_, "ivr_val_qu.RDS")
 
 rm(ivr_naomit)
 

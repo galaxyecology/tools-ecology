@@ -250,7 +250,7 @@ hist(matri_df$dist., main = c(paste("Histo. of Bray (0-adjusted) dist. dissimila
 
 matri_full_bm_bf_fs <- matri_df
 
-#saveRDS(matri_full_bm_bf_fs, "matri_full_log.spi_BM.BF_FS.RDS")
+
 rm(data_, matri_df, matri_list)
 
 
@@ -271,7 +271,7 @@ matri_fct_bmm <- function(data, conca) {
 
   mtxdis <- vegan::vegdist(
   sqrt(qecbnato0_x[, c(bret_egmp_basq_qecb)]), #Transform your species abundance data_ Typically, raw abundances are transformed prior to analysis. Usually you will use square root, fourth-root, log(X+1), or presence-absence (square root being least extreme, P/A being most). I would start with square root. (https://stats.stackexchange.com/questions/234495/double-zeroes-problem-with-euclidean-distance-and-abundance-data-is-the-proble)
-  na.rm = T,
+  na.rm = TRUE,
   method = "bray" #Construct species abundance dissimilarity matrices with Bray-Curtis. If your data contains samples that are all-zero you will run into the double zero problem. This can be overcome by using a zero-adjusted Bray-Curtis coefficient, which is sometimes referred to as a 'dummy variable' which damps down the similarity fluctuations between samples that are both zero (undefined). => see below for zero-adjusted Bray-Curtis coefficient ; #another possibility, sqrt + 1 ??
   )
 
@@ -372,7 +372,7 @@ matri_fct_bmm <- function(data, conca) {
   rm(y)
 
   name_ <- c(a_, b_, c_, d_, e_, f_, g_, h_, i_, j_, k_, l_, m_, n_, o_, p_, q_, r_, s_)
-  df_ <- data.frame(expand.grid(mtxdis), name_[1:nrow(expand.grid(mtxdis))])
+  df_ <- data.frame(expand.grid(mtxdis), name_[1:seq_len(nrow(expand.grid(mtxdis)))])
   names(df_) <- c("dist.", "name_")
 
   rm(a_, b_, c_, d_, e_, f_, g_, h_, i_, j_, k_, l_, m_, n_, o_, p_, q_, r_, s_)
@@ -425,7 +425,6 @@ hist(matri_df$dist., main = c(paste("Histo. of Bray (0-adjusted) dist. dissimila
 
 matri_full_bm_bf_fi <- matri_df
 
-#saveRDS(matri_full_bm_bf_fi, "matri_full_log.spi_BM_FS.FI.RDS")
 rm(data_, matri_df, matri_list)
 
 
@@ -474,11 +473,11 @@ ggplot2::ggsave("distance_diss_FS_FI.png", fs_fi_plot, height = 4.5, width = 4)
 
 # issue with type de bloc, numéro de bloc and quadrat for df_ BM.BF_FS, cfr df_ left vs right variables doesn't give the right combination (variables with left vs right label in names come from the dissimilarity coefficient functions).
 matri_full_bm_bf_fs$Quadrat <- NA
-for (i in c(1:nrow(matri_full_bm_bf_fs))) {
+for (i in c(1:seq_len(nrow(matri_full_bm_bf_fs)))) {
   ifelse(matri_full_bm_bf_fs$Type.Bloc.left[i] == "Bloc mobile", matri_full_bm_bf_fs$Quadrat[i] <- matri_full_bm_bf_fs$Quadrat.left[i], matri_full_bm_bf_fs$Quadrat[i] <- matri_full_bm_bf_fs$Quadrat.right[i])
 }
 matri_full_bm_bf_fs$Numéro.Bloc <- NA
-for (i in c(1:nrow(matri_full_bm_bf_fs))) {
+for (i in c(1:seq_len(nrow(matri_full_bm_bf_fs)))) {
   ifelse(matri_full_bm_bf_fs$Type.Bloc.left[i] == "Bloc mobile", matri_full_bm_bf_fs$Numéro.Bloc[i] <- matri_full_bm_bf_fs$Numéro.Bloc.échantillon.left[i], matri_full_bm_bf_fs$Numéro.Bloc[i] <- matri_full_bm_bf_fs$Numéro.Bloc.échantillon.right[i])
 }
 
@@ -607,7 +606,7 @@ if (choice == "N") {
 }else {
   one <- 0.19
   two <- 0.32
-  three <-0.455
+  three <- 0.455
   four <- 0.735
 }
 # Plot
@@ -637,7 +636,3 @@ ggplot2::ggsave(paste0("bm_bf_", df1$Site, ".png"), device = "png", bm_bf_fs_plo
 rm(df1, four, i, one, three, two, xmax_, xmin_, ymax_, ymin_)
 
 write.table(bm_bf_fs_dist_stat, "Valeurs_stat.tabular", row.names = FALSE, quote = FALSE, sep = "\t", dec = ".", fileEncoding = "UTF-8")
-
-#saveRDS(bm_fs_fi_dist_stat, "matri_full_log.spi_bm_fs_fi_dist_statRDS")
-
-#saveRDS(bm_bf_fs_dist_stat, "matri_full_log.spi_bm_bf_fs_dist_statRDS")

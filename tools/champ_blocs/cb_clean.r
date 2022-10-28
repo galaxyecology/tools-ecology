@@ -154,7 +154,7 @@ for (x in seq_along(qecb$Site)) {
     qecb$Site[x] <- "FINS_Mousterlin"
  } else if (grepl(pattern = "Nicolas", qecb$Site[x]) == TRUE) {
     qecb$Site[x] <- "FINS_StNicolasGlenan"
- } 
+ }
   if (grepl(pattern = "Roz", qecb$site[x]) == TRUE) {
     qecb$Site[x] <- "FINS_AnseRoz"
 }
@@ -200,8 +200,6 @@ rm(ix)
 
 qecb <- qecb[, c(72:107, 1:71)]
 
-#saveRDS(qecb, "qecb.RDS")
-
 ## qecb df preparation prior qecb calculation
 
 # Several issues to solve in the df first
@@ -222,7 +220,7 @@ qecbnew <- qecb
 # df with list object nb and corresponding site_year_month_day value to solve for loop issues
 
 df_list_loop <- data.frame("site_year_month_day" = unique(qecbnew$site_year_month_day),
-     "loop nb" = c(1:length(unique(qecbnew$site_year_month_day))))
+     "loop nb" = c(1:seq_along(unique(qecbnew$site_year_month_day))))
 
 # dplyr::filter for df that makes problem, then eventually correct in the dataframe for wrong coding; brackets (xx) for nb because will change when qecb df_ enlarged.
 # these listed boulder field survey error when highlighted when running the loop, that ran into an error ; it was a step by step procedure with solving one listed observation after another when issues appeared. Surely not the best way to proceed, maybe better just to skip these surveys (site + date), but in the present case I wanted to keep most of the observations, therefore I corrected them manually whenever needed.
@@ -273,17 +271,10 @@ rm(df_list_loop, qecb_i)
 qecbnew$Nb.Spirobranchus.lamarckii.total.ini <- qecbnew$Nb.Spirobranchus.lamarckii.total
 qecbnew$Nb.Spirobranchus.lamarckii.total <- as.character(qecbnew$Nb.Spirobranchus.lamarckii.total)
 
-table(qecbnew$Nb.Spirobranchus.lamarckii.total)
-subset(qecbnew, is.na(qecbnew$Nb.Spirobranchus.lamarckii.total))
-nrow(subset(qecbnew, is.na(qecbnew$Nb.Spirobranchus.lamarckii.total)))
-subset(qecbnew, is.nan(qecbnew$Nb.Spirobranchus.lamarckii.total))
-subset(qecbnew, is.finite(qecbnew$Nb.Spirobranchus.lamarckii.total))
-nrow(dplyr::filter(qecbnew, qecbnew$Nb.Spirobranchus.lamarckii.total %in% c(NA, "NaN", "Inf", "-Inf")))
 
 qecbnew_spirobranchus <- (dplyr::filter(qecbnew, Nb.Spirobranchus.lamarckii.total %in% c(NA, "NaN", "Inf", "-Inf")))
 qecbnew_spirobranchus[, c("Nb.Spirobranchus.lamarckii.1B", "Nb.Spirobranchus.lamarckii.2B", "Nb.Spirobranchus.lamarckii.3B", "Nb.Spirobranchus.lamarckii.4B", "Nb.Spirobranchus.lamarckii.5B")] <- sapply(qecbnew_spirobranchus[, c("Nb.Spirobranchus.lamarckii.1B", "Nb.Spirobranchus.lamarckii.2B", "Nb.Spirobranchus.lamarckii.3B", "Nb.Spirobranchus.lamarckii.4B", "Nb.Spirobranchus.lamarckii.5B")], as.character)
 (spirobranchus_data <- subset(qecbnew_spirobranchus, !is.na(qecbnew_spirobranchus$Nb.Spirobranchus.lamarckii.1B) || !is.na(qecbnew_spirobranchus$Nb.Spirobranchus.lamarckii.2B) || !is.na(qecbnew_spirobranchus$Nb.Spirobranchus.lamarckii.3B) || !is.na(qecbnew_spirobranchus$Nb.Spirobranchus.lamarckii.4B) || !is.na(qecbnew_spirobranchus$Nb.Spirobranchus.lamarckii.5B))[, c("site_year_month_day", "Nb.Spirobranchus.lamarckii.1B", "Nb.Spirobranchus.lamarckii.2B", "Nb.Spirobranchus.lamarckii.3B", "Nb.Spirobranchus.lamarckii.4B", "Nb.Spirobranchus.lamarckii.5B", "Nb.Spirobranchus.lamarckii.total")])
-unique(spirobranchus_data$site_year_month_day)
 
 quemenes <- dplyr::filter(qecbnew, Site == "FINS_Quemenes")
 quemenes <- dplyr::arrange(quemenes, date_fiche)
@@ -301,21 +292,21 @@ qecbnew$Nb.Spirobranchus.lamarckii.total <- ifelse(qecbnew$site_year_month_day =
 rm(seinkilaourou)
 
 # some more issues however with "x100"count data
-Spirobranchus <- subset(qecbnew, !is.na(qecbnew$Nb.Spirobranchus.lamarckii.1B) & !is.na(qecbnew$Nb.Spirobranchus.lamarckii.2B) & !is.na(qecbnew$Nb.Spirobranchus.lamarckii.3B) & !is.na(qecbnew$Nb.Spirobranchus.lamarckii.4B) & !is.na(qecbnew$Nb.Spirobranchus.lamarckii.5B) & !is.na(qecbnew$Nb.Spirobranchus.lamarckii.total))[, c("site_year_month_day", "Nb.Spirobranchus.lamarckii.1B", "Nb.Spirobranchus.lamarckii.2B", "Nb.Spirobranchus.lamarckii.3B", "Nb.Spirobranchus.lamarckii.4B", "Nb.Spirobranchus.lamarckii.5B", "Nb.Spirobranchus.lamarckii.total")]
+spirobranchus <- subset(qecbnew, !is.na(qecbnew$Nb.Spirobranchus.lamarckii.1B) & !is.na(qecbnew$Nb.Spirobranchus.lamarckii.2B) & !is.na(qecbnew$Nb.Spirobranchus.lamarckii.3B) & !is.na(qecbnew$Nb.Spirobranchus.lamarckii.4B) & !is.na(qecbnew$Nb.Spirobranchus.lamarckii.5B) & !is.na(qecbnew$Nb.Spirobranchus.lamarckii.total))[, c("site_year_month_day", "Nb.Spirobranchus.lamarckii.1B", "Nb.Spirobranchus.lamarckii.2B", "Nb.Spirobranchus.lamarckii.3B", "Nb.Spirobranchus.lamarckii.4B", "Nb.Spirobranchus.lamarckii.5B", "Nb.Spirobranchus.lamarckii.total")]
 
-for (i in c(1:nrow(Spirobranchus))) {
-  Spirobranchus$mean.x.100[[i]] <- sum(Spirobranchus[i, c(2:6)], na.rm = TRUE) / sum(!is.na(Spirobranchus[i, c(2:6)])) * 100
+for (i in c(1:nrow(spirobranchus))) {
+  spirobranchus$mean.x.100[[i]] <- sum(spirobranchus[i, c(2:6)], na.rm = TRUE) / sum(!is.na(spirobranchus[i, c(2:6)])) * 100
 }
 
-Spirobranchus$mean.x.100 <- unlist(Spirobranchus$mean.x.100)
-Spirobranchus$Nb.Spirobranchus.lamarckii.total <- as.numeric(Spirobranchus$Nb.Spirobranchus.lamarckii.total)
-for (i in c(1:nrow(Spirobranchus))) {
-  Spirobranchus$diff[[i]] <- Spirobranchus[i, "Nb.Spirobranchus.lamarckii.total"] - Spirobranchus[i, "mean.x.100"]
+spirobranchus$mean.x.100 <- unlist(spirobranchus$mean.x.100)
+spirobranchus$Nb.Spirobranchus.lamarckii.total <- as.numeric(spirobranchus$Nb.Spirobranchus.lamarckii.total)
+for (i in c(1:nrow(spirobranchus))) {
+  spirobranchus$diff[[i]] <- spirobranchus[i, "Nb.Spirobranchus.lamarckii.total"] - spirobranchus[i, "mean.x.100"]
 }
 
-Spirobranchus$diff <- abs(as.integer(Spirobranchus$diff))
-Spirobranchus <- dplyr::arrange(Spirobranchus, desc(diff), mean.x.100)
-Spirobranchus <- dplyr::arrange(dplyr::filter(Spirobranchus, diff != 0 & mean.x.100 != 0), desc(diff))
+spirobranchus$diff <- abs(as.integer(spirobranchus$diff))
+spirobranchus <- dplyr::arrange(spirobranchus, desc(diff), mean.x.100)
+spirobranchus <- dplyr::arrange(dplyr::filter(spirobranchus, diff != 0 & mean.x.100 != 0), desc(diff))
 
 # check it all in the qecbnew df
 
@@ -325,17 +316,13 @@ for (i in c(1:nrow(qecbnew))) {
 } # sum of only NAs/0 = NaN; so replace NaN by Na
 qecbnew$mean.x.100 <- as.character(qecbnew$mean.x.100)
 
-sort(dplyr::filter(qecbnew, paste0(qecbnew$id_qecb, "_", qecbnew$site_year_month_day, "_", qecbnew$Type.Bloc, "_", qecbnew$Numéro.Bloc.échantillon, "_", qecbnew$Face) %in% paste0(qecbnew_spirobranchus$id_qecb, "_", qecbnew_spirobranchus$site_year_month_day, "_", qecbnew_spirobranchus$Type.Bloc, "_", qecbnew_spirobranchus$Numéro.Bloc.échantillon, "_", qecbnew_spirobranchus$Face))[, "mean.x.100"])
 
 for (i in c(1:nrow(qecbnew))) {
   qecbnew$mean.x.100[[i]] <- ifelse(qecbnew$mean.x.100[[i]] == "NaN", NA, qecbnew$mean.x.100[[i]])
 }
-nrow(subset(qecbnew, is.na(qecbnew$mean.x.100)))
 qecbnew$mean.x.100 <- as.integer(qecbnew$mean.x.100)
 
 qecbnew$Nb.Spirobranchus.lamarckii.total <- as.integer(qecbnew$Nb.Spirobranchus.lamarckii.total)
-unique(qecbnew$Nb.Spirobranchus.lamarckii.total - qecbnew$mean.x.100)
-table(qecbnew$Nb.Spirobranchus.lamarckii.total - qecbnew$mean.x.100)
 qecbnew$Nb.Spirobranchus.lamarckii.total.diff <- abs((qecbnew$Nb.Spirobranchus.lamarckii.total - qecbnew$mean.x.100))
 spirobranchus_diff <- qecbnew[, c("Nb.Spirobranchus.lamarckii.1B", "Nb.Spirobranchus.lamarckii.2B", "Nb.Spirobranchus.lamarckii.3B", "Nb.Spirobranchus.lamarckii.4B", "Nb.Spirobranchus.lamarckii.5B", "Nb.Spirobranchus.lamarckii.total", "Nb.Spirobranchus.lamarckii.total.ini", "mean.x.100", "Nb.Spirobranchus.lamarckii.total.diff")]
 spirobranchus_diff <- dplyr::arrange(spirobranchus_diff, desc(Nb.Spirobranchus.lamarckii.total.diff), mean.x.100)
@@ -354,46 +341,30 @@ for (i in c(1:nrow(qecbnew))) {
   qecbnew$Nb.Spirobranchus.lamarckii.total[[i]] <- ifelse(qecbnew$Nb.Spirobranchus.lamarckii.total[[i]] %in% c(NA, "NaN", "Inf", "-Inf"), sum(qecbnew[i, c("Nb.Spirobranchus.lamarckii.1B", "Nb.Spirobranchus.lamarckii.2B", "Nb.Spirobranchus.lamarckii.3B", "Nb.Spirobranchus.lamarckii.4B", "Nb.Spirobranchus.lamarckii.5B")], na.rm = TRUE) / sum(!is.na(qecbnew[i, c("Nb.Spirobranchus.lamarckii.1B", "Nb.Spirobranchus.lamarckii.2B", "Nb.Spirobranchus.lamarckii.3B", "Nb.Spirobranchus.lamarckii.4B", "Nb.Spirobranchus.lamarckii.5B")])) * 100, qecbnew$Nb.Spirobranchus.lamarckii.total[[i]])
 } # sum of only NAs/0 = NaN; so replace NaN by Na
 
-sort(dplyr::filter(qecbnew, paste0(qecbnew$id_qecb, "_", qecbnew$site_year_month_day, "_", qecbnew$Type.Bloc, "_", qecbnew$Numéro.Bloc.échantillon, "_", qecbnew$Face) %in% paste0(qecbnew_spirobranchus$id_qecb, "_", qecbnew_spirobranchus$site_year_month_day, "_", qecbnew_spirobranchus$Type.Bloc, "_", qecbnew_spirobranchus$Numéro.Bloc.échantillon, "_", qecbnew_spirobranchus$Face))[, "Nb.Spirobranchus.lamarckii.total"])
 
 for (i in c(1:nrow(qecbnew))) {
   qecbnew$Nb.Spirobranchus.lamarckii.total[[i]] <- ifelse(qecbnew$Nb.Spirobranchus.lamarckii.total[[i]] == "NaN", NA, qecbnew$Nb.Spirobranchus.lamarckii.total[[i]])
 }
-nrow(subset(qecbnew, is.na(qecbnew$Nb.Spirobranchus.lamarckii.total)))
+
 qecbnew$Nb.Spirobranchus.lamarckii.total <- as.integer(qecbnew$Nb.Spirobranchus.lamarckii.total)
 
-unique(qecbnew$Nb.Spirobranchus.lamarckii.total - qecbnew$Nb.Spirobranchus.lamarckii.total.ini)
-table(qecbnew$Nb.Spirobranchus.lamarckii.total - qecbnew$Nb.Spirobranchus.lamarckii.total.ini)
 qecbnew$Nb.Spirobranchus.lamarckii.total.diff <- abs(qecbnew$Nb.Spirobranchus.lamarckii.total - qecbnew$Nb.Spirobranchus.lamarckii.total.ini)
 spirobranchus_diff <- qecbnew[, c("Nb.Spirobranchus.lamarckii.1B", "Nb.Spirobranchus.lamarckii.2B", "Nb.Spirobranchus.lamarckii.3B", "Nb.Spirobranchus.lamarckii.4B", "Nb.Spirobranchus.lamarckii.5B", "Nb.Spirobranchus.lamarckii.total", "Nb.Spirobranchus.lamarckii.total.ini", "mean.x.100", "Nb.Spirobranchus.lamarckii.total.diff")]
 spirobranchus_diff <- dplyr::arrange(spirobranchus_diff, desc(Nb.Spirobranchus.lamarckii.total.diff), mean.x.100)
 spirobranchus_diff <- dplyr::arrange(dplyr::filter(spirobranchus_diff, Nb.Spirobranchus.lamarckii.total.diff != 0 & mean.x.100 != 0), desc(Nb.Spirobranchus.lamarckii.total.diff))
-table(qecbnew$Nb.Spirobranchus.lamarckii.total.diff)
-length(na.omit(qecbnew$Nb.Spirobranchus.lamarckii.total))
-sum(is.na(qecbnew$Nb.Spirobranchus.lamarckii.total))
-length(na.omit(qecbnew$Nb.Spirobranchus.lamarckii.total)) + sum(is.na(qecbnew$Nb.Spirobranchus.lamarckii.total))
 
 qecbnew <- subset(qecbnew, select = -c(Nb.Spirobranchus.lamarckii.total.ini, mean.x.100, Nb.Spirobranchus.lamarckii.total.diff))
 
-rm(qecbnew_spirobranchus, Spirobranchus, spirobranchus_data, spirobranchus_diff)
+rm(qecbnew_spirobranchus, spirobranchus, spirobranchus_data, spirobranchus_diff)
 
 # do the same for spirorbis
 
 qecbnew$Nb.spirorbis.total.ini <- qecbnew$Nb.spirorbis.total
 qecbnew$Nb.spirorbis.total <- as.character(qecbnew$Nb.spirorbis.total)
 
-table(qecbnew$Nb.spirorbis.total)
-subset(qecbnew, is.na(qecbnew$Nb.spirorbis.total))
-nrow(subset(qecbnew, is.na(qecbnew$Nb.spirorbis.total)))
-subset(qecbnew, is.nan(qecbnew$Nb.spirorbis.total))
-subset(qecbnew, is.finite(qecbnew$Nb.spirorbis.total))
-
-nrow(dplyr::filter(qecbnew, qecbnew$Nb.spirorbis.total %in% c(NA, "NaN", "Inf", "-Inf")))
-
 qecbnew_spirorbis <- (dplyr::filter(qecbnew, Nb.spirorbis.total %in% c(NA, "NaN", "Inf", "-Inf")))
 qecbnew_spirorbis[, c("Nb.spirorbis.1A", "Nb.spirorbis.2A", "Nb.spirorbis.3A", "Nb.spirorbis.4A", "Nb.spirorbis.5A")] <- sapply(qecbnew_spirorbis[, c("Nb.spirorbis.1A", "Nb.spirorbis.2A", "Nb.spirorbis.3A", "Nb.spirorbis.4A", "Nb.spirorbis.5A")], as.character)
 (spirobranchus_data <- subset(qecbnew_spirorbis, !is.na(qecbnew_spirorbis$Nb.spirorbis.1A) || !is.na(qecbnew_spirorbis$Nb.spirorbis.2A) || !is.na(qecbnew_spirorbis$Nb.spirorbis.3A) || !is.na(qecbnew_spirorbis$Nb.spirorbis.4A) || !is.na(qecbnew_spirorbis$Nb.spirorbis.5A))[, c("site_year_month_day", "Nb.spirorbis.1A", "Nb.spirorbis.2A", "Nb.spirorbis.3A", "Nb.spirorbis.4A", "Nb.spirorbis.5A", "Nb.spirorbis.total")])
-unique(spirobranchus_data$site_year_month_day)
 
 # In contrast to Spirobranchus data, no encoding issues for spirorbis data, cfr when sub-quadrat 1A-5A are ALL encoded, NA for total.
 
@@ -417,24 +388,17 @@ spirorbis <- dplyr::arrange(dplyr::filter(spirorbis, diff != 0 & mean.x.200 != 0
 # check it all in the qecbnew df
 
 for (i in c(1:nrow(qecbnew))) {
-    qecbnew$mean.x.200[[i]] <-
-      #ifelse(qecbnew$Nb.spirorbis.total[[i]] %in% c(NA, "NaN", "Inf", "-Inf"),
-      sum(qecbnew[i, c("Nb.spirorbis.1A", "Nb.spirorbis.2A", "Nb.spirorbis.3A", "Nb.spirorbis.4A", "Nb.spirorbis.5A")], na.rm = TRUE) / sum(!is.na(qecbnew[i, c("Nb.spirorbis.1A", "Nb.spirorbis.2A", "Nb.spirorbis.3A", "Nb.spirorbis.4A", "Nb.spirorbis.5A")])) * 200
-    #, qecbnew$Nb.spirorbis.total[[i]])
+    qecbnew$mean.x.200[[i]] <- sum(qecbnew[i, c("Nb.spirorbis.1A", "Nb.spirorbis.2A", "Nb.spirorbis.3A", "Nb.spirorbis.4A", "Nb.spirorbis.5A")], na.rm = TRUE) / sum(!is.na(qecbnew[i, c("Nb.spirorbis.1A", "Nb.spirorbis.2A", "Nb.spirorbis.3A", "Nb.spirorbis.4A", "Nb.spirorbis.5A")])) * 200
 } # sum of only NAs/0 = NaN; so replace NaN by Na
 qecbnew$mean.x.200 <- as.character(qecbnew$mean.x.200)
-
-sort(dplyr::filter(qecbnew, paste0(qecbnew$id_qecb, "_", qecbnew$site_year_month_day, "_", qecbnew$Type.Bloc, "_", qecbnew$Numéro.Bloc.échantillon, "_", qecbnew$Face) %in% paste0(qecbnew_spirorbis$id_qecb, "_", qecbnew_spirorbis$site_year_month_day, "_", qecbnew_spirorbis$Type.Bloc, "_", qecbnew_spirorbis$Numéro.Bloc.échantillon, "_", qecbnew_spirorbis$Face))[, "mean.x.200"])
 
 for (i in c(1:nrow(qecbnew))) {
   qecbnew$mean.x.200[[i]] <- ifelse(qecbnew$mean.x.200[[i]] == "NaN", NA, qecbnew$mean.x.200[[i]])
 }
-nrow(subset(qecbnew, is.na(qecbnew$mean.x.200)))
+
 qecbnew$mean.x.200 <- as.integer(qecbnew$mean.x.200)
 
 qecbnew$Nb.spirorbis.total <- as.integer(qecbnew$Nb.spirorbis.total)
-unique(qecbnew$Nb.spirorbis.total - qecbnew$mean.x.200)
-table(qecbnew$Nb.spirorbis.total - qecbnew$mean.x.200)
 qecbnew$Nb.spirorbis.total.diff <- abs((qecbnew$Nb.spirorbis.total - qecbnew$mean.x.200))
 spirorbis_diff <- qecbnew[, c("Nb.spirorbis.1A", "Nb.spirorbis.2A", "Nb.spirorbis.3A", "Nb.spirorbis.4A", "Nb.spirorbis.5A", "Nb.spirorbis.total", "Nb.spirorbis.total.ini", "mean.x.200", "Nb.spirorbis.total.diff")]
 spirorbis_diff <- dplyr::arrange(spirorbis_diff, desc(Nb.spirorbis.total.diff), mean.x.200)
@@ -453,24 +417,16 @@ for (i in c(1:nrow(qecbnew))) {
   qecbnew$Nb.spirorbis.total[[i]] <- ifelse(qecbnew$Nb.spirorbis.total[[i]] %in% c(NA, "NaN", "Inf", "-Inf"), sum(qecbnew[i, c("Nb.spirorbis.1A", "Nb.spirorbis.2A", "Nb.spirorbis.3A", "Nb.spirorbis.4A", "Nb.spirorbis.5A")], na.rm = TRUE) / sum(!is.na(qecbnew[i, c("Nb.spirorbis.1A", "Nb.spirorbis.2A", "Nb.spirorbis.3A", "Nb.spirorbis.4A", "Nb.spirorbis.5A")])) * 200, qecbnew$Nb.spirorbis.total[[i]])
 } # sum of only NAs/0 = NaN; so replace NaN by Na
 
-sort(dplyr::filter(qecbnew, paste0(qecbnew$id_qecb, "_", qecbnew$site_year_month_day, "_", qecbnew$Type.Bloc, "_", qecbnew$Numéro.Bloc.échantillon, "_", qecbnew$Face) %in% paste0(qecbnew_spirorbis$id_qecb, "_", qecbnew_spirorbis$site_year_month_day, "_", qecbnew_spirorbis$Type.Bloc, "_", qecbnew_spirorbis$Numéro.Bloc.échantillon, "_", qecbnew_spirorbis$Face))[, "Nb.spirorbis.total"])
-
 for (i in c(1:nrow(qecbnew))) {
   qecbnew$Nb.spirorbis.total[[i]] <- ifelse(qecbnew$Nb.spirorbis.total[[i]] == "NaN", NA, qecbnew$Nb.spirorbis.total[[i]])
 }
-nrow(subset(qecbnew, is.na(qecbnew$Nb.spirorbis.total)))
+
 qecbnew$Nb.spirorbis.total <- as.integer(qecbnew$Nb.spirorbis.total)
 
-unique(qecbnew$Nb.spirorbis.total - qecbnew$Nb.spirorbis.total.ini)
-table(qecbnew$Nb.spirorbis.total - qecbnew$Nb.spirorbis.total.ini)
 qecbnew$Nb.spirorbis.total.diff <- abs(qecbnew$Nb.spirorbis.total - qecbnew$Nb.spirorbis.total.ini)
 spirorbis_diff <- qecbnew[, c("Nb.spirorbis.1A", "Nb.spirorbis.2A", "Nb.spirorbis.3A", "Nb.spirorbis.4A", "Nb.spirorbis.5A", "Nb.spirorbis.total", "Nb.spirorbis.total.ini", "mean.x.200", "Nb.spirorbis.total.diff")]
 spirorbis_diff <- dplyr::arrange(spirorbis_diff, desc(Nb.spirorbis.total.diff), mean.x.200)
 spirorbis_diff <- dplyr::arrange(dplyr::filter(spirorbis_diff, Nb.spirorbis.total.diff != 0 & mean.x.200 != 0), desc(Nb.spirorbis.total.diff))
-table(qecbnew$Nb.spirorbis.total.diff)
-length(na.omit(qecbnew$Nb.spirorbis.total))
-sum(is.na(qecbnew$Nb.spirorbis.total))
-length(na.omit(qecbnew$Nb.spirorbis.total)) + sum(is.na(qecbnew$Nb.spirorbis.total))
 
 qecbnew <- subset(qecbnew, select = -c(Nb.spirorbis.total.ini, mean.x.200, Nb.spirorbis.total.diff))
 
@@ -629,7 +585,6 @@ qecbnew <- dplyr::filter(qecbnew, site_year_month_day != "FINS_Quemenes.2020.10.
 
 # save the final qecbnew df_
 
-#saveRDS(qecbnew, "qecbnew.RDS")
 
 qecb <- qecbnew
 
@@ -668,9 +623,7 @@ egmp_basq_bf <- dplyr::filter(qecb, region == "EGMP.BASQ" & Type.Bloc %in% c("Bl
 
 # replace NAs by "0" for variables used in qecb determination
 
-{
-  # bretagne_bm
-  bretagne_bm[, c(
+{ bretagne_bm[, c(
     "X..algues.brunes",
     "Strate.algues.brunes",
     "X..algues.rouges",
@@ -1205,4 +1158,3 @@ qecbnato0 <- tibble::add_column(qecbnato0, log10.Nb.spirorbis.total = log10(qecb
 qecbnato0 <- tibble::add_column(qecbnato0, log10.Nb.Spirobranchus.lamarckii.total = log10(qecbnato0$Nb.Spirobranchus.lamarckii.total + 1), .after = "Nb.Spirobranchus.lamarckii.total")
 
 saveRDS(qecbnato0, "qecbnato0.RDS")
-
