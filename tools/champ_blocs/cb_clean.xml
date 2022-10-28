@@ -28,7 +28,7 @@
             <param name="input_data" value="champbloc_qecb.csv"/>
             <output name="output_qecb">
                 <assert_contents>
-                    <has_size n="146.5"/>
+                    <has_text text="E6P"/>
                 </assert_contents>
             </output>
         </test>
