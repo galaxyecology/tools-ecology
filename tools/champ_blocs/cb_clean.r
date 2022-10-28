@@ -623,7 +623,7 @@ egmp_basq_bf <- dplyr::filter(qecb, region == "EGMP.BASQ" & Type.Bloc %in% c("Bl
 
 # replace NAs by "0" for variables used in qecb determination
 
-{ bretagne_bm[, c(
+bretagne_bm[, c(
     "X..algues.brunes",
     "Strate.algues.brunes",
     "X..algues.rouges",
@@ -1116,8 +1116,6 @@ egmp_basq_bf <- dplyr::filter(qecb, region == "EGMP.BASQ" & Type.Bloc %in% c("Bl
     #."Nb.Mimachlamys.varia..Pétoncle.noir."
   )
   ], function(x) replace(x, is.na(x), 0))
-
-}
 
 # merge dfs.
 qecbnato0 <- dplyr::bind_rows(bretagne_bm, bretagne_bf)
