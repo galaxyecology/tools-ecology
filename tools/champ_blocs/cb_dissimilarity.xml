@@ -48,7 +48,7 @@
             <param name="choice_date" value="2022"/>
             <output name="output_eco">
                 <assert_contents>
-                    <has_size n="295"/>
+                    <has_text text="6t"/>
                 </assert_contents>
             </output>
             <output_collection name="plots_bf" type="list" count="23"/>
