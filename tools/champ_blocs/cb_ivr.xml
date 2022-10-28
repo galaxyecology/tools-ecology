@@ -42,7 +42,7 @@
             <param name="input_data" value="champbloc_ivr.csv"/>
             <output name="output_ivr">
                 <assert_contents>
-                    <has_size n="9.7"/>
+                    <has_text text="pG4"/>
                 </assert_contents>
             </output>
             <output_collection name="plots" type="list" count="23"/>
