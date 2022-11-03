@@ -7,14 +7,17 @@
         <requirement type="package" version="2.16">r-rmarkdown</requirement>
         <requirement type="package" version="0.2.4">r-officedown</requirement>
         <requirement type="package" version="2.6_2">r-vegan</requirement>
+        <requirement type="package" version="1.3.2">r-tidyverse</requirement>
         <requirement type="package" version="3.3.6">r-ggplot2</requirement>
     </expand>
     <command detect_errors="exit_code"><![CDATA[
         Rscript
             '$__tool_directory__/cb_dissimilarity.r'
+            '$fiche_val'
             '$input_data'
             '$choice'
             '$choice_date'
+            '$output_qecb'
             '$output_eco'
             '$plots_bf'
             '$plots_bm'
@@ -22,15 +25,17 @@
         ]]>
     </command>
     <inputs>
-        <param name="input_data" type="data" format="Rdata" label="Input clean Rdata"/>
+        <expand macro="cb_input"/>
+        <param name="input_data" type="data" format="data" label="Input champbloc_qecb.csv"/>
         <param name="choice" type="select" label="Do you have data after the year 2021 ?" display="radio">
             <option value="N">No</option>
             <option value="Y">Yes</option>
         </param>
-        <param name="choice_date" type="text" label="Until when do you have data (write only the YEAR) ?" help="Example write : 2022 "/>
+        <param name="choice_date" type="integer" value="2021" label="Until when do you have data (write only the YEAR) ?" help="Example write : 2021 "/>
     </inputs>
     <outputs>
-        <data name="output_eco" from_work_dir="bret_egmp_basq_qecb.RDS" format="Rdata" label="Dissim Rdata"/>
+        <data name="output_qecb" from_work_dir="qecbnato0.RDS" format="Rdata" label="Clean Rdata"/>
+        <data name="output_eco" from_work_dir="bret_egmp_basq_qecb.RDS" format="Rdata" label="Bret Rdata"/>
         <collection type="list" name="plots_bf" label="Bloc fixe et bloc mobile face sup plot">
             <discover_datasets pattern="bm(?P&lt;designation&gt;.+)\.png" visible="false" format="png"/>
         </collection>
@@ -43,9 +48,15 @@
     </outputs>
     <tests>
         <test>
-            <param name="input_data" value="qecbnato0.Rdata"/>
-            <param name="choice" value="Y"/>
-            <param name="choice_date" value="2022"/>
+            <param name="fiche_val" value="ficheterrain.csv"/>
+            <param name="input_data" value="champbloc_qecb.csv"/>
+            <param name="choice" value="N"/>
+            <param name="choice_date" value="2021"/>
+            <output name="output_qecb">
+                <assert_contents>
+                    <has_text text="E6P"/>
+                </assert_contents>
+            </output>
             <output name="output_eco">
                 <assert_contents>
                     <has_text text="6t"/>
