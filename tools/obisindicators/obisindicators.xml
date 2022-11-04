@@ -35,15 +35,15 @@
     </command>
     <inputs>
         <expand macro="SRS_input"/>
-        <param name="separator" type="select" display="radio" label="What character is the separator in your data? (Mostlikely a comma for a csv file and t for a tabular)">
+        <param name="separator" type="select" display="radio" label="What character is the separator in your data?" help="Mostlikely this will be a comma or a tabular. If not reformat your input before using this tool.">
             <option value=",">Comma (,)</option>  
             <option value="t">Tabulator (\t)</option>     
         </param> 
-        <param name="longitude" label="Select column containing the decimal value of the longitude " type="data_column" data_ref="input" numerical="true" use_header_names="true"/>
-        <param name="latitude" label="Select column containing the decimal value of the latitude " type="data_column" data_ref="input" numerical="true" use_header_names="true"/>
+        <param name="longitude" label="Select column containing the decimal value of the longitude" type="data_column" data_ref="input" numerical="true" use_header_names="true"/>
+        <param name="latitude" label="Select column containing the decimal value of the latitude" type="data_column" data_ref="input" numerical="true" use_header_names="true"/>
         <param name="species" label="Select column containing the species " type="data_column" data_ref="input" use_header_names="true"/>
         <param name="records" label="Select column containing the number of records" type="data_column" data_ref="input" numerical="true" use_header_names="true"/>
-        <param name="type" type="select" label="Type of projection for the map : select your coordinate reference system (CRS)">
+        <param name="type" type="select" label="Type of projection for the map: select your coordinate reference system (CRS)">
             <option value="0">Robinson projection</option>
             <option value="4326">Geographic projection</option>
         </param>
