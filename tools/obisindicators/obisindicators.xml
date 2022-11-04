@@ -1,0 +1,128 @@
+<tool id="obisindicators" name="Ocean biodiversity indicators" version="@VERSION@" profile="20.01">
+    <description>from OBIS</description>
+    <macros>
+        <import>macro.xml</import>
+    </macros>
+    <expand macro="topic"/>
+    <expand macro="requirements">
+        <requirement type="package" version="2.0.3">r-magrittr</requirement>
+        <requirement type="package" version="1.0.9">r-dplyr</requirement>
+        <requirement type="package" version="1.0_7">r-sf</requirement>
+        <requirement type="package" version="2.1_7.1">r-gsl</requirement>
+        <requirement type="package" version="0.1.0">r-rnaturalearth</requirement>
+        <requirement type="package" version="0.1.0">r-rnaturalearthdata</requirement>
+        <requirement type="package" version="0.6.2">r-viridis</requirement>
+        <requirement type="package" version="2.4.2">r-remotes</requirement>
+        <requirement type="package" version="2.0.4">r-dggridr</requirement>
+    </expand>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript
+            '$__tool_directory__/obisindicators.r'
+            '$input'
+            '$colnames'
+            '$separator'
+            '$longitude'
+            '$latitude'
+            '$species'
+            '$records'
+            '$type'
+            '$__tool_directory__/analyze.r'
+            '$__tool_directory__/visualize.r'
+            '$__tool_directory__/data.r'
+            '$output_index'
+            '$plots'
+        ]]>
+    </command>
+    <inputs>
+        <expand macro="SRS_input"/>
+        <param name="separator" type="select" display="radio" label="What character is the separator in your data? (Mostlikely a comma for a csv file and t for a tabular)">
+            <option value=",">Comma (,)</option>  
+            <option value="t">Tabulator (\t)</option>     
+        </param> 
+        <param name="longitude" label="Select column containing the decimal value of the longitude " type="data_column" data_ref="input" numerical="true" use_header_names="true"/>
+        <param name="latitude" label="Select column containing the decimal value of the latitude " type="data_column" data_ref="input" numerical="true" use_header_names="true"/>
+        <param name="species" label="Select column containing the species " type="data_column" data_ref="input" use_header_names="true"/>
+        <param name="records" label="Select column containing the number of records" type="data_column" data_ref="input" numerical="true" use_header_names="true"/>
+        <param name="type" type="select" label="Type of projection for the map : select your coordinate reference system (CRS)">
+            <option value="0">Robinson projection</option>
+            <option value="4326">Geographic projection</option>
+        </param>
+    </inputs>
+    <outputs>
+        <data name="output_index" from_work_dir="Index.csv" format="csv" label="Index">
+        </data>
+        <collection type="list" name="plots">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" visible="false" format="png"/>
+        </collection>
+    </outputs>
+    <tests>
+        <test>
+            <param name="input" value="occ_at.tabular"/>
+            <param name="colnames" value="true"/>
+            <param name="separator" value="t"/>
+            <param name="longitude" value="c1: decimalLongitude"/>
+            <param name="latitude" value="c2: decimalLatitude"/>
+            <param name="species" value="c3: species"/>
+            <param name="records" value="c5: records"/>
+            <param name="type" value="0"/>
+            <output name="output_index" value="Index.csv"/>
+            <output_collection name="plots" type="list" count="5">
+                <element name="ES_50" ftype="png">
+                    <assert_contents>
+                        <has_text text="PNG"/>
+                    </assert_contents>
+                </element>
+                <element name="Maxp" ftype="png">
+                    <assert_contents>
+                        <has_text text="PNG"/>
+                    </assert_contents>
+                </element>
+                <element name="Records" ftype="png">
+                    <assert_contents>
+                        <has_text text="PNG"/>
+                    </assert_contents>
+                </element>
+                <element name="Shannon_index" ftype="png">
+                    <assert_contents>
+                        <has_text text="PNG"/>
+                    </assert_contents>
+                </element>
+               <element name="Simpson_index" ftype="png">
+                    <assert_contents>
+                        <has_text text="PNG"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+        </test>
+    </tests>
+    <help><![CDATA[
+================================================
+Calculates biodiversity indicators and maps them
+================================================
+
+
+**What it does**
+
+This tool calculates the number of records, species richness, Simpson index, Shannon index, Hurlbert index (n = 50), and Hill numbers for each cell.
+
+**Input description**
+
+A tabular file with observation data. Must at least contain four columns longitude, latitude, taxon (any taxon level : species, family, ...) and records.
+
+
++----------+-----------+---------+------------+
+| latitude | longitude |  taxon  |  records   |
++==========+===========+=========+============+
+| lat      |long       | taxonID |      4     |
++----------+-----------+---------+------------+
+|  ...     |    ...    |   ...   |     ...    |
++----------+-----------+---------+------------+
+
+**Output**
+
+- A text output that summarizes in a tabular the results of all the indicators.
+
+- Multiple PNG files representing the indicators on a map (according to the choice of map made).
+    ]]></help>
+    <expand macro="SRS_bibref"/>
+</tool>

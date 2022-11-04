@@ -1,0 +1,35 @@
+<macros>
+    <token name="@VERSION@">0.0.1</token>
+    <xml name="requirements">
+        <requirements>
+            <requirement type="package" version="4.2.1">r-base</requirement>
+            <requirement type="package" version="3.3.6">r-ggplot2</requirement>
+            <yield />
+        </requirements>
+    </xml>
+    <xml name="SRS_input">
+       <param name="input" type="data" format="tabular,csv,txt" label="Input table"/>
+       <param name="colnames" type="boolean" label="First line is a header line" checked="true"/>
+       <param name="separator" type="text" label="What character is the separator in your data? (Mostlikely a comma for a csv file and t for a tabular)"/>
+    </xml>
+    <xml name="SRS_bibref">
+       <citations>
+            <citation type="bibtex">
+            @Manual{,
+            title = {obisindicators: Develop marine biodiversity indicators from OBIS data},
+            author = {Ben Ben and Pieter Provoost and Tylar Murray},
+            year = {2022},
+            note = {https://marinebon.org/obisindicators,
+            https://github.com/marinebon/obisindicators},
+            }
+            </citation>
+        </citations>
+    </xml>
+    <xml name="topic">
+        <edam_topics>
+           <edam_topic>topic_0610</edam_topic>
+           <edam_topic>topic_3050</edam_topic>
+        </edam_topics>
+    </xml>
+</macros>
+
