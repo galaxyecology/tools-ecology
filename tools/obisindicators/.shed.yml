@@ -1,0 +1,14 @@
+categories:
+    - Ecology
+owner: ecology
+remote_repository_url: https://github.com/Marie59/obisindicators
+long_description: |
+  Compute biodiveristy indicators for marine data from obis
+type: unrestricted
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrapper for obisindicators tool: {{ tool_name }}."
+suite:
+  name: "obisindicators"
+  description: "A suite of indicators for marine obis data"
+  type: unrestricted
