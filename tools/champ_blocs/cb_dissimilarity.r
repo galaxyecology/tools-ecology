@@ -1641,7 +1641,7 @@ matri_full$Site_bis <- ifelse(matri_full$Site == "FINS_Mousterlin", "Pointe de M
 matri_full$Site_bis <- ifelse(matri_full$Site == "FINS_StNicolasGlenan", "Saint-Nicolas des Glénan", matri_full$Site_bis)
 matri_full$Site_bis <- ifelse(matri_full$Site == "FINS_AnseRoz", "Pointe de l'Anse du Roz", matri_full$Site_bis)
 
-
+saveRDS(matri_full, "matri_full.RDS")
 
 #############################################################
 #                                                           #

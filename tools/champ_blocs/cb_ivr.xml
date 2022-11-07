@@ -11,6 +11,12 @@
         <requirement type="package" version="0.8.1">r-flextable</requirement>
         <requirement type="package" version="3.3.6">r-ggplot2</requirement>
     </expand>
+    <required_files>
+        <include type="literal" path="test-data/champbloc_ivr.csv"/>
+        <include type="literal" path="test-data/ficheterrain.csv"/>
+        <include type="literal" path="CB_ivr.tif"/>
+        <include type="literal" path="logo_merged.png"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript
             '$__tool_directory__/cb_ivr.r'
@@ -28,7 +34,7 @@
         <param name="input_data" type="data" format="data" label="Input champbloc_ivr.csv"/>
     </inputs>
     <outputs>
-        <data name="output_ivr" from_work_dir="ivr_val_qu_stat.RDS" format="Rdata" label="IVR Rdata"/>
+        <data name="output_ivr" from_work_dir="ivr_val_qu.RDS" format="Rdata" label="IVR Rdata"/>
         <collection type="list" name="plots" label="IVR plot">
             <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" visible="false" format="png"/>
         </collection>
@@ -37,12 +43,12 @@
         </collection>
     </outputs>
     <tests>
-        <test>
+        <test expect_num_outputs="3">
             <param name="fiche_val" value="ficheterrain.csv"/>
             <param name="input_data" value="champbloc_ivr.csv"/>
             <output name="output_ivr">
                 <assert_contents>
-                    <has_text text="XTG"/>
+                    <has_text text="yo"/>
                 </assert_contents>
             </output>
             <output_collection name="plots" type="list" count="23"/>

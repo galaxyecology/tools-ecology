@@ -264,7 +264,7 @@ rm(i, ivr_)
 # reorder variables for logical purpose
 ivr_val_qu_ <- ivr_val_qu_[, c(1:56, 58, 57, 59)]
 indic_full <- ivr_val_qu_
-
+saveRDS(ivr_val_qu_, "ivr_val_qu.RDS")
 rm(ivr_naomit)
 
 
@@ -277,7 +277,6 @@ rm(Date)
 
 ivr_val_qu_stat_ <- as.data.frame(ivr_val_qu_stat_)
 indic <- ivr_val_qu_stat_
-saveRDS(ivr_val_qu_stat_, "ivr_val_qu_stat.RDS")
 
 
 #############################################################
