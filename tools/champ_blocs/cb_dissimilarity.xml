@@ -13,6 +13,7 @@
     <required_files>
         <include type="literal" path="test-data/champbloc_qecb.csv"/>
         <include type="literal" path="test-data/ficheterrain.csv"/>
+        <include type="literal" path="cb_dissimilarity.r"/>
     </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript
