@@ -1,0 +1,93 @@
+<tool id="cb_ivr" name="IVR" version="@VERSION@" profile = "20.01">
+    <description>indicator</description>
+    <macros>
+        <import>macro.xml</import>
+    </macros>
+    <expand macro="cb_requirements">
+        <requirement type="package" version="2.16">r-rmarkdown</requirement>
+        <requirement type="package" version="0.2.4">r-officedown</requirement>
+        <requirement type="package" version="1.3.2">r-tidyverse</requirement>
+        <requirement type="package" version="0.4.4">r-officer</requirement>
+        <requirement type="package" version="0.8.1">r-flextable</requirement>
+        <requirement type="package" version="3.3.6">r-ggplot2</requirement>
+    </expand>
+    <required_files>
+        <include type="literal" path="test-data/champbloc_ivr.csv"/>
+        <include type="literal" path="test-data/ficheterrain.csv"/>
+        <include type="literal" path="CB_ivr.tif"/>
+        <include type="literal" path="logo_merged.png"/>
+        <include type="literal" path="cb_ivr_site_report_col_scale_loop.Rmd"/>
+        <include type="literal" path="loop_col_scale.r"/>
+        <include type="literal" path="cb_ivr.r"/>
+    </required_files>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript
+            '$__tool_directory__/cb_ivr.r'
+            '$fiche_val'
+            '$input_data'
+            '$__tool_directory__/cb_ivr_site_report_col_scale_loop.Rmd'
+            '$__tool_directory__/loop_col_scale.r'
+            '$output_ivr'
+            '$plots'
+            '$output_report'
+        ]]>
+    </command>
+    <inputs>
+        <expand macro="cb_input"/>
+        <param name="input_data" type="data" format="data" label="Input champbloc_ivr.csv"/>
+    </inputs>
+    <outputs>
+        <data name="output_ivr" from_work_dir="ivr_val_qu.RDS" format="Rdata" label="IVR Rdata"/>
+        <collection type="list" name="plots" label="IVR plot">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" visible="false" format="png"/>
+        </collection>
+        <collection type="list" name="output_report" label="Reports">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.docx" directory="results" visible="false" format="docx"/>
+        </collection>
+    </outputs>
+    <tests>
+        <test expect_num_outputs="3">
+            <param name="fiche_val" value="ficheterrain.csv"/>
+            <param name="input_data" value="champbloc_ivr.csv"/>
+            <output name="output_ivr">
+                <assert_contents>
+                    <has_text text="yo"/>
+                </assert_contents>
+            </output>
+            <output_collection name="plots" type="list" count="23"/>
+            <output_collection name="output_report" type="list" count="23"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+=============
+VTI indicator
+=============
+
+
+**What it does**
+
+Calculates the Visual Boulder Turning Indicator (VTI), which is similar to a "landscape" indicator to assess fishing pressure based on architectural criteria.
+Based on the proportion of "turned" and "not turned" blocs this indicator vary from 0 to 5 and can be quickly used.
+
+**Input description**
+
+TWO input files in csv format.
+
++---------------+------------------+
+|      CSV      |        CSV       |
++===============+==================+
+| champbloc.csv | ficheterrain.csv |
++---------------+------------------+
+|      ...      |        ...       |
++---------------+------------------+
+
+
+**Output**
+
+- .RDS file 1 of them for the ivr
+- Multiple png plots one for each of the locations
+
+
+    ]]>    </help>
+        <expand macro="cb_bibref"/>
+</tool>

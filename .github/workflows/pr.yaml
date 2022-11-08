@@ -2,9 +2,9 @@ name: Galaxy Tool Linting and Tests for push and PR
 on: [push, pull_request]
 env:
   GALAXY_FORK: galaxyproject
-  GALAXY_BRANCH: release_22.01
+  GALAXY_BRANCH: release_22.05
   MAX_CHUNKS: 4
-  MAX_FILE_SIZE: 1M
+  MAX_FILE_SIZE: 20M
 concurrency:
   # group runs by PR, but keep runs on master separate
   # because we do not want to cancel toolshed uploads
@@ -157,66 +157,7 @@ jobs:
       with:
         name: 'Python linting output'
         path: pylint_report.txt
-
-  lintr:
-    name: Lint R scripts
-    needs: setup
-    if: ${{ needs.setup.outputs.repository-list != '' }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-20.04]
-        r-version: ['4.0.1']
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 1
-    - uses: r-lib/actions/setup-r@master
-      with:
-        r-version: ${{ matrix.r-version }}
-    - name: Cache R packages
-      uses: actions/cache@v2
-      with:
-        path: ${{ env.R_LIBS_USER }}
-        key: r_cache_${{ matrix.os }}_${{ matrix.r-version }}
-    - name: Install non-R lintr dependencies
-      run: sudo apt-get install libcurl4-openssl-dev
-    - name: Install lintr
-      run: |
-        install.packages('remotes')
-        remotes::install_cran("lintr")
-      shell: Rscript {0}
-    - name: Save repositories to file
-      run: echo '${{ needs.setup.outputs.repository-list }}' > repository_list.txt
-    - name: lintr
-      run: |
-        library(lintr)
-        linters <- with_defaults(line_length_linter = NULL, cyclocomp_linter = NULL, object_usage_linter = NULL)
-        con <- file("repository_list.txt", "r")
-        status <- 0
-        while (TRUE) {
-          repo <- readLines(con, n = 1)
-          if (length(repo) == 0) {
-             break
-          }
-          lnt <- lint_dir(repo, relative_path=T, linters=linters)
-          if (length(lnt) > 0) {
-            status <- 1
-            for (l in lnt) {
-              rel_path <- paste(repo, l$filename, sep="/")
-              write(paste(paste(rel_path, l$line_number, l$column_number, sep=":"), l$message), stderr())
-              write(paste(paste(rel_path, l$line_number, l$column_number, sep=":"), l$message), "rlint_report.txt", append=TRUE)
-            }
-          }
-        }
-        quit(status = status)
-      shell: Rscript {0}
-    - uses: actions/upload-artifact@v2
-      if: ${{ failure() }}
-      with:
-        name: 'R linting output'
-        path: rlint_report.txt
-
+        
   file_sizes:
     name: Check file sizes
     needs: setup
@@ -288,6 +229,8 @@ jobs:
       with:
         path: ~/.planemo
         key: planemo_cache_py_${{ matrix.python-version }}_gxy_${{ needs.setup.outputs.galaxy-head-sha }}
+    - name: update conda
+      run: 'conda update -n base -c defaults conda'
     - name: Planemo test
       uses: galaxyproject/planemo-ci-action@v1
       id: test
@@ -298,6 +241,7 @@ jobs:
         galaxy-branch: ${{ env.GALAXY_BRANCH }}
         chunk: ${{ matrix.chunk }}
         chunk-count: ${{ needs.setup.outputs.chunk-count }}
+        additional-planemo-options: --conda_channels conda-forge,bioconda
     - uses: actions/upload-artifact@v2
       with:
         name: 'Tool test output ${{ matrix.chunk }}'
@@ -348,7 +292,7 @@ jobs:
   # deploy the tools to the toolsheds (first TTS for testing)
   deploy:
     name: Deploy
-    needs: [setup, lint, flake8, lintr, combine_outputs]
+    needs: [setup, lint, flake8, combine_outputs]
     if: ${{ (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' ) && github.repository_owner == 'galaxyecology' }}
     runs-on: ubuntu-latest
     strategy:
@@ -385,7 +329,7 @@ jobs:
 
   determine-success:
     name: Check workflow success
-    needs: [setup, lint, flake8, lintr, file_sizes, combine_outputs]
+    needs: [setup, lint, flake8, file_sizes, combine_outputs]
     if: ${{ always() && github.ref != 'refs/heads/master' && github.ref != 'refs/heads/main' }}
     runs-on: ubuntu-latest
     steps:
@@ -394,9 +338,6 @@ jobs:
       run: exit 1
     - name: Indicate Python script lint status
       if: ${{ needs.flake8.result != 'success' && needs.flake8.result != 'skipped' }}
-      run: exit 1
-    - name: Indicate R script lint status
-      if: ${{ needs.lintr.result != 'success' && needs.lintr.result != 'skipped' }}
       run: exit 1
     - name: Indicate file size check status
       if: ${{ needs.file_sizes.result != 'success' && needs.file_sizes.result != 'skipped' }}

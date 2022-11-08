@@ -1,0 +1,14 @@
+categories:
+    - Ecology
+owner: ecology
+remote_repository_url: https://github.com/Marie59/champ_blocs
+long_description: |
+  Compute indicators for turnover boulders fields
+type: unrestricted
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrapper for champ blocs tool: {{ tool_name }}."
+suite:
+  name: "champ_blocs"
+  description: "A suite of indicators for turnover boulders fields"
+  type: unrestricted
