@@ -16,6 +16,8 @@
         <include type="literal" path="test-data/ficheterrain.csv"/>
         <include type="literal" path="CB_ivr.tif"/>
         <include type="literal" path="logo_merged.png"/>
+        <include type="literal" path="cb_ivr_site_report_col_scale_loop.Rmd"/>
+        <include type="literal" path="loop_col_scale.r"/>
     </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript
