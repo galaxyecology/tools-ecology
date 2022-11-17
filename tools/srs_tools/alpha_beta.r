@@ -71,15 +71,7 @@ pix_per_partition <- pca_output$Pix_Per_Partition
 nb_partitions <- pca_output$nb_partitions
 # path for the updated mask
 input_mask_file <- pca_output$MaskPath
-
-# 3- Select principal components from the PCA raster
-# Select components from the PCA/SPCA/MNF raster
-sel_compo <- c("1\n", "2\n", "3\n", "4\n", "5\n", "6\n", "7\n", "8")
 image_name <- tools::file_path_sans_ext(basename(input_image_file))
-output_dir_full <- file.path(output_dir, image_name, typepca, "PCA")
-
-write.table(sel_compo, paste0(output_dir_full, "/Selected_Components.txt"))
-sel_pc <-  file.path(output_dir_full, "Selected_Components.txt")
 
 ################################################################################
 ##                      MAP ALPHA AND BETA DIVERSITY                          ##
@@ -127,12 +119,9 @@ if (alpha == TRUE || beta == TRUE || all == TRUE) {
 ################################################################################
 ##          COMPUTE ALPHA AND BETA DIVERSITY FROM FIELD PLOTS                 ##
 ################################################################################
-## read selected features from dimensionality reduction
-selected_features <- read.table(sel_pc)[[1]]
-## path for selected components
 
 if (funct == TRUE || all == TRUE) {
-  mapper <- biodivMapR::map_functional_div(Original_Image_File = input_image_file, Functional_File = pca_files,  Selected_Features = selected_features, Output_Dir = output_dir, window_size = window_size, nbCPU = nbcpu, MaxRAM = maxram, TypePCA = typepca)
+  mapper <- biodivMapR::map_functional_div(Original_Image_File = input_image_file, Functional_File = pca_files,  Selected_Features = FALSE, Output_Dir = output_dir, window_size = window_size, nbCPU = nbcpu, MaxRAM = maxram, TypePCA = typepca)
 
   funct_zip <- file.path(output_dir, image_name, typepca, "FUNCTIONAL", "FunctionalDiversity_Map_MeanFilter_Fullres.zip")
   funct_path <- file.path(output_dir, image_name, typepca, "FUNCTIONAL")
