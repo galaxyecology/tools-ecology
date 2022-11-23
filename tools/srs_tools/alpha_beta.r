@@ -73,6 +73,9 @@ nb_partitions <- pca_output$nb_partitions
 input_mask_file <- pca_output$MaskPath
 image_name <- tools::file_path_sans_ext(basename(input_image_file))
 
+selected_pcs <- seq(1, dim(raster::stack(input_image_file))[3])
+
+selected_pcs <- all(selected_pcs)
 ################################################################################
 ##                      MAP ALPHA AND BETA DIVERSITY                          ##
 ################################################################################
