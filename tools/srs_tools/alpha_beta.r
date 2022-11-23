@@ -81,7 +81,7 @@ selected_pcs <- all(selected_pcs)
 ################################################################################
 print("MAP SPECTRAL SPECIES")
 
-kmeans_info <- biodivMapR::map_spectral_species(Input_Image_File = input_image_file, Output_Dir = output_dir, PCA_Files = pca_files, Input_Mask_File = input_mask_file, Pix_Per_Partition = pix_per_partition, nb_partitions = nb_partitions, nbCPU = nbcpu, MaxRAM = maxram, nbclusters = nbclusters, TypePCA = typepca)
+kmeans_info <- biodivMapR::map_spectral_species(Input_Image_File = input_image_file, Output_Dir = output_dir, PCA_Files = pca_files, Input_Mask_File = input_mask_file, , SelectedPCs = selected_pcs, Pix_Per_Partition = pix_per_partition, nb_partitions = nb_partitions, nbCPU = nbcpu, MaxRAM = maxram, nbclusters = nbclusters, TypePCA = typepca)
 
 if (alpha == TRUE || beta == TRUE || all == TRUE) {
 ## alpha
@@ -124,7 +124,7 @@ if (alpha == TRUE || beta == TRUE || all == TRUE) {
 ################################################################################
 
 if (funct == TRUE || all == TRUE) {
-  mapper <- biodivMapR::map_functional_div(Original_Image_File = input_image_file, Functional_File = pca_files,  Selected_Features = FALSE, Output_Dir = output_dir, window_size = window_size, nbCPU = nbcpu, MaxRAM = maxram, TypePCA = typepca)
+  mapper <- biodivMapR::map_functional_div(Original_Image_File = input_image_file, Functional_File = pca_files,  Selected_Features = selected_pcs, Output_Dir = output_dir, window_size = window_size, nbCPU = nbcpu, MaxRAM = maxram, TypePCA = typepca)
 
   funct_zip <- file.path(output_dir, image_name, typepca, "FUNCTIONAL", "FunctionalDiversity_Map_MeanFilter_Fullres.zip")
   funct_path <- file.path(output_dir, image_name, typepca, "FUNCTIONAL")
