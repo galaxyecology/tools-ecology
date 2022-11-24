@@ -71,7 +71,7 @@ pix_per_partition <- pca_output$Pix_Per_Partition
 nb_partitions <- pca_output$nb_partitions
 # path for the updated mask
 input_mask_file <- pca_output$MaskPath
-image_name <- tools::file_path_sans_ext(basename(input_image_file))
+
 
 selected_pcs <- seq(1, dim(raster::stack(input_image_file))[3])
 
@@ -81,13 +81,14 @@ selected_pcs <- all(selected_pcs)
 ################################################################################
 print("MAP SPECTRAL SPECIES")
 
-kmeans_info <- biodivMapR::map_spectral_species(Input_Image_File = input_image_file, Output_Dir = output_dir, PCA_Files = pca_files, Input_Mask_File = input_mask_file, , SelectedPCs = selected_pcs, Pix_Per_Partition = pix_per_partition, nb_partitions = nb_partitions, nbCPU = nbcpu, MaxRAM = maxram, nbclusters = nbclusters, TypePCA = typepca)
+kmeans_info <- biodivMapR::map_spectral_species(Input_Image_File = input_image_file, Output_Dir = output_dir, PCA_Files = pca_files, Input_Mask_File = input_mask_file, SelectedPCs = selected_pcs, Pix_Per_Partition = pix_per_partition, nb_partitions = nb_partitions, TypePCA = typepca, nbCPU = nbcpu, MaxRAM = maxram, nbclusters = nbclusters)
 
+image_name <- tools::file_path_sans_ext(basename(input_image_file))
 if (alpha == TRUE || beta == TRUE || all == TRUE) {
 ## alpha
   print("MAP ALPHA DIVERSITY")
   index_alpha <- c("Shannon")
-  alpha_div <- biodivMapR::map_alpha_div(Input_Image_File = input_image_file, Output_Dir = output_dir, TypePCA = typepca, window_size = window_size, nbCPU = nbcpu, MaxRAM = maxram, Index_Alpha = index_alpha, nbclusters = nbclusters)
+  alpha_div <- biodivMapR::map_alpha_div(Input_Image_File = input_image_file, Output_Dir = output_dir, TypePCA = typepca, window_size = window_size, nbCPU = nbcpu, MaxRAM = maxram, Index_Alpha = index_alpha, nbclusters = nbclusters, FullRes = TRUE, LowRes = FALSE, MapSTD = FALSE)
 
   alpha_zip <- file.path(output_dir, image_name, typepca, "ALPHA", "Shannon_10_Fullres.zip")
   alpha_path <- file.path(output_dir, image_name, typepca, "ALPHA")
@@ -124,7 +125,7 @@ if (alpha == TRUE || beta == TRUE || all == TRUE) {
 ################################################################################
 
 if (funct == TRUE || all == TRUE) {
-  mapper <- biodivMapR::map_functional_div(Original_Image_File = input_image_file, Functional_File = pca_files,  Selected_Features = selected_pcs, Output_Dir = output_dir, window_size = window_size, nbCPU = nbcpu, MaxRAM = maxram, TypePCA = typepca)
+  mapper <- biodivMapR::map_functional_div(Original_Image_File = input_image_file, Functional_File = pca_files,  Selected_Features = selected_pcs, Output_Dir = output_dir, window_size = window_size, nbCPU = nbcpu, MaxRAM = maxram, TypePCA = typepca, FullRes = TRUE, LowRes = FALSE, MapSTD = FALSE)
 
   funct_zip <- file.path(output_dir, image_name, typepca, "FUNCTIONAL", "FunctionalDiversity_Map_MeanFilter_Fullres.zip")
   funct_path <- file.path(output_dir, image_name, typepca, "FUNCTIONAL")
