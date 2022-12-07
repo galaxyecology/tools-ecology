@@ -33,7 +33,7 @@
     <inputs>
         <expand macro="cb_input"/>
         <param name="input_data" type="data" format="data" label="Input champbloc_qecb.csv"/>
-        <param name="choice" type="select" label="Do you have data after the year 2021 ?" display="radio">
+        <param name="choice" type="select" display="radio" label="Do you have data after the year 2021?">
             <option value="N">No</option>
             <option value="Y">Yes</option>
         </param>
