@@ -13,7 +13,7 @@
         <requirement type="package" version="0.1.0">r-rnaturalearthdata</requirement>
         <requirement type="package" version="0.6.2">r-viridis</requirement>
         <requirement type="package" version="2.4.2">r-remotes</requirement>
-        <requirement type="package" version="2.0.4">r-dggridr</requirement>
+        <requirement type="package" version="3.0.0">r-dggridr</requirement>
     </expand>
     <required_files>
         <include type="literal" path="test-data/occ_at.tabular"/>
