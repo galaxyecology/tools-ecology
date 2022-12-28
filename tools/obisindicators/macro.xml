@@ -2,8 +2,8 @@
     <token name="@VERSION@">0.0.1</token>
     <xml name="requirements">
         <requirements>
-            <requirement type="package" version="4.2.1">r-base</requirement>
-            <requirement type="package" version="3.3.6">r-ggplot2</requirement>
+            <requirement type="package" version="4.2.2">r-base</requirement>
+            <requirement type="package" version="3.4.0">r-ggplot2</requirement>
             <yield />
         </requirements>
     </xml>
