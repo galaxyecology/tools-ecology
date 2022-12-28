@@ -15,8 +15,6 @@
         <requirement type="package" version="3.0.0">r-dggridr</requirement>
     </expand>
     <required_files>
-        <include type="literal" path="test-data/occ_at.tabular"/>
-        <include type="literal" path="test-data/Index.csv"/>
         <include type="literal" path="analyze.r"/>
         <include type="literal" path="visualize.r"/>
         <include type="literal" path="data.r"/>
