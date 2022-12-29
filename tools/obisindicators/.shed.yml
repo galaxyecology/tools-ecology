@@ -9,6 +9,6 @@ auto_tool_repositories:
   name_template: "{{ tool_id }}"
   description_template: "Wrapper for obisindicators tool: {{ tool_name }}."
 suite:
-  name: "obisindicators"
+  name: "obisindicators_suite"
   description: "A suite of indicators for marine obis data"
   type: unrestricted
