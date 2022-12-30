@@ -4,20 +4,20 @@
         <import>macro.xml</import>
     </macros>
     <requirements>
-        <requirement type="package" version="4.2.1">r-base</requirement>
+        <requirement type="package" version="4.2.2">r-base</requirement>
         <requirement type="package" version="1.0_7">r-sf</requirement>
-        <requirement type="package" version="0.5_9">r-rgeos</requirement>
+        <requirement type="package" version="0.6_1">r-rgeos</requirement>
         <requirement type="package" version="0.5_5">r-stars</requirement>
-        <requirement type="package" version="1.4.1">r-stringr</requirement>
+        <requirement type="package" version="1.5.1">r-stringr</requirement>
         <requirement type="package" version="1.2.3">r-jqr</requirement>
-        <requirement type="package" version="2.1.2">r-protolite</requirement>
+        <requirement type="package" version="2.1.3">r-protolite</requirement>
         <requirement type="package" version="1.5.3">r-sen2r</requirement>
         <requirement type="package" version="1.2.2">r-progress</requirement>
-        <requirement type="package" version="2.0.3.2">r-gdalutils</requirement>
-        <requirement type="package" version="1.0.3">r-fasterize</requirement> 
-        <requirement type="package" version="3.99_0.11">r-xml</requirement> 
+        <requirement type="package" version="2.0.3">r-gdalutils</requirement>
+        <requirement type="package" version="1.0.4">r-fasterize</requirement> 
+        <requirement type="package" version="3.99_0.13">r-xml</requirement> 
         <requirement type="package" version="1.3.3">r-xml2</requirement>
-        <requirement type="package" version="2.2.1">r-zip</requirement>
+        <requirement type="package" version="2.2.2">r-zip</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
         Rscript
