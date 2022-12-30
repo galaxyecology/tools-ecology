@@ -4,13 +4,13 @@
         <import>macro.xml</import>
     </macros>
     <requirements>
-        <requirement type="package" version="4.2.1">r-base</requirement>
+        <requirement type="package" version="4.2.2">r-base</requirement>
         <requirement type="package" version="3.5_21">r-raster</requirement>
         <requirement type="package" version="1.5_32">r-rgdal</requirement>
-        <requirement type="package" version="1.5_0">r-sp</requirement>
-        <requirement type="package" version="0.2_5.2">r-rasterdiv</requirement>
-        <requirement type="package" version="3.3.6">r-ggplot2</requirement>
-        <requirement type="package" version="1.5-21">r-terra</requirement>
+        <requirement type="package" version="1.5_1">r-sp</requirement>
+        <requirement type="package" version="0.2.1">r-rasterdiv</requirement>
+        <requirement type="package" version="3.4.0">r-ggplot2</requirement>
+        <requirement type="package" version="1.5_21">r-terra</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[ 
         #import re 
