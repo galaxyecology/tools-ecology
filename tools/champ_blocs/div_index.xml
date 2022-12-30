@@ -10,7 +10,6 @@
         <requirement type="package" version="3.4.0">r-ggplot2</requirement>
     </expand>
     <required_files>
-        <include type="literal" path="test-data/Clean_Rdata.Rdata"/>
         <include type="literal" path="div_index.r"/>
     </required_files>
     <command detect_errors="exit_code"><![CDATA[
