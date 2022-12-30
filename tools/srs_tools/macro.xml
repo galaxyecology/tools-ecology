@@ -2,16 +2,16 @@
     <token name="@VERSION@">0.0.1</token>
     <xml name="SRS_requirements">
         <requirements>
-            <requirement type="package" version="4.2.1">r-base</requirement>
-            <requirement type="package" version="2.12.0">r-r.utils</requirement>
+            <requirement type="package" version="4.2.2">r-base</requirement>
+            <requirement type="package" version="2.12.2">r-r.utils</requirement>
             <requirement type="package" version="1.5_32">r-rgdal</requirement>
-            <requirement type="package" version="0.5_9">r-rgeos</requirement>
+            <requirement type="package" version="0.6_1">r-rgeos</requirement>
             <requirement type="package" version="0.5_5">r-stars</requirement>
-            <requirement type="package" version="1.4.1">r-stringr</requirement>
+            <requirement type="package" version="1.5.1">r-stringr</requirement>
             <requirement type="package" version="1.9.8">r-biodivmapr</requirement>
-            <requirement type="package" version="0.34">r-xfun</requirement>
-            <requirement type="package" version="0.51.2">r-rastervis</requirement>
-            <requirement type="package" version="3.3.6">r-ggplot2</requirement>
+            <requirement type="package" version="0.36">r-xfun</requirement>
+            <requirement type="package" version="0.51.4">r-rastervis</requirement>
+            <requirement type="package" version="3.4.0">r-ggplot2</requirement>
             <requirement type="package" version="2.11.0">r-mapview</requirement>
             <requirement type="package" version="2.3">r-gridextra</requirement>
             <requirement type="package" version="3.0.0">r-emstreer</requirement>
