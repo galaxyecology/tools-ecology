@@ -4,20 +4,20 @@
         <import>macro.xml</import>
     </macros>
     <requirements>
-        <requirement type="package" version="4.2.1">r-base</requirement>
-        <requirement type="package" version="2.12.0">r-r.utils</requirement>
+        <requirement type="package" version="4.2.2">r-base</requirement>
+        <requirement type="package" version="2.12.2">r-r.utils</requirement>
         <requirement type="package" version="3.5_21">r-raster</requirement>
-        <requirement type="package" version="1.5_0">r-sp</requirement>
+        <requirement type="package" version="1.5_1">r-sp</requirement>
         <requirement type="package" version="1.5_32">r-rgdal</requirement>
-        <requirement type="package" version="0.2_5.2">r-rasterdiv</requirement>
+        <requirement type="package" version="0.3.1">r-rasterdiv</requirement>
         <requirement type="package" version="0.5_5">r-stars</requirement>
-        <requirement type="package" version="1.4.1">r-stringr</requirement>
+        <requirement type="package" version="1.5.1">r-stringr</requirement>
         <requirement type="package" version="2.4.2">r-pracma</requirement> 
-        <requirement type="package" version="0.1_7">r-expint</requirement> 
-        <requirement type="package" version="0.62.0">r-matrixstats</requirement> 
-        <requirement type="package" version="3.3.6">r-ggplot2</requirement>
-        <requirement type="package" version="3.99_0.11">r-xml</requirement>  
-        <requirement type="package" version="2.2.1">r-zip</requirement>
+        <requirement type="package" version="0.1_8">r-expint</requirement> 
+        <requirement type="package" version="0.63.0">r-matrixstats</requirement> 
+        <requirement type="package" version="3.4.0">r-ggplot2</requirement>
+        <requirement type="package" version="3.99_0.13">r-xml</requirement>  
+        <requirement type="package" version="2.2.2">r-zip</requirement>
         <requirement type="package" version="1.0.10">r-dplyr</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[ 
