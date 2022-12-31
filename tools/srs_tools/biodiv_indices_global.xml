@@ -19,8 +19,8 @@
           #set input_raster_identifier = re.sub('[^\s\w\-]', '_', str($input_raster.element_identifier)) 
           #set input_header = $method.input_header
           #set input_header_identifier = re.sub('[^\s\w\-]+[^.hdr]', '_', str($input_header.element_identifier)) 
-          ln -s '${input_raster}' '${input_raster_identifier}' &&
-          ln -s '${input_header}' '${input_header_identifier}' &&
+          cp '${input_raster}' '${input_raster_identifier}' &&
+          cp '${input_header}' '${input_header_identifier}' &&
         #end if
         Rscript
             '$__tool_directory__/biodiv_indices_global.r'
