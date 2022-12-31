@@ -4,6 +4,7 @@
         <requirements>
             <requirement type="package" version="4.2.2">r-base</requirement>
             <requirement type="package" version="2.12.2">r-r.utils</requirement>
+            <requirement type="package" version="1.0_7">r-sf</requirement>
             <requirement type="package" version="1.5_32">r-rgdal</requirement>
             <requirement type="package" version="0.6_1">r-rgeos</requirement>
             <requirement type="package" version="0.5_5">r-stars</requirement>
