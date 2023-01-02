@@ -22,18 +22,18 @@
         ]]>
     </command>
     <inputs>
-        <param name="input_data" type="data" format="data" label="Input Clean data"/>
+        <param name="input_data" type="data" format="rdata" label="Input Clean data"/>
     </inputs>
     <outputs>
         <data name="output_div" from_work_dir="Valeurs_stat.tabular" format="tabular" label="Diversity index"/>
-        <data name="output_rdata" from_work_dir="div_df.RDS" format="data" label="Diversity Rdata"/>
+        <data name="output_rdata" from_work_dir="div_df.RDS" format="rdata" label="Diversity Rdata"/>
         <collection type="list" name="plots" label="Diversity plot">
             <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" visible="false" format="png"/>
         </collection>
     </outputs>
     <tests>
         <test expect_num_outputs="3">
-            <param name="input_data" value="Clean_Rdata.Rdata"/>
+            <param name="input_data" value="Clean_Rdata.rdata"/>
             <output name="output_div">
                 <assert_contents>
                     <has_n_columns n="20"/>
