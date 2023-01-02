@@ -37,7 +37,7 @@
         <param name="input_data" type="data" format="data" label="Input champbloc_ivr.csv"/>
     </inputs>
     <outputs>
-        <data name="output_ivr" from_work_dir="ivr_val_qu.RDS" format="Rdata" label="IVR Rdata"/>
+        <data name="output_ivr" from_work_dir="ivr_val_qu.RDS" format="rdata" label="IVR Rdata"/>
         <collection type="list" name="plots" label="IVR plot">
             <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" visible="false" format="png"/>
         </collection>
