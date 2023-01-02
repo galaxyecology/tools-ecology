@@ -40,9 +40,9 @@
         <param name="choice_date" type="integer" value="2021" label="Until when do you have data (write only the YEAR) ?" help="Example write : 2021 "/>
     </inputs>
     <outputs>
-        <data name="output_qecb" from_work_dir="qecbnato0.RDS" format="Rdata" label="Clean Rdata"/>
-        <data name="output_eco" from_work_dir="bret_egmp_basq_qecb.RDS" format="Rdata" label="Bret Rdata"/>
-        <data name="output_matri" from_work_dir="matri_full.RDS" format="Rdata" label="Matrice full Rdata"/>
+        <data name="output_qecb" from_work_dir="qecbnato0.RDS" format="rdata" label="Clean Rdata"/>
+        <data name="output_eco" from_work_dir="bret_egmp_basq_qecb.RDS" format="rdata" label="Bret Rdata"/>
+        <data name="output_matri" from_work_dir="matri_full.RDS" format="rdata" label="Matrice full Rdata"/>
         <collection type="list" name="plots_bf" label="Bloc fixe et bloc mobile face sup plot">
             <discover_datasets pattern="bm(?P&lt;designation&gt;.+)\.png" visible="false" format="png"/>
         </collection>
