@@ -11,7 +11,7 @@
         <requirement type="package" version="1.5_32">r-rgdal</requirement>
         <requirement type="package" version="0.3.1">r-rasterdiv</requirement>
         <requirement type="package" version="0.5_5">r-stars</requirement>
-        <requirement type="package" version="1.5.1">r-stringr</requirement>
+        <requirement type="package" version="1.5.0">r-stringr</requirement>
         <requirement type="package" version="2.4.2">r-pracma</requirement>
         <requirement type="package" version="0.1_8">r-expint</requirement>
         <requirement type="package" version="0.63.0">r-matrixstats</requirement>
