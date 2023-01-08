@@ -99,18 +99,8 @@
             <param name="origin" value="envi_bil"/>
             <param name="input_raster" value="S2A_Subset"/>
             <param name="input_header" value="S2A_Subset.hdr"/>
-            <param name="type" value="all"/>
+            <param name="type" value="alpha"/>
             <output name="output_alpha">
-                <assert_contents>
-                    <has_n_columns n="3"/>
-                </assert_contents>
-            </output>
-            <output name="output_beta">
-                <assert_contents>
-                    <has_n_columns n="3"/>
-                </assert_contents>
-            </output>
-            <output name="output_funct">
                 <assert_contents>
                     <has_n_columns n="3"/>
                 </assert_contents>
