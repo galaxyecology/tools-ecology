@@ -118,7 +118,7 @@ Process satellite remote sensing data to produce biodiversity indicators
 
 Féret and Asner (2014) developed a method for **tropical forest** diversity mapping based on very high spatial resolution airborne imaging spectroscopy.
 
-The goal of this tool using the package biodivMapR is to produce (spectral) diversity maps based on (optical) images. 
+The goal of this tool using the package biodivMapR is to produce (spectral) diversity maps based on (optical) images.
 
 **Input description**
 
