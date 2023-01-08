@@ -1,0 +1,14 @@
+categories:
+    - Ecology
+owner: ecology
+remote_repository_url: https://github.com/Marie59/Sentinel_2A/srs_tools
+long_description: |
+  Compute biodiversity indicators for remote sensing data from Sentinel 2
+type: unrestricted
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrapper for srs biodiversity indicators tool: {{ tool_name }}."
+suite:
+  name: "sentinel_2"
+  description: "A suite of biodiversity indicators for Sentinel 2 data"
+  type: unrestricted

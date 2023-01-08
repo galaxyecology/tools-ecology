@@ -1,0 +1,123 @@
+<tool id="srs_global_indices" name="Compute biodiversity indices" version="@VERSION@" profile = "20.01">
+    <description>from remote sensing data</description>
+    <macros>
+        <import>macro.xml</import>
+    </macros>
+    <requirements>
+        <requirement type="package" version="4.2.2">r-base</requirement>
+        <requirement type="package" version="3.5_21">r-raster</requirement>
+        <requirement type="package" version="1.5_32">r-rgdal</requirement>
+        <requirement type="package" version="1.5_1">r-sp</requirement>
+        <requirement type="package" version="0.3.1">r-rasterdiv</requirement>
+        <requirement type="package" version="3.4.0">r-ggplot2</requirement>
+        <!--requirement type="package" version="1.5_21">r-terra</requirement-->
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[ 
+        #import re 
+        #if $method.type == 'envi_bil': 
+          #set input_raster = $method.input_raster
+          #set input_raster_identifier = re.sub('[^\s\w\-]', '_', str($input_raster.element_identifier)) 
+          #set input_header = $method.input_header
+          #set input_header_identifier = re.sub('[^\s\w\-]+[^.hdr]', '_', str($input_header.element_identifier)) 
+          cp '${input_raster}' '${input_raster_identifier}' &&
+          cp '${input_header}' '${input_header_identifier}' &&
+        #end if
+        Rscript
+            '$__tool_directory__/biodiv_indices_global.r'
+             #if $method.type == 'envi_bil':
+              '$input_raster_identifier' 
+              '$input_header_identifier'
+              ''
+            #else:
+              ''
+              ''
+              '$method.input'
+            #end if
+            '$alpha'
+            '$__tool_directory__/functions.r'
+            '$output_indices'
+            '$plots_png'
+        ]]>
+    </command>
+    <inputs>
+        <conditional name="method">
+            <param name="type" type="select" label="In which format are your data ?">
+                <option value="zipper">The data you are using are in a zip folder Reflectance</option>
+                <option value="envi_bil">Your already have the files in ENVI BIL format</option>
+            </param>
+            <when value="zipper">
+                <param name="input" type="data" format="zip" multiple="true" label="Input data"/>
+            </when>
+            <when value="envi_bil">
+                <param name="input_raster" type="data" format="bil" label="Input raster" help="It can be the raw data in bil or the PCA raster layer in bil"/>
+                <param name="input_header" type="data" format="hdr" label="Input header"/>
+            </when>
+        </conditional>
+        <param name="alpha" type="text" label="Write a number of the value of alpha you want to calculate Renyi, Prao and Hill indicators (between 0 and 5)"/>
+    </inputs>
+    <outputs>
+        <data name="output_indices" from_work_dir="BiodivIndex.tabular" format="tabular" label="Biodiversity indices tabular">
+        </data>
+        <collection type="list" name="plots_png" label="Biodiversity indices plots">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" visible="false" format="png"/>
+        </collection>
+    </outputs>
+    <tests>
+        <test>
+            <param name="type" value="envi_bil"/>
+            <param name="input_raster" value="S2A_Subset"/>
+            <param name="input_header" value="S2A_Subset.hdr"/>
+            <param name="alpha" value="1"/>
+            <output name="output_indices">
+                <assert_contents>
+                    <has_n_lines n="2501"/>
+                </assert_contents>
+            </output>
+            <output_collection name="plots_png" type="list" count="7"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+=========================================================================
+Computes global biodiversity indices from satellite remote sensing data 
+=========================================================================
+
+
+**What it does**
+
+This tool aims to provide functions to apply Information Theory based diversity indexes on RasterLayer such as Shannon's entropy or Cumulative Residual Entropy (CRE).
+
+
+**Input description**
+
+It expects an image file as input, with a specific data format. ENVI HDR image with BIL interleave required.
+The image is an ENVI raster including :
+
+- A binary file (which has no extension here).
+
+- A header file (with .hdr extension).
+
+The header file is a text file including all necessary metadata which can be read with a text editor. It includes image dimensions, projection, and the name and central wavelength for each spectral band.
+
+In order to get such input we advise to use the tool preprocessing sentinel 2 data. If you did so you can directly enter the "Reflectance" output from this tool and thus select the otpion "The data you are using are in a zip folder Reflectance". 
+
+⚠️ If you do not use this Reflectance folder make sure that your data are respectively in bil and hdr format in the datatypes.
+
+- A number for the alpha indice which used to calculate the following indicators : Renyi, Hill and Prao.
+
++--------------+----------+---------------+
+|      BIL     | ENVI HDR |  Number alpha |
++==============+==========+===============+
+| raster stack | Metadata |       1       |
++--------------+----------+---------------+
+|      ...     |    ...   |      ...      |
++--------------+----------+---------------+
+
+**Output**
+
+- One tabular with 9 columns longitude, latitude columns and one for each indices.
+
+- Seven png graph one for each indices.
+
+    ]]>    </help>
+        <expand macro="SRS_rasterdivref"/>
+</tool>
