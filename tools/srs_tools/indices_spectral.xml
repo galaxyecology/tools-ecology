@@ -133,7 +133,7 @@
             <output name="output_indices">
                 <assert_contents>
                     <has_n_columns n="4"/>
-                    <has_n_lines n="1001"/>
+                    <has_n_lines n="10001"/>
                     <has_text_matching expression="237\.25\t13.72\d*\t3.17\d*\t0.80\d*" />
                 </assert_contents>
             </output>
