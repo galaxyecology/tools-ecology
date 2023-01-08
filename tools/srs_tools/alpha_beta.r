@@ -37,7 +37,8 @@ if (length(args) < 1) {
     beta <- as.logical(args[6])
     funct <- as.logical(args[7])
     all <- as.logical(args[8])
-    source(args[9])
+    nbcpu <- as.integer(args[9])
+    source(args[10])
 }
 
 ################################################################################
