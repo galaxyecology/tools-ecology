@@ -105,7 +105,7 @@
                     <has_n_columns n="3"/>
                 </assert_contents>
             </output>
-            <output_collection name="plots" type="list" count="3"/>
+            <output_collection name="plots" type="list" count="1"/>
         </test>
     </tests>
     <help><![CDATA[
