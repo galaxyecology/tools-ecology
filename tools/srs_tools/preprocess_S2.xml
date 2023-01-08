@@ -32,7 +32,7 @@
         ]]>
     </command>
     <inputs>
-        <param name="input" type="data" format="data" multiple="true" label="Input data"/>
+        <param name="input" type="data" format="zip" multiple="true" label="Input data"/>
         <param name="source_s2" type="select" label="Where does your data come from ?">
             <option value="SAFE">From Scihub or Peps</option>
             <option value="THEIA">From Theia</option>
