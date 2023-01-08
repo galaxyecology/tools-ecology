@@ -48,6 +48,7 @@
               'FALSE'
               'TRUE'
             #end if
+            \${GALAXY_SLOTS:-1}
             '$__tool_directory__/functions.r'
             '$output_alpha'
             '$output_beta'
