@@ -130,7 +130,13 @@
             <param name="input_header" value="S2A_Subset.hdr"/>
             <param name="input_indice" value="NDVI"/>
             <param name="choice" value="N"/>
-            <output name="output_indices" value="NDVI.tabular"/>
+            <output name="output_indices">
+                <assert_contents>
+                    <has_n_columns n="4"/>
+                    <has_n_lines n="1001"/>
+                    <has_text_matching expression="237\.25\t13.72\d*\t3.17\d*\t0.80\d*" />
+                </assert_contents>
+            </output>
             <output_collection name="plots" type="list" count="1"/>
         </test>
     </tests>
