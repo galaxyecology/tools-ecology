@@ -31,6 +31,7 @@
             '$species'
             '$records'
             '$type'
+            '$resolution'
             '$__tool_directory__/analyze.r'
             '$__tool_directory__/visualize.r'
             '$__tool_directory__/data.r'
@@ -41,8 +42,8 @@
     <inputs>
         <expand macro="SRS_input"/>
         <param name="separator" type="select" display="radio" label="What character is the separator in your data? (Mostlikely a comma for a csv file and t for a tabular)">
+            <option value="t">Tabulator (\t)</option>                 
             <option value=",">Comma (,)</option>  
-            <option value="t">Tabulator (\t)</option>     
         </param> 
         <param name="longitude" label="Select column containing the decimal value of the longitude " type="data_column" data_ref="input" numerical="true" use_header_names="true"/>
         <param name="latitude" label="Select column containing the decimal value of the latitude " type="data_column" data_ref="input" numerical="true" use_header_names="true"/>
@@ -52,6 +53,7 @@
             <option value="0">Robinson projection</option>
             <option value="4326">Geographic projection</option>
         </param>
+        <param name="resolution" label="Write a number between 1 and 30" type="text" data_ref="input" help="We strongly advise to stay below 15 or else you won't see a thing. The bigger your dataset is the smaller the resolution should be."/>
     </inputs>
     <outputs>
         <data name="output_index" from_work_dir="Index.csv" format="csv" label="Index">
@@ -70,6 +72,7 @@
             <param name="species" value="c3: species"/>
             <param name="records" value="c5: records"/>
             <param name="type" value="0"/>
+            <param name="resolution" value="9"/>
             <output name="output_index" value="Index.csv"/>
             <output_collection name="plots" type="list" count="5">
                 <element name="ES_50" ftype="png">

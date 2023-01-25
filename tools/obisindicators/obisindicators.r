@@ -32,9 +32,10 @@ if (length(args) < 4) {
     spe <- as.numeric(args[6])
     rec <- as.numeric(args[7])
     crs <- as.numeric(args[8])
-    source(args[9])
+    reso <- as.numeric(args[9])
     source(args[10])
     source(args[11])
+    source(args[12])
 }
 
 if (hr == "false") {
@@ -63,7 +64,7 @@ colnames(occ)[rec] <- c("records")
 #Create a discrete global grid
 #Create an ISEA discrete global grid of resolution 9 using the dggridR package:
 
-dggs <- dggridR::dgconstruct(projection = "ISEA", topology = "HEXAGON", res = 9)
+dggs <- dggridR::dgconstruct(projection = "ISEA", topology = "HEXAGON", res = reso)
 
 #Then assign cell numbers to the occurrence data
 occ$cell <- dggridR::dgGEO_to_SEQNUM(dggs, occ$decimalLongitude, occ$decimalLatitude)[["seqnum"]]
