@@ -20,6 +20,7 @@
 #               magrittr
 #               rmarkdown
 library(magrittr)
+library(dplyr, conflicts = "warn")
 #####Load arguments
 
 args <- commandArgs(trailingOnly = TRUE)
