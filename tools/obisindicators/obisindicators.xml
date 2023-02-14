@@ -53,7 +53,7 @@
             <option value="0">Robinson projection</option>
             <option value="4326">Geographic projection</option>
         </param>
-        <param name="resolution" label="Choose a resolution for the discrete global grid specifying a number between 1 and 30" type="text" data_ref="input" help="We strongly advise to stay below 15 or else you won't see a thing. The bigger your dataset is the smaller the resolution should be."/>
+        <param name="resolution" type="integer" value="9" min="1" max="30" label="Choose a resolution for the discrete global grid (a number between 1, low resolution, and 30, high resolution)" data_ref="input" help="We strongly advise to stay below 15 or else you won't see a thing. The bigger your dataset is the smaller the resolution should be."/>
     </inputs>
     <outputs>
         <data name="output_index" from_work_dir="Index.csv" format="csv" label="Index">
