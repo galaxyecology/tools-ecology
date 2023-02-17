@@ -8,6 +8,7 @@ output:
   #word_document:
     #reference_docx: word_template.docx
   officedown::rdocx_document
+  output_dir = "results"
 ---
   
 ```{r setup, include=FALSE}
