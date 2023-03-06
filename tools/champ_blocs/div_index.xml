@@ -4,9 +4,9 @@
         <import>macro.xml</import>
     </macros>
     <expand macro="cb_requirements">
+        <requirement type="package" version="1.5">r-magrittr</requirement>
         <requirement type="package" version="1.3.2">r-tidyverse</requirement>
         <requirement type="package" version="0.108.3.2">r-rgl</requirement>
-        <requirement type="package" version="1.5">r-magrittr</requirement>
         <requirement type="package" version="1.7_20">r-ade4</requirement>
         <requirement type="package" version="2.2">r-adiv</requirement>
         <requirement type="package" version="3.4.1">r-ggplot2</requirement>
