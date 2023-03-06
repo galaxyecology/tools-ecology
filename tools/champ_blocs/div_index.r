@@ -10,16 +10,7 @@
 
 #####Packages : dplyr
 #               tidyr
-#               readr
-#               writexl
-#               stringr
-#               readxl
-#               tibble
-#               lubridate
-#               cowplot
-#               magrittr
-#               rmarkdown
-library(magrittr)
+
 #####Load arguments
 
 args <- commandArgs(trailingOnly = TRUE)
