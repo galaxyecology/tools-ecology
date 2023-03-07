@@ -10,7 +10,7 @@
 
 #####Packages : dplyr
 #               tidyr
-
+install.packages("dplyr")
 #####Load arguments
 
 args <- commandArgs(trailingOnly = TRUE)
