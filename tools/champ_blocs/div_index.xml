@@ -24,7 +24,7 @@
         ]]>
     </command>
     <inputs>
-        <param name="input_data" type="data" format="rdata" label="Input Clean data"/>
+        <param name="input_data" type="data" format="rdata" label="Input clean data"/>
     </inputs>
     <outputs>
         <data name="output_div" from_work_dir="Valeurs_stat.tabular" format="tabular" label="Diversity index"/>
