@@ -4,7 +4,6 @@
         <import>macro.xml</import>
     </macros>
     <requirements>
-        <requirement type="package" version="4.2.2">r-base</requirement>
         <requirement type="package" version="2.2">r-adiv</requirement>
         <requirement type="package" version="1.0.10">r-dplyr</requirement>
         <requirement type="package" version="1.2.1">r-tidyr</requirement>
