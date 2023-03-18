@@ -19,6 +19,7 @@
 #               magrittr
 #               rmarkdown
 library(magrittr)
+library(gmp)
 #####Load arguments
 
 args <- commandArgs(trailingOnly = TRUE)
