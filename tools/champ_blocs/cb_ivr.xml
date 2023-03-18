@@ -1,4 +1,4 @@
-<tool id="cb_ivr" name="IVR" version="@VERSION@" profile = "20.01">
+<tool id="cb_ivr" name="IVR" version="@VERSION@" profile="20.01">
     <description>indicator</description>
     <macros>
         <import>macro.xml</import>
@@ -28,11 +28,12 @@
         <include type="literal" path="cb_ivr.r"/>
     </required_files>
     <command detect_errors="exit_code"><![CDATA[
+        cp '$__tool_directory__/cb_ivr_site_report_col_scale_loop.Rmd' ./cb_ivr_site_report_col_scale_loop.Rmd &&
         Rscript
             '$__tool_directory__/cb_ivr.r'
             '$fiche_val'
             '$input_data'
-            '$__tool_directory__/cb_ivr_site_report_col_scale_loop.Rmd'
+            ./cb_ivr_site_report_col_scale_loop.Rmd
             '$__tool_directory__/loop_col_scale.r'
             '$output_ivr'
             '$plots'
