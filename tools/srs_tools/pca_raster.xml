@@ -53,7 +53,8 @@
     </inputs>
     <outputs>
         <collection type="list" name="output_raster" label="PCA raster">
-            <discover_datasets pattern="(?P&lt;designation&gt;.+)" directory="RESULTS/" visible="false" recurse="true" format="bil,hdr"/>
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)" directory="RESULTS/" visible="false" recurse="true" format="bil"/>
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)" directory="RESULTS/" visible="false" recurse="true" format="hdr"/>
         </collection>
         <data name="output_pca" from_work_dir="PCA.tabular" format="tabular" label="PCA tabular"/>
         <collection type="list" name="plots" label="PCA plot">
