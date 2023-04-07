@@ -119,7 +119,9 @@
             <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" visible="false" format="png"/>
         </collection>
         <collection type="list" name="output_raster" label="${input_indice} raster">
-            <discover_datasets pattern="(?P&lt;designation&gt;.+)" directory="SpectralIndices/" visible="false" recurse="true" format="bil,hdr"/>
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)" directory="SpectralIndices/" visible="false" recurse="true" format="bil"/>
+                <filter> choice == 'Y'</filter>
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)" directory="SpectralIndices/" visible="false" recurse="true" format="hdr"/>
                 <filter> choice == 'Y'</filter>
         </collection>
     </outputs>
