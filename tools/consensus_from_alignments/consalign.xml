@@ -1,0 +1,67 @@
+<tool id="aligned_to_consensus" name="Consensus sequence from aligned FASTA" version="@VERSION@">
+    <description></description>
+    <macros>
+        <import>consalign_macros.xml</import>
+    </macros>
+    <requirements>
+        <requirement type="package" version="0.1.4">r-bioseq</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript
+         '$__tool_directory__/consensus_from_alignments.R'
+         '$input'
+         '$seqtype'
+         '$method'
+         '$gaps'
+         '$outog'
+         '$output'
+    ]]>
+    </command>
+    <inputs>
+        <param name="input" type="data" format="fasta" label="Input fasta file with at least two sequences"/>
+        <param name="seqtype" type="select" label="Type of sequence" multiple="false" optional="false" display="radio">
+            <option value="DNA" selected="true">DNA</option>
+            <option value="RNA">RNA</option>
+            <option value="AA">Amino Acid</option>
+        </param>
+        <param name="method" type="select" label="Consensus method when differences are found between sequences" multiple="false" optional="false" display="radio">
+            <option value="chr_ambiguity" selected="true">Use an ambiguous nucleotide</option>
+            <option value="chr_majority">Use the most frequent nucleotide</option>
+        </param>
+        <param name="gaps" type="boolean" checked="no" label="Take account of gaps?" help="/!\ If gaps are at the same place in all the sequences don't check 'no', you'll face an error"/>
+        <param name="outog" type="boolean" checked="no" label="Output consensus sequence AND original sequences in the FASTA file?" help="/!\ If gaps are at the same place in all the sequences don't check 'no', you'll face an error"/>
+    </inputs>
+    <outputs>
+        <data name="output" from_work_dir="output.fasta" format="fasta" label="Consensus sequence of ${input.display_name}"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="input" value="test_file.fasta"/>
+            <param name="seqtype" value="DNA"/>
+            <param name="method" value="chr_ambiguity"/>
+            <param name="gaps" value="false"/>
+            <param name="outog" value="false"/>
+            <output name="output" value="out_file.fasta"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+=====================================================
+Get consensus sequence from several aligned sequences
+=====================================================
+
+This tool uses the seq_consensus function from the bioseq package. @WARNING@ If gaps are at the same place in all the sequences don't check 'no' in the gaps parameter, you'll face an error
+
+Input can be any fasta file containing at least two aligned sequences.
+
+Output is a fasta file containing the computed consensus sequence (along with original sequences if you want to).
+    ]]></help>
+    <citations>
+        <citation type="bibtex">
+        @article{bioseq,
+        title={ Handling biological sequences in R with the bioseq package },
+        author={F. Keck},
+        doi={https://doi.org/10.1111/2041-210X.13490}
+        }
+        </citation>
+    </citations>
+</tool>
