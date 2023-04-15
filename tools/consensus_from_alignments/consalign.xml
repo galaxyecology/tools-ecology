@@ -49,19 +49,14 @@
 Get consensus sequence from several aligned sequences
 =====================================================
 
-This tool uses the seq_consensus function from the bioseq package. @WARNING@ If gaps are at the same place in all the sequences don't check 'no' in the gaps parameter, you'll face an error
+This tool uses the seq_consensus function from the bioseq package. @WARNING@ If gaps are at the same place in all the sequences don't check 'no' in the gaps parameter,
+you'll face an error.
 
 Input can be any fasta file containing at least two aligned sequences.
 
-Output is a fasta file containing the computed consensus sequence (along with original sequences if you want to).
+Output is a FASTA file containing the computed consensus sequence (along with original sequences if you want to).
     ]]></help>
     <citations>
-        <citation type="bibtex">
-        @article{bioseq,
-        title={ Handling biological sequences in R with the bioseq package },
-        author={F. Keck},
-        doi={https://doi.org/10.1111/2041-210X.13490}
-        }
-        </citation>
+        <citation type="doi">10.1111/2041-210X.13490</citation>
     </citations>
 </tool>
