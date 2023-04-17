@@ -5,6 +5,7 @@
     </macros>
     <requirements>
         <requirement type="package" version="0.1.4">r-bioseq</requirement>
+        <requirement type="package" version="1.0.14">r-ptxqc</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
         Rscript
