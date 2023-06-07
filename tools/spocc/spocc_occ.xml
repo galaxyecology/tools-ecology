@@ -28,7 +28,7 @@
             <option value="ecoengine">Berkeley Ecoinformatics Engine : EcoEngine</option>
             <option value="vertnet">VertNet</option>
         </param>    
-        <param name="limit" type="integer" label="Number of records to return" help="This is passed across all sources. /!\ However, be careful you can't exceed 999999 records the tool won't work /!\ . If you have an empty output you should try with a records value smaller." value="500" max="999999"/>
+        <param name="limit" type="integer" label="Number of records to return" help="This is passed across all sources. If you have an empty output you should try with a records value smaller." value="500" max="999999"/>
     </inputs>
     <outputs>
         <data name="output" format="tabular" from_work_dir="output.tab" label="Species occurences"/>
