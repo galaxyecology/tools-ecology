@@ -55,3 +55,4 @@ if(length(results_data)==0){cat("\nNo occurrences found.\nLittle tip : Check you
 write.table(file="output.tab",results_data,sep="\t",row.names=FALSE)
 
 q('no')
+

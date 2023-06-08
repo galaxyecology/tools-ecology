@@ -1,8 +1,10 @@
-<tool id="spocc_occ" name="Get species occurrences data" version="0.9.0">
-    <description>from GBIF, ALA, iNAT and others</description>
-    <requirements>
-        <requirement type="package" version="0.9.0">r-spocc</requirement>
-    </requirements>
+<tool id="spocc_occ" name="Get species occurrences data" version="@VERSION@">
+    <description>from GBIF, OBIS, ALA, iNAT and others</description>
+    <macros>
+        <import>macro.xml</import>
+    </macros>
+    <expand macro="occ_requirements">
+    </expand>
     <command detect_errors="exit_code"><![CDATA[
         Rscript '$__tool_directory__/spocc_occ.R' 
             '$sname' 
@@ -20,16 +22,13 @@
             <option value="bison">Biodiversity Information Serving Our Nation : BISON</option>
             <option value="inat">INaturalist : INAT</option>
             <option value="ebird">eBbird</option>
-<!--
-            <option value="antweb">AntWeb</option>
             <option value="ala">Atlas of Living Australia : ALA</option>
             <option value="idigbio">Integrated Digitized Biocollections : iDigBio</option>
             <option value="obis">Oceanic Biogeographic Information System : OBIS</option> 
--->
             <option value="ecoengine">Berkeley Ecoinformatics Engine : EcoEngine</option>
             <option value="vertnet">VertNet</option>
         </param>    
-        <param name="limit" type="integer" label="Number of records to return" help="This is passed across all sources" value="500"/>
+        <param name="limit" type="integer" label="Number of records to return" help="This is passed across all sources. If you have an empty output you should try with a records value smaller." value="500" max="999999"/>
     </inputs>
     <outputs>
         <data name="output" format="tabular" from_work_dir="output.tab" label="Species occurences"/>
@@ -104,17 +103,14 @@ A programmatic interface to many species occurrence data sources, including :
   - VertNet
     http://vertnet.org/
 
-..  - AntWeb
-..    https://www.antweb.org/
+  - Integrated Digitized Biocollections : iDigBio
+    https://www.idigbio.org/
 
-..  - Integrated Digitized Biocollections : iDigBio
-..    https://www.idigbio.org/
+  - Ocean Biogeographic Information System : OBIS 
+    https://obis.org/
 
-..  - Ocean Biogeographic Information System : OBIS 
-..    https://obis.org/
-
-..  - Atlas of Living Australia : ALA
-..    https://www.ala.org.au/. 
+  - Atlas of Living Australia : ALA
+    https://www.ala.org.au/. 
 
 
 Includes functionality for retrieving species occurrence data, and combining those data.
@@ -128,3 +124,4 @@ Original source : https://cran.r-project.org/web/packages/spocc/index.html
 Reference manual : https://cran.r-project.org/web/packages/spocc/spocc.pdf
     ]]></help>
 </tool>
+
