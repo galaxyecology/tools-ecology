@@ -1,0 +1,68 @@
+<tool id="makeeml" name="Make EML" version="0.1.0+galaxy0">
+	<description> Create EML from EAL templates</description>
+    <requirements>
+		<requirement type="package" version="4.3.1">r-base</requirement>
+	   <requirement type="package" version="3.5.5">r-emlassemblyline</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+	mkdir output_template &&
+	cd output_template &&
+	#for $input in $templates
+		cp $input ${input.element_identifier}.txt;
+	#end for
+	find . -type f -empty -print -delete &&
+	Rscript
+         '$__tool_directory__/make_eml.R'
+    ]]></command>
+    <inputs>
+		<param name="templates" type="data_collection"  type_collection="list" format="tabular" label="Upload all EAL templates" help= "Input a data collection." />
+    </inputs>
+    <outputs>
+		<data name="metadata" format="xml" label="Metadata">
+			<discover_datasets directory = "output_template" pattern= "(?P&lt;designation&gt;.+)\.xml" visible="true"/>
+		</data>
+    </outputs>
+		<tests>
+		 <test expect_num_outputs="1"> 
+            <param type="data" name="data" value="Assessing_the_importance_of_field_margins_for_bat_species.xml">
+				<collection>
+					<element file="annotations.tabular"/>
+					<element file="keywords.tabular" />
+					<element file="attributes_data_blary_al.tabular"/>
+					<element file="catvars_data_blary_al.tabular"/>
+					<element file="keywords.tabular" />
+					<element file="geographic_coverage.tabular" />
+					<element file="personnel.tabular" />
+				</collection>
+			</param>
+			<output name="metadata" ftype="xml"/>
+        </test>
+	</tests>
+<help><![CDATA[
+.. class:: warningmark
+
+'''TIP''' This tool accept as inputs only Galaxy collections containing EAL templates.
+
+**What it does?**
+--------------------
+
+This tool produce EML metadata from EAL templates.
+This tool can be used in the continuation of the eml2eal tool.
+
+**How to use it?**
+--------------------
+To use this tool, you can select, in your history a data collection with EAL templates made by the eml2eal tool. 
+You can also select your own templates that you have to integrate into a Galaxy collection.
+
+To do so you can select the **Upload file** tool, select the *Collection* tab, upload all your templates, click on the *Start* button to integrate the files to Galaxy and then click
+on *Build*. You will need to choose a name and select *Create collection* to build a collection with your templates.
+You also can upload your files to Galaxy, select them in the history by clicking the *Select items* button, click on the newly appeared box on the right and select *Build dataset list*.
+
+ .. class:: infomark 
+ 
+ Templates can be directly edited in Galaxy (view **eml2eal** tool for more information.)
+ 
+
+You then have to select your collection in the upload box of the tool and click **Execute** to get your EML metadata.
+]]></help>
+</tool>
