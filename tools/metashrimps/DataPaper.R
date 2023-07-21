@@ -14,7 +14,6 @@ if (length(args)==0)
 }
 
 library(dplyr)
-webshot::install_phantomjs()
 ######################################################################################################
 #Functions for creation of Data Papers
 
