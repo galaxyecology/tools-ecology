@@ -35,7 +35,7 @@
 					<element file="personnel.tabular" />
 				</collection>
 			</param>
-			<output name="metadata" ftype="xml"/>
+			<output name="metadata" ftype="xml" file="Metadata.xml"/>
         </test>
 	</tests>
 <help><![CDATA[
