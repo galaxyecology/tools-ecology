@@ -1,43 +1,42 @@
 <tool id="makeeml" name="Make EML" version="0.1.0+galaxy0">
-	<description> Create EML from EAL templates</description>
+    <description> Create EML from EAL templates</description>
     <requirements>
-		<requirement type="package" version="4.3.1">r-base</requirement>
-	   <requirement type="package" version="3.5.5">r-emlassemblyline</requirement>
+        <requirement type="package" version="4.3.1">r-base</requirement>
+        <requirement type="package" version="3.5.5">r-emlassemblyline</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
-	mkdir output_template &&
-	cd output_template &&
-	#for $input in $templates
-		cp $input ${input.element_identifier}.txt;
-	#end for
-	find . -type f -empty -print -delete &&
-	Rscript
-         '$__tool_directory__/make_eml.R'
+    mkdir output_template &&
+    cd output_template &&
+    #for $input in $templates
+        cp '$input' '${input.element_identifier}.txt' &&
+    #end for
+    find . -type f -empty -print -delete &&
+    Rscript '$__tool_directory__/make_eml.R'
     ]]></command>
     <inputs>
-		<param name="templates" type="data_collection"  type_collection="list" format="tabular" label="Upload all EAL templates" help= "Input a data collection." />
+        <param name="templates" type="data_collection" type_collection="list" format="tabular" label="Upload all EAL templates" help= "Input a data collection." />
     </inputs>
     <outputs>
-		<data name="metadata" format="xml" label="Metadata">
-			<discover_datasets directory = "output_template" pattern= "(?P&lt;designation&gt;.+)\.xml" visible="true"/>
-		</data>
+        <data name="metadata" format="xml" label="Metadata">
+            <discover_datasets directory = "output_template" pattern= "(?P&lt;designation&gt;.+)\.xml" visible="true"/>
+        </data>
     </outputs>
-		<tests>
-		 <test expect_num_outputs="1"> 
+    <tests>
+        <test expect_num_outputs="1"> 
             <param type="data_collection" name="templates" value="Assessing_the_importance_of_field_margins_for_bat_species.xml">
-				<collection type="list">
-					<element file="annotations.tabular"/>
-					<element file="keywords.tabular" />
-					<element file="attributes_data_blary_al.tabular"/>
-					<element file="catvars_data_blary_al.tabular"/>
-					<element file="keywords.tabular" />
-					<element file="geographic_coverage.tabular" />
-					<element file="personnel.tabular" />
-				</collection>
-			</param>
-			<output name="metadata" ftype="xml" file="Metadata.xml"/>
+                <collection type="list">
+                    <element file="annotations.tabular"/>
+                    <element file="keywords.tabular" />
+                    <element file="attributes_data_blary_al.tabular"/>
+                    <element file="catvars_data_blary_al.tabular"/>
+                    <element file="keywords.tabular" />
+                    <element file="geographic_coverage.tabular" />
+                    <element file="personnel.tabular" />
+                </collection>
+            </param>
+            <output name="metadata" ftype="xml" file="Metadata.xml"/>
         </test>
-	</tests>
+    </tests>
 <help><![CDATA[
 .. class:: warningmark
 
