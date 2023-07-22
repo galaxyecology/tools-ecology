@@ -25,12 +25,12 @@
         <test expect_num_outputs="1"> 
             <param type="data_collection" name="templates" value="Assessing_the_importance_of_field_margins_for_bat_species.xml">
                 <collection type="list">
-                    <element name="annotations" file="annotations.tabular"/>
-                    <element name="keywords" file="keywords.tabular" />
-                    <element name="attributes_data_blary_al" file="attributes_data_blary_al.tabular"/>
-                    <element name="catvars_data_blary_al" file="catvars_data_blary_al.tabular"/>
-                    <element name="geographic_coverage" file="geographic_coverage.tabular" />
-                    <element name="personnel" file="personnel.tabular" />
+                    <element name="annotations" file="annotations.txt"/>
+                    <element name="keywords" file="keywords.txt" />
+                    <element name="attributes_data_blary_al" file="attributes_data_blary_al.txt"/>
+                    <element name="catvars_data_blary_al" file="catvars_data_blary_al.txt"/>
+                    <element name="geographic_coverage" file="geographic_coverage.txt" />
+                    <element name="personnel" file="personnel.txt" />
                 </collection>
             </param>
             <output name="metadata" ftype="xml" file="Metadata.xml"/>
