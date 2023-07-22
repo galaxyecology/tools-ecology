@@ -11,7 +11,7 @@
          '$data'
     ]]></command>
     <inputs>
-		<param name="data" type="data" format="xml" label="Upload EML" help="Insert only metadata using EML standard"/>
+		<param name="inputmetadatafile" type="data" format="xml" label="Upload EML" help="Insert only metadata using EML standard"/>
     </inputs>
     <outputs>
 		<collection name="EML_templates" type="list" label="EML Templates">
@@ -19,8 +19,8 @@
       </collection>
     </outputs>
 	<tests>
-		 <test expect_num_outputs="1"> 
-            <param type="data" name="data" value="Assessing_the_importance_of_field_margins_for_bat_species.xml"/>
+		 <test expect_num_outputs="6"> 
+            <param type="data" name="inputmetadatafile" value="Assessing_the_importance_of_field_margins_for_bat_species.xml"/>
             <output_collection name="EML_templates" type="list">
 				<element name="annotations" file="annotations.tabular" ftype="tabular"/>
 				<element name="keywords" file="keywords.tabular" ftype="tabular" />
