@@ -8,7 +8,7 @@
     <command detect_errors="exit_code"><![CDATA[
        Rscript
          '$__tool_directory__/eml2eal.R'
-         '$data'
+         '$inputmetadatafile'
     ]]></command>
     <inputs>
 		<param name="inputmetadatafile" type="data" format="xml" label="Upload EML" help="Insert only metadata using EML standard"/>
@@ -19,7 +19,7 @@
       </collection>
     </outputs>
 	<tests>
-		 <test expect_num_outputs="6"> 
+		 <test expect_num_outputs="1"> 
             <param type="data" name="inputmetadatafile" value="Assessing_the_importance_of_field_margins_for_bat_species.xml"/>
             <output_collection name="EML_templates" type="list">
 				<element name="annotations" file="annotations.tabular" ftype="tabular"/>
