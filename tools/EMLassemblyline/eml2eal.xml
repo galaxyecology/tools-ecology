@@ -1,4 +1,5 @@
-<tool id="eml2eal" name="EML to EAL" version="0.1.0+galaxy0">
+<tool id="eml2eal" name="EML to EAL" version="0.1.0+galaxy0" profile="22.05">
+
 	<description> Create EAL templates from EML metadata </description>
     <requirements>
 		<requirement type="package" version="4.3.1">r-base</requirement>
