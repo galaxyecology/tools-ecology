@@ -160,10 +160,10 @@ As it is currently impossible to distinguish individual bats from their echoloca
       <funding>DIM ASTREA Région Ile-de-France, FRB</funding>
     </project>
     <dataTable>
-      <entityName>data_blary_&amp;_al.tsv</entityName>
-      <entityDescription>Content of data_blary_&amp;_al.txt</entityDescription>
+      <entityName>data_blary_al.tsv</entityName>
+      <entityDescription>Content of data_blary_al.txt</entityDescription>
       <physical>
-        <objectName>data_blary_&amp;_al.txt</objectName>
+        <objectName>data_blary_al.txt</objectName>
         <size unit="bytes">79724</size>
         <authentication method="MD5">189e312d6c6635a7ca21aa1b6c15bda2</authentication>
         <dataFormat>
