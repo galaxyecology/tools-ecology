@@ -14,7 +14,7 @@
     Rscript '$__tool_directory__/make_eml.R'
     ]]></command>
     <inputs>
-        <param name="templates" type="data_collection" type_collection="list" format="tabular" label="Upload all EAL templates" help= "Input a data collection." />
+        <param name="templates" type="data_collection" format="tabular" label="Upload all EAL templates" help= "Input a data collection." />
     </inputs>
     <outputs>
         <data name="metadata" format="xml">
