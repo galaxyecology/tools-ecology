@@ -8,7 +8,7 @@
     mkdir output_template &&
     cd output_template &&
     #for $input in $templates
-        cp '$input' '${input.element_identifier}.txt' &&
+        ln -s '$input' '${input.element_identifier}.txt' &&
     #end for
     find . -type f -empty -print -delete &&
     Rscript '$__tool_directory__/make_eml.R'
