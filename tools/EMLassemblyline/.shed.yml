@@ -1,44 +1,19 @@
 categories:
     - Ecology
-description: Tools to operate machine actionnable jobs to EML metadata
+description: Tools using EML Assembly Line R package to generate EML metadata from template metadata files and vice versa
 long_description: |
-  Tools to operate machine actionnable jobs to EML metadata from MetaShRIMPS
-name: metashrimps 
+  EML Assembly Line is a R package allowing to create EML metadata file from raw data files using intermediate template metadata files. These template metadata files written in tabular files allow easy modification and addition of metadata information by any researcher without having to deal with XML syntaxe. EML Assembly Line propose a particular workflow to the researcher to facilitate metadata creation. This workflow, used to create the R Shiny app MetaShARK, is easy to understand and follow by any researcher, asking information on data files, then geographical coverage, then taxonomic coverage, then personnal information, and finally abstract, methods, keywords and temporal coverage.
+name: emlassemblyline 
 owner: ecology 
-remote_repository_url: https://github.com/tanguygen/metacure
+remote_repository_url: https://github.com/EDIorg/EMLassemblyline
 type: unrestricted
 
-repositories:
-  DataPaper:
-    description: Make a Data Paper draft from EML
-    owner: ecology
-    include:
-     - DataPaper.xml
-     - DataPaper.R
-     - test-data/Assessing_the_importance_of_field_margins_for_bat_species.xml
-     - test-data/Kakila_database.xml
-     - template_emldown/addmap.xsl
-     - template_emldown/addmap2.xsl
-     - template_emldown/bootstrap.xsl
-     - template_emldown/bootstrap2.xsl
-     - template_emldown/dataset.xsl
-     - template_emldown/dataset2.xsl
-     - template_emldown/datatable.xsl
-     - template_emldown/datatable2.xsl
-     - template_emldown/educational_custom.css
-     - template_emldown/footer.xsl
-     - template_emldown/geographic_coverage.xsl
-     - template_emldown/head.xsl
-     - template_emldown/main_custom.css
-     - template_emldown/method.xsl
-     - template_emldown/nav.xsl
-     - template_emldown/otherentity.xsl
-     - template_emldown/rights.xsl
-     - template_emldown/spatraster.xsl
-     - template_emldown/spatraster2.xsl
-     - template_emldown/spatvector.xsl
-     - template_emldown/spatvector2.xsl
-     - template_emldown/taxonomic_coverage.xsl
-     - template_emldown/temporal_coverage.xsl
-     - template_emldown/units.xsl
-      
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "EML Assembly Line: {{ tool_name }}"
+suite:
+  name: "suite_emlassemblyline"
+  description: Tools using EML Assembly Line R package to generate EML metadata from template metadata files and vice versa
+  long_description: |
+    EML Assembly Line is a R package allowing to create EML metadata file from raw data files using intermediate template metadata files. These template metadata files written in tabular files allow easy modification and addition of metadata information by any researcher without having to deal with XML syntaxe. EML Assembly Line propose a particular workflow to the researcher to facilitate metadata creation. This workflow, used to create the R Shiny app MetaShARK, is easy to understand and follow by any researcher, asking information on data files, then geographical coverage, then taxonomic coverage, then personnal information, and finally abstract, methods, keywords and temporal coverage.
+
