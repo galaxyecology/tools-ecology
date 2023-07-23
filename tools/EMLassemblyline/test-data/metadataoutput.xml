@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="0a0472ad-2e8f-412f-8e95-ba84b7cc9996" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd" system="unknown">
+  <dataset id="dataset">
+    <creator>
+      <individualName>
+        <givenName>Constance</givenName>
+        <surName>Blary</surName>
+      </individualName>
+      <organizationName>CEFE</organizationName>
+      <electronicMailAddress>constance.blary@cefe.cnrs.fr</electronicMailAddress>
+    </creator>
+    <creator>
+      <individualName>
+        <givenName>Kévin</givenName>
+        <surName>Barré</surName>
+      </individualName>
+      <organizationName>CESCO MNHN</organizationName>
+      <electronicMailAddress>kevin.barre@mnhn.fr</electronicMailAddress>
+    </creator>
+    <creator>
+      <individualName>
+        <givenName>Christian</givenName>
+        <surName>Kerbiriou</surName>
+      </individualName>
+      <organizationName>CESCO</organizationName>
+      <electronicMailAddress>christian.kerbiriou@mnhn.fr</electronicMailAddress>
+    </creator>
+    <creator>
+      <individualName>
+        <givenName>Isabelle</givenName>
+        <surName>Le Viol</surName>
+      </individualName>
+      <organizationName>CESCO</organizationName>
+      <electronicMailAddress>isabelle.le-viol@mnhn.fr</electronicMailAddress>
+    </creator>
+    <pubDate>2023-07-23</pubDate>
+    <keywordSet>
+      <keyword>Acoustic monitoring</keyword>
+      <keyword>Bat community</keyword>
+      <keyword>Farmland biodiversity</keyword>
+      <keyword>Field borders</keyword>
+      <keyword>Habitat specialisation</keyword>
+      <keyword>Landscape composition</keyword>
+      <keywordThesaurus>Keywords</keywordThesaurus>
+    </keywordSet>
+    <coverage>
+      <geographicCoverage>
+        <geographicDescription>Yvelines - Essonne - Seine et Marne</geographicDescription>
+        <boundingCoordinates>
+          <westBoundingCoordinate>1.60296</westBoundingCoordinate>
+          <eastBoundingCoordinate>3.56409</eastBoundingCoordinate>
+          <northBoundingCoordinate>49.08428</northBoundingCoordinate>
+          <southBoundingCoordinate>48.12266</southBoundingCoordinate>
+        </boundingCoordinates>
+      </geographicCoverage>
+    </coverage>
+    <annotation>
+      <propertyURI label="is about">http://purl.obolibrary.org/obo/IAO_0000136</propertyURI>
+      <valueURI label="biodiversity">http://aims.fao.org/aos/agrovoc/c_33949</valueURI>
+    </annotation>
+    <annotation>
+      <propertyURI label="is about">http://purl.obolibrary.org/obo/IAO_0000136</propertyURI>
+      <valueURI label="mammals">http://aims.fao.org/aos/agrovoc/c_4560</valueURI>
+    </annotation>
+    <annotation>
+      <propertyURI label="is about">http://purl.obolibrary.org/obo/IAO_0000136</propertyURI>
+      <valueURI label="chiroptera">http://aims.fao.org/aos/agrovoc/c_1560</valueURI>
+    </annotation>
+    <annotation>
+      <propertyURI label="is about">http://purl.obolibrary.org/obo/IAO_0000136</propertyURI>
+      <valueURI label="bats">http://aims.fao.org/aos/agrovoc/c_1560</valueURI>
+    </annotation>
+    <annotation>
+      <propertyURI label="is about">http://purl.obolibrary.org/obo/IAO_0000136</propertyURI>
+      <valueURI label="Landscape">http://www.eionet.europa.eu/gemet/concept/4648</valueURI>
+    </annotation>
+    <annotation>
+      <propertyURI label="is about">http://purl.obolibrary.org/obo/IAO_0000136</propertyURI>
+      <valueURI label="Ecosystem">http://www.eionet.europa.eu/gemet/concept/2519</valueURI>
+    </annotation>
+    <annotation>
+      <propertyURI label="is about">http://purl.obolibrary.org/obo/IAO_0000136</propertyURI>
+      <valueURI label="Animal ecology">http://www.eionet.europa.eu/gemet/concept/420</valueURI>
+    </annotation>
+    <contact>
+      <individualName>
+        <givenName>Constance</givenName>
+        <surName>Blary</surName>
+      </individualName>
+      <organizationName>CEFE</organizationName>
+      <electronicMailAddress>constance.blary@cefe.cnrs.fr</electronicMailAddress>
+    </contact>
+    <contact>
+      <individualName>
+        <givenName>Kévin</givenName>
+        <surName>Barré</surName>
+      </individualName>
+      <organizationName>CESCO MNHN</organizationName>
+      <electronicMailAddress>kevin.barre@mnhn.fr</electronicMailAddress>
+    </contact>
+    <project>
+      <title>Effect of agricultural landscape features on bats</title>
+      <personnel>
+        <individualName>
+          <givenName>Kévin</givenName>
+          <surName>Barré</surName>
+        </individualName>
+        <organizationName>CESCO MNHN</organizationName>
+        <electronicMailAddress>kevin.barre@mnhn.fr</electronicMailAddress>
+        <role>Principal Investigator</role>
+      </personnel>
+      <funding>DIM ASTREA Région Ile-de-France, FRB</funding>
+    </project>
+  </dataset>
+  <annotations>
+    <annotation references="dataset">
+      <propertyURI label="is about">http://purl.obolibrary.org/obo/IAO_0000136</propertyURI>
+      <valueURI label="biodiversity">http://aims.fao.org/aos/agrovoc/c_33949</valueURI>
+    </annotation>
+    <annotation references="dataset">
+      <propertyURI label="is about">http://purl.obolibrary.org/obo/IAO_0000136</propertyURI>
+      <valueURI label="mammals">http://aims.fao.org/aos/agrovoc/c_4560</valueURI>
+    </annotation>
+    <annotation references="dataset">
+      <propertyURI label="is about">http://purl.obolibrary.org/obo/IAO_0000136</propertyURI>
+      <valueURI label="chiroptera">http://aims.fao.org/aos/agrovoc/c_1560</valueURI>
+    </annotation>
+    <annotation references="dataset">
+      <propertyURI label="is about">http://purl.obolibrary.org/obo/IAO_0000136</propertyURI>
+      <valueURI label="bats">http://aims.fao.org/aos/agrovoc/c_1560</valueURI>
+    </annotation>
+    <annotation references="dataset">
+      <propertyURI label="is about">http://purl.obolibrary.org/obo/IAO_0000136</propertyURI>
+      <valueURI label="Landscape">http://www.eionet.europa.eu/gemet/concept/4648</valueURI>
+    </annotation>
+    <annotation references="dataset">
+      <propertyURI label="is about">http://purl.obolibrary.org/obo/IAO_0000136</propertyURI>
+      <valueURI label="Ecosystem">http://www.eionet.europa.eu/gemet/concept/2519</valueURI>
+    </annotation>
+    <annotation references="dataset">
+      <propertyURI label="is about">http://purl.obolibrary.org/obo/IAO_0000136</propertyURI>
+      <valueURI label="Animal ecology">http://www.eionet.europa.eu/gemet/concept/420</valueURI>
+    </annotation>
+  </annotations>
+  <additionalMetadata>
+    <metadata>
+      <emlEditor>
+        <app>EMLassemblyline</app>
+        <release>3.5.5</release>
+      </emlEditor>
+    </metadata>
+  </additionalMetadata>
+</eml:eml>
