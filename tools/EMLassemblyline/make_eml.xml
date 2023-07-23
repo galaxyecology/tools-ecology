@@ -10,11 +10,11 @@
     #for $input in $templates
         cp '$input' '${input.element_identifier}.txt' &&
     #end for
-
+    find . -type f -empty -print -delete &&
     Rscript '$__tool_directory__/make_eml.R'
     ]]></command>
     <inputs>
-        <param name="templates" type="data_collection" collection_type="list" format="tabular" label="Upload all EAL templates" help= "Input a data collection." />
+        <param name="templates" type="data_collection" format="tabular" label="Upload all EAL templates" help= "Input a data collection." />
     </inputs>
     <outputs>
         <data name="metadata" format="xml">
