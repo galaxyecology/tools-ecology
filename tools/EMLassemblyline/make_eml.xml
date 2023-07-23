@@ -34,6 +34,8 @@
                 </collection>
             </param>
             <output name="metadata" ftype="xml" file="Metadata.xml"/>
+                <discover_datasets directory = "output_template" pattern= "(?P&lt;designation&gt;.+)\.xml" visible="true" format="xml" assign_primary_output="true" />
+            </output>
         </test>
     </tests>
 <help><![CDATA[
