@@ -34,7 +34,7 @@
             </param>
             <output name="metadataout" ftype="xml" value="metadataoutput.xml" count="1" >
                 <has_size value="6700" delta="200" />
-            <output/>
+            </output>
         </test>
     </tests>
 <help><![CDATA[
