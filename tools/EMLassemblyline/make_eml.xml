@@ -33,7 +33,6 @@
                 </collection>
             </param>
             <output name="metadataout" ftype="xml" file="metadataoutput.xml"/>
-            </output>
         </test>
     </tests>
 <help><![CDATA[
