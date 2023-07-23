@@ -10,6 +10,7 @@
     #for $input in $templates
         cp '$input' '${input.element_identifier}.txt' &&
     #end for
+
     Rscript '$__tool_directory__/make_eml.R'
     ]]></command>
     <inputs>
