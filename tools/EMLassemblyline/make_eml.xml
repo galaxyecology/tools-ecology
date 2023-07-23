@@ -16,7 +16,9 @@
         <param name="templates" type="data_collection"  collection_type="list" format="tabular" label="Upload all EAL templates" help= "Input a data collection." />
     </inputs>
     <outputs>
-        <data name="metadataout" format="xml" value="Assessing_the_importance_of_field_margins_for_bat_species.xml" />
+        <data name="metadataout" format="xml"
+            <discover_datasets directory = "output_template" pattern= "(?P&lt;designation&gt;.+)\.xml" visible="true" format="xml" assign_primary_output="true" />
+        </data>
     </outputs>
     <tests>
         <test expect_num_outputs="1"> 
@@ -30,8 +32,7 @@
                         <element name="personnel" value="personnel.txt" />
                 </collection>
             </param>
-            <output name="metadataout">
-                <discovered_dataset designation="metadataout1" ftype="xml" file="Metadata.xml"/>
+            <output name="metadataout" ftype="xml" file="metadataoutput.xml"/>
             </output>
         </test>
     </tests>
