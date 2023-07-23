@@ -24,7 +24,7 @@
     <tests>
         <test expect_num_outputs="1"> 
             <param name="templates">
-                <collection >
+                <collection type="list">
                         <element name="annotations" value="annotations.txt"/>
                         <element name="keywords" value="keywords.txt" />
                         <element name="attributes_data_blary_al" value="attributes_data_blary_al.txt"/>
