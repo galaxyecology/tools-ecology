@@ -34,7 +34,7 @@
                 </collection>
             </param>
             <output name="metadata">
-                <discovered_dataset designation="metadata" ftype="xml" file="Metadata.xml">
+                <discovered_dataset designation="metadata" ftype="xml" file="Metadata.xml"/>
             </output>
         </test>
     </tests>
