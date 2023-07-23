@@ -16,7 +16,7 @@
         <param name="templates" type="data_collection"  collection_type="list" format="tabular" label="Upload all EAL templates" help= "Input a data collection." />
     </inputs>
     <outputs>
-        <data name="Metadata" format="xml">
+        <data name="metadataout" format="xml">
             <discover_datasets directory = "output_template" pattern= "(?P&lt;designation&gt;.+)\.xml" visible="true" format="xml" assign_primary_output="true" />
         </data>
     </outputs>
@@ -32,8 +32,8 @@
                         <element name="personnel" value="personnel.txt" />
                 </collection>
             </param>
-            <output name="metadata">
-                <discovered_dataset designation="metadata" ftype="xml" file="Metadata.xml"/>
+            <output name="metadataout">
+                <discovered_dataset designation="metadataout1" ftype="xml" file="Metadata.xml"/>
             </output>
         </test>
     </tests>
