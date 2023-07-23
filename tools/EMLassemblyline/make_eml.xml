@@ -32,7 +32,7 @@
                         <element name="personnel" value="personnel.txt" />
                 </collection>
             </param>
-            <output name="metadataout" ftype="xml" file="metadataoutput.xml"/>
+            <output name="metadataout" ftype="xml" value="metadataoutput.xml" count="1" />
         </test>
     </tests>
 <help><![CDATA[
