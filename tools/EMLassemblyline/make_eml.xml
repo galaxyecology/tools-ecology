@@ -34,7 +34,7 @@
             </param>
             <output name="metadataout" ftype="xml" count="1" >
                 <assert_contents>
-					<has_line line="<?xml version="1.0" encoding="UTF-8"?>" />
+					<has_size value="6700" delta="200" />
                 </assert_contents>
             </output>
         </test>
