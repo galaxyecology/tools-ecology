@@ -18,7 +18,7 @@
     </outputs>
     <tests>
          <test expect_num_outputs="1"> 
-            <param type="data" name="inputmetadatafile" value="Assessing_the_importance_of_field_margins_for_bat_species.xml"/>
+            <param name="inputmetadatafile" value="Assessing_the_importance_of_field_margins_for_bat_species.xml"/>
             <output_collection name="EML_templates" type="list">
                 <element name="annotations" file="annotations.tabular" ftype="tabular"/>
                 <element name="attributes_data_blary_al" file="attributes_data_blary_al.tabular" ftype="tabular"/>
