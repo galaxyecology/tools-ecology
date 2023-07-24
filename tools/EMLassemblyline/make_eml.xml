@@ -10,6 +10,7 @@
     #for $input in $templates
         ln -s '$input' '${input.element_identifier}.txt' &&
     #end for
+    find . -type f -empty -print -delete &&
     Rscript '$__tool_directory__/make_eml.R'
     ]]></command>
     <inputs>
