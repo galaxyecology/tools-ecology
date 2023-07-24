@@ -33,7 +33,9 @@
                 </collection>
             </param>
             <output name="metadataout" ftype="xml" count="1" >
+                <assert_contents>
                 <has_size value="6700" delta="200" />
+                </assert_contents>
             </output>
         </test>
     </tests>
