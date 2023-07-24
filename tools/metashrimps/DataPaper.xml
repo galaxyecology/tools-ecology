@@ -50,11 +50,11 @@
             <param name="data" value="Kakila_database.xml"/>
             <param name="editable" value="yes"/>
             <output_collection name="output1" type="list">
-				<element name="DataPaper" file="DataPaper" ftype="html" />
+				<element name="DataPaper" file="DataPaper.html.html" ftype="html" />
 				<element name="map" file="map" ftype="html" />
 			</output_collection>
 			<output_collection name="output2" type="list">
-				<element name="DataPaper" file="DataPaper" ftype="docx" />
+				<element name="DataPaper" file="DataPaper.docx.docx" ftype="docx" />
 				<element name="map" file="map" ftype="png" />
 			</output_collection>
         </test>
