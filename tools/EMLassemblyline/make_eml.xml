@@ -17,7 +17,7 @@
     </inputs>
     <outputs>
         <data name="metadataout" format="xml" >
-            <discover_datasets directory = "output_template" pattern= "(?P&lt;designation&gt;.+)\.xml" visible="true" format="xml" />
+            <discover_datasets directory = "output_template" pattern= "(?P&lt;designation&gt;.+)\.xml" format="xml" />
         </data>
     </outputs>
     <tests>
