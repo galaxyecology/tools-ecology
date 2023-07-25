@@ -32,11 +32,13 @@
                         <element name="personnel" value="personnel.txt" />
                 </collection>
             </param>
-            <output name="metadataout" ftype="xml" count="1" >
-                <assert_contents>
-			<is_valid_xml />
-			<xml_element path="./dataset"/>
-                </assert_contents>
+            <output name="metadataout" count="1" >
+		<discovered_dataset designation="metadaout1" ftype="xml">
+			<assert_contents>
+				<is_valid_xml />
+				<xml_element path="./dataset"/>
+                	</assert_contents>
+		</discovered_dataset>
             </output>
         </test>
     </tests>
