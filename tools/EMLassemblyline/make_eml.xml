@@ -17,19 +17,19 @@
     </inputs>
     <outputs>
         <data name="metadataout" >
-            <discover_datasets directory = "output_template" pattern= "(?P&lt;designation&gt;.+)\.xml" format="xml" visible="true" />
+            <discover_datasets directory = "output_template" pattern= "(?P&lt;designation&gt;.+1)\.xml" format="xml" visible="true" />
         </data>
     </outputs>
     <tests>
         <test expect_num_outputs="1"> 
             <param name="templates">
                 <collection type="list">
-                        <element value="annotations.txt"/>
-                        <element value="keywords.txt" />
-                        <element value="attributes_data_blary_al.txt"/>
-                        <element value="catvars_data_blary_al.txt"/>
-                        <element value="geographic_coverage.txt" />
-                        <element value="personnel.txt" />
+			<element name="annotations" value="annotations.txt"/>
+                        <element name="keywords" value="keywords.txt" />
+                        <element name="attributes_data_blary_al" value="attributes_data_blary_al.txt"/>
+                        <element name="catvars_data_blary_al" value="catvars_data_blary_al.txt"/>
+                        <element name="geographic_coverage" value="geographic_coverage.txt" />
+                        <element name="personnel" value="personnel.txt" />
                 </collection>
             </param>
             <output name="metadataout" ftype="xml" count="1" >
