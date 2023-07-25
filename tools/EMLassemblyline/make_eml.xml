@@ -33,12 +33,10 @@
                 </collection>
             </param>
             <output name="metadataout" count="1" >
-		<discovered_dataset designation="metadataout1" ftype="xml">
 			<assert_contents>
 				<is_valid_xml />
 				<xml_element path="./dataset"/>
                 	</assert_contents>
-		</discovered_dataset>
             </output>
         </test>
     </tests>
