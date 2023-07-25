@@ -8,17 +8,16 @@
     mkdir output_template &&
     cd output_template &&
     #for $input in $templates
-        ln -s '$input' '${input.element_identifier}.txt' &&
+        ln -s '$input' '${input.element_identifier}.txt';
     #end for
-    find . -type f -empty -print -delete &&
     Rscript '$__tool_directory__/make_eml.R'
     ]]></command>
     <inputs>
         <param name="templates" type="data_collection"  collection_type="list" format="tabular" label="Upload all EAL templates" help= "Input a data collection." />
     </inputs>
     <outputs>
-        <data name="metadataout" format="xml" >
-            <discover_datasets directory = "output_template" pattern= "(?P&lt;designation&gt;.+)\.xml" visible = "true" format="xml" />
+        <data name="metadataout" >
+            <discover_datasets directory = "output_template" pattern= "(?P&lt;designation&gt;.+)\.xml" format="xml" visible="true" />
         </data>
     </outputs>
     <tests>
@@ -33,9 +32,9 @@
                         <element name="personnel" value="personnel.txt" />
                 </collection>
             </param>
-            <output name="metadataout" ftype="xml" count="1" >
+            <output name="metadataout1" ftype="xml" count="1" >
                 <assert_contents>
-					<has_size value="6700" delta="200" />
+					<has_line value="153" />
                 </assert_contents>
             </output>
         </test>
