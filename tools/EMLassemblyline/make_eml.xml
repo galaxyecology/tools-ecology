@@ -32,7 +32,7 @@
                         <element name="personnel" value="personnel.txt" />
                 </collection>
             </param>
-            <output name="metadataout1" ftype="xml" count="1" >
+            <output name="metadataout" ftype="xml" count="1" >
                 <assert_contents>
 			<is_valid_xml />
 			<xml_element path="./dataset"/>
