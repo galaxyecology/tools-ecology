@@ -28,12 +28,12 @@
     </inputs>
     <outputs>
 		<collection name="output1" type="list" label="Data Paper Draft">
-            <data name="DataPaper" from_work_dir="DataPaper" format="html" label="Data Paper"/>
-			<data name="map" from_work_dir="map" format="html" label="Leaflet Map"/>
+            <data name="DataPaper" from_work_dir="DataPaper.html" format="html" label="Data Paper"/>
+			<data name="map" from_work_dir="map.html" format="html" label="Leaflet Map"/>
 		</collection>
 		<collection name="output2" type="list" label="Editable Data Paper Draft">
-			<data name="DataPaper" from_work_dir="DataPaper" format="docx" label="Data Paper docx"/>
-			<data name="map" from_work_dir="map" format="png" label="Leaflet Map Image"/>
+			<data name="DataPaper" from_work_dir="DataPaper.html" format="docx" label="Data Paper docx"/>
+			<data name="map" from_work_dir="map.png" format="png" label="Leaflet Map Image"/>
 			<filter>editable == "yes"</filter>
 		</collection>
     </outputs>
@@ -43,7 +43,7 @@
             <param name="editable" value="no"/>
             <output_collection name="output1" type="list">
 				<element name="DataPaper" file="DataPaper.html" ftype="html" />
-				<element name="map" file="map" ftype="html" />
+				<element name="map" file="map.html" ftype="html" />
 			</output_collection>
         </test>
 		<test expect_num_outputs="6"> 
@@ -51,11 +51,11 @@
             <param name="editable" value="yes"/>
             <output_collection name="output1" type="list">
 				<element name="DataPaper" file="DataPaper.html" ftype="html" />
-				<element name="map" file="map" ftype="html" />
+				<element name="map" file="map.html" ftype="html" />
 			</output_collection>
 			<output_collection name="output2" type="list">
 				<element name="DataPaper" file="DataPaper.docx" ftype="docx" />
-				<element name="map" file="map" ftype="png" />
+				<element name="map" file="map.png" ftype="png" />
 			</output_collection>
         </test>
 	</tests>
