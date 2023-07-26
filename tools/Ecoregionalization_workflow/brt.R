@@ -23,7 +23,6 @@ if (length(args)==0)
     abio_para <- args[3]
 }
 
-
 ### load data
 
 env = read.table(enviro, header = TRUE, dec = ".", na.strings = "-9999")
@@ -52,7 +51,6 @@ make.brt <- function(spe,data,pred.vars,env,nb_file){
    
    return(brt_step)
    }
-
 
 make.prediction.brt <- function(brt_step){
   #predictions
@@ -90,7 +88,6 @@ make.prediction.brt <- function(brt_step){
   preds <- cbind(preds,spe)
   write.table(preds, paste(nb_file,"_brts_pred_ceamarc.txt",sep=""), quote=FALSE, dec=".", row.names=F, col.names=T,append = T)
 }
-
 
 #### RUN BRT ####
 nb_file = 0
