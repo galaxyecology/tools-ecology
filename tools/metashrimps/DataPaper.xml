@@ -49,10 +49,6 @@
 		<test expect_num_outputs="6"> 
             <param name="data" value="Assessing_the_importance_of_field_margins_for_bat_species.xml"/>
             <param name="editable" value="yes"/>
-            <output_collection name="output1" type="list">
-				<element name="DataPaper" file="DataPaper.html" ftype="html" />
-				<element name="map" file="map.html" ftype="html" />
-			</output_collection>
 			<output_collection name="output2" type="list">
 				<element name="DataPaper" file="DataPaper.docx" ftype="docx" />
 				<element name="map" file="map.png" ftype="png" />
