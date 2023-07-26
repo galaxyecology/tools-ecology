@@ -21,7 +21,10 @@
     ]]></command>
     <inputs>
 		<param name="data" type="data" format="xml" label="Upload metadata" help="Insert only metadata using EML standard"/>
-		<param name="editable" type="boolean" checked="false" label="Would you like to include a docx editable file instead of an HTML?" help= "HTML files are better for visualisation but are more difficult to edit than a docx." truevalue="yes" falsevalue="no" />
+		<param name="editable" type="select" label="Would you like to include a docx editable file instead of an HTML?" help= "HTML files are better for visualisation but are more difficult to edit than a docx.">
+			<option selected="true" value="no">No</option>
+			<option value="yes">Yes</option>
+		</param>
     </inputs>
     <outputs>
 		<collection name="output1" type="list" label="Data Paper Draft">
