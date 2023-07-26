@@ -18,9 +18,9 @@
          '$output4'
     ]]></command>
     <inputs>
-      <param name="enviro" type="data" format="txt,csv,tsv" label="Environment Data"/>
+      <param name="enviro" type="data" format="txt,csv,tabular" label="Environment Data"/>
       <param type="data" name="species_files" label="Occurrences Data File" format="tabular,txt,csv" multiple="True" />
-      <param name="input3" type="text" label="write the name of your abiotic parameters (comma separated)"/>
+      <param name="input3" type="text" label="Write the name of your abiotic parameters (comma separated)"/>
     </inputs>
     <outputs>
       <collection name="output1" type="list" label="Prediction files">
