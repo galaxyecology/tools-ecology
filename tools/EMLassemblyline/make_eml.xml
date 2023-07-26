@@ -9,10 +9,13 @@
     #for $input in $templates
         ln -s '$input' 'output_template/${input.element_identifier}.txt';
     #end for
-    Rscript '$__tool_directory__/make_eml.R' &> err.txt
+    Rscript 
+		'$__tool_directory__/make_eml.R' 2> err.txt
+		'title'
     ]]></command>
     <inputs>
         <param name="templates" type="data_collection"  collection_type="list" format="tabular" label="Upload all EAL templates" help= "Input a data collection." />
+		<param name="title" type="text" label="Title for your dataset." />
     </inputs>
     <outputs>
 		 <data name="metadataout" from_work_dir="eml.xml" format="xml" label="EML"/>
