@@ -9,9 +9,7 @@
     #for $input in $templates
         ln -s '$input' 'output_template/${input.element_identifier}.txt';
     #end for
-    Rscript '$__tool_directory__/make_eml.R' 2> err.txt &&
-	ls &&
-	head eml.xml
+    Rscript '$__tool_directory__/make_eml.R' &> err.txt
     ]]></command>
     <inputs>
         <param name="templates" type="data_collection"  collection_type="list" format="tabular" label="Upload all EAL templates" help= "Input a data collection." />
@@ -35,6 +33,7 @@
             <output name="metadataout" count="1" >
 			<assert_contents>
 				<is_valid_xml />
+				<xml_element path="./dataset"/>
                 	</assert_contents>
             </output>
         </test>
