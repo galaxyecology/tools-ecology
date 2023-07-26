@@ -1,0 +1,616 @@
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<style>
+body { padding-top: 70px; }
+footer {
+  margin-top: 45px;
+  padding: 35px 10 36px;
+  border-top: 1px solid #e5e5e5;
+  color: #666;
+  display: flex;
+}
+
+footer p {
+  margin-bottom: 0;
+}
+footer div {
+  flex: 1;
+}
+footer .madeby {
+  text-align: right;
+}
+
+.table-responsive {     max-height:300px;   }
+</style>
+<title>Assessing the importance of field margins for bat species and communities in intensive agricultural landscapes - Data</title>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top"><div class="container">
+<div class="navbar-header">
+<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="#">Project name</a>
+</div>
+<div id="navbar" class="collapse navbar-collapse"><ul class="nav navbar-nav">
+<li class="active"><a href="#">Home</a></li>
+<li><a href="#temporal">Temporal coverage</a></li>
+<li><a href="#geographic">Geographic coverage</a></li>
+<li><a href="#datatable">Data tables</a></li>
+<li><a href="#spatraster">Spatial Rasters</a></li>
+<li><a href="#spatvector">Spatial Vectors</a></li>
+<li><a href="#otherentity">Custom units</a></li>
+<li><a href="#otherentity">Other entities</a></li>
+</ul></div>
+</div></nav><div class="container" id="dataset_info"><div class="starter-template">
+<h1>Assessing the importance of field margins for bat species and communities in intensive agricultural landscapes - Data</h1>
+<h3 class="editor">2021-05-25</h3>
+<h4><a href="#datatable"><span class="glyphicon glyphicon-list-alt"></span>
+    Data table(s) <span class="badge">1</span></a></h4>
+<h4><a href="#spatraster"><span class="glyphicon glyphicon-list-alt"></span>
+    Spatial Raster(s) <span class="badge">0</span></a></h4>
+<h4><a href="#spatvector"><span class="glyphicon glyphicon-list-alt"></span>
+    Spatial Vector(s) <span class="badge">0</span></a></h4>
+<h4><a href="#otherentity"><span class="glyphicon glyphicon-list-alt"></span>
+    Other entity(ies) <span class="badge">0</span></a></h4>
+<h4>Abstract</h4>
+<div class="container"><div class="editor"><div class="jumbotron"><p class="lead">Landscape simplification and degradation through agricultural intensification is widely recognized as a main driver of biodiversity loss. In intensively used agricultural landscapes, patches of semi-natural habitats and particularly connections between them are of high importance for many taxa. Vegetated connections like hedgerows are especially important for foraging and commuting of mobile taxa such as bats. However, the interest of another treeless linear habitat – herbaceous field margins – remains unstudied for insectivorous bats. Field margins are nevertheless known as an important habitat for other taxa, including bat prey. Here we assessed the importance of field margins for bats compared to other landscape variables. We measured bat activity based on a repeated passive acoustic monitoring during 17 complete nights in summer on 112 study sites in an intensively used agricultural landscape. Each night, we sampled bat species activity and community metrics (i.e. species richness and community habitat specialization index) at different distances to field margins, and along a gradient of relative density of field margins. To compare field margin effects with other landscape variables, the sampled sites were selected by keeping a large variability in these other variables (land-cover Shannon diversity index, forests, hedgerows, water bodies, main roads, urban areas, grasslands, number of crops and rapeseed percentage). Only Myotis sp. were affected by herbaceous field margins. Specifically, the Myotis group activity decreased with the distance to herbaceous field margins (i.e. towards field crop cores), and positively correlated with relative density of herbaceous field margins, for which the effect size was comparable to other landscape variables. However, other landscape variables such as the proportion of and the distance to forests, the relative density of and the distance to hedgerows or land-cover Shannon diversity index, affected species richness, community specialization index, and bat activity of species from open, edge and narrow-space foragers, including the Myotis group as well. Our results highlight that herbaceous field margins have a positive effect on the activity of narrow-space bat foragers as Myotis species, but do not replace other landscape variables that drive the activity of the whole community.
+</p></div></div></div>
+<h4>Metadata Provider</h4>
+<p><div name="metaprovider" class="editor"> 
+  </div></p>
+<div class="container"><div class="panel-group"><div class="panel panel-default">
+<div class="panel-heading"><h4 class="panel-title"><a data-toggle="collapse" href="#collapse1">Author list</a></h4></div>
+<div id="collapse1" class="panel-collapse collapse">
+<h4>Creators</h4>
+<ul class="list-group">
+<li class="list-group-item"><div class="editor">Constance 
+            Blary 
+            constance.blary@cefe.cnrs.fr</div></li>
+<li class="list-group-item"><div class="editor">Kévin 
+            Barré 
+            kevin.barre@mnhn.fr</div></li>
+<li class="list-group-item"><div class="editor">Christian 
+            Kerbiriou 
+            christian.kerbiriou@mnhn.fr</div></li>
+<li class="list-group-item"><div class="editor">Isabelle 
+            Le Viol 
+            isabelle.le-viol@mnhn.fr</div></li>
+</ul>
+<h4>Associated parties</h4>
+<ul class="list-group"></ul>
+</div>
+</div></div></div>
+<h4>Keywords</h4>
+<p><div class="editor">
+<ul><li>Acoustic monitoring</li></ul>
+<ul><li>Bat community</li></ul>
+<ul><li>Farmland biodiversity</li></ul>
+<ul><li>Field borders</li></ul>
+<ul><li>Habitat specialisation</li></ul>
+<ul><li>Landscape composition</li></ul>
+</div></p>
+<h4>Annotations</h4>
+<p><div class="editor">
+<ul><li>
+<a href="http://purl.obolibrary.org/obo/IAO_0000136">is about</a> <a href="http://aims.fao.org/aos/agrovoc/c_33949">biodiversity</a>
+</li></ul>
+<ul><li>
+<a href="http://purl.obolibrary.org/obo/IAO_0000136">is about</a> <a href="http://aims.fao.org/aos/agrovoc/c_4560">mammals</a>
+</li></ul>
+<ul><li>
+<a href="http://purl.obolibrary.org/obo/IAO_0000136">is about</a> <a href="http://aims.fao.org/aos/agrovoc/c_1560">chiroptera</a>
+</li></ul>
+<ul><li>
+<a href="http://purl.obolibrary.org/obo/IAO_0000136">is about</a> <a href="http://aims.fao.org/aos/agrovoc/c_1560">bats</a>
+</li></ul>
+<ul><li>
+<a href="http://purl.obolibrary.org/obo/IAO_0000136">is about</a> <a href="http://www.eionet.europa.eu/gemet/concept/4648">Landscape</a>
+</li></ul>
+<ul><li>
+<a href="http://purl.obolibrary.org/obo/IAO_0000136">is about</a> <a href="http://www.eionet.europa.eu/gemet/concept/2519">Ecosystem</a>
+</li></ul>
+<ul><li>
+<a href="http://purl.obolibrary.org/obo/IAO_0000136">is about</a> <a href="http://www.eionet.europa.eu/gemet/concept/420">Animal ecology</a>
+</li></ul>
+</div></p>
+</div></div>
+<div class="container" id="temporal">
+<h3>
+<span class="glyphicon glyphicon-time"></span>
+ Temporal coverage</h3>
+<table class="table table-striped">
+<tr>
+<th>Start date</th>
+<th>End date</th>
+</tr>
+<tr>
+<td>2015-07-08</td>
+<td>2015-08-02</td>
+</tr>
+</table>
+</div>
+<div class="container" id="geographic">
+<h3>
+<span class="glyphicon glyphicon-globe"></span>
+         Geographic coverage
+      </h3>
+<div class="embed-responsive embed-responsive-4by3"><iframe class="embed-responsive-item" src="map.html" style="padding:50px"></iframe></div>
+<div w3-include-html="map.html"></div>
+<div class="row"><div class="col-sm-3">
+<p><b>Yvelines - Essonne - Seine et Marne</b></p>
+<p>
+                        West: 1.60296<br>
+                        East: 3.56409<br>
+                        North: 49.08428<br>
+                        South: 48.12266</p>
+</div></div>
+</div>
+<div class="container" id="taxonomic">
+<h3>
+<span class="glyphicon glyphicon-tree-deciduous"></span>
+Taxonomic coverage</h3>
+<div class="table-responsive"><table class="table table-striped"><tr>
+<th>Rank</th>
+<th>Value</th>
+</tr></table></div>
+</div>
+<div class="container" id="datatable">
+<h3>
+<span class="glyphicon glyphicon-list-alt"></span>
+ Data tables</h3>
+<br><tr><h4>
+<td>data_blary_&amp;_al.tsv</td>
+<td>, 112 records</td>,
+      <td>Content of data_blary_&amp;_al.txt</td>
+</h4></tr>
+<br><tr>
+    Physical: data_blary_&amp;_al.txt</tr>
+<div class="table-responsive"><table class="table table-striped">
+<tr>
+<th>attribute name</th>
+<th>definition</th>
+<th>format, unit or codes</th>
+</tr>
+<tr>
+<td>Id</td>
+<td>Sampling site ID</td>
+<td></td>
+</tr>
+<tr>
+<td>dist_field_margin</td>
+<td>Distance to the nearest field margin element (in meters)</td>
+<td>meter</td>
+</tr>
+<tr>
+<td>dist_hedgerow</td>
+<td>Distance to the nearest hedgerow element (in meters)</td>
+<td>meter</td>
+</tr>
+<tr>
+<td>dist_forest</td>
+<td>Distance to the nearest forest element (in meters)</td>
+<td>meter</td>
+</tr>
+<tr>
+<td>dist_road</td>
+<td>Distance to the nearest road element (in meters)</td>
+<td>meter</td>
+</tr>
+<tr>
+<td>dist_water</td>
+<td>Distance to the nearest water body element (in meters)</td>
+<td>meter</td>
+</tr>
+<tr>
+<td>dist_urban</td>
+<td>Distance to the nearest urban element (in meters)</td>
+<td>meter</td>
+</tr>
+<tr>
+<td>density_field_margins_250m</td>
+<td>Relative density of field margins in a 250 meters buffer around the sampling site (in meters per hectare)</td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>density_field_margins_500m</td>
+<td>Relative density of filed margins in a 500 meters buffer around the sampling site (in meters per hectare)</td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>density_field_margins_750m</td>
+<td>Relative density of filed margins in a 750 meters buffer around the sampling site (in meters per hectare)</td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>density_field_margins_1000m</td>
+<td>Relative density of filed margins in a 1000 meters buffer around the sampling site (in meters per hectare)</td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>density_field_margins_1500m</td>
+<td>Relative density of filed margins in a 1500 meters buffer around the sampling site (in meters per hectare)</td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>density_field_margins_2000m</td>
+<td>Relative density of filed margins in a 2000 meters buffer around the sampling site (in meters per hectare)</td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>density_field_margins_4000m</td>
+<td>Relative density of filed margins in a 4000 meters buffer around the sampling site (in meters per hectare)</td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>density_roads_250m</td>
+<td>Relative density of roads in a 250 meters buffer around the sampling site (in meters per hectare)</td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>density_roads_500m</td>
+<td>Relative density of roads in a 500 meters buffer around the sampling site (in meters per hectare)</td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>density_roads_750m</td>
+<td>Relative density of roads in a 750 meters buffer around the sampling site (in meters per hectare)</td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>density_roads_1000m</td>
+<td>Description for density_roads_1000m</td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>density_roads_1500m</td>
+<td>Relative density of roads in a 1500 meters buffer around the sampling site (in meters per hectare)</td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>density_roads_2000m</td>
+<td>Relative density of roads in a 2000 meters buffer around the sampling site (in meters per hectare)</td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>density_roads_4000m</td>
+<td>Relative density of roads in a 4000 meters buffer around the sampling site (in meters per hectare)</td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>density_hedgerows_250m</td>
+<td>Relative density of hedgerows in a 250 meters buffer around the sampling site (in meters per hectare)</td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>density_hedgerows_500m</td>
+<td>Relative density of hedgerows in a 500 meters buffer around the sampling site (in meters per hectare)</td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>density_hedgerows_750m</td>
+<td>Relative density of hedgerows in a 750 meters buffer around the sampling site (in meters per hectare)</td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>density_hedgerows_1000m</td>
+<td>Relative density of hedgerows in a 1000 meters buffer around the sampling site (in meters per hectare)</td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>density_hedgerows_1500m</td>
+<td>Relative density of hedgerows in a 1500 meters buffer around the sampling site (in meters per hectare)</td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>density_hedgerows_2000m</td>
+<td>Relative density of hedgerows in a 2000 meters buffer around the sampling site (in meters per hectare)</td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>density_hedgerows_4000m</td>
+<td>Relative density of hedgerows in a 4000 meters buffer around the sampling site (in meters per hectare)</td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>shannon_250m</td>
+<td>Land-cover Shannon diversity index in 250 meters buffer around the sampling site (no unit of measurement)</td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>shannon_500m</td>
+<td>Land-cover Shannon diversity index in 500 meters buffer around the sampling site (no unit of measurement)</td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>shannon_750m</td>
+<td>Land-cover Shannon diversity index in 750 meters buffer around the sampling site (no unit of measurement)</td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>shannon_1000m</td>
+<td>Land-cover Shannon diversity index in 1000 meters buffer around the sampling site (no unit of measurement)</td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>shannon_1500m</td>
+<td>Land-cover Shannon diversity index in 1500 meters buffer around the sampling site (no unit of measurement)</td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>shannon_2000m</td>
+<td>Land-cover Shannon diversity index in 2000 meters buffer around the sampling site (no unit of measurement)</td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>shannon_4000m</td>
+<td>Land-cover Shannon diversity index in 4000 meters buffer around the sampling site (no unit of measurement)</td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>grassland_250</td>
+<td>Percentage of land covered by grassland in different 250 m buffer sizes</td>
+<td>percent</td>
+</tr>
+<tr>
+<td>forest_250m</td>
+<td>Percentage of land covered by forest in different 250 m buffer sizes</td>
+<td>percent</td>
+</tr>
+<tr>
+<td>urban_250m</td>
+<td>Percentage of land covered by urban area in different 250 m buffer sizes</td>
+<td>percent</td>
+</tr>
+<tr>
+<td>grassland_500</td>
+<td>Percentage of land covered by grassland in different 500 m buffer sizes</td>
+<td>percent</td>
+</tr>
+<tr>
+<td>forest_500m</td>
+<td>Percentage of land covered by forest in different 500 m buffer sizes</td>
+<td>percent</td>
+</tr>
+<tr>
+<td>urban_500m</td>
+<td>Percentage of land covered by urban area in different 500 m buffer sizes</td>
+<td>percent</td>
+</tr>
+<tr>
+<td>grassland_750</td>
+<td>Percentage of land covered by grassland in different 750 m buffer sizes</td>
+<td>percent</td>
+</tr>
+<tr>
+<td>forest_750m</td>
+<td>Percentage of land covered by forest in different 750 m buffer sizes</td>
+<td>percent</td>
+</tr>
+<tr>
+<td>urban_750m</td>
+<td>Percentage of land covered by urban area in different 750 m buffer sizes</td>
+<td>percent</td>
+</tr>
+<tr>
+<td>grassland_1000</td>
+<td>Percentage of land covered by grassland in different 1000 m buffer sizes</td>
+<td>percent</td>
+</tr>
+<tr>
+<td>forest_1000m</td>
+<td>Percentage of land covered by forest in different 1000 m buffer sizes</td>
+<td>percent</td>
+</tr>
+<tr>
+<td>urban_1000m</td>
+<td>Percentage of land covered by urban area in different 1000 m buffer sizes</td>
+<td>percent</td>
+</tr>
+<tr>
+<td>grassland_1500</td>
+<td>Percentage of land covered by grassland in different 1500 m buffer sizes</td>
+<td>percent</td>
+</tr>
+<tr>
+<td>forest_1500m</td>
+<td>Percentage of land covered by forest in different 1500 m buffer sizes</td>
+<td>percent</td>
+</tr>
+<tr>
+<td>urban_1500m</td>
+<td>Percentage of land covered by urban area in different 1500 m buffer sizes</td>
+<td>percent</td>
+</tr>
+<tr>
+<td>grassland_2000</td>
+<td>Percentage of land covered by grassland in different 2000 m buffer sizes</td>
+<td>percent</td>
+</tr>
+<tr>
+<td>forest_2000m</td>
+<td>Description for forest_2000m</td>
+<td>percent</td>
+</tr>
+<tr>
+<td>urban_2000m</td>
+<td>Percentage of land covered by urban area in different 2000 m buffer sizes</td>
+<td>percent</td>
+</tr>
+<tr>
+<td>grassland_4000</td>
+<td>Percentage of land covered by grassland in different 4000 m buffer sizes</td>
+<td>percent</td>
+</tr>
+<tr>
+<td>forest_4000m</td>
+<td>Percentage of land covered by forest in different 4000 m buffer sizes</td>
+<td>percent</td>
+</tr>
+<tr>
+<td>urban_4000m</td>
+<td>Percentage of land covered by urban area in different 4000 m buffer sizes</td>
+<td>percent</td>
+</tr>
+<tr>
+<td>perc_rapeseed</td>
+<td>Percentage of rapeseed crops in a 100 m radius around each site at the sampling date</td>
+<td>percent</td>
+</tr>
+<tr>
+<td>nb_crops</td>
+<td>Number of different crops in a 100 m radius around each site at the sampling date</td>
+<td>number</td>
+</tr>
+<tr>
+<td>date</td>
+<td>Description for date</td>
+<td>YYYY-MM-DD</td>
+</tr>
+<tr>
+<td>X</td>
+<td>Sampling site longitude</td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>Y</td>
+<td>Sampling site latitude</td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>recorder</td>
+<td>Recorder ID used for data collection on the sampling site</td>
+<td>10250 = Value: 10250 for attribute: recorder 11693 = Value: 11693 for attribute: recorder 13289 = Value: 13289 for attribute: recorder 13676 = Value: 13676 for attribute: recorder 13733 = Value: 13733 for attribute: recorder 13740 = Value: 13740 for attribute: recorder 17232 = Value: 17232 for attribute: recorder 17329 = Value: 17329 for attribute: recorder 17573 = Value: 17573 for attribute: recorder 17578 = Value: 17578 for attribute: recorder 17598 = Value: 17598 for attribute: recorder 17601 = Value: 17601 for attribute: recorder 17607 = Value: 17607 for attribute: recorder 17608 = Value: 17608 for attribute: recorder 3760 = Value: 3760 for attribute: recorder </td>
+</tr>
+<tr>
+<td>min_t</td>
+<td>Minimum temperature recorded on the sampling area during the sampling night (in celsius)</td>
+<td>celsius</td>
+</tr>
+<tr>
+<td>max_wind</td>
+<td>Maximum wind speed recorded on the sampling area during the sampling night (in km/h)</td>
+<td>kilometerPerHour</td>
+</tr>
+<tr>
+<td>CSI_ER05</td>
+<td>Community specialization index calculated from species level activity on the 0.5 maximum error rate tolerance threshold</td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>CSI_ER01</td>
+<td>Community specialization index calculated from species level activity on the 0.1 maximum error rate tolerance threshold</td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>richness_ER05</td>
+<td>Species richness calculated from species level activity on the 0.5 maximum error rate tolerance threshold</td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>richness_ER01</td>
+<td>Species richness calculated from species level activity on the 0.1 maximum error rate tolerance threshold</td>
+<td>dimensionless</td>
+</tr>
+<tr>
+<td>Nyclei_ER05</td>
+<td>Number of bat passes of Nyclei specie or group recorded during the sampling night on the 0.5 maximum error rate tolerance threshold</td>
+<td>number</td>
+</tr>
+<tr>
+<td>Nyclei_ER01</td>
+<td>Number of bat passes of Nyclei specie or group recorded during the sampling night on the 0.1 maximum error rate tolerance threshold</td>
+<td>number</td>
+</tr>
+<tr>
+<td>Pippip_ER05</td>
+<td>Number of bat passes of Pippip specie or group recorded during the sampling night on the 0.5 maximum error rate tolerance threshold</td>
+<td>number</td>
+</tr>
+<tr>
+<td>Pippip_ER01</td>
+<td>Number of bat passes of Pippip specie or group recorded during the sampling night on the 0.1 maximum error rate tolerance threshold</td>
+<td>number</td>
+</tr>
+<tr>
+<td>Eptser_ER05</td>
+<td>Number of bat passes of Epster specie or group recorded during the sampling night on the 0.5 maximum error rate tolerance threshold</td>
+<td>number</td>
+</tr>
+<tr>
+<td>Eptser_ER01</td>
+<td>Number of bat passes of Epster specie or group recorded during the sampling night on the 0.1 maximum error rate tolerance threshold</td>
+<td>number</td>
+</tr>
+<tr>
+<td>Nycnoc_ER05</td>
+<td>Number of bat passes of Nycnoc specie or group recorded during the sampling night on the 0.5 maximum error rate tolerance threshold</td>
+<td>number</td>
+</tr>
+<tr>
+<td>Nycnoc_ER01</td>
+<td>Number of bat passes of Nycnoc specie or group recorded during the sampling night on the 0.1 maximum error rate tolerance threshold</td>
+<td>number</td>
+</tr>
+<tr>
+<td>Myo_ER05</td>
+<td>Number of bat passes of Myo specie or group recorded during the sampling night on the 0.5 maximum error rate tolerance threshold</td>
+<td>number</td>
+</tr>
+<tr>
+<td>Myo_ER01</td>
+<td>Number of bat passes of Myo specie or group recorded during the sampling night on the 0.1 maximum error rate tolerance threshold</td>
+<td>number</td>
+</tr>
+<tr>
+<td>Ple_ER05</td>
+<td>Number of bat passes of Ple specie or group recorded during the sampling night on the 0.5 maximum error rate tolerance threshold</td>
+<td>number</td>
+</tr>
+<tr>
+<td>Ple_ER01</td>
+<td>Number of bat passes of Ple specie or group recorded during the sampling night on the 0.1 maximum error rate tolerance threshold</td>
+<td>number</td>
+</tr>
+</table></div>
+</div>
+<div class="container" id="spatraster"><h3>
+<span class="glyphicon glyphicon-list-alt"></span>
+ Spatial Rasters</h3></div>
+<div class="container" id="spavector"><h3>
+<span class="glyphicon glyphicon-list-alt"></span>
+ Spatial Vectors</h3></div>
+<div class="container" id="units">
+<h3>
+<span class="glyphicon glyphicon-glass"></span>
+ Custom units</h3>
+<table class="table"><tr>
+<th>unit name</th>
+<th>parent SI unit</th>
+<th>unit type</th>
+<th>description</th>
+</tr></table>
+</div>
+<div class="container" id="otherentity">
+<h3>
+<span class="glyphicon glyphicon-list-alt"></span>
+          Other entities
+       </h3>
+<table class="table"></table>
+</div>
+<div class="container">
+<h4>Intellectual Rights</h4>
+<p>This information is released under the Creative Commons license - Attribution - CC BY (https://creativecommons.org/licenses/by/4.0/). The consumer of these data ("Data User" herein) is required to cite it appropriately in any publication that results from its use. The Data User should realize that these data may be actively used by others for ongoing research and that coordination may be necessary to prevent duplicate publication. The Data User is urged to contact the authors of these data if any questions about methodology or results occur. Where appropriate, the Data User is encouraged to consider collaboration or co-authorship with the authors. The Data User should realize that misinterpretation of data may occur if used out of context of the original study. While substantial efforts are made to ensure the accuracy of data and associated documentation, complete accuracy of data sets cannot be guaranteed. All data are made available "as is." The Data User should be aware, however, that data are updated periodically and it is the responsibility of the Data User to check for new versions of the data. The data authors and the repository where these data were obtained shall not be liable for damages resulting from any use or misinterpretation of the data. Thank you.
+</p>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script><script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+<footer><div class="copyright"><p>Development supported by <a href="https://ropensci.org/"><img src="http://unconf17.ropensci.org/images/ropensci_small.png" height="35"></a></p></div>
+<div class="madeby">
+        created with <a href="https://github.com/ropenscilabs/emldown">emldown</a>
+</div></footer>
+</html>
