@@ -1,0 +1,64 @@
+categories:
+    - Ecology
+description: Tools to compute ecoregionalization
+long_description: |
+  Tools to compute ecoregionalization with BRT model predictions and clustering.
+name: ecoregionalization workflow 
+owner: ecology 
+remote_repository_url: https://github.com/PaulineSGN/Workflow_Galaxy/tree/main
+type: unrestricted
+
+repositories:
+  BRT_Analysis:
+    description: BRT tool prediction for species distribution modelling
+    owner: ecology
+    include:
+      - BRT_model.xml
+      - brt.R
+      - test-data/ceamarc_env.csv
+      - test-data/cnidaria_filtered.csv
+      
+      
+  TaxaSeeker:
+    description: Retrieve the list of taxa that have a BRT model and clean 
+    owner: ecology
+    include:
+      - recup_list.xml
+      - recup_list_taxon.R
+      - test-data/1_brts_pred_ceamarc.txt
+      - test-data/List_of_taxa.txt
+      - test-data/List_of_taxa_clean.txt
+      - test-data/ceamarc_env.csv
+      - test-data/cnidaria_filtered.csv
+      - tes-data/Summary_of_taxa_model.csv
+      
+  ClusterEstimate: 
+    description: Determination of the optimal number of clusters for partition-based clustering
+    owner: ecology
+    include:
+      - Nb_cluster.xml
+      - nb_clust_G.R
+      - test-data/1_brts_preds_ceamarc.txt
+      - test-data/Data.bio_table.tsv
+      - test-data/List_of_taxa.txt
+      - test-data/SIH_index_plot.png
+      - test-data/ceamarc_env.csv
+      
+  ClaraClust:
+    description: Make cluster from BRT prediction with Clara algorithm
+    owner: ecology
+    include:
+      - cluster.xml
+      - cluster_ceamarc.R
+      - test-data/Data.bio_table.tsv
+      - test-data/Data_to_cluster.tsv
+      - test-data/ceamarc_env.csv
+      
+  EcoMap:
+    description: Create a map of ecoregions from the clusters
+    owner: ecology
+    include:
+      - crea_carte_G.R
+      - eco_map.xml
+      - test-data/ecoregions.png
+      - test-data/points_clus.txt
