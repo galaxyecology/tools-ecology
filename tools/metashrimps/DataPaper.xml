@@ -38,7 +38,7 @@
 		</collection>
     </outputs>
 	<tests>
-		 <test expect_num_outputs="3"> 
+		 <test expect_num_outputs="6"> 
             <param name="data" value="Assessing_the_importance_of_field_margins_for_bat_species.xml"/>
             <param name="editable" value="yes"/>
             <output_collection name="output1" type="list">
