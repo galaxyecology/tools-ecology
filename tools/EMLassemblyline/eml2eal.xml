@@ -6,7 +6,8 @@
     <command detect_errors="exit_code"><![CDATA[
        Rscript
          '$__tool_directory__/eml2eal.R'
-         '$inputmetadatafile'
+         '$inputmetadatafile' &&
+    find . -type f -empty -print -delete
     ]]></command>
     <inputs>
         <param name="inputmetadatafile" type="data" format="xml" label="EML metadata file" help="Insert only metadata using EML standard"/>
