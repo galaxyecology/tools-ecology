@@ -18,7 +18,7 @@
     <inputs>
          <param name="input1" type="data" format="txt" multiple="True" label="Occurences file"/>
          <param name="input2" type="data" format="txt" multiple="True" label="Predictions file"/>
-         <param name="input3" type="data" format="txt,csv" label="Environement file"/>
+         <param name="input3" type="data" format="txt,csv,tabular" label="Environement file"/>
     </inputs>
     <outputs>
      <data name="output1" from_work_dir="have_model.csv" format="csv" label="Summary of taxa model "/>
