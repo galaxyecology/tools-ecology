@@ -20,9 +20,9 @@
          '$output3'
     ]]></command>
     <inputs>
-      <param name="input1" type="data" format="tsv" label="Prediction matrix (data to cluster from previous step) "/>
-      <param name="input2" type="data" format="txt,csv,tsv" label="Environment file"/>
-      <param name="input3" type="data" format="tsv" label="Prediction file (data.bio table from previous step)"/>
+      <param name="input1" type="data" format="tabular" label="Prediction matrix (data to cluster from previous step) "/>
+      <param name="input2" type="data" format="txt,csv,tabular" label="Environment file"/>
+      <param name="input3" type="data" format="tabular" label="Prediction file (data.bio table from previous step)"/>
       <param name="k" type="integer" label="Number of Cluster wanted" value= "2"/>
       <param name="metric" type="select" label="What metric to use to calculate dissimilarities between observations ?">
              <option value = "manhattan">manhattan</option>
