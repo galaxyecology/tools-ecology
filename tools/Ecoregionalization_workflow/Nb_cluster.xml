@@ -21,7 +21,7 @@
     ]]>
     </command>
     <inputs>
-      <param name="input1" type="data" format="txt,csv,tsv" label="Environment file"/>
+      <param name="input1" type="data" format="txt,csv,tabular" label="Environment file"/>
       <param name="input2" type="data" format="txt" label="Taxa selected file (List of taxa from previous step)"/>
       <param name="input3" type="data" format="txt" multiple="true" label="Prediction files"/>
       <param name="max_k" type="integer" label="Number of Cluster to test" value= "2"/>
