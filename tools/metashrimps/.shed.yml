@@ -1,44 +1,18 @@
-categories:
-    - Ecology
-description: Tools to operate machine actionnable jobs to EML metadata
-long_description: |
-  Tools to operate machine actionnable jobs to EML metadata from MetaShRIMPS
-name: metashrimps 
+name: MetaShRIMPS 
 owner: ecology 
-remote_repository_url: https://github.com/TanguyGen/metacure
+description: Tools to operate machine actionnable jobs on EML metadata
+homepage_url: https://github.com/tanguygen/metacure
+long_description: |
+    Tools to operate machine actionnable jobs to EML metadata from MetaShRIMPS, a project from the PNDB (French hub for biodiversity data)
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/EMLassemblyline
 type: unrestricted
-
-repositories:
-  DataPaper:
-    description: Make a Data Paper draft from EML
-    owner: ecology
-    include:
-     - DataPaper.xml
-     - DataPaper.R
-     - test-data/Assessing_the_importance_of_field_margins_for_bat_species.xml
-     - test-data/Kakila_database.xml
-     - template_emldown/addmap.xsl
-     - template_emldown/addmap2.xsl
-     - template_emldown/bootstrap.xsl
-     - template_emldown/bootstrap2.xsl
-     - template_emldown/dataset.xsl
-     - template_emldown/dataset2.xsl
-     - template_emldown/datatable.xsl
-     - template_emldown/datatable2.xsl
-     - template_emldown/educational_custom.css
-     - template_emldown/footer.xsl
-     - template_emldown/geographic_coverage.xsl
-     - template_emldown/head.xsl
-     - template_emldown/main_custom.css
-     - template_emldown/method.xsl
-     - template_emldown/nav.xsl
-     - template_emldown/otherentity.xsl
-     - template_emldown/rights.xsl
-     - template_emldown/spatraster.xsl
-     - template_emldown/spatraster2.xsl
-     - template_emldown/spatvector.xsl
-     - template_emldown/spatvector2.xsl
-     - template_emldown/taxonomic_coverage.xsl
-     - template_emldown/temporal_coverage.xsl
-     - template_emldown/units.xsl
-      
+categories:
+- Ecology
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "MetaShRIMPS: {{ tool_name }}"
+suite:
+  name: "suite_metashrimps"
+  description: Tools to operate machine actionnable jobs on EML metadata
+  long_description: |
+    Tools to operate machine actionnable jobs to EML metadata from MetaShRIMPS, a project from the PNDB (French hub for biodiversity data).
