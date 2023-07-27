@@ -1,6 +1,7 @@
 name: Ecoregionalization Workflow 
 owner: ecology 
 description: Tools to compute ecoregionalization with BRT model predictions and clustering.
+homepage_url: https://github.com/PaulineSGN/Workflow_Galaxy
 long_description: |
   This tool suite proposes a workflow for ecoregionalization analysis. The workflow aims to produce species distribution maps and identify ecoregions based on biological occurrence data and environmental parameters. There are three big steps in this workflow : species distribution modeling with the Boosted Regression Tree algorithm, clustering of the predictions of the models, and visualization on a map of the clusters representing ecoregions.
 remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/Ecoregionalization_workflow
