@@ -36,7 +36,7 @@
     <tests>
          <test expect_num_outputs="6"> 
             <param name="data" value="Assessing_the_importance_of_field_margins_for_bat_species.xml"/>
-            <param name="editable" value="yes"/>
+            <param name="editable" value="true"/>
             <output_collection name="draft_html" type="list">
                 <element name="DataPaper" file="DataPaper.html" ftype="html" />
             </output_collection>
