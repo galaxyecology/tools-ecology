@@ -23,11 +23,11 @@
         <param name="editable" type="boolean" checked="false" label="Would you like to include a docx editable file instead of an HTML?" help= "HTML files are better for visualisation but are more difficult to edit than a docx."/>
     </inputs>
     <outputs>
-        <collection name="output1" type="list" label="Data Paper Draft">
+        <collection name="draft_html" type="list" label="Data Paper Draft">
             <data name="DataPaper" from_work_dir="DataPaper.html" format="html" label="Data Paper"/>
             <data name="map" from_work_dir="map.html" format="html" label="Leaflet Map"/>
         </collection>
-        <collection name="output2" type="list" label="Editable Data Paper Draft">
+        <collection name="draft_docx" type="list" label="Editable Data Paper Draft">
             <data name="DataPaper" from_work_dir="DataPaper.html" format="docx" label="Data Paper docx"/>
             <data name="map" from_work_dir="map.png" format="png" label="Leaflet Map Image"/>
             <filter>editable</filter>
@@ -37,10 +37,10 @@
          <test expect_num_outputs="6"> 
             <param name="data" value="Assessing_the_importance_of_field_margins_for_bat_species.xml"/>
             <param name="editable" value="yes"/>
-            <output_collection name="output1" type="list">
+            <output_collection name="draft_html" type="list">
                 <element name="DataPaper" file="DataPaper.html" ftype="html" />
             </output_collection>
-            <output_collection name="output2" type="list">
+            <output_collection name="draft_docx" type="list">
                 <element name="DataPaper" file="DataPaper.docx" ftype="docx" />
                 <element name="map" file="map.png" ftype="png" />
             </output_collection>
