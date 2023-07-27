@@ -51,7 +51,7 @@ map_geographical_coverage <- function(eml,editable=edit){
       popup = name,
       fillColor = "transparent"
     )
-  if (editable=="yes") {
+  if (editable=="true") {
     mapview::mapshot(map,file="map.png")
   }
   mapview::mapshot(map, url = "map.html")
@@ -74,7 +74,7 @@ render_eml <- function(eml, open = FALSE,
                        publish_mode = TRUE, output_dir = "/docs",
                        encoding = "",editable) {
   eml <- xml2::read_xml(eml, encoding = encoding)
-  if (editable=="yes"){
+  if (editable=="true"){
     style2 <- xml2::read_xml(paste0(path_temp,"/bootstrap2.xsl"))
     html <- xslt::xml_xslt(eml, style2)
     # make map
