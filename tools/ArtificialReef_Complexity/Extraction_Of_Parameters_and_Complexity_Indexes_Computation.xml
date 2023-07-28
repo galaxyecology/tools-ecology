@@ -35,8 +35,8 @@
 	    <tests>
          <test expect_num_outputs="8"> 
             <param name="STL_files" value="CORAL.stl"/>
-			<output name="new_complexity_indexes" value="new_complexity_indexes.csv" ftype="csv" />
-			<output name="new_parameters" value="new_parameters.csv" ftype="csv"/>
+		<output name="new_complexity_indexes" file="new_complexity_indexes.csv" ftype="csv" />
+		<output name="new_parameters" file="new_parameters.csv" ftype="csv"/>
             <output_collection name="point_clouds" type="list">
                 <element name="coral" file="CORAL.txt" />
             </output_collection>
