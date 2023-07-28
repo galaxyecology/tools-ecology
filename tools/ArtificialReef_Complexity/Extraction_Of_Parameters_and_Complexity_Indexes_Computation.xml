@@ -40,7 +40,7 @@
             <output_collection name="point_clouds" type="list">
                 <element name="coral" file="CORAL.txt" />
             </output_collection>
-            <output_collection name="draft_docx" type="list">
+            <output_collection name="new_parameters" type="list">
                 <element name="coral" file="CORAL.csv" />
             </output_collection>
         </test>
