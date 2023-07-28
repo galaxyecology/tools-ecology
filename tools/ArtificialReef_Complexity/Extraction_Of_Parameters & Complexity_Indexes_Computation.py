@@ -23,10 +23,6 @@ output_path = "./output"
 
 
 # * Create a list of your mesh `list_mesh`
-
-# In[ ]:
-
-
 list_mesh = os.listdir(data_mesh_path)
 
 
