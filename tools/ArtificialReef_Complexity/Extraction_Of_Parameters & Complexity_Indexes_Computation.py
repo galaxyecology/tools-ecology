@@ -1,24 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # **Extraction Of Parameters & Complexity Indexes Computation**
-
-# This script aims at extracting parmaters and elements from 3D CAD models to compute complexity indexes. It is based on **STL** files. 
-# 
-# **Section I : Extraction of the parameters of the 3D CAD models**
-# * Computation of the convexhull of the mesh, and their respective area and volume
-# * Extraction of point clouds and normals to be saved as txt files
-# * Computation of the sum of normals and the number of different normals for each 3D CAD models
-# 
-# **Section II : Computation of geometrical and informational complexity indexes**
-# * Computation of Packing (P<sub>t</sub>) and Convexity (C) (fractal dimension (D<sub>t</sub>) is computed on R, script available at: https://github.com/ELI-RIERA/ArtificialReef_Complexity)
-# * Computation of Richness (R), Diversity (H<sub>t</sub>) and Evenness (J) on normals 
-# 
-# For more details refer to the paper available at:
-
-# ### Loading the libraries
-
-# In[ ]:
+### Loading the libraries
 
 import matplotlib.pyplot as plt
 import os
@@ -31,30 +14,7 @@ from scipy.stats import entropy
 import math
 
 
-# ### Download STL file from Zenodo
-# 
-# As an example to test the script, 3D CAD mesh models (STL files) are available on Zenodo:
-# 
-# [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8048071.svg)](https://doi.org/10.5281/zenodo.8048071)
-# 
-# Otherwise use your own mesh at the format STL 
-
-# ### Path directory & folders
-# 
-# Mesh (STL files):
-# * Create a folder where you store your mesh (STL files) `data_mesh` or the one that you downloaded from Zenodo
-# * Determine the path of your mesh `data_mesh_path`
-# 
-# Point clouds and normals (txt files):
-# * Create two folders where you'll store the point clouds `data_point_clouds` and the normals `data_normals`
-# * Determine the path directory of these folders
-# 
-# outputs:
-# * Create a folder `output` where you'll store the output from the difference computation process
-# * Determine the path of the output folder `output_path`
-
-# In[ ]:
-
+### Path directory & folders
 
 data_mesh_path = "./data_STL"
 data_point_clouds_path = "./data_point_clouds"
@@ -70,28 +30,12 @@ output_path = "./output"
 list_mesh = os.listdir(data_mesh_path)
 
 
-# ## I. Extraction of the parameters of the 3D CAD models
+## I. Extraction of the parameters of the 3D CAD models
 
-# ### I.1 Area and Volume of Mesh and its ConvexHull
-
-# In this section: 
-# * Computation of the convexhull of each mesh of 3D CAD models. The convexhull of a shape is the smallest convex set that contains it.
-# * Computation of the area and volume of all mesh and its respective convexhull that you save in a dataframe called `AreaVol_parameters`
-# 
-
-# ##### Prepare the loop for the computation 
-# 
-# * Create an empty object `AreaVol_parameters` where area and volume parameters will be stored durign the loop
-
-# In[ ]:
+### I.1 Area and Volume of Mesh and its ConvexHull
 
 
 AreaVol_parameters = []
-
-
-# ##### Launch the loop
-
-# In[ ]:
 
 
 for i in range(len(list_mesh)):
@@ -129,25 +73,9 @@ for i in range(len(list_mesh)):
 
 # ### I.2 Extraction of Point clouds and normals from the Mesh
 
-# In this section: 
-# * extraction of point clouds from the mesh that you save as `.txt` file for fractal dimension computation
-# * extraction of normals associated to the point clouds 
-# * computation the number of normals and the number of different normals that you save in a dataframe `normals_parameters`
-# 
-
-# ##### Prepare the loop for the computation
-# 
-# * Create an empty object `normals_parameters` where normals will be stored during the loop
-
-# In[ ]:
-
 
 normals_parameters = []
 
-
-# ##### Launch the loop
-
-# In[ ]:
 
 
 for i in range(len(list_mesh)):
@@ -186,20 +114,10 @@ for i in range(len(list_mesh)):
                     nb_normal, nb_different_normal.iloc[0]))
 
 
-# ### I.3. Save the paramaters data
-# 
-# * Concatenate `normals_parameters` and `AreaVol_parameters` into a panda dataframe `df_parameters`
-# * Rename the rows and columns
-# * Verify your dataframe
-# * Save it to the `output_path`
-
-# In[ ]:
 
 
 df_parameters = pd.concat([pd.DataFrame(AreaVol_parameters).iloc[:, 1:], pd.DataFrame(normals_parameters).iloc[:, 1:]], axis=1)
 
-
-# In[ ]:
 
 
 df_parameters.index = file_names
@@ -208,13 +126,9 @@ df_parameters.columns = ["mesh_area", "mesh_volume",
                         "nb_normal","nb_different_normal"]
 
 
-# In[ ]:
-
 
 df_parameters
 
-
-# In[ ]:
 
 
 df_parameters.to_csv(os.path.join(output_path, "df_parameters.csv"))
@@ -222,29 +136,7 @@ df_parameters.to_csv(os.path.join(output_path, "df_parameters.csv"))
 
 # # II. Computation of geometrical and informational complexity indexes
 
-# ## II.1 Geometrical complexity : Packing (P) & Convexity (C)
-
-# In this section:
-# * computation of Packing (P<sub>t</sub>): measure of the degree of space between different parts of an object.
-# 
-# \begin{equation*}
-# {P}=\frac{{A}_{ar}}{{A}_{ch}} \Rightarrow {P}_{t}=1-\frac{{A}_{ch}}{{A}_{ar}} 
-# \end{equation*}  
-# 
-# * computation of Convexity (C): measure of the degree of space available between different parts of an object.
-# 
-# \begin{equation*}
-# {C}=\frac{{V}_{av}}{{A}_{ch}}
-# \end{equation*} 
-# 
-# * (computation of Fractal Dimension (D<sub>t</sub>): R script available on github (https://github.com/ELI-RIERA/ArtificialReef_Complexity)
-# 
-# \begin{equation*}
-# D=\lim_{\varepsilon\to0}\frac{\log{N}({\varepsilon})}{\log{\frac{1}{\varepsilon}}} \Rightarrow D_{t} = 1-(3-D)
-# \end{equation*}
-# 
-
-# ##### Compute Packing and Convexity from the volume and area of the mesh and its convexhull
+##### Compute Packing and Convexity from the volume and area of the mesh and its convexhull
 
 # In[ ]:
 
@@ -274,24 +166,6 @@ R = R.tolist()
 
 # #### Orientation diversity (H<sub>t</sub>) & Orientation evenness (J)
 
-# ##### Prepare the loop for the computation of H<sub>t</sub> and J
-# 
-# * Create a list from the normals files computed previously
-# * Create an empty objects **H<sub>t</sub>** & **J** where indexes will be stored durign the loop
-# 
-# 
-# \begin{equation*}
-# H=-\sum_{i=1}^{S} {p}_{i} . log\left( {p}_{i} \right)\Rightarrow {H}_{t}=log\left( 1+H \right)
-# \end{equation*}
-# 
-# \begin{equation*}
-# J=\frac{H}{\log{\left( S \right)}}
-# \end{equation*}
-# 
-
-# In[ ]:
-
-
 list_normals = os.listdir(data_normals_path)
 Ht = []
 J = []
@@ -319,11 +193,7 @@ for i in range(len(list_normals)):
 
 
 # ## III. Save the data computed
-# 
-# * Concatenate your indexes **R, H<sub>t</sub>, J, P<sub>t</sub>, C** into a panda dataframe
-# * Rename the rows and columns
-# * Verify your dataframe
-# * Save it to the output path
+
 
 # In[ ]:
 
