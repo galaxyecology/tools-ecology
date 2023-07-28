@@ -21,7 +21,6 @@
             <param name="point_clouds">
                 <collection type="list">
 					<element name="coral" file="CORAL.txt" />
-					<element name="cyldr" file="CYLDR.txt" />
                 </collection>
             </param>
 			<output name="new_fractal_dimension" file="new_fractal_dimension.csv" ftype="csv" />
