@@ -11,8 +11,6 @@ import pandas as pd
 import trimesh
 from scipy.spatial import ConvexHull
 from scipy.stats import entropy
-import math
-
 
 #Path directory & folders
 
