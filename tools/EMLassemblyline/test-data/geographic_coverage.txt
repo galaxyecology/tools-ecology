@@ -1,0 +1,2 @@
+geographicDescription	northBoundingCoordinate	southBoundingCoordinate	eastBoundingCoordinate	westBoundingCoordinate
+Yvelines - Essonne - Seine et Marne	49.08428	48.12266	3.56409	1.60296
