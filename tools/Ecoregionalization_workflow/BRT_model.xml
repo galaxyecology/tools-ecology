@@ -2,7 +2,7 @@
     <description>for species distribution modelling</description>
     <requirements>
        <requirement type="package" version="4.3.0">r-base</requirement>
-       <requirement type="package" version="1.3_14">r-dismo</requirement>
+       <requirement type="package" version="1.3_5">r-dismo</requirement>
        <requirement type="package" version="2.1.8">r-gbm</requirement>
        <requirement type="package" version="3.4.2">r-ggplot2</requirement>
     </requirements>
