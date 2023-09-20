@@ -11,28 +11,28 @@
          '$__tool_directory__/brt.R'
          '$enviro'
          '$species_files'
-         '$input3'
-         '$output1'
-         '$output2'
-         '$output3'
-         '$output4'
+         '$abioticname'
+         '$outputpred'
+         '$outputval'
+         '$outputspdistri'
+         '$outputplots'
     ]]></command>
     <inputs>
       <param name="enviro" type="data" format="txt,csv,tabular" label="Environment Data"/>
       <param type="data" name="species_files" label="Occurrences Data File" format="tabular,txt,csv" multiple="True" />
-      <param name="input3" type="text" label="Write the name of your abiotic parameters (comma separated)"/>
+      <param name="abioticname" type="text" label="Write the name of your abiotic parameters (comma separated)"/>
     </inputs>
     <outputs>
-      <collection name="output1" type="list" label="Prediction files">
+      <collection name="outputpred" type="list" label="Prediction files">
             <discover_datasets pattern="(?P&lt;designation&gt;.+_brts_pred_ceamarc)\.txt" format="txt"/>
       </collection>
-      <collection name="output2" type="list" label="Validation files (Taxa, AUC, Tree complexity, Total deviance explained)">
+      <collection name="outputval" type="list" label="Validation files (Taxa, AUC, Tree complexity, Total deviance explained)">
             <discover_datasets pattern="(?P&lt;designation&gt;.+_brts_validation_ceamarc)\.tsv" format="tabular" />
       </collection>
-      <collection name="output3" type="list" label="Species distribution prediction maps" >
+      <collection name="outputspdistri" type="list" label="Species distribution prediction maps" >
             <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" format="png" />
       </collection>  
-      <collection name="output4" type="list" label="Partial dependence plots" >
+      <collection name="outputplots" type="list" label="Partial dependence plots" >
             <discover_datasets pattern="(?P&lt;designation&gt;.+)\.pdf" format="pdf" />  
       </collection>
     </outputs>
@@ -40,17 +40,17 @@
         <test>
             <param name="enviro" value="ceamarc_env.csv"/>
             <param name="species_files" value="cnidaria_filtered.csv"/>
-            <param name="input3" value="Carbo,Grav,Maxbearing,Maxmagnit,Meancurmag,Meansal,Meantheta,Mud,Prof,Rugosity,Sand,Seaice_prod,Sili,Slope,Standcurmag,Standsal,Standtheta"/>
-            <output_collection name='output1' type = "list" count="1"/>
-            <output_collection name='output2' type = "list" count="1"/>
-            <output_collection name='output3' type = "list">
+            <param name="abioticname" value="Carbo,Grav,Maxbearing,Maxmagnit,Meancurmag,Meansal,Meantheta,Mud,Prof,Rugosity,Sand,Seaice_prod,Sili,Slope,Standcurmag,Standsal,Standtheta"/>
+            <output_collection name='outputpred' type = "list" count="1"/>
+            <output_collection name='outputval' type = "list" count="1"/>
+            <output_collection name='outputspdistri' type = "list">
                   <element name="BRT- Actiniaria _pred_plot">
                        <assert_contents>
             	           <has_size value="168785" delta="10000"/>
             	      </assert_contents>
             	  </element>
             </output_collection>
-            <output_collection name='output4' type = "list">
+            <output_collection name='outputplots' type = "list">
                   <element name="BRT- Actiniaria " >
                        <assert_contents>
             	           <has_size value="16042" delta="1000"/>
