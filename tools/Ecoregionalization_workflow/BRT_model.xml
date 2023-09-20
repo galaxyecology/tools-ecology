@@ -43,7 +43,7 @@
             <param name="abioticname" value="Carbo,Grav,Maxbearing,Maxmagnit,Meancurmag,Meansal,Meantheta,Mud,Prof,Rugosity,Sand,Seaice_prod,Sili,Slope,Standcurmag,Standsal,Standtheta"/>
             <output_collection name='outputpred' type = "list" count="1"/>
             <output_collection name='outputval' type = "list" count="1"/>
-            <output_collection name='outputspdistri' type = "list">
+            <output_collection name='outputspdistri' type = "list" count="1">
                   <element name="BRT- Actiniaria _pred_plot">
                        <assert_contents>
             	           <has_size value="168785" delta="10000"/>
