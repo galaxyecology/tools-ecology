@@ -42,18 +42,20 @@ MFA_ind <- fviz_mfa_ind(res.mfa, ggtheme = theme_few())
 
 ## II. determine the clusters
 
-caskm <- cascadeKM(dist(Indexes,"euclidean"), 2, 5, iter = 100, criterion = "ssi")
-plot(caskm)
+### Lines below are commented as already computed and not used by the final scripts steps!
+
+# caskm <- cascadeKM(dist(Indexes,"euclidean"), 2, 5, iter = 100, criterion = "ssi")
+# plot(caskm)
 
 
 ### III. HCPC
 
 
-res.hcpc <- HCPC(res.mfa, nb.clust = 4,graph = F, method = "ward")
+# res.hcpc <- HCPC(res.mfa, nb.clust = 4,graph = F, method = "ward")
 
-my_palette <- alpha(c("#843734","#444444","#a38064","#086464"),0.5)
+# my_palette <- alpha(c("#843734","#444444","#a38064","#086464"),0.5)
 
-MFA_clust <- fviz_cluster(res.hcpc,
+# MFA_clust <- fviz_cluster(res.hcpc,
                           cex = 1,
                           palette = my_palette,              
                           ggtheme = theme_few(),
