@@ -1,4 +1,4 @@
-<tool id="brt_analysis" name="BRT tool prediction" version="0.1.0+galaxy0" profile="22.05">
+<tool id="ecoregion_brt_analysis" name="BRT tool prediction" version="0.1.0+galaxy0" profile="22.05">
     <description>for species distribution modelling</description>
     <requirements>
        <requirement type="package" version="4.3.0">r-base</requirement>
