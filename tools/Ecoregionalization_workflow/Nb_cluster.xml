@@ -9,9 +9,9 @@
     <command detect_errors="exit_code"><![CDATA[
         Rscript
          '$__tool_directory__/nb_clust_G.R'
-         '$input1'
-         '$input2'
-         '$input3'
+         '$envfile'
+         '$taxafile'
+         '$predictionfile'
          '$max_k'
          '$metric'
          '$sample'
@@ -21,9 +21,9 @@
     ]]>
     </command>
     <inputs>
-      <param name="input1" type="data" format="txt,csv,tabular" label="Environment file"/>
-      <param name="input2" type="data" format="txt" label="Taxa selected file (List of taxa from previous step)"/>
-      <param name="input3" type="data" format="txt" multiple="true" label="Prediction files"/>
+      <param name="envfile" type="data" format="txt,csv,tabular" label="Environment file"/>
+      <param name="taxafile" type="data" format="txt" label="Taxa selected file (List of taxa from TaxaSeeker tool)"/>
+      <param name="predictionfile" type="data" format="txt" multiple="true" label="Prediction files"/>
       <param name="max_k" type="integer" label="Number of Cluster to test" min="1" value= "2"/>
       <param name="metric" type="select" label="What metric to use to calculate dissimilarities between observations ?">
              <option value = "manhattan">manhattan</option>
@@ -39,9 +39,9 @@
     </outputs>
     <tests>
         <test>
-            <param name="input1" value="ceamarc_env.csv"/>
-            <param name="input2" value="List_of_taxa.txt"/>
-            <param name="input3" value="1_brts_pred_ceamarc.txt"/>
+            <param name="envfile" value="ceamarc_env.csv"/>
+            <param name="taxafile" value="List_of_taxa.txt"/>
+            <param name="predictionfile" value="1_brts_pred_ceamarc.txt"/>
             <param name='max_k' value="2"/>
             <param name='metric' value="manhattan"/>
             <param name='sample' value="10"/>
