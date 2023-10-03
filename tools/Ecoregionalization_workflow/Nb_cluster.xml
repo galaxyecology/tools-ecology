@@ -1,4 +1,4 @@
-<tool id="cluster_estimate" name="ClusterEstimate" version="0.1.0+galaxy0" profile="22.05">
+<tool id="ecoregion_cluster_estimate" name="ClusterEstimate" version="0.1.0+galaxy0" profile="22.05">
     <description>Find an optimal number of cluster with SIH index</description>
     <requirements>
        <requirement type="package" version="4.2.3">r-base</requirement>
