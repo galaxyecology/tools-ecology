@@ -30,7 +30,7 @@
              <option value="euclidean">euclidean</option>
              <option value="jaccard">jaccard</option>
       </param>
-      <param name="sample" type="integer" label= "The number of samples to be drawn from the dataset" min="5" value="10"/>
+      <param name="sample" type="integer" label="The number of samples to be drawn from the dataset" min="5" value="10"/>
     </inputs>
     <outputs>
       <data name="output1" from_work_dir="Indices_SIH.png" format="png" label="SIH index plot"/>
