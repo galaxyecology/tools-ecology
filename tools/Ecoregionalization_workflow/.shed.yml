@@ -1,4 +1,4 @@
-name: Ecoregionalization Workflow 
+name: ecoregionalization
 owner: ecology 
 description: Tools to compute ecoregionalization with BRT model predictions and clustering.
 homepage_url: https://github.com/PaulineSGN/Workflow_Galaxy
@@ -10,7 +10,7 @@ categories:
 - Ecology
 auto_tool_repositories:
   name_template: "{{ tool_id }}"
-  description_template: "Ecoregionalization workflow: {{ tool_name }}"
+  description_template: "Ecoregionalization: {{ tool_name }}"
 suite:
   name: "suite_ecoregionalization"
   description: Tools to compute ecoregionalization with BRT model predictions and clustering.
