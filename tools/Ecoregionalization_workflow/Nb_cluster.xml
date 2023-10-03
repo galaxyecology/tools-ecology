@@ -24,7 +24,7 @@
       <param name="envfile" type="data" format="txt,csv,tabular" label="Environment file"/>
       <param name="taxafile" type="data" format="txt" label="Taxa selected file (List of taxa from TaxaSeeker tool)"/>
       <param name="predictionfile" type="data" format="txt" multiple="true" label="Prediction files"/>
-      <param name="max_k" type="integer" label="Number of Cluster to test" min="1" value= "2"/>
+      <param name="max_k" type="integer" value="2" min="1" label="Number of Cluster to test"/>
       <param name="metric" type="select" label="What metric to use to calculate dissimilarities between observations ?">
              <option value = "manhattan">manhattan</option>
              <option value = "euclidean">euclidean</option>
