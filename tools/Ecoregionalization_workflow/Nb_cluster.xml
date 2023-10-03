@@ -26,9 +26,9 @@
       <param name="predictionfile" type="data" format="txt" multiple="true" label="Prediction files"/>
       <param name="max_k" type="integer" value="2" min="1" label="Number of Cluster to test"/>
       <param name="metric" type="select" label="What metric to use to calculate dissimilarities between observations ?">
-             <option value = "manhattan">manhattan</option>
-             <option value = "euclidean">euclidean</option>
-             <option value = "jaccard">jaccard</option>
+             <option value="manhattan">manhattan</option>
+             <option value="euclidean">euclidean</option>
+             <option value="jaccard">jaccard</option>
       </param>
       <param name="sample" type="integer" label= "The number of samples to be drawn from the dataset" min="5" value="10"/>
     </inputs>
