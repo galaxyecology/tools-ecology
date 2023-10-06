@@ -8,6 +8,11 @@
 	   <requirement type="package" version="3.4.2">r-ggplot2</requirement>
 	   <requirement type="package" version="2.3">r-gridextra</requirement>
 	   <requirement type="package" version="2.6_4">r-vegan</requirement>
+	    <requirement type="package" version="1.3.1">r-tidyverse</requirement>
+	    <requirement type="package" version="0.0.7">r-ggplotify</requirement>
+	    <requirement type="package" version="0.2.1">r-formattable</requirement>
+	    <requirement type="package" version="0.5.2">r-htmltools</requirement>
+	    <requirement type="package" version="0.5.2">r-webshot</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
 		ln -s '$complexity_indexes' 'new_complexity_indexes.csv' &&
