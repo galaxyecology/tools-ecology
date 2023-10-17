@@ -1,0 +1,110 @@
+<tool id="ecoregion_brt_analysis" name="BRT tool prediction" version="0.1.0+galaxy0" profile="22.05">
+    <description>for species distribution modelling</description>
+    <requirements>
+       <requirement type="package" version="4.3.0">r-base</requirement>
+       <requirement type="package" version="2.1.8">r-gbm</requirement>
+       <requirement type="package" version="3.4.2">r-ggplot2</requirement>
+       <requirement type="package" version="1.3_14">r-dismo</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript
+         '$__tool_directory__/brt.R'
+         '$enviro'
+         '$species_files'
+         '$abioticname'
+         '$outputpred'
+         '$outputval'
+         '$outputspdistri'
+         '$outputplots'
+    ]]></command>
+    <inputs>
+      <param name="enviro" type="data" format="txt,csv,tabular" label="Environment Data"/>
+      <param type="data" name="species_files" label="Occurrences Data File" format="tabular,txt,csv" multiple="True" />
+      <param name="abioticname" type="text" label="Write the name of your abiotic parameters (comma separated)"/>
+    </inputs>
+    <outputs>
+      <collection name="outputpred" type="list" label="Prediction files">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+_brts_pred_ceamarc)\.txt" format="txt"/>
+      </collection>
+      <collection name="outputval" type="list" label="Validation files (Taxa, AUC, Tree complexity, Total deviance explained)">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+_brts_validation_ceamarc)\.tsv" format="tabular" />
+      </collection>
+      <collection name="outputspdistri" type="list" label="Species distribution prediction maps" >
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" format="png" />
+      </collection>  
+      <collection name="outputplots" type="list" label="Partial dependence plots" >
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.pdf" format="pdf" />  
+      </collection>
+    </outputs>
+    <tests>
+        <test>
+            <param name="enviro" value="ceamarc_env.csv"/>
+            <param name="species_files" value="cnidaria_filtered.csv"/>
+            <param name="abioticname" value="Carbo,Grav,Maxbearing,Maxmagnit,Meancurmag,Meansal,Meantheta,Mud,Prof,Rugosity,Sand,Seaice_prod,Sili,Slope,Standcurmag,Standsal,Standtheta"/>
+            <output_collection name='outputpred' type = "list" count="1"/>
+            <output_collection name='outputval' type = "list" count="1"/>
+            <output_collection name='outputspdistri' type = "list" count="2">
+                  <element name="BRT- Actiniaria _pred_plot">
+                       <assert_contents>
+            	           <has_size value="76065" delta="10000"/>
+            	      </assert_contents>
+            	  </element>
+            </output_collection>
+            <output_collection name='outputplots' type = "list">
+                  <element name="BRT- Actiniaria " >
+                       <assert_contents>
+            	           <has_size value="16042" delta="1000"/>
+            	       </assert_contents>
+            	  </element>
+            </output_collection>
+        </test>
+    </tests>
+    <help><![CDATA[
+==================    
+**What it does ?**
+==================
+
+This Galaxy tool is made to characterize the distribution of each taxon by giving a probability indicator taxon presence for each environmental layer pixel. To do this, the boosted regression trees (BRT) method (Elith *et al*., 2008) is used to fit the relationship between the presence of a single taxon and the environmental conditions where the taxon has been
+detected. Two steps are performed in this script: the creation of the taxon distribution model and the use of this model to obtain a predictive index. The prediction index obtained from each BRT model for each pixel of the environmental layers is an approximation of the probability of detection of the presence of the taxon.
+
+===================         
+**How to use it ?**
+===================
+        
+This tool takes in input the environmental data as well as the species occurrence data. See examples of inputs below. You also need to input the list of abiotic parameters (respecting the case, without spaces and separating them by commas). For example : Carbo,Grav,Maxbearing,...
+This tool gives in output a file containing the predictions of probability of presence of each taxon for each pixel (latitude, longitude) environmental, a visualization of these pixels for each taxon and graphs showing the percentage of model explanation for each environmental parameter. 
+
+**Example of environmental data input :** 
+-----------------------------------------
+
++------+------+---------+------+--------------+-----+
+| long | lat  |  Carbo  | Grav |  Maxbearing  | ... |
++------+------+---------+------+--------------+-----+
+|139.22|-65.57|   0.88  |28.59 |     3.67     | ... |
++------+------+---------+------+--------------+-----+
+|139.22|-65.57|   0.88  |28.61 |     3.64     | ... |
++------+------+---------+------+--------------+-----+
+| ...  | ...  |   ...   | ...  |     ...      | ... |
++------+------+---------+------+--------------+-----+
+
+
+**Example of occurence data input :** 
+-------------------------------------
+
++---------+----------+-----------+------------------------+-----------+-----+
+| station |   lat    |   long    |Acanthorhabdus_fragilis | Acarnidae | ... |
++---------+----------+-----------+------------------------+-----------+-----+
+|    1    |-65,999946|142,3360535|           0            |     1     | ... |
++---------+----------+-----------+------------------------+-----------+-----+
+|   10    |-66,335407| 141,3028  |           0            |     1     | ... |
++---------+----------+-----------+------------------------+-----------+-----+
+|   ...   |   ...    |   ...     |          ...           |    ...    | ... |
++---------+----------+-----------+------------------------+-----------+-----+
+
+
+
+
+    ]]></help>
+</tool>
+
+
