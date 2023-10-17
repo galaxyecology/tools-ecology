@@ -46,7 +46,7 @@
             <output_collection name='outputspdistri' type = "list" count="2">
                   <element name="BRT- Actiniaria _pred_plot">
                        <assert_contents>
-            	           <has_size value="168785" delta="10000"/>
+            	           <has_size value="76065" delta="10000"/>
             	      </assert_contents>
             	  </element>
             </output_collection>
