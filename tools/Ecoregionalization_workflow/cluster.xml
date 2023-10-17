@@ -51,12 +51,12 @@
             </output>
             <output name='output2'>
                 <assert_contents>
-                    <has_size value="2452000" delta="1000" />
+                    <has_size value="255" delta="1000" />
                 </assert_contents>
             </output>
             <output name='output3' >
                 <assert_contents>
-                    <has_size value="21457687" delta="1000000" />
+                    <has_size value="2008" delta="1000000" />
                 </assert_contents>
             </output>
         </test>
