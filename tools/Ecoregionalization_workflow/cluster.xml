@@ -7,17 +7,17 @@
        <requirement type="package" version="2.0.0">r-tidyverse</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
-        Rscript
-         '$__tool_directory__/cluster_ceamarc.R'
-         '$predictionmatrix'
-         '$envfile'
-         '$predictionfile'
-         '$k'
-         '$metric'
-         '$sample'
-         '$output1'
-         '$output2'
-         '$output3'
+    Rscript
+        '$__tool_directory__/cluster_ceamarc.R'
+        '$predictionmatrix'
+        '$envfile'
+        '$predictionfile'
+        '$k'
+        '$metric'
+        '$sample'
+        '$output1'
+        '$output2'
+        '$output3'
     ]]></command>
     <inputs>
       <param name="predictionmatrix" type="data" format="tabular" label="Prediction matrix (data to cluster from Cluster Estimate tool) "/>
