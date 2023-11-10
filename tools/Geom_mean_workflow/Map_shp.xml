@@ -38,7 +38,6 @@
               <valid initial="string.printable">
                   <add value="é"/>
                   <add value="è"/>
-                  <add value="\n"/>
               </valid>
          </sanitizer>
         </param>
