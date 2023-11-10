@@ -53,7 +53,7 @@ if (coord == "true"){
     annotation_scale()
     
   #outuput 
-  ggsave("map.pdf", device = "cairo_pdf")
+  ggsave("map.pdf", device = "pdf")
 }
 
 
