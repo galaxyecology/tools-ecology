@@ -1,0 +1,33 @@
+<macros>
+    <token name="@VERSION@">0.0.1</token>
+    <xml name="argo_requirements">
+        <requirements>
+            <requirement type="package" version="0.1.14">argopy</requirement>
+            <yield/>
+        </requirements>
+    </xml>
+    <xml name="argo_input_user">
+        <inputs>
+            <param name="user" type="select" label="Which kin of user are you ?">
+                <option value="standard">🏊 standard mode simplifies the dataset, remove most of its jargon and return a priori good data</option>
+                <option value="research">🚣 research mode simplifies the dataset to its heart, preserving only data of the highest quality for research studies, including studies sensitive to small pressure and salinity bias </option>
+                <option value="expert">🏄 expert mode return all the Argo data, without any postprocessing</option>
+           </param>
+       </inputs>
+    </xml>
+    <xml name="argo_bibref">
+       <citations>
+            <citation type="bibtex">
+                @article{Maze_argopy_A_Python_2020,
+                author = {Maze, Guillaume and Balem, Kevin},
+                doi = {10.21105/joss.02425},
+                journal = {Journal of Open Source Software},
+                number = {53},
+                title = {{argopy: A Python library for Argo ocean data analysis}},
+                volume = {5},
+                year = {2020}
+                }
+            </citation>
+        </citations>
+    </xml>
+</macros>
