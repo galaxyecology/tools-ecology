@@ -10,12 +10,12 @@
 
 
 # Load arguments
-import sys
 import argparse
+import sys
 
 import argopy
 
-command_line_args=sys.argv[1:]
+command_line_args = sys.argv[1:]
 
 
 parser = argparse.ArgumentParser(description="Retrieve argo Data")
@@ -36,7 +36,7 @@ parser.add_argument("--profile", type=str, help="Number of profiles")
 parser.add_argument("--params", type=str, help="List of bgc parameters")
 parser.add_argument("--measured", type=str, help="List of bgc parameters")
 parser.add_argument("--output_argo", type=str, help="Output data from argo")
-    
+
 args = parser.parse_args(command_line_args)
 
 
@@ -55,18 +55,18 @@ pressure_2 = args.pressure_2
 date_1 = args.date_1
 date_2 = args.date_2
 wmo = args.wmo
-if wmo != None:
+if wmo is not None:
     wmo = list(map(int, wmo.split(",")))
 profile = args.profile
-if profile != None:
+if profile is not None:
     profile = list(map(int, profile.split(",")))
 params = args.params
-if params != None:
+if params is not None:
     params = list(map(int, params.split(",")))
     if len(params) == 83:
         params = "all"
 measured = args.measured
-if measured != None:
+if measured is not None:
     measured = measured.split(",")
 
 # Let’s import the argopy data fetcher:
@@ -74,7 +74,7 @@ if measured != None:
 ######################
 #       User mode    #
 ######################
-# By default, 
+# By default,
 # all argopy data fetchers are set to work with a standard user mode.
 # To change that
 
@@ -93,7 +93,7 @@ argo_data = argopy.DataFetcher()
 
 # 🗺 For a space/time domain #
 
-if (cardinal_1 != None):
+if (cardinal_1 is not None):
     mode = "region"
     argo_data = argo_data.region([cardinal_1, cardinal_2,
                                   cardinal_3, cardinal_4,
@@ -104,11 +104,10 @@ if (cardinal_1 != None):
 # Use the fetcher access point argopy.DataFetcher.profile()
 # to specify the float WMO platform number
 # and the profile cycle number(s) to retrieve profiles for.
-elif (wmo != "" and profile != None):
-     argo_data = argo_data.profile(wmo, profile)
-     # can also be argo_data = argo_data.profile(6902755, [3, 12])
-     mode = "profile"
-     argo_data.data
+elif (wmo is not None and profile is not None):
+    argo_data = argo_data.profile(wmo, profile)
+    # can also be argo_data = argo_data.profile(6902755, [3, 12])
+    mode = "profile"
 
 # 🤖 For one or more floats #
 # If you know the Argo float unique identifier number called a WMO number
@@ -126,9 +125,9 @@ else:
 # Specify data source erddap, gdac or argovis
 
 #if (ftp != "") :
-#	argopy.set_options(src = "gdac", ftp = ftp)
-#else : 
-#	argopy.set_options(src = "erddap")
+    #argopy.set_options(src = "gdac", ftp = ftp)
+#else :
+    #argopy.set_options(src = "erddap")
 
 # With remote, online data sources,
 # it may happens that the data server is experiencing down time.
@@ -147,12 +146,12 @@ print(argopy.status())
 #     salinity, pressure and oxygen, pH, nitrate, chlorophyll,
 #     backscatter, irradiance down to 2000m.
 # You can choose between phy or bgc
-if (params == None):
-    argopy.set_options(dataset = "phy")
+if (params is None):
+    argopy.set_options(dataset="phy")
 else:
-    argopy.set_options(dataset = "bgc")
-    if (measured != None):
-        argo_data = argopy.DataFetcher(params = params, measured = measured)
+    argopy.set_options(dataset="bgc")
+    if (measured is not None):
+        argo_data = argopy.DataFetcher(params=params, measured=measured)
         if (mode == "region"):
             argo_data = argo_data.region([cardinal_1, cardinal_2,
                                           cardinal_3, cardinal_4,
@@ -163,7 +162,7 @@ else:
         else:
             argo_data = argo_data.float(wmo)
     else:
-        argo_data = argopy.DataFetcher(params = params, measured = None)
+        argo_data = argopy.DataFetcher(params=params, measured=None)
         if (mode == "region"):
             argo_data = argo_data.region([cardinal_1, cardinal_2,
                                           cardinal_3, cardinal_4,
@@ -176,7 +175,7 @@ else:
 
 # Data fetching #
 # To fetch (i.e. access, download, format) Argo data,
-# argopy provides the DataFetcher class. 
+# argopy provides the DataFetcher class.
 # Several DataFetcher arguments exist to help you select the dataset,
 # the data source and the user mode the most suited for your applications;
 # and also to improve performances.
@@ -189,3 +188,5 @@ argo_data = argo_data.load().data
 argo_data.to_netcdf("argo_data.nc")
 
 # argo_metadata = argo_data.to_index()
+
+print(argo_data)
