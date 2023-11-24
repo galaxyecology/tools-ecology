@@ -10,51 +10,28 @@
         <include type="literal" path="macro.xml"/>
     </required_files>
     <command detect_errors="exit_code"><![CDATA[ 
-        python
-            '$__tool_directory__/argo_getdata.py'
-            '$user'
+        python $__tool_directory__/argo_getdata.py
+            --user=$user
              #if $selection.data_selection == 'space_time':
-              '$selection.cardinal_1' 
-              '$selection.cardinal_2'
-              '$selection.cardinal_3' 
-              '$selection.cardinal_4'
-              '$selection.pressure_1'
-              '$selection.pressure_2'
-              '$selection.date_1'
-              '$selection.date_2'
-              ''
-              ''
+              --cardinal_1=$selection.cardinal_1
+              --cardinal_2=$selection.cardinal_2
+              --cardinal_3=$selection.cardinal_3
+              --cardinal_4=$selection.cardinal_4
+              --pressure_1=$selection.pressure_1
+              --pressure_2=$selection.pressure_2
+              --date_1=$selection.date_1
+              --date_2=$selection.date_2
             #else if $selection.data_selection == 'floats':
-              ''
-              ''
-              ''
-              ''
-              ''
-              ''
-              ''
-              ''
-              '$selection.wmo'
-              ''
+              --wmo=$selection.wmo
             #else:
-              ''
-              ''
-              ''
-              ''
-              ''
-              ''
-              ''
-              ''
-              '$selection.wmo'
-              '$selection.profile'
+              --wmo=$selection.wmo
+              --profile=$selection.profile
             #end if
             #if $dataset.data_dataset == 'bgc' :
-              '$dataset.params'
-              '$dataset.measured'
-            #else :
-              ''
-              ''
+              --params=$dataset.params
+              --measured=$dataset.measured
             #end if 
-            '$output_argo'
+            --output_argo=$output_argo
         ]]>
     </command>
     <inputs>
