@@ -124,10 +124,10 @@ else:
 # argopy.reset_options()
 # Specify data source erddap, gdac or argovis
 
-#if (ftp != "") :
-    #argopy.set_options(src = "gdac", ftp = ftp)
-#else :
-    #argopy.set_options(src = "erddap")
+# if (ftp != "") :
+    # argopy.set_options(src = "gdac", ftp = ftp)
+# else :
+    # argopy.set_options(src = "erddap")
 
 # With remote, online data sources,
 # it may happens that the data server is experiencing down time.
