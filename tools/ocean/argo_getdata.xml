@@ -274,7 +274,6 @@
             <param name="pressure_2" value="10.0"/>
             <param name="date_1" value="2011-01"/>            
             <param name="date_2" value="2011-06"/>
-            <param name="data_sources" value="erddap"/>
             <param name="data_dataset" value="phy"/>
             <output name="output_argo">
                 <assert_contents>
