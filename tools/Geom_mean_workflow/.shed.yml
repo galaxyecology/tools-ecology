@@ -1,0 +1,18 @@
+name: Geometric means (Dead wood)
+owner: ecology 
+description: Tools to compute The evolution of the total volume of very large trees, standing dead wood and dead wood on the ground on an area and the rate of devolution of the volume of wood favorable to biodiversity by large ecological regions (France).
+homepage_url: https://github.com/PaulineSGN/Galaxy_tool_moyenne_geom
+long_description: |
+  This tool suite proposes a workflow to compute the evolution of the total volume of very large trees, standing dead wood and dead wood on the ground on an area and the rate of evolution of the volume of wood favorable to biodiversity by large ecological regions (GRECO in France). There are three big steps in this workflow : The calculation of the rates of evolution of dead wood with an algorhythm that calculates the geometric mean, then a first graph (bar plot) representing the evolution of the total volume of very large trees, standing dead wood and dead wood on the ground on an area and finally, a graph representing the rate of evolution of the volume of wood favorable to biodiversity by large ecological regions (GRECO in France) using a shapefile.
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/Geom_mean_workflow
+type: unrestricted
+categories:
+- Ecology
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Geometric means: {{ tool_name }}"
+suite:
+  name: "suite_ecoregionalization"
+  description: Tools to compute the evolution of the total volume of very large trees, standing dead wood and dead wood on the ground on an area and the rate of devolution of the volume of wood favorable to biodiversity by large ecological regions (France).
+  long_description: |
+    This tool suite proposes a workflow to compute the evolution of the total volume of very large trees, standing dead wood and dead wood on the ground on an area and the rate of evolution of the volume of wood favorable to biodiversity by large ecological regions (GRECO in France). There are three big steps in this workflow : The calculation of the rates of evolution of dead wood with an algorhythm that calculates the geometric mean, then a first graph (bar plot) representing the evolution of the total volume of very large trees, standing dead wood and dead wood on the ground on an area and finally, a graph representing the rate of evolution of the volume of wood favorable to biodiversity by large ecological regions (GRECO in France) using a shapefile.

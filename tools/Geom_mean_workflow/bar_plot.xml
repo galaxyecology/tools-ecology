@@ -1,0 +1,66 @@
+<tool id="bar_plot" name="Bar plot" version="0.1.0+galaxy0">
+    <description>for simple discrete data </description>
+    <requirements>
+       <requirement type="package" version="4.3.2">r-base</requirement>
+       <requirement type="package" version="3.4.4">r-ggplot2</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript
+         '$__tool_directory__/Bar_plot.R'
+         '$input'
+         '$title'
+         '$error_bar'
+         '$color_bar'
+         '$ylab'
+         '$output'
+    ]]></command>
+    <inputs>
+       <param name="input" type="data" format="tabular" label="Dataset"/>
+       <param name="title" type="text" label="Plot title"/>
+       <param name="error_bar" type="boolean" label="Does your data have a standard deviation? "/>
+       <param name="color_bar" type="text" value = "dark green" label="Choose color of bar(s)"/>
+       <param name="ylab" type="text" label="Label for y axis"/>
+    </inputs>
+    <outputs>
+       <data name="output" from_work_dir="bar_plot.pdf" format="pdf" label="bar_plot.pdf"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name='input' value="histo_data.tsv"/>
+            <param name='title' value="Evolution du volume total des tres gros arbres, bois mort debout et bois mort au sol"/>
+            <param name='error_bar' value="true"/>
+            <param name='color_bar' value="dark green"/>
+            <param name='ylab' value="Base 100"/>
+            <output name='output' value="bar_plot.pdf"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+==================    
+**What it does ?**
+==================
+
+This tool allows to build a simple bar plot for discrete data with or without error bar. And it allows the user to modify some estetic aspect.
+ 
+===================         
+**How to use it ?**
+===================
+        
+This tool takes in input a tabular file witch must contain the discrete data and their name. In option it could contain the standard deviation to make error bar on the graphe. See examples of inputs below. 
+You need to input the title of the plot, indicate if there is stadard deviation data, choose the color of bar(s) and input a name for the y axis.
+
+
+**Example of input data :** 
+-----------------------------------------
+The input file must be a tabular file. 
+
++------------------+-----------+---------------------------------+
+| variable_name    | variable  |  standard_deviation (optionnal) |
++------------------+-----------+---------------------------------+
+|Moyenne 2008-2012 |    100    |         2.38599016822497        |
++------------------+-----------+---------------------------------+
+|Moyenne 2013-2017 |    107    |         3.28578011320741        |
++------------------+-----------+---------------------------------+
+|       ...        |    ...    |              ...                |
++------------------+-----------+---------------------------------+
+    ]]></help>
+</tool>
