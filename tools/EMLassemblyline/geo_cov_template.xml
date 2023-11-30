@@ -37,7 +37,7 @@
             <param name="long_col" value="3"/>
             <param name="site_col" value="1"/>
             <param name="empty" value="false"/>
-            <output name="outuput" value="geographic_coverage.txt"/>
+            <output name="output" value="geographic_coverage.txt"/>
         </test>
     </tests>
     <help><![CDATA[
