@@ -1,0 +1,129 @@
+<tool id="iabiodiv_smartbiodiv_med_environ" name="Adds the environment variables to a dataset" version="0.0.1">
+    <description>
+        From the input dataset, it will request copernicus for environment variables.
+    </description>
+
+	<requirements>
+        <requirement type="package" version="2.1.3">pandas</requirement>
+        <requirement type="package" version="4.9.3">lxml</requirement>
+        <requirement type="package" version="1.0.4">medenv</requirement>
+	</requirements>
+
+    <command>
+        python '$__tool_directory__/med_environ.py' --datafile '${input}' --out_file '${out_file}' --lat_key  '${lat_key}' --long_key '${long_key}' --date_key '${date_key}' --depth_key '${depth_key}' --variables '${env_variables}' --tol_spatial_coordinates '${tol_spatial_coordinates}' --cmems_username '${cmems_username}' --cmems_password '${cmems_password}' --verbose '${verbose}'
+    </command>
+    <inputs>
+		<param format="csv" name="input" type="data" label="Input dataset"/>
+
+        <param name="env_variables" type="select" label="Which variables to add" multiple="true">
+            <option value="temperature">temperature</option>
+            <option value="salinity">salinity</option>
+			<option value="phytoplankton-carbon-biomass">Mole concentration of phytoplankton expressed as carbon in sea water (phyc)</option>
+            <option value="chlorophyl-a">chlorophyl-a (CHL, mg/m3)</option>
+            <option value="nitrate">nitrate (NO3, mmol/M3)</option>
+            <option value="phosphate">phosphate (PO4, mmol/m3)</option>
+            <option value="ammonium">ammonium (NH4, mmol/m3)</option>
+            <option value="net-primary-production">Net primary production of biomass expressed as carbon per unit volume in sea water (nppv, [mg/m3/day])</option>
+            <option value="oxygen">Mole concentration of dissolved molecular oxygen in sea water (O2, [mmol/m3])</option>
+            <option value="ph">Sea water ph reported on total scale (ph) </option>
+            <option value="dissolved-inorganic-carbon">Mole concentration of dissolved inorganic carbon in sea water (dissic, [mol/m3])</option>
+            <option value="alkalinity">alkalinity (talk)</option>
+            <option value="bathymetry">bathymetry</option>
+            <option value="northward-water-velocity">Northward water velocity</option>
+            <option value="eastward-water-velocity">Eastward water velocity</option>
+            <option value="sea-surface-temperature">sea surface temperature</option>
+            <option value="sea-surface-salinity">sea surface salinity</option>
+            <option value="sea-surface-above-geoid">sea surface above geoid</option>
+            <option value="surface-partial-pressure-co2">surface partial pressure CO2</option>
+            <option value="surface-co2-flux">surface CO2 flux</option>
+            <option value="mixed-layer-thickness">mixed layer thickness</option>
+            <option value="mixed-layer-thickness">mixed layer thickness</option>
+		</param>
+		<param name="lat_key" type="text" value="SiteLat" label="The key of the column for the latitude" optional="False"/>
+		<param name="long_key" type="text" value="SiteLong" label="The key of the column for the longitude" optional="False"/>
+        <param name="tol_spatial_coordinates" type="float" value="0.2" label="A tolerance on the latitude/longitude for the request point" optional="False"/>
+		<param name="depth_key" type="text" value="Depth" label="The key of the column for the observation time" optional="False"/>
+		<param name="date_key" type="text" value="SurveyDate" label="The key of the column for the observation time" optional="False"/>
+		<param name="cmems_username" type="text" value="xxxxx" label="Your login to access CMEMS data"/>
+        <param name="cmems_password" type="text" value="xxxxx" label="Your password to access CMEMS data"/>
+        <param name="verbose" type="boolean" value="False" label="Verbose in the standard output of the tool"/>
+    </inputs>
+
+    <outputs>
+        <data format="csv" name="out_file" metadata_source="input" label="Dataset augmented with the environmental variables"/>
+    </outputs>
+
+	<tests>
+		<test expect_num_outputs="1">
+			<param name="input" value="reef_life_subset.csv"/>
+			<param name="env_variables" value="bathymetry"/> <!-- This test is requesting etopo only -->
+			<param name="lat_key" value="SiteLat"/>
+			<param name="long_key" value="SiteLong"/>
+			<param name="tol_spatial_coordinates" value="0.2"/>
+			<param name="depth_key" value="Depth"/>
+			<param name="date_key" value="SurveyDate"/>
+			<param name="cmems_username" value="xxxx"/> <!-- Not used for this test -->
+			<param name="cmems_password" value="xxxx"/> <!-- Not used for this test -->
+			<param name="verbose" value="False"/>
+			<output name="out_file">
+				<assert_contents>
+					<has_n_lines n="100"/>
+				</assert_contents>
+			</output>
+		</test>
+    </tests>
+
+	<help>
+
+		**What it does**
+
+		This script allows to augment your dataset by adding some environmental variables grabbed from CMEMS, etopo, woa. It is a galaxy tool built on the medenv python package available at https://github.com/jeremyfix/medenv .
+
+		We expect the dataset you provide to contain the coordinates of the observation : latitude, longitude, depth, time. The time is expected in ISO 8601 : YYYY-MM-DDTHH:MM:SSZ
+
+        The `cmems_username` and `cmems_password` is required only if you want to add variables provided by CMEMS.
+
+        The CMEMS data are collected from the following products :
+
+			- med-cmcc : https://resources.marine.copernicus.eu/product-detail/MEDSEA_MULTIYEAR_PHY_006_004/INFORMATION
+			- med-ogs : https://resources.marine.copernicus.eu/product-detail/MEDSEA_MULTIYEAR_BGC_006_008/INFORMATION
+
+		The bathymetry is obtained with the ETOPO at : 
+
+			- https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO1/data/bedrock/grid_registered/netcdf/ETOPO1_Bed_g_gmt4.grd.gz
+
+        We request data around the point with a given tolerance and average the collected values. The medenv package does not force that averaging and could return a raster. A latter update of the galaxy tool could take this into account.
+
+		The features you can request are the following, some indexed by depth :
+
+            - "bathymetry", (etopo)
+            - "temperature",
+            - "salinity",
+            - "chlorophyl-a",
+            - "nitrate",
+            - "phosphate",
+            - "ammonium",
+            - "phytoplankton-carbon-biomass",
+            - "oxygen",
+            - "net-primary-production",
+            - "ph",
+            - "alkalinity",
+            - "dissolved-inorganic-carbon",
+            - "northward-water-velocity",
+            - "eastward-water-velocity".
+
+		and others not indexed by depth : 
+
+            - "mixed-layer-thickness",
+            - "sea-surface-temperature",
+            - "sea-surface-salinity",
+            - "sea-surface-above-geoid",
+            - "surface-partial-pressure-co2",
+            - "surface-co2-flux".
+
+		</help>
+    <citations>
+    </citations>
+</tool>
+
+
