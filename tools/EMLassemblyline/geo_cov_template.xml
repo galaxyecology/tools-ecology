@@ -1,0 +1,69 @@
+<tool id="geo_cov_template" name="Make geographic coverage template" version="0.1.0+galaxy0" >
+    <description>for EML metadata creation</description>
+    <requirements>
+        <requirement type="package" version="4.3.1">r-base</requirement>
+        <requirement type="package" version="3.5.5">r-emlassemblyline</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+    
+    mkdir data_files && 
+    ln -s '$inputdata' 'data_files/${inputdata.element_identifier}';
+    #set $table = $inputdata.element_identifier;
+    
+        Rscript 
+         '$__tool_directory__/geo_cov_temp.R'
+         '$inputdata'
+         '$table'
+         '$lat_col' 
+         '$long_col' 
+         '$site_col' 
+         '$empty'
+         
+    ]]></command>
+    <inputs>
+         <param name="inputdata" type="data" format="tabular" label="Upload table containing geographic coordinates" />
+         <param name="lat_col" type="data_column"  label="What column of your table contains latitude coordinates in decimal degrees?" data_ref="inputdata" />
+         <param name="long_col" type="data_column"  label="What column of your table contains longitude coordinates in decimal degrees ?" data_ref="inputdata"/>
+         <param name="site_col" type="data_column"  label="What column of your table contains site names ?" data_ref="inputdata"/>
+         <param name="empty" type="boolean"  label="Write an empty template file ?" />
+    </inputs>
+    <outputs>
+         <data name="output" from_work_dir="geographic_coverage.txt" format="txt" label="geographic coverage template"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="inputdata" value="test-geocov.tabular"/>
+            <param name="lat_col" value="2"/>
+            <param name="long_col" value="3"/>
+            <param name="site_col" value="1"/>
+            <param name="empty" value="false"/>
+            <output name="outuput" value="geographic_coverage.txt"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+    ]]></help>
+**What it does?**
+--------------------
+
+This tool produce template for EML metadata. It produce templates for geographic coverage. 
+This tool can be used with the "Make templates for core features of a data package" tool before the "make eml" tool.
+
+**How to use it?**
+--------------------
+To use this tool, you need to upload a table containing geographic coordinates (the decimal separator must be ".", example below), then select wich column of your table contains latitude, longitude and site names. You can also decide to make an empty geografical coverage templates.
+
+
+**Example of geographic table :** 
+-----------------------------------------
+
++------+------+----------------------+
+| long | lat  |         site         | 
++------+------+----------------------+
+|139.22|-65.57|     name of site 1   |
++------+------+----------------------+
+|139.22|-65.57|     name of site 2   |
++------+------+----------------------+
+| ...  | ...  |          ...         |
++------+------+----------------------+
+
+</tool>
