@@ -1,0 +1,10 @@
+categories:
+    - Access environmental data
+owner: ecology
+remote_repository_url: https://github.com/jeremyfix/medenv
+long_description: |
+  Retrieve environmental data from etopo, cmems and woa
+type: unrestricted
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrapper for medenv tool: {{ tool_name }}."
