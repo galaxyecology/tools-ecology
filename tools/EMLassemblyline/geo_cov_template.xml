@@ -41,7 +41,7 @@
         </test>
     </tests>
     <help><![CDATA[
-    ]]></help>
+    
 **What it does?**
 --------------------
 
@@ -65,5 +65,5 @@ To use this tool, you need to upload a table containing geographic coordinates (
 +------+------+----------------------+
 | ...  | ...  |          ...         |
 +------+------+----------------------+
-
+ ]]></help>
 </tool>
