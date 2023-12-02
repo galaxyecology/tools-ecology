@@ -8,7 +8,7 @@
     
     mkdir data_files && 
     ln -s '$inputdata' 'data_files/${inputdata.element_identifier}' &&
-    #set $table = $inputdata.element_identifier;
+    #set $table = $inputdata.element_identifier
     
         Rscript 
          '$__tool_directory__/geo_cov_temp.R'
