@@ -7,7 +7,7 @@
     <command detect_errors="exit_code"><![CDATA[
     
     mkdir data_files && 
-    ln -s '$inputdata' 'data_files/${inputdata.element_identifier}';
+    ln -s '$inputdata' 'data_files/${inputdata.element_identifier}' &&
     #set $table = $inputdata.element_identifier;
     
         Rscript 
