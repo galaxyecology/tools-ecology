@@ -1,4 +1,4 @@
-<tool id="geo_cov_template" name="Make geographic coverage template" version="0.1.0+galaxy0" >
+<tool id="geo_cov_template" name="Make geographic coverage template" version="0.1.0+galaxy0" profile="22.05">
     <description>for EML metadata creation</description>
     <requirements>
         <requirement type="package" version="4.3.1">r-base</requirement>
