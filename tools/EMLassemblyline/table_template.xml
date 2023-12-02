@@ -9,8 +9,8 @@
     #set $table = ""
     mkdir data_files && 
     #for $indata in $inputdata
-        ln -s '$indata' 'data_files/${indata.element_identifier}';
-        #set $table += $indata.element_identifier + " ";
+        ln -s '$indata' 'data_files/${indata.element_identifier}' &&
+        #set $table += $indata.element_identifier + " "
     #end for
     
     Rscript 
