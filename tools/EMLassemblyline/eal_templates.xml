@@ -1,4 +1,4 @@
-<tool id="templates1" name="Make templates" version="0.1.0+galaxy0" profile="22.05">
+<tool id="eal_templates" name="Make templates" version="0.1.0+galaxy0" profile="22.05">
     <description>for core features of a data package for EML metadata creation</description>
     <requirements>
         <requirement type="package" version="4.3.1">r-base</requirement>
@@ -7,7 +7,7 @@
     <command detect_errors="exit_code"><![CDATA[
     
         Rscript 
-         '$__tool_directory__/templates1.R'
+         '$__tool_directory__/eal_templates.R'
          '$license'
          '$file_type'
          
