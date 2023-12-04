@@ -7,7 +7,7 @@
     <command detect_errors="exit_code"><![CDATA[
     
         Rscript 
-         '$__tool_directory__/templates1.R'
+         '$__tool_directory__/eal_templates.R'
          '$license'
          '$file_type'
          
