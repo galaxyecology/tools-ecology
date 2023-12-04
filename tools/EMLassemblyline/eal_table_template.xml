@@ -14,7 +14,7 @@
     #end for
     
     Rscript 
-         '$__tool_directory__/table_templates.R'
+         '$__tool_directory__/eal_table_templates.R'
          '$table'
     
     ]]></command>
