@@ -1,4 +1,4 @@
-<tool id="ealtemplates" name="Make templates" version="0.1.0+galaxy0" profile="22.05">
+<tool id="eal_templates" name="Make templates" version="0.1.0+galaxy0" profile="22.05">
     <description>for core features of a data package for EML metadata creation</description>
     <requirements>
         <requirement type="package" version="4.3.1">r-base</requirement>
