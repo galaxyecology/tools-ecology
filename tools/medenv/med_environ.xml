@@ -54,7 +54,7 @@
     </inputs>
 
     <outputs>
-        <data format="csv" name="out_file" metadata_source="input" label="Dataset augmented with the environmental variables"/>
+        <data format="tabular" name="out_file" metadata_source="input" label="Dataset augmented with the environmental variables"/>
     </outputs>
 
     <tests>
