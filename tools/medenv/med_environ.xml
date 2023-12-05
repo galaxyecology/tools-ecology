@@ -9,6 +9,10 @@
         <requirement type="package" version="1.0.4">medenv</requirement>
 	</requirements>
 
+	<creator>
+		<person givenName="Jérémy" familyName="Fix" url="http://www.github.com/jeremyfix/" email="jeremy.fix@centralesupelec.fr"/>
+	</creator>
+	
     <command>
         python '$__tool_directory__/med_environ.py' --datafile '${input}' --out_file '${out_file}' --lat_key  '${lat_key}' --long_key '${long_key}' --date_key '${date_key}' --depth_key '${depth_key}' --variables '${env_variables}' --tol_spatial_coordinates '${tol_spatial_coordinates}' --cmems_username '${cmems_username}' --cmems_password '${cmems_password}' --verbose '${verbose}'
     </command>
