@@ -1,4 +1,4 @@
-<tool id="iabiodiv_smartbiodiv_med_environ" name="Adds the environment variables to a dataset" version="0.0.1">
+<tool id="iabiodiv_smartbiodiv_med_environ" name="Adds the environment variables to a dataset" version="0.0.1" profile="22.05">
     <description>
         From the input dataset, it will request copernicus for environment variables.
     </description>
