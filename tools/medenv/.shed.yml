@@ -2,6 +2,7 @@ categories:
     - Access environmental data
 owner: ecology
 remote_repository_url: https://github.com/jeremyfix/medenv
+homepage_url: https://github.com/jeremyfix/medenv
 long_description: |
   Retrieve environmental data from etopo, cmems and woa
 type: unrestricted
