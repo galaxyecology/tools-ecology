@@ -127,6 +127,13 @@
 
     </help>
     <citations>
+        <citation type="bibtex">@misc{medenvGithubRepository,
+        title = "MedEnv",
+        author = "{Jeremy Fix}",
+        howpublished = "\url{https://github.com/jeremyfix/medenv}",
+        year = 2023
+        }
+        </citation>
     </citations>
 </tool>
 
