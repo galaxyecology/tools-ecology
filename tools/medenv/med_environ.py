@@ -5,7 +5,6 @@ import argparse
 from datetime import datetime
 import pathlib
 import os
-import functools
 
 # External imports
 import pandas as pd
