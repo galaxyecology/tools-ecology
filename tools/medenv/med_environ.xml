@@ -10,7 +10,16 @@
     <creator>
         <person givenName="Jérémy" familyName="Fix" url="http://www.github.com/jeremyfix/" email="jeremy.fix@centralesupelec.fr"/>
     </creator>
-    <command>
+	<command>
+		#set $medenv_key_file = os.environ.get('MEDENV_KEY_FILE', '')
+		#if os.path.isfile(str($medenv_key_file))
+			echo "xx $medenv_key_file xx" &&
+			cp $medenv_key_file .medenvkey &&
+		#else
+			echo 'use tool medenvkey file' &&
+			cp '$__tool_directory__/medenvkey.cfg' .medenvkey &&
+		#end if
+
 python '$__tool_directory__/med_environ.py'
     --datafile '${input}'
     --out_file '${out_file}'
@@ -20,8 +29,7 @@ python '$__tool_directory__/med_environ.py'
     --depth_key '${depth_key}'
     --variables '${env_variables}'
     --tol_spatial_coordinates '${tol_spatial_coordinates}'
-    --cmems_username '${cmems_username}'
-    --cmems_password '${cmems_password}'
+		--keyfile .medenvkey
     --verbose '${verbose}'
     </command>
     <inputs>
@@ -54,8 +62,6 @@ python '$__tool_directory__/med_environ.py'
         <param name="tol_spatial_coordinates" type="float" value="0.2" label="A tolerance on the latitude/longitude for the request point" optional="False"/>
         <param name="depth_key" type="text" value="Depth" label="The key of the column for the observation time" optional="False"/>
         <param name="date_key" type="text" value="SurveyDate" label="The key of the column for the observation time" optional="False"/>
-        <param name="cmems_username" type="text" value="xxxxx" label="Your login to access CMEMS data"/>
-        <param name="cmems_password" type="text" value="xxxxx" label="Your password to access CMEMS data"/>
         <param name="verbose" type="boolean" value="False" label="Verbose in the standard output of the tool"/>
     </inputs>
     <outputs>
@@ -70,8 +76,6 @@ python '$__tool_directory__/med_environ.py'
             <param name="tol_spatial_coordinates" value="0.2"/>
             <param name="depth_key" value="Depth"/>
             <param name="date_key" value="SurveyDate"/>
-            <param name="cmems_username" value="xxxx"/> <!-- Not used for this test -->
-            <param name="cmems_password" value="xxxx"/> <!-- Not used for this test -->
             <param name="verbose" value="False"/>
             <output name="out_file">
                 <assert_contents>
@@ -127,6 +131,10 @@ python '$__tool_directory__/med_environ.py'
         - "sea-surface-above-geoid",
         - "surface-partial-pressure-co2",
         - "surface-co2-flux".
+
+		** Copernicus credentials **
+
+		For requesting copernicus, you need to have an account on the https://resources.marine.copernicus.eu platform. Then, you need to provide your credentials in the secrets section of galaxy.
 
     </help>
     <citations>
