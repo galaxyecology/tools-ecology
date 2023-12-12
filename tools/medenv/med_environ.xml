@@ -1,6 +1,6 @@
-<tool id="iabiodiv_smartbiodiv_med_environ" name="Adds the environment variables to a dataset" version="0.0.1" profile="22.05">
-    <description>
-        From the input dataset, it will request copernicus for environment variables.
+<tool id="iabiodiv_smartbiodiv_med_environ" name="Adds environment variables collected from copernicus and etopo to a dataset" version="0.0.1" profile="22.05">
+	<description>
+		Given an input dataset which provides geolocalized and timestamped observations, i.e. which possesses columns for the longitude, latitude, depth and time of observation, this tool will augment the dataset with environmental variables as provided by copernicus and etopo. This version of the tool gets environmental data from etopo for the bathymetry and otherwise copernicus mediterranean products.
     </description>
 
     <requirements>
