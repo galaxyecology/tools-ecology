@@ -2,7 +2,7 @@
     <token name="@VERSION@">0.0.1</token>
     <xml name="argo_requirements">
         <requirements>
-            <requirement type="package" version="0.1.14">argopy</requirement>
+            <requirement type="package" version="0.1.15">argopy</requirement>
             <yield/>
         </requirements>
     </xml>
