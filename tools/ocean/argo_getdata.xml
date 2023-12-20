@@ -3,8 +3,9 @@
     <macros>
         <import>macro.xml</import>
     </macros>
-    <expand macro="argo_requirements">
-    </expand>
+    <requirements>
+        <requirement type="package" version="0.1.15">argopy</requirement>
+    </requirements>  
     <required_files>
         <include type="literal" path="argo_getdata.py"/>
         <include type="literal" path="macro.xml"/>
