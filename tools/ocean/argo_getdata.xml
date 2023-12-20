@@ -1,4 +1,4 @@
-<tool id="argo_getdata" name="Argo data access" version="@VERSION@">
+<tool id="argo_getdata" name="Argo data access" version="@VERSION@" profile="22.05">
     <description>for global ocean in situ observing system</description>
     <macros>
         <import>macro.xml</import>
