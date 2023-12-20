@@ -1,0 +1,52 @@
+<tool id="eal_templates" name="Make templates" version="0.1.0+galaxy0" profile="22.05">
+    <description>for core features of a data package for EML metadata creation</description>
+    <requirements>
+        <requirement type="package" version="4.3.1">r-base</requirement>
+        <requirement type="package" version="3.5.5">r-emlassemblyline</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+    
+        Rscript 
+         '$__tool_directory__/eal_templates.R'
+         '$license'
+         '$file_type'
+         
+    ]]></command>
+    <inputs>
+        <param name="license" type="select" label="Under what license are your data?">
+              <option value="CC0">CC0</option>
+              <option value="CCBY">CCBY</option>
+        </param>
+        <param name="file_type" type="select" label="What type of file do you want for templates?">
+              <option value=".txt">Text</option>
+              <option value=".docx">MS Word</option>
+              <option value=".md">Markdown</option>
+        </param>
+        
+    </inputs>
+    <outputs>
+          <collection name="output" type="list" label="Templates">
+              <discover_datasets pattern="__name_and_ext__"/>
+          </collection>
+    </outputs>
+    <tests>
+        <test>
+           <param name="license" value="CCBY"/>
+           <param name="file_type" value=".txt"/>
+           <output_collection name='output' type = "list" count="6"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+
+**What it does?**
+--------------------
+
+This tool produce templates for core features of a data package for EML metadata. 
+This tool can be used before of the make eml tool.
+
+**How to use it?**
+--------------------
+To use this tool, you need to select what type of license are your data under. Then you need to select the type of file you want for your templates.
+
+    ]]></help>
+</tool>

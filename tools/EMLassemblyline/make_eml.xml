@@ -1,21 +1,72 @@
-<tool id="makeeml" name="Make EML" version="0.1.0+galaxy0">
+<tool id="makeeml" name="Make EML" version="0.1.0+galaxy0" profile="22.05">
     <description> Create EML from EAL templates</description>
     <requirements>
         <requirement type="package" version="4.3.1">r-base</requirement>
         <requirement type="package" version="3.5.5">r-emlassemblyline</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
+    
     mkdir output_template &&
     #for $input in $templates
-        ln -s '$input' 'output_template/${input.element_identifier}.txt';
+        ln -s '$input' 'output_template/${input.element_identifier}';
     #end for
+   
+    #set $table = ""
+    mkdir data_files && 
+    #for $indata in $inputdata
+        ln -s '$indata' 'data_files/${indata.element_identifier}';
+        #set $table += $indata.element_identifier + " ";
+    #end for
+    
+    #set $other = ""
+    #for $data_other in $dataother
+        ln -s '$data_other' 'data_files/${data_other.element_identifier}';
+        #set $other += $data_other.element_identifier + " ";
+    #end for
+  
+    #set $quotetable ="" 
+    #for $q in $table_quote 
+       #set $quotetable += $q.quote + ",";
+    #end for 
+
     Rscript 
-		'$__tool_directory__/make_eml.R' 2> err.txt
-		'title'
+     '$__tool_directory__/make_eml.R' 2> err.txt
+     '$title'
+     '$temporal_coverage.start'
+     '$temporal_coverage.end'
+     '$table'
+     '$other'
+     '$destable'
+     '$desother'
+     '$quotetable'
+     '$table_url'
+     '$other_url'
+		
     ]]></command>
     <inputs>
-        <param name="templates" type="data_collection"  collection_type="list" format="tabular" label="Upload all EAL templates" help= "Input a data collection." />
-		<param name="title" type="text" label="Title for your dataset." />
+        <param name="templates" type="data_collection"  collection_type="list" format="tabular" label="Upload all EAL templates" help= "Input a data collection with only tabular files." />
+      <section name="data_table" title="Do you have data table ? " >
+        <param name="inputdata" type="data_collection"  collection_type="list"  label="Upload all data files wich are data table" help= "Input a data collection." optional = "true"/>
+        <param name="destable" type="text" label="Give a short description of your data file. If there is multiple data files please separate your descriptions with a comma (,) in the same order of your data input" optional = "true"/>
+        <repeat name="table_quote" title="What's the quotes of your data table ? Repeat this parameter as many time as the number of data tables you've input and in the same order" >
+                <param name="quote" type="select" label="What's the quotes of your data table ?" optional="true">
+                 <option value="quote">Quote</option>
+                 <option value="apostrophe">Apostrophe</option>
+                 <option value="none">None</option>
+                </param>
+        </repeat>
+        <param name="table_url" type="text" label="Give the publicly accessible URL from which your data table can be downloaded. If more than one, data files please separate your URLs with a comma (,) in the same order of your data input. If wanting to include URLs for some but not all then use a - for those that don't have a URL." optional = "true"/>
+      </section>
+      <section name="data_other" title="Do you have other data entity ? " >
+        <param name="dataother" type="data_collection"  collection_type="list"  label="Upload all data files wich are other entity" help= "Input a data collection." optional = "true"/>
+        <param name="desother" type="text" label="Give a short description of your data file. If there are multiple data files please separate your descriptions with a comma (,) in the same order of your data input" optional = "true"/>
+        <param name="other_url" type="text" label="Give the publicly accessible URL from which your other data entity can be downloaded. If more than one, data files please separate your URLs with a comma (,) in the same order of your data input. If wanting to include URLs for some but not all then use a - for those that don't have a URL." optional = "true"/>
+      </section>
+	<param name="title" type="text" label="Title for your dataset." />
+      <section name="temporal_coverage" title="Temporal coverage" >
+	<param name="start" type="text" label="Beginning date of the dataset in the format YYYY-MM-DD" />
+	<param name="end" type="text" label="Ending date of the dataset in the format YYYY-MM-DD" />
+      </section>
     </inputs>
     <outputs>
 		 <data name="metadataout" from_work_dir="eml.xml" format="xml" label="EML"/>
@@ -25,12 +76,12 @@
         <test expect_num_outputs="2"> 
             <param name="templates">
                 <collection type="list">
-			<element name="annotations" value="annotations.txt"/>
-                        <element name="keywords" value="keywords.txt" />
-                        <element name="attributes_data_blary_al" value="attributes_data_blary_al.txt"/>
-                        <element name="catvars_data_blary_al" value="catvars_data_blary_al.txt"/>
-                        <element name="geographic_coverage" value="geographic_coverage.txt" />
-                        <element name="personnel" value="personnel.txt" />
+			<element name="annotations.txt" value="annotations.txt"/>
+                        <element name="keywords.txt" value="keywords.txt" />
+                        <element name="attributes_data_blary_al.txt" value="attributes_data_blary_al.txt"/>
+                        <element name="catvars_data_blary_al.txt" value="catvars_data_blary_al.txt"/>
+                        <element name="geographic_coverage.txt" value="geographic_coverage.txt" />
+                        <element name="personnel.txt" value="personnel.txt" />
                 </collection>
             </param>
             <output name="metadataout" >
@@ -44,7 +95,7 @@
 <help><![CDATA[
 .. class:: warningmark
 
-'''TIP''' This tool accept as inputs only Galaxy collections containing EAL templates.
+'''TIP''' This tool accept as inputs only Galaxy collections containing EAL templates in tabular format.
 
 **What it does?**
 --------------------
@@ -60,6 +111,18 @@ You can also select your own templates that you have to integrate into a Galaxy 
 To do so you can select the **Upload file** tool, select the *Collection* tab, upload all your templates, click on the *Start* button to integrate the files to Galaxy and then click
 on *Build*. You will need to choose a name and select *Create collection* to build a collection with your templates.
 You also can upload your files to Galaxy, select them in the history by clicking the *Select items* button, click on the newly appeared box on the right and select *Build dataset list*.
+
+**Recommended optional input:**
+
+Data files : If you have data files you can input them to give more information in your metadata file. There are two parameters to do to so. The first is "Do you have data table ?" that provide you to import a collection with all your data table. The second is "Do you have other data entity ?" is for all your data file that not data table. 
+
+Description : You can add a short description of each data files you input. If there are multiple data files, please separate your descriptions with a comma (,) in the same order of your data input 
+
+Quote : If you have import data table files, you can specify if there are quotes and what type of quote is it. Repeat this parameter as many times as the number of data tables you've input and in the same order
+
+Title : You can give a title for your dataset.
+
+Temporal coverage : You can specify the temporal coverage of your data. 
 
  .. class:: infomark 
  
