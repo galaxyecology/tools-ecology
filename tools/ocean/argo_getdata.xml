@@ -281,6 +281,53 @@
                 </assert_contents>
             </output>
         </test>
+        <test expect_num_outputs="1">
+            <param name="user" value="standard"/>
+            <param name="data_selection" value="floats"/>
+            <param name="wmo" value="6902746"/>
+            <param name="data_dataset" value="phy"/>
+            <output name="output_argo">
+                <assert_contents>
+                    <has_text text="DIMENSION_SCALE"/>
+                </assert_contents>
+            </output>
+        </test>
+        <test expect_num_outputs="1">
+            <param name="user" value="standard"/>
+            <param name="data_selection" value="profiles"/>
+            <param name="wmo" value="6902755"/>
+            <param name="profile" value="12"/>
+            <param name="data_dataset" value="phy"/>
+            <output name="output_argo">
+                <assert_contents>
+                    <has_text text="Direction of the station profiles"/>
+                </assert_contents>
+            </output>
+        </test>
+        <test expect_num_outputs="1">
+            <param name="user" value="expert"/>
+            <param name="data_selection" value="profiles"/>
+            <param name="wmo" value="6902755"/>
+            <param name="profile" value="12"/>
+            <param name="data_dataset" value="phy"/>
+            <output name="output_argo">
+                <assert_contents>
+                    <has_text text="Delayed mode or real time data"/>
+                </assert_contents>
+            </output>
+        </test>
+        <test expect_num_outputs="1">
+            <param name="user" value="expert"/>
+            <param name="data_selection" value="floats"/>
+            <param name="wmo" value="6904241"/>
+            <param name="data_dataset" value="bgc"/>
+            <param name="params" value="DOXY,BBP700"/>
+            <output name="output_argo">
+                <assert_contents>
+                    <has_text text="_NCProperties"/>
+                </assert_contents>
+            </output>
+        </test>
     </tests>
     <help><![CDATA[
 ==========================================================
