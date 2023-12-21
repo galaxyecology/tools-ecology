@@ -149,7 +149,7 @@ if (params is None):
     argopy.set_options(dataset="phy")
 else:
     argopy.set_options(dataset="bgc")
-    if (measured != ['None'] or measured is not None):
+    if (measured != ['None'] and measured is not None):
         argo_data = argopy.DataFetcher(params=params, measured=measured)
         if (mode == "region"):
             argo_data = argo_data.region([cardinal_1, cardinal_2,
