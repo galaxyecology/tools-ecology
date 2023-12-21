@@ -62,7 +62,7 @@ if profile is not None:
     profile = list(map(int, profile.split(",")))
 params = args.params
 if params is not None:
-    params = list(map(int, params.split(",")))
+    params = params.split(",")
     if len(params) == 83:
         params = "all"
 measured = args.measured
@@ -117,8 +117,7 @@ else:
     argo_data = argo_data.float(wmo)
     # can also be argo_data = argo_data.float([6902746, 6902755])
     mode = "float"
-    argo_data.data
-
+  
 # Data sources #
 # Let’s start with standard import:
 # argopy.reset_options()
@@ -150,7 +149,7 @@ if (params is None):
     argopy.set_options(dataset="phy")
 else:
     argopy.set_options(dataset="bgc")
-    if (measured is not None):
+    if (measured != ['None'] or measured is not None):
         argo_data = argopy.DataFetcher(params=params, measured=measured)
         if (mode == "region"):
             argo_data = argo_data.region([cardinal_1, cardinal_2,
