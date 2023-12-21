@@ -1,8 +1,9 @@
 <macros>
-    <token name="@VERSION@">0.1.15</token>
+    <token name="@TOOL_VERSION@">0.1.15</token>
+    <token name="@VERSION_SUFFIX@">0</token>
     <xml name="argo_requirements">
         <requirements>
-            <requirement type="package" version="0.1.15">argopy</requirement>
+            <requirement type="package" version="@TOOL_VERSION@">argopy</requirement>
             <yield/>
         </requirements>
     </xml>
