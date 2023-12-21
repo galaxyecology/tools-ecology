@@ -117,7 +117,7 @@ else:
     argo_data = argo_data.float(wmo)
     # can also be argo_data = argo_data.float([6902746, 6902755])
     mode = "float"
-  
+
 # Data sources #
 # Let’s start with standard import:
 # argopy.reset_options()
