@@ -1,4 +1,4 @@
-<tool id="argo_getdata" name="Argo data access" version="@VERSION@" profile="22.05">
+<tool id="argo_getdata" name="Argo data access" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="22.05">
     <description>for global ocean in situ observing system</description>
     <macros>
         <import>macro.xml</import>
@@ -10,7 +10,7 @@
         <include type="literal" path="macro.xml"/>
     </required_files>
     <command detect_errors="exit_code"><![CDATA[ 
-        python $__tool_directory__/argo_getdata.py
+        python '$__tool_directory__/argo_getdata.py'
             --user=$user
              #if $selection.data_selection == 'space_time':
               --cardinal_1=$selection.cardinal_1
@@ -31,11 +31,11 @@
               --params=$dataset.params
               --measured=$dataset.measured
             #end if 
-            --output_argo=$output_argo
+            --output_argo='$output_argo'
         ]]>
     </command>
     <inputs>
-        <param name="user" type="select" label="Which kind of user are you ?">
+        <param name="user" type="select" label="We have preconfigured some mode of operations for you. What mode do you want to use?">
             <option value="standard">🏊 standard mode simplifies the dataset, remove most of its jargon and return a priori good data</option>
             <option value="research">🚣 research mode simplifies the dataset to its heart, preserving only data of the highest quality for research studies, including studies sensitive to small pressure and salinity bias </option>
             <option value="expert">🏄 expert mode return all the Argo data, without any postprocessing</option>
@@ -57,7 +57,7 @@
                 <param name="date_2" type="text" optional="true" label="Input ending date" value="yyyy-mm"/>    
             </when>
             <when value="floats">
-                <param name="wmo" type="text" label="Input WMO number" help="if you want to enter multiple ones just separate them with a comma (example : 6902746, 6902755)"/>
+                <param name="wmo" type="text" label="Input WMO number" help="If you want to enter multiple ones just separate them with a comma (example : 6902746, 6902755)"/>
             </when>
             <when value="profiles">
                 <param name="wmo" type="integer" value="0" label="Input WMO number" />
@@ -80,7 +80,7 @@
             <when value="argovis"/>
         </conditional>-->
         <conditional name="dataset">
-            <param name="data_dataset" type="select" label="Which kind of dataset do you want ?" display="radio">
+            <param name="data_dataset" type="select" label="Which kind of dataset do you want ?">
                 <option value="phy">Physical parameters: temperature, salinity, pressure</option>
                 <option value="bgc">Biogeochemical parameters: temperature, salinity, pressure and oxygen, pH, nitrate, chlorophyll, backscatter, irradiance</option>
             </param>
@@ -171,7 +171,7 @@
                     <option value="TEMP_QC">TEMP_QC</option>
                     <option value="TIME_QC">TIME_QC</option>
                 </param>
-                <param name="measured" type="select" multiple="true" label="Choose which variables cannot be NaN and must return value (you can select nothing)" optional="true">
+                <param name="measured" type="select" multiple="true" label="Choose which variables cannot be NaN and must return value" optional="true">
                     <option value="BBP532">BBP532</option>
                     <option value="BBP532_ADJUSTED">BBP532_ADJUSTED</option>
                     <option value="BBP532_ADJUSTED_ERROR">BBP532_ADJUSTED_ERROR</option>
