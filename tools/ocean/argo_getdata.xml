@@ -80,7 +80,7 @@
             <when value="argovis"/>
         </conditional>-->
         <conditional name="dataset">
-            <param name="data_dataset" type="select" label="Which kind of dataset do you want ?">
+            <param name="data_dataset" type="select" label="Which kind of dataset do you want ?" help="At this time, BGC parameters are only available in expert user mode.">
                 <option value="phy">Physical parameters: temperature, salinity, pressure</option>
                 <option value="bgc">Biogeochemical parameters: temperature, salinity, pressure and oxygen, pH, nitrate, chlorophyll, backscatter, irradiance</option>
             </param>
