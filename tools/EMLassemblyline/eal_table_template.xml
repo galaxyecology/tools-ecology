@@ -36,7 +36,6 @@
         </test>
     </tests>
     <help><![CDATA[
-
 **What it does?**
 --------------------
 This tool is used to produce EAL templates for data table used to build EML metadata. It produces the following eal files: 
