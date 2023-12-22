@@ -1,0 +1,7 @@
+attributeName	attributeDefinition	class	unit	dateTimeFormatString	missingValueCode	missingValueCodeExplanation
+LIB_SITE	Description for: LIB_SITE	character	""	""	""	""
+X	Description for: X	numeric	dimensionless	""	""	""
+Y	Description for: Y	numeric	dimensionless	""	""	""
+PROGRAMME	Description for: PROGRAMME	categorical	""	""	""	""
+OPERATEUR_	Description for: OPERATEUR_	categorical	""	""	""	""
+STATUT_DU_	Description for: STATUT_DU_	categorical	""	""	""	""

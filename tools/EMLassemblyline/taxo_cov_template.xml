@@ -1,8 +1,7 @@
 <tool id="taxo_cov_template" name="Make taxonomic coverage template" version="0.1.0+galaxy0" profile="22.05">
     <description>for EML metadata creation</description>
     <requirements>
-        <requirement type="package" version="4.3.1">r-base</requirement>
-        <requirement type="package" version="3.5.5">r-emlassemblyline</requirement>
+        <container type="docker">outils-patrinat.mnhn.fr/metashark:latest</container>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
     
@@ -70,7 +69,7 @@
 --------------------
 
 This tool produce template for EML metadata. It produce templates for taxonomic coverage. 
-This tool can be used with the "Make templates for core features of a data package" tool before the "make eml" tool.
+After that, these files can be edited to add information about your data and then be used in the make eml tool to produce EML metadata.
 
 **How to use it?**
 --------------------

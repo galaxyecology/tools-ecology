@@ -1,8 +1,7 @@
 <tool id="eal_table_template" name="Make templates for data tables" version="0.1.0+galaxy0" profile="22.05">
     <description>attributes and categorical variables for EML metadata creation</description>
     <requirements>
-        <requirement type="package" version="4.3.1">r-base</requirement>
-        <requirement type="package" version="3.5.5">r-emlassemblyline</requirement>
+        <container type="docker">outils-patrinat.mnhn.fr/metashark:latest</container>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
     
@@ -22,8 +21,8 @@
          <param name="inputdata" type="data_collection"  collection_type="list"  label="Upload all data files wich are data table" help= "Input a data collection."/>
     </inputs>
     <outputs>
-       <collection name="templates" type="list" label="Templates for data table">
-             <discover_datasets pattern="__designation_and_ext__"/>
+       <collection name="templates" type="list" label="Data table templates">
+             <discover_datasets pattern="(?P&lt;designation&gt;.+\.txt)" format="txt"/>
        </collection>
     </outputs>
     <tests>
@@ -38,8 +37,20 @@
     </tests>
     <help><![CDATA[
 
-To use this tool, you need to select, in your history a data collection with your data table (one or more).To do so, you can select the **Upload file** tool, select the *Collection* tab, upload all your templates, click on the *Start* button to integrate the files to Galaxy and then click on *Build*. You will need to choose a name and select *Create collection* to build a collection with your templates.
-You also can upload your files to Galaxy, select them in the history by clicking the *Select items* button, click on the newly appeared box on the right and select *Build dataset list*.
+**What it does?**
+--------------------
+This tool is used to produce EAL templates for data table used to build EML metadata. It produces the following eal files: 
+
+- attibutes_my_datatable.txt (describe the attributes of your data table)
+- catvars_mydatatable.txt (only if there are one or more catégorical variable in your data table)
+- custom_units.txt (made to describe custom units if there are any)
+
+After that, these files can be edited to add information about your data table and then be used in the make eml tool to produce EML metadata.   
+
+**How to use it?**
+--------------------
+
+To use this tool, you need to select, in your history a data collection with your data table (one or more). To do so, you can select the **Upload file** tool, select the *Collection* tab, upload all your data table file, click on the *Start* button to integrate the files to Galaxy and then click on *Build*. You will need to choose a name and select *Create collection* to build a collection with your templates. You also can upload your files to Galaxy, select them in the history by clicking the *Select items* button, click on the newly appeared box on the right and select *Build dataset list*.
 
     ]]></help>
 </tool>

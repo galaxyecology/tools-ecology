@@ -1,8 +1,7 @@
 <tool id="eal_templates" name="Make templates" version="0.1.0+galaxy0" profile="22.05">
     <description>for core features of a data package for EML metadata creation</description>
     <requirements>
-        <requirement type="package" version="4.3.1">r-base</requirement>
-        <requirement type="package" version="3.5.5">r-emlassemblyline</requirement>
+        <container type="docker">outils-patrinat.mnhn.fr/metashark:latest</container>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
     
@@ -25,8 +24,10 @@
         
     </inputs>
     <outputs>
-          <collection name="output" type="list" label="Templates">
-              <discover_datasets pattern="__name_and_ext__"/>
+          <collection name="output" type="list" label="Core features templates">
+              <discover_datasets pattern="(?P&lt;designation&gt;.+\.txt)" format="txt"/>
+              <discover_datasets pattern="(?P&lt;designation&gt;.+\.docx)" format="docx"/>
+              <discover_datasets pattern="(?P&lt;designation&gt;.+\.md)" format="markdown"/>
           </collection>
     </outputs>
     <tests>
@@ -40,9 +41,16 @@
 
 **What it does?**
 --------------------
+This tool produce templates for core features of a data package used to build EML metadata. It produces the following eal files: 
 
-This tool produce templates for core features of a data package for EML metadata. 
-This tool can be used before of the make eml tool.
+- abstract.txt
+- keywords.txt
+- methods.txt
+- personnel.txt
+- intellectual_rights.txt
+- additional_info.txt
+
+After that, these files can be edited to add informations about your data and then be used in the make EML tool to produce EML metadata.
 
 **How to use it?**
 --------------------
