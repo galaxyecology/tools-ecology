@@ -1,4 +1,4 @@
-<tool id="raster_template" name="Make templates for raster files" version="0.1.0+galaxy0" profile="22.05">
+<tool id="raster_template" name="Make templates for raster files" version="0.1.1+galaxy0" profile="22.05">
     <description>attributes for EML metadata creation</description>
     <requirements>
         <container type="docker">outils-patrinat.mnhn.fr/metashark:latest</container>
