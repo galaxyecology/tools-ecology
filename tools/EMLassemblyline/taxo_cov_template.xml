@@ -1,4 +1,4 @@
-<tool id="taxo_cov_template" name="Make taxonomic coverage template" version="0.1.0+galaxy0" profile="22.05">
+<tool id="taxo_cov_template" name="Make taxonomic coverage template" version="0.1.1+galaxy0" profile="22.05">
     <description>for EML metadata creation</description>
     <requirements>
         <container type="docker">outils-patrinat.mnhn.fr/metashark:latest</container>
