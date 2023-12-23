@@ -105,10 +105,10 @@
             <param name="templates" value="annotations.txt,keywords.txt,attributes_data_blary_al.txt,catvars_data_blary_al.txt,geographic_coverage.tabular,personnel.txt" >
             </param>
             <output name="metadataout" >
-			<assert_contents>
-				<is_valid_xml />
-				<xml_element path="./dataset"/>
-                	</assert_contents>
+                <assert_contents>
+                    <is_valid_xml />
+                    <xml_element path="./dataset"/>
+                </assert_contents>
             </output>
         </test>
     </tests>
