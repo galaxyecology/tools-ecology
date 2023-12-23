@@ -1,8 +1,7 @@
-<tool id="makeeml" name="Make EML" version="0.1.0+galaxy0" profile="22.05">
+<tool id="makeeml" name="Make EML" version="0.1.1+galaxy1" profile="22.05">
     <description> Create EML from EAL templates</description>
     <requirements>
-        <requirement type="package" version="4.3.1">r-base</requirement>
-        <requirement type="package" version="3.5.5">r-emlassemblyline</requirement>
+        <container type="docker">outils-patrinat.mnhn.fr/metashark:latest</container>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
     
@@ -18,6 +17,18 @@
         #set $table += $indata.element_identifier + " ";
     #end for
     
+    #set $raster = ""
+    #for $data_raster in $dataraster
+        ln -s '$data_raster' 'data_files/${data_raster.element_identifier}';
+        #set $raster += $data_raster.element_identifier + " ";
+    #end for
+    
+    #set $vector = ""
+    #for $data_vector in $datavector
+        ln -s '$data_vector' 'data_files/${data_vector.element_identifier}';
+        #set $vector += $data_vector.element_identifier + " ";
+    #end for
+    
     #set $other = ""
     #for $data_other in $dataother
         ln -s '$data_other' 'data_files/${data_other.element_identifier}';
@@ -29,22 +40,34 @@
        #set $quotetable += $q.quote + ",";
     #end for 
 
+    
     Rscript 
      '$__tool_directory__/make_eml.R' 2> err.txt
      '$title'
      '$temporal_coverage.start'
      '$temporal_coverage.end'
      '$table'
+     '$raster'
+     '$vector'
      '$other'
      '$destable'
+     '$desraster'
+     '$desvector'
      '$desother'
      '$quotetable'
      '$table_url'
      '$other_url'
+     '$raster_url'
+     '$vector_url'
 		
     ]]></command>
     <inputs>
-        <param name="templates" type="data_collection"  collection_type="list" format="tabular" label="Upload all EAL templates" help= "Input a data collection with only tabular files." />
+        <param name="templates" type="data" multiple="True" label="Upload all EAL templates" help="You can upload dataset collection or upload templates one by one (especially if there are multiple format)."/>
+        <param name="title" type="text" label="Title for your dataset." />
+      <section name="temporal_coverage" title="Temporal coverage" expanded="true">
+	<param name="start" type="text" label="Beginning date of the dataset in the format YYYY-MM-DD" optional="false"/>
+	<param name="end" type="text" label="Ending date of the dataset in the format YYYY-MM-DD" optional="false"/>
+      </section>
       <section name="data_table" title="Do you have data table ? " >
         <param name="inputdata" type="data_collection"  collection_type="list"  label="Upload all data files wich are data table" help= "Input a data collection." optional = "true"/>
         <param name="destable" type="text" label="Give a short description of your data file. If there is multiple data files please separate your descriptions with a comma (,) in the same order of your data input" optional = "true"/>
@@ -57,15 +80,20 @@
         </repeat>
         <param name="table_url" type="text" label="Give the publicly accessible URL from which your data table can be downloaded. If more than one, data files please separate your URLs with a comma (,) in the same order of your data input. If wanting to include URLs for some but not all then use a - for those that don't have a URL." optional = "true"/>
       </section>
+      <section name="data_raster" title="Do you have raster data ? " >
+        <param name="dataraster" type="data_collection"  collection_type="list"  label="Upload all data files wich are spatial raster" help= "Input a data collection." optional = "true"/>
+        <param name="desraster" type="text" label="Give a short description of your data file. If there is multiple data files please separate your descriptions with a comma (,) in the same order of your data input" optional = "true"/>
+        <param name="raster_url" type="text" label="Give the publicly accessible URL from which your raster data entity can be downloaded. If more than one, data files please separate your URLs with a comma (,) in the same order of your data input. If wanting to include URLs for some but not all then use a - for those that don't have a URL." optional = "true"/>
+      </section>
+      <section name="data_vector" title="Do you have vector data ? " >
+        <param name="datavector" type="data_collection"  collection_type="list"  label="Upload all data files wich are spatial vector" help= "Input a data collection." optional = "true"/>
+        <param name="desvector" type="text" label="Give a short description of your data file. If there is multiple data files please separate your descriptions with a comma (,) in the same order of your data input" optional = "true"/>
+        <param name="vector_url" type="text" label="Give the publicly accessible URL from which your vector data entity can be downloaded. If more than one, data files please separate your URLs with a comma (,) in the same order of your data input. If wanting to include URLs for some but not all then use a - for those that don't have a URL." optional = "true"/>
+      </section>
       <section name="data_other" title="Do you have other data entity ? " >
         <param name="dataother" type="data_collection"  collection_type="list"  label="Upload all data files wich are other entity" help= "Input a data collection." optional = "true"/>
-        <param name="desother" type="text" label="Give a short description of your data file. If there are multiple data files please separate your descriptions with a comma (,) in the same order of your data input" optional = "true"/>
+        <param name="desother" type="text" label="Give a short description of your data file. If there is multiple data files please separate your descriptions with a comma (,) in the same order of your data input" optional = "true"/>
         <param name="other_url" type="text" label="Give the publicly accessible URL from which your other data entity can be downloaded. If more than one, data files please separate your URLs with a comma (,) in the same order of your data input. If wanting to include URLs for some but not all then use a - for those that don't have a URL." optional = "true"/>
-      </section>
-	<param name="title" type="text" label="Title for your dataset." />
-      <section name="temporal_coverage" title="Temporal coverage" >
-	<param name="start" type="text" label="Beginning date of the dataset in the format YYYY-MM-DD" />
-	<param name="end" type="text" label="Ending date of the dataset in the format YYYY-MM-DD" />
       </section>
     </inputs>
     <outputs>
@@ -74,28 +102,18 @@
     </outputs>
     <tests>
         <test expect_num_outputs="2"> 
-            <param name="templates">
-                <collection type="list">
-			<element name="annotations.txt" value="annotations.txt"/>
-                        <element name="keywords.txt" value="keywords.txt" />
-                        <element name="attributes_data_blary_al.txt" value="attributes_data_blary_al.txt"/>
-                        <element name="catvars_data_blary_al.txt" value="catvars_data_blary_al.txt"/>
-                        <element name="geographic_coverage.txt" value="geographic_coverage.txt" />
-                        <element name="personnel.txt" value="personnel.txt" />
-                </collection>
+            <param name="templates" value="annotations.txt,keywords.txt,attributes_data_blary_al.txt,catvars_data_blary_al.txt,geographic_coverage.tabular,personnel.txt" >
             </param>
             <output name="metadataout" >
-			<assert_contents>
-				<is_valid_xml />
-				<xml_element path="./dataset"/>
-                	</assert_contents>
+                <assert_contents>
+                    <is_valid_xml />
+                    <xml_element path="./dataset"/>
+                </assert_contents>
             </output>
         </test>
     </tests>
 <help><![CDATA[
-.. class:: warningmark
 
-'''TIP''' This tool accept as inputs only Galaxy collections containing EAL templates in tabular format.
 
 **What it does?**
 --------------------
@@ -105,30 +123,17 @@ This tool can be used in the continuation of the eml2eal tool.
 
 **How to use it?**
 --------------------
-To use this tool, you can select, in your history a data collection with EAL templates made by the eml2eal tool. 
-You can also select your own templates that you have to integrate into a Galaxy collection.
+To use this tool, you can select, in your history a data collection with EAL templates or select templates one by one.
 
 To do so you can select the **Upload file** tool, select the *Collection* tab, upload all your templates, click on the *Start* button to integrate the files to Galaxy and then click
 on *Build*. You will need to choose a name and select *Create collection* to build a collection with your templates.
 You also can upload your files to Galaxy, select them in the history by clicking the *Select items* button, click on the newly appeared box on the right and select *Build dataset list*.
-
-**Recommended optional input:**
-
-Data files : If you have data files you can input them to give more information in your metadata file. There are two parameters to do to so. The first is "Do you have data table ?" that provide you to import a collection with all your data table. The second is "Do you have other data entity ?" is for all your data file that not data table. 
-
-Description : You can add a short description of each data files you input. If there are multiple data files, please separate your descriptions with a comma (,) in the same order of your data input 
-
-Quote : If you have import data table files, you can specify if there are quotes and what type of quote is it. Repeat this parameter as many times as the number of data tables you've input and in the same order
-
-Title : You can give a title for your dataset.
-
-Temporal coverage : You can specify the temporal coverage of your data. 
 
  .. class:: infomark 
  
  Templates can be directly edited in Galaxy (view **eml2eal** tool for more information.)
  
 
-You then have to select your collection in the upload box of the tool and click **Execute** to get your EML metadata.
+
 ]]></help>
 </tool>

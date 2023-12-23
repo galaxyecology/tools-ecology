@@ -1,6 +1,6 @@
 <tool id="geo_cov_template" name="Make geographic coverage template" version="0.1.0+galaxy0" profile="22.05">
     <description>for EML metadata creation</description>
-    <requirements>
+     <requirements>
         <requirement type="package" version="4.3.1">r-base</requirement>
         <requirement type="package" version="3.5.5">r-emlassemblyline</requirement>
     </requirements>
@@ -28,7 +28,7 @@
          <param name="empty" type="boolean"  label="Write an empty template file ?" />
     </inputs>
     <outputs>
-         <data name="output" from_work_dir="geographic_coverage.txt" format="txt" label="geographic coverage template"/>
+         <data name="output" from_work_dir="geographic_coverage.txt" format="txt" label="geographic_coverage.txt"/>
     </outputs>
     <tests>
         <test>
@@ -45,8 +45,8 @@
 **What it does?**
 --------------------
 
-This tool produce template for EML metadata. It produce templates for geographic coverage. 
-This tool can be used with the "Make templates for core features of a data package" tool before the "make eml" tool.
+This tool produce template for EML metadata. It produce template for geographic coverage. 
+After that, these files can be edited to add information about your data and then be used in the make eml tool to produce EML metadata.
 
 **How to use it?**
 --------------------

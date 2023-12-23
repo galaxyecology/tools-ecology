@@ -1,0 +1,13 @@
+attributeName	code	definition
+PROGRAMME	DCE	Value: DCE for attribute: PROGRAMME
+PROGRAMME	ELV	Value: ELV for attribute: PROGRAMME
+PROGRAMME	DCE/ELV	Value: DCE/ELV for attribute: PROGRAMME
+PROGRAMME	REBENT	Value: REBENT for attribute: PROGRAMME
+PROGRAMME	REBENT/DCE	Value: REBENT/DCE for attribute: PROGRAMME
+OPERATEUR_	MNHN CC	Value: MNHN CC for attribute: OPERATEUR_
+OPERATEUR_	Station de Wimer	Value: Station de Wimer for attribute: OPERATEUR_
+OPERATEUR_	Ifremer Anglet	Value: Ifremer Anglet for attribute: OPERATEUR_
+OPERATEUR_	Bio-Littoral	Value: Bio-Littoral for attribute: OPERATEUR_
+OPERATEUR_	Ecosub	Value: Ecosub for attribute: OPERATEUR_
+STATUT_DU_	actif	Value: actif for attribute: STATUT_DU_
+STATUT_DU_	inactif	Value: inactif for attribute: STATUT_DU_

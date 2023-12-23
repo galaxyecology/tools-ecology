@@ -30,6 +30,7 @@ if (empty == "false"){
 }else if (empty=="true"){
    empty=TRUE}
 
+
 #Make template
 
 template_geographic_coverage(path =".", data.path = "data_files", data.table = tablename, lat.col = latcol, lon.col = longcol, site.col = sitecol, empty = empty)
