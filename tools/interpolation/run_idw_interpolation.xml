@@ -1,5 +1,5 @@
-<tool id="interpolation_run_idw_interpolation" name="Run IDW interpolation" version="1.0" profile="22.05">
-    <description>based on a .csv and .geojson file</description>
+<tool id="interpolation_run_idw_interpolation" name="Run interpolation" version="1.0">
+    <description>based on Inverse Distance Weighting (IDW).</description>
     <requirements>
         <requirement type="package" version="4.1.2">r-base</requirement>
         <requirement type="package" version="1.2.0">r-getopt</requirement>
@@ -28,27 +28,27 @@
         --outputData '$output'
     ]]></command>
     <inputs>
-        <param type="data" format="csv" name="observations_csv" label="Select the .csv file including the observations."/>
-        <param type="data" format="geojson" name="study_area" label="Select the .geojson containing the study area."/>
+        <param type="data" format="csv" name="observations_csv" label="Select the .csv file including the observations"/>
+        <param type="data" format="geojson" name="study_area" label="Select the .geojson containing the study area"/>
         <param name="latitude_column" type="data_column" data_ref="observations_csv" label="In which column are the latitude coordinates?"/>
         <param name="longitude_column" type="data_column" data_ref="observations_csv" label="In which column are the longitude coordinates?"/>
         <param name="observations_column" type="data_column" data_ref="observations_csv" label="In which column are the observation values?"/>
-        <param value="2" min="0.1" max="5" type="float" name="idw_power" label="Select the interpolation power of the IDW method."/>
-        <param value="50000" min="1000" max="100000" type="integer" name="sample_points" label="Select the number of sample points."/>
-        <param type="select" name="sample_type" label="Select a sample type.">
+        <param value="2" min="0.1" max="5" type="float" name="idw_power" label="Select the interpolation power of the IDW method"/>
+        <param value="50000" min="1000" max="100000" type="integer" name="sample_points" label="Select the number of sample points"/>
+        <param type="select" name="sample_type" label="Select a sample type">
             <option value="regular">Regular</option>
             <option value="random">Random</option>
             <option value="stratified">Stratified</option>
             <option value="nonaligned">Nonaligned</option>
         </param>
-        <param type="text" name="legend_label" label="Enter a label for the legend" optional="false"/>
+        <param type="text" name="legend_label" label="Enter a label for the legend"/>
         <param type="select" name="legend_position" label="Should the legend be displayed inside or outside the frame?">
             <option value="false">Inside</option>
             <option value="true">Outside</option>
         </param>
-        <param value="0.2" min="0.1" max="2" type="float" name="dot_size" label="Select the dot size of the points shown on the map."/>
-        <param value="10" min="1" max="100" type="integer" name="number_classes" label="Number of classes (Note: Not all values are possible. tmap tries to generate a number of classes which are as close to the indicated value as possible)."/>
-        <param type="select" name="color_type" label="Select a color palette.">
+        <param value="0.2" min="0.1" max="2" type="float" name="dot_size" label="Select the dot size of the points shown on the map"/>
+        <param value="10" min="1" max="100" type="integer" name="number_classes" label="Number of classes" help="Note: Not all values are possible. tmap tries to generate a number of classes which are as close to the indicated value as possible"/>
+        <param type="select" name="color_type" label="Select a color palette">
             <option value="RdBu">RdBu</option>
             <option value="Blues">Blues</option>
             <option value="BuGn">BuGn</option>
@@ -69,7 +69,7 @@
             <option value="YlOrBr">YlOrBr</option>
             <option value="YlOrRd">YlOrRd</option>
         </param>
-        <param type="select" name="test_case" label="Should a seed be set?">
+        <param type="boolean" name="test_case" label="Should a seed be set?">
             <option value="false">No</option>
             <option value="true">Yes</option>
         </param>
