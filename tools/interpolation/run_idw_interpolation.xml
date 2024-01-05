@@ -1,13 +1,13 @@
 <tool id="interpolation_run_idw_interpolation" name="Run interpolation" version="1.0" profile="22.05">
-    <description>based on Inverse Distance Weighting (IDW).</description>
+    <description>based on Inverse Distance Weighting (IDW)</description>
     <requirements>
-        <requirement type="package" version="4.1.2">r-base</requirement>
-        <requirement type="package" version="1.2.0">r-getopt</requirement>
-        <requirement type="package" version="1.0.14">r-sf</requirement>
-        <requirement type="package" version="3.3.3">r-tmap</requirement>
-        <requirement type="package" version="1.1.3">r-rcolorbrewer</requirement>
-        <requirement type="package" version="3.6.23">r-raster</requirement>
-        <requirement type="package" version="2.1.1">r-gstat</requirement>
+        <requirement type="package" version="4.3.2">r-base</requirement>
+        <requirement type="package" version="1.20.4">r-getopt</requirement>
+        <requirement type="package" version="1.0_2">r-sf</requirement>
+        <requirement type="package" version="3.3_1">r-tmap</requirement>
+        <requirement type="package" version="1.1_2">r-rcolorbrewer</requirement>
+        <requirement type="package" version="2.5_8">r-raster</requirement>
+        <requirement type="package" version="1.1_5">r-gstat</requirement>
     </requirements>
     <command detect_errors='exit_code'><![CDATA[
     Rscript '$__tool_directory__/run_idw_interpolation.R'
@@ -69,7 +69,7 @@
             <option value="YlOrBr">YlOrBr</option>
             <option value="YlOrRd">YlOrRd</option>
         </param>
-        <<param type="boolean" name="test_case" label="Should a seed be set?" truevalue="true" falsevalue="false" />>
+        <param type="boolean" name="test_case" label="Should a seed be set?" truevalue="true" falsevalue="false" />
     </inputs>
     <outputs>
         <data name="output" format="png" />
