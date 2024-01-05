@@ -69,10 +69,7 @@
             <option value="YlOrBr">YlOrBr</option>
             <option value="YlOrRd">YlOrRd</option>
         </param>
-        <param type="boolean" name="test_case" label="Should a seed be set?">
-            <option value="false">No</option>
-            <option value="true">Yes</option>
-        </param>
+        <<param type="boolean" name="test_case" label="Should a seed be set?" truevalue="true" falsevalue="false" />>
     </inputs>
     <outputs>
         <data name="output" format="png" />
