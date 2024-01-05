@@ -1,4 +1,4 @@
-<tool id="interpolation_run_idw_interpolation" name="Run interpolation" version="1.0">
+<tool id="interpolation_run_idw_interpolation" name="Run interpolation" version="1.0" profile="22.05>
     <description>based on Inverse Distance Weighting (IDW).</description>
     <requirements>
         <requirement type="package" version="4.1.2">r-base</requirement>
