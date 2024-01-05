@@ -1,0 +1,11 @@
+sensor_id,attribute,latitude,longitude,measurement,accuracy,unit,date,quality_level,data_processing
+1,waterTemp,51.95690094,7.61361456,10.428,0.002,celsius,03.04.2023 10:00,checked,adjusted
+2,waterTemp,51.9558893,7.616701107,10.181,0.1,celsius,03.04.2023 10:00,checked,adjusted
+3,waterTemp,51.95355062,7.606799142,11.653,0.1,celsius,03.04.2023 10:00,checked,raw
+4,waterTemp,51.95258302,7.608679928,10.619,0.002,celsius,03.04.2023 10:00,unchecked,adjusted
+5,waterTemp,51.95078585,7.604339653,10.124,0.002,celsius,03.04.2023 10:00,checked,adjusted
+6,waterTemp,51.94994044,7.605288084,10.834,0.1,celsius,03.04.2023 10:00,checked,raw
+7,waterTemp,51.94679837,7.596725189,11.244,0.002,celsius,03.04.2023 10:00,checked,adjusted
+8,waterTemp,51.94552117,7.600045848,20.575,0.002,celsius,03.04.2023 10:00,unchecked,raw
+9,waterTemp,51.94244725,7.594818813,10.669,0.002,celsius,03.04.2023 10:00,checked,adjusted
+10,waterTemp,51.94294707,7.597031164,10.702,0.1,celsius,03.04.2023 10:00,checked,adjusted
