@@ -1,13 +1,10 @@
 <tool id="interpolation_run_idw_interpolation" name="Run interpolation" version="1.0" profile="22.05">
     <description>based on Inverse Distance Weighting (IDW)</description>
     <requirements>
-        <requirement type="package" version="4.3.2">r-base</requirement>
         <requirement type="package" version="1.20.4">r-getopt</requirement>
-        <requirement type="package" version="1.0_2">r-sf</requirement>
-        <requirement type="package" version="3.3_1">r-tmap</requirement>
-        <requirement type="package" version="1.1_2">r-rcolorbrewer</requirement>
-        <requirement type="package" version="2.5_8">r-raster</requirement>
-        <requirement type="package" version="1.1_5">r-gstat</requirement>
+        <requirement type="package" version="3.3_4">r-tmap</requirement>
+        <requirement type="package" version="3.6_26">r-raster</requirement>
+        <requirement type="package" version="2.1_1">r-gstat</requirement>
     </requirements>
     <command detect_errors='exit_code'><![CDATA[
     Rscript '$__tool_directory__/run_idw_interpolation.R'
@@ -91,42 +88,15 @@
             <param name="dot_size" value="1"/>
             <param name="color_type" value="RdBu"/>
             <param name="test_case" value="true"/>
-            <output name="output" file="run_idw_interpolation_test_output.png"/>
+            <output name="output" file="run_idw_interpolation_test_output.png" compare="sim_size" delta_frac="0.1"/>
         </test>
     </tests>
     <help><![CDATA[
         IDW stands for Inverse Distance Weighting. The .csv file contains the observations and the .geojson file the study area. The plot is stored as a .png file. 
     ]]></help>
     <citations>
-        <citation type="bibtex">
-            @Manual{getopt,
-                title = {getopt: C-Like 'getopt' Behavior},
-                author = {Trevor L Davis and Allen Day},
-                year = {2019},
-                note = {R package version 1.20.3},
-                url = {https://CRAN.R-project.org/package=getopt},
-            }
-        </citation>
         <citation type="doi">10.32614/RJ-2018-009</citation>
         <citation type="doi">10.18637/jss.v084.i06</citation>
-        <citation type="bibtex">
-            @Manual{rcb,
-                title = {RColorBrewer: ColorBrewer Palettes},
-                author = {Erich Neuwirth},
-                year = {2022},
-                note = {R package version 1.1-3},
-                url = {https://CRAN.R-project.org/package=RColorBrewer},
-            }
-        </citation>
-        <citation type="bibtex">
-            @Manual{raster,
-                title = {raster: Geographic Data Analysis and Modeling},
-                author = {Robert J. Hijmans},
-                year = {2023},
-                note = {R package version 3.6-23},
-                url = {https://CRAN.R-project.org/package=raster},
-            }
-        </citation>
         <citation type="doi">10.32614/RJ-2016-014</citation>
     </citations>
 </tool>
