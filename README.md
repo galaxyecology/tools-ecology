@@ -5,15 +5,21 @@ GalaxyE Community
 
 The GalaxyE Community is devoted to the creation of resources for **ecology** research conducted through the [Galaxy Project](http://galaxyproject.org/).
 
-
 This repo contains a subset of Galaxy repositories used in the Tool Shed (https://toolshed.g2.bx.psu.edu).
 
 These repositories are maintained and developed by the GalaxyE team. Development of GalaxyE tools was initiated through the "65 Millions d'observateurs" French national project, and are continuing thanks to the European [H2020 GAPARS project](http://gapars.mmos.ch/), the European projects EOSC-PILLAR and GALLANTRIES and coordinated by the French national Biodiversity data hub, PNDB.
 
-Pull Requests with dependencies specified as conda-package will be automatically tested and verified using [planemo](https://github.com/galaxyproject/planemo). If the tests pass and the pull request is merged, the tool will be automatically uploaded to the [Test](http://testtoolshed.g2.bx.psu.edu/)- and [Main Tool Shed](http://toolshed.g2.bx.psu.edu/).
+Pull Requests with dependencies specified as conda-package will be automatically tested and verified using [planemo](https://github.com/galaxyproject/planemo).
+If the tests pass and the pull request is merged, the tool will be automatically uploaded to the [Test](http://testtoolshed.g2.bx.psu.edu/)- and [Main Tool Shed](http://toolshed.g2.bx.psu.edu/).
 
 Please note, if you don’t want to run the tests or the automatic upload, add `[ci skip]` to the git commit message.
 Commits that have [ci skip] anywhere in the commit messages are ignored by Travis CI.
+
+To learn more about Galaxy tools, how you can write them, and how they get deployed on the European Galaxy server, please see the following links.
+
+* [3 steps to get your tool into Galaxy - A real-world example](https://usegalaxy-eu.github.io/posts/2020/08/22/three-steps-to-galaxify-your-tool/)
+* [Visual Studio Code extension](https://github.com/galaxyproject/galaxy-language-server)
+* [5h Tutorial](https://planemo.readthedocs.io/en/latest/writing.html)
 
 
 Support
