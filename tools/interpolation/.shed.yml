@@ -10,6 +10,6 @@ auto_tool_repositories:
   name_template: "{{ tool_id }}"
   description_template: "Wrapper for idw interpolation tool: {{ tool_name }}."
 suite:
-  name: "Run IDW interpolation"
+  name: "idw_interpolation"
   description: "A tool for running an IDW interpolation."
   type: unrestricted
