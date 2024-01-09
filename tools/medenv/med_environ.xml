@@ -31,7 +31,7 @@ python '$__tool_directory__/med_environ.py'
     --tol_spatial_coordinates '${tol_spatial_coordinates}'
 		--keyfile .medenvkey
     --verbose '${verbose}'
-    </command>
+    ]]></command>
     <inputs>
         <param name="input" type="data" format="csv" label="Input dataset"/>
         <param name="env_variables" type="select" label="Which variables to add" multiple="true">
