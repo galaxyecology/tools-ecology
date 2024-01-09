@@ -29,7 +29,7 @@ python '$__tool_directory__/med_environ.py'
     --depth_key '${depth_key}'
     --variables '${env_variables}'
     --tol_spatial_coordinates '${tol_spatial_coordinates}'
-		--keyfile .medenvkey
+    --keyfile .medenvkey
     --verbose '${verbose}'
     ]]></command>
     <inputs>
