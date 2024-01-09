@@ -10,7 +10,7 @@
     <creator>
         <person givenName="Jérémy" familyName="Fix" url="http://www.github.com/jeremyfix/" email="jeremy.fix@centralesupelec.fr"/>
     </creator>
-	<command>
+	<command><![CDATA[
 		#set $medenv_key_file = os.environ.get('MEDENV_KEY_FILE', '')
 		#if os.path.isfile(str($medenv_key_file))
 			echo "xx $medenv_key_file xx" &&
