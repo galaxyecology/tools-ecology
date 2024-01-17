@@ -1,7 +1,7 @@
 <tool id="obis_data" name="OBIS occurences" version="@VERSION@" profile="20.01">
     <description>retrieve data</description>
     <macros>
-        <import>macro_obis.xml</import>
+        <import>macro.xml</import>
     </macros>
     <expand macro="topic"/>
     <expand macro="requirements">
