@@ -20,28 +20,28 @@ if (length(args) < 1) {
     long_max <- args[6]
 }
 
+if (lat_min == "0.0" & lat_max == "0.0" & long_min == "0.0" & long_max == "0.0") {
+lat_min <- ""
+lat_max <- ""
+long_min <- ""
+long_max <- ""
+}
 
 ##### Import data
 # Get biological occurrences
 if (lat_min != "" & sname != "" & taxid != "") {
 my_occs <- robis::occurrence(scientificname = sname, taxonid = taxid, geometry = paste("POLYGON ((", long_min, lat_min,  ", ", long_min, lat_max, ", ", long_max, lat_min, ", ", long_max, lat_max, ", ", long_min, lat_min, "))"))
-}
-if (lat_min != "" & sname != "" & taxid == "") {
+}else if (lat_min != "" & sname != "" & taxid == "") {
 my_occs <- robis::occurrence(scientificname = sname, geometry = paste("POLYGON ((", long_min, lat_min,  ", ", long_min, lat_max, ", ", long_max, lat_min, ", ", long_max, lat_max, ", ", long_min, lat_min, "))"))
-}
-if (lat_min != "" & sname == "" & taxid != "") {
+}else if (lat_min != "" & sname == "" & taxid != "") {
 my_occs <- robis::occurrence(taxonid = taxid, geometry = paste("POLYGON ((", long_min, lat_min,  ", ", long_min, lat_max, ", ", long_max, lat_min, ", ", long_max, lat_max, ", ", long_min, lat_min, "))"))
-}
-if (lat_min != "" & sname == "" & taxid == "") {
+}else if (lat_min != "" & sname == "" & taxid == "") {
 my_occs <- robis::occurrence(geometry = paste("POLYGON ((", long_min, lat_min,  ", ", long_min, lat_max, ", ", long_max, lat_min, ", ", long_max, lat_max, ", ", long_min, lat_min, "))"))
-}
-if (lat_min == "" & sname != "" & taxid != "") {
+}else if (lat_min == "" & sname != "" & taxid != "") {
 my_occs <- robis::occurrence(scientificname = sname, taxonid = taxid)
-}
-if (lat_min == "" & sname == "" & taxid != "") {
+}else if (lat_min == "" & sname == "" & taxid != "") {
 my_occs <- robis::occurrence(taxonid = taxid)
-}
-if (lat_min == "" & sname != "" & taxid == "") {
+}else if (lat_min == "" & sname != "" & taxid == "") {
 my_occs <- robis::occurrence(scientificname = sname)
 }
 
