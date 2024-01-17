@@ -2,6 +2,7 @@ categories:
     - Ecology
 owner: ecology
 remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/obisindicators
+homepage_url: https://github.com/Marie59/obisindicators
 long_description: |
   Compute biodiveristy indicators for marine data from obis
 type: unrestricted
