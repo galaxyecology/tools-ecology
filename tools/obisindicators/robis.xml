@@ -1,0 +1,94 @@
+<tool id="obis_data" name="OBIS occurences" version="@VERSION@" profile="20.01">
+    <description>retrieve data</description>
+    <macros>
+        <import>macro_obis.xml</import>
+    </macros>
+    <expand macro="topic"/>
+    <expand macro="requirements">
+        <requirement type="package" version="2.11.3">r-robis</requirement>
+    </expand>
+    <required_files>
+        <include type="literal" path="robis.r"/>
+    </required_files>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript
+            '$__tool_directory__/robis.r'
+            '$species'
+            '$taxon'
+            '$lat_min'
+            '$lat_max'
+            '$long_min'
+            '$long_max'
+            '$output'
+        ]]>
+    </command>
+    <inputs>
+        <param name="species" type="text" label="Scientific name of the species" help="Genus species format, eg : Scomber scombrus"/>
+        <param name="taxon" type="text" label="Taxon ID"/>
+        <param name="lat_min" type="float" min="-90" max="90" value="0" label="Input latitude min (+north/-south):" optional="true"/>
+        <param name="lat_max" type="float" min="-90" max="90" value="0" label="Input latitude max (+north/-south):" optional="true"/>
+        <param name="long_min" type="float" min="-90" max="90" value="0" label="Input longitude min (+east/-west):" optional="true"/>
+        <param name="long_max" type="float" min="-90" max="90" value="0" label="Input longitude max (+east/-west):" optional="true"/>
+    </inputs>
+    <outputs>
+        <data name="output" format="tabular" from_work_dir="output.tab" label="Species occurences"/>
+    </outputs>
+    <tests>
+        <test expect_num_outputs="1">
+            <param name="species" value="Scomber scombrus"/>
+            <output name="output">
+                <assert_contents>
+                    <has_text text="Scombridae"/>
+                    <has_n_columns n="163"/>
+                </assert_contents>
+            </output>
+        </test>
+        <test expect_num_outputs="1">
+            <param name="lat_min" value="6"/>
+            <param name="lat_max" value="12"/>
+            <param name="long_min" value="40"/>
+            <param name="long_max" value="43"/>
+            <output name="output">
+                <assert_contents>
+                    <has_text text="basisOfRecord"/>
+                    <has_n_columns n="144"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+===========================
+Get species occurences data
+===========================      
+**What it does**
+
+Search and retrieve species occurences across OBIS database.
+
+|
+
+**How to use it**
+
+Enter a species scientific name, be careful that the tool is case sensitive. Eg : Scomber scombrus.
+
+Or enter the latitude longitude of the area you want to retrieve data from.
+
+
+|
+
+**Output**
+
+The tool returns a table with the species observations available in OBIS database.
+
+Output file will have at least the following attributes : BasisOfRecords, longitude, latitude, species, individualcount.
+
+|
+
+**How it works**
+
+This tool use the robis R package.
+
+
+Includes functionality for retrieving species occurrence data, and combining those data.
+    ]]></help>
+    <expand macro="obis_doiref"/>
+</tool>
