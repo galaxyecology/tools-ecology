@@ -26,7 +26,7 @@
         <param name="species" type="text" label="Scientific name of the species" help="Genus species format, eg : Scomber scombrus">
             <validator type="regex">^[A-Za-z ]*$</validator>
         </param>
-        <param name="taxon" type="text" label="Taxon ID"/>
+        <param name="taxon" type="text" label="Taxon ID">
             <validator type="regex">^[0-9]*$</validator>
         </param>
         <param name="lat_min" type="float" min="-90" max="90" value="0" label="Input latitude min (+north/-south):" optional="true"/>
