@@ -1,4 +1,4 @@
-lat	long	pred	taxon
+lat	long	Prediction.index	spe
 -65.57	139.22	0.841140843659849	Actiniaria
 -65.57	139.22	0.84803516905332	Actiniaria
 -65.57	139.23	0.845987230372577	Actiniaria
@@ -14,6 +14,7 @@ lat	long	pred	taxon
 -65.57	139.3	0.837674310999705	Actiniaria
 -65.57	139.3	0.78950055854148	Actiniaria
 -65.57	139.31	0.789217507689643	Actiniaria
+lat	long	Prediction.index	spe
 -65.57	139.22	0.247351772498557	Thouarella_vulpicauda
 -65.57	139.22	0.247098939858693	Thouarella_vulpicauda
 -65.57	139.23	0.246144373571671	Thouarella_vulpicauda
