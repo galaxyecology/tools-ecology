@@ -40,7 +40,7 @@
         ]]>
     </command>
     <inputs>
-        <expand macro="SRS_input"/>
+        <expand macro="obis_input"/>
         <param name="separator" type="select" display="radio" label="What character is the separator in your data? (Mostlikely a comma for a csv file and t for a tabular)">
             <option value="t">Tabulator (\t)</option>                 
             <option value=",">Comma (,)</option>  
@@ -132,5 +132,5 @@ A tabular file with observation data. Must at least contain four columns longitu
 
 - Multiple PNG files representing the indicators on a map (according to the choice of map made).
     ]]></help>
-    <expand macro="SRS_bibref"/>
+    <expand macro="obis_bibref"/>
 </tool>
