@@ -16,7 +16,7 @@ if (length(args)==0){
     enviro <- args[3]
 }
 
-env = read.table(enviro, header=T, na.strings = "na")
+env = read.table(enviro, sep="\t", dec=".", header=T, na.strings = "-9999")
 occurrence_files = strsplit(data,",")
 preds_files = strsplit(preds,",")
 
@@ -45,7 +45,7 @@ have.model <- function(taxon_phylum,noms_sp,comptage_sp,brt_phylum){
 ##########Execution########
 brt = NULL
 for (j in 1:length(preds_files[[1]])){
-    brt <- rbind(brt,read.table(preds_files[[1]][j], header = TRUE, na.strings = "na"))
+    brt <- rbind(brt,read.table(preds_files[[1]][j], sep="\t", header = TRUE, na.strings = "na"))
 }
 
 for (i in 1:length(occurrence_files[[1]])) {
@@ -53,7 +53,7 @@ for (i in 1:length(occurrence_files[[1]])) {
   cmpt <- NULL
   taxon <- list()
   
-  occurrence <- read.table(occurrence_files[[1]][i], dec = ",", sep = ";", header = TRUE, na.strings = "na")
+  occurrence <- read.table(occurrence_files[[1]][i], sep = "\t", header = TRUE, na.strings = "na")
   
   taxon_names <- names(occurrence)
   new_taxon <- taxon_names[!(taxon_names %in% names(env)) & taxon_names != "station"]
@@ -66,8 +66,8 @@ for (i in 1:length(occurrence_files[[1]])) {
 }
 
 #Taxa for which a model was obtained
-have_model2 = subset(have_model, have_model$`Model` != "N")
-have_model3 = subset(have_model, have_model$`Model` != "N")
+have_model2 = subset(have_model, have_model$`Model` != "No")
+have_model3 = subset(have_model, have_model$`Model` != "No")
 
 #Obtain a list of taxa (cleaned) that have obtained a BRT model (file that can be submitted to the match taxa tool of the WoRMS database to obtain their classification and be able to sort duplicates between taxonomic ranks)
 
@@ -80,7 +80,7 @@ have_model3 <- have_model3 %>% filter(!str_ends(Taxa, "sp.1|sp[0-9]"))
 have_model <- have_model %>% filter(!str_ends(Taxa, "sp.1|sp[0-9]"))
 
 #extraction of the have_model object
-write.csv(have_model,file = "have_model.csv", quote = F, row.names = F)
+write.table(have_model,file = "have_model.tsv", sep="\t", quote = F, row.names = F)
 
 #getting list of taxa for next if not using worms
 list_taxon = have_model3$Taxa

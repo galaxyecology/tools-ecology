@@ -21,7 +21,7 @@ if (length(args)==0)
 
 #load data 
 
-env.data <- read.table(enviro, header = TRUE, dec = ".", na.strings = "-9999.00") 
+env.data <- read.table(enviro, sep="\t", header = TRUE, dec = ".", na.strings = "-9999") 
 
 ##List of modelled taxa used for clustering
 tv <- read.table(taxa_list, dec=".", sep=" ", header=F, na.strings = "NA") 
@@ -33,7 +33,7 @@ data_split = str_split(preds,",")
 data.bio = NULL
 
 for (i in 1:length(data_split[[1]])) {
-data.bio1 <- read.table(data_split[[1]][i], dec=".", sep=" ", header=T, na.strings = "NA")
+data.bio1 <- read.table(data_split[[1]][i], dec=".", sep="\t", header=T, na.strings = "NA")
 data.bio <- rbind(data.bio,data.bio1)
 remove(data.bio1)
 }

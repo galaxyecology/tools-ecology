@@ -20,9 +20,9 @@
         '$output3'
     ]]></command>
     <inputs>
-      <param name="predictionmatrix" type="data" format="tabular" label="Prediction matrix (data to cluster from Cluster Estimate tool) "/>
-      <param name="envfile" type="data" format="txt,csv,tabular" label="Environmental file"/>
-      <param name="predictionfile" type="data" format="tabular" label="Prediction file (data.bio table from Cluster Estimate tool)"/>
+      <param name="envfile" type="data" format="tabular" label="Environmental file (tabular only)"/>
+      <param name="predictionmatrix" type="data" format="tabular" label="Prediction matrix (file 'data to cluster' from Cluster Estimate tool)"/>
+      <param name="predictionfile" type="data" format="tabular" label="Prediction file (file 'data.bio table' from Cluster Estimate tool)"/>
       <param name="k" type="integer" label="Number of Cluster wanted" min= "1" value="2"/>
       <param name="metric" type="select" label="What metric to use to calculate dissimilarities between observations ?">
              <option value = "manhattan">manhattan</option>
@@ -33,30 +33,31 @@
     </inputs>
     <outputs>
       <data name="output1" from_work_dir="sih.png" format="png" label="SIH plot"/>
-      <data name="output2" from_work_dir="points_clus.txt" format="txt" label="Cluster points"/>
-      <data name="output3" from_work_dir="clus.txt" format="txt" label="Cluster info"/>
+      <data name="output2" from_work_dir="points_clus.tsv" format="tabular" label="Cluster points"/>
+      <data name="output3" from_work_dir="clus.tsv" format="tabular" label="Cluster info"/>
     </outputs>
     <tests>
         <test>
             <param name="predictionmatrix" value="Data_to_cluster.tsv"/>
-            <param name="envfile" value="ceamarc_env.csv"/>
+            <param name="envfile" value="ceamarc_env.tsv"/>
             <param name="predictionfile" value="Data.bio_table.tsv"/>
             <param name='k' value="2"/>
             <param name='metric' value="manhattan"/>
             <param name='sample' value="10"/>
             <output name='output1'>
                 <assert_contents>
-            	    <has_size value="8128" delta="500"/>
+            	    <has_size value="7369" delta="50"/>
             	</assert_contents>
             </output>
             <output name='output2'>
                 <assert_contents>
-                    <has_size value="255" delta="1000" />
+                    <has_n_columns n="3"/>    
+                    <has_text text="lat"/>
                 </assert_contents>
             </output>
             <output name='output3' >
                 <assert_contents>
-                    <has_size value="2008" delta="1000000" />
+                    <has_size value="2298" delta="50" />
                 </assert_contents>
             </output>
         </test>

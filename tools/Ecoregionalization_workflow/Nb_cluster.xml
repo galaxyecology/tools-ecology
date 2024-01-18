@@ -21,9 +21,9 @@
     ]]>
     </command>
     <inputs>
-      <param name="envfile" type="data" format="txt,csv,tabular" label="Environment file"/>
-      <param name="taxafile" type="data" format="txt" label="Taxa selected file (List of taxa from TaxaSeeker tool)"/>
-      <param name="predictionfile" type="data" format="txt" multiple="true" label="Prediction files"/>
+      <param name="envfile" type="data" format="tabular" label="Environment file (tabular format only)" help="See example below"/>
+      <param name="taxafile" type="data" format="txt" label="Taxa selected file (File 'List of taxa' from TaxaSeeker tool)"/>
+      <param name="predictionfile" type="data" format="tabular" multiple="true" label="Prediction files"/>
       <param name="max_k" type="integer" value="2" min="1" label="Number of Cluster to test"/>
       <param name="metric" type="select" label="What metric to use to calculate dissimilarities between observations ?">
              <option value="manhattan">manhattan</option>
@@ -34,14 +34,14 @@
     </inputs>
     <outputs>
       <data name="output1" from_work_dir="Indices_SIH.png" format="png" label="SIH index plot"/>
-      <data name="output2" from_work_dir="data_to_clus.tsv" format="tsv" label="Data to cluster"/>
-      <data name="output3" from_work_dir="data_bio.tsv" format="tsv" label="Data.bio table "/>
+      <data name="output2" from_work_dir="data_to_clus.tsv" format="tabular" label="Data to cluster"/>
+      <data name="output3" from_work_dir="data_bio.tsv" format="tabular" label="Data.bio table "/>
     </outputs>
     <tests>
         <test>
-            <param name="envfile" value="ceamarc_env.csv"/>
+            <param name="envfile" value="ceamarc_env.tsv"/>
             <param name="taxafile" value="List_of_taxa.txt"/>
-            <param name="predictionfile" value="1_brts_pred_ceamarc.txt"/>
+            <param name="predictionfile" value="1_brts_pred_ceamarc.tsv"/>
             <param name='max_k' value="2"/>
             <param name='metric' value="manhattan"/>
             <param name='sample' value="10"/>
@@ -71,7 +71,7 @@ Then there are few parameters :
 
 - the sample size that will be used to perform clustering. Indeed, the clara function is used to clustering large data using a representative sample rather than the entire data set. This will speed up the clustering process and make the calculation more efficient. A fairly high value representative of the data is recommended. It is important to note that using too small a sample may result in loss of information compared to using the entire data set.
 
-The tool will produce three outputs. The first two are files that will be used in the rest of the workflow: a file containing four pieces of information, latitude, longitude, presence prediction and corresponding taxon, and a file containing the data to be partitioned. The third output corresponds to the main information of the tool, a graph presenting the value of the HIS index according to the number of clusters. The silhouette index provides a measure of the separation between clusters and the compactness within each cluster. The silhouette index ranges from -1 to 1. Values close to 1 indicate that objects are well grouped and separated from other clusters, while values close to -1 indicate that objects are poorly grouped and may be closer to other clusters. A value close to 0 indicates a situation where objects are located at the border between two neighboring clusters.
+The tool will produce three outputs. The first two are files that will be used in the rest of the workflow: a file containing four pieces of information, latitude, longitude, presence prediction and corresponding taxon, and a file containing the data to be partitioned. The third output corresponds to the main information of the tool, a graph presenting the value of the SIH index according to the number of clusters. The silhouette index provides a measure of the separation between clusters and the compactness within each cluster. The silhouette index ranges from -1 to 1. Values close to 1 indicate that objects are well grouped and separated from other clusters, while values close to -1 indicate that objects are poorly grouped and may be closer to other clusters. A value close to 0 indicates a situation where objects are located at the border between two neighboring clusters.
 
 **Example of the environemental file :**
 
