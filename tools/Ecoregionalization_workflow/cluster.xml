@@ -44,7 +44,11 @@
             <param name='k' value="2"/>
             <param name='metric' value="manhattan"/>
             <param name='sample' value="10"/>
-            <output name='output1' value="sih.png"/>
+            <output name='output1'>
+                <assert_contents>
+            	    <has_size value="7369" delta="500"/>
+            	</assert_contents>
+            </output>
             <output name='output2'>
                 <assert_contents>
                     <has_n_columns n="3"/>    
