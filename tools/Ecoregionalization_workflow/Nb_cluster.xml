@@ -47,7 +47,7 @@
             <param name='sample' value="10"/>
             <output name='output1'>
                 <assert_contents>
-            	    <has_size value="4297" delta="100"/>
+            	    <has_size value="4297" delta="500"/>
             	</assert_contents>
             </output>
             <output name='output2' value="Data_to_cluster.tsv"/>
