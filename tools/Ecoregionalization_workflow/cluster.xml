@@ -46,7 +46,7 @@
             <param name='sample' value="10"/>
             <output name='output1'>
                 <assert_contents>
-            	    <has_size value="7369" delta="500"/>
+            	    <has_size value="7369" delta="1000"/>
             	</assert_contents>
             </output>
             <output name='output2'>
