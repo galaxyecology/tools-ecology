@@ -45,7 +45,11 @@
             <param name='max_k' value="2"/>
             <param name='metric' value="manhattan"/>
             <param name='sample' value="10"/>
-            <output name='output1' value="SIH_index_plot.png"/>
+            <output name='output1'>
+                <assert_contents>
+            	    <has_size value="4297" delta="100"/>
+            	</assert_contents>
+            </output>
             <output name='output2' value="Data_to_cluster.tsv"/>
             <output name='output3' value="Data.bio_table.tsv"/>
         </test>
