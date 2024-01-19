@@ -69,5 +69,5 @@ for (k in 2:max_k) {
 
 # Plot SIH Index Chart by Number of Clusters
 png("Indices_SIH.png")
-plot(2:max_k, sih_values[2:max_k], type = "b", xlab = "Nombre de clusters", ylab = "Indice SIH")
+plot(2:max_k, sih_values[2:max_k], type = "b", xlab = "Number of clusters", ylab = "SIH index")
 dev.off()
