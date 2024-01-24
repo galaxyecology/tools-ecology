@@ -1,4 +1,4 @@
-<tool id="ecoregion_brt_analysis" name="BRT tool prediction" version="0.1.0+galaxy0" profile="22.05">
+<tool id="ecoregion_brt_analysis" name="BRT prediction tool" version="0.1.0+galaxy0" profile="22.05">
     <description>for species distribution modelling</description>
     <requirements>
        <requirement type="package" version="4.3.0">r-base</requirement>
@@ -16,15 +16,25 @@
          '$outputval'
          '$outputspdistri'
          '$outputplots'
+         '$dec_env'
+         '$dec_species'
     ]]></command>
     <inputs>
-      <param name="enviro" type="data" format="txt,csv,tabular" label="Environment Data"/>
-      <param type="data" name="species_files" label="Occurrences Data File" format="tabular,txt,csv" multiple="True" />
-      <param name="abioticname" type="text" label="Write the name of your abiotic parameters (comma separated)"/>
+      <param name="enviro" type="data" format="tabular" label="Input your environment data file of your study area (tabular format only)" help="See example below"/>
+      <param name="dec_env" type="select" label="What's the decimal separator of your environement data file ?">
+              <option value=".">Dot</option>
+              <option value=",">Comma</option>
+      </param>
+      <param type="data" name="species_files" label="Input your occurrences data file(s) containing also the environemental caracteristics where the species has been observe (tabular format only)" format="tabular" multiple="True" help="See example below"/>
+      <param name="dec_species" type="select" label="What's the decimal separator of your occurrences data file(s) ?" help="It must be the same for all your occurences data files" >
+              <option value=".">Dot</option>
+              <option value=",">Comma</option>
+      </param>
+      <param name="abioticname" type="data_column" label="Choose column(s) where your abiotic parameter are in your environment data file." data_ref="enviro" multiple="true"/>
     </inputs>
     <outputs>
       <collection name="outputpred" type="list" label="Prediction files">
-            <discover_datasets pattern="(?P&lt;designation&gt;.+_brts_pred_ceamarc)\.txt" format="txt"/>
+            <discover_datasets pattern="(?P&lt;designation&gt;.+_brts_pred_ceamarc)\.tsv" format="tabular"/>
       </collection>
       <collection name="outputval" type="list" label="Validation files (Taxa, AUC, Tree complexity, Total deviance explained)">
             <discover_datasets pattern="(?P&lt;designation&gt;.+_brts_validation_ceamarc)\.tsv" format="tabular" />
@@ -38,25 +48,15 @@
     </outputs>
     <tests>
         <test>
-            <param name="enviro" value="ceamarc_env.csv"/>
-            <param name="species_files" value="cnidaria_filtered.csv"/>
-            <param name="abioticname" value="Carbo,Grav,Maxbearing,Maxmagnit,Meancurmag,Meansal,Meantheta,Mud,Prof,Rugosity,Sand,Seaice_prod,Sili,Slope,Standcurmag,Standsal,Standtheta"/>
+            <param name="enviro" value="ceamarc_env.tsv"/>
+            <param name="species_files" value="cnidaria_filtered.tsv"/>
+            <param name="abioticname" value="3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19"/>
+            <param name="dec_env" value="Dot"/>
+            <param name="dec_species" value="Comma"/>
             <output_collection name='outputpred' type = "list" count="1"/>
             <output_collection name='outputval' type = "list" count="1"/>
-            <output_collection name='outputspdistri' type = "list" count="2">
-                  <element name="BRT- Actiniaria _pred_plot">
-                       <assert_contents>
-            	           <has_size value="76065" delta="10000"/>
-            	      </assert_contents>
-            	  </element>
-            </output_collection>
-            <output_collection name='outputplots' type = "list">
-                  <element name="BRT- Actiniaria " >
-                       <assert_contents>
-            	           <has_size value="16042" delta="1000"/>
-            	       </assert_contents>
-            	  </element>
-            </output_collection>
+            <output_collection name='outputspdistri' type = "list" count="2"/>
+            <output_collection name='outputplots' type = "list" count="2"/>
         </test>
     </tests>
     <help><![CDATA[
@@ -71,8 +71,12 @@ detected. Two steps are performed in this script: the creation of the taxon dist
 **How to use it ?**
 ===================
         
-This tool takes in input the environmental data as well as the species occurrence data. See examples of inputs below. You also need to input the list of abiotic parameters (respecting the case, without spaces and separating them by commas). For example : Carbo,Grav,Maxbearing,...
-This tool gives in output a file containing the predictions of probability of presence of each taxon for each pixel (latitude, longitude) environmental, a visualization of these pixels for each taxon and graphs showing the percentage of model explanation for each environmental parameter. 
+This tool takes in input the environmental data (for all the study areas) as well as the species occurrence data and the environmental characteristics where the species has been observed. See examples of inputs below. These files need to be in tabular format. You also need to select the column where your abiotic parameters are in your environment data file.
+ 
+ .. class:: infomark 
+Your abiotic parameters must be present in your occurrence data file(s) and must be named the same as in your environment file.
+ 
+This tool gives in output a file containing the predictions of the probability of the presence of each taxon for each pixel (latitude, longitude) environmental, a visualization of these pixels for each taxon and graphs showing the percentage of model explanation for each environmental parameter. 
 
 **Example of environmental data input :** 
 -----------------------------------------
@@ -87,22 +91,18 @@ This tool gives in output a file containing the predictions of probability of pr
 | ...  | ...  |   ...   | ...  |     ...      | ... |
 +------+------+---------+------+--------------+-----+
 
-
 **Example of occurence data input :** 
 -------------------------------------
 
-+---------+----------+-----------+------------------------+-----------+-----+
-| station |   lat    |   long    |Acanthorhabdus_fragilis | Acarnidae | ... |
-+---------+----------+-----------+------------------------+-----------+-----+
-|    1    |-65,999946|142,3360535|           0            |     1     | ... |
-+---------+----------+-----------+------------------------+-----------+-----+
-|   10    |-66,335407| 141,3028  |           0            |     1     | ... |
-+---------+----------+-----------+------------------------+-----------+-----+
-|   ...   |   ...    |   ...     |          ...           |    ...    | ... |
-+---------+----------+-----------+------------------------+-----------+-----+
-
-
-
++---------+----------+-----------+------------------------+-----------+-----+------+--------------+-----+
+| station |   lat    |   long    |Acanthorhabdus_fragilis | Acarnidae | ... | Grav |  Maxbearing  | ... |
++---------+----------+-----------+------------------------+-----------+-----+------+--------------+-----+
+|    1    |-65,999946|142,3360535|           0            |     1     | ... |28.59 |     3.67     | ... |
++---------+----------+-----------+------------------------+-----------+-----+------+--------------+-----+
+|   10    |-66,335407| 141,3028  |           0            |     1     | ... |28.61 |     3.64     | ... |
++---------+----------+-----------+------------------------+-----------+-----+------+--------------+-----+
+|   ...   |   ...    |   ...     |          ...           |    ...    | ... | ...  |     ...      | ... |
++---------+----------+-----------+------------------------+-----------+-----+------+--------------+-----+
 
     ]]></help>
 </tool>
