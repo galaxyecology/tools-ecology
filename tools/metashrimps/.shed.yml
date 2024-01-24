@@ -1,6 +1,6 @@
 name: MetaShRIMPS 
 owner: ecology 
-description: Tools to operate machine actionnable jobs on EML metadata
+description: Tools to operate machine actionnable actions on EML metadata
 homepage_url: https://github.com/tanguygen/metacure
 long_description: |
     Tools to operate machine actionnable jobs to EML metadata from MetaShRIMPS, a project from the PNDB (French hub for biodiversity data)
