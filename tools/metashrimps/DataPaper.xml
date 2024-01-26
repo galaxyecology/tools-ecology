@@ -4,9 +4,9 @@
 	   <requirement type="package" version="4.3.1">r-base</requirement>
 	   <requirement type="package">r-dplyr</requirement>
 	   <requirement type="package">r-xml2</requirement>
-       	   <requirement type="package" version="1.4.4">r-xslt</requirement>
-	   <requirement type="package" version="2.11.0">r-mapview</requirement>
-	   <requirement type="package" version="2.1.2">r-leaflet</requirement>
+       	   <requirement type="package">r-xslt</requirement>
+	   <requirement type="package">r-mapview</requirement>
+	   <requirement type="package">r-leaflet</requirement>
 	   <requirement type="package">gmp</requirement>
 	   <requirement type="package" version="2.1.1">phantomjs</requirement>
 	   <requirement type="package" version="2.19.2">pandoc</requirement>
