@@ -1,7 +1,7 @@
 <tool id="metashrimp_datapaper" name="Production of a draft of Data Paper" version="0.1.0+galaxy0" profile="22.05">
     <description>Create a draft of Data Paper from metadata</description>
     <requirements>
-	   <requirement type="package" version="4.3.1">r-base</requirement>
+	   <requirement type="package">r-base</requirement>
 	   <requirement type="package">r-dplyr</requirement>
 	   <requirement type="package">r-xml2</requirement>
        	   <requirement type="package">r-xslt</requirement>
