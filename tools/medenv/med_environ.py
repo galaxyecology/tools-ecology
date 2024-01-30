@@ -76,7 +76,7 @@ def environment_dataset(args):
         axis=1,
     )
 
-    df.to_csv(args.out_file, header=True, index=False)
+    df.to_csv(args.out_file, header=True, index=False, sep="\t")
 
 
 def __main__():
