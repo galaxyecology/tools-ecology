@@ -11,13 +11,11 @@
         <person givenName="Jérémy" familyName="Fix" url="http://www.github.com/jeremyfix/" email="jeremy.fix@centralesupelec.fr"/>
     </creator>
 	<command><![CDATA[
-		#set $medenv_key_file = os.environ.get('MEDENV_KEY_FILE', '')
-		#if os.path.isfile(str($medenv_key_file))
-			echo "xx $medenv_key_file xx" &&
-			cp $medenv_key_file .medenvkey &&
+		#set $cmems_login = $__user__.extra_preferences.get('cmems_login', "")
+		#if $cmems_login == ""
+			echo "Error. Set your credentials via: User -> Preferences -> Manage Information"  &&
 		#else
-			echo 'use tool medenvkey file' &&
-			cp '$__tool_directory__/medenvkey.cfg' .medenvkey &&
+			cp '$cmems_credentials' ~/.medenvkey &&
 		#end if
 
 python '$__tool_directory__/med_environ.py'
@@ -29,9 +27,17 @@ python '$__tool_directory__/med_environ.py'
     --depth_key '${depth_key}'
     --variables '${env_variables}'
     --tol_spatial_coordinates '${tol_spatial_coordinates}'
-    --keyfile .medenvkey
+	--keyfile ~/.medenvkey
     --verbose '${verbose}'
-    ]]></command>
+		]]></command>
+	<configfiles>
+		<configfile name="cmems_credentials"><![CDATA[
+			#set $cmems_login = $__user__.extra_preferences.get('cmems_login', "")
+			#set $cmems_password = $__user__.extra_preferences.get('cmems_password', "")
+			login: $cmems_login
+			password: $cmems_password
+			]]>	</configfile>
+	</configfiles>
     <inputs>
         <param name="input" type="data" format="csv" label="Input dataset"/>
         <param name="env_variables" type="select" label="Which variables to add" multiple="true">
@@ -92,7 +98,7 @@ python '$__tool_directory__/med_environ.py'
 
         We expect the dataset you provide to contain the coordinates of the observation: latitude, longitude, depth, and time. The time is expected in ISO 8601: YYYY-MM-DDTHH:MM:SSZ
 
-        The `cmems_username` and `cmems_password` are required only if you want to add variables provided by CMEMS.
+		The `cmems_username` and `cmems_password` are required only if you want to add variables provided by CMEMS. These must be defined in "User -> Preferences -> Manage Information"
 
         The CMEMS data are collected from the following products :
 
