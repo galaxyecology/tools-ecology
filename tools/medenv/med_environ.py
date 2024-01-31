@@ -2,13 +2,13 @@
 
 # Standard imports
 import argparse
-from datetime import datetime
-import pathlib
 import os
+import pathlib
+from datetime import datetime
 
 # External imports
-import pandas as pd
 import medenv
+import pandas as pd
 
 
 def environment_observation(
