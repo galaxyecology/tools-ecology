@@ -36,7 +36,8 @@ def environment_observation(
 
     if verbose:
         print(
-            f"Was fetching for date={date}, long={long0}, lat={lat0}, depth={depth} and got {values} at the coordinates {info_values}"
+            f"Was fetching for date={date}, long={long0}, lat={lat0},"
+            f"depth={depth} and got {values} at the coordinates {info_values}"
         )
     for fname, fvalue in values.items():
         row[fname] = fvalue
