@@ -50,7 +50,7 @@ def environment_dataset(args):
     # "true" or the string "false" that we need to convert to a bool
     verbose = True if args.verbose == "true" else False
 
-    if args.keyfile is not None:
+    if args.keyfile is not None and os.path.exists(args.keyfile):
         with open(args.keyfile, "r") as fh:
             key_lines = fh.readlines()
             cmems_username = key_lines[0].split(":")[1].strip()
