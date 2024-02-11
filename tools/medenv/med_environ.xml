@@ -1,6 +1,6 @@
-<tool id="iabiodiv_smartbiodiv_med_environ" name="Adds environment variables collected from copernicus and etopo to a dataset" version="0.0.1" profile="22.05">
-	<description>
-		Given an input dataset which provides geolocalized and timestamped observations, i.e. which possesses columns for the longitude, latitude, depth and time of observation, this tool will augment the dataset with environmental variables as provided by copernicus and etopo. This version of the tool gets environmental data from etopo for the bathymetry and otherwise copernicus mediterranean products.
+<tool id="iabiodiv_smartbiodiv_med_environ" name="Adds environment variables collected from Copernicus and etopo to a dataset" version="0.0.1" profile="22.05">
+    <description>
+        Given an input dataset which provides geolocalized and timestamped observations, i.e. which possesses columns for the longitude, latitude, depth and time of observation, this tool will augment the dataset with environmental variables as provided by copernicus and etopo. This version of the tool gets environmental data from etopo for the bathymetry and otherwise copernicus mediterranean products.
     </description>
     <requirements>
         <requirement type="package" version="2.1.3">pandas</requirement>
@@ -10,13 +10,13 @@
     <creator>
         <person givenName="Jérémy" familyName="Fix" url="http://www.github.com/jeremyfix/" email="jeremy.fix@centralesupelec.fr"/>
     </creator>
-	<command><![CDATA[
-		#set $cmems_login = $__user__.extra_preferences.get('cmems_login', "")
-		#if $cmems_login == ""
-			echo "Error. Set your credentials via: User -> Preferences -> Manage Information"  &&
-		#else
-			cp '$cmems_credentials' ~/.medenvkey &&
-		#end if
+    <command><![CDATA[
+        #set $cmems_login = $__user__.extra_preferences.get('cmems_login', "")
+        #if $cmems_login == ""
+            echo "Error. Set your credentials via: User -> Preferences -> Manage Information"  &&
+        #else
+            cp '$cmems_credentials' ~/.medenvkey &&
+        #end if
 
 python '$__tool_directory__/med_environ.py'
     --datafile '${input}'
@@ -27,17 +27,17 @@ python '$__tool_directory__/med_environ.py'
     --depth_key '${depth_key}'
     --variables '${env_variables}'
     --tol_spatial_coordinates '${tol_spatial_coordinates}'
-	--keyfile ~/.medenvkey
+    --keyfile ~/.medenvkey
     --verbose '${verbose}'
-		]]></command>
-	<configfiles>
-		<configfile name="cmems_credentials"><![CDATA[
-			#set $cmems_login = $__user__.extra_preferences.get('cmems_login', "")
-			#set $cmems_password = $__user__.extra_preferences.get('cmems_password', "")
-			login: $cmems_login
-			password: $cmems_password
-			]]>	</configfile>
-	</configfiles>
+        ]]></command>
+    <configfiles>
+        <configfile name="cmems_credentials"><![CDATA[
+            #set $cmems_login = $__user__.extra_preferences.get('cmems_login', "")
+            #set $cmems_password = $__user__.extra_preferences.get('cmems_password', "")
+            login: $cmems_login
+            password: $cmems_password
+        ]]></configfile>
+    </configfiles>
     <inputs>
         <param name="input" type="data" format="csv" label="Input dataset"/>
         <param name="env_variables" type="select" label="Which variables to add" multiple="true">
@@ -94,11 +94,11 @@ python '$__tool_directory__/med_environ.py'
 
         **What it does**
 
-        This script allows to augment your dataset by adding some environmental variables grabbed from CMEMS, etopo, and woa. It is a galaxy tool built on the medenv python package available at https://github.com/jeremyfix/medenv.
+        This script allows you to augment your dataset by adding some environmental variables grabbed from CMEMS, etopo, and woa. It is a galaxy tool built on the medenv python package available at https://github.com/jeremyfix/medenv.
 
         We expect the dataset you provide to contain the coordinates of the observation: latitude, longitude, depth, and time. The time is expected in ISO 8601: YYYY-MM-DDTHH:MM:SSZ
 
-		The `cmems_username` and `cmems_password` are required only if you want to add variables provided by CMEMS. These must be defined in "User -> Preferences -> Manage Information"
+        The `cmems_username` and `cmems_password` are required only if you want to add variables provided by CMEMS. These must be defined in "User -> Preferences -> Manage Information"
 
         The CMEMS data are collected from the following products :
 
@@ -138,9 +138,10 @@ python '$__tool_directory__/med_environ.py'
         - "surface-partial-pressure-co2",
         - "surface-co2-flux".
 
-		** Copernicus credentials **
+        ** Copernicus credentials **
 
-		For requesting copernicus, you need to have an account on the https://resources.marine.copernicus.eu platform. Then, you need to provide your credentials in the secrets section of galaxy.
+        To request Copernicus, you need to have an account on the https://resources.marine.copernicus.eu platform.
+        Then, you need to provide your credentials in the user-preference section of Galaxy.
 
     </help>
     <citations>
