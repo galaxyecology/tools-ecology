@@ -39,7 +39,7 @@ python '$__tool_directory__/med_environ.py'
         ]]></configfile>
     </configfiles>
     <inputs>
-        <param name="input" type="data" format="csv" label="Input dataset"/>
+        <param name="input" type="data" format="tabular" label="Input dataset"/>
         <param name="env_variables" type="select" label="Which variables to add" multiple="true">
             <option value="temperature">temperature</option>
             <option value="salinity">salinity</option>

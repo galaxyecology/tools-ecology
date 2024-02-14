@@ -62,7 +62,7 @@ def environment_dataset(args):
     fetcher = medenv.Fetcher(features, reduction="mean")
 
     # Loads the input dataset
-    df = pd.read_csv(args.datafile)
+    df = pd.read_csv(args.datafile, sep="\t")
 
     df = df.apply(
         environment_observation,
