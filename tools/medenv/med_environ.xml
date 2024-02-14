@@ -66,7 +66,7 @@ python '$__tool_directory__/med_environ.py'
         <param name="lat_key" label="The key of the column for the latitude" type="data_column" data_ref="input" use_header_names="true"/>
         <param name="long_key" label="The key of the column for the longitude" type="data_column" data_ref="input" use_header_names="true"/>
         <param name="tol_spatial_coordinates" type="float" value="0.2" label="A tolerance on the latitude/longitude for the request point" optional="False"/>
-        <param name="depth_key" label="The key of the column for the observation time" type="data_column" data_ref="input" use_header_names="true"/>
+        <param name="depth_key" label="The key of the column for the depth" type="data_column" data_ref="input" use_header_names="true"/>
         <param name="date_key" label="The key of the column for the observation time" type="data_column" data_ref="input" use_header_names="true"/>
         <param name="verbose" type="boolean" value="False" label="Verbose in the standard output of the tool"/>
     </inputs>
