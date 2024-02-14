@@ -81,7 +81,7 @@ python '$__tool_directory__/med_environ.py'
             <param name="depth_key" value="11"/>
             <param name="date_key" value="10"/>
             <param name="verbose" value="False"/>
-            <output name="out_file">
+            <output name="out_file" file="expected-output.tsv">
                 <assert_contents>
                     <has_n_lines n="100"/>
                     <has_n_columns n="21"/>
