@@ -75,7 +75,7 @@ python '$__tool_directory__/med_environ.py'
     </outputs>
     <tests>
         <test expect_num_outputs="1">
-            <param name="input" value="reef_life_subset.csv"/>
+            <param name="input" value="reef_life_subset.tsv"/>
             <param name="env_variables" value="bathymetry"/> <!-- This test is requesting etopo only -->
             <param name="lat_key" value="SiteLat"/>
             <param name="long_key" value="SiteLong"/>
