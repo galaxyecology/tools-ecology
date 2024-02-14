@@ -12,9 +12,7 @@
     </creator>
     <command><![CDATA[
         #set $cmems_username = $__user__.extra_preferences.get('cmems_username', "")
-        #if $cmems_username == ""
-            echo "Error. Set your credentials via: User -> Preferences -> Manage Information"  &&
-        #else
+        #if $cmems_username != ""
             cp '$cmems_credentials' ~/.medenvkey &&
         #end if
 
