@@ -78,8 +78,8 @@ python '$__tool_directory__/med_environ.py'
             <param name="lat_key" value="8"/>
             <param name="long_key" value="9"/>
             <param name="tol_spatial_coordinates" value="0.2"/>
-            <param name="depth_key" value="12"/>
-            <param name="date_key" value="11"/>
+            <param name="depth_key" value="11"/>
+            <param name="date_key" value="10"/>
             <param name="verbose" value="False"/>
             <output name="out_file">
                 <assert_contents>
