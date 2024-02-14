@@ -63,11 +63,11 @@ python '$__tool_directory__/med_environ.py'
             <option value="surface-co2-flux">surface CO2 flux</option>
             <option value="mixed-layer-thickness">mixed layer thickness</option>
         </param>
-        <param name="lat_key" type="text" value="SiteLat" label="The key of the column for the latitude" optional="False"/>
-        <param name="long_key" type="text" value="SiteLong" label="The key of the column for the longitude" optional="False"/>
+        <param name="lat_key" label="The key of the column for the latitude" type="data_column" data_ref="input" use_header_names="true"/>
+        <param name="long_key" label="The key of the column for the longitude" type="data_column" data_ref="input" use_header_names="true"/>
         <param name="tol_spatial_coordinates" type="float" value="0.2" label="A tolerance on the latitude/longitude for the request point" optional="False"/>
-        <param name="depth_key" type="text" value="Depth" label="The key of the column for the observation time" optional="False"/>
-        <param name="date_key" type="text" value="SurveyDate" label="The key of the column for the observation time" optional="False"/>
+        <param name="depth_key" label="The key of the column for the observation time" type="data_column" data_ref="input" use_header_names="true"/>
+        <param name="date_key" label="The key of the column for the observation time" type="data_column" data_ref="input" use_header_names="true"/>
         <param name="verbose" type="boolean" value="False" label="Verbose in the standard output of the tool"/>
     </inputs>
     <outputs>
