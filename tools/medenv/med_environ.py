@@ -63,15 +63,20 @@ def environment_dataset(args):
 
     # Loads the input dataset
     df = pd.read_csv(args.datafile, sep="\t")
+    lat_key = df.columns[args.lat_key]
+    long_key = df.columns[args.long_key]
+    depth_key = df.columns[args.depth_key]
+    date_key = df.columns[args.date_key]
+    print(lat_key, long_key, depth_key, date_key)
 
     df = df.apply(
         environment_observation,
         args=(
             fetcher,
-            args.lat_key,
-            args.long_key,
-            args.depth_key,
-            args.date_key,
+            lat_key,
+            long_key,
+            depth_key,
+            date_key,
             args.tol_spatial_coordinates,
             verbose,
         ),
@@ -85,10 +90,10 @@ def __main__():
     parser = argparse.ArgumentParser()
     parser.add_argument("--datafile", type=pathlib.Path, required=True)
     parser.add_argument("--out_file", type=pathlib.Path, required=True)
-    parser.add_argument("--lat_key", type=str, required=True)
-    parser.add_argument("--long_key", type=str, required=True)
-    parser.add_argument("--date_key", type=str, required=True)
-    parser.add_argument("--depth_key", type=str, required=True)
+    parser.add_argument("--lat_key", type=int, required=True)
+    parser.add_argument("--long_key", type=int, required=True)
+    parser.add_argument("--date_key", type=int, required=True)
+    parser.add_argument("--depth_key", type=int, required=True)
     parser.add_argument("--variables", type=str, required=True)
     parser.add_argument("--tol_spatial_coordinates", type=float, required=True)
     parser.add_argument("--keyfile", type=pathlib.Path, default=None)
