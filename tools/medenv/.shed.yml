@@ -1,5 +1,6 @@
 categories:
-    - Access environmental data
+  - Ecology
+  - Data Source
 owner: ecology
 remote_repository_url: https://github.com/jeremyfix/medenv
 homepage_url: https://github.com/jeremyfix/medenv
