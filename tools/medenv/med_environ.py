@@ -63,11 +63,10 @@ def environment_dataset(args):
 
     # Loads the input dataset
     df = pd.read_csv(args.datafile, sep="\t")
-    lat_key = df.columns[args.lat_key]
-    long_key = df.columns[args.long_key]
-    depth_key = df.columns[args.depth_key]
-    date_key = df.columns[args.date_key]
-    print(lat_key, long_key, depth_key, date_key)
+    lat_key = df.columns[args.lat_key - 1]
+    long_key = df.columns[args.long_key - 1]
+    depth_key = df.columns[args.depth_key - 1]
+    date_key = df.columns[args.date_key - 1]
 
     df = df.apply(
         environment_observation,
