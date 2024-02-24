@@ -1,4 +1,4 @@
-<tool id="iabiodiv_smartbiodiv_med_environ" name="Adds environment variables" version="0.0.1" profile="22.05">
+<tool id="iabiodiv_smartbiodiv_med_environ" name="Adds environment variables" version="0.0.2" profile="22.05">
     <description>
         From Copernicus and etopo given geolocalized and timestamped observations
     </description>
@@ -75,11 +75,11 @@ python '$__tool_directory__/med_environ.py'
         <test expect_num_outputs="1">
             <param name="input" value="reef_life_subset.tsv"/>
             <param name="env_variables" value="bathymetry"/> <!-- This test is requesting etopo only -->
-            <param name="lat_key" value="8"/>
-            <param name="long_key" value="9"/>
+            <param name="lat_key" value="9"/>
+            <param name="long_key" value="10"/>
             <param name="tol_spatial_coordinates" value="0.2"/>
-            <param name="depth_key" value="11"/>
-            <param name="date_key" value="10"/>
+            <param name="depth_key" value="12"/>
+            <param name="date_key" value="11"/>
             <param name="verbose" value="False"/>
             <output name="out_file" file="expected-output.tsv">
                 <assert_contents>
