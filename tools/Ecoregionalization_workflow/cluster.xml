@@ -22,7 +22,7 @@
     <inputs>
       <param name="envfile" type="data" format="tabular" label="Environmental file (tabular only)"/>
       <param name="predictionmatrix" type="data" format="tabular" label="Prediction matrix (file 'data to cluster' from Cluster Estimate tool)"/>
-      <param name="predictionfile" type="data" format="tabular" label="Prediction file (file 'data.bio table' from Cluster Estimate tool)"/>
+      <param name="predictionfile" type="data" format="tabular" label="Prediction table (file 'data.bio table' from Cluster Estimate tool)"/>
       <param name="k" type="integer" label="Number of Cluster wanted" min= "1" value="2"/>
       <param name="metric" type="select" label="What metric to use to calculate dissimilarities between observations ?">
              <option value = "manhattan">manhattan</option>
@@ -46,7 +46,7 @@
             <param name='sample' value="10"/>
             <output name='output1'>
                 <assert_contents>
-            	    <has_size value="7369" delta="1000"/>
+            	    <has_size value="8359" delta="500"/>
             	</assert_contents>
             </output>
             <output name='output2'>

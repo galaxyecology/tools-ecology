@@ -81,7 +81,7 @@ This tool takes three inputs : Occurrences file(s), predictions file(s) and envi
 |   ...   |   ...    |   ...     |          ...           |    ...    | ... | ...  |     ...      | ... |
 +---------+----------+-----------+------------------------+-----------+-----+------+--------------+-----+
 
-*Example of the predictions file :**
+**Example of the predictions file :**
 
 +-----------+----------+-----------------------+-------------+
 |    lat    |   long   |   Prediction.index    |     spe     |
