@@ -19,7 +19,7 @@ if(length(args)>0){
   empty <- args[6]
 }
 
-datatable = read.table(data_table,header=T)
+datatable = read.table(data_table,sep="\t",header=T)
 
 latcol = names(datatable[lat_col])
 longcol = names(datatable[long_col])

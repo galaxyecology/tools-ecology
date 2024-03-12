@@ -1,5 +1,5 @@
 #16/02/2023
-## Analyse BRT data Ceamarc
+## Analyse BRT data
 
 ### Clean environment 
 rm(list = ls(all.names = TRUE))
@@ -21,14 +21,22 @@ if (length(args)==0)
     enviro <- args[1]
     species_files <- args[2]
     abio_para <- args[3]
+    dec_env <- args[8]
+    dec_species <- args[9]
 }
 
 ### load data
 
-env = read.table(enviro, header = TRUE, dec = ".", na.strings = "-9999")
-pred.vars = strsplit(abio_para, ",")[[1]] 
+env = read.table(enviro, dec = dec_env, header = TRUE, sep="\t", na.strings = "-9999")
+pred_vars = strsplit(abio_para, ",")[[1]] 
 data_files = strsplit(species_files,",")
 
+pred.vars <- character(length(pred_vars))
+
+for (i in seq_along(pred_vars)) {
+       pred_var_col <- as.numeric(pred_vars[i])
+       pred.vars[i] <- names(env)[pred_var_col]}
+       
 #environemental parameters
 #Carbo,Grav,Maxbearing,Maxmagnit,Meancurmag,Meansal,Meantheta,Mud,Prof,Rugosity,Sand,Seaice_prod,Sili,Slope,Standcurmag,Standsal,Standtheta
 
@@ -86,14 +94,14 @@ make.prediction.brt <- function(brt_step){
   
   #Write prediction in a file
   preds <- cbind(preds,spe)
-  write.table(preds, paste(nb_file,"_brts_pred_ceamarc.txt",sep=""), quote=FALSE, dec=".", row.names=F, col.names=T,append = T)
+  write.table(preds, paste(nb_file,"_brts_pred_ceamarc.tsv",sep=""), quote=FALSE, dec=".", row.names=F, col.names=T,append = T,sep="\t")
 }
 
 #### RUN BRT ####
 nb_file = 0
 
 for (file in data_files[[1]]) {
-  species_data <- read.table(file, dec = ",", sep = ";", header = TRUE, na.strings = "na", colClasses = "numeric")
+  species_data <- read.table(file, dec = dec_species, sep = "\t", header = TRUE, na.strings = "NA", colClasses = "numeric")
   nb_file = nb_file + 1
   `%!in%` <- Negate(`%in%`)
   sp = list()
@@ -101,9 +109,13 @@ for (file in data_files[[1]]) {
     if (n %!in% names(env) && n != 'station'){
        sp = cbind(sp,n)
     }
-  }
-  
+  }     
   for (spe in sp){
    try(make.prediction.brt(make.brt(spe,species_data,pred.vars,env,nb_file)))
    }
 }
+
+cat("Here is the list of your abiotic parameters:\n")
+cat(paste(pred.vars, collapse = ", "), "\n")
+
+

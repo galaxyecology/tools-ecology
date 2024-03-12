@@ -15,7 +15,7 @@ if (length(args)==0)
     data <- args[1]
 }
 
-clus <- read.table(data, header=TRUE, na.strings = "na")
+clus <- read.table(data, sep="\t" ,header=TRUE, na.strings = "na")
 
 #tmap method
 
@@ -26,7 +26,7 @@ grouped_data <- sf_data %>%
   summarize()
 
 map <- tm_shape(grouped_data) + 
-  tm_dots(col = "cluster", palette = "Accent", size = 0.1, title = "écorégions")+
+  tm_dots(col = "cluster", palette = "Accent", n=256, size = 0.1, title = "ecoregions")+
   tm_scale_bar(position = c("right","top"))+
   tm_compass(position = c("right","top"))+
   tm_layout(frame = FALSE,legend.position = c("left","bottom"))+

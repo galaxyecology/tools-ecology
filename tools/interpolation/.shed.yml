@@ -1,0 +1,15 @@
+categories:
+    - Ecology
+owner: ecology
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/interpolation
+homepage_url: https://github.com/AquaINFRA/galaxy
+long_description: |
+  Run IDW interpolation based on a .csv and .geojson file
+type: unrestricted
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrapper for idw interpolation tool: {{ tool_name }}."
+suite:
+  name: "idw_interpolation"
+  description: "A tool for running an IDW interpolation."
+  type: unrestricted

@@ -22,7 +22,7 @@ if (length(args)==0)
 }
 
 #load data 
-env.data <- read.table(enviro, header=TRUE, sep=" ",dec = ".", na.strings = "-9999.00")
+env.data <- read.table(enviro, header=TRUE, sep="\t",dec = ".", na.strings = "-9999")
 data.bio <- read.table(data.bio, header=TRUE, sep="\t")
 test3 <- read.table(data, header = TRUE, sep="\t") 
 
@@ -43,8 +43,8 @@ clus <- cbind(data.bio[1:nrow(test3), 1:2],test5$clustering)
 names(clus) <- c("lat", "long", "cluster")
 clus <- cbind(clus,test3,env.data[,3:19])
 
-write.table(clus[1:3], file = "points_clus.txt",quote = FALSE, row.names = FALSE)
-write.table(clus, file = "clus.txt",quote = FALSE, row.names = FALSE)
+write.table(clus[1:3], file = "points_clus.tsv", quote = FALSE, sep="\t", row.names = FALSE)
+write.table(clus, file = "clus.tsv", quote = FALSE, sep="\t", row.names = FALSE)
 
 
 
