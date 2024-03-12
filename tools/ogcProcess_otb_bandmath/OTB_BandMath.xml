@@ -20,7 +20,7 @@
     </command>
     <inputs>
         <param type="data" format="txt" name="file" label="List of images" help="Image-list of operands to the mathematical expression (.txt file, one per line)" />
-        <param type="integer" name="processing_memory" label="Random-Access Memory (RAM)" value="256" optional="true" help="Available memory for processing (in MB)" />
+        <param type="integer" name="processing_memory" label="Random-Access Memory (RAM)" value="256" min="128" max="16384" optional="true" help="Available memory for processing (in MB)" />
         <param type="text" name="math_expression" label="muParser" optional="false" help="The muParser mathematical expression to apply on input images (e.g., 'im1b3,im1b2,im1b1'). See 'Help' for documentation."/>
         <param type="select" name="output_image" label="Output image" help="Output image which is the result of the mathematical expressions on input image-list operands">
             <option value="float">float</option>
@@ -57,7 +57,16 @@
             <param name="output_type" value="png"/>
             <param name="output_image" value="float"/>
             <param name="output_format" value="download"/>
-            <output name="output_data" file="otb_band_math_test_output.png" compare="sim_size" delta_frac="0.1" />
+            <output name="output_data" file="otb_band_math_test1_output.png" compare="sim_size" delta_frac="0.1" />
+        </test>
+        <test>
+            <param name="file" value="otb_band_math_test_input.txt"/>
+            <param name="processing_memory" value="256"/>
+            <param name="math_expression" value="im1b3,im1b2,im1b1"/>
+            <param name="output_type" value="png"/>
+            <param name="output_image" value="float"/>
+            <param name="output_format" value="getUrl"/>
+            <output name="output_data" file="otb_band_math_test2_output.txt" compare="sim_size" delta_frac="0.1" />
         </test>
     </tests>
     <help><![CDATA[
@@ -78,14 +87,6 @@
                 url = {https://httr2.r-lib.org},
             }
         </citation>
-        <citation type="bibtex">
-            @Article{jsonlite,
-                title = {The jsonlite Package: A Practical and Consistent Mapping Between JSON Data and R Objects},
-                author = {Jeroen Ooms},
-                journal = {arXiv:1403.2805 [stat.CO]},
-                year = {2014},
-                url = {https://arxiv.org/abs/1403.2805},
-            }
-        </citation>
+        <citation type="doi">10.48550/arXiv.1403.2805</citation>
     </citations>
 </tool>
