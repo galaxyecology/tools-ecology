@@ -78,14 +78,6 @@
                 url = {https://httr2.r-lib.org},
             }
         </citation>
-        <citation type="bibtex">
-            @Article{jsonlite,
-                title = {The jsonlite Package: A Practical and Consistent Mapping Between JSON Data and R Objects},
-                author = {Jeroen Ooms},
-                journal = {arXiv:1403.2805 [stat.CO]},
-                year = {2014},
-                url = {https://arxiv.org/abs/1403.2805},
-            }
-        </citation>
+        <citation type="doi">10.48550/arXiv.1403.2805</citation>
     </citations>
 </tool>
