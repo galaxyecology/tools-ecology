@@ -1,0 +1,91 @@
+<tool id="otb_band_math" name="OTB.BandMath" version="1.0" profile="22.05">
+    <description> outputs a monoband image as a result of a mathematical operation on several multi-band images</description>
+    <requirements>
+        <requirement type="package" version="4.3.1">r-base</requirement>
+        <requirement type="package" version="1.20.4">r-getopt</requirement>
+        <requirement type="package" version="0.2.3">r-httr2</requirement>
+        <requirement type="package" version="1.8.7">r-jsonlite</requirement>
+    </requirements>
+    <command detect_errors='exit_code'>
+        <![CDATA[
+            Rscript '$__tool_directory__/OTB_BandMath.R' 
+                --file '$file' 
+                --processingMemory '$processing_memory' 
+                --mathExpression '$math_expression'
+                --outputImage '$output_image' 
+                --outputType '$output_type' 
+                --outputFormat '$output_format' 
+                --outputData '$output_data'    
+        ]]>
+    </command>
+    <inputs>
+        <param type="data" format="txt" name="file" label="List of images" help="Image-list of operands to the mathematical expression (.txt file, one per line)" />
+        <param type="integer" name="processing_memory" label="Random-Access Memory (RAM)" value="256" optional="true" help="Available memory for processing (in MB)" />
+        <param type="text" name="math_expression" label="muParser" optional="false" help="The muParser mathematical expression to apply on input images (e.g., 'im1b3,im1b2,im1b1'). See 'Help' for documentation."/>
+        <param type="select" name="output_image" label="Output image" help="Output image which is the result of the mathematical expressions on input image-list operands">
+            <option value="float">float</option>
+            <option value="uint8">uint8</option>
+            <option value="uint16">uint16</option>
+            <option value="int16">int16</option>
+            <option value="int32">int32</option>
+            <option value="double">double</option>
+        </param>
+        <param type="select" name="output_type" label="Output image format" help="Select .png for obtaining the response as an OGC web service. Select .tiff or .jpeg for using it in a workflow.">
+            <option value="png">.png (for OGC web services)</option>
+            <option value="tiff">.tiff (for workflows)</option>
+            <option value="jpeg">.jpeg (for workflows)</option>
+        </param>
+        <param type="select" name="output_format" label="Download the result to your Galaxy history or get the URL?" help="Select 'Get URL' to use the result as input for another OGC API Process in a workflow.">
+            <option value="download">Download</option>
+            <option value="getUrl">Get URL</option>
+        </param>
+    </inputs>
+    <outputs>
+        <data name="output_data" format="png">
+            <change_format>
+                <when input="output_format" value="getUrl" format="txt" />
+                <when input="output_type" value="tiff" format="tiff" />
+                <when input="output_type" value="jpeg" format="jpeg" />
+            </change_format>
+        </data>
+    </outputs>
+    <tests>
+        <test>
+            <param name="file" value="otb_band_math_test_input.txt"/>
+            <param name="processing_memory" value="256"/>
+            <param name="math_expression" value="im1b3,im1b2,im1b1"/>
+            <param name="output_type" value="png"/>
+            <param name="output_image" value="float"/>
+            <param name="output_format" value="download"/>
+            <output name="output_data" file="otb_band_math_test_output.png" compare="sim_size" delta_frac="0.1" />
+        </test>
+    </tests>
+    <help><![CDATA[
+        OGC API Process documentation: https://ospd.geolabs.fr:8300/ogc-api/processes/OTB.BandMath.html
+        
+        This application performs a mathematical operation on several multi-band images and outputs the result into a monoband image. 
+        The given expression is computed at each pixel position. Evaluation of the mathematical formula is done by the muParser libraries.
+        The formula can be written using:  * numerical values ( 2.3, -5, 3.1e4, ...)  * variables containing pixel 
+        values (e.g. : 'im2b3' is the pixel value in 2nd image, 3rd band)  * binary operators:    * '+' addition, '-' subtraction, '*' multiplication, '/' division    * '^' raise x to the power of y    * '.
+    ]]></help>
+    <citations>
+        <citation type="bibtex">
+            @Manual{httr2,
+                title = {httr2: Perform HTTP Requests and Process the Responses},
+                author = {Hadley Wickham},
+                year = {2023},
+                note = {R package version 1.0.0, https://github.com/r-lib/httr2},
+                url = {https://httr2.r-lib.org},
+            }
+        </citation>
+        <citation type="bibtex">
+            @Article{jsonlite,
+                title = {The jsonlite Package: A Practical and Consistent Mapping Between JSON Data and R Objects},
+                author = {Jeroen Ooms},
+                journal = {arXiv:1403.2805 [stat.CO]},
+                year = {2014},
+                url = {https://arxiv.org/abs/1403.2805},
+            }
+        </citation>
+    </citations>
+</tool>

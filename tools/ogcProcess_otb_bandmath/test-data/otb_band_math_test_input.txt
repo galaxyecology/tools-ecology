@@ -1,0 +1,1 @@
+https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/31/U/ET/2019/4/S2B_31UET_20190421_0_L2A/TCI.tif
