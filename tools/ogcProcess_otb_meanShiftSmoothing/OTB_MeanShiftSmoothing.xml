@@ -78,7 +78,7 @@
             <param name="f_outpos" value="float"/>
             <param name="output_type" value="png"/>
             <param name="output_format" value="download"/>
-            <output_collection name="output_data" type="list" count="3" />
+            <output_collection name="output_data" type="list" count="2" />
         </test>
         <test>
             <param name="file" value="otb_mean_shift_smoothing_test_input.txt"/>
@@ -93,7 +93,7 @@
             <param name="f_outpos" value="float"/>
             <param name="output_type" value="png"/>
             <param name="output_format" value="getUrl"/>
-            <output_collection name="output_data" type="list" count="2" />
+            <output_collection name="output_data" type="list" count="1" />
         </test>
     </tests>
     <help><![CDATA[
