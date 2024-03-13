@@ -1,3 +1,8 @@
+lintr::use_lintr(type = "tidyverse")
+
+# in a project:
+lintr::lint_dir()
+
 #Run with Rscript ./OTB_MeanShiftSmoothing.R
 #--file otb_band_math_test_input.txt
 #--fOut float --fOutpos float --processingMemory 1024 --spatialR 5 --rangeR 15
@@ -120,7 +125,7 @@ tryCatch({
     attempt <- 1
     while (status == "running") {
       #Request 2
-      resp2 <- request(paste0(baseUrl,getStatus,response$jobID)) %>%
+      resp2 <- request(paste0(baseUrl, getStatus, response$jobID)) %>%
         req_headers(
           "accept" = "application/json"
         ) %>%
@@ -128,11 +133,12 @@ tryCatch({
       status_code2 <- resp2$status_code
       if (status_code2 == 200) {
         response2 <- makeResponseBodyReadable(resp2$body)
-        cat("\n", response2$status )
-        if (response2$status=="successful") {
+        cat("\n", response2$status)
+        if (response2$status == "successful") {
           status <- "successful"
           #Request 3
-          resp3 <- request(paste0(baseUrl,getStatus, response2$jobID, getResult)) %>%
+          resp3 <- request(paste0(baseUrl,
+                                  getStatus, response2$jobID, getResult)) %>%
             req_headers(
               "accept" = "application/json"
             ) %>%
@@ -141,11 +147,16 @@ tryCatch({
           if (status_code3 == 200) {
             response3 <- makeResponseBodyReadable(resp3$body)
             if (outputFormat == "download") {
-              options(timeout=600)
-              download.file(response3$fout$href, destfile = paste0("output1.", options$outputType), mode = "wb")
-              download.file(response3$foutpos$href, destfile = paste0("output2.", options$outputType), mode = "wb")
+              options(timeout = 600)
+              download.file(response3$fout$href,
+                            destfile = paste0("output1.", options$outputType),
+                            mode = "wb")
+              download.file(response3$foutpos$href,
+                            destfile = paste0("output2.", options$outputType),
+                            mode = "wb")
             } else if (outputFormat == "getUrl") {
-              writeLines(paste(response3$fout$href, response3$foutpos$href, sep = "\n"), con = "output.txt")
+              writeLines(paste(response3$fout$href, response3$foutpos$href,
+                               sep = "\n"), con = "output.txt")
             }
           } else if (status_code3 == 404) {
             print("The requested URI was not found.")
@@ -154,15 +165,9 @@ tryCatch({
           } else {
             print(paste("HTTP", status_code3, "Error:", resp3$status_message))
           }
-        } else if (response2$status=="failed") {
+        } else if (response2$status == "failed") {
           status <- "failed"
         }
-        #else {
-        # attempt <- attempt +1
-        # if (attempt == 200) {
-        #   status <- "failed"
-        # }
-        #}
       } else {
         status <- "failed"
         print(paste("HTTP", status_code2, "Error:", resp2$status_message))
