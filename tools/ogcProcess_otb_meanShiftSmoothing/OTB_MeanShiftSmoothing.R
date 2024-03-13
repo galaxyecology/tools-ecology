@@ -1,8 +1,3 @@
-lintr::use_lintr(type = "tidyverse")
-
-# in a project:
-lintr::lint_dir()
-
 #Run with Rscript ./OTB_MeanShiftSmoothing.R
 #--file otb_band_math_test_input.txt
 #--fOut float --fOutpos float --processingMemory 1024 --spatialR 5 --rangeR 15
