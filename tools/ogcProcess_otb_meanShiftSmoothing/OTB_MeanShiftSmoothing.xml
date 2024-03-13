@@ -8,7 +8,7 @@
     </requirements>
     <command detect_errors='exit_code'>
         <![CDATA[
-            Rscript $__tool_directory__/OTB_MeanShiftSmoothing.R 
+            Rscript '$__tool_directory__/OTB_MeanShiftSmoothing.R'
                 --file '$file'
                 --fOut '$f_out'
                 --fOutpos '$f_outpos'
