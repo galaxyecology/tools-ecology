@@ -6,26 +6,25 @@
         <requirement type="package" version="0.2.3">r-httr2</requirement>
         <requirement type="package" version="1.8.7">r-jsonlite</requirement>
     </requirements>
-    <command detect_errors='exit_code'>
-        <![CDATA[
-            Rscript '$__tool_directory__/OTB_MeanShiftSmoothing.R'
-                --file '$file'
-                --fOut '$f_out'
-                --fOutpos '$f_outpos'
-                --processingMemory '$processing_memory' 
-                --spatialR '$spatial_r'
-                --rangeR '$range_r'
-                --thresHold '$thres_hold'
-                --maxIter '$max_iter'
-                --rangeRamp '$range_ramp'
-                --modeSearch '$mode_search'
-                --outputType '$output_type' 
-                --outputFormat '$output_format' 
-                --outputData '$output_data'
-        ]]>
+    <command detect_errors='exit_code'><![CDATA[
+    Rscript '$__tool_directory__/OTB_MeanShiftSmoothing.R'
+        --file '$file'
+        --fOut '$f_out'
+        --fOutpos '$f_outpos'
+        --processingMemory '$processing_memory' 
+        --spatialR '$spatial_r'
+        --rangeR '$range_r'
+        --thresHold '$thres_hold'
+        --maxIter '$max_iter'
+        --rangeRamp '$range_ramp'
+        --modeSearch '$mode_search'
+        --outputType '$output_type' 
+        --outputFormat '$output_format' 
+        --outputData '$output_data'
+]]>
     </command>
     <inputs>
-        <param type="data" format="txt" name="file" label="List of images" help="The input image can be any single or multiband image. Beware of pontential imbalance between bands ranges as it may alter euclidean distance" />
+        <param type="data" format="txt" name="file" label="List of images" help="The input image can be any single or multiband image. Beware of potential imbalance between band ranges as it may alter euclidean distance" />
         <param type="integer" name="processing_memory" label="Random-Access Memory (RAM)" value="256" min="128" max="16384" optional="true" help="Available memory for processing (in MB)" />
         <param type="integer" name="spatial_r" label="Radius" value="5" min="0" optional="true" help="Radius of the spatial neighborhood for averaging. Higher values will result in more smoothing and higher processing time."/>
         <param type="float" name="range_r" label="Range" value="15" min="0" optional="true"  help="Threshold on spectral signature euclidean distance (expressed in radiometry unit) to consider neighborhood pixel for averaging. Higher values will be less edge-preserving (more similar to simple average in neighborhood), whereas lower values will result in less noise smoothing. Note that this parameter has no effect on processing time"/>
