@@ -1,4 +1,4 @@
-<tool id="otb_mean_shift_smoothing" name="otb_mean_shift_smoothing" version="1.0" profile="22.05">
+<tool id="otb_mean_shift_smoothing" name="OTB.MeanShiftSmoothing" version="1.0" profile="22.05">
     <description> smooths an image using the MeanShift algorithm</description>
     <requirements>
         <requirement type="package" version="4.3.1">r-base</requirement>
