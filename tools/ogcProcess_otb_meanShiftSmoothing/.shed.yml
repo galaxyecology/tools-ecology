@@ -9,7 +9,3 @@ type: unrestricted
 auto_tool_repositories:
   name_template: "{{ tool_id }}"
   description_template: "Wrapper for the OGC API Process: {{ tool_name }}."
-suite:
-  name: "otb_mean_shift_smoothing"
-  description: "This application smooths an image using the MeanShift algorithm."
-  type: unrestricted
