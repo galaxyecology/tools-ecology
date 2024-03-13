@@ -3,6 +3,7 @@
     <macros>
         <import>pampa_macros.xml</import>
     </macros>
+    <expand macro="bio.tools"/>
     <expand macro="Plot_requirements"/>
     <command detect_errors="exit_code"><![CDATA[
         Rscript 
