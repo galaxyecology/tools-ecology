@@ -9,7 +9,3 @@ type: unrestricted
 auto_tool_repositories:
   name_template: "{{ tool_id }}"
   description_template: "Wrapper for the OGC API Process: {{ tool_name }}."
-suite:
-  name: "OTB.BandMath"
-  description: "Outputs a monoband image which is the result of a mathematical operation on several multi-band images."
-  type: unrestricted
