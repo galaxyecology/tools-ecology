@@ -155,8 +155,8 @@ tryCatch({
               )
             } else if (output_format == "getUrl") {
               writeLines(paste(response3$fout$href, response3$foutpos$href,
-                           sep = "\n"
-                         ), con = "output.txt")
+                sep = "\n"
+              ), con = "output.txt")
             }
           } else if (status_code3 == 404) {
             print("The requested URI was not found.")
