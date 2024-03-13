@@ -35,34 +35,34 @@ options <- getopt(option_specification)
 file <- options$file
 fout <- options$fOut
 foutpos <- options$fOutpos
-processingMemory <- options$processingMemory
+processing_memory <- options$processingMemory
 spatialr <- options$spatialR
 ranger <- options$rangeR
 threshold <- options$thresHold
 maxiter <- options$maxIter
 rangeramp <- options$rangeRamp
 modesearch <- options$modeSearch
-outputType <- paste0("image/", options$outputType)
-outputFormat <- options$outputFormat
-outputData <- options$outputData
+output_type <- paste0("image/", options$outputType)
+output_format <- options$outputFormat
+output_data <- options$outputData
 
 cat("\n file: ", file)
 cat("\n fout: ", fout)
 cat("\n foutpos: ", foutpos)
-cat("\n processingMemory: ", processingMemory)
+cat("\n processing_memory: ", processing_memory)
 cat("\n spatialr: ", spatialr)
 cat("\n ranger: ", ranger)
 cat("\n threshold: ", threshold)
 cat("\n maxiter: ", maxiter)
 cat("\n rangeramp: ", rangeramp)
 cat("\n modesearch: ", modesearch)
-cat("\n outputType: ", outputType)
-cat("\n outputFormat: ", outputFormat)
+cat("\n output_type: ", output_type)
+cat("\n output_format: ", output_format)
 
-baseUrl <- "https://ospd.geolabs.fr:8300/ogc-api/"
+base_url <- "https://ospd.geolabs.fr:8300/ogc-api/"
 execute <- "processes/OTB.MeanShiftSmoothing/execution"
-getStatus <- "jobs/"
-getResult <- "/results"
+get_status <- "jobs/"
+get_result <- "/results"
 
 file_urls <- readLines(file, warn = FALSE)
 
@@ -75,7 +75,7 @@ json_data <- list(
     "in" = il_list,
     "fout" = fout,
     "foutpos" = foutpos,
-    "ram" = processingMemory,
+    "ram" = processing_memory,
     "spatialr" = spatialr,
     "ranger" = ranger,
     "thres" = threshold,
@@ -86,20 +86,20 @@ json_data <- list(
   "outputs" = list(
     "fout" = list(
       "format" = list(
-        "mediaType" = outputType
+        "mediaType" = output_type
       ),
       "transmissionMode" = "reference"
     ),
     "foutpos" = list(
       "format" = list(
-        "mediaType" = outputType
+        "mediaType" = output_type
       ),
       "transmissionMode" = "reference"
     )
   )
 )
 
-makeResponseBodyReadable <- function(body) {
+make_response_body_readable <- function(body) {
   hex <- c(body)
   int_values <- as.integer(hex)
   raw_vector <- as.raw(int_values)
@@ -110,7 +110,7 @@ makeResponseBodyReadable <- function(body) {
 
 tryCatch({
   #Request 1
-  resp1 <- request(paste0(baseUrl, execute)) %>%
+  resp1 <- request(paste0(base_url, execute)) %>%
     req_headers(
       "accept" = "/*",
       "Prefer" = "respond-async;return=representation",
@@ -118,35 +118,35 @@ tryCatch({
     ) %>%
     req_body_json(json_data) %>%
     req_perform()
-  response <- makeResponseBodyReadable(resp1$body)
+  response <- make_response_body_readable(resp1$body)
   status_code1 <- resp1$status_code
   if (status_code1 == 201) {
     status <- "running"
     attempt <- 1
     while (status == "running") {
       #Request 2
-      resp2 <- request(paste0(baseUrl, getStatus, response$jobID)) %>%
+      resp2 <- request(paste0(base_url, get_status, response$jobID)) %>%
         req_headers(
           "accept" = "application/json"
         ) %>%
         req_perform()
       status_code2 <- resp2$status_code
       if (status_code2 == 200) {
-        response2 <- makeResponseBodyReadable(resp2$body)
+        response2 <- make_response_body_readable(resp2$body)
         cat("\n", response2$status)
         if (response2$status == "successful") {
           status <- "successful"
           #Request 3
-          resp3 <- request(paste0(baseUrl,
-                                  getStatus, response2$jobID, getResult)) %>%
+          resp3 <- request(paste0(base_url,
+                                  get_status, response2$jobID, get_result)) %>%
             req_headers(
               "accept" = "application/json"
             ) %>%
             req_perform()
           status_code3 <- resp3$status_code
           if (status_code3 == 200) {
-            response3 <- makeResponseBodyReadable(resp3$body)
-            if (outputFormat == "download") {
+            response3 <- make_response_body_readable(resp3$body)
+            if (output_format == "download") {
               options(timeout = 600)
               download.file(response3$fout$href,
                             destfile = paste0("output1.", options$outputType),
@@ -154,7 +154,7 @@ tryCatch({
               download.file(response3$foutpos$href,
                             destfile = paste0("output2.", options$outputType),
                             mode = "wb")
-            } else if (outputFormat == "getUrl") {
+            } else if (output_format == "getUrl") {
               writeLines(paste(response3$fout$href, response3$foutpos$href,
                                sep = "\n"), con = "output.txt")
             }
