@@ -1,4 +1,4 @@
-#Run with Rscript ./OTB_MeanShiftSmoothing.R
+# Run with Rscript ./OTB_MeanShiftSmoothing.R
 #--file otb_band_math_test_input.txt
 #--fOut float --fOutpos float --processingMemory 1024 --spatialR 5 --rangeR 15
 #--thresHold 0.1 --maxIter 100 --rangeRamp 0 --modeSearch False
@@ -104,7 +104,7 @@ make_response_body_readable <- function(body) {
 }
 
 tryCatch({
-  #Request 1
+  # Request 1
   resp1 <- request(paste0(base_url, execute)) %>%
     req_headers(
       "accept" = "/*",
@@ -119,7 +119,7 @@ tryCatch({
     status <- "running"
     attempt <- 1
     while (status == "running") {
-      #Request 2
+      # Request 2
       resp2 <- request(paste0(base_url, get_status, response$jobID)) %>%
         req_headers(
           "accept" = "application/json"
@@ -131,9 +131,11 @@ tryCatch({
         cat("\n", response2$status)
         if (response2$status == "successful") {
           status <- "successful"
-          #Request 3
-          resp3 <- request(paste0(base_url,
-                                  get_status, response2$jobID, get_result)) %>%
+          # Request 3
+          resp3 <- request(paste0(
+            base_url,
+            get_status, response2$jobID, get_result
+          )) %>%
             req_headers(
               "accept" = "application/json"
             ) %>%
@@ -144,14 +146,17 @@ tryCatch({
             if (output_format == "download") {
               options(timeout = 600)
               download.file(response3$fout$href,
-                            destfile = paste0("output1.", options$outputType),
-                            mode = "wb")
+                destfile = paste0("output1.", options$outputType),
+                mode = "wb"
+              )
               download.file(response3$foutpos$href,
-                            destfile = paste0("output2.", options$outputType),
-                            mode = "wb")
+                destfile = paste0("output2.", options$outputType),
+                mode = "wb"
+              )
             } else if (output_format == "getUrl") {
               writeLines(paste(response3$fout$href, response3$foutpos$href,
-                               sep = "\n"), con = "output.txt")
+                sep = "\n"
+              ), con = "output.txt")
             }
           } else if (status_code3 == 404) {
             print("The requested URI was not found.")
