@@ -1,0 +1,84 @@
+<tool id="moover_train" name="Moover-Train" version="1.0.0">
+  <description>
+    Train your own YOLO-V8 model
+  </description>
+  <requirements>
+    <requirement type="package" version="8.1.2">ultralytics</requirement>
+    <requirement type="package" version="2.1.2+cu121">torch</requirement>
+    <requirement type="package" version="1.1">argparse</requirement>
+    <requirement type="package" version="6.0.1">yaml</requirement>
+  </requirements>
+  <command>
+    <![CDATA[
+      python '${__tool_directory__}/train/main.py' "$objects_list" '$fit_params.epochs' '$fit_params.batch_size' 
+      #if $initial_model_selection.default_or_custom=="default" 
+      'default' 
+      #else 
+      '$model_wights' 
+      #end if 
+      '${__tool_directory__}' '$training_data' '$compile_params.optimizer_type' $compile_params.lr0 $compile_params.lrf $compile_params.momentum $compile_params.seed > /dev/null 2>&1
+    ]]>
+  </command>
+  <inputs>
+    <conditional name="initial_model_selection">
+      <param name="default_or_custom" type="select" label="Use the default model or a custom model">
+        <option value="default">default</option>
+        <option value="custom">custom</option>
+      </param>
+      <when value="default"/>
+      <when value="custom">
+        <param format="pt" name="model_wights" type="data" label="model_wights"/>
+      </when>
+    </conditional>
+    <param name="training_data" type="data" format="zip" label="Select the dataset" help="zip file contain train, validation and test data"/>
+    <param name="objects_list" type="text" value="akina" label="List of Objects for Detection (Separated by Commas)"/>
+    <section name="compile_params" title="Compile Parameters" expanded="true">
+      <param name="optimizer_type" type="select" label="Select an optimizer">
+        <option value="auto" selected="true">auto</option>
+        <option value="Adam">Adam</option>
+        <option value="RMSprop">RMSprop</option>
+        <option value="SGD">SGD</option>
+        <option value="Adamax">Adamax</option>
+        <option value="AdamW">AdamW</option>
+        <option value="NAdam">NAdam</option>
+        <option value="RAdam">RAdam</option>
+      </param>
+      <param argument="lr0" type="float" value="0.001" optional="true" label="Initial learning rate" help="float"/>
+      <param argument="lrf" type="float" value="0.001" optional="true" label="Final learning rate" help="float"/>
+      <param argument="momentum" type="float" value="0.9" optional="true" label="momentum" help="Float"/>
+      <param argument="seed" type="integer" value="0" optional="true" label="random seed" help="float"/>
+    </section>
+    <section name="fit_params" title="Fit Parameters" expanded="true">
+      <param name="epochs" type="integer" value="1" min="1" label="epochs"/>
+      <param name="batch_size" type="integer" value="1" optional="true" label="batch_size" help="Integer or blank for 32"/>
+    </section>
+  </inputs>
+  <outputs>
+    <data format="pt" name="outmodel" label="trained model" from_work_dir="best.pt"/>
+    <data format="csv" name="results" label="results table" from_work_dir="results.csv"/>
+    <data format="png" name="confusion_matrix" label="confusion_matrix" from_work_dir="confusion_matrix.png"/>
+  </outputs>
+  <tests>
+    <test>
+    </test>
+  </tests>
+  <help>
+    # Moover-Train Help:
+    This tool allows you to train your own YOLO-V8 model.
+    
+    Instructions:
+    
+    - Select whether to use the default model or a custom model.
+    - Upload a zip file containing train, validation, and test data.
+    - Provide a list of objects for detection separated by commas.
+    - Adjust compile and fit parameters as needed.
+  </help>
+  <citations>
+    <citation type="bibtex"> 
+      @misc{ moover_inference,
+       author = "e4",
+       title = "Train your own YOLO-V8 model",
+       year = "2024" } 
+    </citation>
+  </citations>
+</tool>
