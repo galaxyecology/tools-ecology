@@ -124,16 +124,13 @@ tryCatch({
           }
         } else if (response2$status=="failed") {
           status <- "failed"
-        }
-         #else {
-         # attempt <- attempt +1
-         # if (attempt == 200) {
-         #   status <- "failed"          
-         # }
-        #}        
+          message("An error occurred. For further details, check OGC Job status through https://ospd.geolabs.fr:8300/ogc-api/jobs/", response2$jobID)
+          q(status = 1)
+        }      
       } else {
         status <- "failed"
-        print(paste("HTTP", status_code2, "Error:", resp2$status_message))
+        print(paste("HTTP", status_code2, "Error:", resp2$status_message, "An error occurred. For further details, check OGC Job status through https://ospd.geolabs.fr:8300/ogc-api/jobs/", response2$jobID))
+        q(status = 1)
       }
       Sys.sleep(3)
     }
@@ -147,4 +144,8 @@ tryCatch({
   } else {
     print(paste("HTTP", status_code1, "Error:", resp1$status_message))
   }
+}, error = function(e) {
+  message("An error occurred:", e)
+  # Exit with code 1
+  q(status = 1)
 })
