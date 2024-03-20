@@ -1,5 +1,5 @@
 categories:
-    - Ecology
+    - ecology
 owner: ecology
 remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/interpolation
 homepage_url: https://github.com/AquaINFRA/galaxy
@@ -9,7 +9,3 @@ type: unrestricted
 auto_tool_repositories:
   name_template: "{{ tool_id }}"
   description_template: "Wrapper for the OGC API Process: {{ tool_name }}."
-suite:
-  name: "otb_mean_shift_smoothing"
-  description: "This application smooths an image using the MeanShift algorithm."
-  type: unrestricted
