@@ -61,7 +61,7 @@
 **What it does ?**
 ==================
 
-This Galaxy tool allows you to merge two data tables (tabular format only) according to their latitude and longitude coordinates (in WGS84 projection), finding the closest points.
+This Galaxy tool allows you to merge two data tables (tabular format only) according to their latitude and longitude coordinates (in **WGS84** projection), finding the closest points.
 This tool can be used as part of the Ecoregionalization workflow data preparation that allows you to create ecoregions from occurrence and environmental data. 
 
 ===================         
