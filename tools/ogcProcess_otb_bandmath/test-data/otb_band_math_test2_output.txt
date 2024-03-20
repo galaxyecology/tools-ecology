@@ -1,1 +1,0 @@
-https://ospd.geolabs.fr:8300/cgi-bin/mapserv?map=/usr/com/zoo-project/out_0_5a749926-e064-11ee-ad8b-0242ac10ee0a.map&request=GetMap&service=WMS&version=1.3.0&layers=out&width=640.000&height=640.000&format=image/png&bbox=499980.000000000000000,5690220.000000000000000,609780.000000000000000,5800020.000000000000000&crs=EPSG:32631
