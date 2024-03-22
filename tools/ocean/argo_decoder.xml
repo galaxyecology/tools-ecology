@@ -1,0 +1,63 @@
+<tool id="coriolis_data_processing_chain_for_argo_floats" name="coriolis data processing" version="@VERSION@">
+    <description>chain for argo floats</description>
+    <macros>
+        <token name="@VERSION@">061a</token>
+        <token name="@VERSION_DOCKER@">@VERSION@-galaxy</token>
+    </macros>
+    <requirements>
+        <container type="docker">ghcr.io/euroargodev/coriolis-data-processing-chain-for-argo-floats:@VERSION_DOCKER@</container>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        
+        ## prepare outputs directory
+        mkdir -p /mnt/data/output/log &&
+        chmod -R 770 /mnt/data/output &&
+
+        ## load inputs into data directory
+        cp '$raw_data' '/tmp/raw_data.zip' &&
+        unzip /tmp/raw_data.zip -d /mnt/data &&
+
+        ## execute decoder script
+        ##$APP_HOME/$APP_RUN_FILE /mnt/runtime 'rsynclog' 'all' 'configfile' '/app/config/_argo_decoder_conf_ir_sbd.json' 'xmlreport' 'argo-decoder-report.xml' 'floatwmo' '$float_wmo' 'PROCESS_REMAINING_BUFFERS' '1' &&
+        /app/run_decode_argo_2_nc_rt.sh /mnt/runtime 'rsynclog' 'all' 'configfile' '/app/config/_argo_decoder_conf_ir_sbd.json' 'xmlreport' 'argo-decoder-report.xml' 'floatwmo' '$float_wmo' 'PROCESS_REMAINING_BUFFERS' '1' &&
+
+        ## copy (because we need to be in working directory) and create output archive
+        cp -R /mnt/data/output/* . &&
+        zip -r argo-decoder-outputs.zip .
+
+    ]]>
+    </command>
+     <environment_variables>
+        <environment_variable name="APP_HOME">/app</environment_variable>
+        <environment_variable name="APP_RUN_FILE">run_decode_argo_2_nc_rt.sh</environment_variable>
+    </environment_variables>
+    <inputs>
+        <param name="raw_data" type="data" format="zip" label="Archived input argo raw data"/>
+        <param name="float_wmo" type="text" label="Input WMO number" help="Input float WMO numer (example : 6903014)"/>
+    </inputs>
+    <outputs>
+        <data name="outputs_data" format="zip" from_work_dir="argo-decoder-outputs.zip" label="argo decoder netcdf outputs"/>
+    </outputs>
+    <tests>
+        <test expect_num_outputs="1">
+            <param name="raw_data" value="data_input_20240319.zip"/>
+            <param name="float_wmo" value="6903014"/>
+            <output name="outputs_data" value="argo-decoder-outputs.zip"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+    Input a zip folder of your Archived Argo data. 
+    Run the tool.
+    Retrieve a zip folder with your your Argo data decoded and reday to be analysed
+    ]]>
+    </help>
+    <citations>
+        <citation type="bibtex">
+            @Manual{,
+            title = {Coriolis data processing chain for Argo floats},
+            author = {Ifremer},
+            year = {2024},
+            note = {https://github.com/euroargodev/Coriolis-data-processing-chain-for-Argo-floats}
+        </citation>
+    </citations>
+</tool>
