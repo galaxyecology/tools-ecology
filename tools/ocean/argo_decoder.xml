@@ -1,4 +1,4 @@
-<tool id="coriolis_data_processing_chain_for_argo_floats" name="coriolis data processing" version="@VERSION@">
+<tool id="coriolis_data_processing_chain_for_argo_floats" name="coriolis data processing" version="@VERSION@" profile="22.05">
     <description>chain for argo floats</description>
     <macros>
         <token name="@VERSION@">061a</token>
