@@ -42,47 +42,70 @@
                 </param>
                 <when value="layers_modern">
                     <section name="environement" title= "environement layers" expanded="true" help="choose at least one environement to take layers from">
-                        <param name="terrestrial" type="boolean" label="terrestrial database" help="Ask for terrestrial data layers"/>
-                        <param name="marine" type="boolean" label="marine database" help="Ask for marine data layers"/>
-                        <param name="freshwater" type="boolean" label="freshwater" help="Ask for freshwater data layers"/>
+                        <param name ="terrestrial" type="boolean" 
+                               label="terrestrial database" help="Ask for terrestrial data layers"/>
+                        <param name ="marine" type="boolean" 
+                               label="marine database" help="Ask for marine data layers"/>
+                        <param name ="freshwater" type="boolean" 
+                               label="freshwater" help="Ask for freshwater data layers"/>
                     </section>
                     <section name="advanced_options" title= "advanced option" expanded="false">
-                        <param name="monthly" type="boolean" checked="true" label="monthly" help="Ask for monthly data layers"/>
-                        <param name="version" type="text" value="0" label="version_layer" help="Ask for version of data layers"/>
+                        <param name ="monthly" type="boolean" checked="true" 
+                               label="monthly" help="Ask for monthly data layers"/>
+                        <param name ="version" type="text" value="0" 
+                               label="version_layer" help="Ask for version of data layers"/>
                     </section>
                 </when>
                 <when value="layers_future">
                     <section name="environement" title= "environement layers" expanded="true" help="choose at least one environement to take layers from">
-                        <param name="terrestrial" type="boolean" label="terrestrial database" help="Ask for terrestrial data layers"/>
-                        <param name="marine" type="boolean" label="marine database" help="Ask for marine data layers"/>
-                        <param name="freshwater" type="boolean" label="freshwater" help="Ask for freshwater data layers"/>
+                        <param name ="terrestrial" type="boolean" 
+                               label="terrestrial database" help="Ask for terrestrial data layers"/>
+                        <param name ="marine" type="boolean" 
+                               label="marine database" help="Ask for marine data layers"/>
+                        <param name ="freshwater" type="boolean" 
+                               label="freshwater" help="Ask for freshwater data layers"/>
                     </section>
                     <section name="advanced_options" title= "advanced option" expanded="false">
-                        <param name="monthly" type="boolean" checked="true" label="monthly" help="Ask for monthly data layers"/>
-                        <param name="version" type="text" value="0" label="version_layer" help="Ask for version of data layers"/>
-                        <param name="scenario" type="text" value="None" label="scenario" help="Ask for version of data layers"/>
-                        <param name="year" type="text" value="0" label="year" help="Ask for version of data layers"/>
+                        <param name ="monthly" type="boolean" checked="true" 
+                               label="monthly" help="Ask for monthly data layers"/>
+                        <param name ="version" type="text" value="0" 
+                               label="version_layer" help="Ask for version of data layers"/>
+                        <param name ="scenario" type="text" value="None" 
+                               label="scenario" help="Ask for version of data layers"/>
+                        <param name ="year" type="text" value="0" 
+                               label="year" help="Ask for version of data layers"/>
                     </section>                   
                 </when>
                 <when value="layers_paleo">
                     <section name="environement" title= "environement layers" expanded="true" help="choose at least one environement to take layers from">
-                        <param name="terrestrial" type="boolean" label="terrestrial database" help="Ask for terrestrial data layers"/>
-                        <param name="marine" type="boolean" label="marine database" help="Ask for marine data layers"/>
-                        <param name="freshwater" type="boolean" label="freshwater" help="Ask for freshwater data layers"/>
+                        <param name ="terrestrial" type="boolean" 
+                               label="terrestrial database" help="Ask for terrestrial data layers"/>
+                        <param name ="marine" type="boolean" 
+                               label="marine database" help="Ask for marine data layers"/>
+                        <param name ="freshwater" type="boolean" 
+                               label="freshwater" help="Ask for freshwater data layers"/>
                      </section>
                     <section name="advanced_options" title= "advanced option" expanded="false">
-                        <param name="monthly" type="boolean" checked="true" label="monthly" help="Ask for monthly data layers"/>
-                        <param name="version" type="text" value="0" label="version_layer" help="Ask for version of data layers"/>
-                        <param name="model_name" type="text" value="None" label="model name" help="Ask for version of data layers"/>
-                        <param name="epoch" type="text" value="None" label="epoch" help="Ask for version of data layers"/>
-                        <param name="years_ago" type="text" value="0" label="years ago" help="Ask for version of data layers"/>
+                        <param name ="monthly" type="boolean" checked="true" 
+                               label="monthly" help="Ask for monthly data layers"/>
+                        <param name ="version" type="text" value="0" 
+                               label="version_layer" help="Ask for version of data layers"/>
+                        <param name ="model_name" type="text" value="None" 
+                               label="model name" help="Ask for version of data layers"/>
+                        <param name ="epoch" type="text" value="None" 
+                               label="epoch" help="Ask for version of data layers"/>
+                        <param name ="years_ago" type="text" value="0" 
+                               label="years ago" help="Ask for version of data layers"/>
                    </section>
                 </when>
             </conditional>
         </repeat>
     </inputs>
     <outputs>
-        <data name="output" from_work_dir="data.tsv" format="tsv"/>
+        <collection name="datasets_output" type="list"
+            label="Datasets list">
+        <discover_datasets pattern="__name_and_ext__" />
+        </collection>
     </outputs>
     <tests>
         <test expect_num_outputs="1">
@@ -91,7 +114,48 @@
         </test>
     </tests>
     <help><![CDATA[ 
-        Usage: outils test SDMpredictors 
+.. class:: infomark
+
+**What it does**
+
+This tool takes the three-dimensional tensor file (in JSON format) produced by the 'Extract RMSD distance matrix data' tool and flattens it along the time axix to give a two-dimensional distance matrix.
+
+Optionally, it also plots the distance matrix as a heatmap with matplotlib, performs hierarchical clustering with scipy, and plots the corresponding dendrogram.
+
+_____
+
+
+.. class:: infomark
+
+**Input**
+
+       - Three-dimensional tensor (JSON).
+       - User selection of desired outputs, clustering method and other parameters
+
+_____
+
+
+.. class:: infomark
+
+**Output**
+
+       - Tabular file containing a two-dimensional N x N distance matrix, where N is the number of MD trajectories
+       - Optional: a heatmap representing the distance matrix.
+       - Optional: a tabular file containing the cluster linkage array produced by hierarchical clustering of the distance matrix
+       - Optional: A dendrogram representing the hierarchical clustering.
+        Usage: outils test SDMpredictors
+
+
+        
++---------------+----------+----------+
+|"     fdp     "|koukou    |   pauline|
++---------------+----------+----------+
+
+
+table(4:3)
+
+
+
     ]]></help>
     <citations>
         <citation type="bibtex">@Manual{,
