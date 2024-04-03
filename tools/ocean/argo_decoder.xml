@@ -22,8 +22,9 @@
         /app/run_decode_argo_2_nc_rt.sh /mnt/runtime 'rsynclog' 'all' 'configfile' '/app/config/_argo_decoder_conf_ir_sbd.json' 'xmlreport' 'argo-decoder-report.xml' 'floatwmo' '$float_wmo' 'PROCESS_REMAINING_BUFFERS' '1' &&
 
         ## copy (because we need to be in working directory) and create output archive
-        cp -R /mnt/data/output/* . &&
-        zip -r argo-decoder-outputs.zip .
+        cd /mnt/data/output &&
+        zip -r argo-decoder-outputs.zip . &&
+        cp argo-decoder-outputs.zip '$outputs_data'
 
     ]]>
     </command>
