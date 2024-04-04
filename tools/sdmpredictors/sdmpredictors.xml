@@ -1,5 +1,5 @@
 <tool id="sdmpredictors_list_layers" name="SdmPredictors List Layers" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="21.05">
-    <description>Terrestrial and marine predictors for species distribution modelling</description>
+    <description>Terrestrial and marine predictors for species distribution modelling, list climate layers from multiple datasets</description>
     <macros>
         <token name="@TOOL_VERSION@">0.2.15</token> 
         <token name="@VERSION_SUFFIX@">0</token>
@@ -11,6 +11,7 @@
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
         
+
         Rscript
          '$__tool_directory__/script.R'
          #for $i, $s in enumerate($list_layers)
@@ -35,67 +36,67 @@
     <inputs>
         <repeat name="list_layers" title="New layer list">
             <conditional name="choose_layer">
-                <param name="input_layer" type="select" label="Choose Layer Time Frame">
-                    <option value="layers_modern" selected="true">Modern Layer</option>
+                <param name="input_layer" type="select" label="Choose Layer Timeframe">
+                    <option value="layers_current" selected="true">Current Layer</option>
                     <option value="layers_future">Future Layer</option>
                     <option value="layers_paleo">Paleo Layer</option>
                 </param>
-                <when value="layers_modern">
-                    <section name="environement" title= "environement layers" expanded="true" help="choose at least one environement to take layers from">
-                        <param name ="terrestrial" type="boolean" 
-                               label="terrestrial database" help="Ask for terrestrial data layers"/>
+                <when value="layers_current">
+                    <section name="environement" title= "Environemental Datasets" expanded="true" help="Choose at least one environemental dataset to take layers from">
+                        <param name ="terrestrial" type="boolean" checked="true"
+                               label="Terrestrial Data" help="When enabled (default), then datasets that only have terrestrial data (sea masked) are returned."/>
                         <param name ="marine" type="boolean" 
-                               label="marine database" help="Ask for marine data layers"/>
+                               label="Marine Data" help="When enabled, then datasets that only have marine data (land masked) are returned."/>
                         <param name ="freshwater" type="boolean" 
-                               label="freshwater" help="Ask for freshwater data layers"/>
+                               label="Freshwater Data" help="When enabled, then datasets that only have freshwater data are returned."/>
                     </section>
-                    <section name="advanced_options" title= "advanced option" expanded="false">
+                    <section name="advanced_options" title= "Advanced Option" expanded="false">
                         <param name ="monthly" type="boolean" checked="true" 
-                               label="monthly" help="Ask for monthly data layers"/>
-                        <param name ="version" type="text" value="0" 
-                               label="version_layer" help="Ask for version of data layers"/>
+                               label="Monthly" help="When enabled, no monthly layers are returned. All annual and monthly layers are returned by default."/>
+                        <param name ="version" type="text" value="0" optional="false"
+                               label="Layer Version" help="When equal to 0, layers from all versions of datasets are returned (default) else layers are filtered by version number."/>
                     </section>
                 </when>
                 <when value="layers_future">
-                    <section name="environement" title= "environement layers" expanded="true" help="choose at least one environement to take layers from">
-                        <param name ="terrestrial" type="boolean" 
-                               label="terrestrial database" help="Ask for terrestrial data layers"/>
+                    <section name="environement" title= "Environemental Datasets" expanded="true" help="Choose at least one environemental dataset to take layers from">
+                        <param name ="terrestrial" type="boolean" checked="true"
+                               label="Terrestrial Data" help="When enabled (default), then datasets that only have terrestrial data (sea masked) are returned."/>
                         <param name ="marine" type="boolean" 
-                               label="marine database" help="Ask for marine data layers"/>
+                               label="Marine Data" help="When enabled, then datasets that only have marine data (land masked) are returned."/>
                         <param name ="freshwater" type="boolean" 
-                               label="freshwater" help="Ask for freshwater data layers"/>
+                               label="Freshwater Data" help="When enabled, then datasets that only have freshwater data are returned."/>
                     </section>
-                    <section name="advanced_options" title= "advanced option" expanded="false">
+                    <section name="advanced_options" title= "Advanced Option" expanded="false">
                         <param name ="monthly" type="boolean" checked="true" 
-                               label="monthly" help="Ask for monthly data layers"/>
-                        <param name ="version" type="text" value="0" 
-                               label="version_layer" help="Ask for version of data layers"/>
-                        <param name ="scenario" type="text" value="None" 
-                               label="scenario" help="Ask for version of data layers"/>
-                        <param name ="year" type="text" value="0" 
-                               label="year" help="Ask for version of data layers"/>
-                    </section>                   
+                               label="Monthly" help="When enabled, no monthly layers are returned. All annual and monthly layers are returned by default."/>
+                        <param name ="version" type="text" value="0" optional="false"
+                               label="Layer Version" help="When equal to 0, layers from all versions of datasets are returned (default) else layers are filtered by version number."/>
+                        <param name ="scenario" type="text" value="All" optional="false"
+                               label="Scenario" help="Climate change scenario, e.g. 'B1', 'A1B', 'A2'. By default All scenarios are listed."/>
+                        <param name ="year" type="text" value="0" optional="false"
+                               label="Year" help="Year for which you want the climate change prediction, e.g. 2100,2200. When 0 all years predicted are listed."/>
+                    </section>
                 </when>
                 <when value="layers_paleo">
-                    <section name="environement" title= "environement layers" expanded="true" help="choose at least one environement to take layers from">
-                        <param name ="terrestrial" type="boolean" 
-                               label="terrestrial database" help="Ask for terrestrial data layers"/>
+                    <section name="environement" title= "Environemental Datasets" expanded="true" help="Choose at least one environemental dataset to take layers from">
+                        <param name ="terrestrial" type="boolean" checked="true"
+                               label="Terrestrial Data" help="When enabled (default), then datasets that only have terrestrial data (sea masked) are returned."/>
                         <param name ="marine" type="boolean" 
-                               label="marine database" help="Ask for marine data layers"/>
+                               label="Marine Data" help="When enabled, then datasets that only have marine data (land masked) are returned."/>
                         <param name ="freshwater" type="boolean" 
-                               label="freshwater" help="Ask for freshwater data layers"/>
+                               label="Freshwater Data" help="When enabled, then datasets that only have freshwater data are returned."/>
                      </section>
-                    <section name="advanced_options" title= "advanced option" expanded="false">
+                    <section name="advanced_options" title= "Advanced Option" expanded="false">
                         <param name ="monthly" type="boolean" checked="true" 
-                               label="monthly" help="Ask for monthly data layers"/>
-                        <param name ="version" type="text" value="0" 
-                               label="version_layer" help="Ask for version of data layers"/>
-                        <param name ="model_name" type="text" value="None" 
-                               label="model name" help="Ask for version of data layers"/>
-                        <param name ="epoch" type="text" value="None" 
-                               label="epoch" help="Ask for version of data layers"/>
-                        <param name ="years_ago" type="text" value="0" 
-                               label="years ago" help="Ask for version of data layers"/>
+                               label="Monthly" help="When enabled, no monthly layers are returned. All annual and monthly layers are returned by default."/>
+                        <param name ="version" type="text" value="0" optional="false"
+                               label="Layer Version" help="When equal to 0, layers from all versions of datasets are returned (default) else layers are filtered by version number."/>
+                        <param name ="model_name" type="text" value="All" optional="false"
+                               label="Model Name" help="Paleo climate model name, see the model_name column in the result. By default all models are listed."/>
+                        <param name ="epoch" type="text" value="All" optional="false"
+                               label="Epoch" help="Epoch for which you want the paleo layer, e.g. 'mid-Holocene', 'Last Glacial Maximum'. By default all epochs are listed."/>
+                        <param name ="years_ago" type="text" value="0" optional="false"
+                               label="Years Ago" help="Years for which you want the paleo layer, e.g. 6000, 21000.When 0 all years are listed."/>
                    </section>
                 </when>
             </conditional>
@@ -114,46 +115,29 @@
         </test>
     </tests>
     <help><![CDATA[ 
+
 .. class:: infomark
 
 **What it does**
 
-This tool takes the three-dimensional tensor file (in JSON format) produced by the 'Extract RMSD distance matrix data' tool and flattens it along the time axix to give a two-dimensional distance matrix.
+This tool helps you get one or multiple list of environemental layers from multiple sources, including :
+WorldClim <https://www.worldclim.org/>
+ENVIREM <https://envirem.github.io/> 
+Bio-ORACLE <https://bio-oracle.org/> 
+and MARSPEC <http://www.marspec.org/> 
 
-Optionally, it also plots the distance matrix as a heatmap with matplotlib, performs hierarchical clustering with scipy, and plots the corresponding dendrogram.
-
-_____
-
-
-.. class:: infomark
-
-**Input**
-
-       - Three-dimensional tensor (JSON).
-       - User selection of desired outputs, clustering method and other parameters
-
-_____
+____
 
 
 .. class:: infomark
 
 **Output**
 
-       - Tabular file containing a two-dimensional N x N distance matrix, where N is the number of MD trajectories
-       - Optional: a heatmap representing the distance matrix.
-       - Optional: a tabular file containing the cluster linkage array produced by hierarchical clustering of the distance matrix
-       - Optional: A dendrogram representing the hierarchical clustering.
-        Usage: outils test SDMpredictors
+Eatch "New layer list" request will produce a tabular file, all files will be available in a collection
 
+.. class:: warning
 
-        
-+---------------+----------+----------+
-|"     fdp     "|koukou    |   pauline|
-+---------------+----------+----------+
-
-
-table(4:3)
-
+**If no Environement are selected, or if the option specified does not exist, the tool will produce an empty file.**
 
 
     ]]></help>

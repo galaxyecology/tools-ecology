@@ -27,7 +27,7 @@ layers_modern_fun <- function(argument_number, file_number){
                          , freshwater = data_freshwater
                          , monthly = data_monthly
                          , version = data_version
-                         ), file = paste(as.character(file_number),"data_modern.tsv", sep = "_"), sep = "\t", row.names=FALSE)
+                         ), file = paste(as.character(file_number),"data_current.tsv", sep = "_"), sep = "\t", row.names=FALSE)
 }
 
 layers_future_fun <- function(argument_number, file_number){
@@ -41,7 +41,7 @@ layers_future_fun <- function(argument_number, file_number){
   data_year        = as.numeric(args[argument_number+7])
   
   if(data_version==0){data_version <- NULL}
-  if(data_scenario=="None"){data_scenario <- NA}
+  if(data_scenario=="All"){data_scenario <- NA}
   if(data_year==0){data_year <- NA}
   
   datasets <- list_datasets(terrestrial = data_terrestrial
@@ -71,8 +71,8 @@ layers_paleo_fun <- function(argument_number, file_number){
   data_years_ago   = as.numeric(args[argument_number+8])
   
   if(data_version==0){data_versio <- NULL}
-  if(data_model_name=="None"){data_model_name <- NA}
-  if(data_epoch=="None"){data_epoch <- NA}
+  if(data_model_name=="All"){data_model_name <- NA}
+  if(data_epoch=="All"){data_epoch <- NA}
   if(data_years_ago==0){data_years_ago <- NA}
   
   datasets <- list_datasets(terrestrial = data_terrestrial
@@ -96,7 +96,7 @@ if (length(args)<0){stop("not enough arguments")
 }else{
   n <- 1
   for (a in 1:length(args)) {
-    if (as.character(args[a]) == "layers_modern"){
+    if (as.character(args[a]) == "layers_current"){
       layers_modern_fun(a,n)
       n <- n+1
     }
