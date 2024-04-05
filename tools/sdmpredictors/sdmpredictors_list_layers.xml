@@ -131,9 +131,9 @@
                 <conditional name="choose_layer">
                     <param name="input_layer" value="layers_future"/>
                     <section name="environement">
-                        <param name="terrestrial" value="false"/>
+                        <param name="terrestrial" value="true"/>
                         <param name="marine" value="false"/>
-                        <param name="freshwater" value="true"/>
+                        <param name="freshwater" value="false"/>
                     </section>
                     <section name="advanced_options">
                         <param name="monthly" value="true"/>
@@ -147,9 +147,9 @@
                 <conditional name="choose_layer">
                     <param name="input_layer" value="layers_current"/>
                     <section name="environement">
-                        <param name="terrestrial" value="true"/>
+                        <param name="terrestrial" value="false"/>
                         <param name="marine" value="false"/>
-                        <param name="freshwater" value="false"/>
+                        <param name="freshwater" value="true"/>
                     </section>
                     <section name="advanced_options">
                         <param name="monthly" value="true"/>
@@ -157,7 +157,11 @@
                     </section>
                 </conditional>
             </repeat>
-            <output_collection name="datasets_output" type="list" count="3"/>
+            <output_collection name="datasets_output" type="list" count="3">
+                <discovered_dataset designation="1_data_paleo.tsv" ftype="tsv"/>
+                <discovered_dataset designation="2_data_future.tsv" ftype="tsv"/>
+                <discovered_dataset designation="3_data_current.tsv" ftype="tsv"/>
+            </output_collection>
         </test>
     </tests>
     <help><![CDATA[ 
