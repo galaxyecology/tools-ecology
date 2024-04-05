@@ -158,9 +158,9 @@
                 </conditional>
             </repeat>
             <output_collection name="datasets_output" type="list" count="3">
-                <discovered_dataset designation="1_data_paleo.tsv" ftype="tsv"/>
-                <discovered_dataset designation="2_data_future.tsv" ftype="tsv"/>
-                <discovered_dataset designation="3_data_current.tsv" ftype="tsv"/>
+                <element name="1_data_paleo" file="1_data_paleo.tsv" ftype="tsv"/>
+                <element name="2_data_future" file="2_data_future.tsv" ftype="tsv"/>
+                <element name="3_data_current" file="3_data_current.tsv" ftype="tsv"/>
             </output_collection>
         </test>
     </tests>
