@@ -1,4 +1,4 @@
-<tool id="ecoregion_brt_analysis" name="BRT prediction tool" version="0.1.0+galaxy0" profile="22.05">
+<tool id="ecoregion_brt_analysis" name="BRT tool prediction" version="0.1.0+galaxy0" profile="22.05">
     <description>for species distribution modelling</description>
     <requirements>
        <requirement type="package" version="4.3.0">r-base</requirement>
@@ -30,7 +30,7 @@
               <option value=".">Dot</option>
               <option value=",">Comma</option>
       </param>
-      <param name="abioticname" type="data_column" label="Choose column(s) where your abiotic parameter are in your environment data file." data_ref="enviro" multiple="true"/>
+      <param name="abioticname" type="data_column" label="Choose column(s) where your abiotic parameter are in your environment data file." data_ref="enviro" multiple="true" use_header_names="true"/>
     </inputs>
     <outputs>
       <collection name="outputpred" type="list" label="Prediction files">
@@ -64,8 +64,8 @@
 **What it does ?**
 ==================
 
-This Galaxy tool is made to characterize the distribution of each taxon by giving a probability indicator taxon presence for each environmental layer pixel. To do this, the boosted regression trees (BRT) method (Elith *et al*., 2008) is used to fit the relationship between the presence of a single taxon and the environmental conditions where the taxon has been
-detected. Two steps are performed in this script: the creation of the taxon distribution model and the use of this model to obtain a predictive index. The prediction index obtained from each BRT model for each pixel of the environmental layers is an approximation of the probability of detection of the presence of the taxon.
+This Galaxy tool is made to characterize the distribution of each taxon by giving a probability indicator taxon presence for each environmental layer pixel. To do this, the boosted regression trees (BRT) method (Elith *et al*., 2008) is used to fit the relationship between the presence of a single taxon and the environmental conditions where the taxon has been detected. 
+Two steps are performed in this script: the creation of the taxon distribution model and the use of this model to obtain a predictive index. The prediction index obtained from each BRT model for each pixel of the environmental layers is an approximation of the probability of detection of the presence of the taxon.
 
 ===================         
 **How to use it ?**
@@ -74,9 +74,10 @@ detected. Two steps are performed in this script: the creation of the taxon dist
 This tool takes in input the environmental data (for all the study areas) as well as the species occurrence data and the environmental characteristics where the species has been observed. See examples of inputs below. These files need to be in tabular format. You also need to select the column where your abiotic parameters are in your environment data file.
  
  .. class:: infomark 
-Your abiotic parameters must be present in your occurrence data file(s) and must be named the same as in your environment file.
+    Your abiotic parameters must be present in your occurrence data file(s) and must be named the same as in your environment file. This file can be obtain with the tool called GeoNearestNeighbor.
+    GeoNearestNeighbor tool allows you to merge two data tables according to their latitude and longitude coordinates, finding the closest points.
  
-This tool gives in output a file containing the predictions of the probability of the presence of each taxon for each pixel (latitude, longitude) environmental, a visualization of these pixels for each taxon and graphs showing the percentage of model explanation for each environmental parameter. 
+This tool gives in output a file containing the predictions of the probability of the presence of each taxon for each pixel (latitude, longitude) environmental, a visualization of these pixels for each taxon and graphs showing the percentage of model explanation for each environmental parameter.
 
 **Example of environmental data input :** 
 -----------------------------------------

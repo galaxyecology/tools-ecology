@@ -82,7 +82,7 @@ have_model <- have_model %>% filter(!str_ends(Taxa, "sp.1|sp[0-9]"))
 #extraction of the have_model object
 write.table(have_model,file = "have_model.tsv", sep="\t", quote = F, row.names = F)
 
-#getting list of taxa for next if not using worms
+#getting list of taxa for next step if not using worms
 list_taxon = have_model3$Taxa
 write.table(list_taxon, file= "list_taxa.txt", quote = F, row.names = F, col.names = F)
 
