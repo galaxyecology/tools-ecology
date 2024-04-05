@@ -13,7 +13,7 @@
         
 
         Rscript
-         '$__tool_directory__/script.R'
+         '$__tool_directory__/sdmpredictors_list_layers.R'
          #for $i, $s in enumerate($list_layers)
             ${s.choose_layer.input_layer}
             ${s.choose_layer.environement.terrestrial}
@@ -52,7 +52,7 @@
                     </section>
                     <section name="advanced_options" title= "Advanced Option" expanded="false">
                         <param name ="monthly" type="boolean" checked="true" 
-                               label="Monthly" help="When enabled, no monthly layers are returned. All annual and monthly layers are returned by default."/>
+                               label="Monthly" help="When enabled, no monthly layers are returned. All annual and monthly layers are returned by default."/>
                         <param name ="version" type="text" value="0" optional="false"
                                label="Layer Version" help="When equal to 0, layers from all versions of datasets are returned (default) else layers are filtered by version number."/>
                     </section>
@@ -68,7 +68,7 @@
                     </section>
                     <section name="advanced_options" title= "Advanced Option" expanded="false">
                         <param name ="monthly" type="boolean" checked="true" 
-                               label="Monthly" help="When enabled, no monthly layers are returned. All annual and monthly layers are returned by default."/>
+                               label="Monthly" help="When enabled, no monthly layers are returned. All annual and monthly layers are returned by default."/>
                         <param name ="version" type="text" value="0" optional="false"
                                label="Layer Version" help="When equal to 0, layers from all versions of datasets are returned (default) else layers are filtered by version number."/>
                         <param name ="scenario" type="text" value="All" optional="false"
@@ -88,7 +88,7 @@
                      </section>
                     <section name="advanced_options" title= "Advanced Option" expanded="false">
                         <param name ="monthly" type="boolean" checked="true" 
-                               label="Monthly" help="When enabled, no monthly layers are returned. All annual and monthly layers are returned by default."/>
+                               label="Monthly" help="When enabled, no monthly layers are returned. All annual and monthly layers are returned by default."/>
                         <param name ="version" type="text" value="0" optional="false"
                                label="Layer Version" help="When equal to 0, layers from all versions of datasets are returned (default) else layers are filtered by version number."/>
                         <param name ="model_name" type="text" value="All" optional="false"
@@ -109,9 +109,55 @@
         </collection>
     </outputs>
     <tests>
-        <test expect_num_outputs="1">
-            <param name="terrestrial_input" value="FALSE"/>
-            <param name="marine_input" value="TRUE"/>
+        <test>
+            <repeat name="list_layers">
+                <conditional name="choose_layer">
+                    <param name="input_layer" value="layers_paleo"/>
+                    <section name="environement">
+                        <param name="terrestrial" value="false"/>
+                        <param name="marine" value="true"/>
+                        <param name="freshwater" value="false"/>
+                    </section>
+                    <section name="advanced_options">
+                        <param name="monthly" value="true"/>
+                        <param name="version" value="0"/>
+                        <param name="model_name" value="All"/>
+                        <param name="epoch" value="All"/>
+                        <param name="years_ago" value="0"/>
+                    </section>
+                </conditional>
+            </repeat>
+            <repeat name="list_layers">
+                <conditional name="choose_layer">
+                    <param name="input_layer" value="layers_future"/>
+                    <section name="environement">
+                        <param name="terrestrial" value="false"/>
+                        <param name="marine" value="false"/>
+                        <param name="freshwater" value="true"/>
+                    </section>
+                    <section name="advanced_options">
+                        <param name="monthly" value="true"/>
+                        <param name="version" value="0"/>
+                        <param name="scenario" value="All"/>
+                        <param name="year" value="0"/>
+                    </section>
+                </conditional>
+            </repeat>
+            <repeat name="list_layers">
+                <conditional name="choose_layer">
+                    <param name="input_layer" value="layers_current"/>
+                    <section name="environement">
+                        <param name="terrestrial" value="true"/>
+                        <param name="marine" value="false"/>
+                        <param name="freshwater" value="false"/>
+                    </section>
+                    <section name="advanced_options">
+                        <param name="monthly" value="true"/>
+                        <param name="version" value="0"/>
+                    </section>
+                </conditional>
+            </repeat>
+            <output_collection name="datasets_output" type="list" count="3"/>
         </test>
     </tests>
     <help><![CDATA[ 
