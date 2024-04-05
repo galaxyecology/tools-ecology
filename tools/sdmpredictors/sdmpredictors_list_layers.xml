@@ -1,5 +1,5 @@
 <tool id="sdmpredictors_list_layers" name="SdmPredictors List Layers" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="21.05">
-    <description>Terrestrial and marine predictors for species distribution modelling, list climate layers from multiple datasets</description>
+    <description>from environmental predictors for species distribution modeling</description>
     <macros>
         <token name="@TOOL_VERSION@">0.2.15</token> 
         <token name="@VERSION_SUFFIX@">0</token>
