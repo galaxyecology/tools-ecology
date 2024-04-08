@@ -11,7 +11,6 @@
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
         
-
         Rscript
          '$__tool_directory__/sdmpredictors_list_layers.R'
          #for $i, $s in enumerate($list_layers)
@@ -24,8 +23,7 @@
             #if str($s.choose_layer.input_layer) == 'layers_future'
                 ${s.choose_layer.advanced_options.scenario}
                 ${s.choose_layer.advanced_options.year}
-            #end if
-            #if str($s.choose_layer.input_layer) == 'layers_paleo'
+            #elif str($s.choose_layer.input_layer) == 'layers_paleo'
                 ${s.choose_layer.advanced_options.model_name}
                 ${s.choose_layer.advanced_options.epoch}
                 ${s.choose_layer.advanced_options.years_ago}
@@ -158,9 +156,9 @@
                 </conditional>
             </repeat>
             <output_collection name="datasets_output" type="list" count="3">
-                <element name="1_data_paleo" file="1_data_paleo.tsv" ftype="tsv"/>
-                <element name="2_data_future" file="2_data_future.tsv" ftype="tsv"/>
-                <element name="3_data_current" file="3_data_current.tsv" ftype="tsv"/>
+                <element name="1_data_paleo" file="1_data_paleo.tabular" ftype="tabular"/>
+                <element name="2_data_future" file="2_data_future.tabular" ftype="tabular"/>
+                <element name="3_data_current" file="3_data_current.tabular" ftype="tabular"/>
             </output_collection>
         </test>
     </tests>

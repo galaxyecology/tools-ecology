@@ -27,7 +27,7 @@ layers_modern_fun <- function(argument_number, file_number){
                          , freshwater = data_freshwater
                          , monthly = data_monthly
                          , version = data_version
-                         ), file = paste(as.character(file_number),"data_current.tsv", sep = "_"), sep = "\t", row.names=FALSE)
+                         ), file = paste(as.character(file_number),"data_current.tabular", sep = "_"), sep = "\t", row.names=FALSE)
 }
 
 layers_future_fun <- function(argument_number, file_number){
@@ -56,7 +56,7 @@ layers_future_fun <- function(argument_number, file_number){
                                 , version = data_version
                                 , scenario = data_scenario
                                 , year = data_year
-                                ), file = paste(as.character(file_number),"data_future.tsv", sep = "_"), sep = "\t", row.names=FALSE)
+                                ), file = paste(as.character(file_number),"data_future.tabular", sep = "_"), sep = "\t", row.names=FALSE)
 }
 
 layers_paleo_fun <- function(argument_number, file_number){
@@ -88,7 +88,7 @@ layers_paleo_fun <- function(argument_number, file_number){
                                 , model_name = data_model_name
                                 , epoch = data_epoch 
                                 , years_ago = data_years_ago
-                                ), file = paste(as.character(file_number),"data_paleo.tsv", sep = "_"), sep = "\t", row.names=FALSE)
+                                ), file = paste(as.character(file_number),"data_paleo.tabular", sep = "_"), sep = "\t", row.names=FALSE)
 }
 
 
