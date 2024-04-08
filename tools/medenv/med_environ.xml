@@ -1,4 +1,4 @@
-<tool id="iabiodiv_smartbiodiv_med_environ" name="Adds environment variables" version="0.0.1" profile="22.05">
+<tool id="iabiodiv_smartbiodiv_med_environ" name="Adds environment variables" version="0.1.0" profile="22.05">
     <description>
         From Copernicus and etopo given geolocalized and timestamped observations
     </description>
