@@ -1,0 +1,19 @@
+name: sdmpredictors
+owner: ecology 
+description: Terrestrial and marine predictors for species distribution modelling.
+homepage_url: https://cran.r-project.org/web/packages/sdmpredictors/index.html
+long_description: |
+  Terrestrial and marine predictors for species distribution modelling from multiple sources, including WorldClim <https://www.worldclim.org/>,, ENVIREM <https://envirem.github.io/>, Bio-ORACLE <https://bio-oracle.org/> and MARSPEC <http://www.marspec.org/>.
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/sdmpredictors
+type: unrestricted
+categories:
+- Ecology
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "List climate layers from multiple datasets for species distribution modelling"
+suite:
+  name: "suite_sdmpredictors"
+  description: Terrestrial and marine predictors for species distribution modelling.
+  long_description: |
+    Terrestrial and marine predictors for species distribution modelling from multiple sources, including WorldClim <https://www.worldclim.org/>,, ENVIREM <https://envirem.github.io/>, Bio-ORACLE <https://bio-oracle.org/> and MARSPEC <http://www.marspec.org/>.
+    
