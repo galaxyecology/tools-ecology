@@ -18,8 +18,7 @@
         unzip /tmp/raw_data.zip -d /mnt/data &&
 
         ## execute decoder script
-        ##$APP_HOME/$APP_RUN_FILE /mnt/runtime 'rsynclog' 'all' 'configfile' '/app/config/_argo_decoder_conf_ir_sbd.json' 'xmlreport' 'argo-decoder-report.xml' 'floatwmo' '$float_wmo' 'PROCESS_REMAINING_BUFFERS' '1' &&
-        /app/run_decode_argo_2_nc_rt.sh /mnt/runtime 'rsynclog' 'all' 'configfile' '/app/config/_argo_decoder_conf_ir_sbd.json' 'xmlreport' 'argo-decoder-report.xml' 'floatwmo' '$float_wmo' 'PROCESS_REMAINING_BUFFERS' '1' &&
+        \$APP_HOME/\$APP_RUN_FILE /mnt/runtime 'rsynclog' 'all' 'configfile' '/app/config/_argo_decoder_conf_ir_sbd.json' 'xmlreport' 'argo-decoder-report.xml' 'floatwmo' '$float_wmo' 'PROCESS_REMAINING_BUFFERS' '1' &&
 
         ## copy (because we need to be in working directory) and create output archive
         cd /mnt/data/output &&
@@ -28,10 +27,6 @@
 
     ]]>
     </command>
-     <environment_variables>
-        <environment_variable name="APP_HOME">/app</environment_variable>
-        <environment_variable name="APP_RUN_FILE">run_decode_argo_2_nc_rt.sh</environment_variable>
-    </environment_variables>
     <inputs>
         <param name="raw_data" type="data" format="zip" label="Archived input argo raw data"/>
         <param name="float_wmo" type="integer" label="Input WMO number" help="Input float WMO numer (example : 6903014)"/>
