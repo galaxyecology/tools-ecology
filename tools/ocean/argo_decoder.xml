@@ -42,21 +42,25 @@
         </test>
     </tests>
     <help><![CDATA[
-    **What does the tool do ? **
-       
-    The Coriolis Argo floats data processing chain decodes, processes, formats and performs quality control on floats data.
+======================
+Decode Argo float data
+======================
+
+**What it does**
+
+The Coriolis Argo floats data processing chain decodes, processes, formats and performs quality control on floats data.
     
     - The main function of the decoder is to format the float data (float metadata, float measurements, float technical data) into four Argo NetCDF CF files.
         
     - The decoder applies Real Time Quality Control (RTQC) tests on Argo profile and trajectory files
 
-   **Inputs**
-    
-    Input a zip folder of your Archived Argo data. Within this zip for each float to decod there is a json file with the metadata necessary for the float and its sensors to be decoded.
+**Input description**
 
-    **Outputs**
-        
-    Retrieve a zip folder with your Argo data decoded and ready to be analysed.
+Input a zip folder of your Archived Argo data. Within this zip for each float to decod there is a json file with the metadata necessary for the float and its sensors to be decoded.
+
+**Output**
+
+Retrieve a zip folder with your Argo data decoded and ready to be analysed.      
     ]]>
     </help>
     <citations>
