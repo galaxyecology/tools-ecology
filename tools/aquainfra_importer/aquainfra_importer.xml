@@ -1,4 +1,4 @@
-<tool id="aquainfra_importer" name="AquaINFRA Importer" tool_type="data_source" version="1.0" profile="22.05">
+<tool id="aquainfra_importer" name="AquaINFRA Importer" tool_type="data_source" version="1.0" profile="20.09">
     <description>downloads content via the AquaINFRA interaction platform</description>
     <command><![CDATA[
         python '$__tool_directory__/data_source.py' '$output' $__app__.config.output_size_limit '$output'
