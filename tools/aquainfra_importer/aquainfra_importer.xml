@@ -1,0 +1,13 @@
+<tool id="aquainfra" name="AquaINFRA Importer" tool_type="data_source" version="1.0">
+    <description>downloads content via the AquaINFRA interaction platform</description>
+    <command><![CDATA[
+        python '$__tool_directory__/data_source.py' '$output' $__app__.config.output_size_limit '$output'
+    ]]></command>
+    <inputs action="https://aquainfra.dev.52north.org/" check_values="false" method="get">
+        <param name="GALAXY_URL" type="baseurl" value="/tool_runner" />
+        <param name="tool_id" type="hidden" value="aquainfra" />
+    </inputs>
+    <outputs>
+        <data name="output" format="zip" label="resource"/>
+    </outputs>
+</tool>
