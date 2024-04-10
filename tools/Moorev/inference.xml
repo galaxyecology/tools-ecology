@@ -1,4 +1,4 @@
-<tool id="moover_inference" name="Moover-inference" version="1.0.0">
+<tool id="moover_inference" name="Moover-inference" version="1.0.0" profile="22.05">
   <description> Automated tracking, segmentation and feature extraction </description>
   <requirements>
     <requirement type="package" version="8.1.2">ultralytics</requirement>
@@ -9,17 +9,20 @@
     <requirement type="package" version="1.1">argparse</requirement>
     <requirement type="package" version="6.0.1">yaml</requirement>
   </requirements>
-  <command> 
-    <![CDATA[
-    mkdir results  
-    && python '${__tool_directory__}/inference/main.py' '$input_file' 
+  <command> <![CDATA[
+    mkdir results &&
+    python '${__tool_directory__}/inference/main.py'
+    '$input_file' 
     #if $Imnfernce_model_selection.default_or_custom=="default"
-    'default' 
+      'default' 
     #else 
-    '$model_wights' 
+      '$model_wights' 
     #end if
-    '$conf' '${__tool_directory__}' '$save_csv' '$save_prediction' '$save_annotation'
-    && rm -r results
+    '$conf'
+    '${__tool_directory__}'
+    '$save_csv'
+    '$save_prediction'
+    '$save_annotation'
     ]]>
   </command>
   <inputs>
@@ -35,9 +38,9 @@
       </when>
     </conditional>
     <param name="conf" value="50.0" type="float" min="0" max="100" label="Percentage" help="Between 0 and 100, e.g. 50%"/>
-    <param name="save_prediction" type="boolean" label="save predictions ?"/>
-    <param name="save_csv" type="boolean" label="extract info ?"/>
-    <param name="save_annotation" type="boolean" label="save annotation ?"/>
+    <param name="save_prediction" type="boolean" label="Save predictions?"/>
+    <param name="save_csv" type="boolean" label="Extract info?"/>
+    <param name="save_annotation" type="boolean" label="Save annotation?"/>
   </inputs>
   <outputs>
     <data format="zip" name="output_file" from_work_dir="results.zip"/>
