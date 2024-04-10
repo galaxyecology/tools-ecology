@@ -1,0 +1,61 @@
+<tool id="vector_template" name="Make templates for vector files" version="0.1.0+galaxy0" profile="22.05">
+    <description>attributes for EML metadata creation</description>
+    <requirements>
+        <container type="docker">outils-patrinat.mnhn.fr/metashark:latest</container>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+    
+    #set $table = ""
+    mkdir data_files && 
+    
+    #for $indata in $inputdata
+        ln -s '$indata' 'data_files/${indata.element_identifier}';
+        #set $table += $indata.element_identifier + " ";
+    #end for
+   
+    Rscript 
+         '$__tool_directory__/vector_templates.R'
+         '$table'
+         
+    
+    ]]></command>
+    <inputs>
+         <param name="inputdata" type="data_collection"  collection_type="list"  label="Upload all data files wich are vector files" help= "Input a data collection."/>
+    </inputs>
+    <outputs>
+       <collection name="templates" type="list" label="Templates for vector data">
+             <discover_datasets pattern="(?P&lt;designation&gt;.+\.txt)" format="txt"/>
+       </collection>
+    </outputs>
+    <tests>
+        <test>
+           <param name="inputdata">
+              <collection type="list">
+                 <element name="data_7.GeoJSON" value="data_7.GeoJSON"/>
+              </collection>
+           </param>
+           <output_collection name='templates' type = "list" count="3"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+
+**What it does?**
+--------------------    
+
+This tool is used to produce EAL templates for data table used to build EML metadata. It produces the following eal files: 
+
+- attibutes_my_vector.txt (describe the attributes of your vector file)
+- catvars_my_vector.txt (only if there are one or more catégorical variable in your vector file)
+- custom_units.txt (made to describe custom units if there are any)
+
+After that, these files can be edited to add information about your vector file and then be used in the make eml tool to produce EML metadata.   
+
+**How to use it?**
+-------------------- 
+To use this tool, you need to select, in your history a data collection with your vector data file(s) (format GeoJSON). To do so, you can select the **Upload file** tool, select the *Collection* tab, upload all your templates, click on the *Start* button to integrate the files to Galaxy and then click on *Build*. You will need to choose a name and select *Create collection* to build a collection with your templates. You also can upload your files to Galaxy, select them in the history by clicking the *Select items* button, click on the newly appeared box on the right and select *Build dataset list*. To upload shapefile you need to create a composite data. 
+
+.. class:: warningmark
+'''TIP''' This tool dont accept as inputs composite data like shapefile at the moment. 
+
+    ]]></help>
+</tool>

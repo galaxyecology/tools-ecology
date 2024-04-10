@@ -1,0 +1,396 @@
+<tool id="argo_getdata" name="Argo data access" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="22.05">
+    <description>for global ocean in situ observing system</description>
+    <macros>
+        <import>macro.xml</import>
+    </macros>
+    <expand macro="argo_requirements">
+    </expand>
+    <required_files>
+        <include type="literal" path="argo_getdata.py"/>
+        <include type="literal" path="macro.xml"/>
+    </required_files>
+    <command detect_errors="exit_code"><![CDATA[ 
+        python '$__tool_directory__/argo_getdata.py'
+            --user=$user
+             #if $selection.data_selection == 'space_time':
+              --cardinal_1=$selection.cardinal_1
+              --cardinal_2=$selection.cardinal_2
+              --cardinal_3=$selection.cardinal_3
+              --cardinal_4=$selection.cardinal_4
+              --pressure_1=$selection.pressure_1
+              --pressure_2=$selection.pressure_2
+              --date_1=$selection.date_1
+              --date_2=$selection.date_2
+            #else if $selection.data_selection == 'floats':
+              --wmo=$selection.wmo
+            #else:
+              --wmo=$selection.wmo
+              --profile=$selection.profile
+            #end if
+            #if $dataset.data_dataset == 'bgc' :
+              --params=$dataset.params
+              --measured=$dataset.measured
+            #end if 
+            --output_argo='$output_argo'
+        ]]>
+    </command>
+    <inputs>
+        <param name="user" type="select" label="We have preconfigured some mode of operations for you. What mode do you want to use?">
+            <option value="standard">🏊 standard mode simplifies the dataset, remove most of its jargon and return a priori good data</option>
+            <option value="research">🚣 research mode simplifies the dataset to its heart, preserving only data of the highest quality for research studies, including studies sensitive to small pressure and salinity bias </option>
+            <option value="expert">🏄 expert mode return all the Argo data, without any postprocessing</option>
+        </param>    
+        <conditional name="selection">
+            <param name="data_selection" type="select" label="How do you want to select your data of interest ?">
+                <option value="space_time">🗺 For a space/time domain</option>
+                <option value="floats">🤖 For one or more floats</option>
+                <option value="profiles">⚓ For one or more profiles</option>
+            </param>
+            <when value="space_time">
+                <param name="cardinal_1" type="float" min="-90" max="90" value="0" label="Input longitude min (+east/-west):"/>
+                <param name="cardinal_2" type="float" min="-90" max="90" value="0" label="Input longitude max (+east/-west):"/>
+                <param name="cardinal_3" type="float" min="-90" max="90" value="0" label="Input latitude min (+north/-south):"/>
+                <param name="cardinal_4" type="float" min="-90" max="90" value="0" label="Input latitude max (+north/-south):"/>
+                <param name="pressure_1" type="float" value="0" label="Input pressure min (db)"/>
+                <param name="pressure_2" type="float" value="0" label="Input pressure max (db)"/>
+                <param name="date_1" type="text" optional="true" label="Input starting date" value="yyyy-mm"/>
+                <param name="date_2" type="text" optional="true" label="Input ending date" value="yyyy-mm"/>    
+            </when>
+            <when value="floats">
+                <param name="wmo" type="text" label="Input WMO number" help="If you want to enter multiple ones just separate them with a comma (example : 6902746, 6902755)"/>
+            </when>
+            <when value="profiles">
+                <param name="wmo" type="integer" value="0" label="Input WMO number" />
+                <param name="profile" type="text" multiple="true" value="0" label="Input profile cycle number" help="if you want to enter multiple ones just separate them with a comma (example : 3,12)"/>
+            </when>
+        </conditional>
+        <!--<conditional name="sources">
+            <param name="data_sources" type="select" label="From where do you want to get your data ?">
+                <option value="erddap">⭐ the Ifremer erddap server </option>
+                <option value="gdac">🌐 an Argo GDAC server or any other GDAC-compliant local folder.</option>
+                <option value="argovis">👁 the Argovis server.</option>
+            </param>
+            <when value="erddap"/>
+            <when value="gdac">
+                <param name="ftp" type="select" label="Input ftp server url">
+                    <option value="ftp://ftp.ifremer.fr/ifremer/argo">France Coriolis</option>
+                    <option value="ftp://usgodae.org/pub/outgoing/argo">US GODAE</option>
+                </param>
+            </when>
+            <when value="argovis"/>
+        </conditional>-->
+        <conditional name="dataset">
+            <param name="data_dataset" type="select" label="Which kind of dataset do you want ?" help="At this time, BGC parameters are only available in expert user mode.">
+                <option value="phy">Physical parameters: temperature, salinity, pressure</option>
+                <option value="bgc">Biogeochemical parameters: temperature, salinity, pressure and oxygen, pH, nitrate, chlorophyll, backscatter, irradiance</option>
+            </param>
+            <when value="phy"/>
+            <when value="bgc">
+                <param name="params" type="select" multiple="true" label="Choose which variable you want to study">
+                    <option value="BBP532">BBP532</option>
+                    <option value="BBP532_ADJUSTED">BBP532_ADJUSTED</option>
+                    <option value="BBP532_ADJUSTED_ERROR">BBP532_ADJUSTED_ERROR</option>
+                    <option value="BBP532_ADJUSTED_QC">BBP532_ADJUSTED_QC</option>
+                    <option value="BBP532_DATA_MODE">BBP532_DATA_MODE</option>
+                    <option value="BBP532_QC">BBP532_QC</option>
+                    <option value="BBP700">BBP700</option>
+                    <option value="BBP700_ADJUSTED">BBP700_ADJUSTED</option>
+                    <option value="BBP700_ADJUSTED_ERROR">BBP700_ADJUSTED_ERROR</option>
+                    <option value="BBP700_ADJUSTED_QC">BBP700_ADJUSTED_QC</option>
+                    <option value="BBP700_DATA_MODE">BBP700_DATA_MODE</option>
+                    <option value="BBP700_QC">BBP700_QC</option>
+                    <option value="CHLA">CHLA</option>
+                    <option value="CHLA_ADJUSTED">CHLA_ADJUSTED</option>
+                    <option value="CHLA_ADJUSTED_ERROR">CHLA_ADJUSTED_ERROR</option>
+                    <option value="CHLA_ADJUSTED_QC">CHLA_ADJUSTED_QC</option>
+                    <option value="CHLA_DATA_MODE">CHLA_DATA_MODE</option>
+                    <option value="CHLA_QC">CHLA_QC</option>
+                    <option value="CONFIG_MISSION_NUMBER">CONFIG_MISSION_NUMBER</option>
+                    <option value="CYCLE_NUMBER">CYCLE_NUMBER</option>
+                    <option value="DIRECTION">DIRECTION</option>
+                    <option value="DOWNWELLING_PAR">DOWNWELLING_PAR</option>
+                    <option value="DOWNWELLING_PAR_ADJUSTED">DOWNWELLING_PAR_ADJUSTED</option>
+                    <option value="DOWNWELLING_PAR_ADJUSTED_ERROR">DOWNWELLING_PAR_ADJUSTED_ERROR</option>
+                    <option value="DOWNWELLING_PAR_ADJUSTED_QC">DOWNWELLING_PAR_ADJUSTED_QC</option>
+                    <option value="DOWNWELLING_PAR_DATA_MODE">DOWNWELLING_PAR_DATA_MODE</option>
+                    <option value="DOWNWELLING_PAR_QC">DOWNWELLING_PAR_QC</option>
+                    <option value="DOWN_IRRADIANCE380">DOWN_IRRADIANCE380</option>
+                    <option value="DOWN_IRRADIANCE380_ADJUSTED">DOWN_IRRADIANCE380_ADJUSTED</option>
+                    <option value="DOWN_IRRADIANCE380_ADJUSTED_ERROR">DOWN_IRRADIANCE380_ADJUSTED_ERROR</option>
+                    <option value="DOWN_IRRADIANCE380_ADJUSTED_QC">DOWN_IRRADIANCE380_ADJUSTED_QC</option>
+                    <option value="DOWN_IRRADIANCE380_DATA_MODE">DOWN_IRRADIANCE380_DATA_MODE</option>
+                    <option value="DOWN_IRRADIANCE380_QC">DOWN_IRRADIANCE380_QC</option>
+                    <option value="DOWN_IRRADIANCE412">DOWN_IRRADIANCE412</option>
+                    <option value="DOWN_IRRADIANCE412_ADJUSTED">DOWN_IRRADIANCE412_ADJUSTED</option>
+                    <option value="DOWN_IRRADIANCE412_ADJUSTED_ERROR">DOWN_IRRADIANCE412_ADJUSTED_ERROR</option>
+                    <option value="DOWN_IRRADIANCE412_ADJUSTED_QC">DOWN_IRRADIANCE412_ADJUSTED_QC</option>
+                    <option value="DOWN_IRRADIANCE412_DATA_MODE">DOWN_IRRADIANCE412_DATA_MODE</option>
+                    <option value="DOWN_IRRADIANCE412_QC">DOWN_IRRADIANCE412_QC</option>
+                    <option value="DOWN_IRRADIANCE490">DOWN_IRRADIANCE490</option>
+                    <option value="DOWN_IRRADIANCE490_ADJUSTED">DOWN_IRRADIANCE490_ADJUSTED</option>
+                    <option value="DOWN_IRRADIANCE490_ADJUSTED_ERROR">DOWN_IRRADIANCE490_ADJUSTED_ERROR</option>
+                    <option value="DOWN_IRRADIANCE490_ADJUSTED_QC">DOWN_IRRADIANCE490_ADJUSTED_QC</option>
+                    <option value="DOWN_IRRADIANCE490_DATA_MODE">DOWN_IRRADIANCE490_DATA_MODE</option>
+                    <option value="DOWN_IRRADIANCE490_QC">DOWN_IRRADIANCE490_QC</option>
+                    <option value="DOXY">DOXY</option>
+                    <option value="DOXY_ADJUSTED">DOXY_ADJUSTED</option>
+                    <option value="DOXY_ADJUSTED_ERROR">DOXY_ADJUSTED_ERROR</option>
+                    <option value="DOXY_ADJUSTED_QC">DOXY_ADJUSTED_QC</option>
+                    <option value="DOXY_DATA_MODE">DOXY_DATA_MODE</option>
+                    <option value="DOXY_QC">DOXY_QC</option>
+                    <option value="NITRATE">NITRATE</option>
+                    <option value="NITRATE_ADJUSTED">NITRATE_ADJUSTED</option>
+                    <option value="NITRATE_ADJUSTED_ERROR">NITRATE_ADJUSTED_ERROR</option>
+                    <option value="NITRATE_ADJUSTED_QC">NITRATE_ADJUSTED_QC</option>
+                    <option value="NITRATE_DATA_MODE">NITRATE_DATA_MODE</option>
+                    <option value="NITRATE_QC">NITRATE_QC</option>
+                    <option value="PH_IN_SITU_TOTAL">PH_IN_SITU_TOTAL</option>
+                    <option value="PH_IN_SITU_TOTAL_ADJUSTED">PH_IN_SITU_TOTAL_ADJUSTED</option>
+                    <option value="PH_IN_SITU_TOTAL_ADJUSTED_ERROR">PH_IN_SITU_TOTAL_ADJUSTED_ERROR</option>
+                    <option value="PH_IN_SITU_TOTAL_ADJUSTED_QC">PH_IN_SITU_TOTAL_ADJUSTED_QC</option>
+                    <option value="PH_IN_SITU_TOTAL_DATA_MODE">PH_IN_SITU_TOTAL_DATA_MODE</option>
+                    <option value="PH_IN_SITU_TOTAL_QC">PH_IN_SITU_TOTAL_QC</option>
+                    <option value="PLATFORM_NUMBER">PLATFORM_NUMBER</option>
+                    <option value="POSITION_QC">POSITION_QC</option>
+                    <option value="PRES">PRES</option>
+                    <option value="PRES_ADJUSTED">PRES_ADJUSTED</option>
+                    <option value="PRES_ADJUSTED_ERROR">PRES_ADJUSTED_ERROR</option>
+                    <option value="PRES_ADJUSTED_QC">PRES_ADJUSTED_QC</option>
+                    <option value="PRES_DATA_MODE">PRES_DATA_MODE</option>
+                    <option value="PRES_QC">PRES_QC</option>
+                    <option value="PSAL">PSAL</option>
+                    <option value="PSAL_ADJUSTED">PSAL_ADJUSTED</option>
+                    <option value="PSAL_ADJUSTED_ERROR">PSAL_ADJUSTED_ERROR</option>
+                    <option value="PSAL_ADJUSTED_QC">PSAL_ADJUSTED_QC</option>
+                    <option value="PSAL_DATA_MODE">PSAL_DATA_MODE</option>
+                    <option value="PSAL_QC">PSAL_QC</option>
+                    <option value="TEMP">TEMP</option>
+                    <option value="TEMP_ADJUSTED">TEMP_ADJUSTED</option>
+                    <option value="TEMP_ADJUSTED_ERROR">TEMP_ADJUSTED_ERROR</option>
+                    <option value="TEMP_ADJUSTED_QC">TEMP_ADJUSTED_QC</option>
+                    <option value="TEMP_QC">TEMP_QC</option>
+                    <option value="TIME_QC">TIME_QC</option>
+                </param>
+                <param name="measured" type="select" multiple="true" label="Choose which variables cannot be NaN and must return value" optional="true">
+                    <option value="BBP532">BBP532</option>
+                    <option value="BBP532_ADJUSTED">BBP532_ADJUSTED</option>
+                    <option value="BBP532_ADJUSTED_ERROR">BBP532_ADJUSTED_ERROR</option>
+                    <option value="BBP532_ADJUSTED_QC">BBP532_ADJUSTED_QC</option>
+                    <option value="BBP532_DATA_MODE">BBP532_DATA_MODE</option>
+                    <option value="BBP532_QC">BBP532_QC</option>
+                    <option value="BBP700">BBP700</option>
+                    <option value="BBP700_ADJUSTED">BBP700_ADJUSTED</option>
+                    <option value="BBP700_ADJUSTED_ERROR">BBP700_ADJUSTED_ERROR</option>
+                    <option value="BBP700_ADJUSTED_QC">BBP700_ADJUSTED_QC</option>
+                    <option value="BBP700_DATA_MODE">BBP700_DATA_MODE</option>
+                    <option value="BBP700_QC">BBP700_QC</option>
+                    <option value="CHLA">CHLA</option>
+                    <option value="CHLA_ADJUSTED">CHLA_ADJUSTED</option>
+                    <option value="CHLA_ADJUSTED_ERROR">CHLA_ADJUSTED_ERROR</option>
+                    <option value="CHLA_ADJUSTED_QC">CHLA_ADJUSTED_QC</option>
+                    <option value="CHLA_DATA_MODE">CHLA_DATA_MODE</option>
+                    <option value="CHLA_QC">CHLA_QC</option>
+                    <option value="CONFIG_MISSION_NUMBER">CONFIG_MISSION_NUMBER</option>
+                    <option value="CYCLE_NUMBER">CYCLE_NUMBER</option>
+                    <option value="DIRECTION">DIRECTION</option>
+                    <option value="DOWNWELLING_PAR">DOWNWELLING_PAR</option>
+                    <option value="DOWNWELLING_PAR_ADJUSTED">DOWNWELLING_PAR_ADJUSTED</option>
+                    <option value="DOWNWELLING_PAR_ADJUSTED_ERROR">DOWNWELLING_PAR_ADJUSTED_ERROR</option>
+                    <option value="DOWNWELLING_PAR_ADJUSTED_QC">DOWNWELLING_PAR_ADJUSTED_QC</option>
+                    <option value="DOWNWELLING_PAR_DATA_MODE">DOWNWELLING_PAR_DATA_MODE</option>
+                    <option value="DOWNWELLING_PAR_QC">DOWNWELLING_PAR_QC</option>
+                    <option value="DOWN_IRRADIANCE380">DOWN_IRRADIANCE380</option>
+                    <option value="DOWN_IRRADIANCE380_ADJUSTED">DOWN_IRRADIANCE380_ADJUSTED</option>
+                    <option value="DOWN_IRRADIANCE380_ADJUSTED_ERROR">DOWN_IRRADIANCE380_ADJUSTED_ERROR</option>
+                    <option value="DOWN_IRRADIANCE380_ADJUSTED_QC">DOWN_IRRADIANCE380_ADJUSTED_QC</option>
+                    <option value="DOWN_IRRADIANCE380_DATA_MODE">DOWN_IRRADIANCE380_DATA_MODE</option>
+                    <option value="DOWN_IRRADIANCE380_QC">DOWN_IRRADIANCE380_QC</option>
+                    <option value="DOWN_IRRADIANCE412">DOWN_IRRADIANCE412</option>
+                    <option value="DOWN_IRRADIANCE412_ADJUSTED">DOWN_IRRADIANCE412_ADJUSTED</option>
+                    <option value="DOWN_IRRADIANCE412_ADJUSTED_ERROR">DOWN_IRRADIANCE412_ADJUSTED_ERROR</option>
+                    <option value="DOWN_IRRADIANCE412_ADJUSTED_QC">DOWN_IRRADIANCE412_ADJUSTED_QC</option>
+                    <option value="DOWN_IRRADIANCE412_DATA_MODE">DOWN_IRRADIANCE412_DATA_MODE</option>
+                    <option value="DOWN_IRRADIANCE412_QC">DOWN_IRRADIANCE412_QC</option>
+                    <option value="DOWN_IRRADIANCE490">DOWN_IRRADIANCE490</option>
+                    <option value="DOWN_IRRADIANCE490_ADJUSTED">DOWN_IRRADIANCE490_ADJUSTED</option>
+                    <option value="DOWN_IRRADIANCE490_ADJUSTED_ERROR">DOWN_IRRADIANCE490_ADJUSTED_ERROR</option>
+                    <option value="DOWN_IRRADIANCE490_ADJUSTED_QC">DOWN_IRRADIANCE490_ADJUSTED_QC</option>
+                    <option value="DOWN_IRRADIANCE490_DATA_MODE">DOWN_IRRADIANCE490_DATA_MODE</option>
+                    <option value="DOWN_IRRADIANCE490_QC">DOWN_IRRADIANCE490_QC</option>
+                    <option value="DOXY">DOXY</option>
+                    <option value="DOXY_ADJUSTED">DOXY_ADJUSTED</option>
+                    <option value="DOXY_ADJUSTED_ERROR">DOXY_ADJUSTED_ERROR</option>
+                    <option value="DOXY_ADJUSTED_QC">DOXY_ADJUSTED_QC</option>
+                    <option value="DOXY_DATA_MODE">DOXY_DATA_MODE</option>
+                    <option value="DOXY_QC">DOXY_QC</option>
+                    <option value="NITRATE">NITRATE</option>
+                    <option value="NITRATE_ADJUSTED">NITRATE_ADJUSTED</option>
+                    <option value="NITRATE_ADJUSTED_ERROR">NITRATE_ADJUSTED_ERROR</option>
+                    <option value="NITRATE_ADJUSTED_QC">NITRATE_ADJUSTED_QC</option>
+                    <option value="NITRATE_DATA_MODE">NITRATE_DATA_MODE</option>
+                    <option value="NITRATE_QC">NITRATE_QC</option>
+                    <option value="PH_IN_SITU_TOTAL">PH_IN_SITU_TOTAL</option>
+                    <option value="PH_IN_SITU_TOTAL_ADJUSTED">PH_IN_SITU_TOTAL_ADJUSTED</option>
+                    <option value="PH_IN_SITU_TOTAL_ADJUSTED_ERROR">PH_IN_SITU_TOTAL_ADJUSTED_ERROR</option>
+                    <option value="PH_IN_SITU_TOTAL_ADJUSTED_QC">PH_IN_SITU_TOTAL_ADJUSTED_QC</option>
+                    <option value="PH_IN_SITU_TOTAL_DATA_MODE">PH_IN_SITU_TOTAL_DATA_MODE</option>
+                    <option value="PH_IN_SITU_TOTAL_QC">PH_IN_SITU_TOTAL_QC</option>
+                    <option value="PLATFORM_NUMBER">PLATFORM_NUMBER</option>
+                    <option value="POSITION_QC">POSITION_QC</option>
+                    <option value="PRES">PRES</option>
+                    <option value="PRES_ADJUSTED">PRES_ADJUSTED</option>
+                    <option value="PRES_ADJUSTED_ERROR">PRES_ADJUSTED_ERROR</option>
+                    <option value="PRES_ADJUSTED_QC">PRES_ADJUSTED_QC</option>
+                    <option value="PRES_DATA_MODE">PRES_DATA_MODE</option>
+                    <option value="PRES_QC">PRES_QC</option>
+                    <option value="PSAL">PSAL</option>
+                    <option value="PSAL_ADJUSTED">PSAL_ADJUSTED</option>
+                    <option value="PSAL_ADJUSTED_ERROR">PSAL_ADJUSTED_ERROR</option>
+                    <option value="PSAL_ADJUSTED_QC">PSAL_ADJUSTED_QC</option>
+                    <option value="PSAL_DATA_MODE">PSAL_DATA_MODE</option>
+                    <option value="PSAL_QC">PSAL_QC</option>
+                    <option value="TEMP">TEMP</option>
+                    <option value="TEMP_ADJUSTED">TEMP_ADJUSTED</option>
+                    <option value="TEMP_ADJUSTED_ERROR">TEMP_ADJUSTED_ERROR</option>
+                    <option value="TEMP_ADJUSTED_QC">TEMP_ADJUSTED_QC</option>
+                    <option value="TEMP_QC">TEMP_QC</option>
+                    <option value="TIME_QC">TIME_QC</option>
+                </param>
+            </when>
+        </conditional>
+    </inputs>
+    <outputs>
+        <data name="output_argo" from_work_dir="argo_data.nc" format="netcdf" label="Argo data"/>
+    </outputs>
+    <tests>
+        <test expect_num_outputs="1">
+            <param name="user" value="standard"/>
+            <param name="data_selection" value="space_time"/>
+            <param name="cardinal_1" value="-75.0"/>            
+            <param name="cardinal_2" value="-45.0"/>
+            <param name="cardinal_3" value="20.0"/>            
+            <param name="cardinal_4" value="30.0"/>
+            <param name="pressure_1" value="0.0"/>            
+            <param name="pressure_2" value="10.0"/>
+            <param name="date_1" value="2011-01"/>            
+            <param name="date_2" value="2011-06"/>
+            <param name="data_dataset" value="phy"/>
+            <output name="output_argo">
+                <assert_contents>
+                    <has_text text="LATITUDE LONGITUDE TIME"/>
+                </assert_contents>
+            </output>
+        </test>
+        <test expect_num_outputs="1">
+            <param name="user" value="standard"/>
+            <param name="data_selection" value="floats"/>
+            <param name="wmo" value="6902746"/>
+            <param name="data_dataset" value="phy"/>
+            <output name="output_argo">
+                <assert_contents>
+                    <has_text text="DIMENSION_SCALE"/>
+                </assert_contents>
+            </output>
+        </test>
+        <test expect_num_outputs="1">
+            <param name="user" value="standard"/>
+            <param name="data_selection" value="profiles"/>
+            <param name="wmo" value="6902755"/>
+            <param name="profile" value="12"/>
+            <param name="data_dataset" value="phy"/>
+            <output name="output_argo">
+                <assert_contents>
+                    <has_text text="Direction of the station profiles"/>
+                </assert_contents>
+            </output>
+        </test>
+        <test expect_num_outputs="1">
+            <param name="user" value="expert"/>
+            <param name="data_selection" value="profiles"/>
+            <param name="wmo" value="6902755"/>
+            <param name="profile" value="12"/>
+            <param name="data_dataset" value="phy"/>
+            <output name="output_argo">
+                <assert_contents>
+                    <has_text text="Delayed mode or real time data"/>
+                </assert_contents>
+            </output>
+        </test>
+        <test expect_num_outputs="1">
+            <param name="user" value="expert"/>
+            <param name="data_selection" value="floats"/>
+            <param name="wmo" value="6904241"/>
+            <param name="data_dataset" value="bgc"/>
+            <param name="params" value="DOXY,BBP700"/>
+            <output name="output_argo">
+                <assert_contents>
+                    <has_text text="_NCProperties"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+==========================================================
+Argo data access to global ocean in situ observing system.
+==========================================================
+In order to ease Argo data analysis for the vast majority of standard users, we implemented in argopy different levels of verbosity and data processing to hide or simply remove variables only meaningful to experts. Let argopy manage data wrangling, and focus on your scientific analysis.
+
+If you don’t know in which category you would place yourself, try to answer the following questions:
+
+    - [] what is a WMO number ?
+
+    - [] what is the difference between Delayed and Real Time data mode ?
+
+    - [] what is an adjusted parameter ?
+
+    - [] what a QC flag of 3 means ?
+
+If you don’t answer to more than 1 question: you probably will feel more comfortable with the standard or research user modes.
+
+By default, all argopy data fetchers are set to work with a standard user mode, the other possible modes are research and expert.
+
+**What it does**
+
+This tool based on argopy is able to fetch (i.e. access, download, format) Argo data into netcdf files.
+
+
+**Input description**
+
+- This tool provides 3 user modes:
+
+    - 🏄 expert mode return all the Argo data, without any postprocessing,
+
+    - 🏊 standard mode simplifies the dataset, remove most of its jargon and return a priori good data,
+
+    - 🚣 research mode simplifies the dataset to its heart, preserving only data of the highest quality for research studies, including studies sensitive to small pressure and salinity bias (e.g. calculations of global ocean heat content or mixed layer depth).
+
+- The tool provides 3 different data selection methods:
+
+    - 🗺 For a space/time domain (to select data for a rectangular space/time domain)
+
+    - 🤖 For one or more floats (if you know the Argo float unique identifier number called a WMO number you can use this mode)
+
+    - ⚓ For one or more profiles (specify the float WMO platform number and the profile cycle number(s) to retrieve profiles)
+
+- The tool can retrieve data from :
+
+    - ⭐ the Ifremer **erddap** server (Default). The erddap server database is updated daily and doesn’t require you to download anymore data than what you need. You can select this data source with the keyword erddap and methods described below. The Ifremer erddap dataset is based on mono-profile files of the GDAC. Since this is the most efficient method to fetcher Argo data, it’s the default data source in argopy.
+    
+- With this tool you can thus get access to the following Argo data:
+
+    - the **phy** dataset, for physical parameters. This dataset provides data from floats that measure temperature, salinity, pressure, without limitation in depth. It is available from all Available data sources. Since this is the most common Argo data subset it’s selected with the phy keyword by default in argopy.
+
+    - the **bgc** dataset, for biogeochemical parameters.This dataset provides data from floats that measure temperature, salinity, pressure and oxygen, pH, nitrate, chlorophyll, backscatter, irradiance, without limitation in depth. You can select this dataset with the keyword bgc and methods described below.
+
+
+**Output**
+
+You can retrieve the Argo data in one netcdf file. 
+
+**More about argopy**
+
+https://argopy.readthedocs.io/en/latest/index.html
+
+    ]]></help>
+    <expand macro="argo_bibref"/>
+</tool>

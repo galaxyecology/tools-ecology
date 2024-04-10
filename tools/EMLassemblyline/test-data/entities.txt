@@ -1,0 +1,4 @@
+objectName	variable	value
+data_7.GeoJSON	geometry	Point
+data_7.GeoJSON	geometricObjectCount	65
+data_7.GeoJSON	spatialReference	GCS_WGS_1984
