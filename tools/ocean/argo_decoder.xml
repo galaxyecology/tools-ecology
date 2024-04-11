@@ -29,7 +29,7 @@
     </command>
     <inputs>
         <param name="raw_data" type="data" format="zip" label="Archived input argo raw data"/>
-        <param name="float_wmo" type="integer" label="Input WMO number" help="Input float WMO numer (example : 6903014)"/>
+        <param name="float_wmo" type="integer" label="Input WMO number" help="Input float WMO number (example: 6903014)"/>
     </inputs>
     <outputs>
         <data name="outputs_data" format="zip" from_work_dir="argo-decoder-outputs.zip" label="Argo decoder netcdf outputs"/>
