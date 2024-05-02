@@ -1,53 +1,19 @@
+<?xml version="1.0" ?>
 <tool id="generic_ogc_processes_wrapper" name="OGC API Process Wrapper" version="0.1.0">
+	<description>executes remote processes</description>
 	<macros>
 		<import>macros.xml</import>
 	</macros>
-	<expand macro="description"/>
 	<expand macro="requirements"/>
 	<command detect_errors="exit_code"><![CDATA[
-#if $select_process == "securityIn":
+#if $select_process == "RVoronoi":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
-		--process '$select_process'
-		--outputData '$output_data'
-#elif $select_process == "securityInFailed":
-	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
-		--process '$select_process'
-		--outputData '$output_data'
-#elif $select_process == "HelloPy":
-	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
-		--process '$select_process'
-		--a '${a}'
-		--outputData '$output_data'
-#elif $select_process == "RVoronoi":
-	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--InputPoints '${InputPoints}'
 		--Result_outformat '${Result_outformat}'
 		--outputData '$output_data'
-#elif $select_process == "hellor":
-	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
-		--process '$select_process'
-		--S '${S}'
-		--outputData '$output_data'
-#elif $select_process == "failR":
-	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
-		--process '$select_process'
-		--S '${S}'
-		--outputData '$output_data'
-#elif $select_process == "securityOut":
-	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
-		--process '$select_process'
-		--outputData '$output_data'
 #elif $select_process == "OTB.MorphologicalMultiScaleDecomposition":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--outconvex '${outconvex}'
@@ -65,7 +31,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.Convert":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--type '${type}'
@@ -84,7 +49,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.PredictRegression":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--mask '${mask}'
@@ -96,7 +60,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.SARPolarMatrixConvert":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--inc '${inc}'
 		--inf '${inf}'
@@ -113,7 +76,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.ImageClassifier":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--mask '${mask}'
@@ -128,7 +90,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.ManageNoData":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--out '${out}'
@@ -144,7 +105,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.SFSTextureExtraction":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--channel '${channel}'
@@ -159,7 +119,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.VectorDataExtractROI":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--io.vd '${io.vd}'
 		--io.in '${io.in}'
@@ -170,7 +129,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.HyperspectralUnmixing":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--out '${out}'
@@ -180,7 +138,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.HooverCompareSegmentation":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ingt '${ingt}'
 		--inms '${inms}'
@@ -193,7 +150,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.ComputeConfusionMatrix":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--format '${format}'
@@ -209,7 +165,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.ConcatenateImages":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--il '${il}'
 		--out '${out}'
@@ -218,7 +173,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.SampleAugmentation":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--field '${field}'
@@ -234,7 +188,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.HaralickTextureExtraction":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--channel '${channel}'
@@ -253,7 +206,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.ConvertSensorToGeoPoint":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--input.idx '${input.idx}'
@@ -261,7 +213,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.DSFuzzyModelEstimation":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--psin '${psin}'
 		--nsin '${nsin}'
@@ -277,7 +228,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.OrthoRectification":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--io.in '${io.in}'
 		--io.out '${io.out}'
@@ -308,7 +258,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.BinaryMorphologicalOperation":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--out '${out}'
@@ -329,7 +278,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.BlockMatching":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--io.inleft '${io.inleft}'
 		--io.inright '${io.inright}'
@@ -368,7 +316,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.KmzExport":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--tilesize '${tilesize}'
@@ -381,7 +328,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.ConnectedComponentSegmentation":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--mask '${mask}'
@@ -396,7 +342,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.TrainImagesClassifier":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--io.il '${io.il}'
 		--io.vd '${io.vd}'
@@ -456,7 +401,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.MultivariateAlterationDetector":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in1 '${in1}'
 		--in2 '${in2}'
@@ -466,7 +410,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.ComputePolylineFeatureFromImage":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--vd '${vd}'
@@ -479,7 +422,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.MultiImageSamplingRate":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--il '${il}'
 		--strategy.byclass.in '${strategy.byclass.in}'
@@ -490,7 +432,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.Segmentation":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--filter '${filter}'
@@ -524,7 +465,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.VectorDataDSValidation":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--descmod '${descmod}'
@@ -536,7 +476,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.OGRLayerClassifier":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--inshp '${inshp}'
 		--instats '${instats}'
@@ -546,7 +485,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.OSMDownloader":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--support '${support}'
 		--key '${key}'
@@ -559,7 +497,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.DisparityMapToElevationMap":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--io.in '${io.in}'
 		--io.left '${io.left}'
@@ -579,7 +516,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.VectorClassifier":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--instat '${instat}'
@@ -591,14 +527,12 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.ObtainUTMZoneFromGeoPoint":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--lat '${lat}'
 		--lon '${lon}'
 		--outputData '$output_data'
 #elif $select_process == "OTB.SOMClassification":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--out '${out}'
@@ -621,7 +555,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.GeneratePlyFile":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--indem '${indem}'
 		--mode '${mode}'
@@ -634,7 +567,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.StereoRectificationGridGenerator":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--io.inleft '${io.inleft}'
 		--io.inright '${io.inright}'
@@ -656,7 +588,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.SARDeburst":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--out '${out}'
@@ -665,7 +596,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.SampleExtraction":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--vec '${vec}'
@@ -679,7 +609,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.MorphologicalProfilesAnalysis":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--out '${out}'
@@ -695,7 +624,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.MeanShiftSmoothing":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--fout '${fout}'
@@ -712,7 +640,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.BundleToPerfectSensor":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--inp '${inp}'
 		--inxs '${inxs}'
@@ -734,7 +661,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.ConvertCartoToGeoPoint":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--carto.x '${carto.x}'
 		--carto.y '${carto.y}'
@@ -745,7 +671,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.VectorDataTransform":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--vd '${vd}'
 		--in '${in}'
@@ -759,7 +684,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.FusionOfClassifications":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--il '${il}'
 		--method '${method}'
@@ -771,7 +695,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.VectorDataSetField":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--fn '${fn}'
@@ -780,7 +703,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.Pansharpening":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--inp '${inp}'
 		--inxs '${inxs}'
@@ -795,14 +717,12 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.ConcatenateVectorData":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--vd '${vd}'
 		--out_outformat '${out_outformat}'
 		--outputData '$output_data'
 #elif $select_process == "OTB.GridBasedImageResampling":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--io.in '${io.in}'
 		--io.out '${io.out}'
@@ -821,7 +741,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.SARPolarSynth":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--out '${out}'
@@ -837,7 +756,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.GrayScaleMorphologicalOperation":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--out '${out}'
@@ -851,7 +769,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.ReadImageInfo":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--keywordlist '${keywordlist}'
@@ -859,7 +776,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.ImageEnvelope":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--sr '${sr}'
@@ -871,7 +787,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.LSMSVectorization":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--inseg '${inseg}'
@@ -882,7 +797,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.FineRegistration":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ref '${ref}'
 		--sec '${sec}'
@@ -912,7 +826,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.GenerateRPCSensorModel":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--inpoints '${inpoints}'
 		--map '${map}'
@@ -928,7 +841,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.DomainTransform":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--out '${out}'
@@ -942,7 +854,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.RefineSensorModel":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ingeom '${ingeom}'
 		--inpoints '${inpoints}'
@@ -959,7 +870,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.ComputeImagesStatistics":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--il '${il}'
 		--bv '${bv}'
@@ -968,7 +878,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.Rasterization":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--out '${out}'
@@ -989,7 +898,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.BandMath":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--il '${il}'
 		--out '${out}'
@@ -999,7 +907,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.RigidTransformResample":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--out '${out}'
@@ -1019,7 +926,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.SARCalibration":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--out '${out}'
@@ -1030,7 +936,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.Smoothing":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--out '${out}'
@@ -1044,7 +949,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.TileFusion":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--il '${il}'
 		--cols '${cols}'
@@ -1054,7 +958,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.ColorMapping":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--out '${out}'
@@ -1075,7 +978,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.Superimpose":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--inr '${inr}'
 		--inm '${inm}'
@@ -1092,7 +994,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.ClassificationMapRegularization":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--io.in '${io.in}'
 		--io.out '${io.out}'
@@ -1107,7 +1008,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.DynamicConvert":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--out '${out}'
@@ -1128,7 +1028,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.Rescale":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--out '${out}'
@@ -1139,7 +1038,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.Quicklook":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--out '${out}'
@@ -1155,7 +1053,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.RadiometricIndices":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--out '${out}'
@@ -1170,7 +1067,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.ExtractROI":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--out '${out}'
@@ -1200,7 +1096,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.PolygonClassStatistics":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--mask '${mask}'
@@ -1215,14 +1110,12 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.DEMConvert":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--out_outformat '${out_outformat}'
 		--outputData '$output_data'
 #elif $select_process == "OTB.MultiResolutionPyramid":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--out '${out}'
@@ -1235,7 +1128,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.LSMSSegmentation":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--inpos '${inpos}'
@@ -1251,7 +1143,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.Despeckle":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--out '${out}'
@@ -1269,7 +1160,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.TrainVectorClassifier":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--io.vd '${io.vd}'
 		--io.stats '${io.stats}'
@@ -1323,7 +1213,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.SampleSelection":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--mask '${mask}'
@@ -1348,7 +1237,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.CompareImages":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ref.in '${ref.in}'
 		--ref.channel '${ref.channel}'
@@ -1362,7 +1250,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.VertexComponentAnalysis":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--ne '${ne}'
@@ -1372,7 +1259,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.SplitImage":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--out '${out}'
@@ -1381,7 +1267,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.DownloadSRTMTiles":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--il '${il}'
 		--vl '${vl}'
@@ -1391,7 +1276,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.ComputeOGRLayersFeaturesStatistics":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--inshp '${inshp}'
 		--feat '${feat}'
@@ -1399,7 +1283,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.LSMSSmallRegionsMerging":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--inseg '${inseg}'
@@ -1412,7 +1295,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.PixelValue":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--coordx '${coordx}'
@@ -1423,7 +1305,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.MorphologicalClassification":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--out '${out}'
@@ -1436,7 +1317,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.LargeScaleMeanShift":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--spatialr '${spatialr}'
@@ -1454,7 +1334,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.TrainRegression":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--io.il '${io.il}'
 		--io.csv '${io.csv}'
@@ -1503,7 +1382,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.ContrastEnhancement":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--out '${out}'
@@ -1529,7 +1407,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.SARDecompositions":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--inhh '${inhh}'
 		--inhv '${inhv}'
@@ -1543,7 +1420,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.EdgeExtraction":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--channel '${channel}'
@@ -1556,7 +1432,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.VectorDataReprojection":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in.vd '${in.vd}'
 		--in.kwl '${in.kwl}'
@@ -1573,7 +1448,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.ComputeModulusAndPhase":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--modulus '${modulus}'
@@ -1584,7 +1458,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.LineSegmentDetection":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--elev.dem '${elev.dem}'
@@ -1596,7 +1469,6 @@
 		--outputData '$output_data'
 #elif $select_process == "OTB.LocalStatisticExtraction":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--in '${in}'
 		--channel '${channel}'
@@ -1607,7 +1479,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_polygons.14":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--A '${A}'
 		--B '${B}'
@@ -1616,7 +1487,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_polygons.20":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--POINTS '${POINTS}'
@@ -1626,7 +1496,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_polygons.5":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POLYGONS '${POLYGONS}'
 		--FIELDS '${FIELDS}'
@@ -1647,7 +1516,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_polygons.12":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POLYGONS '${POLYGONS}'
 		--ID '${ID}'
@@ -1655,7 +1523,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_polygons.16":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--A '${A}'
 		--B '${B}'
@@ -1664,7 +1531,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_polygons.22":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POLYGONS '${POLYGONS}'
 		--ATTRIBUTE '${ATTRIBUTE}'
@@ -1675,7 +1541,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_polygons.18":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--A '${A}'
 		--B '${B}'
@@ -1684,14 +1549,12 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_polygons.21":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--OUTPUT_outformat '${OUTPUT_outformat}'
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_polygons.11":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--CLIP '${CLIP}'
 		--S_INPUT '${S_INPUT}'
@@ -1703,7 +1566,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_polygons.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--LINES '${LINES}'
 		--SINGLE '${SINGLE}'
@@ -1712,7 +1574,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_polygons.23":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POLYGONS '${POLYGONS}'
 		--THRESHOLD '${THRESHOLD}'
@@ -1720,7 +1581,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_polygons.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POLYGONS '${POLYGONS}'
 		--METHOD '${METHOD}'
@@ -1728,7 +1588,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_polygons.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--FIELDS '${FIELDS}'
@@ -1745,7 +1604,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_polygons.10":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POLYGONS '${POLYGONS}'
 		--LAKES '${LAKES}'
@@ -1753,7 +1611,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_polygons.17":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--A '${A}'
 		--B '${B}'
@@ -1762,7 +1619,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_polygons.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POLYGONS '${POLYGONS}'
 		--FIELDS '${FIELDS}'
@@ -1777,7 +1633,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_polygons.19":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--A '${A}'
 		--B '${B}'
@@ -1786,7 +1641,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_polygons.9":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POLYGONS '${POLYGONS}'
 		--EDGES_outformat '${EDGES_outformat}'
@@ -1794,7 +1648,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_polygons.8":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POLYGONS '${POLYGONS}'
 		--LINES '${LINES}'
@@ -1802,7 +1655,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_polygons.15":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--A '${A}'
 		--B '${B}'
@@ -1811,7 +1663,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_polygons.7":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SHAPES '${SHAPES}'
 		--GYROS '${GYROS}'
@@ -1822,14 +1673,12 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_polygons.6":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SHAPES '${SHAPES}'
 		--POINTS_outformat '${POINTS_outformat}'
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_photogrammetry.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--rgbImage '${rgbImage}'
 		--PC_IN '${PC_IN}'
@@ -1854,7 +1703,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.sim_geomorphology.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--RELEASE_AREAS '${RELEASE_AREAS}'
@@ -1893,7 +1741,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.table_calculus.14":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--FIELDS '${FIELDS}'
@@ -1906,7 +1753,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.table_calculus.5":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--FIELD '${FIELD}'
@@ -1929,7 +1775,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.table_calculus.12":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DATA '${DATA}'
 		--CLASS '${CLASS}'
@@ -1942,7 +1787,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.table_calculus.16":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--MEAN '${MEAN}'
 		--MIN '${MIN}'
@@ -1960,7 +1804,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.table_calculus.18":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TABLE '${TABLE}'
 		--FIELDS '${FIELDS}'
@@ -1979,7 +1822,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.table_calculus.11":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--FIELDS '${FIELDS}'
@@ -1991,7 +1833,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.table_calculus.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TABLE '${TABLE}'
 		--FIELD '${FIELD}'
@@ -2003,7 +1844,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.table_calculus.17":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--MEAN '${MEAN}'
 		--MIN '${MIN}'
@@ -2021,7 +1861,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.table_calculus.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TABLE '${TABLE}'
 		--FIELD '${FIELD}'
@@ -2033,7 +1872,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.table_calculus.9":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TABLE '${TABLE}'
 		--ORDER '${ORDER}'
@@ -2043,7 +1881,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.table_calculus.8":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TABLE '${TABLE}'
 		--ORDER '${ORDER}'
@@ -2052,7 +1889,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.table_calculus.15":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TABLE '${TABLE}'
 		--FIELDS '${FIELDS}'
@@ -2060,7 +1896,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.table_calculus.7":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TABLE '${TABLE}'
 		--METHOD '${METHOD}'
@@ -2069,7 +1904,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.table_calculus.6":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--FIELDS '${FIELDS}'
@@ -2082,7 +1916,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_segmentation.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID '${GRID}'
 		--OUTPUT '${OUTPUT}'
@@ -2097,7 +1930,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_segmentation.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SEEDS '${SEEDS}'
 		--FEATURES '${FEATURES}'
@@ -2115,7 +1947,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_segmentation.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--METHOD '${METHOD}'
@@ -2127,7 +1958,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_segmentation.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--FEATURES '${FEATURES}'
 		--NORMALIZE '${NORMALIZE}'
@@ -2144,7 +1974,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_segmentation.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--FEATURES '${FEATURES}'
 		--SEED_TYPE '${SEED_TYPE}'
@@ -2161,7 +1990,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.garden_learn_to_program.5":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--RADIUS '${RADIUS}'
@@ -2170,7 +1998,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.garden_learn_to_program.12":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--METHOD '${METHOD}'
@@ -2185,7 +2012,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.garden_learn_to_program.11":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--DX '${DX}'
@@ -2194,7 +2020,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.garden_learn_to_program.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--FACTOR '${FACTOR}'
@@ -2203,7 +2028,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.garden_learn_to_program.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--METHOD '${METHOD}'
@@ -2211,7 +2035,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.garden_learn_to_program.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT_A '${INPUT_A}'
 		--INPUT_B '${INPUT_B}'
@@ -2220,7 +2043,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.garden_learn_to_program.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ELEVATION '${ELEVATION}'
 		--METHOD '${METHOD}'
@@ -2229,7 +2051,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.garden_learn_to_program.10":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--TIME_SPAN '${TIME_SPAN}'
@@ -2241,7 +2062,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.garden_learn_to_program.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--METHOD '${METHOD}'
@@ -2249,7 +2069,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.garden_learn_to_program.9":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--REFRESH '${REFRESH}'
 		--COLORS '${COLORS}'
@@ -2257,14 +2076,12 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.garden_learn_to_program.8":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ELEVATION '${ELEVATION}'
 		--AREA_outformat '${AREA_outformat}'
 		--outputData '$output_data'
 #elif $select_process == "SAGA.garden_learn_to_program.7":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ELEVATION '${ELEVATION}'
 		--METHOD '${METHOD}'
@@ -2272,7 +2089,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.garden_learn_to_program.13":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ELEVATION '${ELEVATION}'
 		--THRESHOLD '${THRESHOLD}'
@@ -2281,7 +2097,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.garden_learn_to_program.6":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ELEVATION '${ELEVATION}'
 		--STEP '${STEP}'
@@ -2294,7 +2109,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_points.14":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--FIELD '${FIELD}'
@@ -2303,7 +2117,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_points.20":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--GRID '${GRID}'
@@ -2315,7 +2128,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_points.5":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--LINES '${LINES}'
 		--ADD '${ADD}'
@@ -2326,7 +2138,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_points.12":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SHAPES '${SHAPES}'
 		--POLYPOINTS '${POLYPOINTS}'
@@ -2336,7 +2147,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_points.16":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--FRAME '${FRAME}'
@@ -2344,7 +2154,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_points.18":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--SNAP '${SNAP}'
@@ -2354,7 +2163,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_points.21":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--EXTENT '${EXTENT}'
 		--SHAPES '${SHAPES}'
@@ -2374,7 +2182,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_points.11":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--FIELD '${FIELD}'
@@ -2389,7 +2196,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_points.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TABLE '${TABLE}'
 		--X '${X}'
@@ -2399,7 +2205,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_points.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--ID_POINTS '${ID_POINTS}'
@@ -2411,7 +2216,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_points.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POLYGONS '${POLYGONS}'
 		--NUMFIELD '${NUMFIELD}'
@@ -2421,7 +2225,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_points.10":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--POLYGONS '${POLYGONS}'
@@ -2430,7 +2233,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_points.17":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--REFERENCE '${REFERENCE}'
 		--REFERENCE_ID '${REFERENCE_ID}'
@@ -2452,7 +2254,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_points.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--X_EXTENT_MIN '${X_EXTENT_MIN}'
 		--X_EXTENT_MAX '${X_EXTENT_MAX}'
@@ -2463,7 +2264,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_points.19":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--SNAP '${SNAP}'
@@ -2473,7 +2273,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_points.9":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--DIRECTIONS '${DIRECTIONS}'
@@ -2482,7 +2281,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_points.8":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--POLYGONS '${POLYGONS}'
@@ -2492,14 +2290,12 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_points.15":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--MULTIPOINTS '${MULTIPOINTS}'
 		--POINTS_outformat '${POINTS_outformat}'
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_points.7":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--FIELD '${FIELD}'
@@ -2509,7 +2305,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_points.6":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--X '${X}'
@@ -2522,7 +2317,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grids_tools.5":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--Z_FIELD '${Z_FIELD}'
@@ -2546,7 +2340,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grids_tools.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--LIST '${LIST}'
 		--NAME '${NAME}'
@@ -2562,7 +2355,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grids_tools.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRIDS '${GRIDS}'
 		--Z_LEVEL '${Z_LEVEL}'
@@ -2572,7 +2364,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grids_tools.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID '${GRID}'
 		--Z_LEVEL '${Z_LEVEL}'
@@ -2581,7 +2372,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grids_tools.6":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--Z_FIELD '${Z_FIELD}'
@@ -2614,7 +2404,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.climate_tools.14":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TMIN '${TMIN}'
 		--TMAX '${TMAX}'
@@ -2627,7 +2416,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.climate_tools.20":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--T '${T}'
 		--TMIN '${TMIN}'
@@ -2645,7 +2433,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.climate_tools.5":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ALBEDO '${ALBEDO}'
 		--FIELD '${FIELD}'
@@ -2655,7 +2442,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.climate_tools.22":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ATmean '${ATmean}'
 		--ATmax '${ATmax}'
@@ -2686,7 +2472,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.climate_tools.18":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TMEAN '${TMEAN}'
 		--TBASE '${TBASE}'
@@ -2697,7 +2482,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.climate_tools.21":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--CLIMATE '${CLIMATE}'
 		--ATmean '${ATmean}'
@@ -2718,7 +2502,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.climate_tools.11":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--T '${T}'
 		--TMIN '${TMIN}'
@@ -2743,7 +2526,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.climate_tools.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--VARIABLE '${VARIABLE}'
 		--X_SOURCE '${X_SOURCE}'
@@ -2761,7 +2543,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.climate_tools.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--START '${START}'
 		--STOP '${STOP}'
@@ -2771,7 +2552,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.climate_tools.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--VARIABLE '${VARIABLE}'
 		--X_SOURCE '${X_SOURCE}'
@@ -2791,7 +2571,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.climate_tools.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--START '${START}'
 		--STOP '${STOP}'
@@ -2802,7 +2581,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.climate_tools.10":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TMEAN '${TMEAN}'
 		--TMIN '${TMIN}'
@@ -2831,7 +2609,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.climate_tools.17":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--T '${T}'
 		--P '${P}'
@@ -2845,7 +2622,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.climate_tools.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--START '${START}'
 		--STOP '${STOP}'
@@ -2854,7 +2630,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.climate_tools.19":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--T '${T}'
 		--P '${P}'
@@ -2863,7 +2638,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.climate_tools.9":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TARGET '${TARGET}'
 		--DAY_MIN '${DAY_MIN}'
@@ -2874,7 +2648,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.climate_tools.8":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--T '${T}'
 		--T_MIN '${T_MIN}'
@@ -2887,7 +2660,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.climate_tools.15":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GSL '${GSL}'
 		--GST '${GST}'
@@ -2898,7 +2670,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.climate_tools.7":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DAYS '${DAYS}'
 		--JD '${JD}'
@@ -2909,7 +2680,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.climate_tools.13":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--BOUNDARY '${BOUNDARY}'
 		--WIND '${WIND}'
@@ -2925,7 +2695,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_visualisation.5":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--A_GRID '${A_GRID}'
 		--A_METHOD '${A_METHOD}'
@@ -2952,14 +2721,12 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_visualisation.11":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--LUT '${LUT}'
 		--TABLE_outformat '${TABLE_outformat}'
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_visualisation.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--R_GRID '${R_GRID}'
 		--R_METHOD '${R_METHOD}'
@@ -2993,7 +2760,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_visualisation.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--IMAGE '${IMAGE}'
@@ -3012,7 +2778,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_visualisation.9":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--RGB '${RGB}'
 		--NODATA '${NODATA}'
@@ -3023,7 +2788,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_visualisation.8":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--METHOD '${METHOD}'
@@ -3037,7 +2801,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_visualisation.7":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ASPECT '${ASPECT}'
 		--SLOPE '${SLOPE}'
@@ -3046,7 +2809,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_visualisation.6":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID '${GRID}'
 		--METHOD '${METHOD}'
@@ -3054,7 +2816,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.pj_georeference.5":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRIDS '${GRIDS}'
 		--DEFINITION '${DEFINITION}'
@@ -3068,7 +2829,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.pj_georeference.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--DEM '${DEM}'
@@ -3091,7 +2851,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.pj_georeference.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--REF_SOURCE '${REF_SOURCE}'
 		--REF_TARGET '${REF_TARGET}'
@@ -3104,7 +2863,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.pj_georeference.6":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--FILE '${FILE}'
 		--NX '${NX}'
@@ -3123,7 +2881,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_tools.14":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--METAFILE '${METAFILE}'
 		--MULTI2GRIDS '${MULTI2GRIDS}'
@@ -3138,7 +2895,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_tools.5":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--R '${R}'
 		--G '${G}'
@@ -3152,7 +2908,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_tools.12":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID '${GRID}'
 		--TYPE '${TYPE}'
@@ -3167,7 +2922,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_tools.11":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID '${GRID}'
 		--DIRECTION '${DIRECTION}'
@@ -3190,7 +2944,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_tools.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--RED '${RED}'
 		--NIR '${NIR}'
@@ -3205,7 +2958,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_tools.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--BLUE '${BLUE}'
 		--GREEN '${GREEN}'
@@ -3219,7 +2971,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_tools.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--RED '${RED}'
 		--NIR '${NIR}'
@@ -3235,7 +2986,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_tools.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--R '${R}'
 		--G '${G}'
@@ -3250,7 +3000,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_tools.10":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--FILES '${FILES}'
 		--PROJECTION '${PROJECTION}'
@@ -3263,7 +3012,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_tools.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--BLUE '${BLUE}'
 		--RED '${RED}'
@@ -3276,7 +3024,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_tools.9":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--BAND2 '${BAND2}'
 		--BAND3 '${BAND3}'
@@ -3293,7 +3040,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_tools.7":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRIDS '${GRIDS}'
 		--PAN '${PAN}'
@@ -3305,7 +3051,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_tools.13":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID_A '${GRID_A}'
 		--GRID_B '${GRID_B}'
@@ -3321,7 +3066,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_tools.6":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRIDS '${GRIDS}'
 		--PAN '${PAN}'
@@ -3330,7 +3074,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_tools.20":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SHAPES '${SHAPES}'
 		--ATTRIBUTE '${ATTRIBUTE}'
@@ -3340,7 +3083,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_tools.29":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--STRIKE '${STRIKE}'
@@ -3356,7 +3098,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_tools.12":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TYPE '${TYPE}'
 		--EXTENT '${EXTENT}'
@@ -3372,7 +3113,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_tools.26":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SHAPESLIST '${SHAPESLIST}'
 		--INDEX '${INDEX}'
@@ -3380,7 +3120,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_tools.16":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SHAPES '${SHAPES}'
 		--FIELD '${FIELD}'
@@ -3391,7 +3130,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_tools.22":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--FIELD_ID '${FIELD_ID}'
@@ -3403,7 +3141,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_tools.18":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SHAPES '${SHAPES}'
 		--DIST_FIELD '${DIST_FIELD}'
@@ -3417,7 +3154,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_tools.21":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POLAR '${POLAR}'
 		--F_EXAGG '${F_EXAGG}'
@@ -3428,7 +3164,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_tools.25":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--FIELDS '${FIELDS}'
 		--FIELD_ID '${FIELD_ID}'
@@ -3439,7 +3174,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_tools.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--NAME '${NAME}'
 		--TYPE '${TYPE}'
@@ -3449,14 +3183,12 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_tools.28":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SHAPES '${SHAPES}'
 		--COPY_outformat '${COPY_outformat}'
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_tools.23":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--FIELD_Z '${FIELD_Z}'
@@ -3465,7 +3197,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_tools.24":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--SRCINFO '${SRCINFO}'
@@ -3475,7 +3206,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_tools.10":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SHAPES '${SHAPES}'
 		--MOVEX '${MOVEX}'
@@ -3494,7 +3224,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_tools.17":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TABLE '${TABLE}'
 		--FIELD '${FIELD}'
@@ -3502,7 +3231,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_tools.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--SRCINFO '${SRCINFO}'
@@ -3512,7 +3240,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_tools.19":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SHAPES '${SHAPES}'
 		--OUTPUT '${OUTPUT}'
@@ -3520,7 +3247,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_tools.9":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SHAPES '${SHAPES}'
 		--FIELD '${FIELD}'
@@ -3529,7 +3255,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_tools.15":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SHAPES '${SHAPES}'
 		--NX '${NX}'
@@ -3540,7 +3265,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_tools.13":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SHAPES '${SHAPES}'
 		--METHOD '${METHOD}'
@@ -3558,14 +3282,12 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_tools.6":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--OUTPUT_outformat '${OUTPUT_outformat}'
 		--outputData '$output_data'
 #elif $select_process == "SAGA.sim_ecosystems_hugget.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TIME_SPAN '${TIME_SPAN}'
 		--TIME_STEP '${TIME_STEP}'
@@ -3576,7 +3298,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.sim_ecosystems_hugget.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TIME_SPAN '${TIME_SPAN}'
 		--TIME_STEP '${TIME_STEP}'
@@ -3598,7 +3319,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.sim_ecosystems_hugget.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--TIME_SPAN '${TIME_SPAN}'
@@ -3610,7 +3330,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.garden_fractals.5":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--NX '${NX}'
 		--NY '${NY}'
@@ -3621,7 +3340,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.garden_fractals.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ITERATIONS '${ITERATIONS}'
 		--NVALUES '${NVALUES}'
@@ -3633,7 +3351,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.garden_fractals.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--DSIZE '${DSIZE}'
@@ -3641,7 +3358,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.garden_fractals.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TYPE '${TYPE}'
 		--ANGLE '${ANGLE}'
@@ -3653,7 +3369,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.pointcloud_tools.14":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--PC_LIST '${PC_LIST}'
 		--INDEX '${INDEX}'
@@ -3661,14 +3376,12 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.pointcloud_tools.5":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--SHAPES_outformat '${SHAPES_outformat}'
 		--outputData '$output_data'
 #elif $select_process == "SAGA.pointcloud_tools.12":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--PC_LAYERS '${PC_LAYERS}'
 		--DEL_LAYERS '${DEL_LAYERS}'
@@ -3678,7 +3391,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.pointcloud_tools.11":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--PC_IN '${PC_IN}'
 		--FIELDS '${FIELDS}'
@@ -3690,7 +3402,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.pointcloud_tools.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--AREA '${AREA}'
@@ -3699,7 +3410,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.pointcloud_tools.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SHAPES '${SHAPES}'
 		--ZFIELD '${ZFIELD}'
@@ -3708,7 +3418,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.pointcloud_tools.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--OUTPUT '${OUTPUT}'
@@ -3720,7 +3429,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.pointcloud_tools.10":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--PC_IN '${PC_IN}'
 		--FORMULA '${FORMULA}'
@@ -3731,7 +3439,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.pointcloud_tools.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID '${GRID}'
 		--GRIDS '${GRIDS}'
@@ -3739,7 +3446,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.pointcloud_tools.9":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--PERCENT '${PERCENT}'
@@ -3748,7 +3454,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.pointcloud_tools.8":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--IN '${IN}'
 		--DX '${DX}'
@@ -3767,7 +3472,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.pointcloud_tools.7":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--FIELDS '${FIELDS}'
@@ -3775,7 +3479,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.pointcloud_tools.13":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TAB_IN '${TAB_IN}'
 		--FIELD_X '${FIELD_X}'
@@ -3786,7 +3489,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.pointcloud_tools.6":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--ATTRIB '${ATTRIB}'
@@ -3814,7 +3516,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.sim_rivflow.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--INPUT2 '${INPUT2}'
@@ -3836,7 +3537,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.sim_rivflow.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--SX '${SX}'
@@ -3848,7 +3548,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.sim_rivflow.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--INPUT2 '${INPUT2}'
@@ -3930,7 +3629,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.garden_webservices.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SERVER '${SERVER}'
 		--VERSION '${VERSION}'
@@ -3943,7 +3641,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.garden_webservices.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ADDRESSES '${ADDRESSES}'
 		--FIELD '${FIELD}'
@@ -3955,7 +3652,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.sim_landscape_evolution.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SURFACE_T0 '${SURFACE_T0}'
 		--REGOLITH_T0 '${REGOLITH_T0}'
@@ -3973,7 +3669,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_svm.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRIDS '${GRIDS}'
 		--SCALING '${SCALING}'
@@ -4000,7 +3695,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_lighting.5":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--RADIUS '${RADIUS}'
@@ -4012,7 +3706,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_lighting.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ELEVATION '${ELEVATION}'
 		--METHOD '${METHOD}'
@@ -4030,7 +3723,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_lighting.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--RADIUS '${RADIUS}'
@@ -4045,7 +3737,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_lighting.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--ORIGINAL '${ORIGINAL}'
@@ -4059,7 +3750,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_lighting.8":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--THRESHOLD '${THRESHOLD}'
@@ -4070,7 +3760,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_lighting.7":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--STEPS '${STEPS}'
@@ -4081,7 +3770,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_lighting.6":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ELEVATION '${ELEVATION}'
 		--POINTS '${POINTS}'
@@ -4091,7 +3779,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_gridding.5":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--FIELD '${FIELD}'
@@ -4110,7 +3797,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_gridding.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--FIELD '${FIELD}'
@@ -4134,7 +3820,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_gridding.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--FIELD '${FIELD}'
@@ -4154,7 +3839,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_gridding.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--FIELD '${FIELD}'
@@ -4185,7 +3869,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_gridding.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--FIELD '${FIELD}'
@@ -4209,7 +3892,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_gridding.10":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POLYGONS '${POLYGONS}'
 		--FIELD '${FIELD}'
@@ -4231,7 +3913,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_gridding.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--FIELD '${FIELD}'
@@ -4253,7 +3934,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_gridding.9":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POLYGONS '${POLYGONS}'
 		--FIELD '${FIELD}'
@@ -4275,7 +3955,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_gridding.8":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POLYGONS '${POLYGONS}'
 		--METHOD '${METHOD}'
@@ -4295,7 +3974,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_gridding.7":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--FIELD '${FIELD}'
@@ -4327,7 +4005,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_gridding.6":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--POPULATION '${POPULATION}'
@@ -4347,7 +4024,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.pj_proj4.14":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--CRS_METHOD '${CRS_METHOD}'
 		--CRS_PROJ4 '${CRS_PROJ4}'
@@ -4370,7 +4046,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.pj_proj4.20":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--PLANAR '${PLANAR}'
 		--EPSILON '${EPSILON}'
@@ -4379,7 +4054,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.pj_proj4.26":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--CRS_METHOD '${CRS_METHOD}'
 		--CRS_PROJ4 '${CRS_PROJ4}'
@@ -4399,7 +4073,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.pj_proj4.16":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--CRS_METHOD '${CRS_METHOD}'
 		--CRS_PROJ4 '${CRS_PROJ4}'
@@ -4416,7 +4089,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.pj_proj4.21":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--CRS_METHOD '${CRS_METHOD}'
 		--CRS_PROJ4 '${CRS_PROJ4}'
@@ -4435,7 +4107,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.pj_proj4.25":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--CRS_METHOD '${CRS_METHOD}'
 		--CRS_PROJ4 '${CRS_PROJ4}'
@@ -4454,7 +4125,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.pj_proj4.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--CRS_METHOD '${CRS_METHOD}'
 		--CRS_PROJ4 '${CRS_PROJ4}'
@@ -4484,7 +4154,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.pj_proj4.23":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--CRS_METHOD '${CRS_METHOD}'
 		--CRS_PROJ4 '${CRS_PROJ4}'
@@ -4516,7 +4185,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.pj_proj4.24":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--CRS_METHOD '${CRS_METHOD}'
 		--CRS_PROJ4 '${CRS_PROJ4}'
@@ -4548,7 +4216,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.pj_proj4.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--CRS_METHOD '${CRS_METHOD}'
 		--CRS_PROJ4 '${CRS_PROJ4}'
@@ -4565,7 +4232,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.pj_proj4.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--CRS_METHOD '${CRS_METHOD}'
 		--CRS_PROJ4 '${CRS_PROJ4}'
@@ -4595,7 +4261,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.pj_proj4.17":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID '${GRID}'
 		--LON_outformat '${LON_outformat}'
@@ -4603,7 +4268,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.pj_proj4.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--CRS_METHOD '${CRS_METHOD}'
 		--CRS_PROJ4 '${CRS_PROJ4}'
@@ -4621,7 +4285,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.pj_proj4.13":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--DIRECTION '${DIRECTION}'
@@ -4630,7 +4293,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_kriging.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--FIELD '${FIELD}'
@@ -4667,7 +4329,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_kriging.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--FIELD '${FIELD}'
@@ -4703,7 +4364,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_kriging.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--FIELD '${FIELD}'
@@ -4740,7 +4400,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_kriging.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--ATTRIBUTE '${ATTRIBUTE}'
@@ -4753,7 +4412,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_kriging.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--FIELD '${FIELD}'
@@ -4793,7 +4451,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_analysis.14":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SAND '${SAND}'
 		--SILT '${SILT}'
@@ -4809,7 +4466,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_analysis.20":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TABLE '${TABLE}'
 		--SAND '${SAND}'
@@ -4825,7 +4481,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_analysis.5":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SOURCE '${SOURCE}'
 		--DEM '${DEM}'
@@ -4835,7 +4490,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_analysis.12":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--MAXNUMCLASS '${MAXNUMCLASS}'
@@ -4843,7 +4497,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_analysis.16":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--CLASSES '${CLASSES}'
 		--CLASS '${CLASS}'
@@ -4863,7 +4516,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_analysis.18":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SURFACE '${SURFACE}'
 		--INPUT '${INPUT}'
@@ -4878,7 +4530,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_analysis.21":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--CATEGORIES '${CATEGORIES}'
 		--SEARCH_MODE '${SEARCH_MODE}'
@@ -4896,7 +4547,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_analysis.11":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRIDS '${GRIDS}'
 		--ORDERED '${ORDERED}'
@@ -4905,7 +4555,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_analysis.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEST_TYPE '${DEST_TYPE}'
 		--DEST_POINTS '${DEST_POINTS}'
@@ -4920,7 +4569,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_analysis.10":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRIDS '${GRIDS}'
 		--TABLE '${TABLE}'
@@ -4928,7 +4576,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_analysis.17":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DENSITY '${DENSITY}'
 		--CONNECTIVITY '${CONNECTIVITY}'
@@ -4940,7 +4587,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_analysis.19":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID_1 '${GRID_1}'
 		--GRID_2 '${GRID_2}'
@@ -4954,7 +4600,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_analysis.9":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRIDS '${GRIDS}'
 		--CRITERIA '${CRITERIA}'
@@ -4962,7 +4607,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_analysis.8":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--WINSIZE '${WINSIZE}'
@@ -4976,7 +4620,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_analysis.15":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--CLASSES '${CLASSES}'
 		--CLASS '${CLASS}'
@@ -4996,14 +4639,12 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_analysis.7":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--RESULT_outformat '${RESULT_outformat}'
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_analysis.13":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--INPUT2 '${INPUT2}'
@@ -5013,7 +4654,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_analysis.6":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--A '${A}'
 		--B '${B}'
@@ -5025,7 +4665,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_maxent.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TRAINING '${TRAINING}'
 		--FIELD '${FIELD}'
@@ -5049,7 +4688,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_maxent.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--PRESENCE '${PRESENCE}'
 		--FEATURES_NUM '${FEATURES_NUM}'
@@ -5070,7 +4708,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.contrib_perego.5":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--ANG '${ANG}'
@@ -5082,7 +4719,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.contrib_perego.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--RX '${RX}'
@@ -5092,7 +4728,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.contrib_perego.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--MASK '${MASK}'
@@ -5103,7 +4738,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.contrib_perego.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--RX '${RX}'
@@ -5113,7 +4747,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.contrib_perego.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--MASK '${MASK}'
@@ -5124,7 +4757,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.contrib_perego.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--RX '${RX}'
@@ -5134,7 +4766,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.contrib_perego.7":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--ANG '${ANG}'
@@ -5144,7 +4775,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.contrib_perego.6":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--MASK '${MASK}'
@@ -5161,7 +4791,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_regression.14":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--PREDICTORS '${PREDICTORS}'
 		--DEPENDENT '${DEPENDENT}'
@@ -5181,7 +4810,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_regression.5":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--DEPENDENT '${DEPENDENT}'
@@ -5214,7 +4842,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_regression.12":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TABLE '${TABLE}'
 		--DEPENDENT '${DEPENDENT}'
@@ -5229,7 +4856,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_regression.11":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TABLE '${TABLE}'
 		--FIELD_X '${FIELD_X}'
@@ -5240,7 +4866,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_regression.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--PREDICTOR '${PREDICTOR}'
 		--POINTS '${POINTS}'
@@ -5252,7 +4877,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_regression.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--DEPENDENT '${DEPENDENT}'
@@ -5285,7 +4909,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_regression.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--PREDICTORS '${PREDICTORS}'
 		--POINTS '${POINTS}'
@@ -5308,7 +4931,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_regression.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--DEPENDENT '${DEPENDENT}'
@@ -5332,7 +4954,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_regression.10":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TABLE '${TABLE}'
 		--FIELD_X '${FIELD_X}'
@@ -5343,7 +4964,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_regression.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--ATTRIBUTE '${ATTRIBUTE}'
@@ -5366,7 +4986,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_regression.9":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--Y_GRIDS '${Y_GRIDS}'
 		--ORDER '${ORDER}'
@@ -5378,7 +4997,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_regression.8":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEPENDENT '${DEPENDENT}'
 		--PREDICTORS '${PREDICTORS}'
@@ -5397,7 +5015,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_regression.15":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--PREDICTORS '${PREDICTORS}'
 		--ZONES '${ZONES}'
@@ -5414,7 +5031,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_regression.7":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--DEPENDENT '${DEPENDENT}'
@@ -5434,7 +5050,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_regression.13":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TABLE '${TABLE}'
 		--DEPENDENT '${DEPENDENT}'
@@ -5449,7 +5064,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_regression.6":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--DEPENDENT '${DEPENDENT}'
@@ -5475,7 +5089,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_tools.20":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID1 '${GRID1}'
 		--GRID2 '${GRID2}'
@@ -5484,7 +5097,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_tools.29":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--MASK '${MASK}'
@@ -5494,7 +5106,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_tools.5":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ORIGINAL '${ORIGINAL}'
 		--ADDITIONAL '${ADDITIONAL}'
@@ -5503,7 +5114,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_tools.12":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--METHOD '${METHOD}'
@@ -5514,7 +5124,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_tools.32":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRIDS '${GRIDS}'
 		--INDEX '${INDEX}'
@@ -5522,7 +5131,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_tools.26":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--FEATURES '${FEATURES}'
 		--DISTANCE_outformat '${DISTANCE_outformat}'
@@ -5531,7 +5139,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_tools.22":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TABLE '${TABLE}'
 		--ID_FIELD '${ID_FIELD}'
@@ -5540,14 +5147,12 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_tools.33":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID '${GRID}'
 		--COPY_outformat '${COPY_outformat}'
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_tools.18":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--VALUE '${VALUE}'
@@ -5555,7 +5160,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_tools.21":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID '${GRID}'
 		--ORDER '${ORDER}'
@@ -5563,7 +5167,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_tools.11":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--TYPE '${TYPE}'
@@ -5573,7 +5176,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_tools.31":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRIDS '${GRIDS}'
 		--EXTENT '${EXTENT}'
@@ -5591,7 +5193,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_tools.25":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID '${GRID}'
 		--MASK '${MASK}'
@@ -5606,7 +5207,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_tools.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--KEEP_TYPE '${KEEP_TYPE}'
@@ -5626,7 +5226,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_tools.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRIDS '${GRIDS}'
 		--FILE_LIST '${FILE_LIST}'
@@ -5651,7 +5250,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_tools.28":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--OPERATION '${OPERATION}'
@@ -5662,7 +5260,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_tools.23":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INIT '${INIT}'
 		--CELLSIZE '${CELLSIZE}'
@@ -5683,7 +5280,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_tools.24":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID '${GRID}'
 		--MASK '${MASK}'
@@ -5691,7 +5287,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_tools.27":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID '${GRID}'
 		--TILES_SAVE '${TILES_SAVE}'
@@ -5713,7 +5308,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_tools.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--SIZE '${SIZE}'
@@ -5722,7 +5316,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_tools.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--NAME '${NAME}'
 		--CONST '${CONST}'
@@ -5741,7 +5334,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_tools.10":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SOURCE '${SOURCE}'
 		--DIST '${DIST}'
@@ -5752,14 +5344,12 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_tools.17":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--OUTPUT_outformat '${OUTPUT_outformat}'
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_tools.9":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--FEATURES '${FEATURES}'
 		--VALUE '${VALUE}'
@@ -5770,7 +5360,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_tools.8":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--FEATURES '${FEATURES}'
 		--TYPE '${TYPE}'
@@ -5779,7 +5368,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_tools.15":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--METHOD '${METHOD}'
@@ -5806,21 +5394,18 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_tools.37":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID '${GRID}'
 		--OUTPUT_outformat '${OUTPUT_outformat}'
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_tools.34":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID '${GRID}'
 		--INVERSE_outformat '${INVERSE_outformat}'
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_tools.39":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--GRID '${GRID}'
@@ -5834,7 +5419,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_tools.7":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--MASK '${MASK}'
@@ -5843,7 +5427,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_tools.6":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--MODE '${MODE}'
@@ -5852,7 +5435,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_tools.35":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID '${GRID}'
 		--METHOD '${METHOD}'
@@ -5860,7 +5442,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_tools.38":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRIDS '${GRIDS}'
 		--NAME '${NAME}'
@@ -5884,7 +5465,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_tools.30":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRIDS '${GRIDS}'
 		--MIRROR_X '${MIRROR_X}'
@@ -5893,7 +5473,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_preprocessor.5":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ELEV '${ELEV}'
 		--MINSLOPE '${MINSLOPE}'
@@ -5901,7 +5480,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_preprocessor.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--FLAT_OUTPUT '${FLAT_OUTPUT}'
@@ -5910,7 +5488,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_preprocessor.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--MINSLOPE '${MINSLOPE}'
@@ -5918,7 +5495,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_preprocessor.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ELEVATION '${ELEVATION}'
 		--THRESHOLD '${THRESHOLD}'
@@ -5927,7 +5503,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_preprocessor.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ELEV '${ELEV}'
 		--MINSLOPE '${MINSLOPE}'
@@ -5937,7 +5512,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_preprocessor.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--SINKROUTE '${SINKROUTE}'
@@ -5948,7 +5522,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_preprocessor.6":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--STREAM '${STREAM}'
@@ -5959,7 +5532,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_compound.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ELEVATION '${ELEVATION}'
 		--THRESHOLD '${THRESHOLD}'
@@ -5982,7 +5554,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.sim_ihacres.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TABLE '${TABLE}'
 		--DATE_Field '${DATE_Field}'
@@ -6002,7 +5573,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.sim_ihacres.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--NELEVBANDS '${NELEVBANDS}'
 		--AREA_tot '${AREA_tot}'
@@ -6013,7 +5583,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.sim_ihacres.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TABLE '${TABLE}'
 		--DATE_Field '${DATE_Field}'
@@ -6034,7 +5603,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.sim_ihacres.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--NELEVBANDS '${NELEVBANDS}'
 		--NSIM '${NSIM}'
@@ -6049,7 +5617,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.sim_ihacres.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--NSUBBASINS '${NSUBBASINS}'
 		--IHACVERS '${IHACVERS}'
@@ -6059,7 +5626,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.sim_cellular_automata.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TARGET_DEFINITION '${TARGET_DEFINITION}'
 		--TARGET_USER_SIZE '${TARGET_USER_SIZE}'
@@ -6076,7 +5642,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.sim_cellular_automata.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TARGET_DEFINITION '${TARGET_DEFINITION}'
 		--TARGET_USER_SIZE '${TARGET_USER_SIZE}'
@@ -6099,7 +5664,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_vigra.5":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--CENTER '${CENTER}'
@@ -6108,7 +5672,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_vigra.11":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TABLE '${TABLE}'
 		--FEATURES '${FEATURES}'
@@ -6127,7 +5690,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_vigra.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--TYPE '${TYPE}'
@@ -6137,7 +5699,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_vigra.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--NORM '${NORM}'
@@ -6145,7 +5706,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_vigra.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--TYPE '${TYPE}'
@@ -6155,7 +5715,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_vigra.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--SCALE '${SCALE}'
@@ -6165,7 +5724,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_vigra.10":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--FEATURES '${FEATURES}'
 		--PRESENCE '${PRESENCE}'
@@ -6188,7 +5746,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_vigra.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--TYPE '${TYPE}'
@@ -6199,7 +5756,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_vigra.9":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--FEATURES '${FEATURES}'
 		--BPROBABILITIES '${BPROBABILITIES}'
@@ -6226,7 +5782,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_vigra.8":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--SCALE '${SCALE}'
@@ -6238,14 +5793,12 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_vigra.7":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--OUTPUT_outformat '${OUTPUT_outformat}'
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_vigra.6":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--REAL '${REAL}'
 		--IMAG '${IMAG}'
@@ -6254,7 +5807,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_grid.5":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID '${GRID}'
 		--VERTEX '${VERTEX}'
@@ -6269,7 +5821,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_grid.16":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DIR '${DIR}'
 		--LEN '${LEN}'
@@ -6282,7 +5833,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_grid.18":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POLYGONS '${POLYGONS}'
 		--GRID '${GRID}'
@@ -6296,7 +5846,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_grid.11":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--SHAPES '${SHAPES}'
@@ -6305,7 +5854,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_grid.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SHAPES '${SHAPES}'
 		--GRIDS '${GRIDS}'
@@ -6314,7 +5862,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_grid.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRIDS '${GRIDS}'
 		--POLYGONS '${POLYGONS}'
@@ -6324,7 +5871,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_grid.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SHAPES '${SHAPES}'
 		--GRIDS '${GRIDS}'
@@ -6333,7 +5879,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_grid.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID '${GRID}'
 		--FREQ '${FREQ}'
@@ -6341,14 +5886,12 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_grid.10":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--CELLS '${CELLS}'
 		--SHAPES_outformat '${SHAPES_outformat}'
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_grid.17":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--X '${X}'
 		--Y '${Y}'
@@ -6361,7 +5904,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_grid.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRIDS '${GRIDS}'
 		--POLYGONS '${POLYGONS}'
@@ -6382,7 +5924,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_grid.9":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID '${GRID}'
 		--IDENTITY '${IDENTITY}'
@@ -6393,7 +5934,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_grid.8":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRIDS '${GRIDS}'
 		--POINTS '${POINTS}'
@@ -6413,7 +5953,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_grid.15":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SURFACE '${SURFACE}'
 		--STEP '${STEP}'
@@ -6425,7 +5964,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_grid.7":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--POLYGONS '${POLYGONS}'
@@ -6434,7 +5972,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_grid.6":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID '${GRID}'
 		--CLASS_ALL '${CLASS_ALL}'
@@ -6445,7 +5982,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.sim_erosion.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DTM '${DTM}'
 		--S '${S}'
@@ -6487,7 +6023,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.docs_pdf.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SHAPES '${SHAPES}'
 		--FIELD '${FIELD}'
@@ -6497,7 +6032,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.docs_pdf.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--LINES '${LINES}'
@@ -6513,7 +6047,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.sim_qm_of_esp.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--UPDATE '${UPDATE}'
@@ -6527,7 +6060,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.sim_qm_of_esp.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--ITERATIONS '${ITERATIONS}'
@@ -6537,7 +6069,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.sim_qm_of_esp.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--DZFILL '${DZFILL}'
@@ -6546,7 +6077,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.sim_qm_of_esp.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--CHANNELS '${CHANNELS}'
@@ -6560,7 +6090,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.sim_qm_of_esp.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--PREPROC '${PREPROC}'
@@ -6569,7 +6098,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_calculus_bsl.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--BSL '${BSL}'
 		--PROGRESS '${PROGRESS}'
@@ -6577,7 +6105,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_grid.14":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRIDS '${GRIDS}'
 		--RADIUS '${RADIUS}'
@@ -6588,7 +6115,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_grid.5":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ZONES '${ZONES}'
 		--CATLIST '${CATLIST}'
@@ -6599,14 +6125,12 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_grid.12":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID '${GRID}'
 		--STATS_outformat '${STATS_outformat}'
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_grid.16":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--FILES '${FILES}'
 		--HCLASSES '${HCLASSES}'
@@ -6627,7 +6151,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_grid.18":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--COUNT '${COUNT}'
 		--SUM '${SUM}'
@@ -6644,14 +6167,12 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_grid.11":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID '${GRID}'
 		--STATS_outformat '${STATS_outformat}'
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_grid.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--LOD '${LOD}'
@@ -6661,7 +6182,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_grid.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--STDDEV '${STDDEV}'
@@ -6671,7 +6191,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_grid.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID '${GRID}'
 		--MODE '${MODE}'
@@ -6688,7 +6207,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_grid.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRIDS '${GRIDS}'
 		--WEIGHTS '${WEIGHTS}'
@@ -6708,7 +6226,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_grid.10":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--PCA '${PCA}'
 		--EIGEN '${EIGEN}'
@@ -6716,7 +6233,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_grid.17":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRIDS '${GRIDS}'
 		--HCLASSES '${HCLASSES}'
@@ -6732,7 +6248,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_grid.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--RADIUS '${RADIUS}'
@@ -6741,7 +6256,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_grid.9":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--BANDS '${BANDS}'
 		--RADIUS '${RADIUS}'
@@ -6755,7 +6269,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_grid.8":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRIDS '${GRIDS}'
 		--EIGEN_INPUT '${EIGEN_INPUT}'
@@ -6767,7 +6280,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_grid.15":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID '${GRID}'
 		--COMPONENTS '${COMPONENTS}'
@@ -6782,7 +6294,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_grid.7":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID '${GRID}'
 		--CONTIGUITY '${CONTIGUITY}'
@@ -6791,7 +6302,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_grid.13":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRIDS '${GRIDS}'
 		--DATA_CELLS '${DATA_CELLS}'
@@ -6813,7 +6323,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_grid.6":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID '${GRID}'
 		--POINTS '${POINTS}'
@@ -6839,7 +6348,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.db_odbc.5":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ODBC_DSN '${ODBC_DSN}'
 		--ODBC_USR '${ODBC_USR}'
@@ -6850,7 +6358,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.db_odbc.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ODBC_DSN '${ODBC_DSN}'
 		--ODBC_USR '${ODBC_USR}'
@@ -6861,7 +6368,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.db_odbc.10":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ODBC_DSN '${ODBC_DSN}'
 		--ODBC_USR '${ODBC_USR}'
@@ -6871,14 +6377,12 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.db_odbc.9":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--CONNECTED '${CONNECTED}'
 		--SERVERS_outformat '${SERVERS_outformat}'
 		--outputData '$output_data'
 #elif $select_process == "SAGA.db_odbc.8":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ODBC_DSN '${ODBC_DSN}'
 		--ODBC_USR '${ODBC_USR}'
@@ -6895,7 +6399,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.table_tools.20":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TABLE '${TABLE}'
 		--FIELD '${FIELD}'
@@ -6904,7 +6407,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.table_tools.5":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TABLE '${TABLE}'
 		--FIELD '${FIELD}'
@@ -6916,14 +6418,12 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.table_tools.22":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TABLE '${TABLE}'
 		--COPY_outformat '${COPY_outformat}'
 		--outputData '$output_data'
 #elif $select_process == "SAGA.table_tools.21":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--FIELD '${FIELD}'
@@ -6932,7 +6432,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.table_tools.11":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TABLE '${TABLE}'
 		--FIELDS '${FIELDS}'
@@ -6941,7 +6440,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.table_tools.25":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TABLE '${TABLE}'
 		--FIELD '${FIELD}'
@@ -6953,7 +6451,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.table_tools.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--NAME '${NAME}'
 		--NFIELDS '${NFIELDS}'
@@ -6961,7 +6458,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.table_tools.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TABLE_A '${TABLE_A}'
 		--TABLE_B '${TABLE_B}'
@@ -6975,7 +6471,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.table_tools.23":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TABLE '${TABLE}'
 		--FIELD '${FIELD}'
@@ -6984,7 +6479,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.table_tools.24":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TABLE '${TABLE}'
 		--FIELD '${FIELD}'
@@ -6996,14 +6490,12 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.table_tools.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--OUTPUT_outformat '${OUTPUT_outformat}'
 		--outputData '$output_data'
 #elif $select_process == "SAGA.table_tools.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TABLE_A '${TABLE_A}'
 		--TABLE_B '${TABLE_B}'
@@ -7017,7 +6509,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.table_tools.10":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TABLE '${TABLE}'
 		--FIELD '${FIELD}'
@@ -7027,7 +6518,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.table_tools.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--FIELD '${FIELD}'
@@ -7036,7 +6526,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.table_tools.9":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TABLE '${TABLE}'
 		--FIELD_SAGA_RGB '${FIELD_SAGA_RGB}'
@@ -7048,7 +6537,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.table_tools.8":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--APPEND '${APPEND}'
@@ -7056,7 +6544,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.table_tools.15":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TABLE '${TABLE}'
 		--OUT_TABLE_outformat '${OUT_TABLE_outformat}'
@@ -7064,7 +6551,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.table_tools.7":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TABLE '${TABLE}'
 		--FIELD '${FIELD}'
@@ -7073,7 +6559,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.table_tools.6":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TABLE '${TABLE}'
 		--FIELD '${FIELD}'
@@ -7083,7 +6568,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_transect.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TRANSECT '${TRANSECT}'
 		--THEME '${THEME}'
@@ -7092,7 +6576,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_hydrology.20":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SLOPE '${SLOPE}'
 		--AREA '${AREA}'
@@ -7103,7 +6586,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_hydrology.29":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--UPDATE '${UPDATE}'
@@ -7113,7 +6595,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_hydrology.26":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--WEIGHT '${WEIGHT}'
@@ -7126,7 +6607,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_hydrology.16":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ELEV '${ELEV}'
 		--SEEDS '${SEEDS}'
@@ -7136,7 +6616,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_hydrology.22":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SLOPE '${SLOPE}'
 		--AREA '${AREA}'
@@ -7148,7 +6627,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_hydrology.18":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--METHOD '${METHOD}'
@@ -7164,7 +6642,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_hydrology.21":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SLOPE '${SLOPE}'
 		--AREA '${AREA}'
@@ -7173,7 +6650,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_hydrology.25":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--FIELDS '${FIELDS}'
@@ -7192,7 +6668,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_hydrology.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ELEVATION '${ELEVATION}'
 		--SINKROUTE '${SINKROUTE}'
@@ -7219,7 +6694,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_hydrology.28":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ELEVATION '${ELEVATION}'
 		--FIELDS '${FIELDS}'
@@ -7229,7 +6703,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_hydrology.23":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--AREA_outformat '${AREA_outformat}'
@@ -7238,7 +6711,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_hydrology.24":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DISTANCE '${DISTANCE}'
 		--TWI '${TWI}'
@@ -7246,7 +6718,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_hydrology.27":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ELEVATION '${ELEVATION}'
 		--WEIGHTS '${WEIGHTS}'
@@ -7255,7 +6726,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_hydrology.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ELEVATION '${ELEVATION}'
 		--SINKROUTE '${SINKROUTE}'
@@ -7278,7 +6748,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_hydrology.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TARGET '${TARGET}'
 		--TARGET_PT_X '${TARGET_PT_X}'
@@ -7291,7 +6760,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_hydrology.10":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--WEIGHTS '${WEIGHTS}'
@@ -7301,7 +6769,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_hydrology.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ELEVATION '${ELEVATION}'
 		--SINKROUTE '${SINKROUTE}'
@@ -7322,7 +6789,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_hydrology.19":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--TCA '${TCA}'
@@ -7332,7 +6798,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_hydrology.15":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--WEIGHT '${WEIGHT}'
@@ -7349,14 +6814,12 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_hydrology.7":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--LENGTH_outformat '${LENGTH_outformat}'
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_hydrology.13":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ELEVATION '${ELEVATION}'
 		--METHOD '${METHOD}'
@@ -7364,7 +6827,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_hydrology.6":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ELEVATION '${ELEVATION}'
 		--SEED '${SEED}'
@@ -7375,7 +6837,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_calculus.14":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID '${GRID}'
 		--CONVERSION '${CONVERSION}'
@@ -7383,7 +6844,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_calculus.20":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--RESAMPLING '${RESAMPLING}'
 		--FORMULA '${FORMULA}'
@@ -7397,7 +6857,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_calculus.5":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--CELL_COUNT '${CELL_COUNT}'
 		--CELL_SIZE '${CELL_SIZE}'
@@ -7407,7 +6866,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_calculus.12":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRIDS '${GRIDS}'
 		--TYPE '${TYPE}'
@@ -7415,7 +6873,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_calculus.16":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DIR '${DIR}'
 		--LEN '${LEN}'
@@ -7428,7 +6885,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_calculus.18":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--A '${A}'
 		--B '${B}'
@@ -7436,7 +6892,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_calculus.21":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID '${GRID}'
 		--REFERENCE '${REFERENCE}'
@@ -7447,7 +6902,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_calculus.11":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--INC_MIN '${INC_MIN}'
@@ -7462,7 +6916,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_calculus.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--RANGE_MIN '${RANGE_MIN}'
@@ -7471,7 +6924,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_calculus.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--A '${A}'
 		--B '${B}'
@@ -7479,7 +6931,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_calculus.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--RESAMPLING '${RESAMPLING}'
 		--FORMULA '${FORMULA}'
@@ -7493,7 +6944,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_calculus.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--FORMULA '${FORMULA}'
 		--X_RANGE_MIN '${X_RANGE_MIN}'
@@ -7514,7 +6964,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_calculus.10":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--STRETCH '${STRETCH}'
@@ -7522,7 +6971,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_calculus.17":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEFINITION '${DEFINITION}'
 		--USER_SIZE '${USER_SIZE}'
@@ -7543,7 +6991,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_calculus.19":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--FILE '${FILE}'
 		--MINDEGREE '${MINDEGREE}'
@@ -7557,7 +7004,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_calculus.9":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRIDS '${GRIDS}'
 		--NODATA '${NODATA}'
@@ -7565,7 +7011,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_calculus.8":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRIDS '${GRIDS}'
 		--NODATA '${NODATA}'
@@ -7573,7 +7018,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_calculus.15":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DX '${DX}'
 		--DY '${DY}'
@@ -7586,7 +7030,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_calculus.7":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEFINITION '${DEFINITION}'
 		--USER_SIZE '${USER_SIZE}'
@@ -7607,7 +7050,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_calculus.13":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRIDS '${GRIDS}'
 		--TYPE '${TYPE}'
@@ -7615,7 +7057,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_calculus.6":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--RADIUS '${RADIUS}'
 		--ITERATIONS '${ITERATIONS}'
@@ -7633,7 +7074,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_opencv.5":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--FEATURES '${FEATURES}'
 		--NORMALIZE '${NORMALIZE}'
@@ -7648,7 +7088,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_opencv.12":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--FEATURES '${FEATURES}'
 		--NORMALIZE '${NORMALIZE}'
@@ -7667,7 +7106,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_opencv.11":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--FEATURES '${FEATURES}'
 		--NORMALIZE '${NORMALIZE}'
@@ -7696,7 +7134,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_opencv.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--TYPE '${TYPE}'
@@ -7707,7 +7144,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_opencv.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--REAL_outformat '${REAL_outformat}'
@@ -7715,7 +7151,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_opencv.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--LEFT '${LEFT}'
 		--RIGHT '${RIGHT}'
@@ -7738,7 +7173,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_opencv.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--RANGE_MIN '${RANGE_MIN}'
@@ -7747,7 +7181,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_opencv.7":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--FEATURES '${FEATURES}'
 		--NORMALIZE '${NORMALIZE}'
@@ -7769,7 +7202,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_opencv.6":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--FEATURES '${FEATURES}'
 		--NORMALIZE '${NORMALIZE}'
@@ -7787,7 +7219,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_points.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--FIELD '${FIELD}'
@@ -7798,14 +7229,12 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_points.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--TABLE_outformat '${TABLE_outformat}'
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_points.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--FIELD '${FIELD}'
@@ -7815,7 +7244,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_points.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--WEIGHT '${WEIGHT}'
@@ -7826,7 +7254,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.statistics_points.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--FIELD '${FIELD}'
@@ -7838,7 +7265,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_spline.5":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID '${GRID}'
 		--TARGET_DEFINITION '${TARGET_DEFINITION}'
@@ -7860,7 +7286,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_spline.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SHAPES '${SHAPES}'
 		--FIELD '${FIELD}'
@@ -7879,7 +7304,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_spline.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SHAPES '${SHAPES}'
 		--FIELD '${FIELD}'
@@ -7904,7 +7328,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_spline.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SHAPES '${SHAPES}'
 		--FIELD '${FIELD}'
@@ -7926,7 +7349,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_spline.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SHAPES '${SHAPES}'
 		--FIELD '${FIELD}'
@@ -7947,7 +7369,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_spline.8":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--Z_FIELD '${Z_FIELD}'
@@ -7973,7 +7394,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_spline.7":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--FIELD '${FIELD}'
@@ -7992,7 +7412,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_spline.6":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SHAPES '${SHAPES}'
 		--FIELD '${FIELD}'
@@ -8014,7 +7433,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_classification.5":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TABLE '${TABLE}'
 		--FEATURES '${FEATURES}'
@@ -8037,7 +7455,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_classification.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRIDS '${GRIDS}'
 		--NORMALISE '${NORMALISE}'
@@ -8062,13 +7479,11 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_classification.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--CLASSES_outformat '${CLASSES_outformat}'
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_classification.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRIDS '${GRIDS}'
 		--METHOD '${METHOD}'
@@ -8084,7 +7499,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_classification.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SHAPES '${SHAPES}'
 		--FEATURES '${FEATURES}'
@@ -8107,7 +7521,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_classification.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ONE '${ONE}'
 		--ONE_LUT '${ONE_LUT}'
@@ -8129,7 +7542,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.imagery_classification.6":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID '${GRID}'
 		--GRID_VALUES '${GRID_VALUES}'
@@ -8146,7 +7558,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_morphometry.14":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--W '${W}'
@@ -8160,7 +7571,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_morphometry.20":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--EPSILON '${EPSILON}'
@@ -8174,7 +7584,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_morphometry.5":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ELEVATION '${ELEVATION}'
 		--COUNT '${COUNT}'
@@ -8187,7 +7596,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_morphometry.12":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--ALPHA_MAX '${ALPHA_MAX}'
@@ -8195,7 +7603,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_morphometry.26":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--WEIGHTING '${WEIGHTING}'
@@ -8207,7 +7614,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_morphometry.16":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--MODE '${MODE}'
@@ -8220,7 +7626,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_morphometry.22":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--SLOPE '${SLOPE}'
@@ -8239,7 +7644,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_morphometry.18":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--STANDARD '${STANDARD}'
@@ -8253,7 +7657,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_morphometry.21":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--KERNEL '${KERNEL}'
@@ -8269,7 +7672,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_morphometry.11":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--DIR '${DIR}'
@@ -8287,7 +7689,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_morphometry.25":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ELEVATION '${ELEVATION}'
 		--SLOPE '${SLOPE}'
@@ -8324,7 +7725,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_morphometry.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ELEVATION '${ELEVATION}'
 		--METHOD '${METHOD}'
@@ -8345,7 +7745,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_morphometry.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ELEVATION '${ELEVATION}'
 		--METHOD '${METHOD}'
@@ -8354,7 +7753,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_morphometry.28":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--SCALE_MIN '${SCALE_MIN}'
@@ -8365,7 +7763,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_morphometry.23":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--SIZE '${SIZE}'
@@ -8387,7 +7784,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_morphometry.24":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--RADIUS_VALLEY '${RADIUS_VALLEY}'
@@ -8402,7 +7798,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_morphometry.27":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--MAXDIST '${MAXDIST}'
@@ -8414,7 +7809,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_morphometry.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ELEVATION '${ELEVATION}'
 		--METHOD '${METHOD}'
@@ -8423,7 +7817,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_morphometry.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--THRESHOLD '${THRESHOLD}'
@@ -8431,7 +7824,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_morphometry.10":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--HREL '${HREL}'
@@ -8442,7 +7834,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_morphometry.17":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--MODE '${MODE}'
@@ -8455,7 +7846,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_morphometry.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ELEVATION '${ELEVATION}'
 		--RADIUS '${RADIUS}'
@@ -8465,7 +7855,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_morphometry.19":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--RADIUS_A_MIN '${RADIUS_A_MIN}'
@@ -8480,7 +7869,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_morphometry.9":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--DISTANCE '${DISTANCE}'
@@ -8490,7 +7878,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_morphometry.8":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--T_SLOPE '${T_SLOPE}'
@@ -8506,7 +7893,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_morphometry.15":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--DIR '${DIR}'
@@ -8523,7 +7909,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_morphometry.7":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--RADIUS '${RADIUS}'
@@ -8531,7 +7916,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_morphometry.13":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--SWR '${SWR}'
@@ -8545,14 +7929,12 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_morphometry.6":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--AREA_outformat '${AREA_outformat}'
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_profiles.5":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID '${GRID}'
 		--TABLE '${TABLE}'
@@ -8562,7 +7944,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_profiles.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--LINES '${LINES}'
@@ -8573,7 +7954,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_profiles.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--VALUES '${VALUES}'
@@ -8585,7 +7965,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_lines.5":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--LINES '${LINES}'
 		--FIELDS '${FIELDS}'
@@ -8604,14 +7983,12 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_lines.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POLYGONS '${POLYGONS}'
 		--LINES_outformat '${LINES_outformat}'
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_lines.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--LINES '${LINES}'
 		--POLYGONS '${POLYGONS}'
@@ -8621,7 +7998,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_lines.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--POINTS '${POINTS}'
 		--ORDER '${ORDER}'
@@ -8631,7 +8007,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_lines.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--LINES '${LINES}'
 		--TOLERANCE '${TOLERANCE}'
@@ -8639,7 +8014,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_lines.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--LINES '${LINES}'
 		--BPARTS '${BPARTS}'
@@ -8649,7 +8023,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_lines.9":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--LINES_A '${LINES_A}'
 		--LINES_B '${LINES_B}'
@@ -8658,7 +8031,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_lines.8":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--LINES '${LINES}'
 		--SPLIT '${SPLIT}'
@@ -8668,7 +8040,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_lines.7":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--LINES_IN '${LINES_IN}'
 		--METHOD '${METHOD}'
@@ -8680,7 +8051,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.shapes_lines.6":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--LINES '${LINES}'
 		--SPLIT '${SPLIT}'
@@ -8689,7 +8059,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_channels.5":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--THRESHOLD '${THRESHOLD}'
@@ -8703,7 +8072,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_channels.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ELEVATION '${ELEVATION}'
 		--SINKROUTE '${SINKROUTE}'
@@ -8720,7 +8088,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_channels.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ELEVATION '${ELEVATION}'
 		--CHANNELS '${CHANNELS}'
@@ -8732,7 +8099,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_channels.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ELEVATION '${ELEVATION}'
 		--CHANNELS '${CHANNELS}'
@@ -8742,7 +8108,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_channels.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ELEVATION '${ELEVATION}'
 		--CHANNELS '${CHANNELS}'
@@ -8764,7 +8129,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_channels.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--CHANNELS '${CHANNELS}'
@@ -8778,7 +8142,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_channels.7":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ELEVATION '${ELEVATION}'
 		--THRESHOLD '${THRESHOLD}'
@@ -8790,14 +8153,12 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_channels.6":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--STRAHLER_outformat '${STRAHLER_outformat}'
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_filter.14":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT_GRID '${INPUT_GRID}'
 		--FILTER '${FILTER}'
@@ -8810,7 +8171,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_filter.5":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID '${GRID}'
 		--THRESHOLD '${THRESHOLD}'
@@ -8818,7 +8178,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_filter.12":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT_GRID '${INPUT_GRID}'
 		--SHIFT_VALUE '${SHIFT_VALUE}'
@@ -8830,7 +8189,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_filter.16":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TMAGNITUDE '${TMAGNITUDE}'
 		--TDIRECTION '${TDIRECTION}'
@@ -8845,7 +8203,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_filter.18":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--SHAPES '${SHAPES}'
@@ -8856,7 +8213,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_filter.11":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID '${GRID}'
 		--SCALE '${SCALE}'
@@ -8865,7 +8221,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_filter.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--METHOD '${METHOD}'
@@ -8875,7 +8230,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_filter.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--NOISE_ABS '${NOISE_ABS}'
@@ -8888,7 +8242,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_filter.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--SIGMA '${SIGMA}'
@@ -8898,7 +8251,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_filter.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--FILTER '${FILTER}'
@@ -8908,7 +8260,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_filter.10":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--SIGMA '${SIGMA}'
@@ -8920,7 +8271,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_filter.17":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TMAGNITUDE '${TMAGNITUDE}'
 		--TDIRECTION '${TDIRECTION}'
@@ -8935,7 +8285,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_filter.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--METHOD '${METHOD}'
@@ -8946,7 +8295,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_filter.9":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--RANK '${RANK}'
@@ -8956,7 +8304,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_filter.8":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--METHOD '${METHOD}'
@@ -8966,7 +8313,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_filter.15":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--MODE '${MODE}'
@@ -8977,7 +8323,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_filter.7":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--RADIUS '${RADIUS}'
@@ -8988,7 +8333,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_filter.13":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT_GRID '${INPUT_GRID}'
 		--RADIUS '${RADIUS}'
@@ -8996,7 +8340,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.grid_filter.6":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--INPUT '${INPUT}'
 		--TYPE '${TYPE}'
@@ -9007,7 +8350,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_slope_stability.5":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--C '${C}'
@@ -9020,7 +8362,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_slope_stability.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--A '${A}'
 		--Bmin '${Bmin}'
@@ -9049,7 +8390,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_slope_stability.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--Cmin '${Cmin}'
@@ -9072,7 +8412,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_slope_stability.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--A '${A}'
 		--B '${B}'
@@ -9085,7 +8424,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_slope_stability.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--C '${C}'
@@ -9103,7 +8441,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.ta_slope_stability.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--A '${A}'
 		--B '${B}'
@@ -9133,7 +8470,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.db_pgsql.20":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--PG_HOST '${PG_HOST}'
 		--PG_PORT '${PG_PORT}'
@@ -9146,7 +8482,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.db_pgsql.12":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--PG_HOST '${PG_HOST}'
 		--PG_PORT '${PG_PORT}'
@@ -9159,7 +8494,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.db_pgsql.16":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--PG_HOST '${PG_HOST}'
 		--PG_PORT '${PG_PORT}'
@@ -9175,7 +8509,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.db_pgsql.33":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--PG_HOST '${PG_HOST}'
 		--PG_PORT '${PG_PORT}'
@@ -9190,7 +8523,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.db_pgsql.11":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--PG_HOST '${PG_HOST}'
 		--PG_PORT '${PG_PORT}'
@@ -9204,13 +8536,11 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.db_pgsql.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--CONNECTIONS_outformat '${CONNECTIONS_outformat}'
 		--outputData '$output_data'
 #elif $select_process == "SAGA.db_pgsql.23":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--PG_HOST '${PG_HOST}'
 		--PG_PORT '${PG_PORT}'
@@ -9227,7 +8557,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.db_pgsql.10":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--PG_HOST '${PG_HOST}'
 		--PG_PORT '${PG_PORT}'
@@ -9239,7 +8568,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.db_pgsql.15":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--PG_HOST '${PG_HOST}'
 		--PG_PORT '${PG_PORT}'
@@ -9258,7 +8586,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.db_pgsql.30":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--PG_HOST '${PG_HOST}'
 		--PG_PORT '${PG_PORT}'
@@ -9273,7 +8600,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.sim_hydrology.5":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--MASK '${MASK}'
 		--SURF_E '${SURF_E}'
@@ -9282,7 +8608,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.sim_hydrology.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--STA_FC '${STA_FC}'
 		--STA_FC_DEF '${STA_FC_DEF}'
@@ -9296,7 +8621,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.sim_hydrology.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SHAPES '${SHAPES}'
 		--DEM '${DEM}'
@@ -9307,7 +8631,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.sim_hydrology.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--ROUGHNESS '${ROUGHNESS}'
@@ -9329,7 +8652,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.sim_hydrology.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--CHANNEL '${CHANNEL}'
@@ -9345,7 +8667,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.sim_hydrology.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--ATANB '${ATANB}'
 		--WEATHER '${WEATHER}'
@@ -9371,7 +8692,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.sim_hydrology.7":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--MASK '${MASK}'
 		--SURF_E '${SURF_E}'
@@ -9386,7 +8706,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.sim_hydrology.6":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--MASK '${MASK}'
 		--GRAD '${GRAD}'
@@ -9399,7 +8718,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.tin_tools.5":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--ZFIELD '${ZFIELD}'
@@ -9411,7 +8729,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.tin_tools.0":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID '${GRID}'
 		--VALUES '${VALUES}'
@@ -9423,7 +8740,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.tin_tools.3":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TIN '${TIN}'
 		--POINTS_outformat '${POINTS_outformat}'
@@ -9434,7 +8750,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.tin_tools.1":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--GRID '${GRID}'
 		--VALUES '${VALUES}'
@@ -9451,7 +8766,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.tin_tools.4":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--TIN '${TIN}'
 		--ZFIELD '${ZFIELD}'
@@ -9460,7 +8774,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.tin_tools.2":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--SHAPES '${SHAPES}'
 		--TIN_POINTS_outformat '${TIN_POINTS_outformat}'
@@ -9471,7 +8784,6 @@
 		--outputData '$output_data'
 #elif $select_process == "SAGA.tin_tools.6":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--DEM '${DEM}'
 		--ZFIELD '${ZFIELD}'
@@ -9484,7 +8796,6 @@
 		--outputData '$output_data'
 #elif $select_process == "org.n52.javaps.test.EchoProcess":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--literalInput '${literalInput}'
 		--complexInput '${complexInput}'
@@ -9493,7 +8804,6 @@
 		--outputData '$output_data'
 #elif $select_process == "S3Download":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--endpoint_url '${endpoint_url}'
 		--access_key_id '${access_key_id}'
@@ -9507,7 +8817,6 @@
 		--outputData '$output_data'
 #elif $select_process == "Simplify":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--InputPolygon '${InputPolygon}'
 		--Tolerance '${Tolerance}'
@@ -9515,33 +8824,28 @@
 		--outputData '$output_data'
 #elif $select_process == "longProcess":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--sid '${sid}'
 		--outputData '$output_data'
 #elif $select_process == "IsSimple":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--InputPolygon '${InputPolygon}'
 		--outputData '$output_data'
 #elif $select_process == "Voronoi":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--InputPoints '${InputPoints}'
 		--Result_outformat '${Result_outformat}'
 		--outputData '$output_data'
 #elif $select_process == "ConvexHull":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--InputPolygon '${InputPolygon}'
 		--Result_outformat '${Result_outformat}'
 		--outputData '$output_data'
 #elif $select_process == "Difference":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--InputEntity1 '${InputEntity1}'
 		--InputEntity2 '${InputEntity2}'
@@ -9549,7 +8853,6 @@
 		--outputData '$output_data'
 #elif $select_process == "Union":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--InputEntity1 '${InputEntity1}'
 		--InputEntity2 '${InputEntity2}'
@@ -9557,7 +8860,6 @@
 		--outputData '$output_data'
 #elif $select_process == "Buffer":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--InputPolygon '${InputPolygon}'
 		--BufferDistance '${BufferDistance}'
@@ -9565,7 +8867,6 @@
 		--outputData '$output_data'
 #elif $select_process == "Gdal_Grid":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--OF '${OF}'
 		--InputDSN '${InputDSN}'
@@ -9573,20 +8874,17 @@
 		--outputData '$output_data'
 #elif $select_process == "GetArea":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--InputPolygon '${InputPolygon}'
 		--outputData '$output_data'
 #elif $select_process == "Within":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--InputEntity1 '${InputEntity1}'
 		--InputEntity2 '${InputEntity2}'
 		--outputData '$output_data'
 #elif $select_process == "Gdal_Translate":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--Format '${Format}'
 		--GCP '${GCP}'
@@ -9595,27 +8893,23 @@
 		--outputData '$output_data'
 #elif $select_process == "Equals":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--InputEntity1 '${InputEntity1}'
 		--InputEntity2 '${InputEntity2}'
 		--outputData '$output_data'
 #elif $select_process == "IsValid":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--InputPolygon '${InputPolygon}'
 		--outputData '$output_data'
 #elif $select_process == "Touches":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--InputEntity1 '${InputEntity1}'
 		--InputEntity2 '${InputEntity2}'
 		--outputData '$output_data'
 #elif $select_process == "Gdal_Dem":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--InputDSN '${InputDSN}'
 		--OutputDSN '${OutputDSN}'
@@ -9625,28 +8919,24 @@
 		--outputData '$output_data'
 #elif $select_process == "Contains":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--InputEntity1 '${InputEntity1}'
 		--InputEntity2 '${InputEntity2}'
 		--outputData '$output_data'
 #elif $select_process == "Centroid":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--InputPolygon '${InputPolygon}'
 		--Result_outformat '${Result_outformat}'
 		--outputData '$output_data'
 #elif $select_process == "GetStatus":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--sid '${sid}'
 		--Result_outformat '${Result_outformat}'
 		--outputData '$output_data'
 #elif $select_process == "Gdal_Contour":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--InputDSN '${InputDSN}'
 		--OutputDSN '${OutputDSN}'
@@ -9656,7 +8946,6 @@
 		--outputData '$output_data'
 #elif $select_process == "GdalExtractProfile":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--RasterFile '${RasterFile}'
 		--Geometry '${Geometry}'
@@ -9664,20 +8953,17 @@
 		--outputData '$output_data'
 #elif $select_process == "demo":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--sid '${sid}'
 		--outputData '$output_data'
 #elif $select_process == "Disjoint":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--InputEntity1 '${InputEntity1}'
 		--InputEntity2 '${InputEntity2}'
 		--outputData '$output_data'
 #elif $select_process == "Ogr2Ogr":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--F '${F}'
 		--InputDSN '${InputDSN}'
@@ -9687,7 +8973,6 @@
 		--outputData '$output_data'
 #elif $select_process == "Intersection":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--InputEntity1 '${InputEntity1}'
 		--InputEntity2 '${InputEntity2}'
@@ -9695,28 +8980,24 @@
 		--outputData '$output_data'
 #elif $select_process == "Delaunay":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--InputPoints '${InputPoints}'
 		--Result_outformat '${Result_outformat}'
 		--outputData '$output_data'
 #elif $select_process == "Intersects":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--InputEntity1 '${InputEntity1}'
 		--InputEntity2 '${InputEntity2}'
 		--outputData '$output_data'
 #elif $select_process == "Crosses":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--InputEntity1 '${InputEntity1}'
 		--InputEntity2 '${InputEntity2}'
 		--outputData '$output_data'
 #elif $select_process == "SymDifference":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--InputEntity1 '${InputEntity1}'
 		--InputEntity2 '${InputEntity2}'
@@ -9724,21 +9005,18 @@
 		--outputData '$output_data'
 #elif $select_process == "Distance":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--InputEntity1 '${InputEntity1}'
 		--InputEntity2 '${InputEntity2}'
 		--outputData '$output_data'
 #elif $select_process == "Boundary":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--InputPolygon '${InputPolygon}'
 		--Result_outformat '${Result_outformat}'
 		--outputData '$output_data'
 #elif $select_process == "Gdal_Warp":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--Format '${Format}'
 		--InputDSN '${InputDSN}'
@@ -9754,7 +9032,6 @@
 		--outputData '$output_data'
 #elif $select_process == "echo":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--a '${a}'
 		--b '${b}'
@@ -9764,7 +9041,6 @@
 		--outputData '$output_data'
 #elif $select_process == "EchoProcess":
 	Rscript '$__tool_directory__/generic.R'
-		--server https://ospd.geolabs.fr:8300/ogc-api/
 		--process '$select_process'
 		--literalInput '${literalInput}'
 		--complexInput '${complexInput}'
@@ -9776,13 +9052,7 @@
 	<inputs>
 		<conditional name="conditional_process">
 			<param name="select_process" type="select" label="Select process">
-				<option value="securityIn">securityIn: Basic in filtering </option>
-				<option value="securityInFailed">securityInFailed: Convert raster data from one format to another. </option>
-				<option value="HelloPy">HelloPy: Create a welcome message string.</option>
 				<option value="RVoronoi">RVoronoi: Voronoi Diagram. </option>
-				<option value="hellor">hellor: HelloWorld Service in R</option>
-				<option value="failR">failR: HelloWorld Service in R</option>
-				<option value="securityOut">securityOut: Basic out filtering </option>
 				<option value="OTB.MorphologicalMultiScaleDecomposition">OTB.MorphologicalMultiScaleDecomposition: Perform a geodesic morphology based image analysis on an input image channel</option>
 				<option value="OTB.Convert">OTB.Convert: Convert an image to a different format, optionally rescaling the data and/or changing the pixel type.</option>
 				<option value="OTB.PredictRegression">OTB.PredictRegression: Performs a prediction of the input image according to a regression model file.</option>
@@ -10475,11 +9745,6 @@
 				<option value="echo">echo: Echo input</option>
 				<option value="EchoProcess">EchoProcess: Echo input</option>
 			</param>
-			<when value="securityIn"/>
-			<when value="securityInFailed"/>
-			<when value="HelloPy">
-				<param name="a" label="a" optional="false" help="The name to display in the welcome message." type="text"/>
-			</when>
 			<when value="RVoronoi">
 				<param name="InputPoints" label="InputPoints" optional="false" help="The set of data points." type="data" format="txt"/>
 				<param type="select" name="Result_outformat" label="Result_outformat" help="Output format">
@@ -10488,13 +9753,6 @@
 					<option value="text/xml">text/xml</option>
 				</param>
 			</when>
-			<when value="hellor">
-				<param name="S" label="S" optional="false" help="The name to display in the hello message" type="text"/>
-			</when>
-			<when value="failR">
-				<param name="S" label="S" optional="true" help="The name to display in the hello message" type="text"/>
-			</when>
-			<when value="securityOut"/>
 			<when value="OTB.MorphologicalMultiScaleDecomposition">
 				<param name="in" label="in" optional="false" help="The input image to be classified." type="data" format="txt"/>
 				<param name="outconvex" label="outconvex" optional="false" value="float" help="The output convex image with N bands" type="select">
@@ -17414,7 +16672,6 @@
 				<param name="DW_BANDWIDTH" label="DW_BANDWIDTH" optional="true" value="1" help="Gaussian and Exponential Weighting Bandwidth" type="float"/>
 				<param type="select" name="CV_SUMMARY_outformat" label="CV_SUMMARY_outformat" help="Output format">
 					<option value="text/csv">text/csv</option>
-					<option value="text/plain">text/plain</option>
 				</param>
 				<param type="select" name="CV_RESIDUALS_outformat" label="CV_RESIDUALS_outformat" help="Output format">
 					<option value="text/xml">text/xml</option>

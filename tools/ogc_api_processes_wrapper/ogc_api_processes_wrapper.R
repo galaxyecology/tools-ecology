@@ -31,8 +31,8 @@ parseResponseBody <- function(body) {
   return(jsonObject)
 }
 
-getOutputs <- function(inputs, output) {
-    url <- paste(paste(inputs$server, "/processes/", sep = ""), inputs$process, sep = "")
+getOutputs <- function(inputs, output, server) {
+    url <- paste(paste(server, "/processes/", sep = ""), inputs$process, sep = "")
     request <- request(url)
     response <- req_perform(request)
     responseBody <- parseResponseBody(response$body)
@@ -147,12 +147,13 @@ is_url <- function(x) {
 }
 
 inputs <- getParameters()
+server <- "https://ospd.geolabs.fr:8300/ogc-api/"
 
-inputParameters <- inputs[3:length(inputs)]
+inputParameters <- inputs[2:length(inputs)]
 
 outputLocation <- inputParameters$outputData
 
-outputs <- getOutputs(inputs, outputLocation)
+outputs <- getOutputs(inputs, outputLocation, server)
 
 for (key in names(inputParameters)) {
   if (endsWith(inputParameters[[key]], ".dat") || endsWith(inputParameters[[key]], ".txt")) { 
@@ -173,6 +174,6 @@ jsonData <- list(
   "outputs" = outputs
 )
 
-jobID <- executeProcess(inputs$server, inputs$process, jsonData, outputLocation)
+jobID <- executeProcess(server, inputs$process, jsonData, outputLocation)
 
-retrieveResults(inputs$server, jobID, outputLocation)
+retrieveResults(server, jobID, outputLocation)
