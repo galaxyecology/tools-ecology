@@ -1,4 +1,3 @@
-<?xml version="1.0" ?>
 <tool id="generic_ogc_processes_wrapper" name="OGC API Process Wrapper" version="0.1.0" profile="22.05">
 	<description>executes remote processes</description>
 	<macros>

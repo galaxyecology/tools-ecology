@@ -1,10 +1,10 @@
 <macros>
     <xml name="requirements">
         <requirements>
-            <requirement type="package" version="4.1.2">R</requirement>
-            <requirement type="package" version="0.2.3">httr2</requirement>
-            <requirement type="package" version="1.2.0">getopt</requirement>
-            <requirement type="package" version="1.8.7">jsonlite</requirement>
+            <requirement type="package" version="4.3.1">r-base</requirement>
+            <requirement type="package" version="1.20.4">r-getopt</requirement>
+            <requirement type="package" version="0.2.3">r-httr2</requirement>
+            <requirement type="package" version="1.8.7">r-jsonlite</requirement>
         </requirements>
     </xml>
     <xml name="out_options">
