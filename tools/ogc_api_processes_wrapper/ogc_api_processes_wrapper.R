@@ -2,24 +2,17 @@ library("httr2")
 library("jsonlite")
 library("getopt")
 
-cat("start generic wrapper service")
+cat("start generic wrapper service \n")
 
 getParameters <- function(){
     args <- commandArgs(trailingOnly = TRUE)
 
-    names <- list()
-    params <- list()
+    con <- file(args[2], "r")
+    line <- readLines(con, n = 1)
+    json <- fromJSON(line)
+    close(con)
 
-    for (x in 1:length(args)) {
-        if(x %% 2 == 0) {
-            param <- gsub("--", "", args[x-1])
-            value <- args[x]
-            params <- append(params, value)
-            names <- append(names, param)
-        }
-    }
-    names(params) <- names
-    return(params)
+    return(json$conditional_process)
 }
 
 parseResponseBody <- function(body) {
@@ -32,7 +25,7 @@ parseResponseBody <- function(body) {
 }
 
 getOutputs <- function(inputs, output, server) {
-    url <- paste(paste(server, "/processes/", sep = ""), inputs$process, sep = "")
+    url <- paste(paste(server, "/processes/", sep = ""), inputs$select_process, sep = "")
     request <- request(url)
     response <- req_perform(request)
     responseBody <- parseResponseBody(response$body)
@@ -146,17 +139,17 @@ is_url <- function(x) {
   grepl("^https?://", x)
 }
 
-inputs <- getParameters()
 server <- "https://ospd.geolabs.fr:8300/ogc-api/"
 
-inputParameters <- inputs[2:length(inputs)]
+inputParameters <- getParameters()
 
 outputLocation <- inputParameters$outputData
 
-outputs <- getOutputs(inputs, outputLocation, server)
+outputs <- getOutputs(inputParameters, outputLocation, server)
 
 for (key in names(inputParameters)) {
-  if (endsWith(inputParameters[[key]], ".dat") || endsWith(inputParameters[[key]], ".txt")) { 
+  print(inputParameters[[key]])
+  if (is.character(inputParameters[[key]]) && (endsWith(inputParameters[[key]], ".dat") || endsWith(inputParameters[[key]], ".txt"))) { 
     con <- file(inputParameters[[key]], "r")
     url_list <- list()
     while (length(line <- readLines(con, n = 1)) > 0) {
@@ -174,6 +167,6 @@ jsonData <- list(
   "outputs" = outputs
 )
 
-jobID <- executeProcess(server, inputs$process, jsonData, outputLocation)
+jobID <- executeProcess(server, inputParameters$select_process, jsonData, outputLocation)
 
 retrieveResults(server, jobID, outputLocation)
