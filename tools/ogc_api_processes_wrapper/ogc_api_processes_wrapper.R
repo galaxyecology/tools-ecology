@@ -6,12 +6,10 @@ cat("start generic wrapper service \n")
 
 getParameters <- function(){
     args <- commandArgs(trailingOnly = TRUE)
-
-    con <- file(args[2], "r")
+    con <- file("inputs.json", "r")
     line <- readLines(con, n = 1)
     json <- fromJSON(line)
     close(con)
-
     return(json$conditional_process)
 }
 
