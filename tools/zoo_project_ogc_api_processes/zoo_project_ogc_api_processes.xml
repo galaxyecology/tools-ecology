@@ -1,4 +1,4 @@
-<tool id="zoo_project_ogc_api_processes" name="Zoo Project OGC API Processes" version="0.1.0" profile="22.05" >
+<tool id="zoo_project_ogc_api_processes" name="Zoo Project OGC API Processes" version="0.1.0" profile="22.05">
 	<description>executes remote processes</description>
 	<macros>
 		<import>macros.xml</import>
@@ -762,9 +762,9 @@
 					<option value="rgb">rgb</option>
 				</param>
 				<param name="channels_grayscale_channel" label="channels.grayscale.channel" optional="false" value="1" help="channels.grayscale.channel" type="integer"/>
-				<param name="channels_rgb_red" label="channels.rgb.red" optional="false" help="Red channel index." type="integer"/>
-				<param name="channels_rgb_green" label="channels.rgb.green" optional="false" help="Green channel index." type="integer"/>
-				<param name="channels_rgb_blue" label="channels.rgb.blue" optional="false" help="Blue channel index." type="integer"/>
+				<param name="channels_rgb_red" label="channels.rgb.red" optional="false" value="" help="Red channel index." type="integer"/>
+				<param name="channels_rgb_green" label="channels.rgb.green" optional="false" value="" help="Green channel index." type="integer"/>
+				<param name="channels_rgb_blue" label="channels.rgb.blue" optional="false" value="" help="Blue channel index." type="integer"/>
 				<param name="ram" label="ram" optional="true" value="128" help="Available memory for processing (in MB)" type="integer"/>
 				<param type="select" name="out_outformat" label="out_outformat" help="Output format">
 					<expand macro="format_options"/>
@@ -936,7 +936,7 @@
 				<param name="ref_raster_in" label="ref.raster.in" optional="false" help="Input image containing the ground truth labels" type="data" format="txt"/>
 				<param name="ref_raster_nodata" label="ref.raster.nodata" optional="true" value="0" help="Label to be treated as no data in ref raster." type="integer"/>
 				<param name="ref_vector_in" label="ref.vector.in" optional="false" help="Input vector data of the ground truth" type="data" format="txt"/>
-				<param name="ref_vector_field" label="ref.vector.field" optional="false" help="Field name containing the label values" type="text"/>
+				<param name="ref_vector_field" label="ref.vector.field" optional="false" value="" help="Field name containing the label values" type="text"/>
 				<param name="ref_vector_nodata" label="ref.vector.nodata" optional="true" value="0" help="Label to be treated as no data in ref vector. Please note that this value is always used in vector mode, to generate default values. Please set it to a value that does not correspond to a class label." type="integer"/>
 				<param name="nodatalabel" label="nodatalabel" optional="true" value="0" help="Label to be treated as no data in input image" type="integer"/>
 				<param name="ram" label="ram" optional="true" value="128" help="Available memory for processing (in MB)" type="integer"/>
@@ -956,18 +956,18 @@
 			</when>
 			<when value="OTB.SampleAugmentation">
 				<param name="in" label="in" optional="false" help="Vector data file containing samples (OGR format)" type="data" format="txt"/>
-				<param name="field" label="field" optional="false" help="Name of the field carrying the class name in the input vectors." type="text"/>
+				<param name="field" label="field" optional="false" value="" help="Name of the field carrying the class name in the input vectors." type="text"/>
 				<param name="layer" label="layer" optional="true" value="0" help="Layer index to read in the input vector file." type="integer"/>
 				<param name="label" label="label" optional="false" value="1" help="Label of the class of the input file for which new samples will be generated." type="integer"/>
 				<param name="samples" label="samples" optional="false" value="100" help="Number of synthetic samples that will be generated." type="integer"/>
-				<param name="exclude" label="exclude" optional="false" help="List of field names in the input vector data that will not be generated in the output file." type="text"/>
+				<param name="exclude" label="exclude" optional="false" value="" help="List of field names in the input vector data that will not be generated in the output file." type="text"/>
 				<param name="strategy" label="strategy" optional="false" value="replicate" help="strategy" type="select">
 					<option value="replicate">replicate</option>
 					<option value="jitter">jitter</option>
 					<option value="smote">smote</option>
 				</param>
 				<param name="strategy_jitter_stdfactor" label="strategy.jitter.stdfactor" optional="false" value="10" help="The noise added to the input samples will have the standard deviation of the input features divided by the value of this parameter. " type="float"/>
-				<param name="strategy_smote_neighbors" label="strategy.smote.neighbors" optional="false" help="Number of nearest neighbors to be used in the SMOTE algorithm" type="integer"/>
+				<param name="strategy_smote_neighbors" label="strategy.smote.neighbors" optional="false" value="" help="Number of nearest neighbors to be used in the SMOTE algorithm" type="integer"/>
 				<param name="seed" label="seed" optional="true" help="Set specific seed. with integer value." type="integer"/>
 				<param type="select" name="out_outformat" label="out_outformat" help="Output format">
 					<option value="text/xml">text/xml</option>
@@ -1008,8 +1008,8 @@
 			<when value="OTB.DSFuzzyModelEstimation">
 				<param name="psin" label="psin" optional="false" help="Ground truth vector data for positive samples" type="data" format="txt"/>
 				<param name="nsin" label="nsin" optional="false" help="Ground truth vector data for negative samples" type="data" format="txt"/>
-				<param name="belsup" label="belsup" optional="false" help="Dempster Shafer study hypothesis to compute belief" type="text"/>
-				<param name="plasup" label="plasup" optional="false" help="Dempster Shafer study hypothesis to compute plausibility" type="text"/>
+				<param name="belsup" label="belsup" optional="false" value="" help="Dempster Shafer study hypothesis to compute belief" type="text"/>
+				<param name="plasup" label="plasup" optional="false" value="" help="Dempster Shafer study hypothesis to compute plausibility" type="text"/>
 				<param name="cri" label="cri" optional="true" value="((Belief + Plausibility)/2.)" help="Dempster Shafer criterion (by default (belief+plausibility)/2)" type="text"/>
 				<param name="wgt" label="wgt" optional="true" value="0.5" help="Coefficient between 0 and 1 to promote undetection or false detections (default 0.5)" type="float"/>
 				<param name="initmod" label="initmod" optional="false" help="Initialization model (xml file) to be used. If the xml initialization model is set, the descriptor list is not used (specified using the option -desclist)" type="data" format="txt"/>
@@ -1042,12 +1042,12 @@
 					<option value="outputroi">outputroi</option>
 					<option value="orthofit">orthofit</option>
 				</param>
-				<param name="outputs_ulx" label="outputs.ulx" optional="false" help="Cartographic X coordinate of upper-left corner (meters for cartographic projections, degrees for geographic ones)" type="float"/>
-				<param name="outputs_uly" label="outputs.uly" optional="false" help="Cartographic Y coordinate of the upper-left corner (meters for cartographic projections, degrees for geographic ones)" type="float"/>
-				<param name="outputs_sizex" label="outputs.sizex" optional="false" help="Size of projected image along X (in pixels)" type="integer"/>
-				<param name="outputs_sizey" label="outputs.sizey" optional="false" help="Size of projected image along Y (in pixels)" type="integer"/>
-				<param name="outputs_spacingx" label="outputs.spacingx" optional="false" help="Size of each pixel along X axis (meters for cartographic projections, degrees for geographic ones)" type="float"/>
-				<param name="outputs_spacingy" label="outputs.spacingy" optional="false" help="Size of each pixel along Y axis (meters for cartographic projections, degrees for geographic ones)" type="float"/>
+				<param name="outputs_ulx" label="outputs.ulx" optional="false" value="" help="Cartographic X coordinate of upper-left corner (meters for cartographic projections, degrees for geographic ones)" type="float"/>
+				<param name="outputs_uly" label="outputs.uly" optional="false" value="" help="Cartographic Y coordinate of the upper-left corner (meters for cartographic projections, degrees for geographic ones)" type="float"/>
+				<param name="outputs_sizex" label="outputs.sizex" optional="false" value="" help="Size of projected image along X (in pixels)" type="integer"/>
+				<param name="outputs_sizey" label="outputs.sizey" optional="false" value="" help="Size of projected image along Y (in pixels)" type="integer"/>
+				<param name="outputs_spacingx" label="outputs.spacingx" optional="false" value="" help="Size of each pixel along X axis (meters for cartographic projections, degrees for geographic ones)" type="float"/>
+				<param name="outputs_spacingy" label="outputs.spacingy" optional="false" value="" help="Size of each pixel along Y axis (meters for cartographic projections, degrees for geographic ones)" type="float"/>
 				<param name="outputs_lrx" label="outputs.lrx" optional="true" help="Cartographic X coordinate of the lower-right corner (meters for cartographic projections, degrees for geographic ones)" type="float"/>
 				<param name="outputs_lry" label="outputs.lry" optional="true" help="Cartographic Y coordinate of the lower-right corner (meters for cartographic projections, degrees for geographic ones)" type="float"/>
 				<param name="outputs_ortho" label="outputs.ortho" optional="false" help="A model ortho-image that can be used to compute size, origin and spacing of the output" type="data" format="txt"/>
@@ -1119,10 +1119,10 @@
 				</param>
 				<param name="bm_metric_lp_p" label="bm.metric.lp.p" optional="false" value="1" help="Value of the p parameter in Lp pseudo-norm (must be positive)." type="float"/>
 				<param name="bm_radius" label="bm.radius" optional="false" value="3" help="The radius (in pixels) of blocks in Block-Matching" type="integer"/>
-				<param name="bm_minhd" label="bm.minhd" optional="false" help="Minimum horizontal disparity to explore (can be negative)" type="integer"/>
-				<param name="bm_maxhd" label="bm.maxhd" optional="false" help="Maximum horizontal disparity to explore (can be negative)" type="integer"/>
-				<param name="bm_minvd" label="bm.minvd" optional="false" help="Minimum vertical disparity to explore (can be negative)" type="integer"/>
-				<param name="bm_maxvd" label="bm.maxvd" optional="false" help="Maximum vertical disparity to explore (can be negative)" type="integer"/>
+				<param name="bm_minhd" label="bm.minhd" optional="false" value="" help="Minimum horizontal disparity to explore (can be negative)" type="integer"/>
+				<param name="bm_maxhd" label="bm.maxhd" optional="false" value="" help="Maximum horizontal disparity to explore (can be negative)" type="integer"/>
+				<param name="bm_minvd" label="bm.minvd" optional="false" value="" help="Minimum vertical disparity to explore (can be negative)" type="integer"/>
+				<param name="bm_maxvd" label="bm.maxvd" optional="false" value="" help="Maximum vertical disparity to explore (can be negative)" type="integer"/>
 				<param name="bm_subpixel" label="bm.subpixel" optional="false" value="none" help="Estimate disparities with sub-pixel precision" type="select">
 					<option value="none">none</option>
 					<option value="parabolic">parabolic</option>
@@ -1170,7 +1170,7 @@
 			<when value="OTB.ConnectedComponentSegmentation">
 				<param name="in" label="in" optional="false" help="The image to segment." type="data" format="txt"/>
 				<param name="mask" label="mask" optional="true" help="Mask mathematical expression (only if support image is given)" type="text"/>
-				<param name="expr" label="expr" optional="false" help="Formula used for connected component segmentation" type="text"/>
+				<param name="expr" label="expr" optional="false" value="" help="Formula used for connected component segmentation" type="text"/>
 				<param name="minsize" label="minsize" optional="true" value="2" help="Min object size (area in pixel)" type="integer"/>
 				<param name="obia" label="obia" optional="true" help="OBIA mathematical expression" type="text"/>
 				<param name="elev_dem" label="elev.dem" optional="true" help="This parameter allows selecting a directory containing Digital Elevation Model files. Note that this directory should contain only DEM files. Unexpected behaviour might occurs if other images are found in this directory." type="text"/>
@@ -1194,7 +1194,7 @@
 				<param name="sample_mv" label="sample.mv" optional="false" value="1000" help="Maximum size per class (in pixels) of the validation sample list (default = 1000) (no limit = -1). If equal to -1, then the maximal size of the available validation sample list per class will be equal to the surface area of the smallest class multiplied by the validation sample ratio." type="integer"/>
 				<param name="sample_bm" label="sample.bm" optional="false" value="1" help="Bound the number of samples for each class by the number of available samples by the smaller class. Proportions between training and validation are respected. Default is true (=1)." type="integer"/>
 				<param name="sample_vtr" label="sample.vtr" optional="false" value="0.5" help="Ratio between training and validation samples (0.0 = all training, 1.0 = all validation) (default = 0.5)." type="float"/>
-				<param name="sample_vfn" label="sample.vfn" optional="false" help="Field containing the class id for supervision. The values in this field shall be cast into integers." type="text"/>
+				<param name="sample_vfn" label="sample.vfn" optional="false" value="" help="Field containing the class id for supervision. The values in this field shall be cast into integers." type="text"/>
 				<param name="ram" label="ram" optional="true" value="128" help="Available memory for processing (in MB)" type="integer"/>
 				<param name="elev_dem" label="elev.dem" optional="true" help="This parameter allows selecting a directory containing Digital Elevation Model files. Note that this directory should contain only DEM files. Unexpected behaviour might occurs if other images are found in this directory." type="text"/>
 				<param name="elev_geoid" label="elev.geoid" optional="false" help="Use a geoid grid to get the height above the ellipsoid in case there is no DEM available, no coverage for some points or pixels with no_data in the DEM tiles. A version of the geoid can be found on the OTB website(https://gitlab.orfeo-toolbox.org/orfeotoolbox/otb-data/blob/master/Input/DEM/egm96.grd)." type="data" format="txt"/>
@@ -1243,7 +1243,7 @@
 					<option value="back">back</option>
 					<option value="reg">reg</option>
 				</param>
-				<param name="classifier_ann_sizes" label="classifier.ann.sizes" optional="false" help="The number of neurons in each intermediate layer (excluding input and output layers)." type="text"/>
+				<param name="classifier_ann_sizes" label="classifier.ann.sizes" optional="false" value="" help="The number of neurons in each intermediate layer (excluding input and output layers)." type="text"/>
 				<param name="classifier_ann_f" label="classifier.ann.f" optional="false" value="sig" help="This function determine whether the output of the node is positive or not depending on the output of the transfert function." type="select">
 					<option value="ident">ident</option>
 					<option value="sig">sig</option>
@@ -1296,8 +1296,8 @@
 				<param name="elev_dem" label="elev.dem" optional="true" help="This parameter allows selecting a directory containing Digital Elevation Model files. Note that this directory should contain only DEM files. Unexpected behaviour might occurs if other images are found in this directory." type="text"/>
 				<param name="elev_geoid" label="elev.geoid" optional="false" help="Use a geoid grid to get the height above the ellipsoid in case there is no DEM available, no coverage for some points or pixels with no_data in the DEM tiles. A version of the geoid can be found on the OTB website(https://gitlab.orfeo-toolbox.org/orfeotoolbox/otb-data/blob/master/Input/DEM/egm96.grd)." type="data" format="txt"/>
 				<param name="elev_default" label="elev.default" optional="false" value="0" help="This parameter allows setting the default height above ellipsoid when there is no DEM available, no coverage for some points or pixels with no_data in the DEM tiles, and no geoid file has been set. This is also used by some application as an average elevation value." type="float"/>
-				<param name="expr" label="expr" optional="false" help="The feature formula (b1 &amp;lt; 0.3) where b1 is the standard name of input image first band" type="text"/>
-				<param name="field" label="field" optional="false" help="The field name corresponding to the feature codename (NONDVI, ROADSA...)" type="text"/>
+				<param name="expr" label="expr" optional="false" value="" help="The feature formula (b1 &amp;lt; 0.3) where b1 is the standard name of input image first band" type="text"/>
+				<param name="field" label="field" optional="false" value="" help="The field name corresponding to the feature codename (NONDVI, ROADSA...)" type="text"/>
 				<param type="select" name="out_outformat" label="out_outformat" help="Output format">
 					<option value="text/xml">text/xml</option>
 					<option value="application/vnd.google-earth.kml+xml">application/vnd.google-earth.kml+xml</option>
@@ -1314,9 +1314,9 @@
 					<option value="total">total</option>
 					<option value="all">all</option>
 				</param>
-				<param name="strategy_byclass_in" label="strategy.byclass.in" optional="false" help="Number of samples for all classes.In the case of the custom multi-image mode, several values can be given for each image." type="text"/>
-				<param name="strategy_percent_p" label="strategy.percent.p" optional="false" help="The percentage(s) to use In the case of the custom multi-image mode, several values can be given for each image." type="text"/>
-				<param name="strategy_total_v" label="strategy.total.v" optional="false" help="The number of samples to generateIn the case of the custom multi-image mode, several values can be given for each image." type="text"/>
+				<param name="strategy_byclass_in" label="strategy.byclass.in" optional="false" value="" help="Number of samples for all classes.In the case of the custom multi-image mode, several values can be given for each image." type="text"/>
+				<param name="strategy_percent_p" label="strategy.percent.p" optional="false" value="" help="The percentage(s) to use In the case of the custom multi-image mode, several values can be given for each image." type="text"/>
+				<param name="strategy_total_v" label="strategy.total.v" optional="false" value="" help="The number of samples to generateIn the case of the custom multi-image mode, several values can be given for each image." type="text"/>
 				<param name="mim" label="mim" optional="false" value="proportional" help="mim" type="select">
 					<option value="proportional">proportional</option>
 					<option value="equal">equal</option>
@@ -1339,7 +1339,7 @@
 				<param name="filter_meanshift_thres" label="filter.meanshift.thres" optional="false" value="0.1" help="Algorithm iterative scheme will stop if mean-shift vector is below this threshold or if iteration number reached maximum number of iterations." type="float"/>
 				<param name="filter_meanshift_maxiter" label="filter.meanshift.maxiter" optional="false" value="100" help="Algorithm iterative scheme will stop if convergence hasn't been reached after the maximum number of iterations." type="integer"/>
 				<param name="filter_meanshift_minsize" label="filter.meanshift.minsize" optional="false" value="100" help="Minimum size of a region (in pixel unit) in segmentation. Smaller clusters will be merged to the neighboring cluster with the closest radiometry. If set to 0 no pruning is done." type="integer"/>
-				<param name="filter_cc_expr" label="filter.cc.expr" optional="false" help="User defined connection condition, written as a mathematical expression. Available variables are p(i)b(i), intensity_p(i) and distance (example of expression : distance &amp;lt; 10 )" type="text"/>
+				<param name="filter_cc_expr" label="filter.cc.expr" optional="false" value="" help="User defined connection condition, written as a mathematical expression. Available variables are p(i)b(i), intensity_p(i) and distance (example of expression : distance &amp;lt; 10 )" type="text"/>
 				<param name="filter_watershed_threshold" label="filter.watershed.threshold" optional="false" value="0.01" help="Depth threshold Units in percentage of the maximum depth in the image." type="float"/>
 				<param name="filter_watershed_level" label="filter.watershed.level" optional="false" value="0.1" help="flood level for generating the merge tree from the initial segmentation (between 0 and 1)" type="float"/>
 				<param name="filter_mprofiles_size" label="filter.mprofiles.size" optional="false" value="5" help="Size of the profiles" type="integer"/>
@@ -1382,8 +1382,8 @@
 			<when value="OTB.VectorDataDSValidation">
 				<param name="in" label="in" optional="false" help="Input vector data to validate" type="data" format="txt"/>
 				<param name="descmod" label="descmod" optional="false" help="Fuzzy descriptors model (xml file)" type="data" format="txt"/>
-				<param name="belsup" label="belsup" optional="false" help="Dempster Shafer study hypothesis to compute belief" type="text"/>
-				<param name="plasup" label="plasup" optional="false" help="Dempster Shafer study hypothesis to compute plausibility" type="text"/>
+				<param name="belsup" label="belsup" optional="false" value="" help="Dempster Shafer study hypothesis to compute belief" type="text"/>
+				<param name="plasup" label="plasup" optional="false" value="" help="Dempster Shafer study hypothesis to compute plausibility" type="text"/>
 				<param name="cri" label="cri" optional="true" value="((Belief + Plausibility)/2.)" help="Dempster Shafer criterion (by default (belief+plausibility)/2)" type="text"/>
 				<param name="thd" label="thd" optional="true" value="0.5" help="Criterion threshold (default 0.5)" type="float"/>
 				<param type="select" name="out_outformat" label="out_outformat" help="Output format">
@@ -1396,7 +1396,7 @@
 			<when value="OTB.OGRLayerClassifier">
 				<param name="inshp" label="inshp" optional="false" help="Name of the input shapefile" type="data" format="txt"/>
 				<param name="instats" label="instats" optional="false" help="XML file containing mean and variance of each feature." type="data" format="txt"/>
-				<param name="feat" label="feat" optional="false" help="Features to be calculated" type="text"/>
+				<param name="feat" label="feat" optional="false" value="" help="Features to be calculated" type="text"/>
 				<param name="cfield" label="cfield" optional="false" value="predicted" help="Field containing the predicted class" type="text"/>
 				<param type="select" name="insvm_outformat" label="insvm_outformat" help="Output format">
 					<option value="text/xml">text/xml</option>
@@ -1444,7 +1444,7 @@
 				<param name="instat" label="instat" optional="false" help="A XML file containing mean and standard deviation to centerand reduce samples before classification, produced by ComputeImagesStatistics application." type="data" format="txt"/>
 				<param name="model" label="model" optional="false" help="Model file produced by TrainVectorClassifier application." type="data" format="txt"/>
 				<param name="cfield" label="cfield" optional="false" value="predicted" help="Field containing the predicted class.Only geometries with this field available will be taken into account.The field is added either in the input file (if 'out' off) or in the output file.Caution, the 'cfield' must not exist in the input file if you are updating the file." type="text"/>
-				<param name="feat" label="feat" optional="false" help="List of field names in the input vector data used as features for training. Put the same field names as the TrainVectorClassifier application." type="text"/>
+				<param name="feat" label="feat" optional="false" value="" help="List of field names in the input vector data used as features for training. Put the same field names as the TrainVectorClassifier application." type="text"/>
 				<param name="confmap" label="confmap" optional="false" value="False" help="Confidence map of the produced classification. The confidence index depends on the model :   - LibSVM : difference between the two highest probabilities (needs a model with probability estimates, so that classes probabilities can be computed for each sample)  - OpenCV    * Boost : sum of votes    * DecisionTree : (not supported)    * GradientBoostedTree : (not supported)    * KNearestNeighbors : number of neighbors with the same label    * NeuralNetwork : difference between the two highest responses    * NormalBayes : (not supported)    * RandomForest : Confidence (proportion of votes for the majority class). Margin (normalized difference of the votes of the 2 majority classes) is not available for now.    * SVM : distance to margin (only works for 2-class models)." type="boolean" truevalue="True" falsevalue="False"/>
 				<param type="select" name="out_outformat" label="out_outformat" help="Output format">
 					<option value="text/xml">text/xml</option>
@@ -1454,8 +1454,8 @@
 				</param>
 			</when>
 			<when value="OTB.ObtainUTMZoneFromGeoPoint">
-				<param name="lat" label="lat" optional="false" help="Latitude value of desired point." type="float"/>
-				<param name="lon" label="lon" optional="false" help="Longitude value of desired point." type="float"/>
+				<param name="lat" label="lat" optional="false" value="" help="Latitude value of desired point." type="float"/>
+				<param name="lon" label="lon" optional="false" value="" help="Longitude value of desired point." type="float"/>
 			</when>
 			<when value="OTB.SOMClassification">
 				<param name="in" label="in" optional="false" help="Input image to classify." type="data" format="txt"/>
@@ -1560,8 +1560,8 @@
 					<option value="list">list</option>
 				</param>
 				<param name="outfield_prefix_name" label="outfield.prefix.name" optional="false" value="value_" help="Prefix used to form the field names thatwill contain the extracted values." type="text"/>
-				<param name="outfield_list_names" label="outfield.list.names" optional="false" help="Full list of output field names." type="text"/>
-				<param name="field" label="field" optional="false" help="Name of the field carrying the class name in the input vectors." type="text"/>
+				<param name="outfield_list_names" label="outfield.list.names" optional="false" value="" help="Full list of output field names." type="text"/>
+				<param name="field" label="field" optional="false" value="" help="Name of the field carrying the class name in the input vectors." type="text"/>
 				<param name="layer" label="layer" optional="true" value="0" help="Layer index to read in the input vector file." type="integer"/>
 				<param name="ram" label="ram" optional="true" value="128" help="Available memory for processing (in MB)" type="integer"/>
 				<param type="select" name="out_outformat" label="out_outformat" help="Output format">
@@ -1656,8 +1656,8 @@
 				</param>
 			</when>
 			<when value="OTB.ConvertCartoToGeoPoint">
-				<param name="carto_x" label="carto.x" optional="false" help="X cartographic coordinates in the projection defined by mapproj parameter" type="float"/>
-				<param name="carto_y" label="carto.y" optional="false" help="Y cartographic coordinates in the projection defined by mapproj parameter" type="float"/>
+				<param name="carto_x" label="carto.x" optional="false" value="" help="X cartographic coordinates in the projection defined by mapproj parameter" type="float"/>
+				<param name="carto_y" label="carto.y" optional="false" value="" help="Y cartographic coordinates in the projection defined by mapproj parameter" type="float"/>
 				<param name="mapproj" label="mapproj" optional="false" value="utm" help="Defines the map projection to be used." type="select">
 					<option value="utm">utm</option>
 					<option value="lambert2">lambert2</option>
@@ -1708,8 +1708,8 @@
 			</when>
 			<when value="OTB.VectorDataSetField">
 				<param name="in" label="in" optional="false" help="Input Vector Data" type="data" format="txt"/>
-				<param name="fn" label="fn" optional="false" help="Field name" type="text"/>
-				<param name="fv" label="fv" optional="false" help="Field value" type="text"/>
+				<param name="fn" label="fn" optional="false" value="" help="Field name" type="text"/>
+				<param name="fv" label="fv" optional="false" value="" help="Field value" type="text"/>
 				<param type="select" name="out_outformat" label="out_outformat" help="Output format">
 					<option value="text/xml">text/xml</option>
 					<option value="application/vnd.google-earth.kml+xml">application/vnd.google-earth.kml+xml</option>
@@ -1758,8 +1758,8 @@
 				</param>
 				<param name="out_ulx" label="out.ulx" optional="false" value="0" help="X Coordinate of the upper-left pixel of the output resampled image" type="float"/>
 				<param name="out_uly" label="out.uly" optional="false" value="0" help="Y Coordinate of the upper-left pixel of the output resampled image" type="float"/>
-				<param name="out_sizex" label="out.sizex" optional="false" help="Size of the output resampled image along X (in pixels)" type="integer"/>
-				<param name="out_sizey" label="out.sizey" optional="false" help="Size of the output resampled image along Y (in pixels)" type="integer"/>
+				<param name="out_sizex" label="out.sizex" optional="false" value="" help="Size of the output resampled image along X (in pixels)" type="integer"/>
+				<param name="out_sizey" label="out.sizey" optional="false" value="" help="Size of the output resampled image along Y (in pixels)" type="integer"/>
 				<param name="out_spacingx" label="out.spacingx" optional="false" value="1" help="Size of each pixel along X axis" type="float"/>
 				<param name="out_spacingy" label="out.spacingy" optional="false" value="1" help="Size of each pixel along Y axis" type="float"/>
 				<param name="out_default" label="out.default" optional="false" value="0" help="The default value to give to pixel that falls outside of the input image." type="float"/>
@@ -1858,10 +1858,10 @@
 				<param name="out" label="out" optional="false" value="float" help="The output image contains 3 bands, for X offset, Y offset and the metric value. It may contain a 4th one with the validity mask (if used)." type="select">
 					<expand macro="out_options"/>
 				</param>
-				<param name="erx" label="erx" optional="false" help="The exploration radius along x (in pixels)" type="integer"/>
-				<param name="ery" label="ery" optional="false" help="The exploration radius along y (in pixels)" type="integer"/>
-				<param name="mrx" label="mrx" optional="false" help="Radius along x (in pixels) of the metric computation window" type="integer"/>
-				<param name="mry" label="mry" optional="false" help="Radius along y (in pixels) of the metric computation window" type="integer"/>
+				<param name="erx" label="erx" optional="false" value="" help="The exploration radius along x (in pixels)" type="integer"/>
+				<param name="ery" label="ery" optional="false" value="" help="The exploration radius along y (in pixels)" type="integer"/>
+				<param name="mrx" label="mrx" optional="false" value="" help="Radius along x (in pixels) of the metric computation window" type="integer"/>
+				<param name="mry" label="mry" optional="false" value="" help="Radius along y (in pixels) of the metric computation window" type="integer"/>
 				<param name="w" label="w" optional="false" help="The image to warp after disparity estimation is completed." type="data" format="txt"/>
 				<param name="wo" label="wo" optional="true" value="float" help="The output warped image" type="select">
 					<expand macro="out_options"/>
@@ -2014,7 +2014,7 @@
 					<expand macro="out_options"/>
 				</param>
 				<param name="ram" label="ram" optional="true" value="128" help="Available memory for processing (in MB)" type="integer"/>
-				<param name="exp" label="exp" optional="false" help="The muParser mathematical expression to apply on input images." type="text"/>
+				<param name="exp" label="exp" optional="false" value="" help="The muParser mathematical expression to apply on input images." type="text"/>
 				<param type="select" name="out_outformat" label="out_outformat" help="Output format">
 					<expand macro="format_options"/>
 				</param>
@@ -2086,8 +2086,8 @@
 			</when>
 			<when value="OTB.TileFusion">
 				<param name="il" label="il" optional="false" help="Input images to concatenate (in lexicographic order, for instance : (0,0) (1,0) (0,1) (1,1))." type="data" format="txt"/>
-				<param name="cols" label="cols" optional="false" help="Number of columns in the tile array" type="integer"/>
-				<param name="rows" label="rows" optional="false" help="Number of rows in the tile array" type="integer"/>
+				<param name="cols" label="cols" optional="false" value="" help="Number of columns in the tile array" type="integer"/>
+				<param name="rows" label="rows" optional="false" value="" help="Number of rows in the tile array" type="integer"/>
 				<param name="out" label="out" optional="false" value="float" help="Output entire image" type="select">
 					<expand macro="out_options"/>
 				</param>
@@ -2201,9 +2201,9 @@
 					<option value="rgb">rgb</option>
 				</param>
 				<param name="channels_grayscale_channel" label="channels.grayscale.channel" optional="false" value="1" help="channels.grayscale.channel" type="integer"/>
-				<param name="channels_rgb_red" label="channels.rgb.red" optional="false" help="Red channel index." type="integer"/>
-				<param name="channels_rgb_green" label="channels.rgb.green" optional="false" help="Green channel index." type="integer"/>
-				<param name="channels_rgb_blue" label="channels.rgb.blue" optional="false" help="Blue channel index." type="integer"/>
+				<param name="channels_rgb_red" label="channels.rgb.red" optional="false" value="" help="Red channel index." type="integer"/>
+				<param name="channels_rgb_green" label="channels.rgb.green" optional="false" value="" help="Green channel index." type="integer"/>
+				<param name="channels_rgb_blue" label="channels.rgb.blue" optional="false" value="" help="Blue channel index." type="integer"/>
 				<param name="outmin" label="outmin" optional="true" value="0" help="Minimum value of the output image." type="float"/>
 				<param name="outmax" label="outmax" optional="true" value="255" help="Maximum value of the output image." type="float"/>
 				<param name="ram" label="ram" optional="true" value="128" help="Available memory for processing (in MB)" type="integer"/>
@@ -2316,7 +2316,7 @@
 				<param name="starty" label="starty" optional="false" value="0" help="ROI start y position." type="integer"/>
 				<param name="sizex" label="sizex" optional="false" value="0" help="size along x in pixels." type="integer"/>
 				<param name="sizey" label="sizey" optional="false" value="0" help="size along y in pixels." type="integer"/>
-				<param name="cl" label="cl" optional="false" help="Channels to write in the output image." type="text"/>
+				<param name="cl" label="cl" optional="false" value="" help="Channels to write in the output image." type="text"/>
 				<param name="elev_dem" label="elev.dem" optional="true" help="This parameter allows selecting a directory containing Digital Elevation Model files. Note that this directory should contain only DEM files. Unexpected behaviour might occurs if other images are found in this directory." type="text"/>
 				<param name="elev_geoid" label="elev.geoid" optional="false" help="Use a geoid grid to get the height above the ellipsoid in case there is no DEM available, no coverage for some points or pixels with no_data in the DEM tiles. A version of the geoid can be found on the OTB website(https://gitlab.orfeo-toolbox.org/orfeotoolbox/otb-data/blob/master/Input/DEM/egm96.grd)." type="data" format="txt"/>
 				<param name="elev_default" label="elev.default" optional="false" value="0" help="This parameter allows setting the default height above ellipsoid when there is no DEM available, no coverage for some points or pixels with no_data in the DEM tiles, and no geoid file has been set. This is also used by some application as an average elevation value." type="float"/>
@@ -2329,7 +2329,7 @@
 				<param name="in" label="in" optional="false" help="Support image that will be classified" type="data" format="txt"/>
 				<param name="mask" label="mask" optional="false" help="Validity mask (only pixels corresponding to a mask value greater than 0 will be used for statistics)" type="data" format="txt"/>
 				<param name="vec" label="vec" optional="false" help="Input geometries to analyze" type="data" format="txt"/>
-				<param name="field" label="field" optional="false" help="Name of the field carrying the class name in the input vectors." type="text"/>
+				<param name="field" label="field" optional="false" value="" help="Name of the field carrying the class name in the input vectors." type="text"/>
 				<param name="layer" label="layer" optional="true" value="0" help="Layer index to read in the input vector file." type="integer"/>
 				<param name="elev_dem" label="elev.dem" optional="true" help="This parameter allows selecting a directory containing Digital Elevation Model files. Note that this directory should contain only DEM files. Unexpected behaviour might occurs if other images are found in this directory." type="text"/>
 				<param name="elev_geoid" label="elev.geoid" optional="false" help="Use a geoid grid to get the height above the ellipsoid in case there is no DEM available, no coverage for some points or pixels with no_data in the DEM tiles. A version of the geoid can be found on the OTB website(https://gitlab.orfeo-toolbox.org/orfeotoolbox/otb-data/blob/master/Input/DEM/egm96.grd)." type="data" format="txt"/>
@@ -2395,8 +2395,8 @@
 				<param name="filter_frost_deramp" label="filter.frost.deramp" optional="false" value="0.1" help="factor use to control theexponential function used to weight effect of the distance between thecentral pixel and its neighborhood. Increasing the deramp parameter willlead to take more into account pixels farther from the center andtherefore increase the smoothing effects." type="float"/>
 				<param name="filter_gammamap_rad" label="filter.gammamap.rad" optional="false" value="1" help="Radius in pixel." type="integer"/>
 				<param name="filter_gammamap_nblooks" label="filter.gammamap.nblooks" optional="false" value="1" help="Number of looks in the input image." type="float"/>
-				<param name="filter_kuan_rad" label="filter.kuan.rad" optional="false" help="Radius in pixel." type="integer"/>
-				<param name="filter_kuan_nblooks" label="filter.kuan.nblooks" optional="false" help="Number of looks in the input image." type="float"/>
+				<param name="filter_kuan_rad" label="filter.kuan.rad" optional="false" value="" help="Radius in pixel." type="integer"/>
+				<param name="filter_kuan_nblooks" label="filter.kuan.nblooks" optional="false" value="" help="Number of looks in the input image." type="float"/>
 				<param type="select" name="out_outformat" label="out_outformat" help="Output format">
 					<expand macro="format_options"/>
 				</param>
@@ -2405,10 +2405,10 @@
 				<param name="io_vd" label="io.vd" optional="false" help="Input geometries used for training (note : all geometries from the layer will be used)" type="data" format="txt"/>
 				<param name="io_stats" label="io.stats" optional="false" help="XML file containing mean and variance of each feature." type="data" format="txt"/>
 				<param name="layer" label="layer" optional="true" value="0" help="Index of the layer to use in the input vector file." type="integer"/>
-				<param name="feat" label="feat" optional="false" help="List of field names in the input vector data to be used as features for training." type="text"/>
+				<param name="feat" label="feat" optional="false" value="" help="List of field names in the input vector data to be used as features for training." type="text"/>
 				<param name="valid_vd" label="valid.vd" optional="false" help="Geometries used for validation (must contain the same fields used for training, all geometries from the layer will be used)" type="data" format="txt"/>
 				<param name="valid_layer" label="valid.layer" optional="true" value="0" help="Index of the layer to use in the validation vector file." type="integer"/>
-				<param name="cfield" label="cfield" optional="false" help="Field containing the class id for supervision. The values in this field shall be cast into integers. Only geometries with this field available will be taken into account." type="text"/>
+				<param name="cfield" label="cfield" optional="false" value="" help="Field containing the class id for supervision. The values in this field shall be cast into integers. Only geometries with this field available will be taken into account." type="text"/>
 				<param name="v" label="v" optional="false" value="False" help="Verbose mode, display the contingency table result." type="boolean" truevalue="True" falsevalue="False"/>
 				<param name="classifier" label="classifier" optional="false" value="libsvm" help="Choice of the classifier to use for the training." type="select">
 					<option value="libsvm">libsvm</option>
@@ -2454,7 +2454,7 @@
 					<option value="back">back</option>
 					<option value="reg">reg</option>
 				</param>
-				<param name="classifier_ann_sizes" label="classifier.ann.sizes" optional="false" help="The number of neurons in each intermediate layer (excluding input and output layers)." type="text"/>
+				<param name="classifier_ann_sizes" label="classifier.ann.sizes" optional="false" value="" help="The number of neurons in each intermediate layer (excluding input and output layers)." type="text"/>
 				<param name="classifier_ann_f" label="classifier.ann.f" optional="false" value="sig" help="This function determine whether the output of the node is positive or not depending on the output of the transfert function." type="select">
 					<option value="ident">ident</option>
 					<option value="sig">sig</option>
@@ -2509,10 +2509,10 @@
 					<option value="all">all</option>
 				</param>
 				<param name="strategy_byclass_in" label="strategy.byclass.in" optional="false" help="Number of samples by class (CSV format with class name in 1st column and required samples in the 2nd." type="data" format="txt"/>
-				<param name="strategy_constant_nb" label="strategy.constant.nb" optional="false" help="Number of samples for all classes" type="integer"/>
+				<param name="strategy_constant_nb" label="strategy.constant.nb" optional="false" value="" help="Number of samples for all classes" type="integer"/>
 				<param name="strategy_percent_p" label="strategy.percent.p" optional="false" value="0.5" help="The percentage to use" type="float"/>
 				<param name="strategy_total_v" label="strategy.total.v" optional="false" value="1000" help="The number of samples to generate" type="integer"/>
-				<param name="field" label="field" optional="false" help="Name of the field carrying the class name in the input vectors." type="text"/>
+				<param name="field" label="field" optional="false" value="" help="Name of the field carrying the class name in the input vectors." type="text"/>
 				<param name="layer" label="layer" optional="true" value="0" help="Layer index to read in the input vector file." type="integer"/>
 				<param name="elev_dem" label="elev.dem" optional="true" help="This parameter allows selecting a directory containing Digital Elevation Model files. Note that this directory should contain only DEM files. Unexpected behaviour might occurs if other images are found in this directory." type="text"/>
 				<param name="elev_geoid" label="elev.geoid" optional="false" help="Use a geoid grid to get the height above the ellipsoid in case there is no DEM available, no coverage for some points or pixels with no_data in the DEM tiles. A version of the geoid can be found on the OTB website(https://gitlab.orfeo-toolbox.org/orfeotoolbox/otb-data/blob/master/Input/DEM/egm96.grd)." type="data" format="txt"/>
@@ -2563,7 +2563,7 @@
 				<param name="il" label="il" optional="false" help="List of images on which you want to determine corresponding SRTM tiles." type="data" format="txt"/>
 				<param name="vl" label="vl" optional="false" help="List of vector data files on which you want to determine corresponding SRTM tiles." type="data" format="txt"/>
 				<param name="names" label="names" optional="true" help="List of SRTM tile names to download. This list is added to the tiles derived from input images or vectors.The names should follow the SRTM tile naming convention, for instance N43E001." type="text"/>
-				<param name="tiledir" label="tiledir" optional="false" help="Directory where SRTM tiles are stored. In download mode, the zipped archives will be downloaded to this directory. You'll need to unzip all tile files before using them in your application. In any case, this directory will be inspected to check which tiles are already downloaded." type="text"/>
+				<param name="tiledir" label="tiledir" optional="false" value="" help="Directory where SRTM tiles are stored. In download mode, the zipped archives will be downloaded to this directory. You'll need to unzip all tile files before using them in your application. In any case, this directory will be inspected to check which tiles are already downloaded." type="text"/>
 				<param name="mode" label="mode" optional="false" value="download" help="mode" type="select">
 					<option value="download">download</option>
 					<option value="list">list</option>
@@ -2571,7 +2571,7 @@
 			</when>
 			<when value="OTB.ComputeOGRLayersFeaturesStatistics">
 				<param name="inshp" label="inshp" optional="false" help="Name of the input shapefile" type="data" format="txt"/>
-				<param name="feat" label="feat" optional="false" help="List of features to consider for statistics." type="text"/>
+				<param name="feat" label="feat" optional="false" value="" help="List of features to consider for statistics." type="text"/>
 				<param type="select" name="outstats_outformat" label="outstats_outformat" help="Output format">
 					<option value="text/xml">text/xml</option>
 				</param>
@@ -2592,8 +2592,8 @@
 			</when>
 			<when value="OTB.PixelValue">
 				<param name="in" label="in" optional="false" help="Input image" type="data" format="txt"/>
-				<param name="coordx" label="coordx" optional="false" help="This will be the X coordinate interpreted depending on the chosen mode" type="float"/>
-				<param name="coordy" label="coordy" optional="false" help="This will be the Y coordinate interpreted depending on the chosen mode" type="float"/>
+				<param name="coordx" label="coordx" optional="false" value="" help="This will be the X coordinate interpreted depending on the chosen mode" type="float"/>
+				<param name="coordy" label="coordy" optional="false" value="" help="This will be the Y coordinate interpreted depending on the chosen mode" type="float"/>
 				<param name="mode" label="mode" optional="false" value="index" help="Different modes can be selected, default mode is Index." type="select">
 					<option value="index">index</option>
 					<option value="physical">physical</option>
@@ -2686,7 +2686,7 @@
 					<option value="back">back</option>
 					<option value="reg">reg</option>
 				</param>
-				<param name="classifier_ann_sizes" label="classifier.ann.sizes" optional="false" help="The number of neurons in each intermediate layer (excluding input and output layers)." type="text"/>
+				<param name="classifier_ann_sizes" label="classifier.ann.sizes" optional="false" value="" help="The number of neurons in each intermediate layer (excluding input and output layers)." type="text"/>
 				<param name="classifier_ann_f" label="classifier.ann.f" optional="false" value="sig" help="This function determine whether the output of the node is positive or not depending on the output of the transfert function." type="select">
 					<option value="ident">ident</option>
 					<option value="sig">sig</option>
@@ -7153,7 +7153,7 @@
 				</param>
 				<param name="USERNAME" label="USERNAME" optional="true" help="User Name" type="text"/>
 				<param name="PASSWORD" label="PASSWORD" optional="true" help="Password" type="text"/>
-				<param name="ABSTRACT" label="ABSTRACT" optional="false" help="Abstract" type="text"/>
+				<param name="ABSTRACT" label="ABSTRACT" optional="false" value="" help="Abstract" type="text"/>
 				<param type="select" name="MAP_outformat" label="MAP_outformat" help="Output format">
 					<option value="image/tiff">image/tiff</option>
 					<option value="application/x-ogc-envi">application/x-ogc-envi</option>
@@ -17937,13 +17937,13 @@
 				</param>
 			</when>
 			<when value="S3Download">
-				<param name="endpoint_url" label="endpoint_url" optional="false" help="An input string" type="text"/>
-				<param name="access_key_id" label="access_key_id" optional="false" help="An input string" type="text"/>
-				<param name="secret_access_key" label="secret_access_key" optional="false" help="An input string" type="text"/>
-				<param name="region" label="region" optional="false" help="An input string" type="text"/>
-				<param name="s3_bucket" label="s3_bucket" optional="false" help="An input string" type="text"/>
-				<param name="s3_path" label="s3_path" optional="false" help="An input string" type="text"/>
-				<param name="band" label="band" optional="false" help="An input string" type="select">
+				<param name="endpoint_url" label="endpoint_url" optional="false" value="" help="An input string" type="text"/>
+				<param name="access_key_id" label="access_key_id" optional="false" value="" help="An input string" type="text"/>
+				<param name="secret_access_key" label="secret_access_key" optional="false" value="" help="An input string" type="text"/>
+				<param name="region" label="region" optional="false" value="" help="An input string" type="text"/>
+				<param name="s3_bucket" label="s3_bucket" optional="false" value="" help="An input string" type="text"/>
+				<param name="s3_path" label="s3_path" optional="false" value="" help="An input string" type="text"/>
+				<param name="band" label="band" optional="false" value="" help="An input string" type="select">
 					<option value="B01">B01</option>
 					<option value="B02">B02</option>
 					<option value="B03">B03</option>
@@ -17961,7 +17961,7 @@
 					<option value="TCL">TCL</option>
 					<option value="WVP">WVP</option>
 				</param>
-				<param name="resolution" label="resolution" optional="false" help="An input string" type="select">
+				<param name="resolution" label="resolution" optional="false" value="" help="An input string" type="select">
 					<option value="10m">10m</option>
 					<option value="20m">20m</option>
 					<option value="60m">60m</option>
@@ -18026,8 +18026,8 @@
 			</when>
 			<when value="Gdal_Grid">
 				<param name="OF" label="OF" optional="true" value="AAIGrid" help="Select the output format." type="text"/>
-				<param name="InputDSN" label="InputDSN" optional="false" help="The input data source name to use as source for convertion." type="text"/>
-				<param name="OutputDSN" label="OutputDSN" optional="false" help="The output data source name to use as source for convertion." type="text"/>
+				<param name="InputDSN" label="InputDSN" optional="false" value="" help="The input data source name to use as source for convertion." type="text"/>
+				<param name="OutputDSN" label="OutputDSN" optional="false" value="" help="The output data source name to use as source for convertion." type="text"/>
 			</when>
 			<when value="GetArea">
 				<param name="InputPolygon" label="InputPolygon" optional="false" help="URI to a set of GML that describes the polygon." type="data" format="txt"/>
@@ -18039,8 +18039,8 @@
 			<when value="Gdal_Translate">
 				<param name="Format" label="Format" optional="true" value="GTiff" help="Select the output format by usig short name of the format (use gda-config --formats for list of available formats on your platform)." type="text"/>
 				<param name="GCP" label="GCP" optional="true" help="Ground Point Control in the form : pixel,line,eating,northing(,elev)." type="text"/>
-				<param name="InputDSN" label="InputDSN" optional="false" help="The input data source name to use as source for convertion." type="text"/>
-				<param name="OutputDSN" label="OutputDSN" optional="false" help="The output data source name to use as source for convertion." type="text"/>
+				<param name="InputDSN" label="InputDSN" optional="false" value="" help="The input data source name to use as source for convertion." type="text"/>
+				<param name="OutputDSN" label="OutputDSN" optional="false" value="" help="The output data source name to use as source for convertion." type="text"/>
 			</when>
 			<when value="Equals">
 				<param name="InputEntity1" label="InputEntity1" optional="false" help="the first geometry." type="data" format="txt"/>
@@ -18054,9 +18054,9 @@
 				<param name="InputEntity2" label="InputEntity2" optional="false" help="the other geometry to compare against." type="data" format="txt"/>
 			</when>
 			<when value="Gdal_Dem">
-				<param name="InputDSN" label="InputDSN" optional="false" help="The input data source name to use." type="text"/>
-				<param name="OutputDSN" label="OutputDSN" optional="false" help="The output data source name." type="text"/>
-				<param name="utility" label="utility" optional="false" help="This service has 7 different modes :  hillshade,  slope,  aspect, color-relief, TRI, TPI, roughness" type="text"/>
+				<param name="InputDSN" label="InputDSN" optional="false" value="" help="The input data source name to use." type="text"/>
+				<param name="OutputDSN" label="OutputDSN" optional="false" value="" help="The output data source name." type="text"/>
+				<param name="utility" label="utility" optional="false" value="" help="This service has 7 different modes :  hillshade,  slope,  aspect, color-relief, TRI, TPI, roughness" type="text"/>
 				<param name="s" label="s" optional="true" help="Scale is the ratio of vertical units to horizontal, for Feet:Latlong use 370400, for Meters:LatLong use 111120" type="text"/>
 				<param name="co" label="co" optional="true" help="string representing options (NAME=VALUE)" type="text"/>
 			</when>
@@ -18072,15 +18072,15 @@
 				</param>
 			</when>
 			<when value="GetStatus">
-				<param name="sid" label="sid" optional="false" help="The ZOO Service ID of the ZOO Service we want to get the current status." type="integer"/>
+				<param name="sid" label="sid" optional="false" value="" help="The ZOO Service ID of the ZOO Service we want to get the current status." type="integer"/>
 				<param type="select" name="Result_outformat" label="Result_outformat" help="Output format">
 					<option value="text/xml">text/xml</option>
 				</param>
 			</when>
 			<when value="Gdal_Contour">
-				<param name="InputDSN" label="InputDSN" optional="false" help="The input data source name to use." type="text"/>
-				<param name="OutputDSN" label="OutputDSN" optional="false" help="The output data source name." type="text"/>
-				<param name="i" label="i" optional="false" help="The elevation interval between contours." type="text"/>
+				<param name="InputDSN" label="InputDSN" optional="false" value="" help="The input data source name to use." type="text"/>
+				<param name="OutputDSN" label="OutputDSN" optional="false" value="" help="The output data source name." type="text"/>
+				<param name="i" label="i" optional="false" value="" help="The elevation interval between contours." type="text"/>
 				<param name="a" label="a" optional="true" help="provides a name for the attribute in which to put the elevation. If not provided no elevation attribute is attached." type="text"/>
 				<param name="b" label="b" optional="true" help="A particular band, defaults to band 1." type="integer"/>
 			</when>
@@ -18100,8 +18100,8 @@
 			</when>
 			<when value="Ogr2Ogr">
 				<param name="F" label="F" optional="true" value="ESRI ShapeFile" help="Select the output format." type="text"/>
-				<param name="InputDSN" label="InputDSN" optional="false" help="The input data source name to use as source for convertion." type="text"/>
-				<param name="OutputDSN" label="OutputDSN" optional="false" help="The output data name." type="text"/>
+				<param name="InputDSN" label="InputDSN" optional="false" value="" help="The input data source name to use as source for convertion." type="text"/>
+				<param name="OutputDSN" label="OutputDSN" optional="false" value="" help="The output data name." type="text"/>
 				<param name="LCO" label="LCO" optional="true" help="Select the output format." type="text"/>
 				<param name="DSCO" label="DSCO" optional="true" help="Select the output format." type="text"/>
 			</when>
@@ -18149,8 +18149,8 @@
 			</when>
 			<when value="Gdal_Warp">
 				<param name="Format" label="Format" optional="true" value="GTiff" help="Select the output format by usig short name of the format (use gda-config --formats for list of available formats on your platform)." type="text"/>
-				<param name="InputDSN" label="InputDSN" optional="false" help="The input data source name to use as source for convertion." type="text"/>
-				<param name="OutputDSN" label="OutputDSN" optional="false" help="The output data source name to use as source for convertion." type="text"/>
+				<param name="InputDSN" label="InputDSN" optional="false" value="" help="The input data source name to use as source for convertion." type="text"/>
+				<param name="OutputDSN" label="OutputDSN" optional="false" value="" help="The output data source name to use as source for convertion." type="text"/>
 				<param name="s_srs" label="s_srs" optional="true" help="The coordinate systems that can be passed are anything supported by the OGRSpatialReference.SetFromUserInput() call, which includes EPSG PCS and GCSes (ie. EPSG:4296), PROJ.4 declarations (as above), or the name of a .prf file containing well known text." type="text"/>
 				<param name="t_srs" label="t_srs" optional="true" help="The coordinate systems that can be passed are anything supported by the OGRSpatialReference.SetFromUserInput() call, which includes EPSG PCS and GCSes (ie. EPSG:4296), PROJ.4 declarations (as above), or the name of a .prf file containing well known text." type="text"/>
 				<param name="tps" label="tps" optional="true" help="Force use of thin plate spline transformer based on available GCPs" type="boolean" truevalue="True" falsevalue="False"/>
