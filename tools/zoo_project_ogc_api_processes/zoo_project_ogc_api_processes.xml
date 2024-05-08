@@ -670,6 +670,7 @@
 				<option value="SAGA.tin_tools.4">SAGA.tin_tools.4: Gradient</option>
 				<option value="SAGA.tin_tools.2">SAGA.tin_tools.2: Shapes to TIN</option>
 				<option value="SAGA.tin_tools.6">SAGA.tin_tools.6: Flow Accumulation (Parallel)</option>
+				<option value="Buffer">Buffer: Create a buffer around a polygon. </option>
 				<option value="S3Download">S3Download: Echo input</option>
 				<option value="Simplify">Simplify: Simplifies polygons geometries. </option>
 				<option value="longProcess">longProcess: Demo long process. </option>
@@ -678,7 +679,6 @@
 				<option value="ConvexHull">ConvexHull: Compute convex hull.</option>
 				<option value="Difference">Difference: Compute difference. </option>
 				<option value="Union">Union: Compute union. </option>
-				<option value="Buffer">Buffer: Create a buffer around a polygon. </option>
 				<option value="Gdal_Grid">Gdal_Grid: Computes a regular grid (raster) from scattered data read from a vector data source. </option>
 				<option value="GetArea">GetArea: Compute geometry area.</option>
 				<option value="Within">Within: Within test</option>
@@ -17936,6 +17936,14 @@
 					<option value="application/json">application/json</option>
 				</param>
 			</when>
+			<when value="Buffer">
+				<param name="InputPolygon" label="InputPolygon" optional="false" help="URI to a set of GML that describes the polygon." type="data" format="txt"/>
+				<param name="BufferDistance" label="BufferDistance" optional="true" value="10" help="Distance to be used to calculate buffer." type="float"/>
+				<param type="select" name="Result_outformat" label="Result_outformat" help="Output format">
+					<option value="text/xml">text/xml</option>
+					<option value="application/json">application/json</option>
+				</param>
+			</when>
 			<when value="S3Download">
 				<param name="endpoint_url" label="endpoint_url" optional="false" value="" help="An input string" type="text"/>
 				<param name="access_key_id" label="access_key_id" optional="false" value="" help="An input string" type="text"/>
@@ -18011,14 +18019,6 @@
 			<when value="Union">
 				<param name="InputEntity1" label="InputEntity1" optional="false" help="the first geometry to compare against." type="data" format="txt"/>
 				<param name="InputEntity2" label="InputEntity2" optional="false" help="the other geometry to compare against." type="data" format="txt"/>
-				<param type="select" name="Result_outformat" label="Result_outformat" help="Output format">
-					<option value="text/xml">text/xml</option>
-					<option value="application/json">application/json</option>
-				</param>
-			</when>
-			<when value="Buffer">
-				<param name="InputPolygon" label="InputPolygon" optional="false" help="URI to a set of GML that describes the polygon." type="data" format="txt"/>
-				<param name="BufferDistance" label="BufferDistance" optional="true" value="10" help="Distance to be used to calculate buffer." type="float"/>
 				<param type="select" name="Result_outformat" label="Result_outformat" help="Output format">
 					<option value="text/xml">text/xml</option>
 					<option value="application/json">application/json</option>
@@ -18163,9 +18163,7 @@
 		</conditional>
 	</inputs>
 	<outputs>
-		<collection name="output_data" type="list" label="$select_process">
-			<discover_datasets pattern="__name_and_ext__"/>
-		</collection>
+		<data name="output_data" format="txt" label="$select_process"/>
 	</outputs>
 	<expand macro="tests"/>
 	<expand macro="help"/>

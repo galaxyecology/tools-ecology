@@ -38,7 +38,7 @@
                 <param name="ram" value="256"/>
                 <param name="exp" value="im1b3,im1b2,im1b1"/>
                 <param name="out_outformat" value="image/png"/>
-                <output_collection name="output_data" type="list" count="2"/>
+                <output name="output_data" file="otb_band_math_test_output.txt" compare="sim_size" delta="300" />
             </test>
             <test>
                 <param name="select_process" value="OTB.MeanShiftSmoothing"/>
@@ -53,7 +53,7 @@
                 <param name="modesearch" value="False"/>
                 <param name="fout_outformat" value="image/png"/>
                 <param name="foutpos_outformat" value="image/png"/>
-                <output_collection name="output_data" type="list" count="2"/>
+                <output name="output_data" file="otb_mean_shift_smoothing_test_output.txt" compare="sim_size" delta="500" />
             </test>
         </tests>    
     </xml>

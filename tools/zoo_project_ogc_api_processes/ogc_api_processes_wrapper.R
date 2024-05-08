@@ -5,7 +5,6 @@ library("getopt")
 cat("start generic wrapper service \n")
 
 getParameters <- function(){
-    args <- commandArgs(trailingOnly = TRUE)
     con <- file("inputs.json", "r")
     line <- readLines(con, n = 1)
     json <- fromJSON(line)
@@ -112,9 +111,9 @@ retrieveResults <- function(server, jobID, outputData) {
                   resultBody <- parseResponseBody(result$body)
                   urls <- unname(unlist(lapply(resultBody, function(x) x$href)))
                   urls_with_newline <- paste(urls, collapse = "\n")
-                  sink(paste0(outputData, "_result_urls.txt"))
-                    cat(urls_with_newline, "\n")
-                  sink()
+                  con <- file(outputData, "w")
+                  writeLines(urls_with_newline, con = con)
+                  close(con)
                 }
             } else if (jobStatus == "failed") {
               status <- jobStatus
@@ -141,7 +140,8 @@ server <- "https://ospd.geolabs.fr:8300/ogc-api/"
 
 inputParameters <- getParameters()
 
-outputLocation <- inputParameters$outputData
+args <- commandArgs(trailingOnly = TRUE)
+outputLocation <- args[2]
 
 outputs <- getOutputs(inputParameters, outputLocation, server)
 
