@@ -27,7 +27,7 @@
         </citations>
     </xml>
     <xml name="help">
-        <help>This tool is a wrapper for OGC API Processes coming from the Zoo Project (https://zoo-project.github.io/docs/intro.html) and was created using the OGC-API-Process2Galaxy tool (https://github.com/AquaINFRA/OGC-API-Process2Galaxy). Check the README in the repository for more information.</help>
+        <help>This tool is a wrapper for OGC API Processes (OTB) coming from the Zoo Project (https://zoo-project.github.io/docs/intro.html) and was created using the OGC-API-Process2Galaxy tool (https://github.com/AquaINFRA/OGC-API-Process2Galaxy). Check the README in the repository for more information.</help>
     </xml>
     <xml name="tests">
         <tests>
@@ -37,8 +37,12 @@
                 <param name="out" value="float"/>
                 <param name="ram" value="256"/>
                 <param name="exp" value="im1b3,im1b2,im1b1"/>
-                <param name="out_outformat" value="image/png"/>
-                <output_collection name="output_data" type="list" count="2"/>
+                <param name="out_outformat" value="image/tiff"/>
+                <output name="output_data">
+                    <assert_contents>
+                        <has_n_lines n="1"/>
+                    </assert_contents>
+                </output>
             </test>
             <test>
                 <param name="select_process" value="OTB.MeanShiftSmoothing"/>
@@ -51,9 +55,13 @@
                 <param name="maxiter" value="100"/>
                 <param name="rangeramp" value="0"/>
                 <param name="modesearch" value="False"/>
-                <param name="fout_outformat" value="image/png"/>
-                <param name="foutpos_outformat" value="image/png"/>
-                <output_collection name="output_data" type="list" count="2"/>
+                <param name="fout_outformat" value="image/tiff"/>
+                <param name="foutpos_outformat" value="image/tiff"/>
+                <output name="output_data">
+                    <assert_contents>
+                        <has_n_lines n="2"/>
+                    </assert_contents>
+                </output>
             </test>
         </tests>    
     </xml>
