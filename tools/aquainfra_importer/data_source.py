@@ -50,10 +50,10 @@ def main():
     for data_dict in params["output_data"]:
         cur_filename = data_dict["file_name"]
         cur_URL = params["param_dict"].get(
-            "%s|%s|URL" % (GALAXY_PARAM_PREFIX, data_dict["out_data_name"]), 
-                URL
+            "%s|%s|URL" % (GALAXY_PARAM_PREFIX, 
+                            data_dict["out_data_name"]), URL
         )
-        if not cur_URL or urlparse(cur_URL).scheme not in ("http", "https", 
+        if not cur_URL or urlparse(cur_URL).scheme not in ("http", "https",
             "ftp"):
             open(cur_filename, "w").write("")
             sys.exit(
@@ -74,8 +74,8 @@ def main():
                 )
         except Exception as e:
             sys.exit(
-                "The remote data source application may be off line, please try "
-                "again later. Error: %s"
+                "The remote data source application may "
+                "be off line, please try again later. Error: %s"
                 % str(e)
             )
         if max_file_size:
