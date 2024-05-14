@@ -8,6 +8,6 @@
         <param name="tool_id" type="hidden" value="aquainfra_importer" />
     </inputs>
     <outputs>
-        <data name="output" format="zip" label="resource"/>
+        <data name="output" format="auto" label="AquaINFRA Resource"/>
     </outputs>
 </tool>
