@@ -51,10 +51,10 @@ def main():
         cur_filename = data_dict["file_name"]
         cur_URL = params["param_dict"].get(
             "%s|%s|URL" % (GALAXY_PARAM_PREFIX,
-                        data_dict["out_data_name"]), URL
+                            data_dict["out_data_name"]), URL
         )
         if not cur_URL or urlparse(cur_URL).scheme not in ("http", "https",
-                                                        "ftp"):
+                                                            "ftp"):
             open(cur_filename, "w").write("")
             sys.exit(
                 "The remote data source application has not sent "
@@ -65,9 +65,10 @@ def main():
             if URL_method == "get":
                 page = urlopen(cur_URL, timeout=DEFAULT_SOCKET_TIMEOUT)
             elif URL_method == "post":
+                param_dict = params["param_dict"]
                 page = urlopen(
                     cur_URL,
-                    urlencode(params["param_dict"]["incoming_request_params"]).encode(
+                    urlencode(param_dict["incoming_request_params"]).encode(
                         "utf-8"
                     ),
                     timeout=DEFAULT_SOCKET_TIMEOUT,
