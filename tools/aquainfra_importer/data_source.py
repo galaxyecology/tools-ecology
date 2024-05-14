@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-# Retrieves data from external data source applications and 
-# stores in a dataset file.
+#Retrieves data from external data source applications and 
+#stores in a dataset file.
 #
-# Data source application parameters are temporarily stored 
-# in the dataset file.
+#Data source application parameters are temporarily stored 
+#in the dataset file.
 import json
 import os
 import sys
@@ -55,7 +55,8 @@ def main():
         if not cur_URL or urlparse(cur_URL).scheme not in ("http", "https", "ftp"):
             open(cur_filename, "w").write("")
             sys.exit(
-                "The remote data source application has not sent back a URL parameter in the request."
+                "The remote data source application has not sent "\
+                "back a URL parameter in the request."
             )
 
         try:
@@ -71,14 +72,16 @@ def main():
                 )
         except Exception as e:
             sys.exit(
-                "The remote data source application may be off line, please try again later. Error: %s"
+                "The remote data source application may be off line, please try "\
+                "again later. Error: %s"
                 % str(e)
             )
         if max_file_size:
             file_size = int(page.info().get("Content-Length", 0))
             if file_size > max_file_size:
                 sys.exit(
-                    "The requested data size (%d bytes) exceeds the maximum allowed size (%d bytes) on this server."
+                    "The requested data size (%d bytes) exceeds the maximum"\
+                    "allowed size (%d bytes) on this server."
                     % (file_size, max_file_size)
                 )
         try:
