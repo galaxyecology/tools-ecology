@@ -50,11 +50,11 @@ def main():
     for data_dict in params["output_data"]:
         cur_filename = data_dict["file_name"]
         cur_URL = params["param_dict"].get(
-            "%s|%s|URL" % (GALAXY_PARAM_PREFIX, 
-                            data_dict["out_data_name"]), URL
+            "%s|%s|URL" % (GALAXY_PARAM_PREFIX,
+                        data_dict["out_data_name"]), URL
         )
         if not cur_URL or urlparse(cur_URL).scheme not in ("http", "https",
-            "ftp"):
+                                                        "ftp"):
             open(cur_filename, "w").write("")
             sys.exit(
                 "The remote data source application has not sent "
