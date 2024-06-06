@@ -5,7 +5,7 @@
 	</macros>
 	<expand macro="requirements"/>
 	<command detect_errors="exit_code"><![CDATA[
-	Rscript '$__tool_directory__/generic.R'
+	Rscript '$__tool_directory__/ogc_api_processes_wrapper.R'
 		--outputData '$output_data'
 ]]></command>
 	<configfiles>
