@@ -32,20 +32,18 @@
 				<option value="select-products-sentinel2">select-products-sentinel2: Searches the specified catalog for Sentinel-2 products matching filtering criteria.</option>
 			</param>
 			<when value="algae-usecase-workflow-copernicus">
+				<param name="user_credentials" label="user_credentials" optional="false" type="data" format="json"/>
 				<param name="cookie" label="cookie" optional="false" value="" type="text"/>
 				<param name="date" label="date" optional="false" value="" help="No description provided!" type="text"/>
 				<param name="delta_Array_integer" label="delta" optional="false" value="" help="Please provide comma-seperated values of type integer here." type="text"/>
 				<param name="aoi" label="aoi" optional="false" value="" help="No description provided!" type="data" format="txt"/>
 				<param name="collection" label="collection" optional="false" value="" help="No description provided!" type="text"/>
 				<param name="cloud_cover_Array_float" label="cloud_cover" optional="false" value="" help="Please provide comma-seperated values of type float here." type="text"/>
-				<param name="s3_access_key" label="s3_access_key" optional="false" value="" help="Access key to Copernicus data provider. See https://documentation.dataspace.copernicus.eu/Registration.html and https://documentation.dataspace.copernicus.eu/APIs/S3.html#generate-secrets for details." type="text"/>
-				<param name="s3_secret_key" label="s3_secret_key" optional="false" value="" help="Access key to Copernicus data provider. See https://documentation.dataspace.copernicus.eu/Registration.html and https://documentation.dataspace.copernicus.eu/APIs/S3.html#generate-secrets for details." type="text"/>
 			</when>
 			<when value="algae-usecase-workflow-copernicus-process">
+				<param name="user_credentials" label="user_credentials" optional="false" type="data" format="json"/>
 				<param name="cookie" label="cookie" optional="false" value="" type="text"/>
 				<param name="product_url" label="product_url" optional="false" value="" help="No description provided!" type="text"/>
-				<param name="s3_access_key" label="s3_access_key" optional="false" value="" help="No description provided!" type="text"/>
-				<param name="s3_secret_key" label="s3_secret_key" optional="false" value="" help="No description provided!" type="text"/>
 			</when>
 			<when value="algae-usecase-workflow-earth-search">
 				<param name="cookie" label="cookie" optional="false" value="" type="text"/>
@@ -92,10 +90,9 @@
 				<param name="band_z" label="band_z" optional="false" value="" help="No description provided!" type="text"/>
 			</when>
 			<when value="download-band-sentinel2-product-safe">
+				<param name="user_credentials" label="user_credentials" optional="false" type="data" format="json"/>
 				<param name="cookie" label="cookie" optional="false" value="" type="text"/>
 				<param name="product_url" label="product_url" optional="false" value="" help="No description provided!" type="text"/>
-				<param name="s3_access_key" label="s3_access_key" optional="false" value="" help="Access key to Copernicus data provider. See https://documentation.dataspace.copernicus.eu/Registration.html and https://documentation.dataspace.copernicus.eu/APIs/S3.html#generate-secrets for details." type="text"/>
-				<param name="s3_secret_key" label="s3_secret_key" optional="false" value="" help="Secret key to Copernicus data provider. See https://documentation.dataspace.copernicus.eu/Registration.html and https://documentation.dataspace.copernicus.eu/APIs/S3.html#generate-secrets for details." type="text"/>
 				<param name="resolution_Array_text" label="resolution" optional="false" value="" help="Please provide comma-seperated values of type text here." type="text"/>
 				<param name="band" label="band" optional="false" value="" help="No description provided!" type="select">
 					<option value="B01">B01</option>

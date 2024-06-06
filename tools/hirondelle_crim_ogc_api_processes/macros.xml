@@ -33,10 +33,9 @@
         <tests>
             <test>
                 <param name="select_process" value="download-band-sentinel2-product-safe"/>
+                <param name="credentials" value=""/>
                 <param name="cookie" value=""/>
                 <param name="product_url" value="s3:///eodata/Sentinel-2/MSI/L2A/2019/07/01/S2A_MSIL2A_20190701T110621_N0212_R137_T29SPC_20190701T120906.SAFE"/>
-                <param name="s3_access_key" value=""/>
-                <param name="s3_secret_key" value=""/>
                 <param name="resolution_Array_text" value="10m"/>
                 <param name="band" value="B04"/>
                 <assert_stderr>

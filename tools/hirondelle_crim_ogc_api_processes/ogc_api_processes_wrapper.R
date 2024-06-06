@@ -52,6 +52,10 @@ executeProcess <- function(url, process, requestBodyData, cookie) {
     url <- paste(paste(paste(url, "processes/", sep = ""), process, sep = ""), "/execution", sep = "")
     requestBodyData$inputs$cookie <- NULL
     requestBodyData$inputs$select_process <- NULL
+    
+    requestBodyData$inputs$s3_access_key <- requestBodyData$inputs$user_credentials$s3_access_key
+    requestBodyData$inputs$s3_secret_key <- requestBodyData$inputs$user_credentials$s3_secret_key
+    requestBodyData$inputs$user_credentials <- NULL
 
     body <- list()
     body$inputs <- requestBodyData$inputs
@@ -166,13 +170,18 @@ for (key in names(inputParameters)) {
   if (is.character(inputParameters[[key]]) && (endsWith(inputParameters[[key]], ".dat") || endsWith(inputParameters[[key]], ".txt"))) { 
     con <- file(inputParameters[[key]], "r")
     url_list <- list()
-    while (length(line <- readLines(con, n = 1)) > 0) {
-      if (is_url(line)) {
-        url_list <- c(url_list, list(list(href = trimws(line))))
-      }
-    }
+    #while (length(line <- readLines(con, n = 1)) > 0) {
+    #  if (is_url(line)) {
+    #    url_list <- c(url_list, list(list(href = trimws(line))))
+    #  }
+    #}
+    con <- file(inputParameters[[key]], "r")
+    lines <- readLines(con)
     close(con)
-    inputParameters[[key]] <- url_list
+    json_string <- paste(lines, collapse = "\n")
+    json_data <- fromJSON(json_string)
+
+    inputParameters[[key]] <- json_data
     convertedKeys <- append(convertedKeys, key)
   }
   else if (grepl("_Array_", key)) {
