@@ -1,0 +1,11 @@
+categories:
+    - Ecology
+owner: ecology
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/ogc_api_processes_wrapper
+homepage_url: https://github.com/AquaINFRA/galaxy
+long_description: |
+  This tool is a wrapper for OGC API Processes coming from https://osf.io/gfbws/.
+type: unrestricted
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrapper for OGC API Processes: {{ tool_name }}."

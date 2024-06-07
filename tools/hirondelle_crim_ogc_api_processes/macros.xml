@@ -1,0 +1,47 @@
+<macros>
+    <xml name="requirements">
+        <requirements>
+            <requirement type="package" version="4.3.1">r-base</requirement>
+            <requirement type="package" version="1.20.4">r-getopt</requirement>
+            <requirement type="package" version="0.2.3">r-httr2</requirement>
+            <requirement type="package" version="1.8.7">r-jsonlite</requirement>
+        </requirements>
+    </xml>
+    <xml name="out_options">
+        <option value="uint8">uint8</option>
+        <option value="uint16">uint16</option>
+        <option value="int16">int16</option>
+        <option value="int32">int32</option>
+        <option value="float">float</option>
+        <option value="double">double</option>
+    </xml>
+    <xml name="format_options">
+        <option value="image/tiff">image/tiff</option>
+        <option value="image/jpeg">image/jpeg</option>
+        <option value="image/png">image/png</option>
+    </xml>
+    <xml name="citations">
+        <citations>
+            <citation type="bibtex">@Manual{httr2, title = {httr2: Perform HTTP Requests and Process the Responses}, author = {Hadley Wickham}, year = {2023}, note = {R package version 1.0.0, https://github.com/r-lib/httr2}, url = {https://httr2.r-lib.org},}</citation>
+            <citation type="doi">10.48550/arXiv.1403.2805</citation>
+        </citations>
+    </xml>
+    <xml name="help">
+        <help>This tool is a wrapper for OGC API Processes (OTB) coming from the Zoo Project (https://zoo-project.github.io/docs/intro.html) and was created using the OGC-API-Process2Galaxy tool (https://github.com/AquaINFRA/OGC-API-Process2Galaxy). Check the README in the repository for more information.</help>
+    </xml>
+    <xml name="tests">
+        <tests>
+            <test expect_failure="true">
+                <param name="select_process" value="download-band-sentinel2-product-safe"/>
+                <param name="user_credentials" value="crim_test_input.json"/>
+                <param name="cookie" value=""/>
+                <param name="product_url" value="s3:///eodata/Sentinel-2/MSI/L2A/2019/07/01/S2A_MSIL2A_20190701T110621_N0212_R137_T29SPC_20190701T120906.SAFE"/>
+                <param name="resolution_Array_text" value="10m"/>
+                <param name="band" value="B04"/>
+                <assert_stderr>
+                    <has_text text="HTTP 401 Unauthorized"/>
+                </assert_stderr>
+            </test>
+        </tests> 
+    </xml>
+</macros>
