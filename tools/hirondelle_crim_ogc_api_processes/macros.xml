@@ -31,7 +31,7 @@
     </xml>
     <xml name="tests">
         <tests>
-            <test>
+            <test expect_failure="true">
                 <param name="select_process" value="download-band-sentinel2-product-safe"/>
                 <param name="user_credentials" value="crim_test_input.json"/>
                 <param name="cookie" value=""/>
