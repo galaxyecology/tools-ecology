@@ -34,16 +34,16 @@
 			<when value="algae-usecase-workflow-copernicus">
 				<param name="user_credentials" label="user_credentials" optional="false" type="data" format="json"/>
 				<param name="cookie" label="cookie" optional="false" value="" type="text"/>
-				<param name="date" label="date" optional="false" value="" help="No description provided!" type="text"/>
+				<param name="date" label="date" optional="false" value="" type="text"/>
 				<param name="delta_Array_integer" label="delta" optional="false" value="" help="Please provide comma-seperated values of type integer here." type="text"/>
-				<param name="aoi" label="aoi" optional="false" value="" help="No description provided!" type="data" format="txt"/>
-				<param name="collection" label="collection" optional="false" value="" help="No description provided!" type="text"/>
+				<param name="aoi" label="aoi" optional="false" value="" type="data" format="txt"/>
+				<param name="collection" label="collection" optional="false" value="" type="text"/>
 				<param name="cloud_cover_Array_float" label="cloud_cover" optional="false" value="" help="Please provide comma-seperated values of type float here." type="text"/>
 			</when>
 			<when value="algae-usecase-workflow-copernicus-process">
 				<param name="user_credentials" label="user_credentials" optional="false" type="data" format="json"/>
 				<param name="cookie" label="cookie" optional="false" value="" type="text"/>
-				<param name="product_url" label="product_url" optional="false" value="" help="No description provided!" type="text"/>
+				<param name="product_url" label="product_url" optional="false" value="" type="text"/>
 			</when>
 			<when value="algae-usecase-workflow-earth-search">
 				<param name="cookie" label="cookie" optional="false" value="" type="text"/>
@@ -51,7 +51,7 @@
 				<param name="delta_Array_integer" label="delta" optional="false" value="" help="Please provide comma-seperated values of type integer here." type="text"/>
 				<param name="toi_Array_text" label="toi" optional="false" value="" help="Please provide comma-seperated values of type text here." type="text"/>
 				<param name="aoi" label="aoi" optional="false" value="" help="Polygon defining the area of interest." type="data" format="txt"/>
-				<param name="collection" label="collection" optional="false" value="" help="No description provided!" type="text"/>
+				<param name="collection" label="collection" optional="false" value="" type="text"/>
 				<param name="cloud_cover_Array_float" label="cloud_cover" optional="false" value="" help="Please provide comma-seperated values of type float here." type="text"/>
 			</when>
 			<when value="algae-usecase-workflow-earth-search-process">
@@ -62,39 +62,39 @@
 				<param name="cookie" label="cookie" optional="false" value="" type="text"/>
 				<param name="name" label="name" optional="false" value="" help="Name to apply for the output GeoTiff file." type="text"/>
 				<param name="calc" label="calc" optional="false" value="" help="Calculation to perform with band references." type="text"/>
-				<param name="band_a" label="band_a" optional="false" value="" help="No description provided!" type="text"/>
-				<param name="band_b" label="band_b" optional="false" value="" help="No description provided!" type="text"/>
-				<param name="band_c" label="band_c" optional="false" value="" help="No description provided!" type="text"/>
-				<param name="band_d" label="band_d" optional="false" value="" help="No description provided!" type="text"/>
-				<param name="band_e" label="band_e" optional="false" value="" help="No description provided!" type="text"/>
-				<param name="band_f" label="band_f" optional="false" value="" help="No description provided!" type="text"/>
-				<param name="band_g" label="band_g" optional="false" value="" help="No description provided!" type="text"/>
-				<param name="band_h" label="band_h" optional="false" value="" help="No description provided!" type="text"/>
-				<param name="band_i" label="band_i" optional="false" value="" help="No description provided!" type="text"/>
-				<param name="band_j" label="band_j" optional="false" value="" help="No description provided!" type="text"/>
-				<param name="band_k" label="band_k" optional="false" value="" help="No description provided!" type="text"/>
-				<param name="band_l" label="band_l" optional="false" value="" help="No description provided!" type="text"/>
-				<param name="band_m" label="band_m" optional="false" value="" help="No description provided!" type="text"/>
-				<param name="band_n" label="band_n" optional="false" value="" help="No description provided!" type="text"/>
-				<param name="band_o" label="band_o" optional="false" value="" help="No description provided!" type="text"/>
-				<param name="band_p" label="band_p" optional="false" value="" help="No description provided!" type="text"/>
-				<param name="band_q" label="band_q" optional="false" value="" help="No description provided!" type="text"/>
-				<param name="band_r" label="band_r" optional="false" value="" help="No description provided!" type="text"/>
-				<param name="band_s" label="band_s" optional="false" value="" help="No description provided!" type="text"/>
-				<param name="band_t" label="band_t" optional="false" value="" help="No description provided!" type="text"/>
-				<param name="band_u" label="band_u" optional="false" value="" help="No description provided!" type="text"/>
-				<param name="band_v" label="band_v" optional="false" value="" help="No description provided!" type="text"/>
-				<param name="band_w" label="band_w" optional="false" value="" help="No description provided!" type="text"/>
-				<param name="band_x" label="band_x" optional="false" value="" help="No description provided!" type="text"/>
-				<param name="band_y" label="band_y" optional="false" value="" help="No description provided!" type="text"/>
-				<param name="band_z" label="band_z" optional="false" value="" help="No description provided!" type="text"/>
+				<param name="band_a" label="band_a" optional="false" value="" type="text"/>
+				<param name="band_b" label="band_b" optional="false" value="" type="text"/>
+				<param name="band_c" label="band_c" optional="false" value="" type="text"/>
+				<param name="band_d" label="band_d" optional="false" value="" type="text"/>
+				<param name="band_e" label="band_e" optional="false" value="" type="text"/>
+				<param name="band_f" label="band_f" optional="false" value="" type="text"/>
+				<param name="band_g" label="band_g" optional="false" value="" type="text"/>
+				<param name="band_h" label="band_h" optional="false" value="" type="text"/>
+				<param name="band_i" label="band_i" optional="false" value="" type="text"/>
+				<param name="band_j" label="band_j" optional="false" value="" type="text"/>
+				<param name="band_k" label="band_k" optional="false" value="" type="text"/>
+				<param name="band_l" label="band_l" optional="false" value="" type="text"/>
+				<param name="band_m" label="band_m" optional="false" value="" type="text"/>
+				<param name="band_n" label="band_n" optional="false" value="" type="text"/>
+				<param name="band_o" label="band_o" optional="false" value="" type="text"/>
+				<param name="band_p" label="band_p" optional="false" value="" type="text"/>
+				<param name="band_q" label="band_q" optional="false" value="" type="text"/>
+				<param name="band_r" label="band_r" optional="false" value="" type="text"/>
+				<param name="band_s" label="band_s" optional="false" value="" type="text"/>
+				<param name="band_t" label="band_t" optional="false" value="" type="text"/>
+				<param name="band_u" label="band_u" optional="false" value="" type="text"/>
+				<param name="band_v" label="band_v" optional="false" value="" type="text"/>
+				<param name="band_w" label="band_w" optional="false" value="" type="text"/>
+				<param name="band_x" label="band_x" optional="false" value="" type="text"/>
+				<param name="band_y" label="band_y" optional="false" value="" type="text"/>
+				<param name="band_z" label="band_z" optional="false" value="" type="text"/>
 			</when>
 			<when value="download-band-sentinel2-product-safe">
 				<param name="user_credentials" label="user_credentials" optional="false" type="data" format="json"/>
 				<param name="cookie" label="cookie" optional="false" value="" type="text"/>
-				<param name="product_url" label="product_url" optional="false" value="" help="No description provided!" type="text"/>
+				<param name="product_url" label="product_url" optional="false" value="" type="text"/>
 				<param name="resolution_Array_text" label="resolution" optional="false" value="" help="Please provide comma-seperated values of type text here." type="text"/>
-				<param name="band" label="band" optional="false" value="" help="No description provided!" type="select">
+				<param name="band" label="band" optional="false" value="" type="select">
 					<option value="B01">B01</option>
 					<option value="B02">B02</option>
 					<option value="B03">B03</option>
@@ -116,8 +116,8 @@
 			</when>
 			<when value="download-band-sentinel2-stac-item">
 				<param name="cookie" label="cookie" optional="false" value="" type="text"/>
-				<param name="product_url" label="product_url" optional="false" value="" help="No description provided!" type="text"/>
-				<param name="band" label="band" optional="false" value="" help="No description provided!" type="select">
+				<param name="product_url" label="product_url" optional="false" value="" type="text"/>
+				<param name="band" label="band" optional="false" value="" type="select">
 					<option value="B01">B01</option>
 					<option value="B02">B02</option>
 					<option value="B03">B03</option>
@@ -138,14 +138,14 @@
 			</when>
 			<when value="EchoProcess">
 				<param name="cookie" label="cookie" optional="false" value="" type="text"/>
-				<param name="stringInput" label="stringInput" optional="false" value="" help="No description provided!" type="select">
+				<param name="stringInput" label="stringInput" optional="false" value="" type="select">
 					<option value="Value1">Value1</option>
 					<option value="Value2">Value2</option>
 					<option value="Value3">Value3</option>
 				</param>
 				<param name="measureInput" label="measureInput" optional="false" help="This is an example of a NUMERIC literal with an associated unit of measure." type="text"/>
 				<param name="dateInput" label="dateInput" optional="false" value="" help="This is an example of a DATE literal input." type="text"/>
-				<param name="doubleInput" label="doubleInput" optional="false" value="" help="This is an example of a DOUBLE literal input that is bounded between a value greater than 0 and 10.  The default value is 5." type="float"/>
+				<param name="doubleInput" label="doubleInput" optional="false" value="" help="This is an example of a DOUBLE literal input that is bounded between a value greater than 0 and 10. The default value is 5." type="float"/>
 				<param name="arrayInput_Array_integer" label="arrayInput" optional="false" value="" help="Please provide comma-seperated values of type integer here." type="text"/>
 				<param name="complexObjectInput" label="complexObjectInput" optional="false" help="This is an example of a complex object input." type="text"/>
 				<param name="geometryInput" label="geometryInput" optional="false" value="" help="This is an example of a geometry input. In this case the geometry can be expressed as a GML of GeoJSON geometry." type="text"/>
@@ -155,12 +155,12 @@
 			</when>
 			<when value="file_index_selector">
 				<param name="cookie" label="cookie" optional="false" value="" type="text"/>
-				<param name="files" label="files" optional="false" help="No description provided!" type="data" format="txt"/>
-				<param name="index" label="index" optional="false" value="" help="No description provided!" type="integer"/>
+				<param name="files" label="files" optional="false" type="data" format="txt"/>
+				<param name="index" label="index" optional="false" value="" type="integer"/>
 			</when>
 			<when value="file2string_array">
 				<param name="cookie" label="cookie" optional="false" value="" type="text"/>
-				<param name="input" label="input" optional="false" value="" help="No description provided!" type="data" format="txt"/>
+				<param name="input" label="input" optional="false" value="" type="data" format="txt"/>
 			</when>
 			<when value="jsonarray2netcdf">
 				<param name="cookie" label="cookie" optional="false" value="" type="text"/>
@@ -168,7 +168,7 @@
 			</when>
 			<when value="metalink2netcdf">
 				<param name="cookie" label="cookie" optional="false" value="" type="text"/>
-				<param name="input" label="input" optional="false" help="No description provided!" type="text"/>
+				<param name="input" label="input" optional="false" type="text"/>
 				<param name="index" label="index" optional="false" value="" help="Index of the MetaLink file to extract. This index is 1-based." type="integer"/>
 			</when>
 			<when value="ogc-tb16-land-cover-mapping">
@@ -191,7 +191,7 @@
 			</when>
 			<when value="reproject-image">
 				<param name="cookie" label="cookie" optional="false" value="" type="text"/>
-				<param name="input_image" label="input_image" optional="false" help="No description provided!" type="data" format="txt"/>
+				<param name="input_image" label="input_image" optional="false" type="data" format="txt"/>
 				<param name="output_dimensions_Array_integer" label="output_dimensions" optional="false" value="" help="Please provide comma-seperated values of type integer here." type="text"/>
 				<param name="output_resolution_Array_integer" label="output_resolution" optional="false" value="" help="Please provide comma-seperated values of type integer here." type="text"/>
 				<param name="output_name" label="output_name" optional="false" value="" help="Name to apply for the output GeoTiff file." type="text"/>
@@ -202,9 +202,9 @@
 				<param name="delta_Array_integer" label="delta" optional="false" value="" help="Please provide comma-seperated values of type integer here." type="text"/>
 				<param name="toi_Array_text" label="toi" optional="false" value="" help="Please provide comma-seperated values of type text here." type="text"/>
 				<param name="aoi" label="aoi" optional="false" value="" help="Polygon defining the area of interest." type="data" format="txt"/>
-				<param name="collection" label="collection" optional="false" value="" help="No description provided!" type="text"/>
+				<param name="collection" label="collection" optional="false" value="" type="text"/>
 				<param name="product_level_Array_text" label="product_level" optional="false" value="" help="Please provide comma-seperated values of type text here." type="text"/>
-				<param name="catalog" label="catalog" optional="false" value="" help="No description provided!" type="select">
+				<param name="catalog" label="catalog" optional="false" value="" type="select">
 					<option value="copernicus">copernicus</option>
 					<option value="earth-search">earth-search</option>
 				</param>
