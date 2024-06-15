@@ -1,4 +1,4 @@
-name: Retrieve Bold 
+name: retrieve_bold
 owner: ecology 
 description: Search a list of sequences in BOLD (Barcode of Life Data System) from specified taxa list and markers
 homepage_url: https://anaconda.org/conda-forge/r-bold
