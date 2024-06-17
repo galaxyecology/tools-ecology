@@ -133,14 +133,14 @@
                 <param name="marker" value="16S,COI-3P,COI-5P,CPN60,GND,RPOB,RIF,TUF"/>
             </section>
             <section name="fungal_marker">
-                <param name="marker" value="18S,18S-V4,28S,atp6,Beta-tubulin,COI-3P,COI-5P,COII,COXIII,EF1-alpha,ITS,ITS1,ITS2,NBC-COI-5P,RPB1,RPB2,TEF1-alpha"/>
+                <param name="marker" value="5-8S,18S,18S-V4,28S,atp6,Beta-tubulin,COI-3P,COI-5P,COII,COXIII,EF1-alpha,ITS,ITS1,ITS2,NBC-COI-5P,RPB1,RPB2,TEF1-alpha"/>
             </section>
             <section name="protist_marker">
                 <param name="marker" value="18S,23S,28S,COI-3P,COI-5P,ITS,RBCL"/>
             </section>
             <output name="Log" file="Log_test1.txt" compare="diff"/>
             <output_collection name="datasets_output" type="list" count="3">
-                <element name="Chitonidaebold" file="Chitonidaebold.fasta" ftype="fasta"/>
+                <element name="Chitonidaebold" file="Chitonidaebold1.fasta" ftype="fasta"/>
                 <element name="Ischnochitonidaebold" file="Ischnochitonidaebold.fasta" ftype="fasta"/>
                 <element name="Leptochitonidaebold" file="Leptochitonidaebold.fasta" ftype="fasta"/>
             </output_collection>
@@ -185,7 +185,7 @@
             </section>
             <output name="Log" file="Log_test3.txt" compare="diff"/>
             <output_collection name="datasets_output" type="list" count="1">
-                <element name="Chitonidaebold" file="Chitonidaebold.fasta" ftype="fasta"/>
+                <element name="Chitonidaebold" file="Chitonidaebold2.fasta" ftype="fasta"/>
             </output_collection>
         </test>
     </tests>
