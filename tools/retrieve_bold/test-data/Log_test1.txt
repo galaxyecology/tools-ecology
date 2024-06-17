@@ -1,8 +1,8 @@
-researched marker(s): 12S 16S 18S 28S COI-3P COI-5P COII COXIII CYTB H3 ND1 ND2 ND3 ND4 ND4L ND5-0 ND6 atpF-atpH ITS ITS2 matK matK-like trnH-psbA trnL trnL-F psbK-psbI rbcL rbcLa rpoC1 rpoB CPN60 GND RPOB RIF TUF 18S-V4 atp6 Beta-tubulin EF1-alpha ITS1 NBC-COI-5P RPB1 RPB2 TEF1-alpha 23S RBCL 
+researched marker(s): 12S 16S 18S 28S COI-3P COI-5P COII COXIII CYTB H3 ND1 ND2 ND3 ND4 ND4L ND5-0 ND6 atpF-atpH ITS ITS2 matK matK-like trnH-psbA trnL trnL-F psbK-psbI rbcL rbcLa rpoC1 rpoB CPN60 GND RPOB RIF TUF 5-8S 18S-V4 atp6 Beta-tubulin EF1-alpha ITS1 NBC-COI-5P RPB1 RPB2 TEF1-alpha 23S RBCL 
 
 Processing  Leptochitonidae 
 Leptochitonidae marker list: COI-5P  28S 
 Processing  Chitonidae 
-Chitonidae marker list:  COI-5P ND2 COXIII COII ND5-0 ND4 CYTB ND1 ND6 ND4L ND3 
+Chitonidae marker list: COI-5P COII ND6 ND3 ND1 COXIII ND2 ND4 CYTB ND4L ND5-0  
 Processing  Ischnochitonidae 
 Ischnochitonidae marker list: COI-5P  

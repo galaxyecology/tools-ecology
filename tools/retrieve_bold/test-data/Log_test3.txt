@@ -4,7 +4,7 @@ Processing  Leptochitonidae
 Leptochitonidae marker list: COI-5P  28S 
 no sequences were found with selected marker(s) for Leptochitonidae see existing marker list above 
 Processing  Chitonidae 
-Chitonidae marker list:  COI-5P ND2 COXIII COII ND5-0 ND4 CYTB ND1 ND6 ND4L ND3 
+Chitonidae marker list: COI-5P COII ND6 ND3 ND1 COXIII ND2 ND4 CYTB ND4L ND5-0  
 Processing  Ischnochitonidae 
 Ischnochitonidae marker list: COI-5P  
 no sequences were found with selected marker(s) for Ischnochitonidae see existing marker list above 
