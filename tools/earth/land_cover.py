@@ -249,8 +249,6 @@ print("Processed Target Raster Saved:", path_lc_tg)
 # Compute transition map (first digit for baseline land cover,
 # and second digit for target year land cover)
 lc_tr = (lc_bl * esa_to_custom_nesting.parent.get_multiplier()) + lc_tg
-lc_tr_pre_remap = lc_bl * esa_to_custom_nesting.parent.get_multiplier()
-lc_tr_pre_remap += lc_tg
 
 # Compute land cover transition
 # Remap persistence classes so they are sequential.
