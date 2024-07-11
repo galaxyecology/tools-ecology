@@ -134,7 +134,8 @@ params = json.load(open(fjson))
 crs = params.get("crs")
 # print("crs", crs)
 
-trans_matrix = LCTransitionDefinitionDeg.Schema().load(params.get("trans_matrix"))
+trans_matrix_val = params.get("trans_matrix")
+trans_matrix = LCTransitionDefinitionDeg.Schema().load(trans_matrix_val)
 # print("trans_matrix", trans_matrix)
 
 esa_to_custom_nesting = LCLegendNesting.Schema().load(
@@ -248,7 +249,8 @@ print("Processed Target Raster Saved:", path_lc_tg)
 # Compute transition map (first digit for baseline land cover,
 # and second digit for target year land cover)
 lc_tr = (lc_bl * esa_to_custom_nesting.parent.get_multiplier()) + lc_tg
-lc_tr_pre_remap = (lc_bl * esa_to_custom_nesting.parent.get_multiplier()) + lc_tg
+lc_tr_pre_remap = lc_bl * esa_to_custom_nesting.parent.get_multiplier()
+lc_tr_pre_remap += lc_tg
 
 # Compute land cover transition
 # Remap persistence classes so they are sequential.
