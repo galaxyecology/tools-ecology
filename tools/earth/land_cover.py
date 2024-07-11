@@ -106,21 +106,22 @@ fjson = args.json
 # Input Rasters
 
 # Outputs
-if not os.path.exists(os.getcwd()+"/data/land_cover/output/"):
-    os.makedirs(os.getcwd()+"/data/land_cover/output/")
+out_dir = os.path.join(os.getcwd(), "/data/land_cover/output/")
+if not os.path.exists(out_dir):
+    os.makedirs(out_dir)
 
 # Output Rasters
-path_lc_tr = os.getcwd()+'/data/land_cover/output/lc_tr.tiff'
-path_lc_bl = os.getcwd()+'/data/land_cover/output/lc_bl.tiff'
-path_lc_dg = os.getcwd()+'/data/land_cover/output/lc_dg.tiff'
-path_lc_tg = os.getcwd()+'/data/land_cover/output/lc_tg.tiff'
-path_change_yf_yi = os.getcwd()+'/data/land_cover/output/change_yf_yi.tiff'
-path_lc_baseline_esa = os.getcwd()+'/data/land_cover/output/lc_baseline_esa.tiff'
-path_lc_target_esa = os.getcwd()+'/data/land_cover/output/lc_target_esa.tiff'
-path_out_img = os.getcwd()+'/data/land_cover/output/stack.tiff'
+path_lc_tr = os.path.join(out_dir, 'lc_tr.tiff')
+path_lc_bl = os.path.join(out_dir, 'lc_bl.tiff')
+path_lc_dg = os.path.join(out_dir, 'lc_dg.tiff')
+path_lc_tg = os.path.join(out_dir, 'lc_tg.tiff')
+path_change_yf_yi = os.path.join(out_dir, 'change_yf_yi.tiff')
+path_lc_baseline_esa = os.path.join(out_dir, 'lc_baseline_esa.tiff')
+path_lc_target_esa = os.path.join(out_dir, 'lc_target_esa.tiff')
+path_out_img = os.path.join(out_dir, 'stack.tiff')
 
 # Contours
-contours_change_yf_yi = os.getcwd()+'/data/land_cover/output/change_yf_yi0.shp'
+contours_change_yf_yi = os.path.join(out_dir, '/change_yf_yi0.shp')
 
 
 # Parsing Inputs
