@@ -168,13 +168,13 @@ for k in yf_dict_profile:
 
 # Check inputs for consistency
 
-if raster_yi.crs.to_proj4() == raster_yf.crs.to_proj4(): 
+if raster_yi.crs.to_proj4() == raster_yf.crs.to_proj4():
     print('SRC OK')
 
-if raster_yi.shape == raster_yf.shape: 
+if raster_yi.shape == raster_yf.shape:
     print('Array Size OK')
 
-if raster_yi.get_transform() == raster_yf.get_transform(): 
+if raster_yi.get_transform() == raster_yf.get_transform():
     print('Geotransformation OK')
 
 cols = raster_yi.width
@@ -212,11 +212,11 @@ print("Target ESA Raster Saved:", path_lc_target_esa)
 # not the class codes themselves.
 # So need to reclass the land cover used for the transition calculations
 # from the raw class codes to the positional indices of those class codes.
-# And before doing that, need to reclassified initial and 
+# And before doing that, need to reclassified initial and
 # final layers to the IPCC (or custom) classes.
 
 # Processing baseline raster
-bl_remap_1 = remap(lc_baseline_esa, 
+bl_remap_1 = remap(lc_baseline_esa,
                    np.asarray(esa_to_custom_nesting.get_list()[0]),
                    np.asarray(esa_to_custom_nesting.get_list()[1]))
 lc_bl = remap(bl_remap_1, np.asarray(class_codes), np.asarray(class_positions))
@@ -230,7 +230,7 @@ saveRaster(lc_bl.astype('int8'),
 print("Processed Baseline Raster Saved:", path_lc_bl)
 
 # Processing Target Raster
-tg_remap_1 = remap(lc_target_esa, 
+tg_remap_1 = remap(lc_target_esa,
                    np.asarray(esa_to_custom_nesting.get_list()[0]),
                    np.asarray(esa_to_custom_nesting.get_list()[1]))
 lc_tg = remap(tg_remap_1, np.asarray(class_codes), np.asarray(class_positions))
@@ -252,7 +252,7 @@ lc_tr_pre_remap = (lc_bl * esa_to_custom_nesting.parent.get_multiplier()) + lc_t
 # Compute land cover transition
 # Remap persistence classes so they are sequential.
 # This makes it easier to assign a clear color ramp in QGIS.
-lc_tr_pre_remap = remap(lc_tr, 
+lc_tr_pre_remap = remap(lc_tr,
                         np.asarray(trans_matrix.get_persistence_list()[0]),
                         np.asarray(trans_matrix.get_persistence_list()[1]))
 
@@ -265,22 +265,22 @@ saveRaster(lc_tr_pre_remap.astype('int8'),
 print("Land Cover Transition Raster Saved:", path_lc_tr)
 
 # Compute land cover degradation
-# definition of land cover transitions as degradation (-1), 
+# definition of land cover transitions as degradation (-1),
 # improvement (1), or no relevant change (0)
-lc_dg = remap(lc_tr, 
+lc_dg = remap(lc_tr,
               np.asarray(trans_matrix.get_list()[0]),
               np.asarray(trans_matrix.get_list()[1]))
 
 saveRaster(lc_dg.astype('int8'),
            path_lc_dg,
            cols,
-           rows, 
+           rows,
            projection,
            "Land_cover_degradation")
 print("Land Cover Degradation Raster Saved:", path_lc_dg)
 
 # Compute  Mutlibands stack
-# Land Cover Degradation + Baseline ESA 
+# Land Cover Degradation + Baseline ESA
 # + Target ESA + Land Cover Transition
 dg_raster = rasterio.open(path_lc_dg, "r")
 dg = dg_raster.read(1, masked=True)
