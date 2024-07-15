@@ -1,0 +1,12 @@
+name: crs_converter
+owner: ecology 
+description: Geospatial transformation of a shapefile Coordinate Reference Systems
+homepage_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools
+long_description: |
+  This tool was created to be part of a phylodiversity workflow. It creates a PROJ4 string from the option selected by the users and use the string to convert the coordinate reference system of a given geospatial file into another one. This tool also offers to produce output in different formats for wider options of manipulation and visualisation.
+type: unrestricted
+categories:
+- Ecology
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Convert Coordinate Reference Systems of shapefiles"
