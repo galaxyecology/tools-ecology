@@ -106,7 +106,7 @@ fjson = args.json
 # Input Rasters
 
 # Outputs
-out_dir = os.getcwd()+"/data/land_cover/output/"
+out_dir = os.path.join(os.getcwd(), "data/land_cover/output/")
 if not os.path.exists(out_dir):
     os.makedirs(out_dir)
 
