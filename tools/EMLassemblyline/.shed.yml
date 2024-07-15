@@ -1,0 +1,19 @@
+name: emlassemblyline 
+owner: ecology 
+description: Tools using EML Assembly Line R package to generate EML metadata from template metadata files and vice versa
+homepage_url: https://github.com/EDIorg/EMLassemblyline
+long_description: |
+  EML Assembly Line is a R package allowing to create EML metadata file from raw data files using intermediate template metadata files. These template metadata files written in tabular files allow easy modification and addition of metadata information by any researcher without having to deal with XML syntaxe. EML Assembly Line propose a particular workflow to the researcher to facilitate metadata creation. This workflow, used to create the R Shiny app MetaShARK, is easy to understand and follow by any researcher, asking information on data files, then geographical coverage, then taxonomic coverage, then personnal information, and finally abstract, methods, keywords and temporal coverage.
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/EMLassemblyline
+type: unrestricted
+categories:
+- Ecology
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "EML Assembly Line: {{ tool_name }}"
+suite:
+  name: "suite_emlassemblyline"
+  description: Tools using EML Assembly Line R package to generate EML metadata from template metadata files and vice versa
+  long_description: |
+    EML Assembly Line is a R package allowing to create EML metadata file from raw data files using intermediate template metadata files. These template metadata files written in tabular files allow easy modification and addition of metadata information by any researcher without having to deal with XML syntaxe. EML Assembly Line propose a particular workflow to the researcher to facilitate metadata creation. This workflow, used to create the R Shiny app MetaShARK, is easy to understand and follow by any researcher, asking information on data files, then geographical coverage, then taxonomic coverage, then personnal information, and finally abstract, methods, keywords and temporal coverage.
+

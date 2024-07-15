@@ -1,0 +1,9 @@
+<macros>
+    <token name="@VERSION@">1.2.2</token>
+    <xml name="occ_requirements">
+        <requirements>
+        <requirement type="package" version="@VERSION@">r-spocc</requirement>
+           <yield/>
+        </requirements>
+    </xml>
+</macros>

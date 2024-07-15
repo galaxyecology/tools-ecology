@@ -1,0 +1,52 @@
+<tool id="ecoregion_eco_map" name="EcoMap" version="0.1.0+galaxy0" profile="22.05">
+    <description>Create map from cluster to visualize ecoregions</description>
+    <requirements>
+       <requirement type="package" version="4.2.3">r-base</requirement>
+       <requirement type="package" version="3.3">r-tmap</requirement>
+       <requirement type="package" version="1.0_12">r-sf</requirement>
+       <requirement type="package" version="1.1.1">r-dplyr</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript
+        '$__tool_directory__/crea_carte_G.R'
+        '$cluster'
+        '$output'
+    ]]>
+    </command>
+    <inputs>
+      <param name="cluster" type="data" format="tabular" label="Source file (File 'cluster points' from previous step)" help="See example below"/>
+    </inputs>
+    <outputs>
+      <data name="output" from_work_dir="ecoregions.png" format="png" label="Map"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name='cluster' value="points_clus.tsv"/>
+            <output name='output' value="ecoregions.png"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+==================    
+**What it does ?**
+==================
+
+The clusters obtained in the previous step are projected on a map to obtain the spatial distribution of each ecoregion.
+
+===================         
+**How to use it ?**
+===================
+
+This script takes as input a file containing for each environmental pixel its associated cluster. See example below. The output of this script is a map representing ecoregions.
+
++--------+--------+---------+
+|  lat   | long   | cluster |
++--------+--------+---------+
+| -65.57 | 139.22 |    1    |
++--------+--------+---------+
+| -65.57 | 139.22 |    1    |
++--------+--------+---------+
+|   ...  |  ...   |   ...   |
++--------+--------+---------+
+
+    ]]></help>
+</tool>

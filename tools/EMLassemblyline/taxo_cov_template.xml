@@ -1,0 +1,97 @@
+<tool id="taxo_cov_template" name="Make taxonomic coverage template" version="0.1.1+galaxy0" profile="22.05">
+    <description>for EML metadata creation</description>
+    <requirements>
+        <container type="docker">outils-patrinat.mnhn.fr/metashark:latest</container>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+    
+    mkdir data_files && 
+    ln -s '$inputdata' 'data_files/${inputdata.element_identifier}';
+    #set $table = $inputdata.element_identifier;
+    
+        Rscript 
+         '$__tool_directory__/taxo_cov_template.R'
+         '$inputdata'
+         '$table'
+         '$taxa_col' 
+         '$name_type' 
+         '$authority.authority_name' 
+         '$authority.authority_name2'
+         '$authority.authority_name3'
+         '$empty'
+         
+    ]]></command>
+    <inputs>
+         <param name="inputdata" type="data" format="tabular" label="Upload table containing all unique taxa in the data" />
+         <param name="taxa_col" type="data_column"  label="What column of your table listing all unique taxa ?" data_ref="inputdata" />
+         <param name="name_type" type="select"  label="What type of taxa name are in your table ?">
+              <option value="scientific">Scientific</option>
+              <option value="common">Common</option>
+         </param>
+         <section name="authority" title="Select the taxonomic authority in wich the taxa's name will be search (you can select multiple authority). If you select several authhority, please select in order of decreasing in preference." >
+            <param name="authority_name" type="select"  label="Select your first taxonomic authority in wich the taxa's name will be search. (required)" optional="false">
+                 <option value="11">GBIF</option>
+                 <option value="9">WORMS</option>
+                 <option value="3">ITIS</option>
+            </param>
+            <param name="authority_name2" type="select"  label="Select if you want a second taxonomic authority in wich the taxa's name will be search, else select 'None'.">
+                 <option value="0">None</option>
+                 <option value="11">GBIF</option>
+                 <option value="9">WORMS</option>
+                 <option value="3">ITIS</option>
+            </param>
+            <param name="authority_name3" type="select"  label="Select if you want a third taxonomic authority in wich the taxa's name will be search, else select 'None'.">
+                 <option value="0">None</option>
+                 <option value="11">GBIF</option>
+                 <option value="9">WORMS</option>
+                 <option value="3">ITIS</option>
+            </param>
+        </section>    
+         <param name="empty" type="boolean"  label="Write an empty template file ?" />
+    </inputs>
+    <outputs>
+         <data name="output" from_work_dir="taxonomic_coverage.txt" format="txt" label="taxonomic_coverage.txt"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="inputdata" value="taxa.tsv"/>
+             <param name="taxa_col" value="1"/>
+            <param name="name_type" value="scientific"/>
+            <param name="authority_name" value="11"/>
+            <param name="authority_name2" value="0"/>
+            <param name="authority_name3" value="0"/>
+            <param name="empty" value="false"/>
+            <output name="output" value="taxonomic_coverage.txt"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+**What it does?**
+--------------------
+
+This tool produce template for EML metadata. It produce templates for taxonomic coverage. 
+After that, these files can be edited to add information about your data and then be used in the make eml tool to produce EML metadata.
+
+**How to use it?**
+--------------------
+To use this tool, you need to upload a table with a column containing a list of all unique taxa present in the data (example below), then select wich column of your table contains the taxa's names, select what type of taxa name it is (scientific or common) and select the taxonomic authority in wich the taxa's name will be search (ITIS,WORMS or/and GBIF). If you select several authhority, please select in order in ordered of ID's decreasing in preference.  
+You can also decide to make an empty taxonomic coverage templates.
+
+
+**Example of taxonomic table :** 
+-----------------------------------------
+
++-------------------+-------------------+
+|       taxa        |       site        |
++-------------------+-------------------+
+| Achelia sp        |         1         |
++-------------------+-------------------+
+| Achelia spicata   |         2         |
++-------------------+-------------------+
+| Achelia suflata   |         2         |
++-------------------+-------------------+
+| Ammothea adunca   |         3         |
++-------------------+-------------------+
+|       ...         |       ...         |
++-------------------+-------------------+
+    ]]></help>
+</tool>

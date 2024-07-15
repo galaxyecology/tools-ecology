@@ -1,0 +1,54 @@
+<tool id="eml2eal" name="EML to EAL" version="0.1.0+galaxy0" profile="22.05">
+    <description> Create EAL templates from EML metadata </description>
+    <requirements>
+       <requirement type="package" version="3.5.5">r-emlassemblyline</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+       Rscript
+         '$__tool_directory__/eml2eal.R'
+         '$inputmetadatafile' &&
+    find . -type f -empty -print -delete
+    ]]></command>
+    <inputs>
+        <param name="inputmetadatafile" type="data" format="xml" label="EML metadata file" help="Insert only metadata using EML standard"/>
+    </inputs>
+    <outputs>
+        <collection name="EML_templates" type="list" label="EML Templates">
+            <discover_datasets pattern= "(?P&lt;designation&gt;.+)\.txt" format="tabular"/>
+      </collection>
+    </outputs>
+    <tests>
+         <test expect_num_outputs="1"> 
+            <param name="inputmetadatafile" value="Assessing_the_importance_of_field_margins_for_bat_species.xml"/>
+            <output_collection name="EML_templates" type="list">
+                <element name="annotations" file="annotations.tabular" ftype="tabular"/>
+                <element name="attributes_data_blary_al" file="attributes_data_blary_al.tabular" ftype="tabular"/>
+                <element name="catvars_data_blary_al" file="catvars_data_blary_al.tabular" ftype="tabular"/>
+                <element name="geographic_coverage" file="geographic_coverage.tabular" ftype="tabular" />
+                <element name="keywords" file="keywords.tabular" ftype="tabular" />
+                <element name="personnel" file="personnel.tabular" ftype="tabular" />
+            </output_collection>
+        </test>
+    </tests>
+<help><![CDATA[
+.. class:: warningmark
+
+'''TIP''' This tool requires metadata with **XML** format and using **EML** standard
+
+**What it does?**
+--------------------
+
+This tool produce EAL templates from an EML metadata. These templates can be modified by the users by hand and reemplemented into Galaxy to reproduce an EML metadata with
+the make_eml tool.
+
+**How to use it?**
+--------------------
+
+To use this tool, you have to upload a metadata written in XML and using EML standard.
+By clicking the **Execute** button, the work will launch and you will be able to get your results in the historic on your right.
+The results will be presented in a Galaxy Collection. You can then either download the files or you can edit them directly on Galaxy by selecting the *Visualize* icon
+on the bottom of the templates outputs and and then selecting *Editor* in the list.
+Once edited, this templates can me reassembled to produce a new EML with the **make_eml** tool in the EMLassemblyline tool section.
+
+]]></help>
+</tool>

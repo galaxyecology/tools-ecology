@@ -1,0 +1,98 @@
+<tool id="ecoregion_taxa_seeker" name="TaxaSeeker" version="0.1.0+galaxy0" profile="22.05">
+    <description>for recover list of taxa</description>
+    <requirements>
+    <requirement type="package" version="4.2.3">r-base</requirement>
+    <requirement type="package" version="1.1.3">r-dplyr</requirement>
+    <requirement type="package" version="1.6.2">r-taxonomycleanr</requirement> 
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript
+        '$__tool_directory__/recup_liste_taxon.R'
+        '$occurencefile'
+        '$predictionfile'
+        '$envfile'
+        '$output1'
+        '$output2'
+        '$output3' 
+    ]]></command>
+    <inputs>
+         <param name="envfile" type="data" format="tabular" label="Environement file (tabular format only)" help="See example below"/>
+         <param name="occurencefile" type="data" format="tabular" multiple="True" label="Occurences file(s) (tabular format only)" help="See example below"/>
+         <param name="predictionfile" type="data" format="tabular" multiple="True" label="Predictions file(s)" help="See example below"/>
+    </inputs>
+    <outputs>
+     <data name="output1" from_work_dir="have_model.tsv" format="tabular" label="Summary of taxa model "/>
+     <data name="output2" from_work_dir="list_taxa.txt" format="txt" label="List of taxa"/>
+     <data name="output3" from_work_dir="list_taxa_clean.txt" format="txt" label="List of taxa clean"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="occurencefile" value="cnidaria_filtered.tsv"/>
+            <param name="predictionfile" value="1_brts_pred_ceamarc.tsv"/>
+            <param name="envfile" value="ceamarc_env.tsv"/>
+            <output name='output1' value="Summary_of_taxa_model.tsv"/>
+            <output name='output2' value="List_of_taxa.txt"/>
+            <output name='output3' value="List_of_taxa_clean.txt"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+    
+==================    
+**What it does ?**
+==================
+
+This tool does three things:
+
+- It allows obtaining a summary file for each taxon indicating whether a BRT model was obtained and the number of occurrences per taxon.
+
+- It provides a list of taxons that obtained cleaned BRT models (without "_", "_sp", etc.) to propose the list to WorMS (World Register Of Marine Species) and obtain more information about the taxons.
+
+- It generates a list of taxons that obtained a BRT model for use in the subsequent ecoregionalization workflow.
+
+===================         
+**How to use it ?**
+===================
+
+This tool takes three inputs : Occurrences file(s), predictions file(s) and environement file. See example below. 
+
+
+**Example of environmentfile :** 
+
++------+------+---------+------+--------------+-----+
+| long | lat  |  Carbo  | Grav |  Maxbearing  | ... |
++------+------+---------+------+--------------+-----+
+|139.22|-65.57|   0.88  |28.59 |     3.67     | ... |
++------+------+---------+------+--------------+-----+
+|139.22|-65.57|   0.88  |28.61 |     3.64     | ... |
++------+------+---------+------+--------------+-----+
+| ...  | ...  |   ...   | ...  |     ...      | ... |
++------+------+---------+------+--------------+-----+
+
+
+**Example of occurences file :** 
+
++---------+----------+-----------+------------------------+-----------+-----+------+--------------+-----+
+| station |   lat    |   long    |Acanthorhabdus_fragilis | Acarnidae | ... | Grav |  Maxbearing  | ... |
++---------+----------+-----------+------------------------+-----------+-----+------+--------------+-----+
+|    1    |-65,999946|142,3360535|           0            |     1     | ... |28.59 |     3.67     | ... |
++---------+----------+-----------+------------------------+-----------+-----+------+--------------+-----+
+|   10    |-66,335407| 141,3028  |           0            |     1     | ... |28.61 |     3.64     | ... |
++---------+----------+-----------+------------------------+-----------+-----+------+--------------+-----+
+|   ...   |   ...    |   ...     |          ...           |    ...    | ... | ...  |     ...      | ... |
++---------+----------+-----------+------------------------+-----------+-----+------+--------------+-----+
+
+**Example of the predictions file :**
+
++-----------+----------+-----------------------+-------------+
+|    lat    |   long   |   Prediction.index    |     spe     |
++-----------+----------+-----------------------+-------------+
+|  -65.57   |  139.22  |   0.122438487221909   |  Acarnidae  |
++-----------+----------+-----------------------+-------------+
+|  -65.57   |  139.32  |   0.119154535627801   |  Acarnidae  |
++-----------+----------+-----------------------+-------------+
+|   ...     |   ...    |         ...           |     ...     |
++-----------+----------+-----------------------+-------------+
+
+    ]]></help>
+</tool>
+

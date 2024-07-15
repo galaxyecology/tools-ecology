@@ -1,0 +1,107 @@
+<tool id="ecoregion_cluster_estimate" name="ClusterEstimate" version="0.1.0+galaxy0" profile="22.05">
+    <description>Find an optimal number of cluster with SIH index</description>
+    <requirements>
+       <requirement type="package" version="4.2.3">r-base</requirement>
+       <requirement type="package" version="2.1.4">r-cluster</requirement>
+       <requirement type="package" version="1.1.1">r-dplyr</requirement>
+       <requirement type="package" version="2.0.0">r-tidyverse</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript
+         '$__tool_directory__/nb_clust_G.R'
+         '$envfile'
+         '$taxafile'
+         '$predictionfile'
+         '$max_k'
+         '$metric'
+         '$sample'
+         '$output1'
+         '$output2'
+         '$output3'
+    ]]>
+    </command>
+    <inputs>
+      <param name="envfile" type="data" format="tabular" label="Environment file (tabular format only)" help="See example below"/>
+      <param name="taxafile" type="data" format="txt" label="Taxa selected file (File 'List of taxa' from TaxaSeeker tool)"/>
+      <param name="predictionfile" type="data" format="tabular" multiple="true" label="Prediction files"/>
+      <param name="max_k" type="integer" value="2" min="1" label="Number of Cluster to test"/>
+      <param name="metric" type="select" label="What metric to use to calculate dissimilarities between observations ?">
+             <option value="manhattan">manhattan</option>
+             <option value="euclidean">euclidean</option>
+             <option value="jaccard">jaccard</option>
+      </param>
+      <param name="sample" type="integer" label="The number of samples to be drawn from the dataset" min="5" value="10"/>
+    </inputs>
+    <outputs>
+      <data name="output1" from_work_dir="Indices_SIH.png" format="png" label="SIH index plot"/>
+      <data name="output2" from_work_dir="data_to_clus.tsv" format="tabular" label="Data to cluster"/>
+      <data name="output3" from_work_dir="data_bio.tsv" format="tabular" label="Data.bio table "/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="envfile" value="ceamarc_env.tsv"/>
+            <param name="taxafile" value="List_of_taxa.txt"/>
+            <param name="predictionfile" value="1_brts_pred_ceamarc.tsv"/>
+            <param name='max_k' value="2"/>
+            <param name='metric' value="manhattan"/>
+            <param name='sample' value="10"/>
+            <output name='output1'>
+                <assert_contents>
+            	    <has_size value="4297" delta="500"/>
+            	</assert_contents>
+            </output>
+            <output name='output2' value="Data_to_cluster.tsv"/>
+            <output name='output3' value="Data.bio_table.tsv"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+==================    
+**What it does ?**
+==================
+
+The tool enables the determination of the optimal number of clusters for partition-based clustering, along with generating files used in the subsequent ecoregionalization workflow.
+
+===================         
+**How to use it ?**
+===================
+
+The tool takes three inputs files: a file containing the environmental parameter values for each environment layer pixel (latitude-longitude), a file containing the list of selected taxa from previous step of the workflow and the file containing the BRT predictions. See example below.
+
+Then there are few parameters : 
+
+- the maximum number of clusters to be tested with a minimum of two clusters
+ 
+- the metric used to calculate the dissimilarities between the observations: Manhattan, Euclidean and Jaccard  
+
+- the sample size that will be used to perform clustering. Indeed, the clara function is used to clustering large data using a representative sample rather than the entire data set. This will speed up the clustering process and make the calculation more efficient. A fairly high value representative of the data is recommended. It is important to note that using too small a sample may result in loss of information compared to using the entire data set.
+
+The tool will produce three outputs. The first two are files that will be used in the rest of the workflow: a file containing four pieces of information, latitude, longitude, presence prediction and corresponding taxon, and a file containing the data to be partitioned. The third output corresponds to the main information of the tool, a graph presenting the value of the SIH index according to the number of clusters. The silhouette index provides a measure of the separation between clusters and the compactness within each cluster. The silhouette index ranges from -1 to 1. Values close to 1 indicate that objects are well grouped and separated from other clusters, while values close to -1 indicate that objects are poorly grouped and may be closer to other clusters. A value close to 0 indicates a situation where objects are located at the border between two neighboring clusters.
+
+**Example of the environemental file :**
+
++------+------+---------+------+--------------+-----+
+| long | lat  |  Carbo  | Grav |  Maxbearing  | ... |
++------+------+---------+------+--------------+-----+
+|139.22|-65.57|   0.88  |28.59 |     3.67     | ... |
++------+------+---------+------+--------------+-----+
+|139.22|-65.57|   0.88  |28.61 |     3.64     | ... |
++------+------+---------+------+--------------+-----+
+| ...  | ...  |   ...   | ...  |     ...      | ... |
++------+------+---------+------+--------------+-----+
+
+**Example of the Brt prediction file :**
+
++-----------+----------+-----------------------+-------------+
+|    lat    |   long   |   Prediction.index    |     spe     |
++-----------+----------+-----------------------+-------------+
+|  -65.57   |  139.22  |   0.122438487221909   |  Acarnidae  |
++-----------+----------+-----------------------+-------------+
+|  -65.57   |  139.32  |   0.119154535627801   |  Acarnidae  |
++-----------+----------+-----------------------+-------------+
+|   ...     |   ...    |         ...           |     ...     |
++-----------+----------+-----------------------+-------------+
+
+    ]]>
+    </help>
+</tool>
+ 

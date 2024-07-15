@@ -7,12 +7,11 @@
             <yield />
         </requirements>
     </xml>
-    <xml name="SRS_input">
+    <xml name="obis_input">
        <param name="input" type="data" format="tabular,csv,txt" label="Input table"/>
        <param name="colnames" type="boolean" label="First line is a header line" checked="true"/>
-       <param name="separator" type="text" label="What character is the separator in your data? (Mostlikely a comma for a csv file and t for a tabular)"/>
     </xml>
-    <xml name="SRS_bibref">
+    <xml name="obis_bibref">
        <citations>
             <citation type="bibtex">
             @Manual{,
@@ -23,6 +22,11 @@
             https://github.com/marinebon/obisindicators},
             }
             </citation>
+        </citations>
+    </xml>
+    <xml name="obis_doiref">
+        <citations>
+            <citation type="doi">DOI:10.5281/zenodo.6969395</citation>
         </citations>
     </xml>
     <xml name="topic">

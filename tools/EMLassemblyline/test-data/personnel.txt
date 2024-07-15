@@ -1,0 +1,8 @@
+givenName	middleInitial	surName	organizationName	electronicMailAddress	userId	role	projectTitle	fundingAgency	fundingNumber
+Constance		Blary	CEFE	constance.blary@cefe.cnrs.fr	https://orcid.org/0000-0001-6204-9983	creator			
+Kévin		Barré	CESCO MNHN	kevin.barre@mnhn.fr	https://orcid.org/0000-0001-5368-4053	creator			
+Christian		Kerbiriou	CESCO	christian.kerbiriou@mnhn.fr	https://orcid.org/0000-0001-6080-4762	creator			
+Isabelle		Le Viol	CESCO	isabelle.le-viol@mnhn.fr		creator			
+Constance	""	Blary	CEFE	constance.blary@cefe.cnrs.fr	https://orcid.org/0000-0001-6204-9983	contact			
+Kévin	""	Barré	CESCO MNHN	kevin.barre@mnhn.fr	https://orcid.org/0000-0001-5368-4053	contact			
+Kévin	""	Barré	CESCO MNHN	kevin.barre@mnhn.fr	https://orcid.org/0000-0001-5368-4053	PI	Effect of agricultural landscape features on bats	DIM ASTREA Région Ile-de-France, FRB	
