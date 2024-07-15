@@ -197,11 +197,11 @@
     </outputs>
     <tests>
         <test expect_num_outputs='6'>
-            <param name='input_file' value='shapefiles/GRECO_l93.html' ftype='shp'>
-                <composite_data value='shapefiles/GRECO_l93.shp'/>
-                <composite_data value='shapefiles/GRECO_l93.shx'/>
-                <composite_data value='shapefiles/GRECO_l93.dbf'/>
-                <composite_data value='shapefiles/GRECO_l93.prj'/>
+            <param name='input_file' value='shapefiles/grid_aq_3_PF.html' ftype='shp'>
+                <composite_data value='shapefiles/grid_aq_3_PF.shp'/>
+                <composite_data value='shapefiles/grid_aq_3_PF.shx'/>
+                <composite_data value='shapefiles/grid_aq_3_PF.dbf'/>
+                <composite_data value='shapefiles/grid_aq_3_PF.prj'/>
             </param>
             <param name ='output_file_format' value='shp,pdf,png,jpeg,tiff,bmp'/>
             <param name ='+proj=' value='laea'/>
@@ -211,36 +211,36 @@
             <param name ='+x_0=' value='0'/>
             <param name ='+y_0=' value='0'/>
             <param name ='+units=' value='m'/>
-            <output file='results/Out_PDF_output.pdf' name='PDF_output' compare='diff'>
+            <output file='results/PDF_output.pdf' name='PDF_output' compare='diff'>
                 <assert_contents>
-            	    <has_size value="1452417" delta="500"/>
+            	    <has_size value="26257" delta="0"/>
             	</assert_contents>
             </output>
-            <output file='results/Out_PNG_output.png' name='png_output' compare='diff'>
+            <output file='results/PNG_output.png' name='png_output' compare='diff'>
                 <assert_contents>
-            	    <has_size value="15746" delta="0"/>
+            	    <has_size value="54459" delta="0"/>
             	</assert_contents>
             </output>
-            <output file='results/Out_JPEG_output.jpg' name='jpeg_output' compare='diff'>
+            <output file='results/JPEG_output.jpg' name='jpeg_output' compare='diff'>
                 <assert_contents>
-            	    <has_size value="18231" delta="0"/>
+            	    <has_size value="47450" delta="0"/>
             	</assert_contents>
             </output>
-            <output file='results/Out_TIFF_output.tiff' name='tiff_output' compare='diff'>
+            <output file='results/TIFF_output.tiff' name='tiff_output' compare='diff'>
                 <assert_contents>
             	    <has_size value="691360" delta="0"/>
             	</assert_contents>
             </output>
-            <output file='results/Out_BMP_output.bmp' name='bmp_output' compare='diff'>
+            <output file='results/BMP_output.bmp' name='bmp_output' compare='diff'>
                 <assert_contents>
             	    <has_size value="231478" delta="0"/>
             	</assert_contents>
             </output>
-            <output file='results/Out_Shapefile_dataset_shp.html' name='shapefile' compare='diff'>
-                <extra_files type='file' name='shapefile.shp' value='results/Out_shapefile.shp' compare='diff'/>
-                <extra_files type='file' name='shapefile.shx' value='results/Out_shapefile.shx' compare='diff'/>
-                <extra_files type='file' name='shapefile.dbf' value='results/Out_shapefile.dbf' compare='diff'/>
-                <extra_files type='file' name='shapefile.prj' value='results/Out_shapefile.prj' compare='diff'/>
+            <output file='results/Shapefile_dataset_shp.html' name='shapefile' compare='diff'>
+                <extra_files type='file' name='shapefile.shp' value='results/shapefile.shp' compare='diff'/>
+                <extra_files type='file' name='shapefile.shx' value='results/shapefile.shx' compare='diff'/>
+                <extra_files type='file' name='shapefile.dbf' value='results/shapefile.dbf' compare='diff'/>
+                <extra_files type='file' name='shapefile.prj' value='results/shapefile.prj' compare='diff'/>
                 <assert_contents>
             	    <has_size value="1924" delta="0"/>
             	</assert_contents>
