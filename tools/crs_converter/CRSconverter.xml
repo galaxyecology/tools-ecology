@@ -216,22 +216,22 @@
             	    <has_size value="1452417" delta="500"/>
             	</assert_contents>
             </output>
-            <output file='results/Out_PNG_output.png' name='PNG_output' compare='diff'>
+            <output file='results/Out_PNG_output.png' name='png_output' compare='diff'>
                 <assert_contents>
             	    <has_size value="15746" delta="0"/>
             	</assert_contents>
             </output>
-            <output file='results/Out_JPEG_output.jpg' name='JPEG_output' compare='diff'>
+            <output file='results/Out_JPEG_output.jpg' name='jpeg_output' compare='diff'>
                 <assert_contents>
             	    <has_size value="18231" delta="0"/>
             	</assert_contents>
             </output>
-            <output file='results/Out_TIFF_output.tiff' name='TIFF_output' compare='diff'>
+            <output file='results/Out_TIFF_output.tiff' name='tiff_output' compare='diff'>
                 <assert_contents>
             	    <has_size value="691360" delta="0"/>
             	</assert_contents>
             </output>
-            <output file='results/Out_BMP_output.bmp' name='BMP_output' compare='diff'>
+            <output file='results/Out_BMP_output.bmp' name='bmp_output' compare='diff'>
                 <assert_contents>
             	    <has_size value="231478" delta="0"/>
             	</assert_contents>
