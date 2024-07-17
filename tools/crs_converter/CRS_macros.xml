@@ -1,6 +1,6 @@
 <macros>
     <xml name='ellps_options'>
-        <param name ='+ellps=' type='select' checked='true'
+        <param name ='ellps' type='select' checked='true'
                label='Ellipsoid and Datum' help='The name of built-in ellipsoid definition. 
                See https://proj.org/en/9.4/usage/ellipsoids.html#ellipsoids for more informations.'>
             <option value='GRS80'>GRS80</option>
@@ -17,7 +17,7 @@
     
     
     <xml name='latitude_options'>
-        <param name ='+lat_0=' type='integer' value='0' 
+        <param name ='lat_0' type='integer' value='0' 
                label='Latitude' help='Latitude of natural origin, 
                latitude of false origin or latitude of projection centre 
                (naming and meaning depend on the projection method).'/>
@@ -25,26 +25,26 @@
     
     
     <xml name='latitude_1_options'>
-        <param name ='+lat_1=' type='integer' value='1' 
+        <param name ='lat_1' type='integer' value='1' 
                label='Latitude 1' help='First standard parallel.'/>
     </xml>
     
     
     <xml name='latitude_2_options'>
-        <param name ='+lat_2=' type='integer' value='1' 
+        <param name ='lat_2' type='integer' value='1' 
                label='Latitude 2' help='Second standard parallel.'/>
     </xml>
     
     
     <xml name='latitude_ts_options'>
-        <param name ='+lat_ts=' type='integer' value='0' 
+        <param name ='lat_ts' type='integer' value='0' 
                label='Latitude of true scale' help='Defines the latitude where scale is not distorted. 
                Takes precedence over scale factor K if both options are used together.'/>
     </xml>
     
     
     <xml name='longitude_options'>
-        <param name ='+lon_0=' type='integer' value='0' 
+        <param name ='lon_0' type='integer' value='0' 
                label='Longitude' help='Central meridian/longitude of natural origin, 
                longitude of origin or longitude of false origin 
                (naming and meaning depend on the projection method).'/>
@@ -52,45 +52,45 @@
     
     
     <xml name='X_options'>
-        <param name ='+x_0=' type='integer' value='0' 
+        <param name ='x_0' type='integer' value='0' 
                label='X' help='False easting, easting at false origin or easting at projection centre 
                (naming and meaning depend on the projection method). Always in meters.'/>
     </xml>
     
     
     <xml name='Y_options'>
-        <param name ='+y_0=' type='integer' value='0' 
+        <param name ='y_0' type='integer' value='0' 
                label='Y' help='False northing, northing at false origin or northing at projection centre 
                (naming and meaning depend on the projection method). Always in meters.'/>
     </xml>
     
     
     <xml name='K_options'>
-        <param name ='+k_0=' type='integer' value='1' min='1'
+        <param name ='k_0' type='integer' value='1' min='1'
                label='scale factor K' help='Scale factor. Determines scale factor used in the projection.'/>
     </xml>
     
     
     <xml name='zone_options'>
-        <param name ='+zone=' type='integer' value='1' min='1' max ='60'
+        <param name ='zone' type='integer' value='1' min='1' max ='60'
                label='Select which UTM zone to use.' help='Can be a value between 1-60.'/>
     </xml>
     
     
     <xml name='south_options'>
-        <param name ='+south' type='boolean' checked='false'
+        <param name ='south' type='boolean' checked='false'
                label='South hemisphere.' help='Add this flag when using the UTM on the southern hemisphere.'/>
     </xml>
     
     
     <xml name='approx_options'>
-        <param name ='+approx' type='boolean' checked='false'
+        <param name ='approx' type='boolean' checked='false'
                label='approximation algorithm.' help='Use faster, less accurate algorithm for the Transverse Mercator.'/>
     </xml>
     
     
     <xml name='algo_options'>
-        <param name ='+algo=' type='select' optional='false'
+        <param name ='algo' type='select' optional='false'
                label='Selects the algorithm to use.' help='Default value is poder_engsager. 
                When using auto, an heuristics based on the input coordinate is used to 
                determine if the faster Evenden-Snyder method can be used for faster 
@@ -104,26 +104,26 @@
     
     
     <xml name='asc_lon_options'>
-        <param name ='+asc_lon=' type='integer' value='0' 
+        <param name ='asc_lon' type='integer' value='0' 
                label='Ascending Longitude' help='Longitude of the ascending node for the orbit (decimal degrees).'/>
     </xml>
     
     
     <xml name='inc_angle_options'>
-        <param name ='+inc_angle=' type='integer' value='90' 
+        <param name ='inc_angle' type='integer' value='90' 
                label='Inclination angle' help='Inclination (vertical tilt) of the orbit 
                with respect to the reference plane, measured at the ascending node (decimal degrees).'/>
     </xml>
     
     
     <xml name='ps_rev_options'>
-        <param name ='+ps_rev=' type='integer' value='1' 
+        <param name ='ps_rev' type='integer' value='1' 
                label='Revolution time' help='Time required for a single orbit (days).'/>
     </xml>
     
     
     <xml name='units_options'>
-        <param name ='+units=' type='select' checked='true'
+        <param name ='units' type='select' checked='true'
                label='Units' help='Default is meter.'>
             <option value='m' selected='true'>m</option>
             <option value='mm'>mm</option>

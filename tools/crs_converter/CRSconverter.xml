@@ -17,18 +17,18 @@
             ${output_file_format}
             #for $param_name in $input_param.keys() ## this loop successively calls all the names and values of the PROJ string for each option of the conditional, it avoids a 100 lines command.
                 #if $param_name!='__current_case__'
-                    #if $param_name=='+south' and $input_param[$param_name]=='false'
+                    #if $param_name=='south' and $input_param[$param_name]=='false'
                         #pass
-                    #elif $param_name=='+south' and $input_param[$param_name]=='true'
-                        ' ' $param_name
-                    #elif $param_name=='+approx' and $input_param[$param_name]=='false'
+                    #elif $param_name=='south' and $input_param[$param_name]=='true'
+                        ' ' '+' $param_name
+                    #elif $param_name=='approx' and $input_param[$param_name]=='false'
                         #pass
-                    #elif $param_name=='+approx' and $input_param[$param_name]=='true'
-                        ' ' $param_name
-                    #elif $param_name=='+lat_ts=' and $input_param[$param_name]=='0'
+                    #elif $param_name=='approx' and $input_param[$param_name]=='true'
+                        ' ' '+' $param_name
+                    #elif $param_name=='lat_ts' and $input_param[$param_name]=='0'
                         #pass
                     #else
-                        ' ' $param_name
+                        ' ' '+' $param_name '='
                         $input_param[$param_name]
                     #end if
                 #end if
@@ -53,7 +53,7 @@
             <option value='bmp'>bmp</option>
         </param>
         <conditional name='input_param'>
-            <param name ='+proj=' type='select'
+            <param name ='proj' type='select'
                    label='Projection ' help='Choose the projection in witch converting your geospatial data, see https://proj.org/en/9.4/operations/projections/index.html for more informations.'>
                 <option value='adams_ws2'>[Miscellaneous] Adams World in a Square II (adams_ws2)</option>
                 <option value='aeqd'>[Azimuthal] Azimuthal Equidistant (aeqd)</option>
@@ -203,13 +203,13 @@
                 <composite_data value='shapefiles/grid_aq_3_PF.prj'/>
             </param>
             <param name ='output_file_format' value='shp,pdf,png,jpeg,tiff,bmp'/>
-            <param name ='+proj=' value='laea'/>
-            <param name ='+ellps=' value='WGS84'/>
-            <param name ='+lat_0=' value='-50'/>
-            <param name ='+lon_0=' value='70'/>
-            <param name ='+x_0=' value='0'/>
-            <param name ='+y_0=' value='0'/>
-            <param name ='+units=' value='m'/>
+            <param name ='proj' value='laea'/>
+            <param name ='ellps' value='WGS84'/>
+            <param name ='lat_0' value='-50'/>
+            <param name ='lon_0' value='70'/>
+            <param name ='x_0' value='0'/>
+            <param name ='y_0' value='0'/>
+            <param name ='units' value='m'/>
             <output file='results/PDF_output.pdf' name='PDF_output' compare='diff'>
                 <assert_contents>
             	    <has_size value="26257" delta="0"/>
