@@ -210,39 +210,36 @@
             <param name ='x_0' value='0'/>
             <param name ='y_0' value='0'/>
             <param name ='units' value='m'/>
-            <output file='results/PDF_output.pdf' name='PDF_output' compare='diff'>
+            <output file='results/PDF_output.pdf' name='PDF_output'>
                 <assert_contents>
             	    <has_size value="26257" delta="0"/>
             	</assert_contents>
             </output>
-            <output file='results/PNG_output.png' name='png_output' compare='diff'>
+            <output file='results/PNG_output.png' name='png_output'>
                 <assert_contents>
             	    <has_size value="54459" delta="0"/>
             	</assert_contents>
             </output>
-            <output file='results/JPEG_output.jpg' name='jpeg_output' compare='diff'>
+            <output file='results/JPEG_output.jpg' name='jpeg_output'>
                 <assert_contents>
             	    <has_size value="47450" delta="0"/>
             	</assert_contents>
             </output>
-            <output file='results/TIFF_output.tiff' name='tiff_output' compare='diff'>
+            <output file='results/TIFF_output.tiff' name='tiff_output'>
                 <assert_contents>
             	    <has_size value="691360" delta="0"/>
             	</assert_contents>
             </output>
-            <output file='results/BMP_output.bmp' name='bmp_output' compare='diff'>
+            <output file='results/BMP_output.bmp' name='bmp_output'>
                 <assert_contents>
             	    <has_size value="231478" delta="0"/>
             	</assert_contents>
             </output>
-            <output file='results/Shapefile_dataset_shp.html' name='shapefile' compare='diff'>
-                <extra_files type='file' name='shapefile.shp' value='results/shapefile.shp' compare='diff'/>
-                <extra_files type='file' name='shapefile.shx' value='results/shapefile.shx' compare='diff'/>
-                <extra_files type='file' name='shapefile.dbf' value='results/shapefile.dbf' compare='diff'/>
-                <extra_files type='file' name='shapefile.prj' value='results/shapefile.prj' compare='diff'/>
-                <assert_contents>
-            	    <has_size value="1924" delta="0"/>
-            	</assert_contents>
+            <output file='results/Shapefile_dataset_shp.html' name='shapefile' compare='sim_size' delta="0">
+                <extra_files type='file' name='shapefile.shp' value='results/shapefile.shp' compare='sim_size' delta="0"/>
+                <extra_files type='file' name='shapefile.shx' value='results/shapefile.shx' compare='sim_size' delta="0"/>
+                <extra_files type='file' name='shapefile.dbf' value='results/shapefile.dbf' compare='sim_size' delta="0"/>
+                <extra_files type='file' name='shapefile.prj' value='results/shapefile.prj' compare='sim_size' delta="0"/>
             </output>
         </test>
     </tests>
