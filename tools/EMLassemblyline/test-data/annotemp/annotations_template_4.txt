@@ -1,0 +1,13 @@
+id	element	context	subject	predicate_label	predicate_uri	object_label	object_uri
+/dataset	/dataset	eml	dataset	is about	http://purl.obolibrary.org/obo/IAO_0000136		
+/pivot_wider_jupytool_notebook.ipynb	/otherEntity	dataset	pivot_wider_jupytool_notebook.ipynb	is about	http://purl.obolibrary.org/obo/IAO_0000136		
+/Marc Eléaume	/ResponsibleParty	dataset	Marc Eléaume	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+/Marc Eléaume	/ResponsibleParty	dataset	Marc Eléaume	member of	https://schema.org/memberOf		
+/Lenaïg G. Hemery	/ResponsibleParty	dataset	Lenaïg G. Hemery	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+/Lenaïg G. Hemery	/ResponsibleParty	dataset	Lenaïg G. Hemery	member of	https://schema.org/memberOf		
+/Ben Galton-Fenzi	/ResponsibleParty	dataset	Ben Galton-Fenzi	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+/Ben Galton-Fenzi	/ResponsibleParty	dataset	Ben Galton-Fenzi	member of	https://schema.org/memberOf		
+/Pauline Seguineau	/ResponsibleParty	dataset	Pauline Seguineau	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+/Pauline Seguineau	/ResponsibleParty	dataset	Pauline Seguineau	member of	https://schema.org/memberOf		
+/Yvan Le Bras	/ResponsibleParty	dataset	Yvan Le Bras	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+/Yvan Le Bras	/ResponsibleParty	dataset	Yvan Le Bras	member of	https://schema.org/memberOf		

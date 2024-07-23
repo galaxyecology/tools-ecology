@@ -1,0 +1,33 @@
+id	element	context	subject	predicate_label	predicate_uri	object_label	object_uri
+/dataset	/dataset	eml	dataset	is about	http://purl.obolibrary.org/obo/IAO_0000136		
+/ceamarc_env.tsv	/dataTable	dataset	ceamarc_env.tsv	is about	http://purl.obolibrary.org/obo/IAO_0000136		
+/ceamarc_env.tsv/long	/dataTable/attribute	ceamarc_env.tsv	long	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/ceamarc_env.tsv/lat	/dataTable/attribute	ceamarc_env.tsv	lat	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/ceamarc_env.tsv/Carbo	/dataTable/attribute	ceamarc_env.tsv	Carbo	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/ceamarc_env.tsv/Grav	/dataTable/attribute	ceamarc_env.tsv	Grav	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/ceamarc_env.tsv/Maxbearing	/dataTable/attribute	ceamarc_env.tsv	Maxbearing	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/ceamarc_env.tsv/Maxmagnit	/dataTable/attribute	ceamarc_env.tsv	Maxmagnit	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/ceamarc_env.tsv/Meancurmag	/dataTable/attribute	ceamarc_env.tsv	Meancurmag	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/ceamarc_env.tsv/Meansal	/dataTable/attribute	ceamarc_env.tsv	Meansal	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/ceamarc_env.tsv/Meantheta	/dataTable/attribute	ceamarc_env.tsv	Meantheta	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/ceamarc_env.tsv/Mud	/dataTable/attribute	ceamarc_env.tsv	Mud	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/ceamarc_env.tsv/Prof	/dataTable/attribute	ceamarc_env.tsv	Prof	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/ceamarc_env.tsv/Rugosity	/dataTable/attribute	ceamarc_env.tsv	Rugosity	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/ceamarc_env.tsv/Sand	/dataTable/attribute	ceamarc_env.tsv	Sand	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/ceamarc_env.tsv/Seaice_prod	/dataTable/attribute	ceamarc_env.tsv	Seaice_prod	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/ceamarc_env.tsv/Sili	/dataTable/attribute	ceamarc_env.tsv	Sili	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/ceamarc_env.tsv/Slope	/dataTable/attribute	ceamarc_env.tsv	Slope	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/ceamarc_env.tsv/Standcurmag	/dataTable/attribute	ceamarc_env.tsv	Standcurmag	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/ceamarc_env.tsv/Standsal	/dataTable/attribute	ceamarc_env.tsv	Standsal	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/ceamarc_env.tsv/Standtheta	/dataTable/attribute	ceamarc_env.tsv	Standtheta	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/pivot_wider_jupytool_notebook.ipynb	/otherEntity	dataset	pivot_wider_jupytool_notebook.ipynb	is about	http://purl.obolibrary.org/obo/IAO_0000136		
+/Marc Eléaume	/ResponsibleParty	dataset	Marc Eléaume	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+/Marc Eléaume	/ResponsibleParty	dataset	Marc Eléaume	member of	https://schema.org/memberOf		
+/Lenaïg G. Hemery	/ResponsibleParty	dataset	Lenaïg G. Hemery	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+/Lenaïg G. Hemery	/ResponsibleParty	dataset	Lenaïg G. Hemery	member of	https://schema.org/memberOf		
+/Ben Galton-Fenzi	/ResponsibleParty	dataset	Ben Galton-Fenzi	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+/Ben Galton-Fenzi	/ResponsibleParty	dataset	Ben Galton-Fenzi	member of	https://schema.org/memberOf		
+/Pauline Seguineau	/ResponsibleParty	dataset	Pauline Seguineau	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+/Pauline Seguineau	/ResponsibleParty	dataset	Pauline Seguineau	member of	https://schema.org/memberOf		
+/Yvan Le Bras	/ResponsibleParty	dataset	Yvan Le Bras	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+/Yvan Le Bras	/ResponsibleParty	dataset	Yvan Le Bras	member of	https://schema.org/memberOf		

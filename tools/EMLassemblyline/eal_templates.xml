@@ -16,7 +16,7 @@
               <option value="CC0">CC0</option>
               <option value="CCBY">CCBY</option>
         </param>
-        <param name="file_type" type="select" label="What type of file do you want for templates?">
+        <param name="file_type" type="select" label="What type of file do you want for abstract, methods, and additional info??">
               <option value=".txt">Text</option>
               <option value=".docx">MS Word</option>
               <option value=".md">Markdown</option>

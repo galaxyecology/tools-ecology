@@ -2,7 +2,7 @@
     <description>for EML metadata creation</description>
      <requirements>
         <requirement type="package" version="4.3.1">r-base</requirement>
-        <requirement type="package" version="3.5.5">r-emlassemblyline</requirement>
+        <container type="docker">outils-patrinat.mnhn.fr/metashark:latest</container>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
     
@@ -22,9 +22,9 @@
     ]]></command>
     <inputs>
          <param name="inputdata" type="data" format="tabular" label="Upload table containing geographic coordinates" />
-         <param name="lat_col" type="data_column"  label="What column of your table contains latitude coordinates in decimal degrees?" data_ref="inputdata" />
-         <param name="long_col" type="data_column"  label="What column of your table contains longitude coordinates in decimal degrees ?" data_ref="inputdata"/>
-         <param name="site_col" type="data_column"  label="What column of your table contains site names ?" data_ref="inputdata"/>
+         <param name="lat_col" type="data_column"  label="What column of your table contains latitude coordinates in decimal degrees?" data_ref="inputdata" use_header_names="true"/>
+         <param name="long_col" type="data_column"  label="What column of your table contains longitude coordinates in decimal degrees ?" data_ref="inputdata" use_header_names="true"/>
+         <param name="site_col" type="data_column"  label="What column of your table contains site names ?" data_ref="inputdata" use_header_names="true"/>
          <param name="empty" type="boolean"  label="Write an empty template file ?" />
     </inputs>
     <outputs>
@@ -32,7 +32,7 @@
     </outputs>
     <tests>
         <test>
-            <param name="inputdata" value="test-geocov.tabular"/>
+            <param name="inputdata" value="test_geocov.tsv"/>
             <param name="lat_col" value="2"/>
             <param name="long_col" value="3"/>
             <param name="site_col" value="1"/>

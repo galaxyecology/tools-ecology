@@ -1,7 +1,7 @@
 <tool id="eml2eal" name="EML to EAL" version="0.1.0+galaxy0" profile="22.05">
     <description> Create EAL templates from EML metadata </description>
     <requirements>
-       <requirement type="package" version="3.5.5">r-emlassemblyline</requirement>
+      <container type="docker">outils-patrinat.mnhn.fr/metashark:latest</container>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
        Rscript
