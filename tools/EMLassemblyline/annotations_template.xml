@@ -167,4 +167,13 @@ If you want to generate annotation template from scratch you will need to input 
  If you use an existing EML file to generate annotation template you can use **eml2eal** tool to produce annotation template and all the other templates.
 
     ]]></help>
+    <citations>
+       <citation type="bibtex">@Manual{,
+       title = {EMLassemblyline: A tool kit for building EML metadata workflows},
+       author = {Colin Smith},
+       year = {2022},
+       note = {https://github.com/EDIorg/EMLassemblyline,
+       https://ediorg.github.io/EMLassemblyline/},
+       }</citation>
+    </citations>
 </tool>
