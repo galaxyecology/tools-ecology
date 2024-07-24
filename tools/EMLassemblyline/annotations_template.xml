@@ -96,17 +96,17 @@
                        <option value="both" selected="true">Both data table and other entities</option>
                   </param>
                   <when value="data_table">
-                      <param name="inputdata" type="data" label="Upload all your data tables" multiple= "true"/>
-                      <param name="input_temp" type="data" label="Upload all metadata template files" multiple= "true" help="This tool needs to be used only after all the metadata templates tools because it needs the other metadata templates to work"/> 
+                      <param name="inputdata" type="data" format="data" label="Upload all your data tables" multiple= "true"/>
+                      <param name="input_temp" type="data" format="data" label="Upload all metadata template files" multiple= "true" help="This tool needs to be used only after all the metadata templates tools because it needs the other metadata templates to work"/> 
                   </when>
                   <when value="other_entities">
-                      <param name="input_other" type="data" label="Upload all your other entities files" multiple= "true"/>
-                      <param name="input_temp" type="data" label="Upload all your metadata template files" multiple= "true" help="This tool needs to be used only after all the metadata templates tools because it needs the other metadata templates to work"/> 
+                      <param name="input_other" type="data" format="data" label="Upload all your other entities files" multiple= "true"/>
+                      <param name="input_temp" type="data" format="data" label="Upload all your metadata template files" multiple= "true" help="This tool needs to be used only after all the metadata templates tools because it needs the other metadata templates to work"/> 
                   </when>
                   <when value="both">
-                      <param name="inputdata" type="data" label="Upload all your data tables" multiple= "true"/>
-                      <param name="input_other" type="data" label="Upload all your other entities files" multiple= "true"/>
-                      <param name="input_temp" type="data" label="Upload all your metadata template files" multiple= "true" help="This tool needs to be used only after all the metadata templates tools because it needs the other metadata templates to work"/> 
+                      <param name="inputdata" type="data" format="data" label="Upload all your data tables" multiple= "true"/>
+                      <param name="input_other" type="data" format="data" label="Upload all your other entities files" multiple= "true"/>
+                      <param name="input_temp" type="data" format="data" label="Upload all your metadata template files" multiple= "true" help="This tool needs to be used only after all the metadata templates tools because it needs the other metadata templates to work"/> 
                   </when>
               </conditional>
           </when>
