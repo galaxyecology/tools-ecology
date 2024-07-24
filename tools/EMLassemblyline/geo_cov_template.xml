@@ -66,4 +66,13 @@ To use this tool, you need to upload a table containing geographic coordinates (
 | ...  | ...  |          ...         |
 +------+------+----------------------+
  ]]></help>
+    <citations>
+       <citation type="bibtex">@Manual{,
+       title = {EMLassemblyline: A tool kit for building EML metadata workflows},
+       author = {Colin Smith},
+       year = {2022},
+       note = {https://github.com/EDIorg/EMLassemblyline,
+       https://ediorg.github.io/EMLassemblyline/},
+       }</citation>
+    </citations>
 </tool>
