@@ -74,10 +74,10 @@
             <param name="latmin" value="32.0"/>
             <param name="latmax" value="38.0"/>
             <param name="varname" value="phosphate"/>
-            <param name="startdate" value="19500101"/>
-            <param name="enddate" value="20171231"/>
+            <param name="startdate" value="1950-01-01"/>
+            <param name="enddate" value="2017-12-31"/>
             <param name="latmin" value="0.0"/>
-            <param name="latmax" value="100.0"/>
+            <param name="latmax" value="90.0"/>
             <output name="output_netcdf" value="DIVAnd_netcdf_output.netcdf"/>
         </test>
     </tests>

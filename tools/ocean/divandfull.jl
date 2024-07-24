@@ -37,8 +37,8 @@ else
     startdate = args[6] # yyyy,mm,dd
     enddate = args[7]
     varname = args[8]
-    selmin = parse(Int, args[9])
-    selmax = parse(Int, args[10])
+    selmin = parse(Float64, args[9])
+    selmax = parse(Float64, args[10])
 end
 
 ## This script will create a climatology:
@@ -58,21 +58,21 @@ dx, dy = 0.125, 0.125
 lonr = longmin:dx:longmax
 latr = latmin:dy:latmax
 
-# Extracting year, month, and day
-startyear = startdate[1:4]   # extract first four characters (year)
-startmonth = startdate[5:6]  # extract characters 5 and 6 (month)
-startday = startdate[7:8]    # extract last two characters (day)
-# Converting to integers
-startyear = parse(Int, startyear)
-startmonth = parse(Int, startmonth)
-startday = parse(Int, startday)
+# Convert string in date
+startdate = Date(startdate, "yyyy-mm-dd")
 
-endyear = enddate[1:4]   # extract first four characters (year)
-endmonth = enddate[5:6]  # extract characters 5 and 6 (month)
-endday = enddate[7:8]    # extract last two characters (day)
-endyear = parse(Int, endyear)
-endmonth = parse(Int, endmonth)
-endday = parse(Int, endday)
+# extract year month day
+startyear = year(startdate)
+startmonth = month(startdate)
+startday = day(startdate)
+
+# Convert string in date
+enddate = Date(enddate, "yyyy-mm-dd")
+
+# extract year month day
+endyear = year(enddate)
+endmonth = month(enddate)
+endday = day(enddate)
 
 timerange = [Date(startyear, startmonth, startday),Date(endyear, endmonth, endday)];
 
