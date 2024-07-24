@@ -52,9 +52,11 @@ After that, these files can be edited to add information about your vector file 
 
 **How to use it?**
 -------------------- 
+        
 To use this tool, you need to select, in your history a data collection with your vector data file(s) (format GeoJSON). To do so, you can select the **Upload file** tool, select the *Collection* tab, upload all your templates, click on the *Start* button to integrate the files to Galaxy and then click on *Build*. You will need to choose a name and select *Create collection* to build a collection with your templates. You also can upload your files to Galaxy, select them in the history by clicking the *Select items* button, click on the newly appeared box on the right and select *Build dataset list*. To upload shapefile you need to create a composite data. 
 
 .. class:: warningmark
+        
 '''TIP''' This tool dont accept as inputs composite data like shapefile at the moment. 
 
     ]]></help>
