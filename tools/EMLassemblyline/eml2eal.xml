@@ -51,4 +51,13 @@ on the bottom of the templates outputs and and then selecting *Editor* in the li
 Once edited, this templates can me reassembled to produce a new EML with the **make_eml** tool in the EMLassemblyline tool section.
 
 ]]></help>
+    <citations>
+       <citation type="bibtex">@Manual{,
+       title = {EMLassemblyline: A tool kit for building EML metadata workflows},
+       author = {Colin Smith},
+       year = {2022},
+       note = {https://github.com/EDIorg/EMLassemblyline,
+       https://ediorg.github.io/EMLassemblyline/},
+       }</citation>
+    </citations>
 </tool>
