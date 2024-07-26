@@ -4,7 +4,7 @@ owner: ecology
 remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/marine_omics
 homepage_url: https://github.com/fair-ease/Marine-Omics-Galaxy
 long_description: |
-  CTool for identifying biosynthetic gene clusters (BGCs) in genomic & metagenomic data
+  Tool for identifying biosynthetic gene clusters (BGCs) in genomic & metagenomic data
 type: unrestricted
 auto_tool_repositories:
   name_template: "{{ tool_id }}"
