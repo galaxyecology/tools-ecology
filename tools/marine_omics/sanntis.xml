@@ -11,7 +11,7 @@
         <requirement type="package" version="0.9.3.5">sanntis</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
-        sanntis --ip-file "$input_interpro" --outfile "output_sanntis.gff" "$input_genbank"
+        sanntis --ip-file '$input_interpro' --outfile 'output_sanntis.gff' '$input_genbank'
     ]]></command>
     <inputs>
         <param name="input_interpro" type="data" format="tabular" label="Input the TSV file from InterProScan" help="Before using this tool you need to retrieve the right data by using the InterProScan tool"/>
