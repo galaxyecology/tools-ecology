@@ -8,7 +8,7 @@
         <edam_topic>topic_3387</edam_topic>
     </edam_topics>
     <requirements>
-        <requirement type="package" version="0.9.3.5">sanntis</requirement>
+        <requirement type="package" version="@TOOL_VERSION@">sanntis</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
         sanntis --ip-file '$input_interpro' --outfile 'output_sanntis.gff' '$input_genbank'
