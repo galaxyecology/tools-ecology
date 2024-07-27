@@ -1,0 +1,15 @@
+categories:
+    - Ecology
+owner: ecology
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/marine_omics
+homepage_url: https://github.com/Finn-Lab/SanntiS
+long_description: |
+  The Sanntis tool identify biosynthetic gene clusters (BGCs) in genomic & metagenomic data
+type: unrestricted
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrapper for Sanntis tool: {{ tool_name }}."
+suite:
+  name: "marine_omics_suite"
+  description: "A suite of tools for marine omics data"
+  type: unrestricted
