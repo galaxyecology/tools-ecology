@@ -278,7 +278,7 @@ The Datum is the center of the geoid.
 Depending on Earth's relief on a local studied area, or on one's criteria for earth center, Datum and Ellipsoid may vary.
 PROJ4 present 10 built-in Ellipsoids and Datums:  GRS80, airy, bessel, clrk66, intl, WGS60, WGS66, WGS72, WGS84, sphere.
 
-https://proj.org/en/9.4/usage/ellipsoids.html#ellipsoids
+`Click here for more information on ellipsoids <https://proj.org/en/9.4/usage/ellipsoids.html#ellipsoids>`
 
 Other usefull links:
 
