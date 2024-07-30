@@ -1,4 +1,4 @@
-<tool id="terrabyte_ogc_api_processes" name="Terrabyte OGC API Processes" version="0.1.0">
+<tool id="terrabyte_ogc_api_processes" name="Terrabyte OGC API Processes" version="0.1.0" profile="22.05">
 	<description>Water quality EO Application Package</description>
 	<requirements>
 		<requirement type="package" version="4.3.1">r-base</requirement>
