@@ -38,7 +38,6 @@
 	<help>
 		This process takes a Sentinel-2 Scene as input, and calculates chlorophyll-a concentration and turbidity in water bodies in an EO Application Package. 
 		It returns the results as tiffs representing the input scene. You need to have an account at the Leibniz Supercomputing Center (LRZ) with a grant for "terrabyte". 
-		As part of the OGC Open Science Persistent Demonstrator you can ask for an account at LRZ/terrabyte. 
 		If you are associated with an educational organisation, you can likely create an account with your account using the eduGAIN federation. 
 		Please have a look at our documentation: https://docs.terrabyte.lrz.de/services/identity/get-account/.
 	</help>
