@@ -41,7 +41,7 @@
          ]]></command>
     <inputs>
         <param name='input_file' type='data' format='shp'
-               label='Input geospatial data' help='Provide geospatial data in shapefile format (shp). To upload a shapefile on Galaxy : Click on "..." (Browse or update dataset) or "Upload File" on the side bar > Upload > Composite > composite type : shp > upload the available files of your dataset > start > close '/>
+               label='Input geospatial data' help='Provide geospatial data in shapefile format (shp).'/>
         <param name='output_file_format' type='select' checked='true' multiple='true' optional='false'
                label='Output Format' help='Choose the file format in witch the tool output will be, multiple formats can be selected for multiple outputs, default output format is a shapefile.'>
             <option value='shp' selected='true'>shp</option>
@@ -189,7 +189,8 @@
              label='BMP output'>
             <filter>output_file_format and 'bmp' in output_file_format</filter>
         </data>
-        <data name='shapefile' format='shp' from_work_dir='shapefile' label='Shapefile dataset'>
+        <data name='shapefile' format='shp' from_work_dir='shapefile' 
+             label='Shapefile dataset'>
             <filter>output_file_format and 'shp' in output_file_format</filter>
         </data>
     </outputs>
@@ -245,6 +246,12 @@
     <help><![CDATA[
 .. class:: infomark
 
+**Uploading composite data**
+
+To upload a shapefile on Galaxy : Click on "..." (Browse or update dataset) or "Upload File" on the side bar > Upload > Composite > composite type : shp > upload the available files of your dataset > start > close 
+
+.. class:: infomark
+
 **What it does ?**
 
 This tool convert coordinates reference system of shapefiles (shp) for geospatial analysis. 
@@ -261,6 +268,38 @@ This tool only takes shapefiles(shp) as input, if you need to convert a csv file
 **Output**
 
 This tool provides multiples possible outputs, mainly shapefiles, pdf and tiff.
+
+.. class:: infomark
+
+**More on datums and ellipsoids**
+
+An ellipsoid is a mathematically defined surface which approximates the geoid: the surface of the Earth's gravity field, which is approximately the same as mean sea level.
+The Datum is the center of the geoid.
+Depending on Earth's relief on a local studied area, or on one's criteria for earth center, Datum and Ellipsoid may vary.
+PROJ4 present 10 built-in Ellipsoids and Datums:  GRS80, airy, bessel, clrk66, intl, WGS60, WGS66, WGS72, WGS84, sphere.
+
+https://proj.org/en/9.4/usage/ellipsoids.html#ellipsoids
+
+Other usefull links:
+
+https://proj.org/en/9.4/usage/projections.html
+https://proj.org/en/9.4/geodesic.html
+
+https://proj.org/en/9.4/operations/projections/index.html
+
+* Adams World in a Square II (adams_ws2) : https://proj.org/en/9.4/operations/projections/adams_ws2.html 
+* Azimuthal Equidistant (aeqd) : https://proj.org/en/9.4/operations/projections/aeqd.html 
+* Lambert Azimuthal Equal Area (laea) : https://proj.org/en/9.4/operations/projections/laea.html 
+* Albers Equal Area (aea) : https://proj.org/en/9.4/operations/projections/aea.html 
+* Equidistant Conic(eqdc) : https://proj.org/en/9.4/operations/projections/eqdc.html 
+* Natural Earth II (natearth2) : https://proj.org/en/9.4/operations/projections/natearth2.html 
+* Web Mercator (webmerc) : https://proj.org/en/9.4/operations/projections/webmerc.html 
+* Cylindrical Equal Area (cea) : https://proj.org/en/9.4/operations/projections/cea.html 
+* Transverse Cylindrical Equal Area (tcea) : https://proj.org/en/9.4/operations/projections/tcea.html 
+* Universal Transverse Mercator (UTM) : https://proj.org/en/9.4/operations/projections/utm.html 
+* Space Oblique Mercator (SOM) : https://proj.org/en/9.4/operations/projections/som.html 
+* Equidistant Cylindrical (eqc) : https://proj.org/en/9.4/operations/projections/eqc.html
+                    
 
     ]]></help>
     <citations>

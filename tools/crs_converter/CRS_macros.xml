@@ -1,7 +1,7 @@
 <macros>
     <xml name='ellps_options'>
         <param name ='ellps' type='select' checked='true'
-               label='Ellipsoid and Datum' help='The name of built-in ellipsoid definition. 
+               label='Ellipsoid and Datum' help='The name of built-in ellipsoid definition. Defines shape and center of earth simplified model used for projection.
                See https://proj.org/en/9.4/usage/ellipsoids.html#ellipsoids for more informations.'>
             <option value='GRS80'>GRS80</option>
             <option value='airy'>airy</option>
@@ -17,7 +17,7 @@
     
     
     <xml name='latitude_options'>
-        <param name ='lat_0' type='integer' value='0' 
+        <param name ='lat_0' type='integer' value='0'
                label='Latitude' help='Latitude of natural origin, 
                latitude of false origin or latitude of projection centre 
                (naming and meaning depend on the projection method).'/>
@@ -53,39 +53,39 @@
     
     <xml name='X_options'>
         <param name ='x_0' type='integer' value='0' 
-               label='X' help='False easting, easting at false origin or easting at projection centre 
-               (naming and meaning depend on the projection method). Always in meters.'/>
+               label='X' help='False easting, easting at false origin or easting at projection centre.
+               (naming and meaning depend on the projection method). Always in meters. Use Ex: Shifting projection on an East-Weast axis'/>
     </xml>
     
     
     <xml name='Y_options'>
         <param name ='y_0' type='integer' value='0' 
-               label='Y' help='False northing, northing at false origin or northing at projection centre 
-               (naming and meaning depend on the projection method). Always in meters.'/>
+               label='Y' help='False northing, northing at false origin or northing at projection centre. 
+               (naming and meaning depend on the projection method). Always in meters. Use Ex: Shifting projection on a North-South axis'/>
     </xml>
     
     
     <xml name='K_options'>
         <param name='k_0' type='integer' value='1' min='1'
-               label='scale factor K' help='Scale factor. Determines scale factor used in the projection.'/>
+               label='Scale factor K' help='Scale factor. Determines scale factor used in the projection.'/>
     </xml>
     
     
     <xml name='zone_options'>
         <param name ='zone' type='integer' value='1' min='1' max='60'
-               label='Select which UTM zone to use.' help='Can be a value between 1-60.'/>
+               label='Select which UTM zone to use' help='Can be a value between 1-60.'/>
     </xml>
     
     
     <xml name='south_options'>
         <param name ='south' type='boolean' checked='false'
-               label='South hemisphere.' help='Add this flag when using the UTM on the southern hemisphere.'/>
+               label='South hemisphere' help='Add this flag when using the UTM on the southern hemisphere.'/>
     </xml>
     
     
     <xml name='approx_options'>
         <param name ='approx' type='boolean' checked='false'
-               label='approximation algorithm.' help='Use faster, less accurate algorithm for the Transverse Mercator.'/>
+               label='Approximation algorithm' help='Use faster, less accurate algorithm for the Transverse Mercator.'/>
     </xml>
     
     
