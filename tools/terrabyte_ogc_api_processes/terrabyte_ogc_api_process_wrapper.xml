@@ -1,4 +1,4 @@
-<tool id="terrabyte_ogc_api_processes" name="Terrabyte OGC API Processes" version="0.1.0" profile="22.05">
+<tool id="terrabyte_ogc_api_processes" name="Terrabyte OGC API Processes" version="0.1.0">
 	<description>Water quality EO Application Package</description>
 	<requirements>
 		<requirement type="package" version="4.3.1">r-base</requirement>
@@ -7,7 +7,7 @@
 		<requirement type="package" version="1.8.7">r-jsonlite</requirement>
 	</requirements>
 	<command detect_errors="exit_code"><![CDATA[
-	Rscript '$__tool_directory__/terrabyte_ogc_api_process_wrapper.R'
+	Rscript '$__tool_directory__/generic.R'
 		--outputData '$output_data'
 ]]></command>
 	<configfiles>
@@ -25,7 +25,7 @@
 	</outputs>
 	<tests>
 		<test expect_failure="true">
-			<param name="cookie" value="Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ5U0ZVZHZWM2FrZXdpbzVYb1dhMThxci16eVdzZWszMjNOQkxUNnZ2Q1dFIn0.eyJleHAiOjE3MjIyNjA5OTYsImlhdCI6MTcyMjI2MDY5NiwiYXV0aF90aW1lIjoxNzIwNzg1ODExLCJqdGkiOiJhOTA5ZGMxMS02ZjRiLTRhOTktOThmZi02MzNjMWQ4MmJhOTciLCJpc3MiOiJodHRwczovL2F1dGgudGVycmFieXRlLmxyei5kZS9yZWFsbXMvdGVycmFieXRlIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6Ijg5ZDcyMGRkLWRjNTQtNDI2Yi1hZDNjLTlhM2Q0YmZhOTY1MSIsInR5cCI6IkJlYXJlciIsImF6cCI6ImRlLmxyei50ZXJyYWJ5dGUucHJvY2Vzc2luZyIsInNlc3Npb25fc3RhdGUiOiJjYjUxOGY1ZC1kZmYwLTQ0ZGYtOTU5Mi02ODMxODdlNjZjYWEiLCJhY3IiOiIwIiwiYWxsb3dlZC1vcmlnaW5zIjpbImh0dHBzOi8vcHJvY2Vzc2luZy50ZXJyYWJ5dGUubHJ6LmRlIiwiaHR0cHM6Ly9wcm9jZXNzaW5nLnRlcnJhYnl0ZS5scnouZGUvIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLXRlcnJhYnl0ZSIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6Im9wZW5pZCBvZmZsaW5lX2FjY2VzcyBwcm9maWxlIGVtYWlsIiwic2lkIjoiY2I1MThmNWQtZGZmMC00NGRmLTk1OTItNjgzMTg3ZTY2Y2FhIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJuYW1lIjoiTWFya3VzIEtvbmtvbCIsInByZWZlcnJlZF91c2VybmFtZSI6ImRpMzhkb2siLCJnaXZlbl9uYW1lIjoiTWFya3VzIiwiZmFtaWx5X25hbWUiOiJLb25rb2wiLCJlbWFpbCI6Im0ua29ua29sQDUybm9ydGgub3JnIn0.NV3uFRK7jV9yYXvoMK2nVfxCnoez8VsjyXIHH-oQI5pulhgBQg69pgc4dvZtkPJshmEwWasnIfodQfzubbXsz8HnZNcswm49tPzexFYAkQ8AbaMyZDiRb5_W1oHvQrpPzNWzKCt8EGoqAnXBQ2UBqJs-FOpY_hUwn_fRffpljtG8TuqpZO-HBqUbrYjMzdewMfafEnfR56xaIM5ceu6XlEN6GQWEnv_pWbzpOBZrhlKyJfm18dYpT4O0TCEjs72fCamtjlm9Sjh2P12z5YiW6j66ikh784VvmS6CpkQnBATmsImU-s6oXj0V7zasf1hVag5EPTBfSzw4lwbP7eLHrg"/>
+			<param name="cookie" value="eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ5U0ZVZHZWM2FrZXdpbzVYb1dhMThxci16eVdzZWszMjNOQkxUNnZ2Q1dFIn0.eyJleHAiOjE3MjIyNjA5OTYsImlhdCI6MTcyMjI2MDY5NiwiYXV0aF90aW1lIjoxNzIwNzg1ODExLCJqdGkiOiJhOTA5ZGMxMS02ZjRiLTRhOTktOThmZi02MzNjMWQ4MmJhOTciLCJpc3MiOiJodHRwczovL2F1dGgudGVycmFieXRlLmxyei5kZS9yZWFsbXMvdGVycmFieXRlIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6Ijg5ZDcyMGRkLWRjNTQtNDI2Yi1hZDNjLTlhM2Q0YmZhOTY1MSIsInR5cCI6IkJlYXJlciIsImF6cCI6ImRlLmxyei50ZXJyYWJ5dGUucHJvY2Vzc2luZyIsInNlc3Npb25fc3RhdGUiOiJjYjUxOGY1ZC1kZmYwLTQ0ZGYtOTU5Mi02ODMxODdlNjZjYWEiLCJhY3IiOiIwIiwiYWxsb3dlZC1vcmlnaW5zIjpbImh0dHBzOi8vcHJvY2Vzc2luZy50ZXJyYWJ5dGUubHJ6LmRlIiwiaHR0cHM6Ly9wcm9jZXNzaW5nLnRlcnJhYnl0ZS5scnouZGUvIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLXRlcnJhYnl0ZSIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6Im9wZW5pZCBvZmZsaW5lX2FjY2VzcyBwcm9maWxlIGVtYWlsIiwic2lkIjoiY2I1MThmNWQtZGZmMC00NGRmLTk1OTItNjgzMTg3ZTY2Y2FhIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJuYW1lIjoiTWFya3VzIEtvbmtvbCIsInByZWZlcnJlZF91c2VybmFtZSI6ImRpMzhkb2siLCJnaXZlbl9uYW1lIjoiTWFya3VzIiwiZmFtaWx5X25hbWUiOiJLb25rb2wiLCJlbWFpbCI6Im0ua29ua29sQDUybm9ydGgub3JnIn0.NV3uFRK7jV9yYXvoMK2nVfxCnoez8VsjyXIHH-oQI5pulhgBQg69pgc4dvZtkPJshmEwWasnIfodQfzubbXsz8HnZNcswm49tPzexFYAkQ8AbaMyZDiRb5_W1oHvQrpPzNWzKCt8EGoqAnXBQ2UBqJs-FOpY_hUwn_fRffpljtG8TuqpZO-HBqUbrYjMzdewMfafEnfR56xaIM5ceu6XlEN6GQWEnv_pWbzpOBZrhlKyJfm18dYpT4O0TCEjs72fCamtjlm9Sjh2P12z5YiW6j66ikh784VvmS6CpkQnBATmsImU-s6oXj0V7zasf1hVag5EPTBfSzw4lwbP7eLHrg"/>
 			<param name="date" value="2019-06-29"/>
 			<param name="delta" value="4"/>
 			<param name="aoi" value="POLYGON ((-7.664532 38.543869, -7.689248 38.141037, -7.159228 38.151837, -7.115289 38.554609, -7.664532 38.543869))"/>
@@ -35,7 +35,13 @@
 			</assert_stderr>
 		</test>
 	</tests>
-	<help>This process takes a Sentinel-2 Scene as input, and calculates chlorophyll-a concentration and turbidity in water bodies in an EO Application Package. It returns the results as tiffs representing the input scene. You need to have an account at the Leibniz Supercomputing Center (LRZ) with a grant for terrabyte. As part of the OGC Open Science Persistent Demonstrator you can ask for an account at LRZ/terrabyte. If you are associated with an educational organisation, you can likely create an account with your account using the eduGAIN federation. Please have a look at our documentation: https://docs.terrabyte.lrz.de/services/identity/get-account/.</help>
+	<help>
+		This process takes a Sentinel-2 Scene as input, and calculates chlorophyll-a concentration and turbidity in water bodies in an EO Application Package. 
+		It returns the results as tiffs representing the input scene. You need to have an account at the Leibniz Supercomputing Center (LRZ) with a grant for terrabyte. 
+		As part of the OGC Open Science Persistent Demonstrator you can ask for an account at LRZ/terrabyte. 
+		If you are associated with an educational organisation, you can likely create an account with your account using the eduGAIN federation. 
+		Please have a look at our documentation: https://docs.terrabyte.lrz.de/services/identity/get-account/.
+	</help>
 	<citations>
 		<citation type="bibtex">@Manual{httr2, title = {httr2: Perform HTTP Requests and Process the Responses}, author = {Hadley Wickham}, year = {2023}, note = {R package version 1.0.0, https://github.com/r-lib/httr2}, url = {https://httr2.r-lib.org},}</citation>
 		<citation type="doi">10.48550/arXiv.1403.2805</citation>
