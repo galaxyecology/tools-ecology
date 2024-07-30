@@ -41,7 +41,7 @@
 
          ]]></command>
     <inputs>
-        <param name ='input_file' type='data' format='shp'
+        <param name='input_file' type='data' format='shp'
                label='Input Format' help='Provide geospatial data in shapefile format (shp). To upload a shapefile on Galaxy : Click on "..." (Browse or update dataset) or "Upload File" on the side bar > Upload > Composite > composite type : shp > upload the available files of your dataset > start > close '/>
         <param name ='output_file_format' type='select' checked='true' multiple='true' optional='false'
                label='Output Format' help='Choose the file format in witch the tool output will be, multiple formats can be selected for multiple outputs, default output format is a shapefile.'>
