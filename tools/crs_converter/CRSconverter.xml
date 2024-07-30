@@ -13,7 +13,7 @@
         Rscript
             '$__tool_directory__/CRSconverter.R'
             $os.path.join($input_file.extra_files_path, 'shapefile.shp')
-            $output_file_format
+            '$output_file_format'
             #for $param_name in $input_param.keys() ## this loop successively calls all the names and values of the PROJ string for each option of the conditional, it avoids a 100 lines command.
                 #if $param_name!='__current_case__'
                     #if $param_name=='south' and $input_param[$param_name]=='false'
