@@ -53,7 +53,7 @@
         </param>
         <conditional name='input_param'>
             <param name ='proj' type='select'
-                   label='Projection ' help='Choose the projection in witch converting your geospatial data, see https://proj.org/en/9.4/operations/projections/index.html for more informations.'>
+                   label='Projection ' help='Choose the projection in witch converting your geospatial data, see the help section below for more informations.'>
                 <option value='adams_ws2'>[Miscellaneous] Adams World in a Square II (adams_ws2)</option>
                 <option value='aeqd'>[Azimuthal] Azimuthal Equidistant (aeqd)</option>
                 <option value='laea' selected='true'>[Azimuthal] Lambert Azimuthal Equal Area (laea)</option>
