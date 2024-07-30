@@ -12,7 +12,7 @@
     <command detect_errors='exit_code'><![CDATA[
         Rscript
             '$__tool_directory__/CRSconverter.R'
-            $os.path.join($input_file.extra_files_path, 'shapefile.shp')
+            '$os.path.join($input_file.extra_files_path, 'shapefile.shp')'
             '$output_file_format'
             #for $param_name in $input_param.keys() ## this loop successively calls all the names and values of the PROJ string for each option of the conditional, it avoids a 100 lines command.
                 #if $param_name!='__current_case__'
