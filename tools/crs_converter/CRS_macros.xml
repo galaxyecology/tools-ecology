@@ -66,7 +66,7 @@
     
     
     <xml name='K_options'>
-        <param name ='k_0' type='integer' value='1' min='1'
+        <param name='k_0' type='integer' value='1' min='1'
                label='scale factor K' help='Scale factor. Determines scale factor used in the projection.'/>
     </xml>
     
