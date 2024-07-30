@@ -14,11 +14,11 @@
 		<inputs name="inputs" filename="inputs.json" data_style="paths"/>
 	</configfiles>
 	<inputs>
-		<param name="cookie" label="Cookie" optional="false" value="" type="text" help="See 'Help' for for more information regarding the cookie."/>
-		<param name="date" label="Date" optional="false" help="Center date for data query" type="text"/>
-		<param name="delta" label="Delta" optional="false" help="Days delta +- around the specified date" type="text"/>
-		<param name="aoi" label="AOI" optional="false" help="Area of interest as GeoJSON polygon to find intersection of products" type="text"/>
-		<param name="cloud_cover" label="Cloud Cover" optional="false" help="Maximum cloud coverage permitted for query" type="text"/>
+		<param name="cookie" label="Cookie" optional="false" value="" type="text"/>
+		<param name="date" label="Date" optional="false" help="Center date for data query in the format YYYY-MM-DD, e.g., '2019-06-29'." type="text"/>
+		<param name="delta" label="Delta" optional="false" help="Days delta +- around the specified date." type="text"/>
+		<param name="aoi" label="AOI" optional="false" help="Area of interest as Well-Known-Text (WKT) polygon to find intersection of products, e.g., 'POLYGON ((-7.664532 38.543869, -7.689248 38.141037, -7.159228 38.151837, -7.115289 38.554609, -7.664532 38.543869))'." type="text"/>
+		<param name="cloud_cover" label="Cloud Cover" optional="false" help="Maximum cloud coverage permitted for query, e.g. '0.1'." type="text"/>
 	</inputs>
 	<outputs>
 		<data name="output_data" format="txt" label="Water quality EO Application Package"/>
@@ -28,7 +28,7 @@
 			<param name="cookie" value="eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ5U0ZVZHZWM2FrZXdpbzVYb1dhMThxci16eVdzZWszMjNOQkxUNnZ2Q1dFIn0.eyJleHAiOjE3MjIyNjA5OTYsImlhdCI6MTcyMjI2MDY5NiwiYXV0aF90aW1lIjoxNzIwNzg1ODExLCJqdGkiOiJhOTA5ZGMxMS02ZjRiLTRhOTktOThmZi02MzNjMWQ4MmJhOTciLCJpc3MiOiJodHRwczovL2F1dGgudGVycmFieXRlLmxyei5kZS9yZWFsbXMvdGVycmFieXRlIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6Ijg5ZDcyMGRkLWRjNTQtNDI2Yi1hZDNjLTlhM2Q0YmZhOTY1MSIsInR5cCI6IkJlYXJlciIsImF6cCI6ImRlLmxyei50ZXJyYWJ5dGUucHJvY2Vzc2luZyIsInNlc3Npb25fc3RhdGUiOiJjYjUxOGY1ZC1kZmYwLTQ0ZGYtOTU5Mi02ODMxODdlNjZjYWEiLCJhY3IiOiIwIiwiYWxsb3dlZC1vcmlnaW5zIjpbImh0dHBzOi8vcHJvY2Vzc2luZy50ZXJyYWJ5dGUubHJ6LmRlIiwiaHR0cHM6Ly9wcm9jZXNzaW5nLnRlcnJhYnl0ZS5scnouZGUvIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLXRlcnJhYnl0ZSIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6Im9wZW5pZCBvZmZsaW5lX2FjY2VzcyBwcm9maWxlIGVtYWlsIiwic2lkIjoiY2I1MThmNWQtZGZmMC00NGRmLTk1OTItNjgzMTg3ZTY2Y2FhIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJuYW1lIjoiTWFya3VzIEtvbmtvbCIsInByZWZlcnJlZF91c2VybmFtZSI6ImRpMzhkb2siLCJnaXZlbl9uYW1lIjoiTWFya3VzIiwiZmFtaWx5X25hbWUiOiJLb25rb2wiLCJlbWFpbCI6Im0ua29ua29sQDUybm9ydGgub3JnIn0.NV3uFRK7jV9yYXvoMK2nVfxCnoez8VsjyXIHH-oQI5pulhgBQg69pgc4dvZtkPJshmEwWasnIfodQfzubbXsz8HnZNcswm49tPzexFYAkQ8AbaMyZDiRb5_W1oHvQrpPzNWzKCt8EGoqAnXBQ2UBqJs-FOpY_hUwn_fRffpljtG8TuqpZO-HBqUbrYjMzdewMfafEnfR56xaIM5ceu6XlEN6GQWEnv_pWbzpOBZrhlKyJfm18dYpT4O0TCEjs72fCamtjlm9Sjh2P12z5YiW6j66ikh784VvmS6CpkQnBATmsImU-s6oXj0V7zasf1hVag5EPTBfSzw4lwbP7eLHrg"/>
 			<param name="date" value="2019-06-29"/>
 			<param name="delta" value="4"/>
-			<param name="aoi" value="POLYGON ((-7.664532 38.543869, -7.689248 38.141037, -7.159228 38.151837, -7.115289 38.554609, -7.664532 38.543869))"/>
+			<param name="aoi" value="POLYGON ((-7.664532 38.543869, -7.689248 38.141037, -7.159228 38.151837, -7.115289 38.554609, -7.664532 38.543869))."/>
 			<param name="cloud_cover" value="0.1"/>
 			<assert_stderr>
 				<has_text text="HTTP 401 Unauthorized"/>
