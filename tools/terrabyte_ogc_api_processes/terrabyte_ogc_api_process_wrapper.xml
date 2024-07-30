@@ -7,7 +7,7 @@
 		<requirement type="package" version="1.8.7">r-jsonlite</requirement>
 	</requirements>
 	<command detect_errors="exit_code"><![CDATA[
-	Rscript '$__tool_directory__/generic.R'
+	Rscript '$__tool_directory__/terrabyte_ogc_api_process_wrapper.R'
 		--outputData '$output_data'
 ]]></command>
 	<configfiles>
