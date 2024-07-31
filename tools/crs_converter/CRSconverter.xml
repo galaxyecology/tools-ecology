@@ -14,9 +14,9 @@
             '$__tool_directory__/CRSconverter.R'
             '$os.path.join($input_file.extra_files_path, 'shapefile.shp')'
             '$output_file_format'
-            #for $param_name in $input_param.keys() ## this loop successively calls all the names and values of the PROJ string for each option of the conditional, it avoids a 100 lines command.
-                #if $param_name!='__current_case__'
-                    #if $param_name=='south' and $input_param[$param_name]=='false'
+            #for $param_name in $input_param.keys()  ## this loop successively calls all the names and values of the PROJ string for each option of the conditional, it avoids a 100 lines command.
+                #if $param_name!='__current_case__'                                     ## End result of the loop : ' ' '+' proj '=' laea ' ' '+' ellps '=' WGS84 ' ' '+' lat_0 '=' -50 ' ' '+' lon_0 '=' 70 ' ' '+' x_0 '=' 0 ' ' '+' y_0 '=' 0 ' ' '+' units '=' m
+                    #if $param_name=='south' and $input_param[$param_name]=='false'     ## String after concatenation instde the R script: +proj=laea +ellps=WGS84 +lat_0=-50 +lon_0=70 +x_0=0 +y_0=0 +units=m
                         #pass
                     #elif $param_name=='south' and $input_param[$param_name]=='true'
                         ' ' '+' $param_name
