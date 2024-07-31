@@ -81,7 +81,7 @@
             <param name="enddate" value="2017-12-31"/>
             <param name="selmin" value="0"/>
             <param name="selmax" value="100"/>
-            <output name="output_netcdf" value="DIVAnd_netcdf_output.netcdf">
+            <output name="output_netcdf">
                 <assert_contents>
             	    <has_size value="297051" delta="0"/>
             	</assert_contents>
