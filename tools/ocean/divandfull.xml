@@ -98,8 +98,8 @@ This tool takes a observation netcdf file and create climatology
 
 **Input**
 
-- An pcean observation netcdf file
-- A bathymetrie netcdf file, you can download it like this: download("https://dox.ulg.ac.be/index.php/s/U0pqyXhcQrXjEUX/download", "gebco_30sec_8.nc")
+- An ocean observation netcdf file
+- A bathymetry netcdf file, you can download it like this: download("https://dox.ulg.ac.be/index.php/s/U0pqyXhcQrXjEUX/download", "gebco_30sec_8.nc")
 - Some complementary information for the tool to better understand your data and create your climatology on the right area: latitudes, longitudes, dates, and salinity.$
 
 **Output**
