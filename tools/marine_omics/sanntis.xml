@@ -1,0 +1,53 @@
+<tool id="sanntis_marine" name="Sanntis biosynthetic gene clusters" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="20.01" license="MIT">
+    <description>in genomic and metagenomic data</description>
+    <macros>
+        <token name="@TOOL_VERSION@">0.9.3.5</token>
+        <token name="@VERSION_SUFFIX@">0</token>
+    </macros>
+    <edam_topics>
+        <edam_topic>topic_3387</edam_topic>
+    </edam_topics>
+    <requirements>
+        <requirement type="package" version="@TOOL_VERSION@">sanntis</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        sanntis --ip-file '$input_interpro' --outfile 'output_sanntis.gff' '$input_genbank'
+    ]]></command>
+    <inputs>
+        <param name="input_interpro" type="data" format="tabular" label="Input the TSV file from InterProScan" help="Before using this tool you need to retrieve the right data by using the InterProScan tool"/>
+        <param name="input_genbank" type="data" format="genbank" label="Input a Genbank .gb file" help="It needs to have the right structure and fit the protein fasta file used in InterProScan"/>
+    </inputs>
+    <outputs>
+        <data name="output_sanntis" from_work_dir="output_sanntis.gff" format="gff3" label="Sanntis output data"/>
+    </outputs>
+    <tests>
+        <test expect_num_outputs="1">
+            <param name="input_interpro" value="BGC0001472.fna.prodigal.faa.ip.tsv"/>
+            <param name="input_genbank" value="BGC0001472.fna.prodigal.faa.gb"/>
+            <output name="output_sanntis" value="Sanntis_output_data.gff3"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+
+.. class:: infomark
+
+**What it does**
+
+SMBGC Annotation using Neural Networks Trained on Interpro Signatures
+Tool for identifying biosynthetic gene clusters (BGCs) in genomic & metagenomic data
+
+.....
+
+
+**Input**
+- A tsv file coming from InterProScan tool from which you can retrieve the right data.
+- The right Genbank file with the right structure that fits the protein fasta file used to run InterProScan tool
+
+**Output**
+- A Gff3 file
+
+    ]]></help>
+    <citations>
+        <citation type="doi">10.1101/2023.05.23.540769</citation>
+    </citations>
+</tool>
