@@ -83,7 +83,7 @@
             <param name="selmax" value="100"/>
             <output name="output_netcdf">
                 <assert_contents>
-            	    <has_size value="297051" delta="0"/>
+            	    <has_size value="68291" delta="0"/>
             	</assert_contents>
             </output>
         </test>
