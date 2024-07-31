@@ -28,28 +28,30 @@
         '$varname'
         '$selmin'
         '$selmax'
+        '$bathname'
     ]]></command>
     <inputs>
-        <param argument="input_netcdf_identifier" type="data" format="netcdf" label="Input your netcdf data"/>
-        <param argument="longmin" type="float" min="-180" max="180" value="0" label="Longitude minimal"/>
-        <param argument="longmax" type="float" min="-180" max="180" value="0" label="Longitude maximal"/>
-        <param argument="latmin" type="float" min="-180" max="180" value="0" label="Latitude minimal"/>
-        <param argument="latmax" type="float" min="-180" max="180" value="0" label="Latitude maximal"/>
-        <param argument="startdate" type="text" value="yyyy-mm-dd" label="Input the starting date">
+        <param name="input_netcdf_identifier" type="data" format="netcdf" label="Input your netcdf data"/>
+        <param name="bathname" type="data" format="netcdf" label="Input your bathymetry netcdf file" help="for more info see below."/>
+        <param name="longmin" type="float" min="-180" max="180" value="0" label="Longitude minimal"/>
+        <param name="longmax" type="float" min="-180" max="180" value="0" label="Longitude maximal"/>
+        <param name="latmin" type="float" min="-180" max="180" value="0" label="Latitude minimal"/>
+        <param name="latmax" type="float" min="-180" max="180" value="0" label="Latitude maximal"/>
+        <param name="startdate" type="text" value="yyyy-mm-dd" label="Input the starting date">
             <sanitizer invalid_char="">
                 <valid initial="string.digits">
                     <add value="-"/>
                 </valid>
             </sanitizer>
         </param>
-        <param argument="enddate" type="text" value="yyyy-mm-dd" label="Input the ending date">
+        <param name="enddate" type="text" value="yyyy-mm-dd" label="Input the ending date">
             <sanitizer invalid_char="">
                 <valid initial="string.digits">
                     <add value="-"/>
                 </valid>
             </sanitizer>
         </param>
-        <param argument="varname" type="text" value="Variable" label="Write the name of the variable of the analysis" help="Example: phosphate">
+        <param name="varname" type="text" value="variable" label="Write the name of the variable of the analysis" help="Example: phosphate">
             <sanitizer invalid_char="">
                 <valid initial="string.letters">
                     <add value="_"/>
@@ -57,8 +59,8 @@
             </sanitizer>
             <validator type="regex">[0-9a-zA-Z_]+</validator>
         </param>
-        <param argument="selmin" type="integer" min="0" max="100" value="0" label="Minimum of the salinity"/>
-        <param argument="selmax" type="integer" min="0" max="100" value="0" label="Maximum of the salinity"/>
+        <param name="selmin" type="integer" min="0" max="100" optional="true" value="0" label="Minimum of the salinity"/>
+        <param name="selmax" type="integer" min="0" max="100" optional="true" value="0" label="Maximum of the salinity"/>
     </inputs>
     <outputs>
         <data name="output_netcdf" label="DIVAnd netcdf output" from_work_dir="outputs_netcdf/*.nc" format="netcdf"/>
@@ -69,6 +71,7 @@
     <tests>
         <test expect_num_outputs="1">
             <param name="input_netcdf_identifier" value="data_from_Eutrophication_Med_profiles_2022_unrestricted.nc"/>
+            <param name="bathname" value="gebco_30sec_8.nc"/>
             <param name="longmin" value="19.0"/>
             <param name="longmax" value="30.0"/>
             <param name="latmin" value="32.0"/>
@@ -76,9 +79,13 @@
             <param name="varname" value="phosphate"/>
             <param name="startdate" value="1950-01-01"/>
             <param name="enddate" value="2017-12-31"/>
-            <param name="latmin" value="0.0"/>
-            <param name="latmax" value="90.0"/>
-            <output name="output_netcdf" value="DIVAnd_netcdf_output.netcdf"/>
+            <param name="selmin" value="0"/>
+            <param name="selmax" value="100"/>
+            <output name="output_netcdf" value="DIVAnd_netcdf_output.netcdf">
+                <assert_contents>
+            	    <has_size value="297051" delta="0"/>
+            	</assert_contents>
+            </output>
         </test>
     </tests>
     <help><![CDATA[
@@ -86,6 +93,21 @@
 .. class:: infomark
 
 **What it does**
+
+This tool takes a observation netcdf file and create climatology 
+
+**Input**
+
+- An pcean observation netcdf file
+- A bathymetrie netcdf file, you can download it like this: download("https://dox.ulg.ac.be/index.php/s/U0pqyXhcQrXjEUX/download", "gebco_30sec_8.nc")
+- Some complementary information for the tool to better understand your data and create your climatology on the right area: latitudes, longitudes, dates, and salinity.$
+
+**Output**
+
+One netcdf file containing the climatology created by DIVAnd.
+
+
+**A bit of context**
 
 DIVAnd (Data-Interpolating Variational Analysis in n dimensions) performs an n-dimensional variational analysis/gridding of
 arbitrarily located observations. Observations will be interpolated/analyzed on a curvilinear grid in 1, 2, 3 or more dimensions.

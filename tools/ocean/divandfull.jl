@@ -39,6 +39,7 @@ else
     varname = args[8]
     selmin = parse(Float64, args[9])
     selmax = parse(Float64, args[10])
+    bathname = args[11]
 end
 
 ## This script will create a climatology:
@@ -130,9 +131,6 @@ checkobs((obslon,obslat,obsdepth,obstime),obsval,obsid)
 
 # Modify bathname according to the resolution required.
 
-download("https://dox.ulg.ac.be/index.php/s/U0pqyXhcQrXjEUX/download", "gebco_30sec_8.nc")
-bathname="gebco_30sec_8.nc"
-
 @time bx,by,b = load_bath(bathname,true,lonr,latr);
      
 #figure("Data-Bathymetry")
@@ -183,7 +181,6 @@ obslat = obslat[sel]
 obsdepth = obsdepth[sel]
 obstime = obstime[sel]
 obsid = obsid[sel];
-
 
 ### 4. Analysis parameters
 # Correlation lengths and noise-to-signal ratio
@@ -241,11 +238,11 @@ function plotres(timeindex,sel,fit,erri)
     end
 end
 
+print("bouh")
 ## 7.2 Create the gridded fields using diva3d
 # Here only the noise-to-signal ratio is estimated.
 # Set fitcorrlen to true to also optimise the correlation length.
-
-@time dbinfo = diva3d((lonr,latr,depthr,TS),
+@time dbinfo = DIVAnd.diva3d((lonr,latr,depthr,TS),
     (obslon,obslat,obsdepth,obstime), obsval,
     len, epsilon2,
     filename,varname,
@@ -256,5 +253,4 @@ end
     );
 
 # Save the observation metadata in the NetCDF file.
-
 DIVAnd.saveobs(filename,(obslon,obslat,obsdepth,obstime),obsid);
