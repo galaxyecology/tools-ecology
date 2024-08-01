@@ -59,9 +59,6 @@
     </inputs>
     <outputs>
         <data name="output_netcdf" label="DIVAnd netcdf output" from_work_dir="outputs_netcdf/*.nc" format="netcdf"/>
-        <!--<collection name="outputs" type="list" label="DIVAnd all outputs">
-            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" directory="/outputs/" format="png"/>
-        </collection>-->
     </outputs>
     <tests>
         <test expect_num_outputs="1">
