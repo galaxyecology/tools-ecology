@@ -4,28 +4,17 @@
 ##    DIVAndrun analsysis    ##
 ###############################
 import Pkg; 
-#Pkg.add("julia")  
 using Pkg
 Pkg.status()
 
 ### Import packages
-# using NCDatasets
-# using PhysOcean
-# using DataStructures
 using DIVAnd
 using Dates
-# using Statistics
-# using Random
-
 using Printf
-# Pkg.add("PyCall")
-# using PyCall
-# PyCall.pyimport("matplotlib.pyplot")
-### Import data
-# Récupération des arguments de la ligne de commande
+# Getting the arguments from the command line
 args = ARGS
 
-# Importation des données
+# Import data
 if length(args) < 4
     error("This tool needs at least 4 arguments")
 else
@@ -111,16 +100,6 @@ datafile = netcdf_data
 @time obsval,obslon,obslat,obsdepth,obstime,obsid = NCODV.load(Float64, datafile, 
     "Water body $(varname)");
 
-#figure("Data")
-#ax = subplot(1,1,1)
-#plot(obslon, obslat, "ko", markersize=.1, markerfacecolor="k")
-#aspectratio = 1/cos(mean(latr) * pi/180)
-#ax.tick_params("both",labelsize=6)
-#gca().set_aspect(aspectratio)
-#figname = "Data.png"
-#plt.savefig(joinpath(figdir, figname), dpi=600, bbox_inches="tight");
-#plt.close_figs()
-
 # Check the extremal values of the observations
 checkobs((obslon,obslat,obsdepth,obstime),obsval,obsid)
 
@@ -132,17 +111,6 @@ checkobs((obslon,obslat,obsdepth,obstime),obsval,obsid)
 # Modify bathname according to the resolution required.
 
 @time bx,by,b = load_bath(bathname,true,lonr,latr);
-     
-#figure("Data-Bathymetry")
-#ax = subplot(1,1,1)
-#pcolor(bx, by, permutedims(b, [2,1]));
-#colorbar(orientation="vertical", shrink=0.8).ax.tick_params(labelsize=8)
-#contour(bx, by, permutedims(b, [2,1]), [0, 0.1], colors="k", linewidths=.5)
-#gca().set_aspect(aspectratio)
-#ax.tick_params("both",labelsize=6)
-#figname = "Bathymetry.png"
-#plt.savefig(joinpath(figdir, figname), dpi=600, bbox_inches="tight");
-#plt.close_figs()
 
 ## 2.2 Create mask
 # False for sea
@@ -157,17 +125,6 @@ for k = 1:length(depthr)
     end
 end
 @show size(mask)
-
-
-#figure("Data-Mask")
-#ax = subplot(1,1,1)
-#gca().set_aspect(aspectratio)
-#ax.tick_params("both",labelsize=6)
-#ax.pcolor(bx, by, transpose(mask[:,:,1]), cmap=plt.cm.binary_r)
-#ax.set_title("Land-sea mask")
-#figname = "Mask.png"
-#plt.savefig(joinpath(figdir, figname), dpi=600, bbox_inches="tight");
-#plt.close_figs()
 
 ### 3. Quality control
 # We check the salinity value.
@@ -194,7 +151,6 @@ leny = fill(100_000.,sz)   # 100 km
 lenz = fill(25.,sz);      # 25 m 
 len = (lenx, leny, lenz);
 epsilon2 = 0.1;
-#epsilon2 = epsilon2 * rdiag;
 
 ### Output file name
 outputdir = "outputs_netcdf/"
@@ -238,7 +194,6 @@ function plotres(timeindex,sel,fit,erri)
     end
 end
 
-print("bouh")
 ## 7.2 Create the gridded fields using diva3d
 # Here only the noise-to-signal ratio is estimated.
 # Set fitcorrlen to true to also optimise the correlation length.
