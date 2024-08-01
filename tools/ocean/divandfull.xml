@@ -7,11 +7,6 @@
     <requirements>
         <requirement type="package" version="1.8.5">julia</requirement>
         <requirement type="package" version="2.7.9">julia-divand</requirement>
-        <!--<requirement type="package" version="0.8.2">julia-pycall</requirement>
-        <requirement type="package" version="0.4.4">julia-dates</requirement>
-        <requirement type="package" version="@TOOL_VERSION@">ncdatasets</requirement>
-        <requirement type="package" version="@TOOL_VERSION@">physocean</requirement>
-        -->
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
     ## The HOME .julia folder is not writable inside the Docker container, so we need to set one that is writable. 
