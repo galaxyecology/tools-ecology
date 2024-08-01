@@ -1,0 +1,140 @@
+<tool id="divand_full_analysis" name="DIVAnd" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="20.01" license="MIT">
+    <description>Data-Interpolating Variational Analysis in n dimensions</description>
+    <macros>
+        <token name="@TOOL_VERSION@">0.1.0</token>
+        <token name="@VERSION_SUFFIX@">0</token>
+    </macros>
+    <requirements>
+        <requirement type="package" version="1.8.5">julia</requirement>
+        <requirement type="package" version="2.7.9">julia-divand</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+    ## The HOME .julia folder is not writable inside the Docker container, so we need to set one that is writable. 
+    export JULIA_DEPOT_PATH="\$PWD:\$JULIA_DEPOT_PATH" &&
+    julia
+        '$__tool_directory__/divandfull.jl'
+        '$input_netcdf_identifier'
+        '$longmin'
+        '$longmax'
+        '$latmin'
+        '$latmax'
+        '$startdate'
+        '$enddate'
+        '$varname'
+        '$selmin'
+        '$selmax'
+        '$bathname'
+    ]]></command>
+    <inputs>
+        <param name="input_netcdf_identifier" type="data" format="netcdf" label="Input your netcdf data"/>
+        <param name="bathname" type="data" format="netcdf" label="Input your bathymetry netcdf file" help="for more info see below."/>
+        <param name="longmin" type="float" min="-180" max="180" value="0" label="Longitude minimal"/>
+        <param name="longmax" type="float" min="-180" max="180" value="0" label="Longitude maximal"/>
+        <param name="latmin" type="float" min="-180" max="180" value="0" label="Latitude minimal"/>
+        <param name="latmax" type="float" min="-180" max="180" value="0" label="Latitude maximal"/>
+        <param name="startdate" type="text" value="yyyy-mm-dd" label="Input the starting date">
+            <sanitizer invalid_char="">
+                <valid initial="string.digits">
+                    <add value="-"/>
+                </valid>
+            </sanitizer>
+        </param>
+        <param name="enddate" type="text" value="yyyy-mm-dd" label="Input the ending date">
+            <sanitizer invalid_char="">
+                <valid initial="string.digits">
+                    <add value="-"/>
+                </valid>
+            </sanitizer>
+        </param>
+        <param name="varname" type="text" value="variable" label="Write the name of the variable of the analysis" help="Example: phosphate">
+            <sanitizer invalid_char="">
+                <valid initial="string.letters">
+                    <add value="_"/>
+                </valid>
+            </sanitizer>
+            <validator type="regex">[0-9a-zA-Z_]+</validator>
+        </param>
+        <param name="selmin" type="integer" min="0" max="100" optional="true" value="0" label="Minimum of the salinity"/>
+        <param name="selmax" type="integer" min="0" max="100" optional="true" value="0" label="Maximum of the salinity"/>
+    </inputs>
+    <outputs>
+        <data name="output_netcdf" label="DIVAnd netcdf output" from_work_dir="outputs_netcdf/*.nc" format="netcdf"/>
+    </outputs>
+    <tests>
+        <test expect_num_outputs="1">
+            <param name="input_netcdf_identifier" value="data_from_Eutrophication_Med_profiles_2022_unrestricted.nc"/>
+            <param name="bathname" location="https://dox.ulg.ac.be/index.php/s/U0pqyXhcQrXjEUX/download"/>
+            <param name="longmin" value="19.0"/>
+            <param name="longmax" value="30.0"/>
+            <param name="latmin" value="32.0"/>
+            <param name="latmax" value="38.0"/>
+            <param name="varname" value="phosphate"/>
+            <param name="startdate" value="1950-01-01"/>
+            <param name="enddate" value="2017-12-31"/>
+            <param name="selmin" value="0"/>
+            <param name="selmax" value="100"/>
+            <output name="output_netcdf">
+                <assert_contents>
+            	    <has_size value="68291" delta="0"/>
+            	</assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+
+.. class:: infomark
+
+**What it does**
+
+This tool takes a observation netcdf file and create climatology 
+
+**Input**
+
+- An ocean observation netcdf file
+- A bathymetry netcdf file, you can download it like this: download("https://dox.ulg.ac.be/index.php/s/U0pqyXhcQrXjEUX/download", "gebco_30sec_8.nc")
+- Some complementary information for the tool to better understand your data and create your climatology on the right area: latitudes, longitudes, dates, and salinity.$
+
+**Output**
+
+One netcdf file containing the climatology created by DIVAnd.
+
+
+**A bit of context**
+
+DIVAnd (Data-Interpolating Variational Analysis in n dimensions) performs an n-dimensional variational analysis/gridding of
+arbitrarily located observations. Observations will be interpolated/analyzed on a curvilinear grid in 1, 2, 3 or more dimensions.
+In this sense it is a generalization of the original two-dimensional DIVA version (still available `here <https://github.com/gher-uliege/DIVA>`_ but
+not further developed anymore).
+
+The method bears some similarities and equivalences with Optimal Interpolation or Krigging in that it allows to create a smooth
+and continous field from a collection of observations, observations which can be affected by errors. The analysis method is however
+different in practise, allowing to take into account topological features, physical constraints etc in a natural way.
+The method was initially developped with ocean data in mind, but it can be applied to any field where localized observations have
+to be used to produce gridded fields which are "smooth".
+
+DIVAndrun is the core analysis function in n dimensions. It does not know anything about the physical parameters or units you work with.
+Coordinates can also be very general. The only constraint is that the metrics (pm,pn,po,...) when multiplied by the corresponding length
+scales len lead to non-dimensional parameters. Furthermore the coordinates of the output grid (xi,yi,zi,...) need to have the same units
+as the observation coordinates (x,y,z,...).
+
+DIVAndfun is a version with a minimal set of parameters (the coordinates and values of observations, i.e. (x,f), the remaining parameters
+being optional) and provides an interpolation function rather than an already gridded field.
+
+diva3D is a higher-level function specifically designed for climatological analysis of data on Earth, using longitude/latitude/depth/time
+coordinates and correlations length in meters. It makes the necessary preparation of metrics, parameter optimizations etc you normally would
+program yourself before calling the analysis function DIVAndrun.
+
+DIVAnd_heatmap can be used for additive data and produces Kernel Density Estimations.
+
+DIVAndgo is only needed for very large problems when a call to DIVAndrun leads to memory or CPU time problems. This function tries to decide
+which solver (direct or iterative) to use and how to make an automatic domain decomposition. Not all options from DIVAndrun are available.
+
+If you want to try out multivariate approaches, you can look at DIVAnd_multivarEOF and DIVAnd_multivarJAC
+
+If you want more informations about the functions and parameters see also the `documentations here <https://gher-uliege.github.io/DIVAnd.jl/latest/index.html>`_.
+
+    ]]></help>
+    <citations>
+        <citation type="doi">doi:10.5194/gmd-7-225-2014</citation>
+    </citations>
+</tool>
