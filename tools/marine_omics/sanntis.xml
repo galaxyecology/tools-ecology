@@ -1,8 +1,8 @@
 <tool id="sanntis_marine" name="Sanntis biosynthetic gene clusters" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="20.01" license="MIT">
     <description>in genomic and metagenomic data</description>
     <macros>
-        <token name="@TOOL_VERSION@">0.9.3.6</token>
-        <token name="@VERSION_SUFFIX@">0</token>
+        <token name="@TOOL_VERSION@">0.9.3.5</token>
+        <token name="@VERSION_SUFFIX@">0.1</token>
     </macros>
     <edam_topics>
         <edam_topic>topic_3387</edam_topic>
