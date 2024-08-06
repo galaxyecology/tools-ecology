@@ -2,7 +2,7 @@
     <description>Data-Interpolating Variational Analysis in n dimensions</description>
     <macros>
         <token name="@TOOL_VERSION@">0.1.0</token>
-        <token name="@VERSION_SUFFIX@">0</token>
+        <token name="@VERSION_SUFFIX@">0.0.1</token>
     </macros>
     <requirements>
         <requirement type="package" version="1.8.5">julia</requirement>
