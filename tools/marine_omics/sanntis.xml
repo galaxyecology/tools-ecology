@@ -24,7 +24,7 @@
                 <option value="genbank">Build genbank</option>
             </param>
             <when value="sanntis">
-                <param name="input_interpro" type="data" format="tabular" label="Input the TSV file from InterProScan" help="Before using this tool you need to retrieve the right data by using the InterProScan tool"/>
+                <param name="input_interpro" type="data" format="tabular" label="Input the tabular file from InterProScan" help="Before using this tool you need to retrieve the right data by using the InterProScan tool"/>
                 <param name="input_genbank" type="data" format="genbank" label="Input a Genbank .gb file" help="It needs to have the right structure and fit the protein fasta file used in InterProScan"/>
             </when>
             <when value="genbank">
