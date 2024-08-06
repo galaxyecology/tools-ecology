@@ -11,20 +11,48 @@
         <requirement type="package" version="@TOOL_VERSION@">sanntis</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
-        sanntis --ip-file '$input_interpro' --outfile 'output_sanntis.gff' '$input_genbank'
+    #if $selection.which_sanntis == 'sanntis': 
+        sanntis --ip-file '$selection.input_interpro' --outfile 'output_sanntis.gff' '$selection.input_genbank'
+    #else:
+        sanntis_build_gb  -n '$selection.input_nuc' -a '$selection.input_prot' -o 'output_sanntis_gb.gb'
+    #end if 
     ]]></command>
     <inputs>
-        <param name="input_interpro" type="data" format="tabular" label="Input the TSV file from InterProScan" help="Before using this tool you need to retrieve the right data by using the InterProScan tool"/>
-        <param name="input_genbank" type="data" format="genbank" label="Input a Genbank .gb file" help="It needs to have the right structure and fit the protein fasta file used in InterProScan"/>
+        <conditional name="selection">
+            <param name="which_sanntis" type="select" label="Do you want to build a genbank or to use sanntis ?" help="If you decide to build a genbank you can then use this genbank intot sanntis.">
+                <option value="sanntis">Run sanntis</option>
+                <option value="genbank">Build genbank</option>
+            </param>
+            <when value="sanntis">
+                <param name="input_interpro" type="data" format="tabular" label="Input the TSV file from InterProScan" help="Before using this tool you need to retrieve the right data by using the InterProScan tool"/>
+                <param name="input_genbank" type="data" format="genbank" label="Input a Genbank .gb file" help="It needs to have the right structure and fit the protein fasta file used in InterProScan"/>
+            </when>
+            <when value="genbank">
+                <param name="input_nuc" type="data" format="fasta" label="Input a nucleotide fasta file"/>
+                <param name="input_prot" type="data" format="fasta" label="Input a protein fasta file" help="Before using this tool you can get the right protein data by using the Prodigal tool"/>
+            </when>
+        </conditional>
     </inputs>
     <outputs>
-        <data name="output_sanntis" from_work_dir="output_sanntis.gff" format="gff3" label="Sanntis output data"/>
+        <data name="output_sanntis" from_work_dir="output_sanntis.gff" format="gff3" label="Sanntis output data">
+            <filter>selection['which_sanntis'] == 'sanntis'</filter>
+        </data>
+        <data name="output_sanntis_gb" from_work_dir="output_sanntis_gb.gb" format="genbank" label="Sanntis output data genbank">
+            <filter>selection['which_sanntis'] == 'genbank'</filter>
+        </data>
     </outputs>
     <tests>
         <test expect_num_outputs="1">
+            <param name="which_sanntis" value="sanntis"/>
             <param name="input_interpro" value="BGC0001472.fna.prodigal.faa.ip.tsv"/>
             <param name="input_genbank" value="BGC0001472.fna.prodigal.faa.gb"/>
             <output name="output_sanntis" value="Sanntis_output_data.gff3"/>
+        </test>
+        <test expect_num_outputs="1">
+            <param name="which_sanntis" value="genbank"/>
+            <param name="input_nuc" value="BGC0001472.fna"/>
+            <param name="input_prot" value="Regex_Find_And_Replace_on_data_21.fasta"/>
+            <output name="output_sanntis_gb" value="Sanntis_output_data.genbank"/>
         </test>
     </tests>
     <help><![CDATA[
@@ -35,6 +63,10 @@
 
 SMBGC Annotation using Neural Networks Trained on Interpro Signatures
 Tool for identifying biosynthetic gene clusters (BGCs) in genomic & metagenomic data
+
+**Or**
+
+This tool can also create a Genbank adapted to be used in sanntis
 
 .....
 
