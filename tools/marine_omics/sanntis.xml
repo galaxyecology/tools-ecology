@@ -1,7 +1,7 @@
 <tool id="sanntis_marine" name="Sanntis biosynthetic gene clusters" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="20.01" license="MIT">
     <description>in genomic and metagenomic data</description>
     <macros>
-        <token name="@TOOL_VERSION@">0.9.3.5</token>
+        <token name="@TOOL_VERSION@">0.9.3.6</token>
         <token name="@VERSION_SUFFIX@">0</token>
     </macros>
     <edam_topics>
@@ -19,7 +19,7 @@
     ]]></command>
     <inputs>
         <conditional name="selection">
-            <param name="which_sanntis" type="select" label="Do you want to build a genbank or to use sanntis ?" help="If you decide to build a genbank you can then use this genbank intot sanntis.">
+            <param name="which_sanntis" type="select" label="Do you want to build a genbank or to make a SMBGC Annotation?" help="If you decide to build a genbank you can then use this genbank to then conduct the annotation.">
                 <option value="sanntis">Run sanntis</option>
                 <option value="genbank">Build genbank</option>
             </param>
