@@ -53,4 +53,13 @@ After that, these files can be edited to add information about your raster data 
 To use this tool, you need to select, in your history a data collection with your raster data (one or more).To do so, you can select the **Upload file** tool, select the *Collection* tab, upload all your templates, click on the *Start* button to integrate the files to Galaxy and then click on *Build*. You will need to choose a name and select *Create collection* to build a collection with your templates.
 You also can upload your files to Galaxy, select them in the history by clicking the *Select items* button, click on the newly appeared box on the right and select *Build dataset list*.
     ]]></help>
+    <citations>
+       <citation type="bibtex">@Manual{,
+       title = {EMLassemblyline: A tool kit for building EML metadata workflows},
+       author = {Colin Smith},
+       year = {2022},
+       note = {https://github.com/EDIorg/EMLassemblyline,
+       https://ediorg.github.io/EMLassemblyline/},
+       }</citation>
+    </citations>
 </tool>

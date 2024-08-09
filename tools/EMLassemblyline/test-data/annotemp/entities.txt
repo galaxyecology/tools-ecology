@@ -1,0 +1,2 @@
+objectName	variable	value
+pivot_wider_jupytool_notebook.ipynb	entityType	executable

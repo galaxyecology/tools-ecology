@@ -1,0 +1,95 @@
+id	element	context	subject	predicate_label	predicate_uri	object_label	object_uri
+/dataset	/dataset	eml	dataset	is about	http://purl.obolibrary.org/obo/IAO_0000136		
+/data_blary_al.txt	/dataTable	dataset	data_blary_al.txt	is about	http://purl.obolibrary.org/obo/IAO_0000136		
+/data_blary_al.txt/Id	/dataTable/attribute	data_blary_al.txt	Id	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/dist_field_margin	/dataTable/attribute	data_blary_al.txt	dist_field_margin	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/dist_hedgerow	/dataTable/attribute	data_blary_al.txt	dist_hedgerow	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/dist_forest	/dataTable/attribute	data_blary_al.txt	dist_forest	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/dist_road	/dataTable/attribute	data_blary_al.txt	dist_road	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/dist_water	/dataTable/attribute	data_blary_al.txt	dist_water	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/dist_urban	/dataTable/attribute	data_blary_al.txt	dist_urban	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/density_field_margins_250m	/dataTable/attribute	data_blary_al.txt	density_field_margins_250m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/density_field_margins_500m	/dataTable/attribute	data_blary_al.txt	density_field_margins_500m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/density_field_margins_750m	/dataTable/attribute	data_blary_al.txt	density_field_margins_750m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/density_field_margins_1000m	/dataTable/attribute	data_blary_al.txt	density_field_margins_1000m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/density_field_margins_1500m	/dataTable/attribute	data_blary_al.txt	density_field_margins_1500m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/density_field_margins_2000m	/dataTable/attribute	data_blary_al.txt	density_field_margins_2000m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/density_field_margins_4000m	/dataTable/attribute	data_blary_al.txt	density_field_margins_4000m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/density_roads_250m	/dataTable/attribute	data_blary_al.txt	density_roads_250m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/density_roads_500m	/dataTable/attribute	data_blary_al.txt	density_roads_500m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/density_roads_750m	/dataTable/attribute	data_blary_al.txt	density_roads_750m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/density_roads_1000m	/dataTable/attribute	data_blary_al.txt	density_roads_1000m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/density_roads_1500m	/dataTable/attribute	data_blary_al.txt	density_roads_1500m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/density_roads_2000m	/dataTable/attribute	data_blary_al.txt	density_roads_2000m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/density_roads_4000m	/dataTable/attribute	data_blary_al.txt	density_roads_4000m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/density_hedgerows_250m	/dataTable/attribute	data_blary_al.txt	density_hedgerows_250m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/density_hedgerows_500m	/dataTable/attribute	data_blary_al.txt	density_hedgerows_500m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/density_hedgerows_750m	/dataTable/attribute	data_blary_al.txt	density_hedgerows_750m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/density_hedgerows_1000m	/dataTable/attribute	data_blary_al.txt	density_hedgerows_1000m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/density_hedgerows_1500m	/dataTable/attribute	data_blary_al.txt	density_hedgerows_1500m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/density_hedgerows_2000m	/dataTable/attribute	data_blary_al.txt	density_hedgerows_2000m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/density_hedgerows_4000m	/dataTable/attribute	data_blary_al.txt	density_hedgerows_4000m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/shannon_250m	/dataTable/attribute	data_blary_al.txt	shannon_250m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/shannon_500m	/dataTable/attribute	data_blary_al.txt	shannon_500m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/shannon_750m	/dataTable/attribute	data_blary_al.txt	shannon_750m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/shannon_1000m	/dataTable/attribute	data_blary_al.txt	shannon_1000m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/shannon_1500m	/dataTable/attribute	data_blary_al.txt	shannon_1500m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/shannon_2000m	/dataTable/attribute	data_blary_al.txt	shannon_2000m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/shannon_4000m	/dataTable/attribute	data_blary_al.txt	shannon_4000m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/grassland_250	/dataTable/attribute	data_blary_al.txt	grassland_250	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/forest_250m	/dataTable/attribute	data_blary_al.txt	forest_250m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/urban_250m	/dataTable/attribute	data_blary_al.txt	urban_250m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/grassland_500	/dataTable/attribute	data_blary_al.txt	grassland_500	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/forest_500m	/dataTable/attribute	data_blary_al.txt	forest_500m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/urban_500m	/dataTable/attribute	data_blary_al.txt	urban_500m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/grassland_750	/dataTable/attribute	data_blary_al.txt	grassland_750	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/forest_750m	/dataTable/attribute	data_blary_al.txt	forest_750m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/urban_750m	/dataTable/attribute	data_blary_al.txt	urban_750m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/grassland_1000	/dataTable/attribute	data_blary_al.txt	grassland_1000	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/forest_1000m	/dataTable/attribute	data_blary_al.txt	forest_1000m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/urban_1000m	/dataTable/attribute	data_blary_al.txt	urban_1000m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/grassland_1500	/dataTable/attribute	data_blary_al.txt	grassland_1500	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/forest_1500m	/dataTable/attribute	data_blary_al.txt	forest_1500m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/urban_1500m	/dataTable/attribute	data_blary_al.txt	urban_1500m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/grassland_2000	/dataTable/attribute	data_blary_al.txt	grassland_2000	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/forest_2000m	/dataTable/attribute	data_blary_al.txt	forest_2000m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/urban_2000m	/dataTable/attribute	data_blary_al.txt	urban_2000m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/grassland_4000	/dataTable/attribute	data_blary_al.txt	grassland_4000	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/forest_4000m	/dataTable/attribute	data_blary_al.txt	forest_4000m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/urban_4000m	/dataTable/attribute	data_blary_al.txt	urban_4000m	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/perc_rapeseed	/dataTable/attribute	data_blary_al.txt	perc_rapeseed	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/nb_crops	/dataTable/attribute	data_blary_al.txt	nb_crops	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/date	/dataTable/attribute	data_blary_al.txt	date	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/X	/dataTable/attribute	data_blary_al.txt	X	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/Y	/dataTable/attribute	data_blary_al.txt	Y	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/recorder	/dataTable/attribute	data_blary_al.txt	recorder	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/min_t	/dataTable/attribute	data_blary_al.txt	min_t	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/max_wind	/dataTable/attribute	data_blary_al.txt	max_wind	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/CSI_ER05	/dataTable/attribute	data_blary_al.txt	CSI_ER05	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/CSI_ER01	/dataTable/attribute	data_blary_al.txt	CSI_ER01	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/richness_ER05	/dataTable/attribute	data_blary_al.txt	richness_ER05	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/richness_ER01	/dataTable/attribute	data_blary_al.txt	richness_ER01	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/Nyclei_ER05	/dataTable/attribute	data_blary_al.txt	Nyclei_ER05	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/Nyclei_ER01	/dataTable/attribute	data_blary_al.txt	Nyclei_ER01	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/Pippip_ER05	/dataTable/attribute	data_blary_al.txt	Pippip_ER05	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/Pippip_ER01	/dataTable/attribute	data_blary_al.txt	Pippip_ER01	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/Eptser_ER05	/dataTable/attribute	data_blary_al.txt	Eptser_ER05	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/Eptser_ER01	/dataTable/attribute	data_blary_al.txt	Eptser_ER01	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/Nycnoc_ER05	/dataTable/attribute	data_blary_al.txt	Nycnoc_ER05	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/Nycnoc_ER01	/dataTable/attribute	data_blary_al.txt	Nycnoc_ER01	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/Myo_ER05	/dataTable/attribute	data_blary_al.txt	Myo_ER05	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/Myo_ER01	/dataTable/attribute	data_blary_al.txt	Myo_ER01	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/Ple_ER05	/dataTable/attribute	data_blary_al.txt	Ple_ER05	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/data_blary_al.txt/Ple_ER01	/dataTable/attribute	data_blary_al.txt	Ple_ER01	contains measurements of type	http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType		
+/Blary Constance	/ResponsibleParty	dataset	Blary Constance	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+/Blary Constance	/ResponsibleParty	dataset	Blary Constance	member of	https://schema.org/memberOf		
+/Barré Kévin	/ResponsibleParty	dataset	Barré Kévin	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+/Barré Kévin	/ResponsibleParty	dataset	Barré Kévin	member of	https://schema.org/memberOf		
+/Kerbiriou Christian	/ResponsibleParty	dataset	Kerbiriou Christian	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+/Kerbiriou Christian	/ResponsibleParty	dataset	Kerbiriou Christian	member of	https://schema.org/memberOf		
+/Le Viol Isabelle	/ResponsibleParty	dataset	Le Viol Isabelle	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+/Le Viol Isabelle	/ResponsibleParty	dataset	Le Viol Isabelle	member of	https://schema.org/memberOf		
+/Blary Constance ""	/ResponsibleParty	dataset	Blary Constance ""	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+/Blary Constance ""	/ResponsibleParty	dataset	Blary Constance ""	member of	https://schema.org/memberOf		
+/Barré Kévin ""	/ResponsibleParty	dataset	Barré Kévin ""	is a	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	Person	https://schema.org/Person
+/Barré Kévin ""	/ResponsibleParty	dataset	Barré Kévin ""	member of	https://schema.org/memberOf		

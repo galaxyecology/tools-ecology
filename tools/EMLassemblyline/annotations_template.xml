@@ -1,0 +1,179 @@
+<tool id="annotations_template" name="Make annotations template" version="0.1.0+galaxy0" python_template_version="3.5" profile="21.05">
+    <description>from scratch or from EML metadata file</description>
+    <requirements>
+        <requirement type="package" version="4.4.1">r-base</requirement>
+        <container type="docker">outils-patrinat.mnhn.fr/metashark:latest</container>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+   
+   #if str($input_prod.input_prod_selector) == "fr_EML"
+             mkdir data_files && 
+             ln -s $input_prod.inputEML 'data_files/${input_prod.inputEML.element_identifier}';
+             #set $eml = $input_prod.inputEML.element_identifier;
+   #end if
+  
+   #if str($input_prod.input_prod_selector) == "fr_scratch"
+       #set $datatable = ""
+       #set $dataother = ""
+       #set $datatemp = ""
+       mkdir data_files && 
+       
+       #if str($input_prod.input_selector) == "data_table"      
+             #for $input in $input_prod.input.inputdata
+                ln -s $input 'data_files/${input.element_identifier}';
+                #set $datatable += $input.element_identifier + " ";
+             #end for
+             #for $input3 in $input_prod.input.input_temp
+                ln -s $input3 'data_files/${input3.element_identifier}';
+                #set $datatemp += $input3.element_identifier + " ";
+             #end for
+       #end if
+       #if str($input_prod.input_selector) == "other_entities" 
+             
+             #for $input2 in $input_prod.input.input_other
+                ln -s $input2 'data_files/${input2.element_identifier}';
+                #set $dataother += $input2.element_identifier + " ";
+             #end for
+             
+             #for $input3 in $input_prod.input.input_temp
+                ln -s $input3 'data_files/${input3.element_identifier}';
+                #set $datatemp += $input3.element_identifier + " ";
+             #end for
+       #end if
+       #if str($input_prod.input_selector) == "both"
+      
+             #for $input in $input_prod.input.inputdata
+                ln -s $input 'data_files/${input.element_identifier}';
+                #set $datatable += $input.element_identifier + " ";
+             #end for
+      
+             #for $input2 in $input_prod.input.input_other
+                ln -s $input2 'data_files/${input2.element_identifier}';
+                #set $dataother += $input2.element_identifier + " ";
+             #end for
+             
+             #for $input3 in $input_prod.input.input_temp
+                ln -s $input3 'data_files/${input3.element_identifier}';
+                #set $datatemp += $input3.element_identifier + " ";
+             #end for
+       #end if
+   #end if
+   
+   Rscript 
+         '$__tool_directory__/annotations_template.R' 
+         '$input_prod.input_prod_selector' 
+         
+         #if str($input_prod.input_prod_selector) == "fr_scratch"   
+             '$input_prod.input.input_selector'
+             
+             #if str($input_prod.input.input_selector) =="data_table"
+                    '$datatable'
+                    '$datatemp'
+             #elif str($input_prod.input.input_selector) =="other_entities"
+                    '$dataother'
+                    '$datatemp'
+             #elif str($input_prod.input.input_selector) =="both"
+                    '$datatable'
+                    '$dataother'
+                    '$datatemp'
+             #end if
+         #elif str($input_prod.input_prod_selector) == "fr_EML"
+             '$eml'
+         #end if
+         
+    ]]></command>
+    <inputs>
+      <conditional name="input_prod">
+          <param name="input_prod_selector" type="select" label="How do you want to produce your annotations template ?">
+              <option value="fr_scratch" selected="true">Make annotations template from scratch</option>
+              <option value="fr_EML">Make annotations template from an EML file</option>
+          </param>
+          <when value="fr_scratch">
+              <conditional name="input">
+                  <param name="input_selector" type="select" label="What is the type of your data files ?">
+                       <option value="data_table">Data table</option>
+                       <option value="other_entities">Other entities</option>
+                       <option value="both" selected="true">Both data table and other entities</option>
+                  </param>
+                  <when value="data_table">
+                      <param name="inputdata" type="data" format="data" label="Upload all your data tables" multiple= "true"/>
+                      <param name="input_temp" type="data" format="data" label="Upload all metadata template files" multiple= "true" help="This tool needs to be used only after all the metadata templates tools because it needs the other metadata templates to work"/> 
+                  </when>
+                  <when value="other_entities">
+                      <param name="input_other" type="data" format="data" label="Upload all your other entities files" multiple= "true"/>
+                      <param name="input_temp" type="data" format="data" label="Upload all your metadata template files" multiple= "true" help="This tool needs to be used only after all the metadata templates tools because it needs the other metadata templates to work"/> 
+                  </when>
+                  <when value="both">
+                      <param name="inputdata" type="data" format="data" label="Upload all your data tables" multiple= "true"/>
+                      <param name="input_other" type="data" format="data" label="Upload all your other entities files" multiple= "true"/>
+                      <param name="input_temp" type="data" format="data" label="Upload all your metadata template files" multiple= "true" help="This tool needs to be used only after all the metadata templates tools because it needs the other metadata templates to work"/> 
+                  </when>
+              </conditional>
+          </when>
+          <when value="fr_EML">
+              <param name="inputEML" type="data" format="xml" label="Upload an EML file" />
+          </when>
+      </conditional>
+    </inputs>
+    <outputs>
+       <data name="output" from_work_dir="data_files/annotations.txt" format="txt" label="annotations.txt"/>
+    </outputs>
+    <tests>
+        <test expect_num_outputs="1">
+           <param name="input_prod_selector" value="fr_EML"/>
+           <param name="inputEML" value="Assessing_the_importance_of_field_margins_for_bat_species.xml"/>
+           <output name="output" file="annotemp/annotations_template.txt"/>
+        </test>
+        <test expect_num_outputs="1">
+           <param name="input_prod_selector" value="fr_scratch"/>
+           <param name="input_selector" value="both"/>
+           <param name="inputdata" value = "annotemp/ceamarc_env.tsv"/>
+           <param name="input_other" value="annotemp/pivot_wider_jupytool_notebook.ipynb"/>
+           <param name="input_temp" value="annotemp/abstract.txt,annotemp/personnel.txt,annotemp/keywords.txt,annotemp/geographic_coverage.txt,annotemp/methods.txt,annotemp/custom_units.txt,annotemp/attributes_ceamarc_env.txt"/> 
+           <output name="output" file="annotemp/annotations_template_2.txt"/>
+        </test>
+        <test expect_num_outputs="1">
+           <param name="input_prod_selector" value="fr_scratch"/>
+           <param name="input_selector" value="data_table"/>
+           <param name="inputdata" value = "annotemp/ceamarc_env.tsv"/>
+           <param name="input_temp" value="annotemp/abstract.txt,annotemp/personnel.txt,annotemp/keywords.txt,annotemp/geographic_coverage.txt,annotemp/methods.txt,annotemp/custom_units.txt,annotemp/attributes_ceamarc_env.txt"/> 
+           <output name="output" file="annotemp/annotations_template_3.txt"/>
+        </test>
+        <test expect_num_outputs="1">
+           <param name="input_prod_selector" value="fr_scratch"/>
+           <param name="input_selector" value="other_entities"/>
+           <param name="input_other" value="annotemp/pivot_wider_jupytool_notebook.ipynb"/>
+           <param name="input_temp" value="annotemp/abstract.txt,annotemp/personnel.txt,annotemp/keywords.txt,annotemp/geographic_coverage.txt,annotemp/methods.txt,annotemp/custom_units.txt,annotemp/attributes_ceamarc_env.txt"/> 
+           <output name="output" file="annotemp/annotations_template_4.txt"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+    
+**What it does?**
+--------------------
+
+This tool is made to produce an annotation template to adds semantic meaning to dataset features (variables, locations, persons, etc.) through links to ontology terms. Template produced can be used in the make EML tool to produce EML metadata Annotating a dataset enables greater human understanding and machine actionability (linked data) and vastly improves the accuracy of future user searches and the interoperability of data in general.
+
+**How to use it?**
+--------------------
+
+You can run this tool after all your EAL metadata templates are complete or if you're annotating an existing EML file.
+
+If you use an existing EML file you will need to input it. 
+If you want to generate annotation template from scratch you will need to input your data files and all the other complete template that you produce before with the other EMLassemblyline tools.
+
+ .. class:: infomark 
+ 
+ If you use an existing EML file to generate annotation template you can use **eml2eal** tool to produce annotation template and all the other templates.
+
+    ]]></help>
+    <citations>
+       <citation type="bibtex">@Manual{,
+       title = {EMLassemblyline: A tool kit for building EML metadata workflows},
+       author = {Colin Smith},
+       year = {2022},
+       note = {https://github.com/EDIorg/EMLassemblyline,
+       https://ediorg.github.io/EMLassemblyline/},
+       }</citation>
+    </citations>
+</tool>

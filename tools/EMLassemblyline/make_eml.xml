@@ -62,7 +62,7 @@
 		
     ]]></command>
     <inputs>
-        <param name="templates" type="data" multiple="True" label="Upload all EAL templates" help="You can upload dataset collection or upload templates one by one (especially if there are multiple format)."/>
+        <param name="templates" type="data" format="data" multiple="True" label="Upload all EAL templates" help="You can upload dataset collection or upload templates one by one (especially if there are multiple format)."/>
         <param name="title" type="text" label="Title for your dataset." />
       <section name="temporal_coverage" title="Temporal coverage" expanded="true">
 	<param name="start" type="text" label="Beginning date of the dataset in the format YYYY-MM-DD" optional="false"/>
@@ -136,4 +136,13 @@ You also can upload your files to Galaxy, select them in the history by clicking
 
 
 ]]></help>
+<citations>
+       <citation type="bibtex">@Manual{,
+       title = {EMLassemblyline: A tool kit for building EML metadata workflows},
+       author = {Colin Smith},
+       year = {2022},
+       note = {https://github.com/EDIorg/EMLassemblyline,
+       https://ediorg.github.io/EMLassemblyline/},
+       }</citation>
+    </citations>
 </tool>

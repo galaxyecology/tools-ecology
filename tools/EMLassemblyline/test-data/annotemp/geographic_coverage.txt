@@ -1,0 +1,2 @@
+geographicDescription	northBoundingCoordinate	southBoundingCoordinate	eastBoundingCoordinate	westBoundingCoordinate
+Dumont D'Urville sea sampling border	-65.57	-67.01	145.53	139.22
