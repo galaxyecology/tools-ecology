@@ -1,0 +1,11 @@
+categories:
+    - Ecology
+owner: ecology
+remote_repository_url: https://github.com/AquaINFRA/tools-ecology/tree/terrabyte_ogc_api_process
+homepage_url: https://github.com/AquaINFRA/galaxy
+long_description: |
+  This tool is a wrapper for OGC API Processes (OTB) coming from terrabyte (https://docs.terrabyte.lrz.de/).
+type: unrestricted
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrapper for OGC API Processes: {{ tool_name }}."
