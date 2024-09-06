@@ -1,0 +1,87 @@
+<tool id="copernicusmarine" name="Copernicue Marine Data Store" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="22.01" license="MIT">
+    <description>retrieve marine data</description>
+    <macros>
+        <token name="@TOOL_VERSION@">1.3.3</token>
+        <token name="@VERSION_SUFFIX@">0</token>
+    </macros>
+    <requirements>
+        <requirement type="package" version="@TOOL_VERSION@">copernicusmarine</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        #set $cmems_username = $__user__.extra_preferences.get('cmems_username', "")
+        #set $cmems_password = $__user__.extra_preferences.get('cmems_password', "")
+        #if $cmems_username != ""
+            echo 'Error. Set your CMEMS credentials via: User -> Preferences -> Manage Information'  &&
+        #end if
+
+        eval '$input_text' --force-download --username $cmems_username --password $cmems_password
+
+    ]]></command>
+    <configfiles>
+        <configfile name="cmems_credentials">
+            #set $cmems_username = $__user__.extra_preferences.get('cmems_username', "")
+            #set $cmems_password = $__user__.extra_preferences.get('cmems_password', "")
+            cmems_username: $cmems_username
+            cmems_password: $cmems_password
+        </configfile>
+    </configfiles>
+    <inputs>
+        <param name="input_text" label="Paste API Request" type="text" area="true"/>
+    </inputs>
+    <outputs>
+        <data name="output_netcdf" label="Copernicus marine data" from_work_dir="./*.nc" format="netcdf"/>
+    </outputs>
+    <tests>
+        <test expect_num_outputs="1">
+            <param name="input_text" value="copernicusmarine subset --dataset-id cmems_mod_med_phy_my_4.2km-climatology_P1M-m --variable bottomT_avg --variable bottomT_std --variable mlotst_avg --variable mlotst_std --variable so_avg --variable so_std --variable thetao_avg --variable thetao_std --variable uo_avg --variable uo_std --variable vo_avg --variable vo_std --variable zos_avg --variable zos_std --start-datetime 1993-12-01T00:00:00 --end-datetime 1993-12-01T00:00:00 --minimum-longitude 10.283266521135577 --maximum-longitude 12.139348881644054 --minimum-latitude 38.461936025366256 --maximum-latitude 39.82957565942514 --minimum-depth 1.0182366371154785 --maximum-depth 1.0182366371154785"/>
+            <output name="output_netcdf">
+                <assert_contents>
+                    <has_text text="_NCProperties"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+
+        **Copernicus Marine Data Store**
+=======================================================================================================
+
+** Context **
+This tool is a wrapper to retrieve data from the Copernicus Marine Environment Monitoring Service (CMEMS).
+
+- It allows to retrieve data from the Copernicus Marine Service.
+- Any user willing to use this tool needs to `create a new account <https://data.marine.copernicus.eu/login>`_.
+- Set your Copernicus CMEMS API Key via: User > Preferences > Manage Information
+- Enter your username and password for Copernicus CMEMS
+- Compose your request directly on Copernicus Marine Data Store 
+    - Choose there which data interest you click on the download button
+    - Then on the top right click again on the big download butto
+    - Log in
+    - Click on "Automate"
+    - You should have a pop-up window called "Automate download"
+    - Copy the ">_Command-Line Interface" proposed there
+- Back on Galaxy paste it in the input field "Paste API Request".
+
+For more information on the Command-Line Interface (CLI) go on `Copernicus Marine Toolbox CLI - Subset <https://help.marine.copernicus.eu/en/articles/7972861-copernicus-marine-toolbox-cli-subset>`
+
+** Input **
+Command line from the Copernicus marine services copy paste as a text.
+
+** Output **
+A netcdf file containing the the data chose by the user from the Copernicus Marine Data Store
+
+
+    ]]></help>
+    <citations>
+        <citation type="bibtext"> 
+        @misc{Copernicus, 
+        title={Copernicus Marine Data Store}, 
+        url={https://data.marine.copernicus.eu/products}, 
+        note={E.U. Copernicus Marine Service Information}, 
+        author={Copernicus, E.U.} 
+        }
+        </citation>
+    </citations>
+</tool>
+
+E.U. Copernicus Marine Service Information
