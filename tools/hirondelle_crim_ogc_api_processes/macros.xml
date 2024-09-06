@@ -35,13 +35,13 @@
                 <param name="select_process" value="download-band-sentinel2-product-safe"/>
                 <param name="user_credentials" value="crim_test_input.json"/>
                 <param name="cookie" value=""/>
-                <param name="product_url" value="product_url.txt"/>
-                <param name="resolution" value="10m"/>
+                <param name="product_url" value="s3:///eodata/Sentinel-2/MSI/L2A/2019/07/01/S2A_MSIL2A_20190701T110621_N0212_R137_T29SPC_20190701T120906.SAFE"/>
+                <param name="resolution_Array_text" value="10m"/>
                 <param name="band" value="B04"/>
                 <assert_stderr>
                     <has_text text="HTTP 401 Unauthorized"/>
                 </assert_stderr>
             </test>
-        </tests>    
+        </tests> 
     </xml>
 </macros>
