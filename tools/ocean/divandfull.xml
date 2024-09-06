@@ -2,7 +2,7 @@
     <description>Data-Interpolating Variational Analysis in n dimensions</description>
     <macros>
         <token name="@TOOL_VERSION@">0.1.0</token>
-        <token name="@VERSION_SUFFIX@">1</token>
+        <token name="@VERSION_SUFFIX@">0</token>
     </macros>
     <requirements>
         <requirement type="package" version="1.8.5">julia</requirement>
@@ -58,7 +58,7 @@
         <param name="selmax" type="integer" min="0" max="100" optional="true" value="0" label="Maximum of the salinity"/>
     </inputs>
     <outputs>
-        <data name="output_netcdf" label="DIVAnd_output.nc" from_work_dir="outputs_netcdf/*.nc" format="netcdf"/>
+        <data name="output_netcdf" label="DIVAnd netcdf output" from_work_dir="outputs_netcdf/*.nc" format="netcdf"/>
     </outputs>
     <tests>
         <test expect_num_outputs="1">
