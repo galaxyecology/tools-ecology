@@ -1,14 +1,17 @@
-import sys
 import os
+import sys
 import subprocess
 
+
 def validate_command(command):
-    # Example validation: Ensure the command does not contain potentially dangerous substrings
+    # Example validation: Ensure the command does not contain 
+    # potentially dangerous substrings
     forbidden_substrings = ['rm -rf', 'sudo', 'dd if=', 'curl', 'wget']
     for substring in forbidden_substrings:
         if substring in command:
-            return False, f"Error: Command contains forbidden substring '{substring}'"
-        
+            message = f"Error: Command contains forbidden substring '{substring}'"
+            return False, message 
+
     # Check if the command starts with 'copernicusmarine'
     if not command.startswith('copernicusmarine'):
         return False, "Error: Command must start with 'copernicusmarine'"
@@ -20,18 +23,21 @@ def validate_command(command):
     if command.startswith('subset'):
         # Check for required arguments for 'subset' command
         if not ('--dataset-id' in command or '--dataset-url' in command):
-            return False, "Error: 'subset' command must contain either '--dataset-id' or '--dataset-url'"
+            message = "Error: 'subset' command must have '--dataset-id' or '--dataset-url'"
+            return False, message
     elif command.startswith('get'):
         # Check for required arguments for 'get' command
         if not ('--dataset-id' in command or '--dataset-url' in command):
-            return False, "Error: 'get' command must contain either '--dataset-id' or '--dataset-url'"
+            message = "Error: 'get' command must have '--dataset-id' or '--dataset-url'"
+            return False, message
     elif command.startswith('login') or command.startswith('describe'):
-        return False, "Sorry, this tool accepts only the 'subset' and 'get' commands of the Copernicus Marine Toolbox"
+        message = "This tool only accepts 'subset' and 'get' commands."
+        return False, message
     else:
         return False, "Error: Command must be 'subset' or 'get'"
 
-    
     return True, None
+
 
 def main():
     # Check if a filename argument is provided
