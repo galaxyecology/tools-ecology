@@ -63,12 +63,12 @@ This tool is a wrapper to retrieve data from the Copernicus Marine Environment M
 - Set your Copernicus CMEMS API Key via: User > Preferences > Manage Information
 - Enter your username and password for Copernicus CMEMS
 - Compose your request directly on Copernicus Marine Data Store 
-  - Choose there which data interest you click on the download button
-  - Then on the top right click again on the big download butto
-  - Log in
-  - Click on "Automate"
-  - You should have a pop-up window called "Automate download"
-  - Copy the ">_Command-Line Interface" proposed there
+    - Choose there which data interest you click on the download button
+    - Then on the top right click again on the big download butto
+    - Log in
+    - Click on "Automate"
+    - You should have a pop-up window called "Automate download"
+    - Copy the ">_Command-Line Interface" proposed there
 - Back on Galaxy paste it in the input field "Paste API Request".
 
 For more information on the Command-Line Interface (CLI) go on `Copernicus Marine Toolbox CLI - Subset <https://help.marine.copernicus.eu/en/articles/7972861-copernicus-marine-toolbox-cli-subset>`
