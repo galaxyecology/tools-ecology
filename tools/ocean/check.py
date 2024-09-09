@@ -1,16 +1,16 @@
 import os
-import sys
 import subprocess
+import sys
 
 
 def validate_command(command):
-    # Example validation: Ensure the command does not contain 
+    # Example validation: Ensure the command does not contain
     # potentially dangerous substrings
     forbidden_substrings = ['rm -rf', 'sudo', 'dd if=', 'curl', 'wget']
     for substring in forbidden_substrings:
         if substring in command:
-            message = f"Error: Command contains forbidden substring '{substring}'"
-            return False, message 
+            message = f"Error: Command has forbidden substring '{substring}'"
+            return False, message
 
     # Check if the command starts with 'copernicusmarine'
     if not command.startswith('copernicusmarine'):
@@ -69,6 +69,7 @@ def main():
     except subprocess.CalledProcessError as e:
         print(f"Error: Command failed with exit code {e.returncode}")
         sys.exit(1)
+
 
 if __name__ == "__main__":
     main()
