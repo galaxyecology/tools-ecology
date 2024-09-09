@@ -82,7 +82,7 @@ A netcdf file containing the the data chose by the user from the Copernicus Mari
 
     ]]></help>
     <citations>
-        <citation type="bibtext"> 
+        <citation type="bibtex"> 
         @misc{Copernicus, 
         title={Copernicus Marine Data Store}, 
         url={https://data.marine.copernicus.eu/products}, 
