@@ -13,9 +13,12 @@
         #if $cmems_username != ""
             echo 'Error. Set your CMEMS credentials via: User -> Preferences -> Manage Information'  &&
         #end if
+        
+        #set $filename="config_file_with_my_command"
+        echo -e '$input_text' > $filename --force-download &&
 
-        eval '$input_text' --force-download --username $cmems_username --password $cmems_password
-
+        python '$__tool_directory__/check.py' $filename
+        
     ]]></command>
     <configfiles>
         <configfile name="cmems_credentials">
@@ -26,7 +29,18 @@
         </configfile>
     </configfiles>
     <inputs>
-        <param name="input_text" label="Paste API Request" type="text" area="true"/>
+        <param name="input_text" label="Paste API Request" type="text" area="true">
+            <sanitizer invalid_char="">
+                <valid initial="string.letters,string.digits">
+                    <add value="_" />
+                    <add value="-" />
+                    <add value=" " />
+                    <add value=":" />
+                    <add value="." />
+                </valid>
+            </sanitizer>
+            <validator type="regex">[0-9a-zA-Z_]+</validator>
+        </param>
     </inputs>
     <outputs>
         <data name="output_netcdf" label="Copernicus marine data" from_work_dir="./*.nc" format="netcdf"/>
