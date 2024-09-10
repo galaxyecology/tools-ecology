@@ -3,7 +3,7 @@
 
 ### Clean environment 
 rm(list = ls(all.names = TRUE))
-options(warn=-1)
+options(warn=1)
 
 ### load packages
 
@@ -43,7 +43,27 @@ for (i in seq_along(pred_vars)) {
 #Load functions
 
 make.brt <- function(spe,data,pred.vars,env,nb_file){
-   brt_step <- gbm.step(data= data, gbm.x = pred.vars, gbm.y = spe, family = "bernoulli", tree.complexity = 2, learning.rate = 0.0001,max.trees = 10000,plot.main = F)
+   cat(paste("  ", spe,":\n  -> optimising BRT model ",sep=""))
+   lr <- 0.05
+   no.trees <- 0
+   while ( no.trees < 1000 & lr > 0.0005 ) {
+    cat(".")
+    try(brt_step <- gbm.step(data= data, gbm.x = pred.vars, gbm.y = spe, family = "bernoulli", tree.complexity = 2, learning.rate = lr,max.trees = 10000, plot.main = F))
+    # if the gbm does not converge, the return object is null or of size 0
+    if (!is.null(brt_step) ) {
+      if (object.size(brt_step) > 0 ) {
+        no.trees <- brt_step$gbm.call$best.trees
+        print(no.trees)
+      }
+    } else {
+      no.trees <- 0
+      print(no.trees)
+    }
+
+    # decrease the learning rate
+    lr <- lr / 2
+    print(lr)
+  }
    #plot
    if (is.null(brt_step)==FALSE){
      pdf(file = paste("BRT-",spe,".pdf"))
@@ -94,27 +114,38 @@ make.prediction.brt <- function(brt_step){
   
   #Write prediction in a file
   preds <- cbind(preds,spe)
-  write.table(preds, paste(nb_file,"_brts_pred_ceamarc.tsv",sep=""), quote=FALSE, dec=".", row.names=F, col.names=T,append = T,sep="\t")
+  write.table(preds, paste(nb_file,"_brts_pred_ceamarc.tsv",sep=""), quote=FALSE, dec=".", row.names=F, col.names=!file.exists(paste(nb_file,"_brts_pred_ceamarc.tsv",sep="")),append = T,sep="\t")
 }
 
 #### RUN BRT ####
 nb_file = 0
 
+# Creating the %!in% operator
+`%!in%` <- Negate(`%in%`)
+
+# Data file browsing
 for (file in data_files[[1]]) {
+  
+  # Reading the file
   species_data <- read.table(file, dec = dec_species, sep = "\t", header = TRUE, na.strings = "NA", colClasses = "numeric")
   nb_file = nb_file + 1
-  `%!in%` <- Negate(`%in%`)
+ 
+  # List to store species to predict
   sp = list()
+  
+  # Selection of columns that are not in 'env' and that are not coordinates or stations
   for (n in names(species_data)) {
-    if (n %!in% names(env) && n != 'station'){
-       sp = cbind(sp,n)
+    if (n %!in% names(env) && n != 'station' && n != 'decimalLatitude' && n != 'decimalLongitude' && n!='lat' && n!='long'){
+       sp = c(sp,n) 
     }
-  }     
+  } 
+  # Making predictions for each species 
   for (spe in sp){
    try(make.prediction.brt(make.brt(spe,species_data,pred.vars,env,nb_file)))
    }
 }
 
+#Display of abiotic parameters
 cat("Here is the list of your abiotic parameters:\n")
 cat(paste(pred.vars, collapse = ", "), "\n")
 
