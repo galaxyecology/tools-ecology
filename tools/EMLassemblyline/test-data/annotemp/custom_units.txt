@@ -1,0 +1,4 @@
+id	unitType	parentSI	multiplierToSI	description
+PSU	density	gramPerGram	0.001	"1 PSU = 1g/kg"
+degreeCelsius	temperature	dimensionless	1	"0 °C + 273,15 = 273,15 Kelvin"
+meterPerYear	speed	centimeterPerYear	0.01	"meter per year"
