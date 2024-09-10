@@ -1,4 +1,4 @@
-<tool id="hirondelle_crim" name="Hirondelle CRIM OGC API Processes" version="0.1.0" profile="22.05">
+<tool id="hirondelle_crim" name="Hirondelle CRIM OGC API Processes" version="0.2.0" profile="22.05">
 	<description>executes remote processes.</description>
 	<macros>
 		<import>macros.xml</import>
@@ -14,87 +14,52 @@
 	<inputs>
 		<conditional name="conditional_process">
 			<param name="select_process" type="select" label="Select process">
-				<option value="algae-usecase-workflow-copernicus">algae-usecase-workflow-copernicus: Algae bloom for water quality assessment on Sentinel-2 imagery offered by Copernicus platform.</option>
-				<option value="algae-usecase-workflow-copernicus-process">algae-usecase-workflow-copernicus-process: Processing on Sentinel-2 bands to evaluate algae bloom.</option>
-				<option value="algae-usecase-workflow-earth-search">algae-usecase-workflow-earth-search: Algae bloom for water quality assessment on Sentinel-2 L2A imagery offered by Earth-Search platform.</option>
-				<option value="algae-usecase-workflow-earth-search-process">algae-usecase-workflow-earth-search-process: Processing on Sentinel-2 L2A bands to evaluate algae bloom.</option>
 				<option value="calculate-band">calculate-band: Performs a calculation with bands.</option>
 				<option value="download-band-sentinel2-product-safe">download-band-sentinel2-product-safe: Downloads Copernicus products.</option>
-				<option value="download-band-sentinel2-stac-item">download-band-sentinel2-stac-item: Downloads Sentinel-2 GeoTiff from STAC Item.</option>
-				<option value="EchoProcess">EchoProcess</option>
-				<option value="file_index_selector">file_index_selector: File Index Selector</option>
-				<option value="file2string_array">file2string_array: File to String-Array</option>
-				<option value="jsonarray2netcdf">jsonarray2netcdf: JSON array to NetCDF</option>
-				<option value="metalink2netcdf">metalink2netcdf: Metalink to NetCDF</option>
-				<option value="ogc-tb16-land-cover-mapping">ogc-tb16-land-cover-mapping: OGC Testbed-16 Pixel-Wise Classifier for Land Cover Mapping</option>
 				<option value="plot-image">plot-image: Plots an image with colors.</option>
 				<option value="reproject-image">reproject-image: Performs image reprojection.</option>
 				<option value="select-products-sentinel2">select-products-sentinel2: Searches the specified catalog for Sentinel-2 products matching filtering criteria.</option>
 			</param>
-			<when value="algae-usecase-workflow-copernicus">
-				<param name="user_credentials" label="user_credentials" optional="false" type="data" format="json"/>
-				<param name="cookie" label="cookie" optional="false" value="" type="text"/>
-				<param name="date" label="date" optional="false" value="" type="text"/>
-				<param name="delta_Array_integer" label="delta" optional="false" value="" help="Please provide comma-seperated values of type integer here." type="text"/>
-				<param name="aoi" label="aoi" optional="false" value="" type="data" format="txt"/>
-				<param name="collection" label="collection" optional="false" value="" type="text"/>
-				<param name="cloud_cover_Array_float" label="cloud_cover" optional="false" value="" help="Please provide comma-seperated values of type float here." type="text"/>
-			</when>
-			<when value="algae-usecase-workflow-copernicus-process">
-				<param name="user_credentials" label="user_credentials" optional="false" type="data" format="json"/>
-				<param name="cookie" label="cookie" optional="false" value="" type="text"/>
-				<param name="product_url" label="product_url" optional="false" value="" type="text"/>
-			</when>
-			<when value="algae-usecase-workflow-earth-search">
-				<param name="cookie" label="cookie" optional="false" value="" type="text"/>
-				<param name="date_Array_text" label="date" optional="false" value="" help="Please provide comma-seperated values of type text here." type="text"/>
-				<param name="delta_Array_integer" label="delta" optional="false" value="" help="Please provide comma-seperated values of type integer here." type="text"/>
-				<param name="toi_Array_text" label="toi" optional="false" value="" help="Please provide comma-seperated values of type text here." type="text"/>
-				<param name="aoi" label="aoi" optional="false" value="" help="Polygon defining the area of interest." type="data" format="txt"/>
-				<param name="collection" label="collection" optional="false" value="" type="text"/>
-				<param name="cloud_cover_Array_float" label="cloud_cover" optional="false" value="" help="Please provide comma-seperated values of type float here." type="text"/>
-			</when>
-			<when value="algae-usecase-workflow-earth-search-process">
-				<param name="cookie" label="cookie" optional="false" value="" type="text"/>
-				<param name="product_url" label="product_url" optional="false" value="" help="The STAC Item should contain Assets with Sentinel-2 product bands." type="text"/>
-			</when>
 			<when value="calculate-band">
 				<param name="cookie" label="cookie" optional="false" value="" type="text"/>
-				<param name="name" label="name" optional="false" value="" help="Name to apply for the output GeoTiff file." type="text"/>
-				<param name="calc" label="calc" optional="false" value="" help="Calculation to perform with band references." type="text"/>
-				<param name="band_a" label="band_a" optional="false" value="" type="text"/>
-				<param name="band_b" label="band_b" optional="false" value="" type="text"/>
-				<param name="band_c" label="band_c" optional="false" value="" type="text"/>
-				<param name="band_d" label="band_d" optional="false" value="" type="text"/>
-				<param name="band_e" label="band_e" optional="false" value="" type="text"/>
-				<param name="band_f" label="band_f" optional="false" value="" type="text"/>
-				<param name="band_g" label="band_g" optional="false" value="" type="text"/>
-				<param name="band_h" label="band_h" optional="false" value="" type="text"/>
-				<param name="band_i" label="band_i" optional="false" value="" type="text"/>
-				<param name="band_j" label="band_j" optional="false" value="" type="text"/>
-				<param name="band_k" label="band_k" optional="false" value="" type="text"/>
-				<param name="band_l" label="band_l" optional="false" value="" type="text"/>
-				<param name="band_m" label="band_m" optional="false" value="" type="text"/>
-				<param name="band_n" label="band_n" optional="false" value="" type="text"/>
-				<param name="band_o" label="band_o" optional="false" value="" type="text"/>
-				<param name="band_p" label="band_p" optional="false" value="" type="text"/>
-				<param name="band_q" label="band_q" optional="false" value="" type="text"/>
-				<param name="band_r" label="band_r" optional="false" value="" type="text"/>
-				<param name="band_s" label="band_s" optional="false" value="" type="text"/>
-				<param name="band_t" label="band_t" optional="false" value="" type="text"/>
-				<param name="band_u" label="band_u" optional="false" value="" type="text"/>
-				<param name="band_v" label="band_v" optional="false" value="" type="text"/>
-				<param name="band_w" label="band_w" optional="false" value="" type="text"/>
-				<param name="band_x" label="band_x" optional="false" value="" type="text"/>
-				<param name="band_y" label="band_y" optional="false" value="" type="text"/>
-				<param name="band_z" label="band_z" optional="false" value="" type="text"/>
+				<param name="calc" label="Calculation" optional="false" help="Calculation to perform with band references." type="text"/>
+				<param name="band_a" label="Band A" optional="true" type="data" format="txt"/>
+				<param name="band_b" label="Band B" optional="true" type="data" format="txt"/>
+				<param name="band_c" label="Band C" optional="true" type="data" format="txt"/>
+				<param name="band_d" label="Band D" optional="true" type="data" format="txt"/>
+				<param name="band_e" label="Band E" optional="true" type="data" format="txt"/>
+				<param name="band_f" label="Band F" optional="true" type="data" format="txt"/>
+				<param name="band_g" label="Band G" optional="true" type="data" format="txt"/>
+				<param name="band_h" label="Band H" optional="true" type="data" format="txt"/>
+				<param name="band_i" label="Band I" optional="true" type="data" format="txt"/>
+				<param name="band_j" label="Band J" optional="true" type="data" format="txt"/>
+				<param name="band_k" label="Band K" optional="true" type="data" format="txt"/>
+				<param name="band_l" label="Band L" optional="true" type="data" format="txt"/>
+				<param name="band_m" label="Band M" optional="true" type="data" format="txt"/>
+				<param name="band_n" label="Band N" optional="true" type="data" format="txt"/>
+				<param name="band_o" label="Band O" optional="true" type="data" format="txt"/>
+				<param name="band_p" label="Band P" optional="true" type="data" format="txt"/>
+				<param name="band_q" label="Band Q" optional="true" type="data" format="txt"/>
+				<param name="band_r" label="Band R" optional="true" type="data" format="txt"/>
+				<param name="band_s" label="Band S" optional="true" type="data" format="txt"/>
+				<param name="band_t" label="Band T" optional="true" type="data" format="txt"/>
+				<param name="band_u" label="Band U" optional="true" type="data" format="txt"/>
+				<param name="band_v" label="Band V" optional="true" type="data" format="txt"/>
+				<param name="band_w" label="Band W" optional="true" type="data" format="txt"/>
+				<param name="band_x" label="Band X" optional="true" type="data" format="txt"/>
+				<param name="band_y" label="Band Y" optional="true" type="data" format="txt"/>
+				<param name="band_z" label="Band Z" optional="true" type="data" format="txt"/>
 			</when>
 			<when value="download-band-sentinel2-product-safe">
-				<param name="user_credentials" label="user_credentials" optional="false" type="data" format="json"/>
+				<param name="product_url" label="Product URL" help="S3 URL to a Sentinel-2 product in SAFE format." optional="false" type="data" format="txt"/>
+				<param name="user_credentials" label="User credentials" optional="false" type="data" format="json"/>
 				<param name="cookie" label="cookie" optional="false" value="" type="text"/>
-				<param name="product_url" label="product_url" optional="false" value="" type="text"/>
-				<param name="resolution_Array_text" label="resolution" optional="false" value="" help="Please provide comma-seperated values of type text here." type="text"/>
-				<param name="band" label="band" optional="false" value="" type="select">
+				<param name="resolution" label="resolution" optional="true" type="select">
+					<option value="10m">10m</option>
+					<option value="20m">20m</option>
+					<option value="60m">60m</option>
+				</param>
+				<param name="band" label="band" optional="false" type="select">
 					<option value="B01">B01</option>
 					<option value="B02">B02</option>
 					<option value="B03">B03</option>
@@ -112,103 +77,38 @@
 					<option value="TCI">TCI</option>
 					<option value="WVP">WVP</option>
 				</param>
-				<param name="debug_Array_boolean" label="debug" value="" help="Please provide comma-seperated values of type boolean here." type="text"/>
-			</when>
-			<when value="download-band-sentinel2-stac-item">
-				<param name="cookie" label="cookie" optional="false" value="" type="text"/>
-				<param name="product_url" label="product_url" optional="false" value="" type="text"/>
-				<param name="band" label="band" optional="false" value="" type="select">
-					<option value="B01">B01</option>
-					<option value="B02">B02</option>
-					<option value="B03">B03</option>
-					<option value="B04">B04</option>
-					<option value="B05">B05</option>
-					<option value="B06">B06</option>
-					<option value="B07">B07</option>
-					<option value="B08">B08</option>
-					<option value="B8A">B8A</option>
-					<option value="B09">B09</option>
-					<option value="B11">B11</option>
-					<option value="B12">B12</option>
-					<option value="AOT">AOT</option>
-					<option value="SCL">SCL</option>
-					<option value="TCI">TCI</option>
-					<option value="WVP">WVP</option>
-				</param>
-			</when>
-			<when value="EchoProcess">
-				<param name="cookie" label="cookie" optional="false" value="" type="text"/>
-				<param name="stringInput" label="stringInput" optional="false" value="" type="select">
-					<option value="Value1">Value1</option>
-					<option value="Value2">Value2</option>
-					<option value="Value3">Value3</option>
-				</param>
-				<param name="measureInput" label="measureInput" optional="false" help="This is an example of a NUMERIC literal with an associated unit of measure." type="text"/>
-				<param name="dateInput" label="dateInput" optional="false" value="" help="This is an example of a DATE literal input." type="text"/>
-				<param name="doubleInput" label="doubleInput" optional="false" value="" help="This is an example of a DOUBLE literal input that is bounded between a value greater than 0 and 10. The default value is 5." type="float"/>
-				<param name="arrayInput_Array_integer" label="arrayInput" optional="false" value="" help="Please provide comma-seperated values of type integer here." type="text"/>
-				<param name="complexObjectInput" label="complexObjectInput" optional="false" help="This is an example of a complex object input." type="text"/>
-				<param name="geometryInput" label="geometryInput" optional="false" value="" help="This is an example of a geometry input. In this case the geometry can be expressed as a GML of GeoJSON geometry." type="text"/>
-				<param name="boundingBoxInput" label="boundingBoxInput" optional="false" help="This is an example of an image input. In this case, the input is an array of up to 150 images that might, for example, be a set of tiles.  The oneOf[] conditional is used to indicate the acceptable image content types; GeoTIFF and JPEG 2000 in this case.  Each input image in the input array can be included inline in the execute request as a base64-encoded string or referenced using the link.yaml schema.  The use of a base64-encoded string is implied by the specification and does not need to be specified in the definition of the input." type="data" format="txt"/>
-				<param name="imagesInput" label="imagesInput" optional="false" help="This is an example of an image input.  In this case, the input is an array of up to 150 images that might, for example, be a set of tiles.  The oneOf[] conditional is used to indicate the acceptable image content types; GeoTIFF and JPEG 2000 in this case.  Each input image in the input array can be included inline in the execute request as a base64-encoded string or referenced using the link.yaml schema.  The use of a base64-encoded string is implied by the specification and does not need to be specified in the definition of the input." type="data" format="txt"/>
-				<param name="featureCollectionInput" label="featureCollectionInput" optional="false" help="This is an example of an input that is a feature collection that can be encoded in one of three ways. As a GeoJSON feature collection, as a GML feature collection retrieved from a WFS or as a KML document." type="text"/>
-			</when>
-			<when value="file_index_selector">
-				<param name="cookie" label="cookie" optional="false" value="" type="text"/>
-				<param name="files" label="files" optional="false" type="data" format="txt"/>
-				<param name="index" label="index" optional="false" value="" type="integer"/>
-			</when>
-			<when value="file2string_array">
-				<param name="cookie" label="cookie" optional="false" value="" type="text"/>
-				<param name="input" label="input" optional="false" value="" type="data" format="txt"/>
-			</when>
-			<when value="jsonarray2netcdf">
-				<param name="cookie" label="cookie" optional="false" value="" type="text"/>
-				<param name="input" label="input" optional="false" value="" help="JSON file formed of an array of file URIs, each representing NetCDF contents." type="text"/>
-			</when>
-			<when value="metalink2netcdf">
-				<param name="cookie" label="cookie" optional="false" value="" type="text"/>
-				<param name="input" label="input" optional="false" type="text"/>
-				<param name="index" label="index" optional="false" value="" help="Index of the MetaLink file to extract. This index is 1-based." type="integer"/>
-			</when>
-			<when value="ogc-tb16-land-cover-mapping">
-				<param name="cookie" label="cookie" optional="false" value="" type="text"/>
-				<param name="raster_file" label="raster_file" optional="false" help="Input raster onto which to run object classification. Either a Sentinel-2 SAFE ZIP or a RBG-NIR GeoTiff." type="data" format="txt"/>
-				<param name="raster_bands_Array_integer" label="raster_bands" optional="false" value="" help="Please provide comma-seperated values of type integer here." type="text"/>
-				<param name="raster_mean_Array_float" label="raster_mean" optional="false" value="" help="Please provide comma-seperated values of type float here." type="text"/>
-				<param name="raster_std_Array_float" label="raster_std" optional="false" value="" help="Please provide comma-seperated values of type float here." type="text"/>
-				<param name="patch_size_Array_integer" label="patch_size" optional="false" value="" help="Please provide comma-seperated values of type integer here." type="text"/>
-				<param name="batch_size_Array_integer" label="batch_size" optional="false" value="" help="Please provide comma-seperated values of type integer here." type="text"/>
-				<param name="device_Array_text" label="device" optional="false" value="" help="Please provide comma-seperated values of type text here." type="text"/>
+				<param name="debug" label="Debug" optional="true" type="boolean"/>
 			</when>
 			<when value="plot-image">
 				<param name="cookie" label="cookie" optional="false" value="" type="text"/>
-				<param name="input_image" label="input_image" optional="false" value="" help="Image to map with the colors bins." type="data" format="txt"/>
-				<param name="color_scale" label="color_scale" optional="false" value="" help="JSON-like array with each item being an array of 2 elements, the first for the bin scale value and the second for the RGB color. Each RGB value can be either a [0-1] floating point or a [0-255] integer. Example: '[ [0, [0,0,0]], [20, [0,0,255]], [50, [255,100,0]] ]'" type="text"/>
-				<param name="output_name_Array_text" label="output_name" optional="false" value="" help="Please provide comma-seperated values of type text here." type="text"/>
-				<param name="plot_name_Array_text" label="plot_name" optional="false" value="" help="Please provide comma-seperated values of type text here." type="text"/>
-				<param name="plot_title_Array_text" label="plot_title" optional="false" value="" help="Please provide comma-seperated values of type text here." type="text"/>
+				<param name="input_image" label="Input image" optional="false" help="Image to map with the colors bins." type="data" format="txt"/>
+				<param name="color_scale" label="Color mappings to bin scales to apply to the image." optional="false" help="JSON-like array with each item being an array of 2 elements, the first for the bin scale value and the second for the RGB color. Each RGB value can be either a [0-1] floating point or a [0-255] integer. Example: '[ [0, [0,0,0]], [20, [0,0,255]], [50, [255,100,0]] ]'" type="text"/>
+				<param name="output_name" label="Output name" optional="true" type="text"/>
+				<param name="plot_name" label="Plot name" optional="true" type="text"/>
+				<param name="plot_title" label="Plot title" optional="true" type="text"/>
 			</when>
 			<when value="reproject-image">
 				<param name="cookie" label="cookie" optional="false" value="" type="text"/>
 				<param name="input_image" label="input_image" optional="false" type="data" format="txt"/>
-				<param name="output_dimensions_Array_integer" label="output_dimensions" optional="false" value="" help="Please provide comma-seperated values of type integer here." type="text"/>
-				<param name="output_resolution_Array_integer" label="output_resolution" optional="false" value="" help="Please provide comma-seperated values of type integer here." type="text"/>
-				<param name="output_name" label="output_name" optional="false" value="" help="Name to apply for the output GeoTiff file." type="text"/>
+				<param name="output_dimensions_Array_integer" label="output_dimensions" optional="true" help="Please provide comma-seperated values of type integer here." type="text"/>
+				<param name="output_resolution_Array_integer" label="Output resolution" optional="true" help="Please provide comma-seperated values of type integer here." type="text"/>
 			</when>
 			<when value="select-products-sentinel2">
 				<param name="cookie" label="cookie" optional="false" value="" type="text"/>
-				<param name="date_Array_text" label="date" optional="false" value="" help="Please provide comma-seperated values of type text here." type="text"/>
-				<param name="delta_Array_integer" label="delta" optional="false" value="" help="Please provide comma-seperated values of type integer here." type="text"/>
-				<param name="toi_Array_text" label="toi" optional="false" value="" help="Please provide comma-seperated values of type text here." type="text"/>
-				<param name="aoi" label="aoi" optional="false" value="" help="Polygon defining the area of interest." type="data" format="txt"/>
-				<param name="collection" label="collection" optional="false" value="" type="text"/>
-				<param name="product_level_Array_text" label="product_level" optional="false" value="" help="Please provide comma-seperated values of type text here." type="text"/>
-				<param name="catalog" label="catalog" optional="false" value="" type="select">
+				<param name="date" label="Central date" optional="true" help="Date around which ±delta-days will be applied for search. If omitted, 'toi' input must be provided instead." type="text"/>
+				<param name="delta" label="Delta" optional="true" type="integer"/>
+				<param name="toi_Array_text" label="Time of interest" optional="true" help="Start and end date-time strings. Must be provided if 'date' input is omitted. Please provide comma-seperated values of type text here." type="text"/>
+				<param name="aoi" label="Area of interest" optional="false" help="Polygon defining the area of interest." type="data" format="txt"/>
+				<param name="collection" label="Collection" optional="false" type="text"/>
+				<param name="product_level" label="Product level" optional="true" help="Please provide comma-seperated values of type text here." type="select">
+					<option value="L1C">L1C</option>
+					<option value="L2A">L2A</option>
+				</param>
+				<param name="catalog" label="catalog" optional="false" type="select">
 					<option value="copernicus">copernicus</option>
 					<option value="earth-search">earth-search</option>
 				</param>
-				<param name="cloud_cover_Array_float" label="cloud_cover" optional="false" value="" help="Please provide comma-seperated values of type float here." type="text"/>
+				<param name="cloud_cover" label="Cloud cover" optional="true" type="float"/>
 			</when>
 		</conditional>
 	</inputs>
