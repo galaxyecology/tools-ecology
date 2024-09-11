@@ -132,4 +132,9 @@ This tool gives in output two files:
 |   ...    |   ...     |          ...           |    ...    |   ...   | ...  |     ...      | ... |
 +----------+-----------+------------------------+-----------+---------+------+--------------+-----+
     ]]></help>
+    <citations>
+       <citation type="doi">10.32614/RJ-2018-009</citation>  
+       <citation type="doi">10.32614/CRAN.package.dplyr</citation>
+       <citation type="doi">10.32614/CRAN.package.sf</citation> 
+    </citations>
 </tool>

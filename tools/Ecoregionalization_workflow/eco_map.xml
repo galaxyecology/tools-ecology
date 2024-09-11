@@ -49,4 +49,9 @@ This script takes as input a file containing for each environmental pixel its as
 +--------+--------+---------+
 
     ]]></help>
+    <citations>
+       <citation type="doi">10.32614/CRAN.package.dplyr</citation>
+       <citation type="doi">10.32614/CRAN.package.sf</citation>
+       <citation type="doi">10.32614/CRAN.package.tmap</citation>
+    </citations>
 </tool>
