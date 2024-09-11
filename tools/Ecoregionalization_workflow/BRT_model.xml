@@ -106,6 +106,11 @@ This tool gives in output a file containing the predictions of the probability o
 +---------+----------+-----------+------------------------+-----------+-----+------+--------------+-----+
 
     ]]></help>
+    <citations>
+       <citation type="doi">10.32614/CRAN.package.dismo</citation>
+       <citation type="doi">10.32614/CRAN.package.gbm</citation>
+       <citation type="doi">10.32614/CRAN.package.ggplot2</citation>
+    </citations>
 </tool>
 
 
