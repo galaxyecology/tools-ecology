@@ -1,7 +1,7 @@
 <tool id="ecoregion_brt_analysis" name="BRT tool prediction" version="0.1.0+galaxy0" profile="22.05">
     <description>for species distribution modelling</description>
     <requirements>
-       <requirement type="package" version="4.3.3">r-base</requirement>
+       <requirement type="package" version="4.3.0>r-base</requirement>
        <requirement type="package" version="2.1.8">r-gbm</requirement>
        <requirement type="package" version="3.4.2">r-ggplot2</requirement>
        <requirement type="package" version="1.3_14">r-dismo</requirement>
