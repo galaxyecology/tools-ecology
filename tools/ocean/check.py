@@ -17,20 +17,24 @@ def validate_command(command):
         return False, "Error: Command must start with 'copernicusmarine'"
 
     # Remove 'copernicusmarine' from the start
-    command = command[len("copernicusmarine") :].strip()
+    command = command[len("copernicusmarine"):].strip()
 
     # Check for specific commands and their arguments
     if command.startswith("subset"):
         # Check for required arguments for 'subset' command
         if not ("--dataset-id" in command or "--dataset-url" in command):
             message = (
-                "Error: 'subset' command must have '--dataset-id' or '--dataset-url'"
+                "Error: 'subset' command must have '--dataset-id' or "
+                "'--dataset-url'"
             )
             return False, message
     elif command.startswith("get"):
         # Check for required arguments for 'get' command
         if not ("--dataset-id" in command or "--dataset-url" in command):
-            message = "Error: 'get' command must have '--dataset-id' or '--dataset-url'"
+            message = (
+                "Error: 'get' command must have '--dataset-id' or " 
+                "'--dataset-url'"
+            )
             return False, message
     elif command.startswith("login") or command.startswith("describe"):
         message = "This tool only accepts 'subset' and 'get' commands."
