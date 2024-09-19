@@ -32,7 +32,7 @@ def validate_command(command):
         # Check for required arguments for 'get' command
         if not ("--dataset-id" in command or "--dataset-url" in command):
             message = (
-                "Error: 'get' command must have '--dataset-id' or " 
+                "Error: 'get' command must have '--dataset-id' or "
                 "'--dataset-url'"
             )
             return False, message
