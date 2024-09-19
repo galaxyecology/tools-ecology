@@ -6,31 +6,33 @@ import sys
 def validate_command(command):
     # Example validation: Ensure the command does not contain
     # potentially dangerous substrings
-    forbidden_substrings = ['rm -rf', 'sudo', 'dd if=', 'curl', 'wget']
+    forbidden_substrings = ["rm -rf", "sudo", "dd if=", "curl", "wget"]
     for substring in forbidden_substrings:
         if substring in command:
             message = f"Error: Command has forbidden substring '{substring}'"
             return False, message
 
     # Check if the command starts with 'copernicusmarine'
-    if not command.startswith('copernicusmarine'):
+    if not command.startswith("copernicusmarine"):
         return False, "Error: Command must start with 'copernicusmarine'"
 
     # Remove 'copernicusmarine' from the start
-    command = command[len('copernicusmarine'):].strip()
+    command = command[len("copernicusmarine") :].strip()
 
     # Check for specific commands and their arguments
-    if command.startswith('subset'):
+    if command.startswith("subset"):
         # Check for required arguments for 'subset' command
-        if not ('--dataset-id' in command or '--dataset-url' in command):
-            message = "Error: 'subset' command must have '--dataset-id' or '--dataset-url'"
+        if not ("--dataset-id" in command or "--dataset-url" in command):
+            message = (
+                "Error: 'subset' command must have '--dataset-id' or '--dataset-url'"
+            )
             return False, message
-    elif command.startswith('get'):
+    elif command.startswith("get"):
         # Check for required arguments for 'get' command
-        if not ('--dataset-id' in command or '--dataset-url' in command):
+        if not ("--dataset-id" in command or "--dataset-url" in command):
             message = "Error: 'get' command must have '--dataset-id' or '--dataset-url'"
             return False, message
-    elif command.startswith('login') or command.startswith('describe'):
+    elif command.startswith("login") or command.startswith("describe"):
         message = "This tool only accepts 'subset' and 'get' commands."
         return False, message
     else:
@@ -54,7 +56,7 @@ def main():
         sys.exit(1)
 
     # Read the content of the file
-    with open(config_file, 'r') as file:
+    with open(config_file, "r") as file:
         command = file.read().strip()
 
     # Validate the command
