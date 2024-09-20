@@ -21,7 +21,7 @@
         #end if
         
         #set $filename="config_file_with_my_command"
-        echo -e '$input_text' > $filename --force-download --username mjosse --password Vanupiedscop22! &&
+        echo -e '$input_text' > $filename --force-download --username $cmems_username --password $cmems_password &&
 
         python '$__tool_directory__/check.py' $filename
         
