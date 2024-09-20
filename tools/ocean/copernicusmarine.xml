@@ -10,12 +10,18 @@
     <command detect_errors="exit_code"><![CDATA[
         #set $cmems_username = $__user__.extra_preferences.get('cmems_username', "")
         #set $cmems_password = $__user__.extra_preferences.get('cmems_password', "")
+
+        #if $cmems_username == "" or $cmems_password == ""
+            #set $cmems_username = os.getenv('CMEMS_USERNAME', '')
+            #set $cmems_password = os.getenv('CMEMS_PASSWORD', '')
+        #end if
+
         #if $cmems_username != ""
             echo 'Error. Set your CMEMS credentials via: User -> Preferences -> Manage Information'  &&
         #end if
         
         #set $filename="config_file_with_my_command"
-        echo -e '$input_text' > $filename --force-download --username $cmems_username --password $cmems_password &&
+        echo -e '$input_text' > $filename --force-download --username mjosse --password Vanupiedscop22! &&
 
         python '$__tool_directory__/check.py' $filename
         
