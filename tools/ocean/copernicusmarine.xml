@@ -52,8 +52,13 @@
         <data name="output_netcdf" label="Copernicus marine data" from_work_dir="./*.nc" format="netcdf"/>
     </outputs>
     <tests>
-        <test expect_failure="true" expect_exit_code="1">
+        <test expect_num_outputs="1">
             <param name="input_text" value="copernicusmarine subset --dataset-id cmems_mod_med_phy_my_4.2km-climatology_P1M-m --variable bottomT_avg --variable bottomT_std --variable mlotst_avg --variable mlotst_std --variable so_avg --variable so_std --variable thetao_avg --variable thetao_std --variable uo_avg --variable uo_std --variable vo_avg --variable vo_std --variable zos_avg --variable zos_std --start-datetime 1993-12-01T00:00:00 --end-datetime 1993-12-01T00:00:00 --minimum-longitude 10.283266521135577 --maximum-longitude 12.139348881644054 --minimum-latitude 38.461936025366256 --maximum-latitude 39.82957565942514 --minimum-depth 1.0182366371154785 --maximum-depth 1.0182366371154785"/>
+            <output name="output_netcdf">
+                <assert_contents>
+                    <has_text text="_NCProperties"/>
+                </assert_contents>
+            </output>
         </test>
     </tests>
     <help><![CDATA[
