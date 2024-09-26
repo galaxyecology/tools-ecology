@@ -1,0 +1,2 @@
+Your EML is not valid. You can improve it by correcting this error: 
+[1] "Element 'creator': This element is not expected. Expected is one of ( references, alternateIdentifier, shortName, title )."
