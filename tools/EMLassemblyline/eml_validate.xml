@@ -35,8 +35,8 @@ Eml_validate processes an EML document using the XSD schema for the appropriate 
 
 You need to input an EML file in xml format. And the tool will produce a text file with the information you need. 
 There are two different cases: 
-    1) Your EML file is valid. 
-    2) Your EML file is not valid, and a list of errors is displayed for you to improve your EML file.
+        1) Your EML file is valid.
+        2) Your EML file is not valid, and a list of errors is displayed for you to improve your EML file.
     
     ]]></help>
     <citations>
