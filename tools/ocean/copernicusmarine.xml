@@ -24,7 +24,6 @@
         echo -e '$input_text' > $filename --force-download --username $cmems_username --password $cmems_password &&
 
         python '$__tool_directory__/check.py' $filename
-        
     ]]></command>
     <configfiles>
         <configfile name="cmems_credentials">
