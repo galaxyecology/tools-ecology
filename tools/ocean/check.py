@@ -6,7 +6,15 @@ import sys
 def validate_command(command):
     # Example validation: Ensure the command does not contain
     # potentially dangerous substrings
-    forbidden_substrings = ["rm", "rm -rf", "sudo", "dd if=", "curl", "wget", ";", "&&"]
+    forbidden_substrings = ["rm",
+                            "rm -rf",
+                            "sudo",
+                            "dd if=",
+                            "curl",
+                            "wget",
+                            ";",
+                            "&&"
+                           ]
     for substring in forbidden_substrings:
         if substring in command:
             message = f"Error: Command has forbidden substring '{substring}'"
