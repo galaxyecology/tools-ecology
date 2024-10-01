@@ -13,8 +13,7 @@ def validate_command(command):
                             "curl",
                             "wget",
                             ";",
-                            "&&"
-                           ]
+                            "&&"]
     for substring in forbidden_substrings:
         if substring in command:
             message = f"Error: Command has forbidden substring '{substring}'"
