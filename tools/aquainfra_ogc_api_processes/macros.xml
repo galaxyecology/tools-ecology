@@ -14,7 +14,9 @@
         </citations>
     </xml>
     <xml name="help">
-        <help>This tool is a wrapper for OGC API Processes coming from the Zoo Project (https://zoo-project.github.io/docs/intro.html) and was created using the OGC-API-Process2Galaxy tool (https://github.com/AquaINFRA/OGC-API-Process2Galaxy). Check the README in the repository for more information.</help>
+        <help>
+            Use the dropdown menu at the top to select the OGC API processes hosted on https://aqua.igb-berlin.de/pygeoapi-dev/processes and then complete the corresponding form to run the service. 
+        </help>
     </xml>
     <xml name="tests">
         <tests>
