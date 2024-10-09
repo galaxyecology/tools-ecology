@@ -1,0 +1,49 @@
+<macros>
+    <xml name="requirements">
+        <requirements>
+            <requirement type="package" version="4.3.1">r-base</requirement>
+            <requirement type="package" version="1.20.4">r-getopt</requirement>
+            <requirement type="package" version="0.2.3">r-httr2</requirement>
+            <requirement type="package" version="1.8.7">r-jsonlite</requirement>
+        </requirements>
+    </xml>
+    <xml name="citations">
+        <citations>
+            <citation type="bibtex">@Manual{httr2, title = {httr2: Perform HTTP Requests and Process the Responses}, author = {Hadley Wickham}, year = {2023}, note = {R package version 1.0.0, https://github.com/r-lib/httr2}, url = {https://httr2.r-lib.org},}</citation>
+            <citation type="doi">10.48550/arXiv.1403.2805</citation>
+        </citations>
+    </xml>
+    <xml name="help">
+        <help>This tool is a wrapper for OGC API Processes coming from the Zoo Project (https://zoo-project.github.io/docs/intro.html) and was created using the OGC-API-Process2Galaxy tool (https://github.com/AquaINFRA/OGC-API-Process2Galaxy). Check the README in the repository for more information.</help>
+    </xml>
+    <xml name="tests">
+        <tests>
+            <test>
+                <param name="select_process" value="points-att-polygon"/>
+                <param name="regions" value="points_att_polygon_test_input_1.txt"/>
+                <param name="input_data" value="points_att_polygon_test_input_2.txt"/>
+                <param name="colname_long" value="longitude"/>
+                <param name="colname_lat" value="latitude"/>
+                <output name="output_data">
+                    <assert_contents>
+                        <has_n_lines n="1"/>
+                    </assert_contents>
+                </output>
+            </test>
+            <test>
+                <param name="select_process" value="map-shapefile-points"/>
+                <param name="regions" value="points_att_polygon_test_input_1.txt"/>
+                <param name="input_data" value="points_att_polygon_test_input_3.txt"/>
+                <param name="colname_long" value="longitude"/>
+                <param name="colname_lat" value="latitude"/>
+                <param name="colname_value_name" value="transparency_m"/>
+                <param name="colname_region_id" value="HELCOM_ID"/>
+                <output name="output_data">
+                    <assert_contents>
+                        <has_n_lines n="1"/>
+                    </assert_contents>
+                </output>
+            </test>
+        </tests>    
+    </xml>
+</macros>

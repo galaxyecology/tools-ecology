@@ -1,0 +1,94 @@
+<tool id="aquainfra" name="AquaINFRA OGC API Processes" version="0.1.0" profile="22.05">
+	<description/>
+	<macros>
+		<import>macros.xml</import>
+	</macros>
+	<expand macro="requirements"/>
+	<command detect_errors="exit_code"><![CDATA[
+	Rscript '$__tool_directory__/aquainfra_ogc_api_processes.R'
+		--outputData '$output_data'
+]]></command>
+	<configfiles>
+		<inputs name="inputs" filename="inputs.json" data_style="paths"/>
+	</configfiles>
+	<inputs>
+		<conditional name="conditional_process">
+			<param name="select_process" type="select" label="Select process">
+				<option value="points-att-polygon">points-att-polygon: Group points by region</option>
+				<option value="peri-conv">peri-conv: Group data to groups based on date</option>
+				<option value="mean-by-group">mean-by-group: Return group average</option>
+				<option value="ts-selection-interpolation">ts-selection-interpolation: Select and Interpolate Time Series</option>
+				<option value="trend-analysis-mk">trend-analysis-mk: Man-Kendall Trend Analysis on Time Series</option>
+				<option value="barplot-trend-results">barplot-trend-results: Visualisation of statistical analysis results</option>
+				<option value="map-trends-static">map-trends-static: Spatial visualisation of regions and data points</option>
+				<option value="map-shapefile-points">map-shapefile-points: Spatial visualisation of regions and data points</option>
+			</param>
+			<when value="points-att-polygon">
+				<param name="regions" label="Study region or study subregions" optional="false" help="URL to the study region, or several regions, to classify your input data into groups of interest. Currently it has to be provided as a shapefile. It can be in any coordinate system and will be transformed to WGS84 during this process." type="data" format="txt"/>
+				<param name="input_data" label="Table to be merged with study region" optional="false" help="URL to the input table containing the in-situ data points with coordinates. Can be provided as Excel file or CSV file (comma-separated text file). The coordinates have to be in WGS84 coordinate system." type="data" format="txt"/>
+				<param name="colname_long" label="Column name for longitude" optional="false" help="Name of the column that contains longitude values (in WGS84)." type="text"/>
+				<param name="colname_lat" label="Column name for latitude" optional="false" help="Name of the column that contains latitude values (in WGS84)." type="text"/>
+			</when>
+			<when value="peri-conv">
+				<param name="input_data" label="Table to be grouped by date, with date colum" help="URL to the table with a column containing a date. It can have other columns which will not be changed during this process." type="data" format="txt"/>
+				<param name="colname_date" label="Date column name" optional="false" help="Column name of the date column in the format defined above. Example: 'visit date'." type="text"/>
+				<param name="date_format" label="Date format" optional="true" help="The date format used to parse the date, i.e. to extract day, month and year from the date column, e.g.  or 'y-m-d' for dates like '1998-08-22' (this is the default) or 'y/m/d' for dates like '1998/08/22'." type="text"/>
+				<param name="group_to_periods" label="Periods to group the data into" optional="true" help="Define the periods that you want the data to be grouped into. Please follow the example: 'Dec-01:Mar-01,Mar-02:May-30,Jun-01:Aug-30,Sep-01:Nov-30' (first three letters of each month, then a minus/hyphen, then the day (two digits), then comma, then the next period)." type="text"/>
+				<param name="group_labels" label="Period labels" optional="true" help="Define names for the periods defined above, separated by a comma. Example: 'winter,spring,summer,autumn'." type="text"/>
+				<param name="year_starts_at_Dec1" label="Include December into next year" help="Tell whether the years in your grouping starts at first of December ('true') or not ('false'). This has to be reflected in the period definitions, these should not contradict each other." type="boolean" truevalue="true" falsevalue="false" checked="true"/>
+			</when>
+			<when value="mean-by-group">
+				<param name="input_data" label="Input table" optional="false" help="URL to the input table containing group identifier(s) and a value column. Groups are defined by one or more columns. Other columns present in the table will be removed in the process, retaining only those specified in cols_to_group_by and value_col. For example, use the result table from peri_conv. " type="data" format="txt"/>
+				<param name="colnames_to_group_by" label="Column names identifying group" optional="false" help="One or more column names identifying the group. A combination of all specified columns will be used to define unique groups for calculating the average value. Example: 'longitude, latitude, Year_adj_generated, group_labels, HELCOM_ID'. Another example: 'Year_adj_generated, group_labels, HELCOM_ID'." type="text"/>
+				<param name="colname_value" label="Column name for column containing values" optional="false" help="The name of the column that contains the values for which the average will be calculated. Only one column name can be included. Examples: 'transparency_m', 'mean'" type="text"/>
+			</when>
+			<when value="ts-selection-interpolation">
+				<param name="input_data" label="Input table" optional="false" help="URL to the input table containing data for selection and interpolation. This table includes grouping variables (if applicable), the year (or other time identifier) and the value columns to be interpolated. For example, use the result from mean_by_group." type="data" format="txt"/>
+				<param name="colnames_relevant" label="Column names identifying group(s)" optional="false" help="Column name(s) describing relevant values in the dataset. These columns are treated as grouping identifiers, and a combination of all specified columns will be used to define unique groups. For each group, a separate time series is analyzed and interpolated individually." type="text"/>
+				<param name="missing_threshold_percentage" label="Threshold for missing values" optional="false" help="Threshold for the allowed percentage of missing data points (NAs). For example, a value of 40 means series with more than 40% missing data will be removed. Default = 30." value="30" min="0" max="100" type="float"/>
+				<param name="colname_year" label=" Column name for time" optional="false" help="The name of the column containing the year (or other time identifier, such as quarter, month, or day). Example = 'year'." type="text"/>
+				<param name="colname_value" label="Column name for values" optional="false" help="The name of the column containing the values to be considered for interpolation." type="text"/>
+				<param name="min_data_point" label="Minimum number of data points required" optional="false" help="The minimum number of data points required in a time series for it to be included in the interpolation process. Default = 10." value="10" min="0" type="integer"/>
+			</when>
+			<when value="trend-analysis-mk">
+				<param name="input_data" label="Input table" optional="false" help="URL to the input table containing the time series data. This table includes grouping identifiers (if applicable), columns for time (e.g., year, month) and values to be analyzed for trends. For example, use the result from ts_selection_interpolation." type="data" format="txt"/>
+				<param name="colnames_relevant" label="Column names identifying group(s)" optional="false" help="Column name(s) identifying relevant groups in the dataset. These columns will be used to define unique groups for which separate trend analyses are performed." type="text"/>
+				<param name="colname_time" label="Column name for time" optional="false" help="The name of the column containing the time variable (e.g., year, month) to be used in the trend analysis. Example = 'year'." type="text"/>
+				<param name="colname_value" label="Column name for values" optional="false" help="The name of the column containing the values to be analyzed in the Man-Kendall trend test." type="text"/>
+			</when>
+			<when value="barplot-trend-results">
+				<param name="input_data" label="Input table" optional="false" help="URL to the input table containing statistical analysis results. The table must include columns for test values, p-values, and group identifiers." type="data" format="txt"/>
+				<param name="colname_id" label="Column name for identifier" optional="false" help="The name of the column containing group or sample identifiers, e.g., polygon id. Example = 'polygon_id'" type="text"/>
+				<param name="colname_test_value" label="Column name for test value" optional="false" help="The name of the column containing the test values (e.g., statistical coefficients) to be plotted on the Y-axis, e.g., Tau for Mann-Kendall test." type="text"/>
+				<param name="colname_p_value" label="Column name for p value" optional="false" help="The name of the column containing p values, used to determine bar transparency. Example = 'p_value'" type="text"/>
+				<param name="p_value_threshold" label="p value threshold for significance" optional="false" help="The threshold for distinguishing significant from insignificant values. It adjusts the transparency of bars in the plot. Example = 0.05" value="0.05" min="0.01" max="0.1" type="float"/>
+				<param name="colname_group" label="Column name for subgroups" optional="false" help="The name of the column that defines the subgroups or categories to be displayed on the X-axis, e.g., seasons for every polygon_id." type="text"/>
+			</when>
+			<when value="map-trends-static">
+				<param name="regions" label="Study region or study subregions" optional="false" help="URL to the study region, or several regions, used to classify the input data into groups of interest. Currently it has to be provided as a shapefile. It can be in any coordinate system and will be transformed to WGS84 during this process." type="data" format="txt"/>
+				<param name="input_data" label="Input table" optional="false" help="URL to the input table containing statistical analysis results. The table must include columns for test values, p-values, and identifiers linking to study region." type="data" format="txt"/>
+				<param name="colname_id_trend" label="Column name of study region identifier" optional="false" help="The name of the column containing identifiers for study regions, which must correspond to the identifiers in the shapefile (shp). Example = 'id'." type="text"/>
+				<param name="colname_region_id" label="Column name of study region identifier" optional="false" help="The name of the column in the input data that contains identifiers for study regions, corresponding to the identifiers in the shapefile. Example = 'id'." type="text"/>
+				<param name="colname_group" label="Column name for subgroups" optional="false" help="The name of the column that defines the subgroups or categories to be displayed on the X-axis, e.g., seasons for every polygon_id." type="text"/>
+				<param name="p_value_threshold" label="p value threshold for significance" optional="false" help="The threshold for distinguishing significant from insignificant values. It adjusts the transparency of bars in the plot. Example = 0.05." value="0.05" min="0.01" max="0.1" type="float"/>
+				<param name="colname_p_value" label="Column name for p value" optional="false" help="The name of the column containing p values, used to determine bar transparency. Example = 'p_value'" type="text"/>
+			</when>
+			<when value="map-shapefile-points">
+				<param name="regions" label="Study region or study subregions" optional="false" help="URL to the study region, or several regions, to classify the input data into groups of interest. Currently it has to be provided as a shapefile. It can be in any coordinate system and will be transformed to WGS84 during this process." type="data" format="txt"/>
+				<param name="input_data" label="Data table to be plotted on top of study regions" optional="false" help="URL to the input table containing the in-situ data points with coordinates." type="data" format="txt"/>
+				<param name="colname_long" label="Column name for longitude" optional="false" help="The name of the column containing longitude values for the data points." type="text"/>
+				<param name="colname_lat" label="Column name for latiitude" optional="false" help="The name of the column containing latitude values for the data points." type="text"/>
+				<param name="colname_value_name" label="Column name of data point identifier" optional="false" help="The name of the column containing identifier (e.g., site name) or values (e.g., depth) to color the points according to their corresponding values." type="text"/>
+				<param name="colname_region_id" label="Column name of region identifier" optional="false" help="The name of the column containing identifiers (e.g., basin name) to distinguish the polygons on the map if multiple regions are present." type="text"/>
+			</when>
+		</conditional>
+	</inputs>
+	<outputs>
+		<data name="output_data" format="txt" label="$select_process"/>
+	</outputs>
+	<expand macro="tests"/>
+	<help>
+		Use the dropdown menu at the top to select the OGC API process and then complete the corresponding form to run the service.
+	</help>
+	<expand macro="citations"/>
+</tool>
