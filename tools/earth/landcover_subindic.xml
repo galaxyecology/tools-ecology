@@ -12,15 +12,35 @@
         <requirement type="package" version="2.1.14">trends_earth_schemas</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
-        python '$__tool_directory__/land_cover.py'
-            --raster_1 '$raster_1'
-            --raster_2 '$raster_2'
-            --json '$json'
+            #if '$method.json_file' == "no"
+                python '$__tool_directory__/land_cover.py'
+                --raster_1 '$raster_1'
+                --raster_2 '$raster_2'
+                --json '$downloaded.json'
+            #else        
+                #set $json_url = "https://raw.githubusercontent.com/fair-ease/earth-critical-zone-galaxy/refs/heads/main/landcover.json"  
+                wget -O downloaded.json $json_url &&
+                python '$__tool_directory__/land_cover.py'
+                --raster_1 '$raster_1'
+                --raster_2 '$raster_2'
+                --json 'downloaded.json'
+            #end if
+
     ]]></command>
     <inputs>
         <param name="raster_1" type="data" format="tiff" label="A raster image of the land at a reference year" />
         <param name="raster_2" type="data" format="tiff" label="A raster image of the land at the year you want to study" />
-        <param name="json" type="data" format="json" label="A file containing the land specifications" help="You can directly use the default one here https://github.com/fair-ease/earth-critical-zone-galaxy/blob/main/landcover.json but you can also customize it"/>
+        <conditional name="method">
+            <param name="json_file" type="select" label="Do you want to use the default file json or your customized one ?" help="A file containing the land specifications, you can directly use the default one or you can customize it beforehand">
+                <option value="yes">yes</option>
+                <option value="no">no</option>
+            </param>
+            <when value="yes">
+            </when>
+            <when value="no">
+                <param name="downloaded.json" type="data" format="json" label="A file containing the land specifications" help="You can customize as needed the default file https://github.com/fair-ease/earth-critical-zone-galaxy/blob/main/landcover.json"/>
+            </when>
+        </conditional>
     </inputs>
     <outputs>
         <collection name="output_tiff" type="list" label="Land cover raster outputs">
@@ -96,6 +116,9 @@ To assess changes in land cover users need land cover maps covering the study ar
 
 **Output**
 - A potential Land degradation raster
+
+
+For more information go on `the official trends earth documentation<http://docs.trends.earth/en/latest/for_users/features/unccdreporting.html>`
 
     ]]></help>
     <citations>
