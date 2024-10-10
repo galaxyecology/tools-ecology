@@ -16,7 +16,7 @@
                 python '$__tool_directory__/land_cover.py'
                 --raster_1 '$raster_1'
                 --raster_2 '$raster_2'
-                --json '$downloaded.json'
+                --json '$json'
             #else        
                 #set $json_url = "https://raw.githubusercontent.com/fair-ease/earth-critical-zone-galaxy/refs/heads/main/landcover.json"  
                 wget -O downloaded.json $json_url &&
@@ -38,7 +38,7 @@
             <when value="yes">
             </when>
             <when value="no">
-                <param name="downloaded.json" type="data" format="json" label="A file containing the land specifications" help="You can customize as needed the default file https://github.com/fair-ease/earth-critical-zone-galaxy/blob/main/landcover.json"/>
+                <param name="json" type="data" format="json" label="A file containing the land specifications" help="You can customize as needed the default file https://github.com/fair-ease/earth-critical-zone-galaxy/blob/main/landcover.json"/>
             </when>
         </conditional>
     </inputs>
