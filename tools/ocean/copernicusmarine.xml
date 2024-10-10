@@ -8,12 +8,22 @@
         <requirement type="package" version="@TOOL_VERSION@">copernicusmarine</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
+    #import re
         #set $cmems_username = $__user__.extra_preferences.get('cmems_username', "")
         #set $cmems_password = $__user__.extra_preferences.get('cmems_password', "")
 
         #if $cmems_username == "" or $cmems_password == ""
             #set $cmems_username = os.getenv('CMEMS_USERNAME', '')
             #set $cmems_password = os.getenv('CMEMS_PASSWORD', '')
+
+            echo "Using global ENVs" &&
+
+            #if re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$", $cmems_password):
+                echo "Password meets the required criteria" &&
+            #else:
+                echo "Password does not meet the required criteria" &&
+            #end if
+
         #end if
 
         #if $cmems_username != ""
@@ -42,9 +52,10 @@
                     <add value=" " />
                     <add value=":" />
                     <add value="." />
+                    <add value=" " />
                 </valid>
             </sanitizer>
-            <validator type="regex">[0-9a-zA-Z_]+</validator>
+            <validator type="regex">[0-9a-zA-Z_:\-\. ]+</validator>
         </param>
     </inputs>
     <outputs>
