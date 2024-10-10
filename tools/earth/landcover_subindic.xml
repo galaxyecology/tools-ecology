@@ -84,7 +84,6 @@
 This tool aims at facilitating the analysis of remotely-sensed datasets in support of monitoring land degradation. 
 This project contains common code used by the scripts in trends.earth.
 
-.....
 To assess changes in land cover users need land cover maps covering the study area for the baseline and target years. These maps need to be of acceptable accuracy and created in such a way which allows for valid comparisons. Trends.Earth uses ESA CCI land cover maps as the default dataset, but local maps can also be used. The indicator is computed as follows:
 
     - Reclassify both land cover maps to the 7 land cover classes needed for reporting to the UNCCD (forest, grassland, cropland, wetland, artificial area, bare land and water).
@@ -99,7 +98,6 @@ To assess changes in land cover users need land cover maps covering the study ar
 
 **Output**
 - A potential Land degradation raster
-
 
 For more information go on `the official trends earth documentation`<http://docs.trends.earth/en/latest/for_users/features/unccdreporting.html> 
 
