@@ -39,7 +39,9 @@
 				    <option value="y-m-d">y-m-d</option>
                     <option value="y/m/d">y/m/d</option>
 				</param>
-                <param name="group_to_periods" label="Periods to group the data into" optional="true" help="Define the periods that you want the data to be grouped into. Please follow the example: 'Dec-01:Mar-01,Mar-02:May-30,Jun-01:Aug-30,Sep-01:Nov-30' (first three letters of each month, then a minus/hyphen, then the day (two digits), then comma, then the next period)." type="text" />
+                <param name="group_to_periods" label="Periods to group the data into" optional="true" help="Define the periods that you want the data to be grouped into. Please follow the example: 'Dec-01:Mar-01,Mar-02:May-30,Jun-01:Aug-30,Sep-01:Nov-30' (first three letters of each month, then a minus/hyphen, then the day (two digits), then comma, then the next period)." type="text">
+                    <validator type="regex">^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-[0-3][0-9]:(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-[0-3][0-9](,(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-[0-3][0-9]:(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-[0-3][0-9])*$</validator>
+                </param>
                 <param name="group_labels" label="Period labels" optional="true" help="Define names for the periods defined above, separated by a comma. Example: 'winter,spring,summer,autumn'." type="text"/>
                 <param name="year_starts_at_dec1" label="Include December into next year" help="Tell whether the years in your grouping starts at first of December ('true') or not ('false'). This has to be reflected in the period definitions, these should not contradict each other." type="boolean" truevalue="true" falsevalue="false" checked="true"/>
             </when>
