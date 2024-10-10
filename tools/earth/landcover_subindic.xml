@@ -78,8 +78,6 @@
     </tests>
     <help><![CDATA[
 
-.. class:: infomark
-
 **What it does**
 This tool aims at facilitating the analysis of remotely-sensed datasets in support of monitoring land degradation. 
 This project contains common code used by the scripts in trends.earth.
@@ -99,7 +97,8 @@ To assess changes in land cover users need land cover maps covering the study ar
 **Output**
 - A potential Land degradation raster
 
-For more information go on `the official trends earth documentation`<http://docs.trends.earth/en/latest/for_users/features/unccdreporting.html> 
+
+For more information go on `the official trends earth documentation <http://docs.trends.earth/en/latest/for_users/features/unccdreporting.html> `
 
     ]]></help>
     <citations>
