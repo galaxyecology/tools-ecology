@@ -18,9 +18,9 @@
             --json '$json'
     ]]></command>
     <inputs>
-        <param name="raster_1" type="data" format="tiff" label="raster" />
-        <param name="raster_2" type="data" format="tiff" label="raster" />
-        <param name="json" type="data" format="json" label="json" />
+        <param name="raster_1" type="data" format="tiff" label="A raster image of the land at a reference year" />
+        <param name="raster_2" type="data" format="tiff" label="A raster image of the land at the year you want to study" />
+        <param name="json" type="data" format="json" label="A file containing the land specifications" help="You can directly use the default one here https://github.com/fair-ease/earth-critical-zone-galaxy/blob/main/landcover.json but you can also customize it"/>
     </inputs>
     <outputs>
         <collection name="output_tiff" type="list" label="Land cover raster outputs">
@@ -85,12 +85,23 @@ This tool aims at facilitating the analysis of remotely-sensed datasets in suppo
 This project contains common code used by the scripts in trends.earth.
 
 .....
+To assess changes in land cover users need land cover maps covering the study area for the baseline and target years. These maps need to be of acceptable accuracy and created in such a way which allows for valid comparisons. Trends.Earth uses ESA CCI land cover maps as the default dataset, but local maps can also be used. The indicator is computed as follows:
+
+    - Reclassify both land cover maps to the 7 land cover classes needed for reporting to the UNCCD (forest, grassland, cropland, wetland, artificial area, bare land and water).
+    - Perform a land cover transition analysis to identify which pixels remained in the same land cover class, and which ones changed.
+    - Based on your local knowledge of the conditions in the study area and the land degradation processed occurring there, use the table below to identify which transitions correspond to degradation (- sign), improvement (+ sign), or no change in terms of land condition (zero).
+    - This tool will combine the information from the land cover maps and the table of degradation typologies by land cover transition to compute the land cover sub-indicator.
 
 **Input**
-
+- One referenced raster of the land at an initial year
+- A second raster of the same location at a final study year 
+- json file containing the 7 land cover classes. We specify by default a json feel free to customize it according to your need.
 
 **Output**
+- A potential Land degradation raster
 
+
+For more information go on `the official trends earth documentation`<http://docs.trends.earth/en/latest/for_users/features/unccdreporting.html> 
 
     ]]></help>
     <citations>
