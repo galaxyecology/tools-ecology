@@ -40,12 +40,12 @@
 **What it does?**
 --------------------
 
-This tool derived from the R Shiny App MetaShRIMPS <https://github.com/TanguyGen/metaCure> is made to produce draft of data paper from Ecological Metadata Language (EML) based metadata documents.
+This tool derived from the archived R Opensci emldown package thanks to French Fund for open science "OpenMetaPaper" project emldown R code improvements https://github.com/TanguyGen/emldown and creation fo the MetaShRIMPS R Shiny App <https://github.com/TanguyGen/metaCure> is made to produce draft of data paper from Ecological Metadata Language (EML) based metadata documents.
 
 **How to use it?**
 --------------------
 
-You need to input an EML data file (xml format) and run the tool that will produce a draft of data paper in docx format that you can edit.  
+You need to input an EML (Ecological Metadata Language) metadata file (xml format) and run the tool that will produce a draft of data paper in docx format that you can edit.  
     
     
     ]]></help>
@@ -56,6 +56,14 @@ You need to input an EML data file (xml format) and run the tool that will produ
            title        = {{Metadata Shiny for Retroactive Information Management and Production of data paper Sketches}},
            publisher    = {Github},
            url          = {https://github.com/TanguyGen/metaCure},
+           year         = {2023}
+           }
+          }</citation>
+           <citation type="bibtex">@misc{githubsurvey2023b,
+           author       = {Tanguy Genthon},
+           title        = {{Produce beautifull website from EML}},
+           publisher    = {Github},
+           url          = {https://github.com/TanguyGen/emldown},
            year         = {2023}
            }
           }</citation>
