@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="datatable.xsl" type="text/xsl"?>
+<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="def513c0-1dbf-46d4-964d-f2730c7c3ac5" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd" system="unknown">
+  <dataset id="dataDDU">
+    <title>Dumont D Urville sea abiotic and physical parameters and Jupyter notebook</title>
+    <creator>
+      <individualName>
+        <givenName>Marc</givenName>
+        <surName>Eléaume</surName>
+      </individualName>
+      <organizationName>Muséum National d'Histoire Naturelle</organizationName>
+      <electronicMailAddress>marc.eleaume@mnhn.fr</electronicMailAddress>
+      <userId directory="https://orcid.org">https://orcid.org/0000-0003-1999-1177</userId>
+    </creator>
+    <creator>
+      <individualName>
+        <givenName>Lenaïg</givenName>
+        <givenName>G.</givenName>
+        <surName>Hemery</surName>
+      </individualName>
+      <organizationName>Pacific Northwest National Laboratory Marine Sciences Laboratory</organizationName>
+      <electronicMailAddress>lenaighemery@gmail.com,lenaig.hemery@pnnl.gov</electronicMailAddress>
+      <userId directory="https://orcid.org">https://orcid.org/0000-0001-5337-4514</userId>
+    </creator>
+    <creator>
+      <individualName>
+        <givenName>Pauline</givenName>
+        <surName>Seguineau</surName>
+      </individualName>
+      <organizationName>Muséum National d'Histoire Naturelle</organizationName>
+      <electronicMailAddress>pauline.seguineau@mnhn.fr</electronicMailAddress>
+      <userId directory="https://orcid.org">https://orcid.org/0009-0009-5969-8478</userId>
+    </creator>
+    <creator>
+      <individualName>
+        <givenName>Yvan</givenName>
+        <surName>Le Bras</surName>
+      </individualName>
+      <organizationName>Muséum National d'Histoire Naturelle</organizationName>
+      <electronicMailAddress>yvan.le-bras@mnhn.fr</electronicMailAddress>
+      <userId directory="https://orcid.org">https://orcid.org/0000-0002-8504-068X</userId>
+    </creator>
+    <pubDate>2024-05-28</pubDate>
+    <abstract>
+      <para>Antarctica and the Southern Ocean play a central role in regulating the Earth climate and its singularity dating back 25 Mya also includes ecological processes that need to be better understood. The Dumont D’Urville sea located off George V and Adélie Land, is one of the better known East-Antarctic marine area displaying a diversity of abiotic and physical parameters that have been shown to drive the distribution of marine organisms. The dataset presented here contribute to our understanding of these interactions, providing essential information for ongoing research and conservation efforts in this Antarctic ecosystem. This dataset presents a table containing abiotic and physical parameters specific to the Dumont D’Urville Sea and a Jupyter notebook to execute a R script in the ecoregionalization Galaxy workflow. The abiotic and physical parameters were first presented in the research article 'Predicting habitat preferences for Anthometrina adriani (Echinodermata) on the East Antarctic continental shelf' by Hemery et al. (2011). The jupyter notebook is dedicated to the pivot_wider function from the tidyr R package. This notebook is the final part of the data preparation for the ecoregionalization Galaxy workflow.
+</para>
+    </abstract>
+    <keywordSet>
+      <keyword>Antarctica</keyword>
+      <keyword>Ocean circulation model</keyword>
+      <keyword>Southern Ocean</keyword>
+      <keyword>Dumont D'Urville sea</keyword>
+      <keyword>CEAMARC</keyword>
+      <keyword>Abiotic and physical parameters</keyword>
+      <keyword>Ecoregionalization</keyword>
+      <keyword>Tidyr</keyword>
+      <keyword>R package</keyword>
+      <keyword>Jupyter notebook</keyword>
+      <keyword>Pivot wider function</keyword>
+    </keywordSet>
+    <additionalInfo>
+      <para>
+</para>
+    </additionalInfo>
+    <intellectualRights>
+      <para>This information is released under the Creative Commons license - Attribution - CC BY (https://creativecommons.org/licenses/by/4.0/). The consumer of these data ("Data User" herein) is required to cite it appropriately in any publication that results from its use. The Data User should realize that these data may be actively used by others for ongoing research and that coordination may be necessary to prevent duplicate publication. The Data User is urged to contact the authors of these data if any questions about methodology or results occur. Where appropriate, the Data User is encouraged to consider collaboration or co-authorship with the authors. The Data User should realize that misinterpretation of data may occur if used out of context of the original study. While substantial efforts are made to ensure the accuracy of data and associated documentation, complete accuracy of data sets cannot be guaranteed. All data are made available "as is." The Data User should be aware, however, that data are updated periodically and it is the responsibility of the Data User to check for new versions of the data. The data authors and the repository where these data were obtained shall not be liable for damages resulting from any use or misinterpretation of the data. Thank you.
+</para>
+    </intellectualRights>
+    <coverage>
+      <geographicCoverage>
+        <geographicDescription>Dumont D'Urville sampling border</geographicDescription>
+        <boundingCoordinates>
+          <westBoundingCoordinate>139.22</westBoundingCoordinate>
+          <eastBoundingCoordinate>145.53</eastBoundingCoordinate>
+          <northBoundingCoordinate>-65.57</northBoundingCoordinate>
+          <southBoundingCoordinate>-67.01</southBoundingCoordinate>
+        </boundingCoordinates>
+      </geographicCoverage>
+      <temporalCoverage>
+        <rangeOfDates>
+          <beginDate>
+            <calendarDate>2007-12-01</calendarDate>
+          </beginDate>
+          <endDate>
+            <calendarDate>2008-01-31</calendarDate>
+          </endDate>
+        </rangeOfDates>
+      </temporalCoverage>
+    </coverage>
+    <annotation id="kw1">
+      <propertyURI label="is about">http://purl.obolibrary.org/obo/IAO_0000136</propertyURI>
+      <valueURI label="Antarctica">http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C18007</valueURI>
+      </annotation>
+    <contact>
+      <individualName>
+        <givenName>Marc</givenName>
+        <surName>Eléaume</surName>
+      </individualName>
+      <organizationName>Muséum National d'Histoire Naturelle</organizationName>
+      <electronicMailAddress>marc.eleaume@mnhn.fr</electronicMailAddress>
+      <userId directory="https://orcid.org">https://orcid.org/0000-0003-1999-1177</userId>
+    </contact>
+    <methods>
+      <methodStep>
+        <description>
+          <para>Abiotic and physical parameters in this dataset were taken from oceanographic model and in situ measurements (Hemery et al., 2011). Here we quote the relevant section of the “Materials and methods” part from the study: “Abiotic or physical parameters. Two different categories of abiotic parameters were used (Fig. 2): parameters likely to be subject to daily or seasonal variability (temperature, salinity, current magnitude, general current direction and sea-ice concentration) and parameters with long-term stability (bathymetry, slope, rugosity and seabed sediments). Parameters with short-term variability are taken from an oceanographic model, whereas parameters with long-term stability are derived from in situ measurements. Physical oceanography. Physical oceanographic parameters near the seabed (temperature, salinity, mean current magnitude, standard deviations of these 3 parameters, maximum current magnitude and general current direction) are taken from a climatologically forced ocean circulation model. The model was run for a total of 23 yr. A spinup phase of 20 yr was required for the model to reach quasi-equilibrium. The mean and SD were calculated by using 6-hourly model data for the last 3 yr. Sea ice growth rate was calculated directly from special sensor microwave imager (SSM/I) observations (Tamura et al. 2008). The model is based on the Rutgers/University of California Los Angeles Regional Ocean Model System (ROMS; Shchepetkin &amp; McWilliams 2005) and is identical to the one described by B. K. Galton-Fenzi et al. (unpubl.). The model used here, initially developed for regional modelling studies of the Amery Ice Shelf/Ocean system and has been used in circum-Antarctic modelling studies, is able to simulate ice/ocean interactions at a high level of realism (Galton-Fenzi 2009, 2010). For the region of this study, the model is able to reproduce the circulation patterns and water mass properties when compared with oceanographic measurements taken in the vicinity of the George V and Adélie basins (A. Meijers pers. comm.). The model domain extends from 135.77° E to 158.08° E and from 69.417° S to 62.724° S. The southern boundary of the model is a closed, solid, free slip wall and the eastern and western boundaries are partially open. The horizontal grid resolution is between 2.16 km near the southern boundary to 2.88 km near the northern boundary. There are 31 vertical levels that are concentrated towards the top and bottom of the model domain. The parameters used here were taken from the lowest vertical level in the model that lies immediately adjacent to the seabed. The choice of mixing and advection schemes follows the choices that were successfully used by Dinniman et al. (2003, 2007) for studies of the shelf seas near the Ross Ice Shelf. The melting and freezing formulation uses the full 3-equation formulation and dynamics frazil ice model used in the studies of Galton-Fenzi (2009, 2010). Lateral boundary fields (potential temperature, salinity and currents) on the open boundaries are relaxed to monthly climatologies from ECCO2 (Menemenlis et al. 2008, Wunsch et al. 2009). Ten primary tidal constituents were added as a free-surface forcing. The tidal amplitudes and phase are calculated with a nonstandard ROMS subroutine, based on tidal information from the Proudman Oceanographic Laboratory (Murray 1964) and modified to be included within ROMS, yielding a standard tidal prediction. The bathymetry and the ice-draft information come from a version of R-TOPO (Timmermann et al. 2010) that was modified to include the high-resolution bathymetric data (outlined below, Beaman et al. 2011) and knowledge of the glacial ice drafts in the region (B. Legresy pers.comm.). The open ocean surface fluxes are modified by an imposed climatological sea-ice cover that includes polynyas, derived from SSM/I observations (Tamura et al. 2008). During summer, the Tamura et al. (2008) data are supplemented with open-water heat and salt fluxes by using the monthly climatologies from the NCEP-2 (Kanamitsu et al. 2002). Bathymetry and seabed sediments. A bathymetry model based on multibeam swath sonar and single beam bathymetry data was produced at about 250 m resolution for the study area (Beaman et al. 2011). A raster map of the slope gradient was generated from this bathymetry model by using ESRI ArcGIS 9.2 Spatial Analysis Tools and a raster map of the rugosity was generated by using Benthic Terrain Modeler tools. Sediment grabs provided substratum composition data, such as the percentage of gravel, mud, sand, biogenic carbonate and biogenic silica at sample sites (Beaman &amp; O’Brien 2009). These data are used as a broad-scale representation of the seafloor substratum.” (Hemery et al., 2011) 
+</para>
+        </description>
+      </methodStep>
+    </methods>
+    <dataTable>
+      <entityName>ceamarc_env</entityName>
+      <entityDescription>A table containing abiotic and physical parameters specific to the Dumont D'Urville Sea that were first presented in the research article "Predicting habitat preferences for Anthometrina adriani (Echinodermata) on the East Antarctic continental shelf" by Hemery et al. (2011). </entityDescription>
+      <physical>
+        <objectName>ceamarc_env.tsv</objectName>
+        <size unit="bytes">15573372</size>
+        <authentication method="MD5">7e21041af224ad58f685f37f68a49c5b</authentication>
+        <dataFormat>
+          <textFormat>
+            <numHeaderLines>1</numHeaderLines>
+            <recordDelimiter>\n</recordDelimiter>
+            <attributeOrientation>column</attributeOrientation>
+            <simpleDelimited>
+              <fieldDelimiter>\t</fieldDelimiter>
+            </simpleDelimited>
+          </textFormat>
+        </dataFormat>
+      </physical>
+      <attributeList>
+        <attribute id="att-long">
+          <attributeName>long</attributeName>
+          <attributeDefinition>Longitude is a geographic coordinate that specifies the east–west position of a point</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>degree</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">139.22</minimum>
+                  <maximum exclusive="false">145.53</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>-9999</code>
+            <codeExplanation>no data available</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute id="att-lat">
+          <attributeName>lat</attributeName>
+          <attributeDefinition>Latitude is a geographic coordinate that specifies the north–south position of a point.</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>degree</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">-67.01</minimum>
+                  <maximum exclusive="false">-65.57</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>-9999</code>
+            <codeExplanation>no data available</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute id="att-carbo">
+          <attributeName>Carbo</attributeName>
+          <attributeDefinition>Percentage of biogenic carbonate</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>percent</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0.78</minimum>
+                  <maximum exclusive="false">5.62</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>-9999</code>
+            <codeExplanation>no data available</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute id="att-Grav">
+          <attributeName>Grav</attributeName>
+          <attributeDefinition>Percentage of gravel in the seabed</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>percent</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">-0.01</minimum>
+                  <maximum exclusive="false">29.55</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>-9999</code>
+            <codeExplanation>no data available</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute id="att-maxbearing">
+          <attributeName>Maxbearing</attributeName>
+          <attributeDefinition>Maximum current bearing</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>radian</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0.000201518007088453</minimum>
+                  <maximum exclusive="false">6.28</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>-9999</code>
+            <codeExplanation>no data available</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute id="att-maxmagnit">
+          <attributeName>Maxmagnit</attributeName>
+          <attributeDefinition>Maximum current magnitude</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>meterPerSecond</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0.000266201008344069</minimum>
+                  <maximum exclusive="false">0.49</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>-9999</code>
+            <codeExplanation>no data available</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute id="att-meancurmag">
+          <attributeName>Meancurmag</attributeName>
+          <attributeDefinition>Mean current magnitude</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>meterPerSecond</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0.01</minimum>
+                  <maximum exclusive="false">0.26</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>-9999</code>
+            <codeExplanation>no data available</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute id="att-meansal">
+          <attributeName>Meansal</attributeName>
+          <attributeDefinition>Mean salinity of the sea</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <customUnit>PSU</customUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">34.52</minimum>
+                  <maximum exclusive="false">34.77</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>-9999</code>
+            <codeExplanation>no data available</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute id="att-meantheta">
+          <attributeName>Meantheta</attributeName>
+          <attributeDefinition>Mean temperature of the sea</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <customUnit>degreeCelsius</customUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">-1.86</minimum>
+                  <maximum exclusive="false">-0.09</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>-9999</code>
+            <codeExplanation>no data available</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute id="att-mud">
+          <attributeName>Mud</attributeName>
+          <attributeDefinition>Percentage of mud in the seabed</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>percent</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">-2.04</minimum>
+                  <maximum exclusive="false">85.6</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>-9999</code>
+            <codeExplanation>no data available</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute id="att-depth">
+          <attributeName>Prof</attributeName>
+          <attributeDefinition>Depth of the sea</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>meter</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>integer</numberType>
+                <bounds>
+                  <minimum exclusive="false">-1200</minimum>
+                  <maximum exclusive="false">-130</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>-9999</code>
+            <codeExplanation>no data available</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute id="att-rug">
+          <attributeName>Rugosity</attributeName>
+          <attributeDefinition>Rugosity of the seabed</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">1</minimum>
+                  <maximum exclusive="false">1.01</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>-9999</code>
+            <codeExplanation>no data available</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute id="att-sand">
+          <attributeName>Sand</attributeName>
+          <attributeDefinition>Percentage of sand in the seabed</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>percent</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">34.29</minimum>
+                  <maximum exclusive="false">73.92</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>-9999</code>
+            <codeExplanation>no data available</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute id="att-seaice">
+          <attributeName>Seaice_prod</attributeName>
+          <attributeDefinition>Seaice production in meter per year</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <customUnit>meterPerYear</customUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">-2.21</minimum>
+                  <maximum exclusive="false">13.31</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>-9999</code>
+            <codeExplanation>no data available</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute id="att-sili">
+          <attributeName>Sili</attributeName>
+          <attributeDefinition>Percentage of biogenic silica in the seabed</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>percent</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0.69</minimum>
+                  <maximum exclusive="false">17.1</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>-9999</code>
+            <codeExplanation>no data available</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute id="att-slope">
+          <attributeName>Slope</attributeName>
+          <attributeDefinition>Slope of the seabed</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>degree</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">-0.29</minimum>
+                  <maximum exclusive="false">13.18</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>-9999</code>
+            <codeExplanation>no data available</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute id="att-standcur">
+          <attributeName>Standcurmag</attributeName>
+          <attributeDefinition>Current magnitude standard deviation</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>meterPerSecond</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0.01</minimum>
+                  <maximum exclusive="false">0.08</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>-9999</code>
+            <codeExplanation>no data available</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute id="att-standsal">
+          <attributeName>Standsal</attributeName>
+          <attributeDefinition>Salinity standard deviation</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <customUnit>PSU</customUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0.00584563100710511</minimum>
+                  <maximum exclusive="false">0.26</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>-9999</code>
+            <codeExplanation>no data available</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute id="att-standthe">
+          <attributeName>Standtheta</attributeName>
+          <attributeDefinition>Temperature standard deviation</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <customUnit>degreeCelsius</customUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0.03</minimum>
+                  <maximum exclusive="false">0.52</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>-9999</code>
+            <codeExplanation>no data available</codeExplanation>
+          </missingValueCode>
+        </attribute>
+      </attributeList>
+      <numberOfRecords>155823</numberOfRecords>
+    </dataTable>
+    <otherEntity>
+      <entityName>pivot_wider_jupytool_notebook</entityName>
+      <entityDescription>This jupyter notebook is dedicated to the pivot_wider function from the tidyr R package. It is the final part of the data preparation for the ecoregionalization Galaxy workflow.</entityDescription>
+      <physical>
+        <objectName>pivot_wider_jupytool_notebook.ipynb</objectName>
+        <size unit="bytes">2794</size>
+        <authentication method="MD5">2065faa032869e3da5f20b56c7904290</authentication>
+        <dataFormat>
+          <externallyDefinedFormat>
+            <formatName>Unknown</formatName>
+          </externallyDefinedFormat>
+        </dataFormat>
+      </physical>
+      <entityType>executable</entityType>
+    </otherEntity>
+  </dataset>
+  <additionalMetadata>
+    <metadata>
+      <unitList>
+        <unit id="PSU" multiplierToSI="0.001" name="PSU" parentSI="gramPerGram" unitType="density">
+          <description>1 PSU = 1g/kg</description>
+        </unit>
+        <unit id="degreeCelsius" multiplierToSI="1" name="degreeCelsius" parentSI="dimensionless" unitType="temperature">
+          <description>0 °C + 273,15 = 273,15 Kelvin</description>
+        </unit>
+        <unit id="meterPerYear" multiplierToSI="0.01" name="meterPerYear" parentSI="centimeterPerYear" unitType="speed">
+          <description>meter per year</description>
+        </unit>
+      </unitList>
+    </metadata>
+  </additionalMetadata>
+  <additionalMetadata>
+    <metadata>
+      <emlEditor>
+        <app>EMLassemblyline</app>
+        <release>3.5.5</release>
+      </emlEditor>
+    </metadata>
+  </additionalMetadata>
+</eml:eml>

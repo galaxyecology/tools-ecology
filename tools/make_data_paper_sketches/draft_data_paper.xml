@@ -1,0 +1,63 @@
+<tool id="data_paper_from_EML" name="Make data paper sketches" version="0.1.0+galaxy0" profile="21.05">
+    <description>from EML</description>
+    <requirements>
+       <requirement type="package" version="4.3.3">r-base</requirement>
+       <requirement type="package" version="1.1.39">libxslt</requirement>
+       <requirement type="package" version="3.5">pandoc</requirement>
+       <requirement type="package" version="1.1.4">r-dplyr</requirement>
+       <requirement type="package" version="2.11.2">r-mapview</requirement>
+       <requirement type="package" version="1.4.6">r-xslt</requirement>
+       <requirement type="package" version="1.3.6">r-xml2</requirement>
+       <requirement type="package" version="2.1.1">phantomjs</requirement>
+       
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+    
+    Rscript '$__tool_directory__/map_geographical_coverage.R' '$inputmetadatafile' &&
+    
+    xsltproc -o datapaper.html '$__tool_directory__/emldown_templates/bootstrap2.xsl' '${inputmetadatafile}' &&
+    pandoc datapaper.html -o data_paper.docx
+ 
+    ]]></command>
+    <inputs>
+       <param name="inputmetadatafile" type="data" format="xml" label="EML metadata file" help="Insert only metadata using EML standard"/>
+    </inputs>
+    <outputs>
+        <data name="datapaper_docx" from_work_dir="data_paper.docx" format="docx" label="data_paper.docx"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="inputmetadatafile" value="EML.xml"/>
+            <output name='datapaper_docx'>
+                <assert_contents>
+            	    <has_size value="31756" delta="50"/>
+            	</assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+    
+**What it does?**
+--------------------
+
+This tool derived from the R Shiny App MetaShRIMPS <https://github.com/TanguyGen/metaCure> is made to produce draft of data paper from Ecological Metadata Language (EML) based metadata documents.
+
+**How to use it?**
+--------------------
+
+You need to input an EML data file (xml format) and run the tool that will produce a draft of data paper in docx format that you can edit.  
+    
+    
+    ]]></help>
+    
+    <citations>
+           <citation type="bibtex">@misc{githubsurvey2023,
+           author       = {Tanguy Genthon},
+           title        = {{Metadata Shiny for Retroactive Information Management and Production of data paper Sketches}},
+           publisher    = {Github},
+           url          = {https://github.com/TanguyGen/metaCure},
+           year         = {2023}
+           }
+          }</citation>
+    </citations>
+</tool>
