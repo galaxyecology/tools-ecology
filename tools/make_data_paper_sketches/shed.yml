@@ -1,0 +1,10 @@
+name: Make data paper sketches from EML 
+owner: ecology 
+description: This tool derived from the R Shiny App MetaShRIMPS <https://github.com/TanguyGen/metaCure> is made to produce draft of data paper from Ecological Metadata Language (EML) based metadata documents.
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/main/tools-ecology/tools/make_data_paper_sketches
+type: unrestricted
+categories:
+- Ecology
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "{{ tool_name }}"
