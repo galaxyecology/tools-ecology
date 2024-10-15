@@ -18,12 +18,10 @@
                 --raster_2 '$raster_2'
                 --json '$json'
             #else        
-                #set $json_url = "https://raw.githubusercontent.com/fair-ease/earth-critical-zone-galaxy/refs/heads/main/landcover.json"  
-                wget -O downloaded.json $json_url &&
                 python '$__tool_directory__/land_cover.py'
                 --raster_1 '$raster_1'
                 --raster_2 '$raster_2'
-                --json 'downloaded.json'
+                --json '$__tool_directory__/test-data/landcover.json'
             #end if
 
     ]]></command>
@@ -112,11 +110,24 @@ To assess changes in land cover users need land cover maps covering the study ar
 **Input**
 - One referenced raster of the land at an initial year
 - A second raster of the same location at a final study year 
+
+You can get these data on the `ESA (European Spatial Agency) website<https://www.esa-landcover-cci.org/?q=node/164>`. For more information follow the `Trends Earth doumentation<http://docs.trends.earth/en/latest/for_users/datasets/input_data.html>`
+
 - json file containing the 7 land cover classes. We specify by default a json feel free to customize it according to your need.
+
+
+In the json config file you find defined a way to map ESA land cover classes into (the 7) IPCC land cover classes.
+As a user you can add a new set of rules to map land cover classes from any system (ESA, CLC, …) to the IPCC ones. In the end, the user can do three different things:
+
+    - Use the default set of mapping rules findable on this `github repository<https://github.com/fair-ease/earth-critical-zone-galaxy/blob/main/landcover.json>`
+    - Modify an existent set of mapping rules with custom associations
+    - Add a new set of rules, useful for any custom map depicting land cover
+
+See also custom `land cover classes<http://docs.trends.earth/en/latest/for_users/training/settings.html#custom-land-cover-classes>`.
 
 **Output**
 - A potential Land degradation raster
-
+In the json config file there is also the definition of the transformation of the land use change into the three output classes (Degradation, Improvement, and Stable)
 
 For more information go on `the official trends earth documentation<http://docs.trends.earth/en/latest/for_users/features/unccdreporting.html>`
 
