@@ -1,6 +1,9 @@
 name: Make data paper sketches from EML 
 owner: ecology 
 description: This tool derived from the R Shiny App MetaShRIMPS <https://github.com/TanguyGen/metaCure> is made to produce draft of data paper from Ecological Metadata Language (EML) based metadata documents.
+homepage_url: https://github.com/TanguyGen/emldown
+long_description: |
+  emldown is an old archived ROpensci R package allowing to create beautiful website from Ecological Metadata Language (EML) documents. Thanks to french fund for open science "OpenMetaPaper" project, PNDB biodiversity e-infrastructure impriove the original code allowing taking into account more EML elements (notably semantic annotations, methods and better display of taxonomic coverage) and creating editable docx documents.
 remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/main/tools-ecology/tools/make_data_paper_sketches
 type: unrestricted
 categories:
