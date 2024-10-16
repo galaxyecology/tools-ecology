@@ -41,7 +41,7 @@ dev.off()
 
 clus <- cbind(data.bio[1:nrow(test3), 1:2],test5$clustering)
 names(clus) <- c("lat", "long", "cluster")
-clus <- cbind(clus,test3,env.data[,3:19])
+clus <- cbind(clus,test3,env.data[,3:ncol(env.data)])
 
 write.table(clus[1:3], file = "points_clus.tsv", quote = FALSE, sep="\t", row.names = FALSE)
 write.table(clus, file = "clus.tsv", quote = FALSE, sep="\t", row.names = FALSE)
