@@ -65,37 +65,37 @@
                 <element name="lc_bl" ftype="tiff">
                     <assert_contents>
                         <has_text text="LAEA Europe"/>
-                        <has_size size="977.7k"/>
+                        <has_size size="977.7"/>
                     </assert_contents>
                 </element>    
                 <element name="lc_dg" ftype="tiff">
                     <assert_contents>
                         <has_text text="LAEA Europe"/>
-                        <has_size size="977.7k"/>
+                        <has_size size="977.7"/>
                     </assert_contents>
                 </element>    
                 <element name="lc_target_esa" ftype="tiff">
                     <assert_contents>
                         <has_text text="LAEA Europe"/>
-                        <has_size size="977.7k"/>
+                        <has_size size="977.7"/>
                     </assert_contents>
                 </element>    
                 <element name="lc_tg" ftype="tiff">
                     <assert_contents>
                         <has_text text="LAEA Europe"/>
-                        <has_size size="977.7k"/>
+                        <has_size size="977.7"/>
                     </assert_contents>
                 </element>    
                 <element name="lc_tr" ftype="tiff">
                     <assert_contents>
                         <has_text text="LAEA Europe"/>
-                        <has_size size="977.7k"/>
+                        <has_size size="977.7"/>
                     </assert_contents>
                 </element>    
                 <element name="stack" ftype="tiff">
                     <assert_contents>
                         <has_text text="LAEA Europe"/>
-                        <has_size size="977.7k"/>
+                        <has_size size="977.7"/>
                     </assert_contents>
                 </element>    
             </output_collection>
