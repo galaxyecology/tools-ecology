@@ -29,7 +29,7 @@
         <param name="raster_1" type="data" format="tiff" label="A raster image of the land at a reference year" />
         <param name="raster_2" type="data" format="tiff" label="A raster image of the land at the year you want to study" />
         <conditional name="method">
-            <param name="json_file" type="select" label="Do you want to use the default file json or your customized one ?" help="A file containing the land specifications, you can directly use the default one or you can customize it beforehand">
+            <param name="json_file" type="select" label="Do you want to use the default file json or your customized one ?" help="A file containing the land specifications, you can directly use the default one or you can customize it beforehand. The default one can be obtained at https://github.com/fair-ease/earth-critical-zone-galaxy/blob/main/landcover.json">
                 <option value="yes">Yes, use the standard land specification time</option>
                 <option value="no">No, I will provide my own.</option>
             </param>
