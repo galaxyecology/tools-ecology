@@ -1,0 +1,151 @@
+<tool id="landcover_subindicator" name="Land cover degradation" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="20.01" license="MIT">
+    <description>subindicator to track land changes</description>
+    <macros>
+        <token name="@TOOL_VERSION@">0.1.0</token>
+        <token name="@VERSION_SUFFIX@">0</token>
+    </macros>
+    <requirements>
+        <requirement type="package" version="1.26.3">numpy</requirement>
+        <requirement type="package" version="3.8.4">matplotlib</requirement>
+        <requirement type="package" version="1.3.10">rasterio</requirement>
+        <requirement type="package" version="2.1.14">trends_earth_algorithms</requirement>
+        <requirement type="package" version="2.1.14">trends_earth_schemas</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+            #if '$method.json_file' == "no"
+                python '$__tool_directory__/land_cover.py'
+                --raster_1 '$raster_1'
+                --raster_2 '$raster_2'
+                --json '$json'
+            #else        
+                python '$__tool_directory__/land_cover.py'
+                --raster_1 '$raster_1'
+                --raster_2 '$raster_2'
+                --json '$__tool_directory__/test-data/landcover.json'
+            #end if
+
+    ]]></command>
+    <inputs>
+        <param name="raster_1" type="data" format="tiff" label="A raster image of the land at a reference year" />
+        <param name="raster_2" type="data" format="tiff" label="A raster image of the land at the year you want to study" />
+        <conditional name="method">
+            <param name="json_file" type="select" label="Do you want to use the default file json or your customized one ?" help="A file containing the land specifications, you can directly use the default one or you can customize it beforehand. The default one can be obtained at https://github.com/fair-ease/earth-critical-zone-galaxy/blob/main/landcover.json">
+                <option value="yes">Yes, use the standard land specification time</option>
+                <option value="no">No, I will provide my own.</option>
+            </param>
+            <when value="yes">
+            </when>
+            <when value="no">
+                <param name="json" type="data" format="json" label="A file containing the land specifications" help="You can customize as needed the default file https://github.com/fair-ease/earth-critical-zone-galaxy/blob/main/landcover.json"/>
+            </when>
+        </conditional>
+    </inputs>
+    <outputs>
+        <collection name="output_tiff" type="list" label="Land cover raster outputs">
+            <discover_datasets pattern="__name_and_ext__" directory="data/land_cover/output/" />
+        </collection>
+        <!--<collection name="output_png" type="list" label="Land cover plots">
+            <discover_datasets pattern="__name_and_ext__" directory="data/land_cover/" />
+        </collection>-->
+        <data name="contour" format="shp"  from_work_dir="data/land_cover/output/change_yf_yi0.shp" label="${tool.name} on ${on_string}" />
+    </outputs>
+    <tests>
+        <test expect_num_outputs="2">
+            <param name="raster_1" value="EU_CLC_1990.tiff"/>
+            <param name="raster_2" value="EU_CLC_2018.tiff"/>   
+            <param name="json_file" value="yes"/>
+            <output name="contour" value="change_yf_yi0.shp"/>
+            <output_collection name="output_tiff" type="list" count="7">
+                <element name="lc_baseline_esa" ftype="tiff">
+                    <assert_contents>
+                        <has_text text="LAEA Europe"/>
+                        <has_size size="977"/>
+                    </assert_contents>
+                </element>
+                <element name="lc_bl" ftype="tiff">
+                    <assert_contents>
+                        <has_text text="LAEA Europe"/>
+                        <has_size size="977"/>
+                    </assert_contents>
+                </element>    
+                <element name="lc_dg" ftype="tiff">
+                    <assert_contents>
+                        <has_text text="LAEA Europe"/>
+                        <has_size size="977"/>
+                    </assert_contents>
+                </element>    
+                <element name="lc_target_esa" ftype="tiff">
+                    <assert_contents>
+                        <has_text text="LAEA Europe"/>
+                        <has_size size="977"/>
+                    </assert_contents>
+                </element>    
+                <element name="lc_tg" ftype="tiff">
+                    <assert_contents>
+                        <has_text text="LAEA Europe"/>
+                        <has_size size="977"/>
+                    </assert_contents>
+                </element>    
+                <element name="lc_tr" ftype="tiff">
+                    <assert_contents>
+                        <has_text text="LAEA Europe"/>
+                        <has_size size="977"/>
+                    </assert_contents>
+                </element>    
+                <element name="stack" ftype="tiff">
+                    <assert_contents>
+                        <has_text text="LAEA Europe"/>
+                        <has_size size="977"/>
+                    </assert_contents>
+                </element>    
+            </output_collection>
+        </test>
+    </tests>
+    <help><![CDATA[
+
+**What it does**
+This tool aims at facilitating the analysis of remotely-sensed datasets in support of monitoring land degradation. 
+This project contains common code used by the scripts in trends.earth.
+
+To assess changes in land cover users need land cover maps covering the study area for the baseline and target years. These maps need to be of acceptable accuracy and created in such a way which allows for valid comparisons. Trends.Earth uses ESA CCI land cover maps as the default dataset, but local maps can also be used. The indicator is computed as follows:
+
+    - Reclassify both land cover maps to the 7 land cover classes needed for reporting to the UNCCD (forest, grassland, cropland, wetland, artificial area, bare land and water).
+    - Perform a land cover transition analysis to identify which pixels remained in the same land cover class, and which ones changed.
+    - Based on your local knowledge of the conditions in the study area and the land degradation processed occurring there, use the table below to identify which transitions correspond to degradation (- sign), improvement (+ sign), or no change in terms of land condition (zero).
+    - This tool will combine the information from the land cover maps and the table of degradation typologies by land cover transition to compute the land cover sub-indicator.
+
+**Input**
+- One referenced raster of the land at an initial year
+- A second raster of the same location at a final study year 
+
+You can get these data on the `ESA (European Spatial Agency) website<https://www.esa-landcover-cci.org/?q=node/164>`. For more information follow the `Trends Earth doumentation<http://docs.trends.earth/en/latest/for_users/datasets/input_data.html>`
+
+- json file containing the 7 land cover classes. We specify by default a json feel free to customize it according to your need.
+
+
+In the json config file you find defined a way to map ESA land cover classes into (the 7) IPCC land cover classes.
+As a user you can add a new set of rules to map land cover classes from any system (ESA, CLC, …) to the IPCC ones. In the end, the user can do three different things:
+
+    - Use the default set of mapping rules findable on this `github repository<https://github.com/fair-ease/earth-critical-zone-galaxy/blob/main/landcover.json>`
+    - Modify an existent set of mapping rules with custom associations
+    - Add a new set of rules, useful for any custom map depicting land cover
+
+See also custom `land cover classes<http://docs.trends.earth/en/latest/for_users/training/settings.html#custom-land-cover-classes>`.
+
+**Output**
+- A potential Land degradation raster
+In the json config file there is also the definition of the transformation of the land use change into the three output classes (Degradation, Improvement, and Stable)
+
+For more information go on `the official trends earth documentation<http://docs.trends.earth/en/latest/for_users/features/unccdreporting.html>`
+
+    ]]></help>
+    <citations>
+        <citation type="bibtex">
+            @Manual{
+            title = {Trends.Earth. Conservation International},
+            year = {2022},
+            note = {http://trends.earth}
+            }
+        </citation>
+    </citations>
+</tool>
