@@ -59,7 +59,7 @@
                 <element name="lc_baseline_esa" ftype="tiff">
                     <assert_contents>
                         <has_text text="LAEA Europe"/>
-                        <has_size size="977.7"(k)i?/>
+                        <has_size size="977.7"/>
                     </assert_contents>
                 </element>
                 <element name="lc_bl" ftype="tiff">
