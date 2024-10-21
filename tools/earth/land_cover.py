@@ -89,7 +89,6 @@ command_line_args = sys.argv[1:]
 
 parser = argparse.ArgumentParser(description="landcover inputs and outputs")
 # Add arguments
-print(parser)
 parser.add_argument("--raster_1", help="raster 1")
 parser.add_argument("--raster_2", help="raster 2")
 parser.add_argument("--json", help="json")
@@ -129,24 +128,19 @@ contours_change_yf_yi = os.path.join(out_dir, '/change_yf_yi0.shp')
 # Transition Matrix, ESA Legend, IPCC Legend
 # Input Raster and Vector Paths
 params = json.load(open(fjson))
-# print(params)
 
 crs = params.get("crs")
-# print("crs", crs)
 
 trans_matrix_val = params.get("trans_matrix")
 trans_matrix = LCTransitionDefinitionDeg.Schema().load(trans_matrix_val)
-# print("trans_matrix", trans_matrix)
 
 esa_to_custom_nesting = LCLegendNesting.Schema().load(
     params.get("legend_nesting_esa_to_custom")
 )
-# print("esa_to_custom_nesting", esa_to_custom_nesting)
 
 ipcc_nesting = LCLegendNesting.Schema().load(
     params.get("legend_nesting_custom_to_ipcc")
 )
-# print("ipcc_nesting", ipcc_nesting)
 
 class_codes = sorted([c.code for c in esa_to_custom_nesting.parent.key])
 class_positions = [*range(1, len(class_codes) + 1)]
@@ -168,28 +162,10 @@ yf_dict_profile = dict(raster_yf.profile)
 for k in yf_dict_profile:
     print(k.upper(), yf_dict_profile[k])
 
-# Check inputs for consistency
-
-if raster_yi.crs.to_proj4() == raster_yf.crs.to_proj4():
-    print('SRC OK')
-
-if raster_yi.shape == raster_yf.shape:
-    print('Array Size OK')
-
-if raster_yi.get_transform() == raster_yf.get_transform():
-    print('Geotransformation OK')
-
 cols = raster_yi.width
-print("Columns", cols)
-
 rows = raster_yf.height
-print("Rows", rows)
-
 transform = raster_yi.transform
-print("Transform", transform)
-
 projection = raster_yi.crs
-print("Projection", projection)
 
 # Setting up output
 saveRaster(lc_baseline_esa.astype('int8'),
@@ -198,7 +174,6 @@ saveRaster(lc_baseline_esa.astype('int8'),
            rows,
            projection,
            "Land_cover_yi")
-print("Baseline ESA Raster Saved:", path_lc_baseline_esa)
 
 saveRaster(lc_target_esa.astype('int8'),
            path_lc_target_esa,
@@ -206,7 +181,6 @@ saveRaster(lc_target_esa.astype('int8'),
            rows,
            projection,
            "Land_cover_yf")
-print("Target ESA Raster Saved:", path_lc_target_esa)
 
 # Algorithm execution
 # Transition codes are based on the class code indices
@@ -229,7 +203,6 @@ saveRaster(lc_bl.astype('int8'),
            rows,
            projection,
            "Land_cover_yi")
-print("Processed Baseline Raster Saved:", path_lc_bl)
 
 # Processing Target Raster
 tg_remap_1 = remap(lc_target_esa,
@@ -243,7 +216,6 @@ saveRaster(lc_tg.astype('int8'),
            rows,
            projection,
            "Land_cover_yf")
-print("Processed Target Raster Saved:", path_lc_tg)
 
 # Processing Transition Map
 # Compute transition map (first digit for baseline land cover,
@@ -263,7 +235,6 @@ saveRaster(lc_tr_pre_remap.astype('int8'),
            rows,
            projection,
            "Land_cover_transitions_yi-yf")
-print("Land Cover Transition Raster Saved:", path_lc_tr)
 
 # Compute land cover degradation
 # definition of land cover transitions as degradation (-1),
@@ -278,7 +249,6 @@ saveRaster(lc_dg.astype('int8'),
            rows,
            projection,
            "Land_cover_degradation")
-print("Land Cover Degradation Raster Saved:", path_lc_dg)
 
 # Compute  Mutlibands stack
 # Land Cover Degradation + Baseline ESA
@@ -296,5 +266,3 @@ out_meta.update({"count": 4})
 with rasterio.open(path_out_img, 'w', **out_meta) as dest:
     for band_nr, src in enumerate(band_list, start=1):
         dest.write(src, band_nr)
-
-print("Land Cover Multibands Stack Image Saved:", path_out_img)
