@@ -30,12 +30,12 @@
         <param name="raster_2" type="data" format="tiff" label="A raster image of the land at the year you want to study" />
         <conditional name="method">
             <param name="json_file" type="select" label="Do you want to use the default file json or your customized one ?" help="A file containing the land specifications, you can directly use the default one or you can customize it beforehand. The default one can be obtained at https://github.com/fair-ease/earth-critical-zone-galaxy/blob/main/landcover.json">
-                <option value="yes">Yes, use the standard land specification time</option>
-                <option value="no">No, I will provide my own.</option>
+                <option size="yes">Yes, use the standard land specification time</option>
+                <option size="no">No, I will provide my own.</option>
             </param>
-            <when value="yes">
+            <when size="yes">
             </when>
-            <when value="no">
+            <when size="no">
                 <param name="json" type="data" format="json" label="A file containing the land specifications" help="You can customize as needed the default file https://github.com/fair-ease/earth-critical-zone-galaxy/blob/main/landcover.json"/>
             </when>
         </conditional>
@@ -51,51 +51,51 @@
     </outputs>
     <tests>
         <test expect_num_outputs="2">
-            <param name="raster_1" value="EU_CLC_1990.tiff"/>
-            <param name="raster_2" value="EU_CLC_2018.tiff"/>   
-            <param name="json_file" value="yes"/>
-            <output name="contour" value="change_yf_yi0.shp"/>
+            <param name="raster_1" size="EU_CLC_1990.tiff"/>
+            <param name="raster_2" size="EU_CLC_2018.tiff"/>   
+            <param name="json_file" size="yes"/>
+            <output name="contour" size="change_yf_yi0.shp"/>
             <output_collection name="output_tiff" type="list" count="7">
                 <element name="lc_baseline_esa" ftype="tiff">
                     <assert_contents>
                         <has_text text="LAEA Europe"/>
-                        <has_size value="977.7"/>
+                        <has_size size="977"/>
                     </assert_contents>
                 </element>
                 <element name="lc_bl" ftype="tiff">
                     <assert_contents>
                         <has_text text="LAEA Europe"/>
-                        <has_size value="977.7"/>
+                        <has_size size="977.7"/>
                     </assert_contents>
                 </element>    
                 <element name="lc_dg" ftype="tiff">
                     <assert_contents>
                         <has_text text="LAEA Europe"/>
-                        <has_size value="977.7"/>
+                        <has_size size="977"/>
                     </assert_contents>
                 </element>    
                 <element name="lc_target_esa" ftype="tiff">
                     <assert_contents>
                         <has_text text="LAEA Europe"/>
-                        <has_size value="977.7"/>
+                        <has_size size="977"/>
                     </assert_contents>
                 </element>    
                 <element name="lc_tg" ftype="tiff">
                     <assert_contents>
                         <has_text text="LAEA Europe"/>
-                        <has_size value="977.7"/>
+                        <has_size size="977"/>
                     </assert_contents>
                 </element>    
                 <element name="lc_tr" ftype="tiff">
                     <assert_contents>
                         <has_text text="LAEA Europe"/>
-                        <has_size value="977.7"/>
+                        <has_size size="977"/>
                     </assert_contents>
                 </element>    
                 <element name="stack" ftype="tiff">
                     <assert_contents>
                         <has_text text="LAEA Europe"/>
-                        <has_size value="977.7"/>
+                        <has_size size="977"/>
                     </assert_contents>
                 </element>    
             </output_collection>
