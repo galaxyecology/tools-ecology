@@ -30,8 +30,8 @@
         <param name="raster_2" type="data" format="tiff" label="A raster image of the land at the year you want to study" />
         <conditional name="method">
             <param name="json_file" type="select" label="Do you want to use the default file json or your customized one ?" help="A file containing the land specifications, you can directly use the default one or you can customize it beforehand">
-                <option value="yes">yes</option>
-                <option value="no">no</option>
+                <option value="yes">Yes, use the standard land specification time</option>
+                <option value="no">No, I will provide my own.</option>
             </param>
             <when value="yes">
             </when>
