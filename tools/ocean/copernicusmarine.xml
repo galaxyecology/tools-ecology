@@ -17,7 +17,7 @@
             #set $cmems_username = os.getenv('CMEMS_USERNAME', '')
             #set $cmems_password = os.getenv('CMEMS_PASSWORD', '')
 
-            echo "Using global ENVs" &&
+            echo "Using global ENVs: $cmems_username" &&
 
             #if re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$", $cmems_password):
                 echo "Password meets the required criteria" &&
