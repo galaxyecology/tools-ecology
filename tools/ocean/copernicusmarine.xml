@@ -34,7 +34,7 @@
         #end if
         
         #set $filename="config_file_with_my_command"
-        ##echo -e '$input_text' > $filename --force-download --username $cmems_username --password $cmems_password &&
+        echo -e '$input_text' > $filename --force-download --username $cmems_username --password $cmems_password &&
 
         python '$__tool_directory__/check.py' $filename
     ]]></command>
@@ -98,10 +98,10 @@ This tool is a wrapper to retrieve data from the Copernicus Marine Environment M
 For more information on the Command-Line Interface (CLI) go on `Copernicus Marine Toolbox CLI - Subset <https://help.marine.copernicus.eu/en/articles/7972861-copernicus-marine-toolbox-cli-subset>`
 
 ** Input **
-Command line from the Copernicus marine services copy paste as a text.
+Copy and paste the command line from the Copernicus marine services as text.
 
 ** Output **
-A netcdf file containing the the data chose by the user from the Copernicus Marine Data Store.
+A netcdf file containing the data chosen by the user from the Copernicus Marine Data Store.
 
     ]]></help>
     <citations>
