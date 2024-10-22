@@ -1,0 +1,20 @@
+attributeName	attributeDefinition	class	unit	dateTimeFormatString	missingValueCode	missingValueCodeExplanation
+long	Longitude is a geographic coordinate that specifies the east–west position of a point 	numeric	degree	""	-9999	no data available
+lat	Latitude is a geographic coordinate that specifies the north–south position of a point.	numeric	degree	""	-9999	no data available
+Carbo	Percentage of biogenic carbonate	numeric	percent	""	-9999	no data available
+Grav	Percentage of gravel in the seabed	numeric	percent	""	-9999	no data available
+Maxbearing	Maximum current bearing	numeric	radian	""	-9999	no data available
+Maxmagnit	Maximum current magnitude	numeric	meterPerSecond	""	-9999	no data available
+Meancurmag	Mean current magnitude	numeric	meterPerSecond	""	-9999	no data available
+Meansal	Mean salinity of the sea	numeric	PSU	""	-9999	no data available
+Meantheta	Mean temperature of the sea	numeric	degreeCelsius	""	-9999	no data available
+Mud	Percentage of mud in the seabed	numeric	percent	""	-9999	no data available
+Prof	Depth of the sea 	numeric	meter	""	-9999	no data available
+Rugosity	Rugosity of the seabed 	numeric	dimensionless	""	-9999	no data available
+Sand	Percentage of sand in the seabed 	numeric	percent	""	-9999	no data available
+Seaice_prod	Seaice production in meter per year	numeric	meterPerYear	""	-9999	no data available
+Sili	Percentage of biogenic silica in the seabed 	numeric	percent	""	-9999	no data available
+Slope	Slope of the seabed 	numeric	degree	""	-9999	no data available
+Standcurmag	Current magnitude standard deviation 	numeric	meterPerSecond	""	-9999	no data available
+Standsal	Salinity standard deviation	numeric	PSU	""	-9999	no data available
+Standtheta	Temperature standard deviation	numeric	degreeCelsius	""	-9999	no data available

@@ -130,4 +130,9 @@ neighbors.
 
 
     ]]></help>
+    <citations>
+       <citation type="doi">10.32614/CRAN.package.dplyr</citation>
+       <citation type="doi">10.32614/CRAN.package.cluster</citation>
+       <citation type="doi">10.32614/CRAN.package.tidyverse</citation>
+   </citations>
 </tool>
