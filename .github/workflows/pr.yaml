@@ -1,6 +1,6 @@
 name: Galaxy Tool Linting and Tests for push and PR
 on:
-  pull_request:
+  pull_request_target:
     paths-ignore:
       - '.github/**'
       - 'deprecated/**'
