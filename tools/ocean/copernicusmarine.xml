@@ -9,15 +9,17 @@
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
     #import re
+    #import os
+
         #set $cmems_username = $__user__.extra_preferences.get('cmems_username', "")
         #set $cmems_password = $__user__.extra_preferences.get('cmems_password', "")
         echo "Before if condition ..." &&
         #if $cmems_username == "" or $cmems_password == ""
             echo "in IF condition" &&
-            #set $cmems_username = os.getenv('CMEMS_USERNAME', '')
-            #set $cmems_password = os.getenv('CMEMS_PASSWORD', '')
+            #set $cmems_username = os.getenv('CMEMS_USERNAME', 'default-user')
+            #set $cmems_password = os.getenv('CMEMS_PASSWORD', 'default-bjoern')
 
-            echo "Using global ENVs: $cmems_username" &&
+            echo "Using global ENVs: '$cmems_username'" &&
 
             #if re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$", $cmems_password):
                 echo "Password meets the required criteria" &&
