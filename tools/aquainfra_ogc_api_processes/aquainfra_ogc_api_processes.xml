@@ -120,7 +120,7 @@
                     <option value="VIIRS_JPSS2">VIIRS_JPSS2: [ 411 445 488 555 671 747 868 ]</option>
                     <option value="VIIRS_SNPP">VIIRS_SNPP: [ 410 443 486 551 671 745 862 ]</option>
                 </param>
-				<param name="output_option" label="Output option" optional="false" type="select">
+                <param name="output_option" label="Output option" optional="false" type="select">
                     <option value="1">1: for standard output with five variables</option>
                     <option value="2">2: for extensive output including memberships of all water types</option>
                 </param>
