@@ -21,7 +21,7 @@ env:
   GALAXY_BRANCH: release_24.1
   MAX_CHUNKS: 4
   CMEMS_PASSWORD: ${{ secrets.CMEMS_PASSWORD }}
-  CMEMS_USERNAME: ${{ secrets.CMEMS_USERNAME }}
+  CMEMS_USERNAME: 'very-strange' ###${{ secrets.CMEMS_USERNAME }}
   MAX_FILE_SIZE: 1M
 concurrency:
   # Group runs by PR, but keep runs on the default branch separate
