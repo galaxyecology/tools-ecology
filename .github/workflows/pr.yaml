@@ -129,11 +129,11 @@ jobs:
         key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ needs.setup.outputs.galaxy-head-sha }}
 
     - name: Set fail level for pull request
-      if: ${{ github.event_name == 'pull_request' }}
+      if: ${{ github.event_name == 'pull_request_target' }}
       run:
         echo "FAIL_LEVEL=warn" >> "$GITHUB_ENV"
     - name: Set fail level for merge
-      if: ${{ github.event_name != 'pull_request' }}
+      if: ${{ github.event_name != 'pull_request_target' }}
       run:
         echo "FAIL_LEVEL=error" >> "$GITHUB_ENV"
     - name: Planemo lint
@@ -154,7 +154,7 @@ jobs:
   flake8:
     name: Lint Python scripts
     needs: setup
-    if: ${{ github.event_name == 'pull_request' && needs.setup.outputs.repository-list != '' }}
+    if: ${{ github.event_name == 'pull_request_target' && needs.setup.outputs.repository-list != '' }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -199,7 +199,7 @@ jobs:
   file_sizes:
     name: Check file sizes
     needs: setup
-    if: ${{ github.event_name == 'pull_request' && needs.setup.outputs.repository-list != '' }}
+    if: ${{ github.event_name == 'pull_request_target' && needs.setup.outputs.repository-list != '' }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
