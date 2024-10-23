@@ -1,6 +1,6 @@
 name: Galaxy Tool Linting and Tests for push and PR
 on:
-  pull_request:
+  pull_request_target:
     paths-ignore:
       - '.github/**'
       - 'deprecated/**'
@@ -20,6 +20,8 @@ env:
   GALAXY_BRANCH: release_24.1
   MAX_CHUNKS: 4
   MAX_FILE_SIZE: 1M
+  CMEMS_PASSWORD: ${{ secrets.CMEMS_PASSWORD }}
+  CMEMS_USERNAME: ${{ secrets.CMEMS_USERNAME }}
 concurrency:
   # Group runs by PR, but keep runs on the default branch separate
   # because we do not want to cancel ToolShed uploads
@@ -127,11 +129,11 @@ jobs:
         key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ needs.setup.outputs.galaxy-head-sha }}
 
     - name: Set fail level for pull request
-      if: ${{ github.event_name == 'pull_request' }}
+      if: ${{ github.event_name == 'pull_request_target' }}
       run:
         echo "FAIL_LEVEL=warn" >> "$GITHUB_ENV"
     - name: Set fail level for merge
-      if: ${{ github.event_name != 'pull_request' }}
+      if: ${{ github.event_name != 'pull_request_target' }}
       run:
         echo "FAIL_LEVEL=error" >> "$GITHUB_ENV"
     - name: Planemo lint
@@ -152,7 +154,7 @@ jobs:
   flake8:
     name: Lint Python scripts
     needs: setup
-    if: ${{ github.event_name == 'pull_request' && needs.setup.outputs.repository-list != '' }}
+    if: ${{ github.event_name == 'pull_request_target' && needs.setup.outputs.repository-list != '' }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -197,7 +199,7 @@ jobs:
   file_sizes:
     name: Check file sizes
     needs: setup
-    if: ${{ github.event_name == 'pull_request' && needs.setup.outputs.repository-list != '' }}
+    if: ${{ github.event_name == 'pull_request_target' && needs.setup.outputs.repository-list != '' }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
