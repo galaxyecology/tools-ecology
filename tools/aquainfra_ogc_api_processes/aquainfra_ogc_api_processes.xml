@@ -91,38 +91,38 @@
 				<param name="colname_region_id" label="Column name of region identifier" optional="false" help="The name of the column containing identifiers (e.g., basin name) to distinguish the polygons on the map if multiple regions are present." type="text"/>
 			</when>
             <when value="owt-classification">
-				<param name="input_data_url" label="Input data" optional="false" help="URL (stored in a .txt file) to your input file." type="data" format="txt"/>
-				<param name="input_option" label="Type of input" optional="false" help="If type of input is csv, the output is a text file (.csv). If it is sat, the output is a NetCDF file (.nc) of the same dimensions and geo-reference as the input file." type="select">
-                    <option value="csv">csv: for text data input (first line wavelength, following lines remote-sensing reflectance)</option>
-                    <option value="sat">sat: for satellite product input containing reflectance (e.g., Sentinel-3 OLCI Level-2)</option>
+				<param name="input_data_url" label="Input data" optional="false" help="URL (stored in a .txt file) to your input file. Find example data on https://github.com/bishun945/pyOWT/tree/main/projects/AquaINFRA." type="data" format="txt"/>
+				<param name="input_option" label="Type of input" optional="false" help="csv: for text data input (first line wavelength, following lines remote-sensing reflectance). sat: for satellite product input containing reflectance (e.g., Sentinel-3 OLCI Level-2)." type="select">
+                    <option value="csv">csv</option>
+                    <option value="sat">sat</option>
                 </param>
 				<param name="sensor" label="Sensor name" optional="false" help="Spectral band configuration of satellite mission (includes adaptation to sensor spectral response functions)." type="select">
-                    <option value="HYPER">HYPER: hyperspectral remote-sensing reflectance between 400 and 800 nm</option>
-                    <option value="AERONET_OC_1">AERONET_OC_1: [ 400 412 443 490 510 560 620 665 779 866 ]</option>
-                    <option value="AERONET_OC_2">AERONET_OC_2: [ 412 443 490 532 551 667 870 ]</option>
-                    <option value="CMEMS_BAL_HROC">CMEMS_BAL_HROC: [ 443 492 560 665 704, 740, 783 865 ] (Copernicus Marine Service Baltic Sea High-Resolution Ocean Colour)</option>
-                    <option value="CMEMS_BAL_NRT">CMEMS_BAL_NRT (Copernicus Marine Service Baltic Sea Near Real Time)</option>
-                    <option value="CMEMS_MED_MYINT">CMEMS_MED_MYINT (Copernicus Marine Service Mediterranean Sea Multi-Years Interim)</option>
-                    <option value="CZCS">CZCS: [ 443 520 550 670 ]</option>
-                    <option value="GOCI">GOCI: [ 412 443 490 555 660 680 745 865 ]</option>
-                    <option value="HawkEye">HawkEye: [ 412 447 488 510 556 670 752 867 ]</option>
-                    <option value="MERIS">MERIS: [ 413 443 490 510 560 620 665 681 709 754 779 865 ]</option>
-                    <option value="ODIS_Aqua">ODIS_Aqua: [ 412 443 469 488 531 547 555 645 667 678 748 859 ]</option>
-                    <option value="MODIS_Terra">MODIS_Terra: [ 412 443 469 488 531 547 555 645 667 678 748 859 ]</option>
-                    <option value="MSI_S2A">MSI_S2A: [ 443 492 560 665 704 740 783 835 ]</option>
-                    <option value="MSI_S2B">MSI_S2B: [ 442 492 559 665 704 739 780 835 ]</option>
-                    <option value="OCTS">OCTS: [ 412 443 490 516 565 667 862 ]</option>
-                    <option value="OLCI_S3A">OLCI_S3A: [ 400 412 443 490 510 560 620 665 674 682 709 754 779 866 ]</option>
-                    <option value="OLCI_S3B">OLCI_S3B: [ 400 412 443 490 510 560 620 665 674 681 709 754 779 866 ]</option>
-                    <option value="OLI">OLI: [ 443 482 561 655 865 ]</option>
-                    <option value="SeaWiFS">SeaWiFS: [ 412 443 490 510 555 670 865 ]</option>
-                    <option value="VIIRS_JPSS1">VIIRS_JPSS1: [ 411 445 489 556 667 746 868 ]</option>
-                    <option value="VIIRS_JPSS2">VIIRS_JPSS2: [ 411 445 488 555 671 747 868 ]</option>
-                    <option value="VIIRS_SNPP">VIIRS_SNPP: [ 410 443 486 551 671 745 862 ]</option>
+                    <option value="HYPER">HYPER</option>
+                    <option value="AERONET_OC_1">AERONET_OC_1</option>
+                    <option value="AERONET_OC_2">AERONET_OC_2</option>
+                    <option value="CMEMS_BAL_HROC">CMEMS_BAL_HROC</option>
+                    <option value="CMEMS_BAL_NRT">CMEMS_BAL_NRT</option>
+                    <option value="CMEMS_MED_MYINT">CMEMS_MED_MYINT</option>
+                    <option value="CZCS">CZCS</option>
+                    <option value="GOCI">GOCI</option>
+                    <option value="HawkEye">HawkEye</option>
+                    <option value="MERIS">MERIS</option>
+                    <option value="ODIS_Aqua">ODIS_Aqua</option>
+                    <option value="MODIS_Terra">MODIS_Terra</option>
+                    <option value="MSI_S2A">MSI_S2A</option>
+                    <option value="MSI_S2B">MSI_S2B</option>
+                    <option value="OCTS">OCTS</option>
+                    <option value="OLCI_S3A">OLCI_S3A</option>
+                    <option value="OLCI_S3B">OLCI_S3B</option>
+                    <option value="OLI">OLI</option>
+                    <option value="SeaWiFS">SeaWiFS</option>
+                    <option value="VIIRS_JPSS1">VIIRS_JPSS1</option>
+                    <option value="VIIRS_JPSS2">VIIRS_JPSS2</option>
+                    <option value="VIIRS_SNPP">VIIRS_SNPP</option>
                 </param>
-				<param name="output_option" label="Output option" optional="false" type="select">
-                    <option value="1">1: for standard output with five variables</option>
-                    <option value="2">2: for extensive output including memberships of all water types</option>
+				<param name="output_option" label="Output option" help="1: for standard output with five variables. 2: for extensive output including memberships of all water types" optional="false" type="select">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
                 </param>
 			</when>
         </conditional>
