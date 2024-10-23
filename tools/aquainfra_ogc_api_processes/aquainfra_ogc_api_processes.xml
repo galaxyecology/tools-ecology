@@ -1,11 +1,11 @@
-<tool id="aquainfra_ogc_api_processes" name="AquaINFRA OGC API Processes" version="0.1.0" profile="22.05">
+<tool id="aquainfra_ogc_api_processes" name="AquaINFRA OGC API Processes" version="0.2.0" profile="22.05">
     <description/>
     <macros>
         <import>macros.xml</import>
     </macros>
-	<creator>
+    <creator>
 	    <organization name="EOSC AquaINFRA" url="https://aquainfra.eu/"/>
-	</creator>
+    </creator>
     <expand macro="requirements"/>
     <command detect_errors="exit_code"><![CDATA[
     Rscript '$__tool_directory__/aquainfra_ogc_api_processes.R'
@@ -25,20 +25,21 @@
                 <option value="barplot-trend-results">barplot-trend-results: Visualisation of statistical analysis results</option>
                 <option value="map-trends-static">map-trends-static: Spatial visualisation of regions and data points</option>
                 <option value="map-shapefile-points">map-shapefile-points: Spatial visualisation of regions and data points</option>
+                <option value="owt-classification">OWT-classification: Optical Water Type classification for ocean, coastal and inland waters</option>
             </param>
             <when value="points-att-polygon">
                 <param name="regions" label="Study region or study subregions" optional="false" help="URL (stored in a .txt file) to the study region, or several regions, to classify your input data into groups of interest. Currently it has to be provided as a shapefile. It can be in any coordinate system and will be transformed to WGS84 during this process." type="data" format="txt"/>
                 <param name="input_data" label="Table to be merged with study region" optional="false" help="URL (stored in a .txt file) to the input table containing the in-situ data points with coordinates. Can be provided as Excel file or CSV file (comma-separated text file). The coordinates have to be in WGS84 coordinate system." type="data" format="txt"/>
-                <param name="colname_long" label="Column name for longitude" optional="false" help="Name of the column that contains longitude values (in WGS84)." type="text"/>
-                <param name="colname_lat" label="Column name for latitude" optional="false" help="Name of the column that contains latitude values (in WGS84)." type="text"/>
+                <param name="colname_long" label="Column name for longitude" help="Name of the column that contains longitude values (in WGS84)." type="text"/>
+                <param name="colname_lat" label="Column name for latitude" help="Name of the column that contains latitude values (in WGS84)." type="text"/>
             </when>
             <when value="peri-conv">
                 <param name="input_data" label="Table to be grouped by date, with date colum" help="URL (stored in a .txt file) to the table with a column containing a date. It can have other columns which will not be changed during this process." type="data" format="txt"/>
                 <param name="colname_date" label="Date column name" optional="false" help="Column name of the date column in the format defined above. Example: 'visit date'." type="text"/>
                 <param name="date_format" label="Date format" optional="true" help="The date format used to parse the date, i.e. to extract day, month and year from the date column, e.g.  or 'y-m-d' for dates like '1998-08-22' (this is the default) or 'y/m/d' for dates like '1998/08/22'." type="select">
-				    <option value="y-m-d">y-m-d</option>
+                    <option value="y-m-d">y-m-d</option>
                     <option value="y/m/d">y/m/d</option>
-				</param>
+                </param>
                 <param name="group_to_periods" label="Periods to group the data into" optional="true" help="Define the periods that you want the data to be grouped into. Please follow the example: 'Dec-01:Mar-01,Mar-02:May-30,Jun-01:Aug-30,Sep-01:Nov-30' (first three letters of each month, then a minus/hyphen, then the day (two digits), then comma, then the next period)." type="text">
                     <validator type="regex">^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-[0-3][0-9]:(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-[0-3][0-9](,(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-[0-3][0-9]:(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-[0-3][0-9])*$</validator>
                 </param>
@@ -65,36 +66,71 @@
                 <param name="colname_value" label="Column name for values" optional="false" help="The name of the column containing the values to be analyzed in the Man-Kendall trend test." type="text"/>
             </when>
             <when value="barplot-trend-results">
-				<param name="input_data" label="Input table" optional="false" help="URL (stored in a .txt file) to the input table containing statistical analysis results. The table must include columns for test values, p-values, and group identifiers." type="data" format="txt"/>
-				<param name="colname_id" label="Column name for identifier" optional="false" help="The name of the column containing group or sample identifiers, e.g., polygon id. Example = 'polygon_id'" type="text"/>
-				<param name="colname_test_value" label="Column name for test value" optional="false" help="The name of the column containing the test values (e.g., statistical coefficients) to be plotted on the Y-axis, e.g., Tau for Mann-Kendall test." type="text"/>
-				<param name="colname_p_value" label="Column name for p value" optional="false" help="The name of the column containing p values, used to determine bar transparency. Example = 'p_value'" type="text"/>
-				<param name="p_value_threshold" label="p value threshold for significance" optional="false" help="The threshold for distinguishing significant from insignificant values. It adjusts the transparency of bars in the plot. Example = 0.05" value="0.05" min="0.01" max="0.1" type="float"/>
-				<param name="colname_group" label="Column name for subgroups" optional="false" help="The name of the column that defines the subgroups or categories to be displayed on the X-axis, e.g., seasons for every polygon_id." type="text"/>
-			</when>
+                <param name="input_data" label="Input table" optional="false" help="URL (stored in a .txt file) to the input table containing statistical analysis results. The table must include columns for test values, p-values, and group identifiers." type="data" format="txt"/>
+                <param name="colname_id" label="Column name for identifier" optional="false" help="The name of the column containing group or sample identifiers, e.g., polygon id. Example = 'polygon_id'" type="text"/>
+                <param name="colname_test_value" label="Column name for test value" optional="false" help="The name of the column containing the test values (e.g., statistical coefficients) to be plotted on the Y-axis, e.g., Tau for Mann-Kendall test." type="text"/>
+                <param name="colname_p_value" label="Column name for p value" optional="false" help="The name of the column containing p values, used to determine bar transparency. Example = 'p_value'" type="text"/>
+                <param name="p_value_threshold" label="p value threshold for significance" optional="false" help="The threshold for distinguishing significant from insignificant values. It adjusts the transparency of bars in the plot. Example = 0.05" value="0.05" min="0.01" max="0.1" type="float"/>
+                <param name="colname_group" label="Column name for subgroups" optional="false" help="The name of the column that defines the subgroups or categories to be displayed on the X-axis, e.g., seasons for every polygon_id." type="text"/>
+            </when>
             <when value="map-trends-static">
-				<param name="regions" label="Study region or study subregions" optional="false" help="URL (stored in a .txt file) to the study region, or several regions, used to classify the input data into groups of interest. Currently it has to be provided as a shapefile. It can be in any coordinate system and will be transformed to WGS84 during this process." type="data" format="txt"/>
-				<param name="input_data" label="Input table" optional="false" help="URL to the input table containing statistical analysis results. The table must include columns for test values, p-values, and identifiers linking to study region." type="data" format="txt"/>
-				<param name="colname_id_trend" label="Column name of study region identifier" optional="false" help="The name of the column containing identifiers for study regions, which must correspond to the identifiers in the shapefile (shp). Example = 'id'." type="text"/>
-				<param name="colname_region_id" label="Column name of study region identifier" optional="false" help="The name of the column in the input data that contains identifiers for study regions, corresponding to the identifiers in the shapefile. Example = 'id'." type="text"/>
-				<param name="colname_group" label="Column name for subgroups" optional="false" help="The name of the column that defines the subgroups or categories to be displayed on the X-axis, e.g., seasons for every polygon_id." type="text"/>
-				<param name="p_value_threshold" label="p value threshold for significance" optional="false" help="The threshold for distinguishing significant from insignificant values. It adjusts the transparency of bars in the plot. Example = 0.05." value="0.05" min="0.01" max="0.1" type="float"/>
-				<param name="colname_p_value" label="Column name for p value" optional="false" help="The name of the column containing p values, used to determine bar transparency. Example = 'p_value'" type="text"/>
-			</when>
+                <param name="regions" label="Study region or study subregions" optional="false" help="URL (stored in a .txt file) to the study region, or several regions, used to classify the input data into groups of interest. Currently it has to be provided as a shapefile. It can be in any coordinate system and will be transformed to WGS84 during this process." type="data" format="txt"/>
+                <param name="input_data" label="Input table" optional="false" help="URL to the input table containing statistical analysis results. The table must include columns for test values, p-values, and identifiers linking to study region." type="data" format="txt"/>
+                <param name="colname_id_trend" label="Column name of study region identifier" optional="false" help="The name of the column containing identifiers for study regions, which must correspond to the identifiers in the shapefile (shp). Example = 'id'." type="text"/>
+                <param name="colname_region_id" label="Column name of study region identifier" optional="false" help="The name of the column in the input data that contains identifiers for study regions, corresponding to the identifiers in the shapefile. Example = 'id'." type="text"/>
+                <param name="colname_group" label="Column name for subgroups" optional="false" help="The name of the column that defines the subgroups or categories to be displayed on the X-axis, e.g., seasons for every polygon_id." type="text"/>
+                <param name="p_value_threshold" label="p value threshold for significance" optional="false" help="The threshold for distinguishing significant from insignificant values. It adjusts the transparency of bars in the plot. Example = 0.05." value="0.05" min="0.01" max="0.1" type="float"/>
+                <param name="colname_p_value" label="Column name for p value" optional="false" help="The name of the column containing p values, used to determine bar transparency. Example = 'p_value'" type="text"/>
+            </when>
             <when value="map-shapefile-points">
-				<param name="regions" label="Study region or study subregions" optional="false" help="URL (stored in a .txt file) to the study region, or several regions, to classify the input data into groups of interest. Currently it has to be provided as a shapefile. It can be in any coordinate system and will be transformed to WGS84 during this process." type="data" format="txt"/>
-				<param name="input_data" label="Data table to be plotted on top of study regions" optional="false" help="URL (stored in a .txt file) to the input table containing the in-situ data points with coordinates." type="data" format="txt"/>
-				<param name="colname_long" label="Column name for longitude" optional="false" help="The name of the column containing longitude values for the data points." type="text"/>
-				<param name="colname_lat" label="Column name for latiitude" optional="false" help="The name of the column containing latitude values for the data points." type="text"/>
-				<param name="colname_value_name" label="Column name of data point identifier" optional="false" help="The name of the column containing identifier (e.g., site name) or values (e.g., depth) to color the points according to their corresponding values." type="text"/>
-				<param name="colname_region_id" label="Column name of region identifier" optional="false" help="The name of the column containing identifiers (e.g., basin name) to distinguish the polygons on the map if multiple regions are present." type="text"/>
-			</when>
+                <param name="regions" label="Study region or study subregions" optional="false" help="URL (stored in a .txt file) to the study region, or several regions, to classify the input data into groups of interest. Currently it has to be provided as a shapefile. It can be in any coordinate system and will be transformed to WGS84 during this process." type="data" format="txt"/>
+                <param name="input_data" label="Data table to be plotted on top of study regions" optional="false" help="URL (stored in a .txt file) to the input table containing the in-situ data points with coordinates." type="data" format="txt"/>
+                <param name="colname_long" label="Column name for longitude" optional="false" help="The name of the column containing longitude values for the data points." type="text"/>
+                <param name="colname_lat" label="Column name for latitude" optional="false" help="The name of the column containing latitude values for the data points." type="text"/>
+                <param name="colname_value_name" label="Column name of data point identifier" optional="false" help="The name of the column containing identifier (e.g., site name) or values (e.g., depth) to color the points according to their corresponding values." type="text"/>
+                <param name="colname_region_id" label="Column name of region identifier" optional="false" help="The name of the column containing identifiers (e.g., basin name) to distinguish the polygons on the map if multiple regions are present." type="text"/>
+            </when>
+            <when value="owt-classification">
+                <param name="input_data_url" label="Input data" optional="false" help="URL (stored in a .txt file) to your input file. Find example data on https://github.com/bishun945/pyOWT/tree/main/projects/AquaINFRA." type="data" format="txt"/>
+                <param name="input_option" label="Type of input" optional="false" help="csv: for text data input (first line wavelength, following lines remote-sensing reflectance). sat: for satellite product input containing reflectance (e.g., Sentinel-3 OLCI Level-2)." type="select">
+                    <option value="csv">csv</option>
+                    <option value="sat">sat</option>
+                </param>
+                <param name="sensor" label="Sensor name" optional="false" help="Spectral band configuration of satellite mission (includes adaptation to sensor spectral response functions)." type="select">
+                    <option value="HYPER">HYPER</option>
+                    <option value="AERONET_OC_1">AERONET_OC_1</option>
+                    <option value="AERONET_OC_2">AERONET_OC_2</option>
+                    <option value="CMEMS_BAL_HROC">CMEMS_BAL_HROC</option>
+                    <option value="CMEMS_BAL_NRT">CMEMS_BAL_NRT</option>
+                    <option value="CMEMS_MED_MYINT">CMEMS_MED_MYINT</option>
+                    <option value="CZCS">CZCS</option>
+                    <option value="GOCI">GOCI</option>
+                    <option value="HawkEye">HawkEye</option>
+                    <option value="MERIS">MERIS</option>
+                    <option value="ODIS_Aqua">ODIS_Aqua</option>
+                    <option value="MODIS_Terra">MODIS_Terra</option>
+                    <option value="MSI_S2A">MSI_S2A</option>
+                    <option value="MSI_S2B">MSI_S2B</option>
+                    <option value="OCTS">OCTS</option>
+                    <option value="OLCI_S3A">OLCI_S3A</option>
+                    <option value="OLCI_S3B">OLCI_S3B</option>
+                    <option value="OLI">OLI</option>
+                    <option value="SeaWiFS">SeaWiFS</option>
+                    <option value="VIIRS_JPSS1">VIIRS_JPSS1</option>
+                    <option value="VIIRS_JPSS2">VIIRS_JPSS2</option> 
+                    <option value="VIIRS_SNPP">VIIRS_SNPP</option>
+                </param>
+                <param name="output_option" label="Output option" help="1: for standard output with five variables. 2: for extensive output including memberships of all water types" optional="false" type="select">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </param>
+            </when>
         </conditional>
     </inputs>
-	<outputs>
-		<data name="output_data" format="txt" label="$select_process"/>
-	</outputs>
+    <outputs>
+        <data name="output_data" format="txt" label="$select_process"/>
+    </outputs>
     <expand macro="tests"/>
-	<expand macro="help" />
-	<expand macro="citations"/>
+    <expand macro="help" />
+    <expand macro="citations"/>
 </tool>
