@@ -1,4 +1,4 @@
-<tool id="copernicusmarine" name="Copernicue Marine Data Store" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="22.01" license="MIT">
+<tool id="copernicusmarine" name="Copernicus Marine Data Store" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="22.01" license="MIT">
     <description>retrieve marine data</description>
     <macros>
         <token name="@TOOL_VERSION@">1.3.3</token>
@@ -26,7 +26,7 @@
 
         #end if
 
-        #if $cmems_username != ""
+        #if $cmems_username == ""
             echo 'Error. Set your CMEMS credentials via: User -> Preferences -> Manage Information'  &&
         #end if
         
