@@ -6,6 +6,9 @@
             <requirement type="package" version="3.4.0">r-ggplot2</requirement>
             <yield />
         </requirements>
+    <xrefs>
+        <xref type="bio.tools">obisindicators</xref>
+    </xrefs>
     </xml>
     <xml name="obis_input">
        <param name="input" type="data" format="tabular,csv,txt" label="Input table"/>
