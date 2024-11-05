@@ -43,7 +43,7 @@
             <output name="output">
                 <assert_contents>
                     <has_text text="Scombridae"/>
-                    <has_n_columns n="163"/>
+                    <has_n_columns n="167"/>
                 </assert_contents>
             </output>
         </test>
@@ -55,7 +55,7 @@
             <output name="output">
                 <assert_contents>
                     <has_text text="basisOfRecord"/>
-                    <has_n_columns n="144"/>
+                    <has_n_columns n="148"/>
                 </assert_contents>
             </output>
         </test>
