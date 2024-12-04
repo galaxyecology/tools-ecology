@@ -26,7 +26,7 @@
         <param name="infiles" type="data" format="netcdf" multiple="true" label="Input the netcdf data files" help="This files can netcdf raw Argo data or Gliders data"/>
     </inputs>
     <outputs>
-        <data name="output_net" format="netcdf" directory="/runtime/data/harmonized_data/work/*.nc" label="${tool.name} netcdf data" />
+        <data name="output_net" format="netcdf" from_work_dir="/runtime/data/harmonized_data/work/*.nc" label="${tool.name} netcdf data" />
     </outputs>
     <tests>
         <test expect_num_outputs="1">
