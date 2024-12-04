@@ -1,0 +1,126 @@
+<tool id="bgc_harmonizer" name="Ingestor" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="22.01" license="MIT">
+    <description>of BioGeoChemical marine in-situ netcdf data</description>
+    <macros>
+        <token name="@TOOL_VERSION@">1.1</token>
+        <token name="@VERSION_SUFFIX@">0</token>
+    </macros>
+    <requirements>
+        <container type="docker">pokapok/qcv_ingester:@TOOL_VERSION@</container>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        export HOME=\$PWD &&
+
+        #for $i, $infile in enumerate($infiles):
+            #if $infile.ext == "netcdf":
+                cp '$infile' '/runtime/data/original_data/work/ga_la_xy/${infile.element_identifier}' &&
+            #else:
+                echo "Your data should be netcdf files"
+            #end if
+        #end for
+
+        /app/launchers/start-app.sh GALAXY &&
+        
+        cp /runtime/data/harmonized_data/work/ga_la_xy_harm_agg.nc '$output_net'
+    ]]></command>
+    <inputs>
+        <param name="infiles" type="data" format="netcdf" multiple="true" label="Input the netcdf data files" help="This files can netcdf raw Argo data or Gliders data"/>
+    </inputs>
+    <outputs>
+        <data name="output_net" format="netcdf" directory="/runtime/data/harmonized_data/work/*.nc" label="${tool.name} netcdf data" />
+    </outputs>
+    <tests>
+        <test expect_num_outputs="1">
+            <param name="infiles" value="D6901758_001.nc,D6901758_002.nc,D6901758_003.nc,D6901758_004.nc,D6901758_005.nc"/>
+            <output name="output_net" value="Ingestor_netcdf_data.netcdf"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+
+.. class:: infomark
+
+**What it does**
+General presentation
+
+The cerb_harmonizer tool aggregates and harmonizes marine in-situ data following the needs of the UseCase 2.1-BCG - Fair-Ease. It converts files of individual or already aggregated data profiles into concatened single file with harmonized vocabullary needed for the project.
+Profiles are concatenated along the time dimension in the order given by the lising : if BGC data preceed CORE profiles, all BGC data will preceed CORE data. Use cycle_number variable to associate them again.
+Vocabulary translations are below. On the left, the writing of each variable in the output file, on the right, all possible translations found over data exploration.
+
+Coordinates and variables :
+
+    "lon" : ["longitude", "LONGITUDE", "LON", "lon"],
+    "lat" : ["latitude", "LATITUDE", "LAT", "lat"],
+    "time" : ["date", "time", "TIME", "JULD"],
+    "time_qc" : ["date_qc", "time_qc", "TIME_QC", "JULD_QC"],
+    "depth" : ["DEPTH", "depth"],
+    "cycle_number" : ["CYCLE_NUMBER"],
+    "ref_time" : ["REFERENCE_DATE_TIME"],
+    "pos_qc" : ["POSITION_QC",]
+
+--
+
+    "temperature" : ["TEMP", "TEMPERATURE"],
+    "salinity" : ["PSAL", "PRACTICAL_SALINITY"],
+    "oxygen" : ["DOXY"],
+    "pressure" : ["PRES"],
+    "chlorophylle" : ["CHLA"],
+    "nitrate" : ["NO3", "NITRATE", "n_an"],
+    "bbp700" : ["BBP700"],
+
+All variables are tagged with a suffix to indicate the state of the data (_raw, _dmadjusted, _rtadjusted)
+
+--
+
+Variables extracted from meta files are :
+
+    LAUNCH_DATE
+    PLATFORM_TYPE
+    PI_NAME meta variables are stored as metadata
+
+--
+
+Units :
+
+    "degree_east" : ["degree_east"],
+    "degree_north" : ["degree_north"],
+    "degree_celsius" : ["degree_celsius", "degree_Celsius"], # temperature
+    "psu" : ["psu", "practical_salinity_unit", "PSU"], # salinity
+    "micromol/l" : ["micromole.l-1", "micromole_per_liter", "μmol.l-1", "μmol/l", "μmol/L", "μmol.L-1"], # concentration liters
+    "mg/m3" : ["mg/m3",],
+    "micromole/kg" : ["micromole/kg",],
+    "m-1" : ["m-1"],
+    "decibar" : ["decibar", "dbar"], # pressure
+
+Arbitrarily,
+
+    dates are written following : "seconds since 1950-01-01T00:00:00 in julian calendar"
+    longitude is set between : -180° and 180°
+    latitude is set between : -90° and 90°
+
+WARNING : This application works only platform by platform. For example, it is possible to aggregate and harmonize a whole argo trajectory but one at a time. If two argo trajectories are needed to process, this tool needs to be run 2 times.
+
+**Input**
+
+a list of files in a txt file named cerb_listing.txt copntaining only filenames without paths. The tool will find the files automatically. A listing example here :
+
+BD6901580_003.nc BD6901580_004.nc BD6901580_005.nc BD6901580_006.nc D6901580_003.nc D6901580_004.nc D6901580_005.nc D6901580_006.nc 6901580_meta.nc
+
+paths of where are the data (volumes) containing configurations, listings and data. Paths are :
+
+    config path : where your textfile containing the list of files names is : it contains the listing cerb_listing.txt
+    data_path : highest folder including all the files to harmonize written in the textfile listing
+
+**Output**
+
+A concatenated and harmonized netcdf file
+
+    ]]></help>
+    <citations>
+        <citation type="bibtex">
+            @Manual{,
+            title = {QCV Ingester},
+            author = {Pokapok},
+            year = {2024},
+            note = {https://gitlab.com/pokapok-projects/PKP8-OGI-BGC/qcv_ingester}
+        </citation>    
+    </citations>
+</tool>
