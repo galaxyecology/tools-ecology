@@ -71,6 +71,7 @@ The second file contains the cluster/sample group assigned to each latitude and 
 +----------+-----------+----------+
 
  .. class:: infomark 
+        
  It is preferable to name your columns latitude and longitude in both file as in the examples. 
  
 Then you need to indicate wich columns in your occurrence file contain species data. And finally, you have to choose if you want to display only significant results (p-value < 0.05) or if you want all results including no significants ones. 
