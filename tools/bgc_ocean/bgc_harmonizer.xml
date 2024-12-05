@@ -11,11 +11,7 @@
         export HOME=\$PWD &&
 
         #for $i, $infile in enumerate($infiles):
-            #if $infile.ext == "netcdf":
-                cp '$infile' '/runtime/data/original_data/work/ga_la_xy/${infile.element_identifier}' &&
-            #else:
-                echo "Your data should be netcdf files"
-            #end if
+            cp '$infile' '/runtime/data/original_data/work/ga_la_xy/${infile.element_identifier}' &&
         #end for
 
         /app/launchers/start-app.sh GALAXY &&
