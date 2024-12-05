@@ -35,14 +35,14 @@
 **What it does?**
 -----------------
 
-This tool uses the multipatt function from indcispecies R package. The multipatt function is used in ecology to identify species indicators associated with groups of samples. It is an extension of IndVal (Indicator Value) by Dufrêne and Legendre (1997). It is commonly used to determine which species are characteristic of certain habitats or sample groups, which is useful in conservation biology, ecosystem management or biodiversity studies. This function creates combinations of the input clusters and compares each combination with the species in the input matrix. For each species it chooses the combination with a highest association value. Best matching patterns are tested for statistical significance of the associations. Indicator value indices will return the pattern that better matches the species observed pattern, whereas correlation indices will return the pattern that creates a highest inside/outside difference. Details are given in De Cáceres et al. (2010).
+This tool uses the multipatt function from indcispecies R package. The multipatt function is used in ecology to identify species indicators associated with groups of samples. It is an extension of IndVal (Indicator Value) by Dufrêne and Legendre (1997). It is commonly used to determine which species are characteristic of certain habitats or sample groups, which is useful in conservation biology, ecosystem management or biodiversity studies. This function creates combinations of the input clusters and compares each combination with the species in the input matrix. For each species it chooses the combination with the highest association value. Best matching patterns are tested for statistical significance of the associations. Indicator value indices will return the pattern that better matches the species observed pattern, whereas correlation indices will return the pattern that creates the highest inside/outside difference. Details are given in De Cáceres et al. (2010).
 
 **How to use it?**
 ------------------
 
-To use this tool, you will need two type of data file as this tool is concive to be run with or after the Ecoregionalization workflow (https://ecology.usegalaxy.eu/training-material/topics/ecology/tutorials/Ecoregionalization_tutorial/tutorial.html).
+To use this tool, you will need two types of data file as this tool is conceive to be run with or after the Ecoregionalization workflow (https://ecology.usegalaxy.eu/training-material/topics/ecology/tutorials/Ecoregionalization_tutorial/tutorial.html).
 
-The first file is an occurrence file with at least three type of columns : latitude, longitude and occurrence (one column per taxon with their abscence/presence data). 
+The first file is an occurrence file with at least three types of columns : latitude, longitude and occurrence (one column per taxon with their absence/presence data). 
 
 **Example of occurence data input :**
 
@@ -71,10 +71,9 @@ The second file contains the cluster/sample group assigned to each latitude and 
 +----------+-----------+----------+
 
  .. class:: infomark 
- 
  It is preferable to name your columns latitude and longitude in both file as in the examples. 
  
-Then you need to indicates wich columns in your occurrence file contain species data. And finally, you have to choose if you want to display only significant results (p-value < 0.05) or if you want all results including non significatives ones. 
+Then you need to indicate wich columns in your occurrence file contain species data. And finally, you have to choose if you want to display only significant results (p-value < 0.05) or if you want all results including no significants ones. 
  
 **Interpretation of results**
 -----------------------------
@@ -88,7 +87,7 @@ Explanation of associated statics :
  - A (Specificity): This is the proportion of occurrences of the species in the group in relation to all the groups. A value of 1.0000 means that the species is exclusively present in this group.
  - B (Fidelity): The proportion of sites in the group where the species is present. A value of 0.5000 means that the species is present in 50% of the sites in the group.
  - stat : The IndVal statistical value (generalized indicator value index). A high value indicates a strong association between the species and the group.
- - p.value : The p-value of the association. A low p-value (< 0.05) means that the association is statistically significant.
+ - p-value : The p-value of the association. A low p-value (< 0.05) means that the association is statistically significant.
 
 Why is a species not significant in a group?
 
