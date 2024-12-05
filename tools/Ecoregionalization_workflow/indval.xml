@@ -1,0 +1,108 @@
+<tool id="indval" name="Indicspecies" version="0.1.0+galaxy0">
+    <description>to identify indicator species within clusters/groups</description>
+    <requirements>
+      <requirement type="package" version="4.4.2">r-base</requirement>
+      <requirement type="package" version="1.1.4">r-dplyr</requirement>
+      <requirement type="package" version="1.7.15">r-indicspecies</requirement>
+      <requirement type="package" version="0.9_4">r-permute</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+    Rscript '$__tool_directory__/indval.R' '$clus' '$occ' '$name_species' '$sign'
+    ]]></command>
+    <inputs>
+      <param name="occ" type="data" format="tabular" label="Input your Occurences file (tabular format only)" help="See example below"/>
+      <param name="clus" type="data" format="tabular" label="Input your cluster file (tabular format only)" help="See example below"/>
+      <param name="name_species" type="data_column" label="Choose column(s) where your species are in your occurrence data file." data_ref="occ" multiple="true" use_header_names="true"/>
+      <param name="sign" type="boolean" label="Display only significant results (p-value inferior to 0.05)" checked="true"/>
+    </inputs>
+    <outputs>
+      <data name="output" from_work_dir="indval.txt" format="txt" label="Indicator values"/>
+    </outputs>
+    <tests>
+      <test>
+        <param name="occ" value="Merged_table.tabular"/>
+        <param name="clus" value="Cluster_points.tabular"/>
+        <param name="name_species" value="3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73"/>
+        <param name="sign" value="true"/>
+        <output name="output">
+           <assert_contents>
+              <has_size value="4175" delta="50"/>
+           </assert_contents>
+        </output>
+      </test>
+    </tests>
+    <help><![CDATA[
+**What it does?**
+-----------------
+
+This tool uses the multipatt function from indcispecies R package. The multipatt function is used in ecology to identify species indicators associated with groups of samples. It is an extension of IndVal (Indicator Value) by Dufrêne and Legendre (1997). It is commonly used to determine which species are characteristic of certain habitats or sample groups, which is useful in conservation biology, ecosystem management or biodiversity studies. This function creates combinations of the input clusters and compares each combination with the species in the input matrix. For each species it chooses the combination with a highest association value. Best matching patterns are tested for statistical significance of the associations. Indicator value indices will return the pattern that better matches the species observed pattern, whereas correlation indices will return the pattern that creates a highest inside/outside difference. Details are given in De Cáceres et al. (2010).
+
+**How to use it?**
+------------------
+
+To use this tool, you will need two type of data file as this tool is concive to be run with or after the Ecoregionalization workflow (https://ecology.usegalaxy.eu/training-material/topics/ecology/tutorials/Ecoregionalization_tutorial/tutorial.html).
+
+The first file is an occurrence file with at least three type of columns : latitude, longitude and occurrence (one column per taxon with their abscence/presence data). 
+
+**Example of occurence data input :**
+
++----------+-----------+------------------------+-----------+-----+------+--------------+-----+
+|   lat    |   long    |Acanthorhabdus_fragilis | Acarnidae | ... | Grav |  Maxbearing  | ... |
++----------+-----------+------------------------+-----------+-----+------+--------------+-----+
+|-65,999946|142,3360535|           0            |     1     | ... |28.59 |     3.67     | ... |
++----------+-----------+------------------------+-----------+-----+------+--------------+-----+
+|-66,335407| 141,3028  |           0            |     1     | ... |28.61 |     3.64     | ... |
++----------+-----------+------------------------+-----------+-----+------+--------------+-----+
+|   ...    |   ...     |          ...           |    ...    | ... | ...  |     ...      | ... |
++----------+-----------+------------------------+-----------+-----+------+--------------+-----+
+
+The second file contains the cluster/sample group assigned to each latitude and longitude.
+
+**Example of cluster data input :**
+
++----------+-----------+----------+
+|   lat    |   long    |  Cluster | 
++----------+-----------+----------+
+|-65,999946|142,3360535|    1     |
++----------+-----------+----------+
+|-66,335407| 141,3028  |    2     |
++----------+-----------+----------+
+|   ...    |   ...     |   ...    |
++----------+-----------+----------+
+
+ .. class:: infomark 
+ 
+ It is preferable to name your columns latitude and longitude in both file as in the examples. 
+ 
+Then you need to indicates wich columns in your occurrence file contain species data. And finally, you have to choose if you want to display only significant results (p-value < 0.05) or if you want all results including non significatives ones. 
+ 
+**Interpretation of results**
+-----------------------------
+
+On the tool's output file, we can find a lot of information. Firstly, the function used, in this case IndVal.g, which indicates that the generalized indicator value index has been used. Next is the level of significance (alpha) according to the choice made earlier (p-value < 0.05 or all). This is followed by the number of species analyzed and the number of species identified as indicators. The following lines show how many species are specific to a single group, and whether one or more species are simultaneously associated with several groups. 
+
+The following section lists the indicator species for each group, with associated statistics.
+
+Explanation of associated statics :  
+
+ - A (Specificity): This is the proportion of occurrences of the species in the group in relation to all the groups. A value of 1.0000 means that the species is exclusively present in this group.
+ - B (Fidelity): The proportion of sites in the group where the species is present. A value of 0.5000 means that the species is present in 50% of the sites in the group.
+ - stat : The IndVal statistical value (generalized indicator value index). A high value indicates a strong association between the species and the group.
+ - p.value : The p-value of the association. A low p-value (< 0.05) means that the association is statistically significant.
+
+Why is a species not significant in a group?
+
+There are several possible reasons for the absence of significant species in certain groups:
+
+ - Low specificity (A): Species are present in several groups, reducing their indicator value.
+ - Low fidelity (B): Species are not frequent enough in the sites of the group.
+ - Insufficient data : Lack of samples or too few occurrences to detect robust associations.
+ - High variability between sites in the same group.
+    
+    ]]></help>
+    <citations>
+      <citation type="doi">doi:10.2307/2963459</citation>
+      <citation type="doi">doi:10.1111/j.1600-0706.2010.18334.x</citation>
+      <citation type="doi">10.32614/CRAN.package.indicspecies</citation>
+    </citations>
+</tool>
