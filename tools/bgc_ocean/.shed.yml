@@ -1,0 +1,15 @@
+categories:
+    - Ecology
+owner: ecology
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/bgc_ocean
+homepage_url: https://github.com/Marie59/FE-ft-ESG/tree/main/ocean
+long_description: |
+  Process in-situ and biogechemical oceanographic Argo or Glider data for the Earth System
+type: unrestricted
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrapper for ocean biogechemical data tool: {{ tool_name }}."
+suite:
+  name: "bgc_ocean_suite"
+  description: "A suite of tools for the ocean biogeochemical compartment of the Earth System"
+  type: unrestricted
