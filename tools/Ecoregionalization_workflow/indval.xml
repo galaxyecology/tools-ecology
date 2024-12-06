@@ -26,7 +26,12 @@
         <param name="sign" value="true"/>
         <output name="output">
            <assert_contents>
-              <has_size value="4175" delta="50"/>
+              <has_text text="Multilevel pattern analysis"/>
+              <has_text text="Association function: IndVal.g"/>
+              <has_text text="Significance level (alpha): 0.05"/>
+              <has_text text="Total number of species: 71"/>
+              <has_text text="Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1"/>
+              <has_n_lines n="57" delta="3"/>
            </assert_contents>
         </output>
       </test>
@@ -71,7 +76,7 @@ The second file contains the cluster/sample group assigned to each latitude and 
 +----------+-----------+----------+
 
  .. class:: infomark 
-        
+ 
  It is preferable to name your columns latitude and longitude in both file as in the examples. 
  
 Then you need to indicate wich columns in your occurrence file contain species data. And finally, you have to choose if you want to display only significant results (p-value < 0.05) or if you want all results including no significants ones. 
