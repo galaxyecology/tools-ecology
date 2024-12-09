@@ -1,4 +1,4 @@
-<tool id="indval" name="Indicspecies" version="0.1.0+galaxy0" profile="16.04">
+<tool id="indval" name="Indicspecies" version="0.1.0+galaxy0" profile="23.0">
     <description>to identify indicator species within clusters/groups</description>
     <requirements>
       <requirement type="package" version="4.4.2">r-base</requirement>
