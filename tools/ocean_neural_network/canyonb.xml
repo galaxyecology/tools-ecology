@@ -1,4 +1,4 @@
-<tool id="bgc_canyon_b" name="Canyon-B" version="@VERSION@+galaxy@VERSION_SUFFIX@" license="MIT">
+<tool id="bgc_canyon_b" name="Canyon-B" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="22.05" license="MIT">
     <description>estimation of ocean CO2 variables and nutrient concentrations</description>
     <macros>
         <token name="@VERSION@">0.9.3</token>
