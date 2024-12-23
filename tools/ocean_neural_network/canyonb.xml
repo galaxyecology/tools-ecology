@@ -127,8 +127,6 @@ Check values for :
         CT:    2197.927   9.151    umol kg-1
         pH:    7.866380   0.022136 (insitu total scale, comparable to "calculated pH values" as described in Carter et al., 2018)
         pCO2:  636.9615  56.5087        uatm
-
-
     ]]></help>
     <citations>
         <citation type="doi">10.3389/fmars.2018.00328</citation>
