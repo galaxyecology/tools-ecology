@@ -1,14 +1,15 @@
-<tool id="bgc_canyon_b" name="Canyon-B" version="@VERSION@">
-    <description>Robust Estimation of Open Ocean CO2 Variables and Nutrient Concentrations From T, S, and O2 Data Using Bayesian Neural Networks</description>
+<tool id="bgc_canyon_b" name="Canyon-B" version="@VERSION@+galaxy@VERSION_SUFFIX@" license="MIT">
+    <description>estimation of ocean CO2 variables and nutrient concentrations</description>
     <macros>
         <token name="@VERSION@">0.9.3</token>
+        <token name="@VERSION_SUFFIX@">0</token>
     </macros>
     <requirements>
         <requirement type="package" version="4.3.2">r-base</requirement>
         <requirement type="package" version="@VERSION@">r-canyonb</requirement>
     </requirements>
     <required_files>
-        <include type="literal" path="canyonb.r"/>
+        <include type="path" path="canyonb.r"/>
     </required_files>
     <command detect_errors="exit_code"><![CDATA[ 
         Rscript
@@ -32,7 +33,7 @@
         <param name="date" type="text" value="yyyy-mm-dd HH:MM" label="date (UTC) as string ('yyyy-mm-dd HH:MM')"/>
         <param name="latitude" type="float" min="-90" max="90" value="0"  label="latitude / °N  [-90 90]"/>
         <param name="longitude" type="float" min="-180" max="180" value="0"  label="longitude / °E [-180 180]"/>
-        <param name="pressure" type="float" value="0"  label="pressure / dbar"/>
+        <param name="pressure" type="float" value="0" min="0" label="pressure / dbar"/>
         <param name="temperature" type="float" value="0"  label="in-situ temperature / °C"/>
         <param name="salinity" type="float" value="0"  label="salinity"/>
         <param name="dissoxygen" type="float" value="0" label="dissolved oxygen / umol kg-1"/>
@@ -75,14 +76,58 @@
         </test>
     </tests>
     <help><![CDATA[
-========================================================================
-Neural Network
-========================================================================
+=======================
+Canyon-B Neural Network
+=======================
+
 **What it does**
+
+Robust Estimation of Open Ocean CO2 Variables and Nutrient Concentrations From T, S, and O2 Data Using Bayesian Neural Networks.
+
+CANYON-B calculation according to Bittig et al. (2018):
+Bayesian neural network mapping of NO3, PO4, SiOH4, AT, CT, pH or pCO2 for any set of water column P, T, S, O2, location data as an alternative to (spatial) climatological interpolation. Based on GLODAPv2/GO-SHIP bottle data
 
 **Input description**
 
+- date  - date (UTC) as string ("yyyy-mm-dd HH:MM")
+- lat   - latitude / °N  [-90 90]
+- lon   - longitude / °E [-180 180] or [0 360]
+- pres  - pressure / dbar
+- temp  - in-situ temperature / °C
+- psal  - salinity
+- doxy  - dissolved oxygen / umol kg-1 (!)
+
+- param - character vector of variable names to be predicted ("AT", "CT", "pH", "pCO2",
+        "NO3", "PO4", "SiOH4") (optional; defaults to all variables)
+
+Default values for input errors (optional):
+- epres:   0.5 dbar
+- etemp:   0.005 °C
+- epsal:   0.005 psu
+- edoxy:   1 % of doxy (<- This is a rather optimistic default, meant for GO-SHIP quality bottle data. A reasonable default sensor doxy error would be 3 % of doxy (or higher!).)
+
 **Output**
+
+- out$(param)     - predicted variable (same size as 'pres' input)
+- out$(param)_ci  - predicted variable uncertainty (same size as 'pres' input)
+- out$(param)_cim - variable measurement uncertainty
+- out$(param)_cin - variable uncertainty for Bayesian neural network mapping
+- out$(param)_cii - variable uncertainty due to input errors
+
+measurement errors for AT, CT, pH, NO3, PO4, SiOH4 are 6 umol kg-1, 4umol kg-1, 0.005, 2 %, 2 %, 2 %, respectively (Olsen et al. 2016) measurement error for pCO2 is equivalent to pCO2 calculation uncertainty from CO2SYS(AT,CT).
+
+Check values for :
+
+09-Dec-2014 08:45, 17.6° N, -24.3° E, 180 dbar, 16 °C, 36.1 psu, 104 umol O2 kg-1:
+               (param)  (param)_ci      unit
+        NO3:   17.91522   1.32494  umol kg-1
+        PO4:   1.081163   0.073566 umol kg-1
+        SiOH4: 5.969813   2.485283 umol kg-1
+        AT:    2359.331   9.020    umol kg-1
+        CT:    2197.927   9.151    umol kg-1
+        pH:    7.866380   0.022136 (insitu total scale, comparable to "calculated pH values" as described in Carter et al., 2018)
+        pCO2:  636.9615  56.5087        uatm
+
 
     ]]></help>
     <citations>
