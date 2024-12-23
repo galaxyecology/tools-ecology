@@ -9,7 +9,7 @@
         <requirement type="package" version="@VERSION@">r-canyonb</requirement>
     </requirements>
     <required_files>
-        <include type="path" path="canyonb.r"/>
+        <include type="literal" path="canyonb.r"/>
     </required_files>
     <command detect_errors="exit_code"><![CDATA[ 
         Rscript
