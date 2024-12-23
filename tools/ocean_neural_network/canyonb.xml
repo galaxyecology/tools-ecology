@@ -114,19 +114,7 @@ Default values for input errors (optional):
 - out$(param)_cin - variable uncertainty for Bayesian neural network mapping
 - out$(param)_cii - variable uncertainty due to input errors
 
-measurement errors for AT, CT, pH, NO3, PO4, SiOH4 are 6 umol kg-1, 4umol kg-1, 0.005, 2 %, 2 %, 2 %, respectively (Olsen et al. 2016) measurement error for pCO2 is equivalent to pCO2 calculation uncertainty from CO2SYS(AT,CT).
-
-Check values for :
-
-09-Dec-2014 08:45, 17.6° N, -24.3° E, 180 dbar, 16 °C, 36.1 psu, 104 umol O2 kg-1:
-               (param)  (param)_ci      unit
-        NO3:   17.91522   1.32494  umol kg-1
-        PO4:   1.081163   0.073566 umol kg-1
-        SiOH4: 5.969813   2.485283 umol kg-1
-        AT:    2359.331   9.020    umol kg-1
-        CT:    2197.927   9.151    umol kg-1
-        pH:    7.866380   0.022136 (insitu total scale, comparable to "calculated pH values" as described in Carter et al., 2018)
-        pCO2:  636.9615  56.5087        uatm
+Measurement errors for AT, CT, pH, NO3, PO4, SiOH4 are 6 umol kg-1, 4umol kg-1, 0.005, 2 %, 2 %, 2 %, respectively (Olsen et al. 2016) measurement error for pCO2 is equivalent to pCO2 calculation uncertainty from CO2SYS(AT,CT).
     ]]></help>
     <citations>
         <citation type="doi">10.3389/fmars.2018.00328</citation>
