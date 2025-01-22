@@ -1,23 +1,16 @@
-<tool id="cb_ivr" name="IVR" version="@VERSION@" profile="20.01">
+<tool id="cb_ivr" name="IVR" version="@VERSION@" profile = "20.01">
     <description>indicator</description>
     <macros>
         <import>macro.xml</import>
     </macros>
-    <requirements>
-        <requirement type="package" version="1.0.10">r-dplyr</requirement>
-        <requirement type="package" version="1.2.1">r-tidyr</requirement>
-        <requirement type="package" version="1.4.1">r-stringr</requirement>
-        <requirement type="package" version="3.1.8">r-tibble</requirement>
-        <requirement type="package" version="1.40">r-knitr</requirement>
-        <requirement type="package" version="0.6_8">r-gmp</requirement>
-        <requirement type="package" version="2.0.3">r-magrittr</requirement>
-        <requirement type="package" version="2.18">r-rmarkdown</requirement>
+    <expand macro="cb_requirements">
+        <requirement type="package" version="2.19">r-rmarkdown</requirement>
         <requirement type="package" version="0.2.4">r-officedown</requirement>
         <requirement type="package" version="1.3.2">r-tidyverse</requirement>
-        <requirement type="package" version="0.5.1">r-officer</requirement>
+        <requirement type="package" version="0.5.0">r-officer</requirement>
         <requirement type="package" version="0.8.3">r-flextable</requirement>
-        <requirement type="package" version="3.4.0">r-ggplot2</requirement>
-    </requirements>
+        <requirement type="package" version="3.4">r-ggplot2</requirement>
+    </expand>
     <required_files>
         <include type="literal" path="test-data/champbloc_ivr.csv"/>
         <include type="literal" path="test-data/ficheterrain.csv"/>
@@ -28,12 +21,11 @@
         <include type="literal" path="cb_ivr.r"/>
     </required_files>
     <command detect_errors="exit_code"><![CDATA[
-        cp '$__tool_directory__/cb_ivr_site_report_col_scale_loop.Rmd' ./cb_ivr_site_report_col_scale_loop.Rmd &&
         Rscript
             '$__tool_directory__/cb_ivr.r'
             '$fiche_val'
             '$input_data'
-            ./cb_ivr_site_report_col_scale_loop.Rmd
+            '$__tool_directory__/cb_ivr_site_report_col_scale_loop.Rmd'
             '$__tool_directory__/loop_col_scale.r'
             '$output_ivr'
             '$plots'

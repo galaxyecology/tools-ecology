@@ -3,21 +3,13 @@
     <macros>
         <import>macro.xml</import>
     </macros>
-    <requirements>
-        <requirement type="package" version="4.2.2">r-base</requirement>
-        <requirement type="package" version="2.0.3">r-magrittr</requirement>
-        <requirement type="package" version="1.1.0">r-dplyr</requirement>
-        <requirement type="package" version="1.3.0">r-tidyr</requirement>
-        <requirement type="package" version="1.5.0">r-stringr</requirement>
-        <requirement type="package" version="3.1.8">r-tibble</requirement>
-        <requirement type="package" version="1.42">r-knitr</requirement>
-        <requirement type="package" version="0.7_1">r-gmp</requirement>
-        <requirement type="package" version="2.20">r-rmarkdown</requirement>
-        <requirement type="package" version="0.3.0">r-officedown</requirement>
+    <expand macro="cb_requirements">
+        <requirement type="package" version="2.19">r-rmarkdown</requirement>
+        <requirement type="package" version="0.2.4">r-officedown</requirement>
         <requirement type="package" version="2.6_4">r-vegan</requirement>
         <requirement type="package" version="1.3.2">r-tidyverse</requirement>
-        <requirement type="package" version="3.4.1">r-ggplot2</requirement>
-    </requirements>
+        <requirement type="package" version="3.4">r-ggplot2</requirement>
+    </expand>
     <required_files>
         <include type="literal" path="test-data/champbloc_qecb.csv"/>
         <include type="literal" path="test-data/ficheterrain.csv"/>

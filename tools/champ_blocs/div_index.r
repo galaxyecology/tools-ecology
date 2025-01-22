@@ -10,6 +10,17 @@
 
 #####Packages : dplyr
 #               tidyr
+#               readr
+#               writexl
+#               stringr
+#               readxl
+#               tibble
+#               lubridate
+#               cowplot
+#               magrittr
+#               rmarkdown
+library(magrittr)
+library(dplyr)
 #####Load arguments
 
 args <- commandArgs(trailingOnly = TRUE)
@@ -95,7 +106,7 @@ qecnato0$period <- as.character(qecnato0$period)
 qecnato0$Face <- as.character(qecnato0$Face)
 
 div_list <- vector("list", length(unique(qecnato0$site_year_month_day)))
-library(dplyr)
+
 for (i in c(1:nrow(qecnato0))) {
   div_i <- dplyr::filter(qecnato0, site_year_month_day == qecnato0$site_year_month_day[i])
 
