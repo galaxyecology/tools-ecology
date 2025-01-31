@@ -36,7 +36,7 @@
             <when value="peri-conv">
                 <param name="input_data" label="Table to be grouped by date, with date colum" optional="false" help="URL to the table with a column containing a date. It can have other columns which will not be changed during this process. (URL must be stored in a .txt file)" type="data" format="txt"/>
                 <param name="colname_date" label="Date column name" optional="false" help="Column name of the date column in the format defined above. Example: 'visit_date'." type="text"/>
-                <param name="date_format" label="Date format" optional="true" value="y-m-d" help="The date format used to parse the date, i.e. to extract day, month and year from the date column, e.g.  or 'y-m-d' for dates like '1998-08-22' (this is the default) or 'y/m/d' for dates like '1998/08/22'." type="select">
+                <param name="date_format" label="Date format" optional="true" help="The date format used to parse the date, i.e. to extract day, month and year from the date column, e.g.  or 'y-m-d' for dates like '1998-08-22' (this is the default) or 'y/m/d' for dates like '1998/08/22'." type="select">
                     <option value="y-m-d">y-m-d</option>
                     <option value="y/m/d">y/m/d</option>
                 </param>
@@ -92,11 +92,11 @@
             </when>
             <when value="owt-classification">
                 <param name="input_data_url" label="Input data" optional="false" help="URL to your input file. Find example data on https://github.com/bishun945/pyOWT/tree/main/projects/AquaINFRA. (URL must be stored in a .txt file)" type="data" format="txt"/>
-                <param name="input_option" label="Type of input" optional="false" value="csv" help="csv: for text data input (first line wavelength, following lines remote-sensing reflectance). sat: for satellite product input containing reflectance (e.g., Sentinel-3 OLCI Level-2)" type="select">
+                <param name="input_option" label="Type of input" optional="false" help="csv: for text data input (first line wavelength, following lines remote-sensing reflectance). sat: for satellite product input containing reflectance (e.g., Sentinel-3 OLCI Level-2)" type="select">
                     <option value="csv">csv</option>
                     <option value="sat">sat</option>
                 </param>
-                <param name="sensor" label="Sensor name" optional="false" value="HYPER" help="Spectral band configuration of satellite mission (includes adaptation to sensor spectral response functions)." type="select">
+                <param name="sensor" label="Sensor name" optional="false" help="Spectral band configuration of satellite mission (includes adaptation to sensor spectral response functions)." type="select">
                     <option value="HYPER">HYPER</option>
                     <option value="AERONET_OC_1">AERONET_OC_1</option>
                     <option value="AERONET_OC_2">AERONET_OC_2</option>
@@ -120,7 +120,7 @@
                     <option value="VIIRS_JPSS2">VIIRS_JPSS2</option>
                     <option value="VIIRS_SNPP">VIIRS_SNPP</option>
                 </param>
-                <param name="output_option" label="Output option" optional="false" value="1" help="1: for standard output with five variables. 2: for extensive output including memberships of all water types." type="select">
+                <param name="output_option" label="Output option" optional="false" help="1: for standard output with five variables. 2: for extensive output including memberships of all water types." type="select">
                     <option value="1">1</option>
                     <option value="2">2</option>
                 </param>
