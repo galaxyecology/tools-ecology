@@ -15,7 +15,7 @@
         mkdir -p '/runtime/data-out/' &&
 
         cp '$input_raw' '/runtime/data-in-raw/${input_raw.element_identifier}' &&
-        #if $input_ref and str($input_ref).strip() not in ["", "None"]:            
+        #if $input_ref:            
             cp '$input_ref' '/runtime/data-in-ref/${input_ref.element_identifier}' &&
         #end if
 
