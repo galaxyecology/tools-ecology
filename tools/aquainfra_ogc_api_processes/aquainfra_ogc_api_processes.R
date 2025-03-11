@@ -183,7 +183,7 @@ is_url <- function(x) {
   grepl("^https?://", x)
 }
 
-server <- "https://aqua.igb-berlin.de/pygeoapi-dev/"
+server <- "https://aquainfra.ogc.igb-berlin.de/pygeoapi/"
 
 print("--> Retrieve parameters")
 inputParameters <- getParameters()
