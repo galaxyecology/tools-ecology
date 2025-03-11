@@ -60,7 +60,7 @@
         </param>
         <conditional name="config">
             <param name="type" type="select" label="Select if you are have your own configuration file or not.">   
-                <option value="no">No, I don't have my a configuration file, I use the default one</option>
+                <option value="no">No, I don't have a configuration file, I use the default one</option>
                 <option value="yes">Yes, I do have my own configuration file</option>
             </param>
             <when value="yes">
