@@ -15,7 +15,7 @@
         mkdir -p '/runtime/data-out/' &&
 
         cp '$input_raw' '/runtime/data-in-raw/${input_raw.element_identifier}' &&
-        #if $input_ref and str($input_ref).strip() not in ["", "None"]:            
+        #if $input_ref:            
             cp '$input_ref' '/runtime/data-in-ref/${input_ref.element_identifier}' &&
         #end if
 
@@ -53,19 +53,35 @@
     ]]></command>
     <inputs>
         <param name="input_raw" type="data" format="netcdf" label="Input raw data"/>
-        <param name="input_ref" type="data" format="netcdf" optional="true" label="Input ref data"/>
+        <param name="input_ref" type="data" format="netcdf" optional="true" label="Input reference data"/>
         <param name="mode" type="select" label="Select in which mode you want to run the tool">
             <option value="R_APP_QV">QV that creates a odv collection with raw and ref files to qualify</option>
             <option value="DEMO">Valide with ODV demo that performes the demo</option>
         </param>
         <conditional name="config">
             <param name="type" type="select" label="Select if you are have your own configuration file or not.">   
-                <option value="no">No, I don't have my a configuration file, I use the default one</option>
+                <option value="no">No, I don't have a configuration file, I use the default one</option>
                 <option value="yes">Yes, I do have my own configuration file</option>
             </param>
             <when value="yes">
                 <param name="operator" type="text" label="Enter operator name"/>
-                <param name="qc_convention" type="text" value="ARGO" label="Enter QC convention (default: ARGO)"/>
+                <param name="qc_convention" type="select" label="Enter QC convention for the ODV collection output (default: ARGO)">
+                    <option value="ARGO">ARGO</option>
+                    <option value="ODV">ODV</option>
+                    <option value="GTSPP">GTSPP</option>
+                    <option value="SEADATANET">SEADATANET</option>
+                    <option value="ESEAS">ESEAS</option>
+                    <option value="WOD">WOD</option>
+                    <option value="WODSTATION">WODSTATION</option>
+                    <option value="WOCEBOTTLE">WOCEBOTTLE</option>
+                    <option value="WOCECTD">WOCECTD</option>
+                    <option value="QARTOD">QARTOD</option>
+                    <option value="BODC">BODC</option>
+                    <option value="PANGAEA">PANGAEA</option>
+                    <option value="SMHI">SMHI</option>
+                    <option value="OceanSITES">OceanSITES</option>
+                    <option value="IODE">IODE</option>
+                </param>
                 <param name="subsetting" type="float" min="-1" max="1" value="1" label="Enter subsetting (default: 1)"/>
                 <param name="plt" type="float" min="0" max="1" value="0" label="Enter plt (default: 0 for QV, 1 for demo)"/>
             </when>
@@ -74,9 +90,9 @@
         </conditional>
     </inputs>
     <outputs>
-        <data name="output" from_work_dir="/runtime/data-out/*.txt" format="txt" label="ODV tool output"/>
+        <data name="output" format="txt" label="ODV tool output"/>
         <collection type="list" name="files" label="ODV tool collection">
-            <discover_datasets pattern="(?P&lt;designation&gt;.+)" directory="./" recurse="true"/>
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)" directory="./" recurse="true" format="text"/>
         </collection>
     </outputs>
     <tests>
@@ -87,7 +103,7 @@
             <param name="type" value="no"/>
             <output name="output">
                 <assert_contents>
-                    <has_n_lines n="528723"/>
+                    <has_n_lines n="26377"/>
                 </assert_contents>
             </output>
             <output_collection name="files" type="list" count="4"/>
@@ -102,7 +118,7 @@
             <param name="plt" value="0"/>
             <output name="output">
                 <assert_contents>
-                    <has_n_lines n="274984"/>
+                    <has_n_lines n="17966"/>
                 </assert_contents>
             </output>
             <output_collection name="files" type="list" count="4"/>
@@ -113,24 +129,26 @@
             <param name="type" value="no"/>
             <output name="output">
                 <assert_contents>
-                    <has_n_lines n="274984"/>
+                    <has_n_lines n="17966"/>
                 </assert_contents>
             </output>
             <output_collection name="files" type="list" count="4"/>
         </test>
     </tests>
     <help><![CDATA[
-=======================
-ODV tool
-=======================
+======================
+ODV collection manager
+======================
 
 **What it does**
+
 This tool present two type of actions :
 
     - qualificiation & validation : the tool merges various datasets with a common vocabulary and creates a single generic ODV spreadsheet following ODV user’s guide (v5.7.0) in an automatic way.
     - history : the tool report in the input file the ODV history including the change of QC flag (not yet operational)
 
 **Input description**
+
     - file_name_raw : nc file to be qualified
     - file_name_ref : nc file used for validation / comparison. noted NULL if no files
     - odv_collection$qc_convention : tool makes mapping when its necessary and when global attribute qc_convention is available and filled in file_name_raw
@@ -148,6 +166,7 @@ with default values different from NULL :
 If the list of raw file name is empty, tool stops If the user make an error in the file extension, tool changes it by itself. If the user miss the yaml configuration, tool uses its default config and upload file in data-in-raw and data-in-ref
 
 **Output**
+
 This tool creates a single generic ODV spreadsheet following ODV user’s guide 
 
     ]]></help>
