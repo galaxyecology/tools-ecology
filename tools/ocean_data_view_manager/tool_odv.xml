@@ -53,7 +53,7 @@
     ]]></command>
     <inputs>
         <param name="input_raw" type="data" format="netcdf" label="Input raw data"/>
-        <param name="input_ref" type="data" format="netcdf" optional="true" label="Input ref data"/>
+        <param name="input_ref" type="data" format="netcdf" optional="true" label="Input reference data"/>
         <param name="mode" type="select" label="Select in which mode you want to run the tool">
             <option value="R_APP_QV">QV that creates a odv collection with raw and ref files to qualify</option>
             <option value="DEMO">Valide with ODV demo that performes the demo</option>
