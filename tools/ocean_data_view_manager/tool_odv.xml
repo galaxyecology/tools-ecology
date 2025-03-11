@@ -65,7 +65,7 @@
             </param>
             <when value="yes">
                 <param name="operator" type="text" label="Enter operator name"/>
-                <param name="qc_convention" type="text" value="ARGO" label="Enter QC convention (default: ARGO)"/>
+                <param name="qc_convention" type="text" value="ARGO" label="Enter QC convention for the ODV collection output (default: ARGO)"/>
                 <param name="subsetting" type="float" min="-1" max="1" value="1" label="Enter subsetting (default: 1)"/>
                 <param name="plt" type="float" min="0" max="1" value="0" label="Enter plt (default: 0 for QV, 1 for demo)"/>
             </when>
