@@ -19,7 +19,7 @@ env:
   GALAXY_FORK: galaxyproject
   GALAXY_BRANCH: release_24.1
   MAX_CHUNKS: 4
-  MAX_FILE_SIZE: 1M
+  MAX_FILE_SIZE: 12M
   CMEMS_PASSWORD: ${{ secrets.CMEMS_PASSWORD }}
   CMEMS_USERNAME: ${{ secrets.CMEMS_USERNAME }}
 concurrency:
