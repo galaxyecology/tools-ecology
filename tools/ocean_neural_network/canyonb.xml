@@ -6,71 +6,78 @@
     </macros>
     <requirements>
         <requirement type="package" version="4.3.2">r-base</requirement>
+        <requirement type="package" version="2.13.0">r-r.utils</requirement>
         <requirement type="package" version="@VERSION@">r-canyonb</requirement>
+        <requirement type="package" version="0.4.0">r-logger</requirement>
     </requirements>
     <required_files>
-        <include type="literal" path="canyonb.r"/>
+        <include type="literal" path="run_tool_canyonb.R"/>
     </required_files>
-    <command detect_errors="exit_code"><![CDATA[ 
-        Rscript
-            '$__tool_directory__/canyonb.r'             
-            '$date'
-            '$latitude'
-            '$longitude'
-            '$pressure'
-            '$temperature'
-            '$salinity'
-            '$dissoxygen'
-            '$variables'
-            '$epressure'
-            '$etemperature'
-            '$epsalinity'
-            '$edissoxygen'
-            '$output'
-        ]]>
+    <command detect_errors="exit_code"><![CDATA[
+        mkdir input/ &&
+        cp '$input_data' 'input/$input_data.element_identifier' &&
+        
+        #if $mapping.type == 'no':        
+            Rscript '$__tool_directory__/run_tool_canyonb.R'  
+            'input/$input_data.element_identifier'
+        #else:        
+            Rscript '$__tool_directory__/run_tool_canyonb.R'  
+            'input/$input_data.element_identifier'
+            '$mapping.mapping_pres'
+            '$mapping.mapping_temp'
+            '$mapping.mapping_psal'
+            '$mapping.mapping_doxy'
+            '$mapping.mapping_epres'
+            '$mapping.mapping_etemp'
+            '$mapping.mapping_epsal'
+            '$mapping.mapping_edoxy'
+        #end if     
+    ]]>
     </command>
     <inputs>
-        <param name="date" type="text" value="yyyy-mm-dd HH:MM" label="date (UTC) as string ('yyyy-mm-dd HH:MM')"/>
-        <param name="latitude" type="float" min="-90" max="90" value="0"  label="latitude / °N  [-90 90]"/>
-        <param name="longitude" type="float" min="-180" max="180" value="0"  label="longitude / °E [-180 180]"/>
-        <param name="pressure" type="float" value="0" min="0" label="pressure / dbar"/>
-        <param name="temperature" type="float" value="0"  label="in-situ temperature / °C"/>
-        <param name="salinity" type="float" value="0"  label="salinity"/>
-        <param name="dissoxygen" type="float" value="0" label="dissolved oxygen / umol kg-1"/>
-        <param name="variables" type="select" label="Variable names to be predicted" multiple="true">
-                <option value="AT">AT</option>
-                <option value="CT">CT</option>
-                <option value="pH">pH</option>
-                <option value="pCO2">pCO2</option>
-                <option value="NO3">NO3</option>
-                <option value="PO4">PO4</option>
-                <option value="SiOH4">SiOH4</option>
-        </param>
-        <param name="epressure" type="float" value="0.5" label="Default value for input errors pressure (optional) 0.5 dbar" optional="true"/>
-        <param name="etemperature" type="float" value="0.005" label="Default value for input errors temperature (optional) 0.005 °C" optional="true"/>
-        <param name="epsalinity" type="float" value="0.005" label="Default value for input errors salinity (optional) 0.005 psu" optional="true"/>
-        <param name="edissoxygen" type="float" value="1"  label="Default value for input errors dissolved oxygen (optional) 1%" optional="true" help="1 % of dissolved oxygen (This is a rather optimistic default, meant for GO-SHIP quality bottle data. A reasonable default sensor dissolved oxgyen error would be 3 % of doxy (or higher!).)"/>
+        <param name="input_data" type="data" format="csv,txt" label="Input a csv or txt file"/>
+        <conditional name="mapping">
+            <param name="type" type="select" label="Do you have your own mapping to make ?" help="The mapping is needed for ODV collection extracted from the ODV software.">      
+                <option value="no">No, the mapping is already correct in my data</option>
+                <option value="yes">Yes, I have to make a mapping</option>
+            </param>
+            <when value="no">
+            </when>
+            <when value="yes">
+                <param name="mapping_pres" type="text" label="Column name of the pressure"/>
+                <param name="mapping_temp" type="text" label="Column name of the in-situ temperature"/>
+                <param name="mapping_psal" type="text" label="Column name of the salinity"/>
+                <param name="mapping_doxy" type="text" label="Column name of the dissolved oxygen"/>
+                <param name="mapping_epres" type="text" label="Column name of the default value for input errors pressure (optional)" optional="true"/>
+                <param name="mapping_etemp" type="text" label="Column name of the default value for input errors temperature (optional)" optional="true"/>
+                <param name="mapping_epsal" type="text" label="Column name of the default value for input errors salinity (optional)" optional="true"/>
+                <param name="mapping_edoxy" type="text" label="Column name of the default value for input errors dissolved oxygen (optional)" optional="true" help="1 % of dissolved oxygen (This is a rather optimistic default, meant for GO-SHIP quality bottle data. A reasonable default sensor dissolved oxgyen error would be 3 % of doxy (or higher!).)"/>
+            </when>
+        </conditional>
     </inputs>
     <outputs>
-        <data name="output" from_work_dir="output.tabular" format="tabular" label="Canyon-B Neural network"/>
+        <data name="output" from_work_dir="input/*_canyonb.*" format="tabular" label="Canyon-B Neural network"/>
     </outputs>
     <tests>
         <test expect_num_outputs="1">
-            <param name="date" value="2023-12-24 13:30"/>
-            <param name="latitude" value="0.0"/>
-            <param name="longitude" value="0.0"/>
-            <param name="pressure" value="0.0"/>
-            <param name="temperature" value="20.0"/>
-            <param name="salinity" value="10.0"/>
-            <param name="dissoxygen" value="0.0"/>
-            <param name="variables" value="CT"/>
-            <param name="epressure" value="0.5"/>
-            <param name="etemperature" value="0.005"/>
-            <param name="epsalinity" value="0.005"/>
-            <param name="edissoxygen" value="1.0"/>
+            <param name="input_data" value="full_odv_collection_galaxy_exemple_simplified.csv"/>
+            <param name="type" value="no"/>
             <output name="output">
                 <assert_contents>
-                    <has_n_columns n="5"/>
+                    <has_n_lines n="274026"/>
+                </assert_contents>
+            </output>
+        </test>
+        <test expect_num_outputs="1">
+            <param name="input_data" value="data_from_GEOTRACES_IDP2021_Seawater_Discrete_Sample_Data_v2.txt"/>
+            <param name="type" value="yes"/>
+            <param name="mapping_pres" value="CTDPRS_T_VALUE_SENSOR [dbar]"/>
+            <param name="mapping_temp" value="CTDTMP_T_VALUE_SENSOR [deg C]"/>
+            <param name="mapping_psal" value="CTDSAL_D_CONC_SENSOR [pss-78]"/>
+            <param name="mapping_doxy" value="CTDOXY_D_CONC_SENSOR [umol/kg]"/>
+            <output name="output">
+                <assert_contents>
+                    <has_n_lines n="806"/>
                 </assert_contents>
             </output>
         </test>
@@ -86,37 +93,56 @@ Robust Estimation of Open Ocean CO2 Variables and Nutrient Concentrations From T
 
 CANYON-B calculation according to Bittig et al. (2018):
 Bayesian neural network mapping of NO3, PO4, SiOH4, AT, CT, pH or pCO2 for any set of water column P, T, S, O2, location data as an alternative to (spatial) climatological interpolation. Based on GLODAPv2/GO-SHIP bottle data
+This tool runs canyon B on multi profiles !
 
 **Input description**
 
-- date  - date (UTC) as string ("yyyy-mm-dd HH:MM")
-- lat   - latitude / °N  [-90 90]
-- lon   - longitude / °E [-180 180] or [0 360]
-- pres  - pressure / dbar
-- temp  - in-situ temperature / °C
-- psal  - salinity
-- doxy  - dissolved oxygen / umol kg-1 (!)
+Mandatory a txt or csv file to be processed
+   .csv built by the user with :
+       separator ";"
+       mandatory column name :
+            date/latitude/longitude/temperature/salinity/oxygen
+       optional column name for error:
+             epre/etemp/epsal/edoxy
 
-- param - character vector of variable names to be predicted ("AT", "CT", "pH", "pCO2",
-        "NO3", "PO4", "SiOH4") (optional; defaults to all variables)
+or
 
-Default values for input errors (optional):
-- epres:   0.5 dbar
-- etemp:   0.005 °C
-- epsal:   0.005 psu
-- edoxy:   1 % of doxy (<- This is a rather optimistic default, meant for GO-SHIP quality bottle data. A reasonable default sensor doxy error would be 3 % of doxy (or higher!).)
+   .txt built by the tools  QCV-ingestor-harmonizer then QCV-odv-tool
+
+
+If you have to make your own mapping which means you have an extracted .txt from the (web)ODV software (from ODV)
+- Mandatory name of the column pressure, temperature, salinity and oxygen
+- Optional name of the column error for pres, temp, sal and oxy
+
+
+*Important* :
+  canyon B reads :
+      latitude [-90 to 90°N]
+      longitude [-180 to 180°E]
+      pressure in dbar
+      temperature in °C
+      salinity in psu
+      oxygen in µmol/kg
+
+
 
 **Output**
 
-- out$(param)     - predicted variable (same size as 'pres' input)
-- out$(param)_ci  - predicted variable uncertainty (same size as 'pres' input)
-- out$(param)_cim - variable measurement uncertainty
-- out$(param)_cin - variable uncertainty for Bayesian neural network mapping
-- out$(param)_cii - variable uncertainty due to input errors
+Input csv or txt enriched with canyonb output including their errors:
+    - NO3 (nitrate)
+    - PO4 (phosphate)
+    - AT (total alkalinity)
+    - CT (total carbon)
+    - pH (ph)
+    - pCO2 (pCO2)
+    - SiOH4 (silicate)
+The output is visible with `ODV <https://earth-system.usegalaxy.eu/root?tool_id=interactive_tool_odv>`
 
-Measurement errors for AT, CT, pH, NO3, PO4, SiOH4 are 6 umol kg-1, 4umol kg-1, 0.005, 2 %, 2 %, 2 %, respectively (Olsen et al. 2016) measurement error for pCO2 is equivalent to pCO2 calculation uncertainty from CO2SYS(AT,CT).
+For more information read https://github.com/HCBScienceProducts/CANYON-B/blob/master/CANYONB.R 
+
     ]]></help>
     <citations>
         <citation type="doi">10.3389/fmars.2018.00328</citation>
+
     </citations>
 </tool>
