@@ -19,31 +19,14 @@
             cp '$input_ref' '/runtime/data-in-ref/${input_ref.element_identifier}' &&
         #end if
 
+        
         #if $config.type == 'yes':
-            ## Define output YAML file
-            touch /runtime/config/config_file.yaml
-
             ## Write YAML content
-            '/runtime/config/config_file.yaml' << echo"
-            default :
-            ## mandatory information
-                file_name_list_raw :
-                    '\$config.file_name_list_raw.element_identifier'    
-            ## optional
-                operator : '\$config.operator'
-            QV :
-                file_name_list_ref : 
-                    '\$config.file_name_list_ref.element_identifier'
-                odv_collection :
-                    name : odv_collection.txt
-                    qc_convention : '\$config.qc_convention'
-                tool_option : 
-                    subsetting : '\$config.subsetting'
-                    plt : '\$config.plt'            
-            " &&
+            cp '${config_file}' '/runtime/config/config_user_odv_tool.yml' &&
         #end if 
 
         /app/launchers/start-app.sh '$mode' &&
+
         #if $mode == 'R_APP_QV':
             cp '/runtime/data-out/odv_collection.txt' $output &&
         #else:
@@ -51,6 +34,21 @@
         #end if
         cp -r '/runtime/data-out/' './'
     ]]></command>
+    <configfiles>
+        <configfile name="config_file">
+            default:
+                file_name_list_raw: '${input_raw.element_identifier}'
+                operator: '${config.operator}' 
+            QV:
+                file_name_list_ref: '${input_ref.element_identifier}' 
+                odv_collection:
+                    name: "odv_collection.txt"
+                    qc_convention: '${config.qc_convention}' 
+                tool_option:
+                    subsetting: '${config.subsetting}' 
+                    plt: '${config.plt}' 
+        </configfile>
+    </configfiles>
     <inputs>
         <param name="input_raw" type="data" format="netcdf" label="Input raw data"/>
         <param name="input_ref" type="data" format="netcdf" optional="true" label="Input reference data"/>
@@ -64,7 +62,7 @@
                 <option value="yes">Yes, I do have my own configuration file</option>
             </param>
             <when value="yes">
-                <param name="operator" type="text" label="Enter operator name"/>
+                <param name="operator" type="text" value="Anonymous" label="Enter operator name"/>
                 <param name="qc_convention" type="select" label="Enter QC convention for the ODV collection output (default: ARGO)">
                     <option value="ARGO">ARGO</option>
                     <option value="ODV">ODV</option>
@@ -92,7 +90,7 @@
     <outputs>
         <data name="output" format="txt" label="ODV tool output"/>
         <collection type="list" name="files" label="ODV tool collection">
-            <discover_datasets pattern="(?P&lt;designation&gt;.+)" directory="./" recurse="true" format="data"/>
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)" directory="./" recurse="true" format="text"/>
         </collection>
     </outputs>
     <tests>
