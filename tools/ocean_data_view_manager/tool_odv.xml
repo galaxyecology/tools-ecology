@@ -90,7 +90,7 @@
     <outputs>
         <data name="output" format="txt" label="ODV tool output"/>
         <collection type="list" name="files" label="ODV tool collection">
-            <discover_datasets pattern="(?P&lt;designation&gt;.+)" directory="./" recurse="true" format="text"/>
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)" directory="./" recurse="true" format="txt"/>
         </collection>
     </outputs>
     <tests>
