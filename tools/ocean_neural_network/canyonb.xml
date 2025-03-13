@@ -60,7 +60,7 @@
     </outputs>
     <tests>
         <test expect_num_outputs="1">
-            <param name="input_data" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/libraries/tool_canyonb_galaxy/-/raw/main/embedded-resources/example-data/full_odv_collection_galaxy_exemple_simplified.csv?ref_type=heads"/>
+            <param name="input_data" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/libraries/tool_canyonb_galaxy/-/blob/c26f464d79cea10e65c73c83b018841699c732e5/embedded-resources/example-data/full_odv_collection_galaxy_exemple_simplified.csv"/>
             <param name="type" value="no"/>
             <output name="output">
                 <assert_contents>
@@ -69,7 +69,7 @@
             </output>
         </test>
         <test expect_num_outputs="1">
-            <param name="input_data" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/libraries/tool_canyonb_galaxy/-/raw/main/embedded-resources/example-data/data_from_GEOTRACES_IDP2021_Seawater_Discrete_Sample_Data_v2.txt?ref_type=heads"/>
+            <param name="input_data" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/libraries/tool_canyonb_galaxy/-/blob/c26f464d79cea10e65c73c83b018841699c732e5/embedded-resources/example-data/data_from_GEOTRACES_IDP2021_Seawater_Discrete_Sample_Data_v2.txt"/>
             <param name="type" value="yes"/>
             <param name="mapping_pres" value="CTDPRS_T_VALUE_SENSOR [dbar]"/>
             <param name="mapping_temp" value="CTDTMP_T_VALUE_SENSOR [deg C]"/>
