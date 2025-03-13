@@ -60,7 +60,7 @@
     </outputs>
     <tests>
         <test expect_num_outputs="1">
-            <param name="input_data" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/libraries/tool_canyonb_galaxy/-/blob/c26f464d79cea10e65c73c83b018841699c732e5/embedded-resources/example-data/full_odv_collection_galaxy_exemple_simplified.csv"/>
+            <param name="input_data" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/libraries/tool_canyonb_galaxy/-/raw/c26f464d79cea10e65c73c83b018841699c732e5/embedded-resources/example-data/full_odv_collection_galaxy_exemple_simplified.csv"/>
             <param name="type" value="no"/>
             <output name="output">
                 <assert_contents>
