@@ -59,9 +59,9 @@
             <option value="DEMO">Valide with ODV demo that performes the demo</option>
         </param>
         <conditional name="config">
-            <param name="type" type="select" label="Do you want to set advanced options?">   
-                <option value="no">No, I don't want to, please use default configuration</option>
-                <option value="yes">Yes, I want to tweak a few parameters</option>
+            <param name="type" type="select" label="Select if you want to write your own configuration file or not.">   
+                <option value="no">No, I don't want to, I'll use the default one</option>
+                <option value="yes">Yes, I to write my own configuration file</option>
             </param>
             <when value="yes">
                 <param name="operator" type="text" value="Anonymous" label="Enter operator name"/>
@@ -97,8 +97,8 @@
     </outputs>
     <tests>
         <test expect_num_outputs="2">
-            <param name="input_raw" value="data_raw.nc"/>
-            <param name="input_ref" value="data_ref.nc"/>
+            <param name="input_raw" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-odv-tool/-/blob/7b3557c89438b7347c601d6959af354103b167a1/galaxy_tool/test-data/data_raw.nc"/>
+            <param name="input_ref" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-odv-tool/-/blob/7b3557c89438b7347c601d6959af354103b167a1/galaxy_tool/test-data/data_ref.nc"/>
             <param name="mode" value="R_APP_QV"/>
             <param name="type" value="no"/>
             <output name="output">
@@ -109,7 +109,7 @@
             <output_collection name="files" type="list" count="4"/>
         </test>
         <test expect_num_outputs="2">
-            <param name="input_raw" value="data_raw.nc"/>
+            <param name="input_raw" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-odv-tool/-/blob/7b3557c89438b7347c601d6959af354103b167a1/galaxy_tool/test-data/data_raw.nc"/>
             <param name="mode" value="R_APP_QV"/>
             <param name="type" value="yes"/>
             <param name="operator" value="anonymous"/>
@@ -124,7 +124,7 @@
             <output_collection name="files" type="list" count="4"/>
         </test>
         <test expect_num_outputs="2">
-            <param name="input_raw" value="data_raw.nc"/>
+            <param name="input_raw" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-odv-tool/-/raw/dev_virginie/galaxy_tool/test-data/data_raw.nc?ref_type=heads"/>
             <param name="mode" value="DEMO"/>
             <param name="type" value="no"/>
             <output name="output">
