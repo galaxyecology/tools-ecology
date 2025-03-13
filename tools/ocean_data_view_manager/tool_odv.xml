@@ -59,9 +59,9 @@
             <option value="DEMO">Valide with ODV demo that performes the demo</option>
         </param>
         <conditional name="config">
-            <param name="type" type="select" label="Select if you want to write your own configuration file or not.">   
-                <option value="no">No, I don't want to, I'll use the default one</option>
-                <option value="yes">Yes, I to write my own configuration file</option>
+            <param name="type" type="select" label="Do you want to set advanced options?">   
+                <option value="no">No, I don't want to, please use default configuration</option>
+                <option value="yes">Yes, I want to tweak a few parameters</option>
             </param>
             <when value="yes">
                 <param name="operator" type="text" value="Anonymous" label="Enter operator name"/>
