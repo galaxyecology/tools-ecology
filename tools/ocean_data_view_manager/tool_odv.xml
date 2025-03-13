@@ -36,6 +36,7 @@
     ]]></command>
     <configfiles>
         <configfile name="config_file">
+    #if $config.type == 'yes':
             default:
                 file_name_list_raw: '${input_raw.element_identifier}'
                 operator: '${config.operator}' 
@@ -47,6 +48,7 @@
                 tool_option:
                     subsetting: '${config.subsetting}' 
                     plt: '${config.plt}' 
+    #end if 
         </configfile>
     </configfiles>
     <inputs>
@@ -57,9 +59,9 @@
             <option value="DEMO">Valide with ODV demo that performes the demo</option>
         </param>
         <conditional name="config">
-            <param name="type" type="select" label="Select if you are have your own configuration file or not.">   
-                <option value="no">No, I don't have a configuration file, I use the default one</option>
-                <option value="yes">Yes, I do have my own configuration file</option>
+            <param name="type" type="select" label="Select if you want to write your own configuration file or not.">   
+                <option value="no">No, I don't want to, I'll use the default one</option>
+                <option value="yes">Yes, I to write my own configuration file</option>
             </param>
             <when value="yes">
                 <param name="operator" type="text" value="Anonymous" label="Enter operator name"/>
