@@ -33,7 +33,7 @@
         #else:
             cp '/runtime/data-out/demo_odv_collection.txt' '$output' &&
         #end if
-        cp -r '/runtime/data-out/' './'
+        cp -r '/runtime/data-out/' './outputs/'
     ]]></command>
     <configfiles>
         <configfile name="config_file">
