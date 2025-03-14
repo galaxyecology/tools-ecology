@@ -37,7 +37,7 @@
     <inputs>
         <param name="input_data" type="data" format="csv,txt" label="Input a csv or txt file"/>
         <conditional name="mapping">
-            <param name="type" type="select" label="Do you have your own mapping to make ?" help="The mapping is needed for ODV collection extracted from the ODV software.">      
+            <param name="type" type="select" label="Do you have your own mapping to make?" help="The mapping is needed for ODV collection extracted from the ODV software.">      
                 <option value="no">No, the mapping is already correct in my data</option>
                 <option value="yes">Yes, I have to make a mapping</option>
             </param>
