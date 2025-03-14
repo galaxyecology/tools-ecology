@@ -28,9 +28,9 @@
         /app/launchers/start-app.sh '$mode' &&
 
         #if $mode == 'R_APP_QV':
-            cp '/runtime/data-out/odv_collection.txt' $output &&
+            cp '/runtime/data-out/odv_collection.txt' '$output' &&
         #else:
-            cp '/runtime/data-out/demo_odv_collection.txt' $output &&
+            cp '/runtime/data-out/demo_odv_collection.txt' '$output' &&
         #end if
         cp -r '/runtime/data-out/' './'
     ]]></command>
