@@ -13,6 +13,7 @@
         mkdir -p '/runtime/data-in-raw/' &&
         mkdir -p '/runtime/data-in-ref/' &&
         mkdir -p '/runtime/data-out/' &&
+        mkdir -p ./outputs &&
 
         cp '$input_raw' '/runtime/data-in-raw/${input_raw.element_identifier}' &&
         #if $input_ref:            
