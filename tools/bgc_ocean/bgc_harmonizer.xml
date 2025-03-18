@@ -1,5 +1,5 @@
 <tool id="harmonize_insitu_to_netcdf" name="QCV harmonizer" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="22.01" license="MIT">
-    <description>and aggregator of insitu marine physical and biogeochemical data</description>
+    <description>and aggregator of in-situ marine physical and biogeochemical data</description>
     <macros>
         <token name="@TOOL_VERSION@">2.0</token>
         <token name="@VERSION_SUFFIX@">0</token>
@@ -16,13 +16,13 @@
 
         /app/launchers/start-app.sh GALAXY &&
         
-        cp '/runtime/data-out/*.nc' '$output_net'
+        cp /runtime/data-out/*.nc '$output_net'
     ]]></command>
     <inputs>
-        <param name="infiles" type="data" format="netcdf" multiple="true" label="Input the netcdf data files" help="This files can netcdf raw Argo or Gliders datafiles following CMEMS convention."/>
+        <param name="infiles" type="data" format="netcdf" multiple="true" label="Input the NetCDF data files" help="This files can NetCDF raw Argo or Gliders data files following CMEMS convention."/>
     </inputs>
     <outputs>
-        <data name="output_net" format="netcdf" from_work_dir="/runtime/data/harmonized_data/work/*.nc" label="${tool.name} netcdf data" />
+        <data name="output_net" format="netcdf" label="${tool.name} NetCDF data" />
     </outputs>
     <tests>
         <test expect_num_outputs="1">
@@ -96,25 +96,22 @@ Units :
 
 Arbitrarily,
 
-    dates are written following : "days decimal since 1950-01-01T00:00:00 in julian calendar"
-    longitude is set between : -180° and 180°
-    latitude is set between : -90° and 90°
+    dates are written following: "days decimal since 1950-01-01T00:00:00 in julian calendar"
+    longitude is set between: -180° and 180°
+    latitude is set between: -90° and 90°
 
-WARNING : This application works only platform by platform. For example, it is possible to aggregate and harmonize a whole argo trajectory but one at a time. If two argo trajectories are needed to process, this tool needs to be run 2 times.
+WARNING: This application works only platform by platform. For example, it is possible to aggregate and harmonize a whole argo trajectory but one at a time.
+         If two argo trajectories are needed to process, this tool needs to be run 2 times.
 
 **Input**
 
-files in input folder should be like:
+files in the input folder should be like:
 
 BD6901580_003.nc BD6901580_004.nc BD6901580_005.nc BD6901580_006.nc D6901580_003.nc D6901580_004.nc D6901580_005.nc D6901580_006.nc 6901580_meta.nc
 
-paths of where are the data (volumes) containing configurations, listings and data. Paths are :
-    data-in : where the data to harmonize/aggregate are 
-    data-out : where the output data will stand
-
 **Output**
 
-A concatenated and harmonized netcdf file
+A concatenated and harmonized NetCDF file.
 
     ]]></help>
     <citations>
