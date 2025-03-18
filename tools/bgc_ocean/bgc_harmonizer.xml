@@ -1,7 +1,7 @@
 <tool id="harmonize_insitu_to_netcdf" name="QCV harmonizer" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="22.01" license="MIT">
-    <description>and aggregator of insitu marine physical and biogeochemical data</description>
+    <description>and aggregator of in-situ marine physical and biogeochemical data</description>
     <macros>
-        <token name="@TOOL_VERSION@">1.1</token>
+        <token name="@TOOL_VERSION@">2.0</token>
         <token name="@VERSION_SUFFIX@">0</token>
     </macros>
     <requirements>
@@ -11,25 +11,25 @@
         export HOME=\$PWD &&
 
         #for $i, $infile in enumerate($infiles):
-            cp '$infile' '/runtime/data/original_data/work/ga_la_xy/${infile.element_identifier}' &&
+            cp '$infile' '/runtime/data-in/${infile.element_identifier}' &&
         #end for
 
         /app/launchers/start-app.sh GALAXY &&
         
-        cp /runtime/data/harmonized_data/work/ga_la_xy_harm_agg.nc '$output_net'
+        cp /runtime/data-out/*.nc '$output_net'
     ]]></command>
     <inputs>
-        <param name="infiles" type="data" format="netcdf" multiple="true" label="Input the netcdf data files" help="This files can netcdf raw Argo or Gliders datafiles following CMEMS convention."/>
+        <param name="infiles" type="data" format="netcdf" multiple="true" label="Input the NetCDF data files" help="This files can NetCDF raw Argo or Gliders data files following CMEMS convention."/>
     </inputs>
     <outputs>
-        <data name="output_net" format="netcdf" from_work_dir="/runtime/data/harmonized_data/work/*.nc" label="${tool.name} netcdf data" />
+        <data name="output_net" format="netcdf" label="${tool.name} NetCDF data" />
     </outputs>
     <tests>
         <test expect_num_outputs="1">
             <param name="infiles" value="D6901758_001.nc,D6901758_002.nc,D6901758_003.nc,D6901758_004.nc,D6901758_005.nc"/>
             <output name="output_net">
                 <assert_contents>
-            	    <has_size value="427535" delta="0"/>
+            	    <has_size value="480666" delta="0"/>
             	</assert_contents>
             </output>
         </test>
@@ -58,13 +58,17 @@ Coordinates and variables :
 
 --
 
-    "temperature" : ["TEMP", "TEMPERATURE"],
-    "salinity" : ["PSAL", "PRACTICAL_SALINITY"],
-    "oxygen" : ["DOXY"],
+    "temperature" : ["TEMP", "TEMPERATURE", "t_an"],
+    "salinity" : ["PSAL", "PRACTICAL_SALINITY", "s_an"],
+    "oxygen" : ["DOXY", "o_an"],
+    "oxygenSat" : ["O_an"],
     "pressure" : ["PRES"],
     "chlorophylle" : ["CHLA"],
     "nitrate" : ["NO3", "NITRATE", "n_an"],
     "bbp700" : ["BBP700"],
+    "C1PHASE_DOXY" : ["C1PHASE_DOXY"],
+    "C2PHASE_DOXY" : ["C2PHASE_DOXY"],
+    "TEMP_DOXY" : ["TEMP_DOXY"],
 
 All variables are tagged with a suffix to indicate the state of the data (_raw, _dmadjusted, _rtadjusted)
 
@@ -92,26 +96,22 @@ Units :
 
 Arbitrarily,
 
-    dates are written following : "seconds since 1950-01-01T00:00:00 in julian calendar"
-    longitude is set between : -180° and 180°
-    latitude is set between : -90° and 90°
+    dates are written following: "days decimal since 1950-01-01T00:00:00 in julian calendar"
+    longitude is set between: -180° and 180°
+    latitude is set between: -90° and 90°
 
-WARNING : This application works only platform by platform. For example, it is possible to aggregate and harmonize a whole argo trajectory but one at a time. If two argo trajectories are needed to process, this tool needs to be run 2 times.
+WARNING: This application works only platform by platform. For example, it is possible to aggregate and harmonize a whole argo trajectory but one at a time.
+         If two argo trajectories are needed to process, this tool needs to be run 2 times.
 
 **Input**
 
-a list of files in a txt file named cerb_listing.txt copntaining only filenames without paths. The tool will find the files automatically. A listing example here :
+files in the input folder should be like:
 
 BD6901580_003.nc BD6901580_004.nc BD6901580_005.nc BD6901580_006.nc D6901580_003.nc D6901580_004.nc D6901580_005.nc D6901580_006.nc 6901580_meta.nc
 
-paths of where are the data (volumes) containing configurations, listings and data. Paths are :
-
-    config path : where your textfile containing the list of files names is : it contains the listing cerb_listing.txt
-    data_path : highest folder including all the files to harmonize written in the textfile listing
-
 **Output**
 
-A concatenated and harmonized netcdf file
+A concatenated and harmonized NetCDF file.
 
     ]]></help>
     <citations>
