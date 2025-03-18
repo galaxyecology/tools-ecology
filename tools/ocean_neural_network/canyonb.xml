@@ -16,13 +16,10 @@
     <command detect_errors="exit_code"><![CDATA[
         mkdir input/ &&
         cp '$input_data' 'input/$input_data.element_identifier' &&
+        Rscript '$__tool_directory__/run_tool_canyonb.R'  
+        'input/$input_data.element_identifier'
         
-        #if $mapping.type == 'no':        
-            Rscript '$__tool_directory__/run_tool_canyonb.R'  
-            'input/$input_data.element_identifier'
-        #else:        
-            Rscript '$__tool_directory__/run_tool_canyonb.R'  
-            'input/$input_data.element_identifier'
+        #if $mapping.type != 'no':
             '$mapping.mapping_pres'
             '$mapping.mapping_temp'
             '$mapping.mapping_psal'
@@ -41,8 +38,7 @@
                 <option value="no">No, the mapping is already correct in my data</option>
                 <option value="yes">Yes, I have to make a mapping</option>
             </param>
-            <when value="no">
-            </when>
+            <when value="no"/>
             <when value="yes">
                 <param name="mapping_pres" type="text" label="Column name of the pressure"/>
                 <param name="mapping_temp" type="text" label="Column name of the in-situ temperature"/>
@@ -146,6 +142,5 @@ For more information read https://github.com/HCBScienceProducts/CANYON-B/blob/ma
     ]]></help>
     <citations>
         <citation type="doi">10.3389/fmars.2018.00328</citation>
-
     </citations>
 </tool>
