@@ -16,7 +16,7 @@
 
         /app/launchers/start-app.sh GALAXY &&
         
-        cp /runtime/data-out/*.nc '$output_net'
+        cp '/runtime/data-out/*.nc' '$output_net'
     ]]></command>
     <inputs>
         <param name="infiles" type="data" format="netcdf" multiple="true" label="Input the netcdf data files" help="This files can netcdf raw Argo or Gliders datafiles following CMEMS convention."/>
