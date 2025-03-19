@@ -2,15 +2,15 @@
     <description>retrieve marine data</description>
     <macros>
         <token name="@TOOL_VERSION@">1.3.3</token>
-        <token name="@VERSION_SUFFIX@">0</token>
+        <token name="@VERSION_SUFFIX@">1</token>
     </macros>
     <requirements>
         <requirement type="package" version="@TOOL_VERSION@">copernicusmarine</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
     #import re
-        #set $cmems_username = $__user__.extra_preferences.get('cmems_username', "")
-        #set $cmems_password = $__user__.extra_preferences.get('cmems_password', "")
+        #set $cmems_username = $__user__.extra_preferences.get('cmems_account|cmems_username', "")
+        #set $cmems_password = $__user__.extra_preferences.get('cmems_account|cmems_password', "")
 
         #if $cmems_username == "" or $cmems_password == ""
             #set $cmems_username = os.getenv('CMEMS_USERNAME', '')
@@ -77,6 +77,7 @@ Copernicus Marine Data Store
 ============================
 
 ** Context **
+        
 This tool is a wrapper to retrieve data from the Copernicus Marine Environment Monitoring Service (CMEMS).
 
 - It allows to retrieve data from the Copernicus Marine Service.
@@ -95,9 +96,11 @@ This tool is a wrapper to retrieve data from the Copernicus Marine Environment M
 For more information on the Command-Line Interface (CLI) go on `Copernicus Marine Toolbox CLI - Subset <https://help.marine.copernicus.eu/en/articles/7972861-copernicus-marine-toolbox-cli-subset>`
 
 ** Input **
+        
 Command line from the Copernicus marine services copy paste as a text.
 
 ** Output **
+        
 A netcdf file containing the the data chose by the user from the Copernicus Marine Data Store.
 
     ]]></help>
