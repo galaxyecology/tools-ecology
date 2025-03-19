@@ -1,10 +1,10 @@
 categories:
-    - Ecology
+  - Ecology
 owner: ecology
 remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/ocean
 homepage_url: https://github.com/Marie59/FE-ft-ESG/tree/main/ocean
 long_description: |
-  Access, process, visualise oceanographic data for the Earth System
+  Access, process, and visualise oceanographic data for the Earth System
 type: unrestricted
 auto_tool_repositories:
   name_template: "{{ tool_id }}"
