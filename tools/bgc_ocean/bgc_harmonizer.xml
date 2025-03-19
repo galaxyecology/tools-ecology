@@ -15,7 +15,6 @@
         #end for
 
         /app/launchers/start-app.sh GALAXY &&
-        
         cp /runtime/data-out/*.nc '$output_net'
     ]]></command>
     <inputs>
