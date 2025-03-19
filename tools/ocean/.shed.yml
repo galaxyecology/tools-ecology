@@ -9,7 +9,3 @@ type: unrestricted
 auto_tool_repositories:
   name_template: "{{ tool_id }}"
   description_template: "Wrapper for ocean data tool: {{ tool_name }}."
-suite:
-  name: "ocean_suite"
-  description: "A suite of tools for the ocean compartment of the Earth System"
-  type: unrestricted
