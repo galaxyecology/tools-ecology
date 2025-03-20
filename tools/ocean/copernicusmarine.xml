@@ -8,10 +8,13 @@
         <requirement type="package" version="@TOOL_VERSION@">copernicusmarine</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
+        echo 'aaaaa' &&
+        echo \$CMEMS_USERNAME &&
+        echo 'bbbb' &&
+        cat  $cmems_credentials &&
         bash '$cmems_credentials' &&
         
         echo -e '$input_text' > config_file_with_my_command &&
-        cat  $cmems_credentials &&
         python '$__tool_directory__/check.py' 'config_file_with_my_command'
     ]]></command>
     <configfiles>
@@ -20,6 +23,7 @@
 #set $cmems_username = $__user__.extra_preferences.get('cmems_username', "")
 #set $cmems_password = $__user__.extra_preferences.get('cmems_password', "")
 #if $cmems_username == "" or $cmems_password == ""
+    echo "Using global ENVs"
     #set $cmems_username = os.getenv('CMEMS_USERNAME', '')
     #set $cmems_password = os.getenv('CMEMS_PASSWORD', '')
 #end if
