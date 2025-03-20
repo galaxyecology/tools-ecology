@@ -11,7 +11,7 @@
         bash '$cmems_credentials' &&
         
         echo -e '$input_text' > config_file_with_my_command &&
-        cat config_file_with_my_command
+        cat config_file_with_my_command &&
         python '$__tool_directory__/check.py' 'config_file_with_my_command'
     ]]></command>
     <configfiles>
