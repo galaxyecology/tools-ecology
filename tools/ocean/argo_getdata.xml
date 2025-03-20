@@ -265,16 +265,20 @@
     <tests>
         <test expect_num_outputs="1">
             <param name="user" value="standard"/>
-            <param name="data_selection" value="space_time"/>
-            <param name="cardinal_1" value="-75.0"/>            
-            <param name="cardinal_2" value="-45.0"/>
-            <param name="cardinal_3" value="20.0"/>            
-            <param name="cardinal_4" value="30.0"/>
-            <param name="pressure_1" value="0.0"/>            
-            <param name="pressure_2" value="10.0"/>
-            <param name="date_1" value="2011-01"/>            
-            <param name="date_2" value="2011-06"/>
-            <param name="data_dataset" value="phy"/>
+            <conditional name="selection">
+                <param name="data_selection" value="space_time"/>
+                <param name="cardinal_1" value="-75.0"/>            
+                <param name="cardinal_2" value="-45.0"/>
+                <param name="cardinal_3" value="20.0"/>            
+                <param name="cardinal_4" value="30.0"/>
+                <param name="pressure_1" value="0.0"/>            
+                <param name="pressure_2" value="10.0"/>
+                <param name="date_1" value="2011-01"/>            
+                <param name="date_2" value="2011-06"/>
+            </conditional>
+            <conditional name="dataset">
+                <param name="data_dataset" value="phy"/>
+            </conditional>
             <output name="output_argo">
                 <assert_contents>
                     <has_text text="LATITUDE LONGITUDE TIME"/>
@@ -283,9 +287,13 @@
         </test>
         <test expect_num_outputs="1">
             <param name="user" value="standard"/>
-            <param name="data_selection" value="floats"/>
-            <param name="wmo" value="6902746"/>
-            <param name="data_dataset" value="phy"/>
+            <conditional name="selection">
+                <param name="data_selection" value="floats"/>
+                <param name="wmo" value="6902746"/>
+            </conditional>
+            <conditional name="dataset">
+                <param name="data_dataset" value="phy"/>
+            </conditional>
             <output name="output_argo">
                 <assert_contents>
                     <has_text text="DIMENSION_SCALE"/>
@@ -294,10 +302,14 @@
         </test>
         <test expect_num_outputs="1">
             <param name="user" value="standard"/>
-            <param name="data_selection" value="profiles"/>
-            <param name="wmo" value="6902755"/>
-            <param name="profile" value="12"/>
-            <param name="data_dataset" value="phy"/>
+            <conditional name="selection">
+                <param name="data_selection" value="profiles"/>
+                <param name="wmo" value="6902755"/>
+                <param name="profile" value="12"/>
+            </conditional>
+            <conditional name="dataset">
+                <param name="data_dataset" value="phy"/>
+            </conditional>
             <output name="output_argo">
                 <assert_contents>
                     <has_text text="Direction of the station profiles"/>
@@ -306,10 +318,14 @@
         </test>
         <test expect_num_outputs="1">
             <param name="user" value="expert"/>
-            <param name="data_selection" value="profiles"/>
-            <param name="wmo" value="6902755"/>
-            <param name="profile" value="12"/>
-            <param name="data_dataset" value="phy"/>
+            <conditional name="selection">
+                <param name="data_selection" value="profiles"/>
+                <param name="wmo" value="6902755"/>
+                <param name="profile" value="12"/>
+            </conditional>
+            <conditional name="dataset">
+                <param name="data_dataset" value="phy"/>
+            </conditional>
             <output name="output_argo">
                 <assert_contents>
                     <has_text text="Delayed mode or real time data"/>
@@ -318,10 +334,14 @@
         </test>
         <test expect_num_outputs="1">
             <param name="user" value="expert"/>
-            <param name="data_selection" value="floats"/>
-            <param name="wmo" value="6904241"/>
-            <param name="data_dataset" value="bgc"/>
-            <param name="params" value="DOXY,BBP700"/>
+            <conditional name="selection">
+                <param name="data_selection" value="floats"/>
+                <param name="wmo" value="6904241"/>
+            </conditional>
+            <conditional name="dataset">
+                <param name="data_dataset" value="bgc"/>
+                <param name="params" value="DOXY,BBP700"/>
+            </conditional>
             <output name="output_argo">
                 <assert_contents>
                     <has_text text="_NCProperties"/>
