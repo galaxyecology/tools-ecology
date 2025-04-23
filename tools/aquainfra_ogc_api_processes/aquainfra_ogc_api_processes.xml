@@ -138,7 +138,7 @@
                 <param name="end_date" label="End Date" optional="true" help="End date of the simulation in the format yyyymmdd. Defaults to: 20201231. Latest possible date for the default input project: 20221231." type="integer"/>
             </when>
             <when value="tordera-gloria-connection">
-                <param name="swat_output_file" label="SWAT+ Variable Outputs Database" optional="false" help="SQLite database (thread_1.sqlite) storing the simulated output values based on the defined time range and time step (daily, monthly, yearly, or annual average)." type="data"/>
+                <param name="swat_output_file" label="SWAT+ Variable Outputs Database" optional="false" help="SQLite database (thread_1.sqlite) storing the simulated output values based on the defined time range and time step (daily, monthly, yearly, or annual average)." type="data" format="txt"/>
             </when>
         </conditional>
     </inputs>
