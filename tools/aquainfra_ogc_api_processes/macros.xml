@@ -23,32 +23,32 @@
             <test>
                 <conditional name="conditional_process">
                     <param name="select_process" value="points-att-polygon"/>
+                    <param name="input_data" value="points_att_polygon_test_input_2.txt"/>
+                    <param name="regions" value="points_att_polygon_test_input_1.txt"/>
+                    <param name="colname_long" value="longitude"/>
+                    <param name="colname_lat" value="latitude"/>
+                    <output name="output_data">
+                        <assert_contents>
+                            <has_n_lines n="1"/>
+                        </assert_contents>
+                    </output>
                 </conditional>
-                <param name="input_data" value="points_att_polygon_test_input_2.txt"/>
-                <param name="regions" value="points_att_polygon_test_input_1.txt"/>
-                <param name="colname_long" value="longitude"/>
-                <param name="colname_lat" value="latitude"/>
-                <output name="output_data">
-                    <assert_contents>
-                        <has_n_lines n="1"/>
-                    </assert_contents>
-                </output>
             </test>
             <test>
                 <conditional name="conditional_process">
                     <param name="select_process" value="map-shapefile-points"/>
+                    <param name="regions" value="points_att_polygon_test_input_1.txt"/>
+                    <param name="input_data" value="points_att_polygon_test_input_3.txt"/>
+                    <param name="colname_long" value="longitude"/>
+                    <param name="colname_lat" value="latitude"/>
+                    <param name="colname_value_name" value="transparency_m"/>
+                    <param name="colname_region_id" value="HELCOM_ID"/>
+                    <output name="output_data">
+                        <assert_contents>
+                            <has_n_lines n="1"/>
+                        </assert_contents>
+                    </output>
                 </conditional>
-                <param name="regions" value="points_att_polygon_test_input_1.txt"/>
-                <param name="input_data" value="points_att_polygon_test_input_3.txt"/>
-                <param name="colname_long" value="longitude"/>
-                <param name="colname_lat" value="latitude"/>
-                <param name="colname_value_name" value="transparency_m"/>
-                <param name="colname_region_id" value="HELCOM_ID"/>
-                <output name="output_data">
-                    <assert_contents>
-                        <has_n_lines n="1"/>
-                    </assert_contents>
-                </output>
             </test>
         </tests>    
     </xml>
