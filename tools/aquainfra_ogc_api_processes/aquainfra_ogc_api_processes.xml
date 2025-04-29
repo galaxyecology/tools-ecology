@@ -1,4 +1,4 @@
-<tool id="aquainfra_ogc_api_processes" name="AquaINFRA OGC API Processes" version="0.4.0" profile="22.05">
+<tool id="aquainfra_ogc_api_processes" name="AquaINFRA OGC API Processes" version="0.5.0" profile="22.05">
     <description/>
     <macros>
         <import>macros.xml</import>
@@ -28,6 +28,7 @@
                 <option value="owt-classification">owt-classification: OWT Classification</option>
                 <option value="tordera-gloria">tordera-gloria: SWAT+, Soil and Water Assessment Tool</option>
                 <option value="tordera-gloria-connection">tordera-gloria-connection: SWAT+ output to MITgcm input connection tool</option>
+                <option value="riverload">riverload: Compute River Load</option>
             </param>
             <when value="points-att-polygon">
                 <param name="input_data" label="Table to be merged with study region" optional="false" help="URL to the input table containing the in-situ data points with coordinates. Can be provided as Excel file or CSV file (comma-separated text file). The coordinates have to be in WGS84 coordinate system. (URL must be stored in a .txt file)" type="data" format="txt"/>
@@ -138,7 +139,11 @@
                 <param name="end_date" label="End Date" optional="true" help="End date of the simulation in the format yyyymmdd. Defaults to: 20201231. Latest possible date for the default input project: 20221231." type="integer"/>
             </when>
             <when value="tordera-gloria-connection">
-                <param name="swat_output_file" label="SWAT+ Variable Outputs Database" optional="false" help="SQLite database (thread_1.sqlite) storing the simulated output values based on the defined time range and time step (daily, monthly, yearly, or annual average)." type="data" format="txt"/>
+                <param name="swat_output_file" label="SWAT+ Variable Outputs Database" optional="false" help="SQLite database (thread_1.sqlite) storing the simulated output values based on the defined time range and time step (daily, monthly, yearly, or annual average)." type="data"/>
+            </when>
+            <when value="riverload">
+                <param name="input_toc_urls" label="Input Total Organic Carbon (TOC)" optional="false" help="URL to in situ Total Organic Carbon (TOC) data (date, value). If the data is divided into parts, please provide several URLs separated by a comma. All URLs need to start with http(s). (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_discharge_urls" label="Input discharge" optional="false" help="URL to the daily discharge data (date, value). If the data is divided into parts, please provide several URLs separated by a comma. All URLs need to start with http(s). (URL must be stored in a .txt file)" type="data" format="txt"/>
             </when>
         </conditional>
     </inputs>
