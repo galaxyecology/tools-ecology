@@ -8,13 +8,6 @@
         <requirement type="package" version="@TOOL_VERSION@">copernicusmarine</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
-        bash '$cmems_credentials' &&
-        
-        echo -e '$input_text' > config_file_with_my_command &&
-        python '$__tool_directory__/check.py' 'config_file_with_my_command'
-    ]]></command>
-    <configfiles>
-        <configfile name="cmems_credentials">
 #import os 
 #set $cmems_username = $__user__.extra_preferences.get('cmems_username', "")
 #set $cmems_password = $__user__.extra_preferences.get('cmems_password', "")
@@ -22,9 +15,13 @@
     #set $cmems_username = os.getenv('CMEMS_USERNAME', '')
     #set $cmems_password = os.getenv('CMEMS_PASSWORD', '')
 #end if
-export cmems_username='$cmems_username'
-export cmems_password='$cmems_password'
-        </configfile>
+export cmems_username='$cmems_username' &&
+export cmems_password='$cmems_password' &&
+        
+        echo '$input_text --username $cmems_username --password $cmems_password' > config_file_with_my_command &&
+        python '$__tool_directory__/check.py' 'config_file_with_my_command'
+    ]]></command>
+    <configfiles>
     </configfiles>
     <inputs>
         <param name="input_text" label="Paste API Request" type="text" area="true">
