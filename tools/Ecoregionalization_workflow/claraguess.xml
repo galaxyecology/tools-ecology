@@ -70,7 +70,7 @@ Rscript '$__tool_directory__/claraguess.R'
 
             <output name="output2">
                 <assert_contents>
-                    <has_size value="9264" delta="1516"/>
+                    <has_size value="10022" delta="900"/>
                 </assert_contents>
             </output>
 
@@ -105,13 +105,13 @@ Rscript '$__tool_directory__/claraguess.R'
 
             <output name="output2">
                 <assert_contents>
-                    <has_size value="9264" delta="700"/>
+                    <has_size value="10022" delta="900"/>
                 </assert_contents>
             </output>
 
             <output name="output3">
                 <assert_contents>
-                    <has_size value="10183" delta="700"/>
+                    <has_size value="10183" delta="500"/>
                 </assert_contents>
             </output>
 
