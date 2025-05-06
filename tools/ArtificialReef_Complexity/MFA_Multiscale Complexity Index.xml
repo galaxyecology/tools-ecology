@@ -1,0 +1,38 @@
+<tool id="mfa" name="MFA" version="0.1.0+galaxy0">
+	<description>Multiscale Complexity Index (MCI)</description>
+    <requirements>
+		<requirement type="package" version="4.3.1">r-base</requirement>
+	   <requirement type="package" version="2.8">r-factominer</requirement>
+	   <requirement type="package" version="1.0.7">r-factoextra</requirement>
+	   <requirement type="package" version="4.2.4">r-ggthemes</requirement>
+	   <requirement type="package" version="3.4.2">r-ggplot2</requirement>
+	   <requirement type="package" version="2.3">r-gridextra</requirement>
+	   <requirement type="package" version="2.6_4">r-vegan</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+		ln -s '$complexity_indexes' 'new_complexity_indexes.csv' &&
+		ln -s '$fractal_dimension' 'new_fractal_dimension.csv' &&
+       Rscript
+         '$__tool_directory__/MFA_Multiscale Complexity Index.R'
+		 '$__tool_directory__/df_complexity_indexes.csv'
+]]></command>
+    <inputs>
+		<param name="complexity_indexes" type="data" format="csv" label="Upload new_complexity_indexes.csv"/>
+		<param name="fractal_dimension" type="data" format="csv" label="Upload new_fractal_dimension.csv"/>
+    </inputs>
+    <outputs>
+		<data name="Plots" from_work_dir="Rplots.pdf" format="pdf" label="Plots"/>
+    </outputs>
+	<tests>
+		<test expect_num_outputs="1">
+			<param name="complexity_indexes" value="new_complexity_indexes.csv"/>
+			<param name="fractal_dimension" value="new_fractal_dimension.csv"/>
+			<output name="Plots" file="Plots.pdf" ftype="pdf" />
+        </test>
+    </tests>
+<help><![CDATA[
+
+to do
+
+]]></help>
+</tool>
