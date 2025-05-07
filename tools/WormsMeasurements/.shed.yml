@@ -1,9 +1,9 @@
 name: WormsMeasurements
-owner: Jean Le Cras 
+owner: ecology
 description: This tool uses WoRMS (World Register of Marine Species) to add measurement values to a dataset based on scientific names.
 homepage_url: https://github.com/jeanlecras/tools-ecology
 long_description: |
-  This tool requests WoRMS (World Register of Marine Species) to get data about a specific by accessing the entry returned by an its scientific name, it looks for the measurementType(s) requested by the user and select the associated measurement value to add it to a dataset.
+  This tool requests WoRMS (World Register of Marine Species) to get data about a specific species by accessing the entry returned by an its scientific name, it looks for the measurementType(s) requested by the user and select the associated measurement value to add it to a dataset.
 remote_repository_url: https://github.com/jeanlecras/tools-ecology/tree/master/tools/WormsMeasurements
 type: unrestricted
 categories:
