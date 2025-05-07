@@ -63,7 +63,7 @@ Rscript '$__tool_directory__/wormsmeasurements.R'
 **What it does ?**
 ==================
 
-This tool uses WoRMS (World Register of Marine Species) to add measurement values to a dataset based on scientific names.
+This tool requests WoRMS (World Register of Marine Species) to get data about a specific by accessing the entry returned by an its scientific name, it looks for the measurementType(s) requested by the user and select the associated measurement value to add it to a dataset.
 
 ===================         
 **How to use it ?**
