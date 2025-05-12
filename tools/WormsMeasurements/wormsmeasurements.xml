@@ -1,5 +1,5 @@
 <tool id="WormsMeasurements" name="Enrich dataset with WoRMS" version="0.1.1" profile="23.2">
-    <description>Use scientific names to enrich dataset with measurement type data from WoRMS (World Register of Marine Species)</description>
+    <description>Enrich dataset with measurement type data from WoRMS</description>
 
     <requirements>
         <requirement type="package" version="4.3.3">r-base</requirement>
