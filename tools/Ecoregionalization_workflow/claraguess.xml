@@ -1,0 +1,189 @@
+<tool id="ClaraGuess" name="Clara Estimate and Clustering" version="0.1.1" profile="23.2">
+    <description>Environmental clustering using CLARA and BRT predictions</description>
+
+    <requirements>
+        <requirement type="package" version="4.3.3">r-base</requirement>
+        <requirement type="package" version="2.1.8.1">r-cluster</requirement>
+        <requirement type="package" version="1.1.4">r-dplyr</requirement>
+        <requirement type="package" version="2.0.0">r-tidyverse</requirement>
+    </requirements>
+
+    <command detect_errors="exit_code"><![CDATA[
+Rscript '$__tool_directory__/claraguess.R'
+    '$enviro'
+    '$preds'
+    '$taxas'
+    '$type'
+    '$k'
+    '$metric'
+    '$samples'
+    '$output1'
+    '$output2'
+    '$output3'
+    '$output4'
+    ]]></command>
+
+    <inputs>
+        <param name="enviro" type="data" format="tabular" label="Environmental data (tabular)"/>
+        <param name="preds" type="data" format="tabular" multiple="true" label="BRT prediction files (collection of tabular)"/>
+        <param name="taxas" type="data" format="txt" label="List of taxa (from TaxaSeeker)"/>
+
+        <param name="type" type="select" label="k is ...">
+            <option value="fixed">the number of clusters (fixed)</option>
+            <option value="auto">the maximum number of clusters (automatic)</option>
+        </param>
+
+        <param name="k" type="integer" optional="true" label="Value of k"/>
+
+        <param name="metric" type="select" label=" dissimilarity metric">
+            <option value="manhattan">Manhattan</option>
+            <option value="jaccard">Jaccard</option>
+            <option value="euclidean" selected="true">Euclidean</option>
+        </param>
+
+        <param name="samples" type="integer" value="1000" label="Number of samples for CLARA"/>
+    </inputs>
+
+    <outputs>
+        <data name="output1" from_work_dir="data_cluster.tabular" format="tabular" label="Cluster assignments (lat, long, cluster)"/>
+        <data name="output2" from_work_dir="silhouette_plot.png" format="png" label="Silhouette Index Plot"/>
+        <data name="output3" from_work_dir="sih_scores.png" format="png" label="Silhouette Plot"/>
+        <data name="output4" from_work_dir="clustered_taxas_env.tabular" format="tabular" label="Environment + Clustered Data"/>
+    </outputs>
+
+    <tests>
+        <test>
+            <param name="enviro" value="enviro.tabular"/>
+            <param name="preds" value="preds.tabular"/>
+            <param name="taxas" value="taxas.tabular"/>
+            <param name="type" value="fixed"/>
+            <param name="k" value="3"/>
+            <param name="metric" value="manhattan"/>
+            <param name="samples" value="10"/>
+
+            <output name="output1">
+                <assert_contents>
+                    <has_line_matching expression="^lat\tlong\tcluster$"/>
+                    <has_n_columns n="3"/>
+                </assert_contents>
+            </output>
+
+            <output name="output2">
+                <assert_contents>
+                    <has_size value="8400" delta="600"/>
+                </assert_contents>
+            </output>
+
+            <output name="output3">
+                <assert_contents>
+                    <has_size value="0"/>
+                </assert_contents>
+            </output>
+
+            <output name="output4">
+                <assert_contents>
+                    <has_line_matching expression="^lat\tlong\tcluster.*$"/>
+                </assert_contents>
+            </output>
+        </test>
+
+        <test>
+            <param name="enviro" value="enviro.tabular"/>
+            <param name="preds" value="preds.tabular"/>
+            <param name="taxas" value="taxas.tabular"/>
+            <param name="type" value="auto"/>
+            <param name="k" value="3"/>
+            <param name="metric" value="manhattan"/>
+            <param name="samples" value="10"/>
+
+            <output name="output1">
+                <assert_contents>
+                    <has_line_matching expression="^lat\tlong\tcluster$"/>
+                    <has_n_columns n="3"/>
+                </assert_contents>
+            </output>
+
+            <output name="output2">
+                <assert_contents>
+                    <has_size value="8400" delta="600"/>
+                </assert_contents>
+            </output>
+
+            <output name="output3">
+                <assert_contents>
+                    <has_size value="6918" delta="600"/>
+                </assert_contents>
+            </output>
+
+            <output name="output4">
+                <assert_contents>
+                    <has_line_matching expression="^lat\tlong\tcluster.*$"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+
+    <help><![CDATA[
+==================    
+**What it does ?**
+==================
+
+This tool applies the CLARA clustering method to identify environmental clusters based on:
+- BRT model predictions (a collection of tabular files),
+- environmental variables (tabular),
+- a list of taxa (tabular, from TaxaSeeker).
+The tool enables the determination of the optimal number of clusters for partition-based clustering (if automatic mode is selected), along with generating files used in the subsequent ecoregionalization workflow.
+
+===================         
+**How to use it ?**
+===================
+
+## Parameters:
+
+- **Clustering type**: Choose between a fixed number of clusters ("Number of clusters") or an automatic mode using a maximum number ("Max number of clusters").
+- **k**: The number of clusters (used based on the selected mode).
+- **Distance metric**: dissimilarity metric / distance used in clustering (Manhattan, Jaccard, or Euclidean).
+- **Samples**: Number of samples drawn for CLARA clustering.
+
+## Outputs:
+
+- A tabular file containing cluster assignments for each geographic point (columns: lat, long, cluster).
+- A collection of:
+  - A silhouette plot (PNG),
+  - A silhouette index plot (PNG),
+  - A tabular file with original environmental variables and predicted cluster number.
+
+This tool is useful for ecological modeling and spatial analysis, particularly in marine or terrestrial biogeography contexts.
+
+**Example of the environemental file :**
+
++------+------+---------+------+--------------+-----+
+| long | lat  |  Carbo  | Grav |  Maxbearing  | ... |
++------+------+---------+------+--------------+-----+
+|139.22|-65.57|   0.88  |28.59 |     3.67     | ... |
++------+------+---------+------+--------------+-----+
+|139.22|-65.57|   0.88  |28.61 |     3.64     | ... |
++------+------+---------+------+--------------+-----+
+| ...  | ...  |   ...   | ...  |     ...      | ... |
++------+------+---------+------+--------------+-----+
+
+**Example of the Brt prediction file :**
+
++-----------+----------+-----------------------+-------------+
+|    lat    |   long   |   Prediction.index    |     spe     |
++-----------+----------+-----------------------+-------------+
+|  -65.57   |  139.22  |   0.122438487221909   |  Acarnidae  |
++-----------+----------+-----------------------+-------------+
+|  -65.57   |  139.32  |   0.119154535627801   |  Acarnidae  |
++-----------+----------+-----------------------+-------------+
+|   ...     |   ...    |         ...           |     ...     |
++-----------+----------+-----------------------+-------------+
+
+]]></help>
+
+    <citations>
+        <citation type="doi">10.32614/CRAN.package.dplyr</citation>
+        <citation type="doi">10.32614/CRAN.package.cluster</citation>
+        <citation type="doi">10.32614/CRAN.package.tidyverse</citation>
+    </citations>
+</tool>
