@@ -1,4 +1,4 @@
-<tool id="ClaraGuess" name="Clara Estimate and Clustering" version="0.1.1">
+<tool id="ClaraGuess" name="Clara Estimate and Clustering" version="0.1.1" profile="23.2">
     <description>Environmental clustering using CLARA and BRT predictions</description>
 
     <requirements>
