@@ -156,7 +156,9 @@
                     <option value="Eta">Eta</option>
                     <option value="W">W</option>
                 </param>
-                <param name="plot_time" label="Hour to be plotted" optional="false" value="YYYYMMDD-HH:MM:SS" help="The time of day (hourly resolution) that should be plotted. Please specify it in this specific format: '20220703-12:00:00'. We assume that the hour is in the simulation period." type="text" />
+                <param name="plot_time" label="Hour to be plotted" optional="false" value="" help="The time of day (hourly resolution) that should be plotted. Please specify it in this specific format: '20220703-12:00:00'. We assume that the hour is in the simulation period." type="text">
+                    <validator type="empty_field" message="You must specify the hour to be plotted."/>
+                </param>
                 <param name="plot_depth" label="Depth to be plotted" optional="false" value="0.0" help="The depth at which should be plotted. The plot will be at the closest vertical level to this depth. Please specify a negative value. We assume the depth is in the range of our depths." type="float" />
                 <param name="min_var_for_color" label="Minimum value to be considered for color limit" optional="true" help="This is a parameter controlling the color limits to display. Example (for salinity): 35. Leave empty to let the color limits be chosen automatically." type="float"/>
                 <param name="max_var_for_color" label="Maximum value to be considered for color limit" optional="true" help="This is a parameter controlling the color limits to display. Example (for salinity): 38. Leave empty to let the color limits be chosen automatically." type="float"/>
