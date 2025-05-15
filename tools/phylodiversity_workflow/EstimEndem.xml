@@ -69,7 +69,147 @@
                 <composite_data value="composite_dataset/shapefile.prj"/>
             </param>
             <param name="nb_cluster" value="8"/>
-            <param name="clustering_method" value="UPGMA"/>
+            <param name="clustering_method" value="ward.D"/>
+
+            <output file="shapefile/shapefile_shp.html" name="shapefile">
+                <extra_files type="file" name="output.shp" value="shapefile/output.shp"/>
+                <extra_files type="file" name="output.shx" value="shapefile/output.shx"/>
+                <extra_files type="file" name="output.dbf" value="shapefile/output.dbf" compare="sim_size" delta="50"/>
+                <extra_files type="file" name="output.prj" value="shapefile/output.prj"/>
+            </output>
+        </test>
+
+        <test>
+            <param name="phylogeny" value="tree_file"/>
+            <param name="occupancy" value="matrix_file"/>
+            <param name="coordinates_file_input" value="composite_dataset/shapefile" ftype="shp">
+                <composite_data value="composite_dataset/shapefile.shp"/>
+                <composite_data value="composite_dataset/shapefile.shx"/>
+                <composite_data value="composite_dataset/shapefile.dbf"/>
+                <composite_data value="composite_dataset/shapefile.prj"/>
+            </param>
+            <param name="nb_cluster" value="8"/>
+            <param name="clustering_method" value="ward.D2"/>
+
+            <output file="shapefile/shapefile_shp.html" name="shapefile">
+                <extra_files type="file" name="output.shp" value="shapefile/output.shp"/>
+                <extra_files type="file" name="output.shx" value="shapefile/output.shx"/>
+                <extra_files type="file" name="output.dbf" value="shapefile/output.dbf" compare="sim_size" delta="50"/>
+                <extra_files type="file" name="output.prj" value="shapefile/output.prj"/>
+            </output>
+        </test>
+
+        <test>
+            <param name="phylogeny" value="tree_file"/>
+            <param name="occupancy" value="matrix_file"/>
+            <param name="coordinates_file_input" value="composite_dataset/shapefile" ftype="shp">
+                <composite_data value="composite_dataset/shapefile.shp"/>
+                <composite_data value="composite_dataset/shapefile.shx"/>
+                <composite_data value="composite_dataset/shapefile.dbf"/>
+                <composite_data value="composite_dataset/shapefile.prj"/>
+            </param>
+            <param name="nb_cluster" value="8"/>
+            <param name="clustering_method" value="single"/>
+
+            <output file="shapefile/shapefile_shp.html" name="shapefile">
+                <extra_files type="file" name="output.shp" value="shapefile/output.shp"/>
+                <extra_files type="file" name="output.shx" value="shapefile/output.shx"/>
+                <extra_files type="file" name="output.dbf" value="shapefile/output.dbf" compare="sim_size" delta="50"/>
+                <extra_files type="file" name="output.prj" value="shapefile/output.prj"/>
+            </output>
+        </test>
+
+        <test>
+            <param name="phylogeny" value="tree_file"/>
+            <param name="occupancy" value="matrix_file"/>
+            <param name="coordinates_file_input" value="composite_dataset/shapefile" ftype="shp">
+                <composite_data value="composite_dataset/shapefile.shp"/>
+                <composite_data value="composite_dataset/shapefile.shx"/>
+                <composite_data value="composite_dataset/shapefile.dbf"/>
+                <composite_data value="composite_dataset/shapefile.prj"/>
+            </param>
+            <param name="nb_cluster" value="8"/>
+            <param name="clustering_method" value="complete"/>
+
+            <output file="shapefile/shapefile_shp.html" name="shapefile">
+                <extra_files type="file" name="output.shp" value="shapefile/output.shp"/>
+                <extra_files type="file" name="output.shx" value="shapefile/output.shx"/>
+                <extra_files type="file" name="output.dbf" value="shapefile/output.dbf" compare="sim_size" delta="50"/>
+                <extra_files type="file" name="output.prj" value="shapefile/output.prj"/>
+            </output>
+        </test>
+
+        <test>
+            <param name="phylogeny" value="tree_file"/>
+            <param name="occupancy" value="matrix_file"/>
+            <param name="coordinates_file_input" value="composite_dataset/shapefile" ftype="shp">
+                <composite_data value="composite_dataset/shapefile.shp"/>
+                <composite_data value="composite_dataset/shapefile.shx"/>
+                <composite_data value="composite_dataset/shapefile.dbf"/>
+                <composite_data value="composite_dataset/shapefile.prj"/>
+            </param>
+            <param name="nb_cluster" value="8"/>
+            <param name="clustering_method" value="average"/>
+
+            <output file="shapefile/shapefile_shp.html" name="shapefile">
+                <extra_files type="file" name="output.shp" value="shapefile/output.shp"/>
+                <extra_files type="file" name="output.shx" value="shapefile/output.shx"/>
+                <extra_files type="file" name="output.dbf" value="shapefile/output.dbf" compare="sim_size" delta="50"/>
+                <extra_files type="file" name="output.prj" value="shapefile/output.prj"/>
+            </output>
+        </test>
+
+        <test>
+            <param name="phylogeny" value="tree_file"/>
+            <param name="occupancy" value="matrix_file"/>
+            <param name="coordinates_file_input" value="composite_dataset/shapefile" ftype="shp">
+                <composite_data value="composite_dataset/shapefile.shp"/>
+                <composite_data value="composite_dataset/shapefile.shx"/>
+                <composite_data value="composite_dataset/shapefile.dbf"/>
+                <composite_data value="composite_dataset/shapefile.prj"/>
+            </param>
+            <param name="nb_cluster" value="8"/>
+            <param name="clustering_method" value="mcquitty"/>
+
+            <output file="shapefile/shapefile_shp.html" name="shapefile">
+                <extra_files type="file" name="output.shp" value="shapefile/output.shp"/>
+                <extra_files type="file" name="output.shx" value="shapefile/output.shx"/>
+                <extra_files type="file" name="output.dbf" value="shapefile/output.dbf" compare="sim_size" delta="50"/>
+                <extra_files type="file" name="output.prj" value="shapefile/output.prj"/>
+            </output>
+        </test>
+
+        <test>
+            <param name="phylogeny" value="tree_file"/>
+            <param name="occupancy" value="matrix_file"/>
+            <param name="coordinates_file_input" value="composite_dataset/shapefile" ftype="shp">
+                <composite_data value="composite_dataset/shapefile.shp"/>
+                <composite_data value="composite_dataset/shapefile.shx"/>
+                <composite_data value="composite_dataset/shapefile.dbf"/>
+                <composite_data value="composite_dataset/shapefile.prj"/>
+            </param>
+            <param name="nb_cluster" value="8"/>
+            <param name="clustering_method" value="median"/>
+
+            <output file="shapefile/shapefile_shp.html" name="shapefile">
+                <extra_files type="file" name="output.shp" value="shapefile/output.shp"/>
+                <extra_files type="file" name="output.shx" value="shapefile/output.shx"/>
+                <extra_files type="file" name="output.dbf" value="shapefile/output.dbf" compare="sim_size" delta="50"/>
+                <extra_files type="file" name="output.prj" value="shapefile/output.prj"/>
+            </output>
+        </test>
+
+        <test>
+            <param name="phylogeny" value="tree_file"/>
+            <param name="occupancy" value="matrix_file"/>
+            <param name="coordinates_file_input" value="composite_dataset/shapefile" ftype="shp">
+                <composite_data value="composite_dataset/shapefile.shp"/>
+                <composite_data value="composite_dataset/shapefile.shx"/>
+                <composite_data value="composite_dataset/shapefile.dbf"/>
+                <composite_data value="composite_dataset/shapefile.prj"/>
+            </param>
+            <param name="nb_cluster" value="8"/>
+            <param name="clustering_method" value="centroid"/>
 
             <output file="shapefile/shapefile_shp.html" name="shapefile">
                 <extra_files type="file" name="output.shp" value="shapefile/output.shp"/>

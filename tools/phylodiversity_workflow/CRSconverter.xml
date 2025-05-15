@@ -107,7 +107,7 @@
     </outputs>
 
     <tests>
-        <test>
+        <test expect_num_outputs="5">
             <param name="coordinates_file_input" value="composite_dataset/shapefile" ftype="shp">
                 <composite_data value="composite_dataset/shapefile.shp"/>
                 <composite_data value="composite_dataset/shapefile.shx"/>
@@ -132,7 +132,7 @@
                 <extra_files type="file" name="output.prj" value="shapefile/output.prj"/>
             </output>
         </test>
-        <test>
+        <test expect_num_outputs="1">
             <param name="coordinates_file_input" value="composite_dataset/shapefile" ftype="shp">
                 <composite_data value="composite_dataset/shapefile.shp"/>
                 <composite_data value="composite_dataset/shapefile.shx"/>
@@ -152,7 +152,7 @@
 
             <output file="output.pdf" name="output" ftype="pdf"/>
         </test>
-        <test>
+        <test expect_num_outputs="1">
             <param name="coordinates_file_input" value="composite_dataset/shapefile" ftype="shp">
                 <composite_data value="composite_dataset/shapefile.shp"/>
                 <composite_data value="composite_dataset/shapefile.shx"/>
@@ -172,7 +172,7 @@
 
             <output file="output.png" name="output" ftype="png"/>
         </test>
-        <test>
+        <test expect_num_outputs="1">
             <param name="coordinates_file_input" value="composite_dataset/shapefile" ftype="shp">
                 <composite_data value="composite_dataset/shapefile.shp"/>
                 <composite_data value="composite_dataset/shapefile.shx"/>
@@ -192,7 +192,7 @@
 
             <output file="output.jpeg" name="output" ftype="jpg"/>
         </test>
-        <test>
+        <test expect_num_outputs="1">
             <param name="coordinates_file_input" value="composite_dataset/shapefile" ftype="shp">
                 <composite_data value="composite_dataset/shapefile.shp"/>
                 <composite_data value="composite_dataset/shapefile.shx"/>
@@ -212,7 +212,7 @@
 
             <output file="output.tiff" name="output" ftype="tiff"/>
         </test>
-        <test>
+        <test expect_num_outputs="1">
             <param name="coordinates_file_input" value="composite_dataset/shapefile" ftype="shp">
                 <composite_data value="composite_dataset/shapefile.shp"/>
                 <composite_data value="composite_dataset/shapefile.shx"/>
