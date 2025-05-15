@@ -1,0 +1,58 @@
+<tool id="PhylOccuMatcher" name="PhylOccuMatcher" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="21.05">
+    <description>Tool to match phylogenetic and occupancy data</description>
+    
+    <macros>
+        <token name="@TOOL_VERSION@">1.0</token> 
+        <token name="@VERSION_SUFFIX@">0</token>
+    </macros>
+    
+    <requirements> 
+        <requirement type="package" version="4.3.3">r-base</requirement> 
+        <requirement type="package" version="1.0.8">r-phyloregion</requirement>
+        <requirement type="package" version="1.6.5">r-matrix</requirement>
+        <requirement type="package" version="5.8_1">r-ape</requirement>
+        <requirement type="package" version="1.2.2">bioconductor-sparsearray</requirement>
+    </requirements>
+
+    <command>
+        <![CDATA[
+        Rscript '$__tool_directory__/PhylOccuMatcher.R' 
+            '$phylogeny' 
+            '$occupancy'
+            '$output1' 
+            '$output2'
+        ]]>
+    </command>
+
+    <inputs>
+        <param name="phylogeny" type="data" format="newick" label="Phylogeny file (Newick format)" />
+        <param name="occupancy" type="data" format="tabular" label="Occupancy data (Tabular format)" />
+    </inputs>
+    <outputs>
+        <data name="output1" format="newick" label="Phylogeny with occupancy data" />
+        <data name="output2" format="tabular" label="Matched output data" />
+    </outputs>
+    
+    <tests>
+        <test>
+            <param name="phylogeny" value="tree_file"/>
+            <param name="occupancy" value="actinos_test"/>
+            <output name="output1" file="output1" ftype="newick"/>
+            <output name="output2" file="output2" ftype="tabular"/>
+        </test>
+    </tests>
+
+    <help>
+        This tool matches phylogenetic data with occupancy data using the R script PhylOccuMatcher.R.
+        Ensure that the input files are in the correct formats:
+        - Phylogeny file: Newick format
+        - Occupancy data: Tabular format
+    </help>
+
+    <citations>
+        <citation type="bibtex">@Manual{,
+
+        }        
+        </citation>
+    </citations>
+</tool> 
