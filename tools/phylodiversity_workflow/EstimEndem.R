@@ -21,7 +21,7 @@ save_sf <- function(){
 }
 
 
-if (length(args)<5){stop('Usage : sparseMatrix.csv tree.txt grid.shp')
+if (length(args)<5){stop('Usage : sparseMatrix.csv tree.txt grid.shp nb_clust clust_method')}
 }else{
   # read enter files  
   comm_tree <- read.tree(args[1])

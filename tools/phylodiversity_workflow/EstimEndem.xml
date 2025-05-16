@@ -70,11 +70,11 @@
             <param name="nb_cluster" value="8"/>
             <param name="clustering_method" value="ward.D"/>
 
-            <output file="shapefile/shapefile_shp.html" name="shapefile">
-                <extra_files type="file" name="output.shp" value="shapefile/output.shp"/>
-                <extra_files type="file" name="output.shx" value="shapefile/output.shx"/>
-                <extra_files type="file" name="output.dbf" value="shapefile/output.dbf" compare="sim_size" delta="50"/>
-                <extra_files type="file" name="output.prj" value="shapefile/output.prj"/>
+            <output file="shapefile_out_1/shapefile_shp_test1.html" name="shapefile">
+                <extra_files type="file" name="output.shp" value="shapefile_out_1/output.shp"/>
+                <extra_files type="file" name="output.shx" value="shapefile_out_1/output.shx"/>
+                <extra_files type="file" name="output.dbf" value="shapefile_out_1/output.dbf" compare="sim_size" delta="50"/>
+                <extra_files type="file" name="output.prj" value="shapefile_out_1/output.prj"/>
             </output>
         </test>
 
@@ -90,11 +90,11 @@
             <param name="nb_cluster" value="8"/>
             <param name="clustering_method" value="ward.D2"/>
 
-            <output file="shapefile/shapefile_shp.html" name="shapefile">
-                <extra_files type="file" name="output.shp" value="shapefile/output.shp"/>
-                <extra_files type="file" name="output.shx" value="shapefile/output.shx"/>
-                <extra_files type="file" name="output.dbf" value="shapefile/output.dbf" compare="sim_size" delta="50"/>
-                <extra_files type="file" name="output.prj" value="shapefile/output.prj"/>
+            <output file="shapefile_out_2/shapefile_shp_test2.html" name="shapefile">
+                <extra_files type="file" name="output.shp" value="shapefile_out_2/output.shp"/>
+                <extra_files type="file" name="output.shx" value="shapefile_out_2/output.shx"/>
+                <extra_files type="file" name="output.dbf" value="shapefile_out_2/output.dbf" compare="sim_size" delta="50"/>
+                <extra_files type="file" name="output.prj" value="shapefile_out_2/output.prj"/>
             </output>
         </test>
 
@@ -110,11 +110,11 @@
             <param name="nb_cluster" value="8"/>
             <param name="clustering_method" value="single"/>
 
-            <output file="shapefile/shapefile_shp.html" name="shapefile">
-                <extra_files type="file" name="output.shp" value="shapefile/output.shp"/>
-                <extra_files type="file" name="output.shx" value="shapefile/output.shx"/>
-                <extra_files type="file" name="output.dbf" value="shapefile/output.dbf" compare="sim_size" delta="50"/>
-                <extra_files type="file" name="output.prj" value="shapefile/output.prj"/>
+            <output file="shapefile_out_3/shapefile_shp_test3.html" name="shapefile">
+                <extra_files type="file" name="output.shp" value="shapefile_out_3/output.shp"/>
+                <extra_files type="file" name="output.shx" value="shapefile_out_3/output.shx"/>
+                <extra_files type="file" name="output.dbf" value="shapefile_out_3/output.dbf" compare="sim_size" delta="50"/>
+                <extra_files type="file" name="output.prj" value="shapefile_out_3/output.prj"/>
             </output>
         </test>
 
@@ -130,11 +130,11 @@
             <param name="nb_cluster" value="8"/>
             <param name="clustering_method" value="complete"/>
 
-            <output file="shapefile/shapefile_shp.html" name="shapefile">
-                <extra_files type="file" name="output.shp" value="shapefile/output.shp"/>
-                <extra_files type="file" name="output.shx" value="shapefile/output.shx"/>
-                <extra_files type="file" name="output.dbf" value="shapefile/output.dbf" compare="sim_size" delta="50"/>
-                <extra_files type="file" name="output.prj" value="shapefile/output.prj"/>
+            <output file="shapefile_out_4/shapefile_shp_test4.html" name="shapefile">
+                <extra_files type="file" name="output.shp" value="shapefile_out_4/output.shp"/>
+                <extra_files type="file" name="output.shx" value="shapefile_out_4/output.shx"/>
+                <extra_files type="file" name="output.dbf" value="shapefile_out_4/output.dbf" compare="sim_size" delta="50"/>
+                <extra_files type="file" name="output.prj" value="shapefile_out_4/output.prj"/>
             </output>
         </test>
 
@@ -150,11 +150,11 @@
             <param name="nb_cluster" value="8"/>
             <param name="clustering_method" value="average"/>
 
-            <output file="shapefile/shapefile_shp.html" name="shapefile">
-                <extra_files type="file" name="output.shp" value="shapefile/output.shp"/>
-                <extra_files type="file" name="output.shx" value="shapefile/output.shx"/>
-                <extra_files type="file" name="output.dbf" value="shapefile/output.dbf" compare="sim_size" delta="50"/>
-                <extra_files type="file" name="output.prj" value="shapefile/output.prj"/>
+            <output file="shapefile_out_5/shapefile_shp_test5.html" name="shapefile">
+                <extra_files type="file" name="output.shp" value="shapefile_out_5/output.shp"/>
+                <extra_files type="file" name="output.shx" value="shapefile_out_5/output.shx"/>
+                <extra_files type="file" name="output.dbf" value="shapefile_out_5/output.dbf" compare="sim_size" delta="50"/>
+                <extra_files type="file" name="output.prj" value="shapefile_out_5/output.prj"/>
             </output>
         </test>
 
@@ -170,11 +170,11 @@
             <param name="nb_cluster" value="8"/>
             <param name="clustering_method" value="mcquitty"/>
 
-            <output file="shapefile/shapefile_shp.html" name="shapefile">
-                <extra_files type="file" name="output.shp" value="shapefile/output.shp"/>
-                <extra_files type="file" name="output.shx" value="shapefile/output.shx"/>
-                <extra_files type="file" name="output.dbf" value="shapefile/output.dbf" compare="sim_size" delta="50"/>
-                <extra_files type="file" name="output.prj" value="shapefile/output.prj"/>
+            <output file="shapefile_out_6/shapefile_shp_test6.html" name="shapefile">
+                <extra_files type="file" name="output.shp" value="shapefile_out_6/output.shp"/>
+                <extra_files type="file" name="output.shx" value="shapefile_out_6/output.shx"/>
+                <extra_files type="file" name="output.dbf" value="shapefile_out_6/output.dbf" compare="sim_size" delta="50"/>
+                <extra_files type="file" name="output.prj" value="shapefile_out_6/output.prj"/>
             </output>
         </test>
 
@@ -190,11 +190,11 @@
             <param name="nb_cluster" value="8"/>
             <param name="clustering_method" value="median"/>
 
-            <output file="shapefile/shapefile_shp.html" name="shapefile">
-                <extra_files type="file" name="output.shp" value="shapefile/output.shp"/>
-                <extra_files type="file" name="output.shx" value="shapefile/output.shx"/>
-                <extra_files type="file" name="output.dbf" value="shapefile/output.dbf" compare="sim_size" delta="50"/>
-                <extra_files type="file" name="output.prj" value="shapefile/output.prj"/>
+            <output file="shapefile_out_7/shapefile_shp_test7.html" name="shapefile">
+                <extra_files type="file" name="output.shp" value="shapefile_out_7/output.shp"/>
+                <extra_files type="file" name="output.shx" value="shapefile_out_7/output.shx"/>
+                <extra_files type="file" name="output.dbf" value="shapefile_out_7/output.dbf" compare="sim_size" delta="50"/>
+                <extra_files type="file" name="output.prj" value="shapefile_out_7/output.prj"/>
             </output>
         </test>
 
@@ -210,11 +210,11 @@
             <param name="nb_cluster" value="8"/>
             <param name="clustering_method" value="centroid"/>
 
-            <output file="shapefile/shapefile_shp.html" name="shapefile">
-                <extra_files type="file" name="output.shp" value="shapefile/output.shp"/>
-                <extra_files type="file" name="output.shx" value="shapefile/output.shx"/>
-                <extra_files type="file" name="output.dbf" value="shapefile/output.dbf" compare="sim_size" delta="50"/>
-                <extra_files type="file" name="output.prj" value="shapefile/output.prj"/>
+            <output file="shapefile_out_8/shapefile_shp_test8.html" name="shapefile">
+                <extra_files type="file" name="output.shp" value="shapefile_out_8/output.shp"/>
+                <extra_files type="file" name="output.shx" value="shapefile_out_8/output.shx"/>
+                <extra_files type="file" name="output.dbf" value="shapefile_out_8/output.dbf" compare="sim_size" delta="50"/>
+                <extra_files type="file" name="output.prj" value="shapefile_out_8/output.prj"/>
             </output>
         </test>
     </tests>
