@@ -7,7 +7,6 @@
     </macros>
     
     <requirements> 
-        <requirement type="package" version="4.3.3">r-base</requirement> 
         <requirement type="package" version="1.0.8">r-phyloregion</requirement>
         <requirement type="package" version="1.6.5">r-matrix</requirement>
         <requirement type="package" version="5.8_1">r-ape</requirement>
