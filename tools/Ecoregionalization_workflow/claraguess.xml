@@ -61,26 +61,26 @@ Rscript '$__tool_directory__/claraguess.R'
             <param name="metric" value="manhattan"/>
             <param name="samples" value="10"/>
 
-            <output name="output1">
+            <output name="data_cluster">
                 <assert_contents>
                     <has_line_matching expression="^lat\tlong\tcluster$"/>
                     <has_n_columns n="3"/>
                 </assert_contents>
             </output>
 
-            <output name="output2">
+            <output name="silhouette_plot">
                 <assert_contents>
                     <has_size value="8400" delta="600"/>
                 </assert_contents>
             </output>
 
-            <output name="output3">
+            <output name="sih_scores">
                 <assert_contents>
                     <has_size value="0"/>
                 </assert_contents>
             </output>
 
-            <output name="output4">
+            <output name="clustered_taxas_env">
                 <assert_contents>
                     <has_line_matching expression="^lat\tlong\tcluster.*$"/>
                 </assert_contents>
