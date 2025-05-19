@@ -40,7 +40,7 @@ Rscript '$__tool_directory__/wormsmeasurements.R'
             <param name="scientic_name" value="scientificName"/>
             <param name="include_inherited" value="true"/>
             <param name="pivot_wider" value="false"/>
-            <param name="exlude_NA" value="false"/>
+            <param name="exclude_NA" value="false"/>
             <output name="output" file="enriched_data_inherited.tabular"/>
         </test>
         <test>
@@ -49,7 +49,7 @@ Rscript '$__tool_directory__/wormsmeasurements.R'
             <param name="scientic_name" value="scientificName"/>
             <param name="include_inherited" value="false"/>
             <param name="pivot_wider" value="false"/>
-            <param name="exlude_NA" value="false"/>
+            <param name="exclude_NA" value="false"/>
             <output name="output" file="enriched_data.tabular"/>
         </test>
         <test>
@@ -58,7 +58,7 @@ Rscript '$__tool_directory__/wormsmeasurements.R'
             <param name="include_inherited" value="true"/>
             <param name="scientic_name" value="scientificName"/>
             <param name="pivot_wider" value="true"/>
-            <param name="exlude_NA" value="false"/>
+            <param name="exclude_NA" value="false"/>
             <output name="output" file="enriched_data_inherited_ohe.tabular"/>
         </test>
     </tests>
@@ -81,7 +81,7 @@ This tool requests WoRMS (World Register of Marine Species) to get data about a 
 - **scientific names column name**: the name of column in the dataset containing scientific names.
 - **include attributes inherited from parent taxon**: usefull when the data you are looking for are incomplete.
 - **one hot encoding on the measurement types**: each possible values of a measurementType becomes a column encoded in 0/1
-- **exclude lines with missing measurement value
+- **exclude_NA**: exclude lines with missing measurement value
 
 ## Outputs:
 
