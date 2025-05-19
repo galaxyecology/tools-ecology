@@ -18,6 +18,7 @@ measurement_types <- unlist(str_split(args[2], ","))
 include_inherited <- ifelse(args[4]=="true", T, F)
 pivot_wider <- ifelse(args[5]=="true", T, F)
 scientificName_name <- args[3]
+exclude_NA <- ifelse(args[6]=="true", T, F)
 
 
 ### 
@@ -77,13 +78,30 @@ cache <- list()
 trait_data <- occurrence %>%
   mutate(life_history_traits = map(.data[[scientificName_name]], ~ get_life_history_traits(.x)))
 
-view(trait_data)
 trait_data <- trait_data %>%
   unnest_wider(life_history_traits)
 
-if (pivot_wider) {
-  trait_data <- dummy_cols(trait_data, select_columns = measurement_types, remove_selected_columns=T, ignore_na=T)
+numeric_cols <- c()
 
+trait_data <- trait_data %>%
+  mutate(across(all_of(measurement_types), ~ {
+    numeric_col <- suppressWarnings(as.numeric(.))
+    if (all(is.na(.) == is.na(numeric_col))) {
+      numeric_cols <<- c(numeric_cols, cur_column())
+      numeric_col
+    } else {
+      .
+    }
+  }))
+
+if (exclude_NA) {
+  trait_data <- trait_data[complete.cases(trait_data[, measurement_types]),]
+}
+
+factor_cols = setdiff(measurement_types, numeric_cols)
+
+if (pivot_wider & length(factor_cols) > 0) {
+  trait_data <- dummy_cols(trait_data, select_columns = factor_cols, remove_selected_columns=T, ignore_na=T)
 }
 
 write.table(trait_data, "enriched_data.tabular", sep="\t", row.names = FALSE)
