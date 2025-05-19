@@ -42,10 +42,12 @@
     </tests>
 
     <help>
+        <![CDATA[
         This tool matches phylogenetic data with occupancy data using the R script PhylOccuMatcher.R.
         Ensure that the input files are in the correct formats:
         - Phylogeny file: Newick format
         - Occupancy data: Tabular format
+        ]]>
     </help>
 
     <citations>

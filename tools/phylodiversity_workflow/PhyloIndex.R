@@ -18,7 +18,7 @@ write_results <- function(){
 }
 
 # verif args
-if (length(args)<2){stop('Usage : input_tree_file input_matrix_file output_file')
+if (length(args)<5){stop('Usage : input_tree_file input_matrix_file random_seed clustering_model output_file')
 }else{
   # read enter file
   comm_tree <- read.tree(args[1])
@@ -39,9 +39,3 @@ if (length(args)<2){stop('Usage : input_tree_file input_matrix_file output_file'
   # write res 
   write_results()
 }
-
-
-
-
-
-
