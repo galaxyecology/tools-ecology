@@ -377,7 +377,7 @@ jobs:
   deploy-report:
     name: Report deploy status
     needs: [deploy]
-    if: ${{ always() && needs.deploy.result != 'success' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' ) && github.repository_owner == 'galaxyecology' }}
+    if: ${{ always() && needs.deploy.result != 'success' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' ) && github.repository_owner == 'galaxyproject' }}
     runs-on: ubuntu-latest
     steps:
     # report to the PR if deployment failed
@@ -395,6 +395,7 @@ jobs:
           Attention: deployment ${{ needs.deploy.result }}!
 
           https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
 
   determine-success:
     name: Check workflow success
