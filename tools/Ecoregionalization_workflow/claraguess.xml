@@ -17,10 +17,10 @@ Rscript '$__tool_directory__/claraguess.R'
     '$k'
     '$metric'
     '$samples'
-    '$output1'
-    '$output2'
-    '$output3'
-    '$output4'
+    '$data_cluster'
+    '$silhouette_plot'
+    '$sih_scores'
+    '$clustered_taxas_env'
     ]]></command>
 
     <inputs>
@@ -45,10 +45,10 @@ Rscript '$__tool_directory__/claraguess.R'
     </inputs>
 
     <outputs>
-        <data name="output1" from_work_dir="data_cluster.tabular" format="tabular" label="Cluster assignments (lat, long, cluster)"/>
-        <data name="output2" from_work_dir="silhouette_plot.png" format="png" label="Silhouette Index Plot"/>
-        <data name="output3" from_work_dir="sih_scores.png" format="png" label="Silhouette Plot"/>
-        <data name="output4" from_work_dir="clustered_taxas_env.tabular" format="tabular" label="Environment + Clustered Data"/>
+        <data name="data_cluster" from_work_dir="data_cluster.tabular" format="tabular" label="Cluster assignments (lat, long, cluster)"/>
+        <data name="silhouette_plot" from_work_dir="silhouette_plot.png" format="png" label="Silhouette Index Plot"/>
+        <data name="sih_scores" from_work_dir="sih_scores.png" format="png" label="Silhouette Plot"/>
+        <data name="clustered_taxas_env" from_work_dir="clustered_taxas_env.tabular" format="tabular" label="Environment + Clustered Data"/>
     </outputs>
 
     <tests>
@@ -96,26 +96,26 @@ Rscript '$__tool_directory__/claraguess.R'
             <param name="metric" value="manhattan"/>
             <param name="samples" value="10"/>
 
-            <output name="output1">
+            <output name="data_cluster">
                 <assert_contents>
                     <has_line_matching expression="^lat\tlong\tcluster$"/>
                     <has_n_columns n="3"/>
                 </assert_contents>
             </output>
 
-            <output name="output2">
+            <output name="silhouette_plot">
                 <assert_contents>
                     <has_size value="8400" delta="600"/>
                 </assert_contents>
             </output>
 
-            <output name="output3">
+            <output name="sih_scores">
                 <assert_contents>
                     <has_size value="6918" delta="600"/>
                 </assert_contents>
             </output>
 
-            <output name="output4">
+            <output name="clustered_taxas_env">
                 <assert_contents>
                     <has_line_matching expression="^lat\tlong\tcluster.*$"/>
                 </assert_contents>
