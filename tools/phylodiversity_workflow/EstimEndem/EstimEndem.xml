@@ -30,7 +30,7 @@
             '$clustering_method'
             
         &&
-        mv output.* ${shapefile.extra_files_path}
+        mv output.* '${shapefile.extra_files_path}'
 
         ]]>
     </command>
