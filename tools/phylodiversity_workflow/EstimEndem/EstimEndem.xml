@@ -39,7 +39,7 @@
         <param name="phylogeny" type="data" format="newick" label="Phylogeny file (Newick format)" />
         <param name="occupancy" type="data" format="tabular" label="Occupancy data (Tabular format)" />
         <param name ="coordinates_file_input" type="data" format="shp" label="input_shapefile" help="Provide coordinates files"/>
-        <param name="nb_cluster" type="integer" value="10" label="the number of cluster" help="choose the number pf pjyloregion"/>
+        <param name="nb_cluster" type="integer" value="10" label="the number of cluster" help="choose the number of phyloregion"/>
         <param name ="clustering_method" type="select" checked="true" 
                label="Choose a clustering method" help="choose">
             <option value="ward.D" selected="true">ward.D</option>
