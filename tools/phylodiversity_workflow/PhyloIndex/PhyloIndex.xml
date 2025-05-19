@@ -1,0 +1,65 @@
+<tool id="phylo_index" name="PhyloIndex" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="21.05">
+    <description>compute phylodiversity index based on matched phylogenetic and occupancy data</description>
+    
+    <macros>
+        <token name="@TOOL_VERSION@">1.0</token> 
+        <token name="@VERSION_SUFFIX@">0</token>
+    </macros>
+
+    <requirements> 
+        <requirement type="package" version="1.0.8">r-phyloregion</requirement>
+        <requirement type="package" version="1.6.5">r-matrix</requirement>
+        <requirement type="package" version="5.8_1">r-ape</requirement>
+        <requirement type="package" version="1.2.2">bioconductor-sparsearray</requirement>
+    </requirements>
+
+    <command detect_errors="exit_code">
+        <![CDATA[
+        Rscript '$__tool_directory__/PhyloIndex.R' 
+            '$phylogeny'  
+            '$occupancy' 
+            '$random_seed'
+            '$model'
+            '$output' 
+        ]]> 
+    </command>
+
+    <inputs>
+        <param name="phylogeny" type="data" format="newick" label="Phylogeny file (Newick format)" />
+        <param name="occupancy" type="data" format="tabular" label="Occupancy data (Tabular format)" />
+        <param name="random_seed" type="integer" label="Seed for the random PD compute"/>
+        <param name="model" type="select" label="Model for the PD compute">
+            <option value="tipshuffle" selected="true">tipshuffle</option>
+            <option value="rowwise">rowwise</option>
+            <option value="colwise">colwise</option>
+        </param>
+    </inputs>
+    <outputs>
+        <data name ="output" format="tabular" label="a table" />
+    </outputs>
+
+    <tests>
+        <test>
+            <param name="phylogeny" value="tree_file"/>
+            <param name="occupancy" value="matrix_file"/>
+            <param name="random_seed" value="34"/>
+            <param name="model" value="tipshuffle"/>
+            <output name="output" file="output" ftype="tabular"/>
+        </test>
+    </tests>
+
+    <help><![CDATA[
+    this tool computes the phylodiversity index based on matched phylogenetic and occupancy data using the R script PhyloIndex.R.
+    Ensure that the input files are in the correct formats:
+    - Phylogeny file: Newick format
+    - Occupancy data: Tabular format
+    The output will be a tabular file containing the computed phylodiversity index.
+    ]]></help>
+
+    <citations>
+        <citation type="doi">10.32614/CRAN.package.phyloregion</citation>
+        <citation type="doi">10.32614/CRAN.package.Matrix</citation>
+        <citation type="doi">10.32614/CRAN.package.ape</citation>
+        <citation type="doi">10.18129/B9.bioc.SparseArray</citation>
+    </citations>
+</tool>
