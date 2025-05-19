@@ -1,6 +1,6 @@
-<tool id="EstimEndem" name="Estimate the endemism of each cell of a spatial grid" version="0.1.0+galaxy0" python_template_version="3.5" profile="21.05">
+<tool id="estimate_endem" name="EstimEndem" version="0.1.0+galaxy0" python_template_version="3.5" profile="21.05">
     <description>
-        Tool to estimate the endemism of each cell of a spatial grid using the R script EstimEndem.R.
+        of each cell of a spatial grid
     </description>
 
     <macros>
@@ -228,9 +228,14 @@
     </help>       
     
     <citations>
-        <citation type="bibtex">@Manual{, 
-            }        
-        </citation>
+        <citation type="doi">10.32614/CRAN.package.phyloregion</citation>    
+        <citation type="doi">10.32614/CRAN.package.Matrix</citation>
+        <citation type="doi">10.32614/CRAN.package.ape</citation>
+        <citation type="doi">10.18129/B9.bioc.SparseArray</citation>
+        <citation type="doi">10.32614/CRAN.package.sf</citation>
+        <citation type="doi">10.32614/CRAN.package.sp</citation>
+        <citation type="doi">10.32614/CRAN.package.raster</citation>
+        <citation type="doi">10.32614/CRAN.package.dplyr</citation>
     </citations>
     
 </tool>

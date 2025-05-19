@@ -240,9 +240,7 @@
         - Shapefile : commposite file, shp format
     ]]></help>
     <citations> 
-        <citation type="bibtex">@Manual{,
-
-}        
-        </citation>
+        <citation type="doi">10.32614/CRAN.package.sf</citation>
+        <citation type="doi">10.32614/CRAN.package.tidyr</citation>
     </citations>
 </tool>
