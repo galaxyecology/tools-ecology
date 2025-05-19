@@ -19,7 +19,11 @@ Rscript '$__tool_directory__/claraguess.R'
     '$samples'
     '$data_cluster'
     '$silhouette_plot'
+#if str($type) == "auto":
     '$sih_scores'
+#else:
+    'NA'
+#end if
     '$clustered_taxas_env'
     ]]></command>
 
@@ -47,12 +51,14 @@ Rscript '$__tool_directory__/claraguess.R'
     <outputs>
         <data name="data_cluster" from_work_dir="data_cluster.tabular" format="tabular" label="Cluster assignments (lat, long, cluster)"/>
         <data name="silhouette_plot" from_work_dir="silhouette_plot.png" format="png" label="Silhouette Index Plot"/>
-        <data name="sih_scores" from_work_dir="sih_scores.png" format="png" label="Silhouette Plot"/>
+        <data name="sih_scores" from_work_dir="sih_scores.png" format="png" label="Silhouette Plot">
+            <filter>type == "auto"</filter>
+        </data>
         <data name="clustered_taxas_env" from_work_dir="clustered_taxas_env.tabular" format="tabular" label="Environment + Clustered Data"/>
     </outputs>
 
     <tests>
-        <test>
+        <test expect_num_outputs="3">
             <param name="enviro" value="enviro.tabular"/>
             <param name="preds" value="preds.tabular"/>
             <param name="taxas" value="taxas.tabular"/>
@@ -74,12 +80,6 @@ Rscript '$__tool_directory__/claraguess.R'
                 </assert_contents>
             </output>
 
-            <output name="sih_scores">
-                <assert_contents>
-                    <has_size value="0"/>
-                </assert_contents>
-            </output>
-
             <output name="clustered_taxas_env">
                 <assert_contents>
                     <has_line_matching expression="^lat\tlong\tcluster.*$"/>
@@ -87,7 +87,7 @@ Rscript '$__tool_directory__/claraguess.R'
             </output>
         </test>
 
-        <test>
+        <test expect_num_outputs="4">
             <param name="enviro" value="enviro.tabular"/>
             <param name="preds" value="preds.tabular"/>
             <param name="taxas" value="taxas.tabular"/>
