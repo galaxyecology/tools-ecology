@@ -37,7 +37,7 @@ Rscript '$__tool_directory__/claraguess.R'
             <option value="auto">the maximum number of clusters (automatic)</option>
         </param>
 
-        <param name="k" type="integer" label="Value of k"/>
+        <param name="k" type="integer" optional="true" label="Value of k"/>
 
         <param name="metric" type="select" label=" dissimilarity metric">
             <option value="manhattan">Manhattan</option>
