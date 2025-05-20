@@ -1,0 +1,13 @@
+name: CRSConverter
+owner: ecology 
+description: Tools to transforms geographical vector data to a specified coordinate reference system.
+homepage_url: https://github.com/Morphy427/phylodiversity_workflow/CRSConverter
+long_description: |
+  This tool transforms geographical vector data to a specified coordinate reference system and allows you to export the result in various formats, including shapefile and image formats (PDF, PNG, JPEG, TIFF, BMP).
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/Phylodiversity_workflow
+type: unrestricted
+categories:
+- Ecology
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Phylodiversity : {{ tool_name }}"
