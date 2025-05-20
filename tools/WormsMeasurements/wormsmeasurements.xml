@@ -1,4 +1,4 @@
-<tool id="WormsMeasurements" name="Enrich dataset with WoRMS" version="0.1.1" profile="23.2">
+<tool id="WormsMeasurements" name="Enrich dataset with WoRMS" profile="23.2">
     <description>Enrich dataset with measurement type data from WoRMS</description>
 
     <requirements>
