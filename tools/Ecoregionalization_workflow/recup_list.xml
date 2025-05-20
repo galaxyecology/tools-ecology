@@ -1,4 +1,4 @@
-<tool id="ecoregion_taxa_seeker" name="TaxaSeeker" version="0.1.0+galaxy0" profile="22.05">
+<tool id="ecoregion_taxa_seeker" name="TaxaSeeker" version="0.1.0+galaxy0" profile="23.2>
     <description>for recover list of taxa</description>
     <requirements>
     <requirement type="package" version="4.2.3">r-base</requirement>
