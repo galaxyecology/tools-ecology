@@ -1,4 +1,4 @@
-<tool id="ecoregion_GeoNearestNeighbor" name="GeoNearestNeighbor" version="0.1.0+galaxy0" profile="21.05">
+<tool id="ecoregion_GeoNearestNeighbor" name="GeoNearestNeighbor" version="0.1.0+galaxy0" profile="23.2>
     <description>Merge two data tables by finding the closest points based on latitude and longitude coordinates (WGS84 projection).</description>
     <requirements>
        <requirement type="package" version="4.3.2">r-base</requirement>
