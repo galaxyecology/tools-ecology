@@ -34,10 +34,10 @@
     </outputs>
     <tests>
         <test>
-            <param name="env" value="ceamarc_env.tsv"/>
+            <param name="env_file.env" value="ceamarc_env.tsv"/>
             <param name="envgeolat" value="2"/>
             <param name="envgeolong" value="1"/>
-            <param name="occ" value="fish_wide.tsv"/>
+            <param name="occ_file.occ" value="fish_wide.tsv"/>
             <param name="occgeolat" value="1"/>
             <param name="occgeolong" value="2"/>
             <output name='occ_env_out'>
