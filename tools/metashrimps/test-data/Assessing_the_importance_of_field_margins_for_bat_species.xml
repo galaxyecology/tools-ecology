@@ -1,0 +1,2074 @@
+<?xml version="1.0" encoding="UTF-8"?><eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" packageId="doi:10.48502/hssh-5194" system="unknown" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0  https://nis.lternet.edu/schemas/EML/eml-2.2.0/xsd/eml.xsd">
+  <dataset id="dataset-02">
+    <title>Assessing the importance of field margins for bat species and communities in intensive agricultural landscapes - Data</title>
+    <creator>c
+      <individualName>
+        <givenName>Constance</givenName>
+        <givenName/>
+        <surName>Blary</surName>
+      </individualName>
+      <organizationName>CEFE</organizationName>
+      <electronicMailAddress>constance.blary@cefe.cnrs.fr</electronicMailAddress>
+      <userId directory="https://orcid.org">https://orcid.org/0000-0001-6204-9983</userId>
+    </creator>
+    <creator>
+      <individualName>
+        <givenName>Kévin</givenName>
+        <givenName/>
+        <surName>Barré</surName>
+      </individualName>
+      <organizationName>CESCO MNHN</organizationName>
+      <electronicMailAddress>kevin.barre@mnhn.fr</electronicMailAddress>
+      <userId directory="https://orcid.org">https://orcid.org/0000-0001-5368-4053</userId>
+    </creator>
+    <creator>
+      <individualName>
+        <givenName>Christian</givenName>
+        <givenName/>
+        <surName>Kerbiriou</surName>
+      </individualName>
+      <organizationName>CESCO</organizationName>
+      <electronicMailAddress>christian.kerbiriou@mnhn.fr</electronicMailAddress>
+      <userId directory="https://orcid.org">https://orcid.org/0000-0001-6080-4762</userId>
+    </creator>
+    <creator>
+      <individualName>
+        <givenName>Isabelle</givenName>
+        <givenName/>
+        <surName>Le Viol</surName>
+      </individualName>
+      <organizationName>CESCO</organizationName>
+      <electronicMailAddress>isabelle.le-viol@mnhn.fr</electronicMailAddress>
+    </creator>
+    <pubDate>2021-05-25</pubDate>
+    <abstract>
+      <para>Landscape simplification and degradation through agricultural intensification is widely recognized as a main driver of biodiversity loss. In intensively used agricultural landscapes, patches of semi-natural habitats and particularly connections between them are of high importance for many taxa. Vegetated connections like hedgerows are especially important for foraging and commuting of mobile taxa such as bats. However, the interest of another treeless linear habitat – herbaceous field margins – remains unstudied for insectivorous bats. Field margins are nevertheless known as an important habitat for other taxa, including bat prey. Here we assessed the importance of field margins for bats compared to other landscape variables. We measured bat activity based on a repeated passive acoustic monitoring during 17 complete nights in summer on 112 study sites in an intensively used agricultural landscape. Each night, we sampled bat species activity and community metrics (i.e. species richness and community habitat specialization index) at different distances to field margins, and along a gradient of relative density of field margins. To compare field margin effects with other landscape variables, the sampled sites were selected by keeping a large variability in these other variables (land-cover Shannon diversity index, forests, hedgerows, water bodies, main roads, urban areas, grasslands, number of crops and rapeseed percentage). Only Myotis sp. were affected by herbaceous field margins. Specifically, the Myotis group activity decreased with the distance to herbaceous field margins (i.e. towards field crop cores), and positively correlated with relative density of herbaceous field margins, for which the effect size was comparable to other landscape variables. However, other landscape variables such as the proportion of and the distance to forests, the relative density of and the distance to hedgerows or land-cover Shannon diversity index, affected species richness, community specialization index, and bat activity of species from open, edge and narrow-space foragers, including the Myotis group as well. Our results highlight that herbaceous field margins have a positive effect on the activity of narrow-space bat foragers as Myotis species, but do not replace other landscape variables that drive the activity of the whole community.
+</para>
+    </abstract>
+    <keywordSet>
+        <keyword>Acoustic monitoring</keyword>
+        <keyword>Bat community</keyword>
+        <keyword>Farmland biodiversity</keyword>
+        <keyword>Field borders</keyword>
+        <keyword>Habitat specialisation</keyword>
+        <keyword>Landscape composition</keyword>
+        <keywordThesaurus>Keywords</keywordThesaurus>
+    </keywordSet>
+    <intellectualRights>
+      <para>This information is released under the Creative Commons license - Attribution - CC BY (https://creativecommons.org/licenses/by/4.0/). The consumer of these data ("Data User" herein) is required to cite it appropriately in any publication that results from its use. The Data User should realize that these data may be actively used by others for ongoing research and that coordination may be necessary to prevent duplicate publication. The Data User is urged to contact the authors of these data if any questions about methodology or results occur. Where appropriate, the Data User is encouraged to consider collaboration or co-authorship with the authors. The Data User should realize that misinterpretation of data may occur if used out of context of the original study. While substantial efforts are made to ensure the accuracy of data and associated documentation, complete accuracy of data sets cannot be guaranteed. All data are made available "as is." The Data User should be aware, however, that data are updated periodically and it is the responsibility of the Data User to check for new versions of the data. The data authors and the repository where these data were obtained shall not be liable for damages resulting from any use or misinterpretation of the data. Thank you.
+</para>
+    </intellectualRights>
+    <coverage>
+      <geographicCoverage>
+        <geographicDescription>Yvelines - Essonne - Seine et Marne</geographicDescription>
+        <boundingCoordinates>
+          <westBoundingCoordinate>1.60296</westBoundingCoordinate>
+          <eastBoundingCoordinate>3.56409</eastBoundingCoordinate>
+          <northBoundingCoordinate>49.08428</northBoundingCoordinate>
+          <southBoundingCoordinate>48.12266</southBoundingCoordinate>
+        </boundingCoordinates>
+      </geographicCoverage>
+      <temporalCoverage>
+        <rangeOfDates>
+          <beginDate>
+            <calendarDate>2015-07-08</calendarDate>
+          </beginDate>
+          <endDate>
+            <calendarDate>2015-08-02</calendarDate>
+          </endDate>
+        </rangeOfDates>
+      </temporalCoverage>
+    </coverage>
+    <annotation id="kw3">
+        <propertyURI label="is about">http://purl.obolibrary.org/obo/IAO_0000136</propertyURI>
+        <valueURI label="biodiversity">http://aims.fao.org/aos/agrovoc/c_33949</valueURI>
+    </annotation>
+    <annotation id="kw4">
+        <propertyURI label="is about">http://purl.obolibrary.org/obo/IAO_0000136</propertyURI>
+        <valueURI label="mammals">http://aims.fao.org/aos/agrovoc/c_4560</valueURI>
+    </annotation>
+    <annotation id="kw5">
+        <propertyURI label="is about">http://purl.obolibrary.org/obo/IAO_0000136</propertyURI>
+        <valueURI label="chiroptera">http://aims.fao.org/aos/agrovoc/c_1560</valueURI>
+    </annotation>
+    <annotation id="kw55">
+        <propertyURI label="is about">http://purl.obolibrary.org/obo/IAO_0000136</propertyURI>
+        <valueURI label="bats">http://aims.fao.org/aos/agrovoc/c_1560</valueURI>
+    </annotation>
+    <annotation id="kw10">
+        <propertyURI label="is about">http://purl.obolibrary.org/obo/IAO_0000136</propertyURI>
+        <valueURI label="Landscape">http://www.eionet.europa.eu/gemet/concept/4648</valueURI>
+    </annotation>
+    <annotation id="kw1">
+        <propertyURI label="is about">http://purl.obolibrary.org/obo/IAO_0000136</propertyURI>
+        <valueURI label="Ecosystem"> http://www.eionet.europa.eu/gemet/concept/2519</valueURI>
+    </annotation>
+    <annotation id="kw2">
+        <propertyURI label="is about">http://purl.obolibrary.org/obo/IAO_0000136</propertyURI>
+        <valueURI label="Animal ecology">http://www.eionet.europa.eu/gemet/concept/420</valueURI>
+    </annotation>
+    <maintenance>
+      <description>ongoing</description>
+    </maintenance>
+    <contact>
+      <individualName>
+        <givenName>Constance</givenName>
+        <givenName>""</givenName>
+        <surName>Blary</surName>
+      </individualName>
+      <organizationName>CEFE</organizationName>
+      <electronicMailAddress>constance.blary@cefe.cnrs.fr</electronicMailAddress>
+              <userId directory="https://orcid.org">https://orcid.org/0000-0001-6204-9983</userId>
+    </contact>
+    <contact>
+      <individualName>
+        <givenName>Kévin</givenName>
+        <givenName>""</givenName>
+        <surName>Barré</surName>
+      </individualName>
+      <organizationName>CESCO MNHN</organizationName>
+      <electronicMailAddress>kevin.barre@mnhn.fr</electronicMailAddress>
+      <userId directory="https://orcid.org">https://orcid.org/0000-0001-5368-4053</userId>
+    </contact>
+    <methods>
+        <methodStep>
+            <description>The aim of the study was to investigate the potential of field margins to support bat activity compared to other landscape variables in agricultural landscapes. As a consequence, we chose the location of sampling sites in a way that limited correlations between field margins and other landscape variables to avoid statistical issues (see Statistical analysis section), and to maximise the gradient of each. The weather was highly stable and favourable to bats throughout the sampling period. We recorded bat activity on 112 sampling sites along a gradient of distances from 0 to 447 m from field margins (median: 60 m, median absolute deviation: 57 m) and along a gradient of relative density of field margins ranging from 0 to 64 m/ha (computed in different sizes of buffers around sampling sites, from 250 m to 4,000 m, see Landscape variable and Statistical analysis sections for more details about buffer sizes). Each night, we sampled simultaneously three to 11 sites at different densities of and distances from field margins, in order to limit potential correlations with temporal variables (i.e. weather, moon). Each site was sampled one time and echolocation calls were recorded on sites separated by at least 230 m from each other to avoid simultaneous recordings (see acoustic sampling section). Recorders were associated with a single microphone throughout the study and were homogeneously distributed between distances to the field margin and relative densities of field margins, in order to limit potential correlations between recorders and field margins variables.</description>
+            <instrumentation>Sampling was carried out over 17 nights from the 8th of July to the 2nd of August 2015, during the seasonal peak in bat activity. Recordings were performed during the entire night, from 30 min before sunset to 30 min after sunrise. Standardized acoustic bat survey was carried out using Song Meter SM2Bat+ and omnidirectional microphones SMX-US (Wildlife Acoustics Inc., Concord, MA, USA) put horizontally at one meter above the ground on a pole and pointed perpendicularly to the field margin. Recording was triggered automatically by ultrasounds between eight and 192 kHz, using a trigger level set to 6 dB Signal Noise Ratio and set to continue recording until two seconds after last trigger event, and a 384 kHz sampling rate, as widely used in many previous studies (e.g. Azam et al., 2016; Millon et al., 2017; Barré et al., 2017, 2019). As it is currently impossible to distinguish individual bats from their echolocation calls, it is not possible to count bat abundance. Instead, we used the number of bat passes recorded during a night as a measure of bat activity (however this metric is correlated to the abundance, see Mimet et al., 2020). We defined a bat pass as one or more echolocation call within a 5-second interval, which is a commonly accepted standard in Europe (Stahlschmidt and Brühl; 2012, Millon et al.; 2015, Kerbiriou et al. 2018; 2019; Put et al., 2019). We used the software TADARIDA (Bas et al., 2017) to automatically detect sound events and assign bat passes (11,324 bat passes for a total of ~450,000 calls) to the most accurate taxonomic level associated to a confidence score calculated by the software (i.e. the probability that a bat pass has been assigned to the right species). Two species groups were firstly constructed in order to limit identification errors: (i) a Myotis group (including Myotis nattereri, Myotis myotis, Myotis mystacinus and Myotis daubentonii) and (ii) a Plecotus group (including Plecotus austriacus and Plecotus auritus). In addition to these species-groups, we considered four species: (i) P. pipistrellus that are edge space foragers, (ii) Nyctalus leisleri and (iii) Nyctalus noctula that are open space foragers, and (iv) Eptesicus serotinus, that are edge space foragers (Robinson and Stebbincs, 1996). Given that automated identification can generate high error rates at species level, we followed the Barré et al. (2019) approach proposing a cautious method to ensure results robustness against automated identification errors. The method allows to model the error rate for each species or group, according to confidence scores of automated identifications provided by the software TADARIDA (Bas et al., 2017). This method allows to perform statistical analyses based on two levels of maximum error rate tolerance: first on a 0.5 maximum error rate tolerance and then by confirming results on a safer threshold of 0.1 maximum error rate tolerance. Indeed, each threshold of error rate tolerated in data involve different caveats which potentially induce biases in acoustic data (i.e. false positives and false negatives). The 0.5 maximum error rate tolerance keeps high number of bat passes for analysis including false positives, while a more restrictive 0.1 threshold limits false positives, but at the cost of discarding more true positives, which thus induce a loss of statistical power. As a consequence, checking the consistence in results whatever the threshold considered ensures robust conclusions (see Barré et al. 2019 for more details).</instrumentation>
+        </methodStep>
+        <sampling>
+            <studyExtent>
+                <description> The study was conducted in France, in the Île-de-France region (Yvelines, Essonne and Seine-et-Marne departments) in an intensively used agricultural landscape. This region is covered by 59% agricultural areas, 22% forests and semi natural areas, 18% artificial surfaces and 1% water bodies (Corine Land Cover data from 2016; https://www.data.gouv.fr/en/datasets/corine-land-cover-occupation-des-sols-en-france). The agricultural areas were dominated by arable land (90%) for intensive cropping (73 % of rapeseed, 7% of wheat, 3% of barley, based on manual mapping during the experiment in a 100 m radius around sampling sites). Crops were harvested before the study between the end of June and the beginning of July.
+We defined field margins as an herbaceous linear structure with only spontaneous vegetation, without fertilizers or pesticides immediately applied, without trees or bushes, 2 ± 1 m wide, and that were surrounding fields. </description>
+            </studyExtent>
+            <samplingDescription>Sampling was carried out over 17 nights from the 8th of July to the 2nd of August 2015, during the seasonal peak in bat activity. Recordings were performed during the entire night, from 30 min before sunset to 30 min after sunrise. Standardized acoustic bat survey was carried out using Song Meter SM2Bat+ and omnidirectional microphones SMX-US (Wildlife Acoustics Inc., Concord, MA, USA) put horizontally at one meter above the ground on a pole and pointed perpendicularly to the field margin. Recording was triggered automatically by ultrasounds between eight and 192 kHz, using a trigger level set to 6 dB Signal Noise Ratio and set to continue recording until two seconds after last trigger event, and a 384 kHz sampling rate, as widely used in many previous studies (e.g. Azam et al., 2016; Millon et al., 2017; Barré et al., 2017, 2019).
+As it is currently impossible to distinguish individual bats from their echolocation calls, it is not possible to count bat abundance. Instead, we used the number of bat passes recorded during a night as a measure of bat activity (however this metric is correlated to the abundance, see Mimet et al., 2020). We defined a bat pass as one or more echolocation call within a 5-second interval, which is a commonly accepted standard in Europe (Stahlschmidt and Brühl; 2012, Millon et al.; 2015, Kerbiriou et al. 2018; 2019; Put et al., 2019).</samplingDescription>
+        </sampling>
+    </methods>
+    <project>
+      <title>Effect of agricultural landscape features on bats</title>
+      <personnel>
+        <individualName>
+          <givenName>Kévin</givenName>
+          <givenName>""</givenName>
+          <surName>Barré</surName>
+        </individualName>
+        <organizationName>CESCO MNHN</organizationName>
+        <electronicMailAddress>kevin.barre@mnhn.fr</electronicMailAddress>
+        <userId directory="https://orcid.org">https://orcid.org/0000-0001-5368-4053</userId>
+        <role>Principal Investigator</role>
+      </personnel>
+      <funding>DIM ASTREA Région Ile-de-France, FRB</funding>
+    </project>
+    <dataTable>
+      <entityName>data_blary_&amp;_al.tsv</entityName>
+      <entityDescription>Content of data_blary_&amp;_al.txt</entityDescription>
+      <physical>
+        <objectName>data_blary_&amp;_al.txt</objectName>
+        <size unit="bytes">79724</size>
+        <authentication method="MD5">189e312d6c6635a7ca21aa1b6c15bda2</authentication>
+        <dataFormat>
+          <textFormat>
+            <numHeaderLines>1</numHeaderLines>
+            <recordDelimiter>\r\n</recordDelimiter>
+            <attributeOrientation>column</attributeOrientation>
+            <simpleDelimited>
+              <fieldDelimiter>	</fieldDelimiter>
+            </simpleDelimited>
+          </textFormat>
+        </dataFormat>
+      </physical>
+      <attributeList>
+        <attribute>
+          <attributeName>Id</attributeName>
+          <attributeDefinition>Sampling site ID</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <textDomain>
+                  <definition>sampling site ID</definition>
+                </textDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>dist_field_margin</attributeName>
+          <attributeDefinition>Distance to the nearest field margin element (in meters)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>meter</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0.197097079</minimum>
+                  <maximum exclusive="false">446.7105128</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>NA</code>
+            <codeExplanation>No information</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>dist_hedgerow</attributeName>
+          <attributeDefinition>Distance to the nearest hedgerow element (in meters)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>meter</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">26.18609735</minimum>
+                  <maximum exclusive="false">993.9548575</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>dist_forest</attributeName>
+          <attributeDefinition>Distance to the nearest forest element (in meters)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>meter</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">35.65219329</minimum>
+                  <maximum exclusive="false">2117.555351</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>dist_road</attributeName>
+          <attributeDefinition>Distance to the nearest road element (in meters)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>meter</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">26.78687042</minimum>
+                  <maximum exclusive="false">1906.832346</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>dist_water</attributeName>
+          <attributeDefinition>Distance to the nearest water body element (in meters)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>meter</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">293.5477229</minimum>
+                  <maximum exclusive="false">7059.607301</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>dist_urban</attributeName>
+          <attributeDefinition>Distance to the nearest urban element (in meters)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>meter</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">117.752441</minimum>
+                  <maximum exclusive="false">1660.510336</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>density_field_margins_250m</attributeName>
+          <attributeDefinition>Relative density of field margins in a 250 meters buffer around the sampling site (in meters per hectare)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">63.98307757</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>density_field_margins_500m</attributeName>
+          <attributeDefinition>Relative density of filed margins in a 500 meters buffer around the sampling site (in meters per hectare)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">1.30602297</minimum>
+                  <maximum exclusive="false">56.85356039</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>density_field_margins_750m</attributeName>
+          <attributeDefinition>Relative density of filed margins in a 750 meters buffer around the sampling site (in meters per hectare)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">3.76147295</minimum>
+                  <maximum exclusive="false">51.98107287</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>density_field_margins_1000m</attributeName>
+          <attributeDefinition>Relative density of filed margins in a 1000 meters buffer around the sampling site (in meters per hectare)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">7.016125291</minimum>
+                  <maximum exclusive="false">49.65501534</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>density_field_margins_1500m</attributeName>
+          <attributeDefinition>Relative density of filed margins in a 1500 meters buffer around the sampling site (in meters per hectare)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">13.19438883</minimum>
+                  <maximum exclusive="false">46.14576092</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>density_field_margins_2000m</attributeName>
+          <attributeDefinition>Relative density of filed margins in a 2000 meters buffer around the sampling site (in meters per hectare)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">14.31645702</minimum>
+                  <maximum exclusive="false">49.15383992</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>density_field_margins_4000m</attributeName>
+          <attributeDefinition>Relative density of filed margins in a 4000 meters buffer around the sampling site (in meters per hectare)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">12.0861939</minimum>
+                  <maximum exclusive="false">49.04803019</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>density_roads_250m</attributeName>
+          <attributeDefinition>Relative density of roads in a 250 meters buffer around the sampling site (in meters per hectare)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">41.24173899</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>density_roads_500m</attributeName>
+          <attributeDefinition>Relative density of roads in a 500 meters buffer around the sampling site (in meters per hectare)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">28.67314656</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>density_roads_750m</attributeName>
+          <attributeDefinition>Relative density of roads in a 750 meters buffer around the sampling site (in meters per hectare)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">21.52403654</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>density_roads_1000m</attributeName>
+          <attributeDefinition>Description for density_roads_1000m</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">16.31772774</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>density_roads_1500m</attributeName>
+          <attributeDefinition>Relative density of roads in a 1500 meters buffer around the sampling site (in meters per hectare)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">14.66196384</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>density_roads_2000m</attributeName>
+          <attributeDefinition>Relative density of roads in a 2000 meters buffer around the sampling site (in meters per hectare)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0.691124942</minimum>
+                  <maximum exclusive="false">15.21731043</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>density_roads_4000m</attributeName>
+          <attributeDefinition>Relative density of roads in a 4000 meters buffer around the sampling site (in meters per hectare)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">4.415217013</minimum>
+                  <maximum exclusive="false">12.96935098</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>density_hedgerows_250m</attributeName>
+          <attributeDefinition>Relative density of hedgerows in a 250 meters buffer around the sampling site (in meters per hectare)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">29.04454202</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>density_hedgerows_500m</attributeName>
+          <attributeDefinition>Relative density of hedgerows in a 500 meters buffer around the sampling site (in meters per hectare)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">30.69898208</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>density_hedgerows_750m</attributeName>
+          <attributeDefinition>Relative density of hedgerows in a 750 meters buffer around the sampling site (in meters per hectare)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">27.45535012</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>density_hedgerows_1000m</attributeName>
+          <attributeDefinition>Relative density of hedgerows in a 1000 meters buffer around the sampling site (in meters per hectare)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0.018214632</minimum>
+                  <maximum exclusive="false">20.45344062</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>density_hedgerows_1500m</attributeName>
+          <attributeDefinition>Relative density of hedgerows in a 1500 meters buffer around the sampling site (in meters per hectare)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0.28226013</minimum>
+                  <maximum exclusive="false">15.24459232</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>density_hedgerows_2000m</attributeName>
+          <attributeDefinition>Relative density of hedgerows in a 2000 meters buffer around the sampling site (in meters per hectare)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0.793527384</minimum>
+                  <maximum exclusive="false">16.1536311</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>density_hedgerows_4000m</attributeName>
+          <attributeDefinition>Relative density of hedgerows in a 4000 meters buffer around the sampling site (in meters per hectare)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">1.067627189</minimum>
+                  <maximum exclusive="false">12.42166846</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>shannon_250m</attributeName>
+          <attributeDefinition>Land-cover Shannon diversity index in 250 meters buffer around the sampling site (no unit of measurement)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">0.855530354</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>shannon_500m</attributeName>
+          <attributeDefinition>Land-cover Shannon diversity index in 500 meters buffer around the sampling site (no unit of measurement)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">0.977506236</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>shannon_750m</attributeName>
+          <attributeDefinition>Land-cover Shannon diversity index in 750 meters buffer around the sampling site (no unit of measurement)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0.009166349</minimum>
+                  <maximum exclusive="false">1.072124368</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>shannon_1000m</attributeName>
+          <attributeDefinition>Land-cover Shannon diversity index in 1000 meters buffer around the sampling site (no unit of measurement)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0.025382592</minimum>
+                  <maximum exclusive="false">1.123819367</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>shannon_1500m</attributeName>
+          <attributeDefinition>Land-cover Shannon diversity index in 1500 meters buffer around the sampling site (no unit of measurement)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0.050243126</minimum>
+                  <maximum exclusive="false">1.129956244</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>shannon_2000m</attributeName>
+          <attributeDefinition>Land-cover Shannon diversity index in 2000 meters buffer around the sampling site (no unit of measurement)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0.066009112</minimum>
+                  <maximum exclusive="false">1.190823677</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>shannon_4000m</attributeName>
+          <attributeDefinition>Land-cover Shannon diversity index in 4000 meters buffer around the sampling site (no unit of measurement)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0.188127771</minimum>
+                  <maximum exclusive="false">1.328685868</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>grassland_250</attributeName>
+          <attributeDefinition>Percentage of land covered by grassland in different 250 m buffer sizes</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>percent</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">46.5648855</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>forest_250m</attributeName>
+          <attributeDefinition>Percentage of land covered by forest in different 250 m buffer sizes</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>percent</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">30.25980642</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>urban_250m</attributeName>
+          <attributeDefinition>Percentage of land covered by urban area in different 250 m buffer sizes</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>percent</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">7.997962303</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>grassland_500</attributeName>
+          <attributeDefinition>Percentage of land covered by grassland in different 500 m buffer sizes</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>percent</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">35.31134598</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>forest_500m</attributeName>
+          <attributeDefinition>Percentage of land covered by forest in different 500 m buffer sizes</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>percent</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">29.51362363</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>urban_500m</attributeName>
+          <attributeDefinition>Percentage of land covered by urban area in different 500 m buffer sizes</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>percent</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">8.348180199</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>grassland_750</attributeName>
+          <attributeDefinition>Percentage of land covered by grassland in different 750 m buffer sizes</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>percent</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">23.93162393</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>forest_750m</attributeName>
+          <attributeDefinition>Percentage of land covered by forest in different 750 m buffer sizes</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>percent</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">37.17890687</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>urban_750m</attributeName>
+          <attributeDefinition>Percentage of land covered by urban area in different 750 m buffer sizes</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>percent</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">14.74017887</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>grassland_1000</attributeName>
+          <attributeDefinition>Percentage of land covered by grassland in different 1000 m buffer sizes</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>percent</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">20.70600968</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>forest_1000m</attributeName>
+          <attributeDefinition>Percentage of land covered by forest in different 1000 m buffer sizes</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>percent</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">39.53725216</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>urban_1000m</attributeName>
+          <attributeDefinition>Percentage of land covered by urban area in different 1000 m buffer sizes</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>percent</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">19.74593269</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>grassland_1500</attributeName>
+          <attributeDefinition>Percentage of land covered by grassland in different 1500 m buffer sizes</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>percent</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0.026879439</minimum>
+                  <maximum exclusive="false">13.52712356</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>forest_1500m</attributeName>
+          <attributeDefinition>Percentage of land covered by forest in different 1500 m buffer sizes</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>percent</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0.014150076</minimum>
+                  <maximum exclusive="false">46.80246128</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>urban_1500m</attributeName>
+          <attributeDefinition>Percentage of land covered by urban area in different 1500 m buffer sizes</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>percent</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0.063679846</minimum>
+                  <maximum exclusive="false">28.33451252</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>grassland_2000</attributeName>
+          <attributeDefinition>Percentage of land covered by grassland in different 2000 m buffer sizes</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>percent</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0.082766305</minimum>
+                  <maximum exclusive="false">9.971589326</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>forest_2000m</attributeName>
+          <attributeDefinition>Description for forest_2000m</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>percent</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0.008754128</minimum>
+                  <maximum exclusive="false">49.82452231</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>urban_2000m</attributeName>
+          <attributeDefinition>Percentage of land covered by urban area in different 2000 m buffer sizes</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>percent</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0.421796535</minimum>
+                  <maximum exclusive="false">25.34798768</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>grassland_4000</attributeName>
+          <attributeDefinition>Percentage of land covered by grassland in different 4000 m buffer sizes</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>percent</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0.174480141</minimum>
+                  <maximum exclusive="false">8.655696087</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>forest_4000m</attributeName>
+          <attributeDefinition>Percentage of land covered by forest in different 4000 m buffer sizes</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>percent</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0.37902</minimum>
+                  <maximum exclusive="false">56.74757214</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>urban_4000m</attributeName>
+          <attributeDefinition>Percentage of land covered by urban area in different 4000 m buffer sizes</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>percent</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">1.227729864</minimum>
+                  <maximum exclusive="false">18.25776748</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>perc_rapeseed</attributeName>
+          <attributeDefinition>Percentage of rapeseed crops in a 100 m radius around each site at the sampling date</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>percent</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">1</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>nb_crops</attributeName>
+          <attributeDefinition>Number of different crops in a 100 m radius around each site at the sampling date</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>number</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>natural</numberType>
+                <bounds>
+                  <minimum exclusive="false">1</minimum>
+                  <maximum exclusive="false">4</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>date</attributeName>
+          <attributeDefinition>Description for date</attributeDefinition>
+          <storageType>date</storageType>
+          <measurementScale>
+            <dateTime>
+              <formatString>YYYY-MM-DD</formatString>
+              <dateTimeDomain/>
+            </dateTime>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute id="x">
+          <attributeName>X</attributeName>
+          <attributeDefinition>Sampling site longitude</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>natural</numberType>
+                <bounds>
+                  <minimum exclusive="false">616338</minimum>
+                  <maximum exclusive="false">742845</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+          <annotation>
+              <propertyURI label="is a">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</propertyURI>
+              <valueURI label="decimalLongitude">http://rs.tdwg.org/dwc/terms/decimalLongitude</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="y">
+          <attributeName>Y</attributeName>
+          <attributeDefinition>Sampling site latitude</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>natural</numberType>
+                <bounds>
+                  <minimum exclusive="false">6784925</minimum>
+                  <maximum exclusive="false">6847092</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+          <annotation>
+              <propertyURI label="is a">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</propertyURI>
+              <valueURI label="decimalLatitude">http://rs.tdwg.org/dwc/terms/decimalLatitude</valueURI>
+          </annotation>
+        </attribute>
+        <attribute>
+          <attributeName>recorder</attributeName>
+          <attributeDefinition>Recorder ID used for data collection on the sampling site</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <enumeratedDomain>
+                  <codeDefinition>
+                    <code>10250</code>
+                    <definition>Value: 10250 for attribute: recorder</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>11693</code>
+                    <definition>Value: 11693 for attribute: recorder</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>13289</code>
+                    <definition>Value: 13289 for attribute: recorder</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>13676</code>
+                    <definition>Value: 13676 for attribute: recorder</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>13733</code>
+                    <definition>Value: 13733 for attribute: recorder</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>13740</code>
+                    <definition>Value: 13740 for attribute: recorder</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>17232</code>
+                    <definition>Value: 17232 for attribute: recorder</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>17329</code>
+                    <definition>Value: 17329 for attribute: recorder</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>17573</code>
+                    <definition>Value: 17573 for attribute: recorder</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>17578</code>
+                    <definition>Value: 17578 for attribute: recorder</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>17598</code>
+                    <definition>Value: 17598 for attribute: recorder</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>17601</code>
+                    <definition>Value: 17601 for attribute: recorder</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>17607</code>
+                    <definition>Value: 17607 for attribute: recorder</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>17608</code>
+                    <definition>Value: 17608 for attribute: recorder</definition>
+                  </codeDefinition>
+                  <codeDefinition>
+                    <code>3760</code>
+                    <definition>Value: 3760 for attribute: recorder</definition>
+                  </codeDefinition>
+                </enumeratedDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>min_t</attributeName>
+          <attributeDefinition>Minimum temperature recorded on the sampling area during the sampling night (in celsius)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>celsius</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">8.1</minimum>
+                  <maximum exclusive="false">20</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>max_wind</attributeName>
+          <attributeDefinition>Maximum wind speed recorded on the sampling area during the sampling night (in km/h)</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>kilometerPerHour</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>whole</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">30</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>CSI_ER05</attributeName>
+          <attributeDefinition>Community specialization index calculated from species level activity on the 0.5 maximum error rate tolerance threshold</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0.004968013</minimum>
+                  <maximum exclusive="false">0.241732748</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>CSI_ER01</attributeName>
+          <attributeDefinition>Community specialization index calculated from species level activity on the 0.1 maximum error rate tolerance threshold</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="false">0.00199574</minimum>
+                  <maximum exclusive="false">0.238529275</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>richness_ER05</attributeName>
+          <attributeDefinition>Species richness calculated from species level activity on the 0.5 maximum error rate tolerance threshold</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>whole</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">11</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>richness_ER01</attributeName>
+          <attributeDefinition>Species richness calculated from species level activity on the 0.1 maximum error rate tolerance threshold</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>whole</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">9</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>Nyclei_ER05</attributeName>
+          <attributeDefinition>Number of bat passes of Nyclei specie or group recorded during the sampling night on the 0.5 maximum error rate tolerance threshold</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>number</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>whole</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">51</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>Nyclei_ER01</attributeName>
+          <attributeDefinition>Number of bat passes of Nyclei specie or group recorded during the sampling night on the 0.1 maximum error rate tolerance threshold</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>number</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>whole</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">49</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>Pippip_ER05</attributeName>
+          <attributeDefinition>Number of bat passes of Pippip specie or group recorded during the sampling night on the 0.5 maximum error rate tolerance threshold</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>number</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>whole</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">863</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>Pippip_ER01</attributeName>
+          <attributeDefinition>Number of bat passes of Pippip specie or group recorded during the sampling night on the 0.1 maximum error rate tolerance threshold</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>number</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>whole</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">842</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>Eptser_ER05</attributeName>
+          <attributeDefinition>Number of bat passes of Epster specie or group recorded during the sampling night on the 0.5 maximum error rate tolerance threshold</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>number</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>whole</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">65</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>Eptser_ER01</attributeName>
+          <attributeDefinition>Number of bat passes of Epster specie or group recorded during the sampling night on the 0.1 maximum error rate tolerance threshold</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>number</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>whole</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">40</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>Nycnoc_ER05</attributeName>
+          <attributeDefinition>Number of bat passes of Nycnoc specie or group recorded during the sampling night on the 0.5 maximum error rate tolerance threshold</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>number</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>whole</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">17</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>Nycnoc_ER01</attributeName>
+          <attributeDefinition>Number of bat passes of Nycnoc specie or group recorded during the sampling night on the 0.1 maximum error rate tolerance threshold</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>number</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>whole</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">13</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>Myo_ER05</attributeName>
+          <attributeDefinition>Number of bat passes of Myo specie or group recorded during the sampling night on the 0.5 maximum error rate tolerance threshold</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>number</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>whole</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">42</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>Myo_ER01</attributeName>
+          <attributeDefinition>Number of bat passes of Myo specie or group recorded during the sampling night on the 0.1 maximum error rate tolerance threshold</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>number</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>whole</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">33</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>Ple_ER05</attributeName>
+          <attributeDefinition>Number of bat passes of Ple specie or group recorded during the sampling night on the 0.5 maximum error rate tolerance threshold</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>number</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>whole</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">8</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>Ple_ER01</attributeName>
+          <attributeDefinition>Number of bat passes of Ple specie or group recorded during the sampling night on the 0.1 maximum error rate tolerance threshold</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>number</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>whole</numberType>
+                <bounds>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">5</maximum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>"NA"</code>
+            <codeExplanation>"No information"</codeExplanation>
+          </missingValueCode>
+        </attribute>
+      </attributeList>
+      <numberOfRecords>112</numberOfRecords>
+    </dataTable>
+  </dataset>
+</eml:eml>
