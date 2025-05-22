@@ -1,58 +1,59 @@
-<tool id="tool_odv_history" name="ODV history manager" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="22.05" license="MIT">
-    <description>reports user action performed with ODV</description>
+<tool id="tool_odv" name="ODV collection manager" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="22.05" license="MIT">
+    <description>tool for qualificiation and validation</description>
     <macros>
-        <token name="@VERSION@">1.0</token>
+        <token name="@VERSION@">1.1</token>
         <token name="@VERSION_SUFFIX@">0</token>
     </macros>
     <requirements>
-        <container type="docker">easyqcvbgc/easy-qcv_odv-history-manager_tool:@VERSION@</container>
+        <container type="docker">easyqcvbgc/easy-qcv_odv-coll-manager_tool:@VERSION@</container>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
         export HOME=\$PWD &&
         mkdir -p /runtime/config &&
         mkdir -p '/runtime/data-in-raw/' &&
-        mkdir -p '/runtime/data-in-history/' &&
+        mkdir -p '/runtime/data-in-ref/' &&
         mkdir -p '/runtime/data-out/' &&
         mkdir -p ./outputs &&
 
 	#for $i, $infile in enumerate($input_raw):
         	cp '$infile' '/runtime/data-in-raw/${infile.element_identifier}_${i}.nc' &&
-    #end for	
-    #for $i, $infile in enumerate($input_hist):            
-            cp '$infile' '/runtime/data-in-history/${infile.element_identifier}_${i}' &&
-    #end for
+        #end for	
+        #if $input_ref:
+            #for $i, $infile in enumerate($input_ref):            
+            	cp '$infile' '/runtime/data-in-ref/${infile.element_identifier}_${i}' &&
+            #end for
+        #end if
+        
         #if $config.type == 'yes':
             ## Write YAML content
             cp '${config_file}' '/runtime/config/config_user_odv_tool.yml' &&
         #end if 
 
         /app/launchers/start-app.sh &&
-        cp '/runtime/data-out/*.txt' '$output' &&
+        cp '/runtime/data-out/odv_collection.txt' '$output' &&
 
         cp -r '/runtime/data-out/' './outputs/'
     ]]></command>
     <configfiles>
         <configfile name="config_file">
     #if $config.type == 'yes':
-	default :
-	#mandatory information
-	    file_name_list_raw : '${input_raw.element_identifier}'
-	#optional
-	    operator : name_or_email_of_the_operator
-	history : 
-	    odv_collection :
-                name: "odv_collection.txt"
-                qc_convention: '${config.qc_convention}' 
-	    file_name_odv_history : '${input_history.element_identifier}'
-	    change_report : # choose the change report 
-		- EDITFLAGS
-		- EDITDATA
+            default:
+                file_name_list_raw: '${input_raw.element_identifier}'
+                operator: '${config.operator}' 
+            QV:
+                file_name_list_ref: '${input_ref.element_identifier}' 
+                odv_collection:
+                    name: "odv_collection.txt"
+                    qc_convention: '${config.qc_convention}' 
+                tool_option:
+                    subsetting: '${config.subsetting}' 
+                    plt: '${config.plt}' 
     #end if 
         </configfile>
     </configfiles>
     <inputs>
         <param name="input_raw" type="data" format="netcdf" multiple="true" label="Input raw data"/>
-        <param name="input_hist" type="data" format="txt" multiple="true" optional="true" label="Input history data"/>
+        <param name="input_ref" type="data" format="netcdf" optional="true" multiple="true" label="Input reference data"/>
         <conditional name="config">
             <param name="type" type="select" label="Select if you want to write your own configuration file or not.">   
                 <option value="no">No, I don't want to, I'll use the default one</option>
@@ -60,9 +61,22 @@
             </param>
             <when value="yes">
                 <param name="operator" type="text" value="Anonymous" label="Enter operator name"/>
-                <param name="change_report" type="select" multiple="true" label="Enter QC convention for the ODV collection output (default: ARGO)">
-                    <option value="EDITFLAGS">EDITFLAGS</option>
-                    <option value="EDITDATA">EDITDATA</option>
+                <param name="qc_convention" type="select" label="Enter QC convention for the ODV collection output (default: ARGO)">
+                    <option value="ARGO">ARGO</option>
+                    <option value="ODV">ODV</option>
+                    <option value="GTSPP">GTSPP</option>
+                    <option value="SEADATANET">SEADATANET</option>
+                    <option value="ESEAS">ESEAS</option>
+                    <option value="WOD">WOD</option>
+                    <option value="WODSTATION">WODSTATION</option>
+                    <option value="WOCEBOTTLE">WOCEBOTTLE</option>
+                    <option value="WOCECTD">WOCECTD</option>
+                    <option value="QARTOD">QARTOD</option>
+                    <option value="BODC">BODC</option>
+                    <option value="PANGAEA">PANGAEA</option>
+                    <option value="SMHI">SMHI</option>
+                    <option value="OceanSITES">OceanSITES</option>
+                    <option value="IODE">IODE</option>
                 </param>
                 <param name="subsetting" type="float" min="-1" max="1" value="1" label="Enter subsetting (default: 1)"/>
                 <param name="plt" type="float" min="0" max="1" value="0" label="Enter plt (default: 0 for QV, 1 for demo)"/>
@@ -72,8 +86,8 @@
         </conditional>
     </inputs>
     <outputs>
-        <data name="output" format="txt" label="ODV history manager output"/>
-        <collection type="list" name="files" label="ODV history collection">
+        <data name="output" format="txt" label="ODV tool output"/>
+        <collection type="list" name="files" label="ODV tool collection">
             <discover_datasets pattern="(?P&lt;designation&gt;.+)" directory="./outputs" recurse="true" format="txt"/>
         </collection>
     </outputs>
@@ -81,7 +95,6 @@
         <test expect_num_outputs="2">
             <param name="input_raw" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-odv-tool/-/raw/7b3557c89438b7347c601d6959af354103b167a1/galaxy_tool/test-data/data_raw.nc"/>
             <param name="input_ref" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-odv-tool/-/raw/7b3557c89438b7347c601d6959af354103b167a1/galaxy_tool/test-data/data_ref.nc"/>
-            <param name="mode" value="R_APP_QV"/>
             <conditional name="config">
                 <param name="type" value="no"/>
             </conditional>
@@ -94,26 +107,12 @@
         </test>
         <test expect_num_outputs="2">
             <param name="input_raw" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-odv-tool/-/raw/7b3557c89438b7347c601d6959af354103b167a1/galaxy_tool/test-data/data_raw.nc"/>
-            <param name="mode" value="R_APP_QV"/>
             <conditional name="config">
                 <param name="type" value="yes"/>
                 <param name="operator" value="anonymous"/>
                 <param name="qc_convention" value="ARGO"/>
                 <param name="subsetting" value="1"/>
                 <param name="plt" value="0"/>
-            </conditional>
-            <output name="output">
-                <assert_contents>
-                    <has_n_lines n="17966"/>
-                </assert_contents>
-            </output>
-            <output_collection name="files" type="list" count="4"/>
-        </test>
-        <test expect_num_outputs="2">
-            <param name="input_raw" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-odv-tool/-/raw/dev_virginie/galaxy_tool/test-data/data_raw.nc?ref_type=heads"/>
-            <param name="mode" value="DEMO"/>
-            <conditional name="config">
-                <param name="type" value="no"/>
             </conditional>
             <output name="output">
                 <assert_contents>
@@ -131,24 +130,26 @@ ODV collection manager
 **What it does**
 
 This tool present two type of actions :
-    - history : the tool report in the input file the ODV history including the change of QC flag 
+
+    - qualificiation & validation : the tool merges various datasets with a common vocabulary and creates a single generic ODV spreadsheet following ODV user’s guide (v5.7.0) in an automatic way.
 
 **Input description**
 
-    file_name_raw : nc file to be qualified
-    file_name_history : history txt file extracted from ODV (manualy or automatically)
-    odv_collection$name : name of the odv collection view with webODV and updated
-    odv_collection$qc_convention : tool makes mapping when its necessary and when global attribute qc_convention is available and filled in file_name_raw
+    - file_name_raw : nc file to be qualified
+    - file_name_ref : nc file used for validation / comparison. noted NULL if no files
+    - odv_collection$qc_convention : tool makes mapping when its necessary and when global attribute qc_convention is available and filled in file_name_raw
+    - tool_option$subsetting : 1 apply a subbsetting to ref data searching the smallest box (default) / 0 no subsetting / -1 apply an inverse subseting
+    - tool_option$plt : figure option to see the subseted box (0 or 1) - default name subset_box.png
 
 with default values different from NULL :
 
-    odv_collection$name : odv_collection.txt
-    odv_collection$qc_convention : ARGO
-    tool_action :
-    tool_option$subsetting :
-    tool_option$plt :
+    - odv_collection$name : odv_collection.txt
+    - odv_collection$qc_convention : ARGO
+    - tool_action :
+    - tool_option$subsetting :
+    - tool_option$plt :
 
-If the list of raw or history file name is empty, tool stops If the user make an error in the file extension, tool changes it by itself. If the user miss the yaml configuration, tool uses its default config and upload file in data-in-raw and data-in-history
+If the list of raw file name is empty, tool stops If the user make an error in the file extension, tool changes it by itself. If the user miss the yaml configuration, tool uses its default config and upload file in data-in-raw and data-in-ref
 
 **Output**
 
