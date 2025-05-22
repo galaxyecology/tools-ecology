@@ -32,7 +32,7 @@
     <inputs>
         <param name="phylogeny" type="data" format="newick" label="Phylogeny file (Newick format)" />
         <param name="occupancy" type="data" format="tabular" label="Occupancy data (Tabular format)" />
-        <param name="random_seed" type="integer" label="Seed for the random PD compute"/>
+        <param name="random_seed" type="integer" value="34" label="Seed for the random PD compute"/>
         <param name="model" type="select" label="Model for the PD compute">
             <option value="tipshuffle" selected="true">tipshuffle</option>
             <option value="rowwise">rowwise</option>
