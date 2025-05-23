@@ -15,9 +15,9 @@
         mkdir -p '/runtime/data-out/' &&
         mkdir -p ./outputs &&
 
-	#for $i, $infile in enumerate($input_raw):
+	    #for $i, $infile in enumerate($input_raw):
         	cp '$infile' '/runtime/data-in-raw/${infile.element_identifier}_${i}.nc' &&
-        #end for	
+        #end for	        
         #if $input_ref:
             #for $i, $infile in enumerate($input_ref):            
             	cp '$infile' '/runtime/data-in-ref/${infile.element_identifier}_${i}' &&
@@ -36,24 +36,32 @@
     ]]></command>
     <configfiles>
         <configfile name="config_file">
-    #if $config.type == 'yes':
-            default:
-                file_name_list_raw: '${input_raw.element_identifier}'
-                operator: '${config.operator}' 
-            QV:
-                file_name_list_ref: '${input_ref.element_identifier}' 
-                odv_collection:
-                    name: "odv_collection.txt"
-                    qc_convention: '${config.qc_convention}' 
-                tool_option:
-                    subsetting: '${config.subsetting}' 
-                    plt: '${config.plt}' 
-    #end if 
+        #if $config.type == 'yes':
+                default:
+                    file_name_list_raw: 
+                        #for $i, $infile in enumerate($input_raw):
+                            #set name_raw='${infile.element_identifier}_${i}.nc'
+                        #end for
+                        - ${name_raw}
+                    operator: '${config.operator}' 
+                QV:
+                    file_name_list_ref: 
+                        #for $i, $infile in enumerate($input_ref):
+                            #set name_ref='${infile.element_identifier}_${i}.nc'
+                        #end for
+                        - ${name_ref}
+                    odv_collection:
+                        name: "odv_collection.txt"
+                        qc_convention: '${config.qc_convention}' 
+                    tool_option:
+                        subsetting: '${config.subsetting}' 
+                        plt: '${config.plt}' 
+        #end if 
         </configfile>
     </configfiles>
     <inputs>
         <param name="input_raw" type="data" format="netcdf" multiple="true" label="Input raw data"/>
-        <param name="input_ref" type="data" format="netcdf" optional="true" multiple="true" label="Input reference data"/>
+        <param name="input_ref" type="data" format="netcdf" multiple="true" optional="true" label="Input reference data"/>
         <conditional name="config">
             <param name="type" type="select" label="Select if you want to write your own configuration file or not.">   
                 <option value="no">No, I don't want to, I'll use the default one</option>
