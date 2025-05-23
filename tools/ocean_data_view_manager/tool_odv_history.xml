@@ -33,21 +33,27 @@
     ]]></command>
     <configfiles>
         <configfile name="config_file">
-    #if $config.type == 'yes':
-	default :
-	#mandatory information
-	    file_name_list_raw : '${input_raw.element_identifier}'
-	#optional
-	    operator : name_or_email_of_the_operator
-	history : 
-	    odv_collection :
-                name: "odv_collection.txt"
-                qc_convention: '${config.qc_convention}' 
-	    file_name_odv_history : '${input_history.element_identifier}'
-	    change_report : # choose the change report 
-		- EDITFLAGS
-		- EDITDATA
-    #end if 
+        #if $config.type == 'yes':
+            default :
+            #mandatory information
+                file_name_list_raw :
+                    #for $i, $infile in enumerate($input_raw):
+                        #set name_raw='${infile.element_identifier}_${i}.nc'
+                    #end for
+                    - ${name_raw}
+            #optional
+                operator : '${config.operator}'
+            history : 
+                odv_collection :
+                        name: "odv_collection.txt"
+                        qc_convention: '${config.qc_convention}' 
+                file_name_odv_history : 
+                    #for $i, $infile in enumerate($input_hist):
+                        #set name_hist='${infile.element_identifier}_${i}.nc'
+                    #end for
+                    - ${name_hist}
+                change_report : '${config.change_report}' 
+        #end if
         </configfile>
     </configfiles>
     <inputs>
@@ -60,12 +66,27 @@
             </param>
             <when value="yes">
                 <param name="operator" type="text" value="Anonymous" label="Enter operator name"/>
+                <param name="qc_convention" type="select" label="Enter QC convention for the ODV collection output (default: ARGO)">
+                    <option value="ARGO">ARGO</option>
+                    <option value="ODV">ODV</option>
+                    <option value="GTSPP">GTSPP</option>
+                    <option value="SEADATANET">SEADATANET</option>
+                    <option value="ESEAS">ESEAS</option>
+                    <option value="WOD">WOD</option>
+                    <option value="WODSTATION">WODSTATION</option>
+                    <option value="WOCEBOTTLE">WOCEBOTTLE</option>
+                    <option value="WOCECTD">WOCECTD</option>
+                    <option value="QARTOD">QARTOD</option>
+                    <option value="BODC">BODC</option>
+                    <option value="PANGAEA">PANGAEA</option>
+                    <option value="SMHI">SMHI</option>
+                    <option value="OceanSITES">OceanSITES</option>
+                    <option value="IODE">IODE</option>
+                </param>
                 <param name="change_report" type="select" multiple="true" label="Enter QC convention for the ODV collection output (default: ARGO)">
                     <option value="EDITFLAGS">EDITFLAGS</option>
                     <option value="EDITDATA">EDITDATA</option>
                 </param>
-                <param name="subsetting" type="float" min="-1" max="1" value="1" label="Enter subsetting (default: 1)"/>
-                <param name="plt" type="float" min="0" max="1" value="0" label="Enter plt (default: 0 for QV, 1 for demo)"/>
             </when>
             <when value="no">
             </when>
