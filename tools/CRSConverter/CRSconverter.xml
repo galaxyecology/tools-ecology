@@ -2,7 +2,7 @@
     <description>from environmental predictors for species distribution modeling</description>
 
     <macros>
-        <token name="@TOOL_VERSION@">1.0</token> 
+        <token name="@TOOL_VERSION@">1.1</token> 
         <token name="@VERSION_SUFFIX@">0</token>
     </macros>
 
@@ -36,7 +36,7 @@
         #if $output_file_format == 'shp'
             &&
             mkdir -p '$shapefile.extra_files_path' &&
-            mv output.* ${shapefile.extra_files_path}
+            mv shapefile.* ${shapefile.extra_files_path}
         #else
             && mv output.* '$output'
         #end if
@@ -129,10 +129,10 @@
             <param name ="output_file_format" value="shp"/>
             
             <output file="shapefile/shapefile_shp.html" name="shapefile">
-                <extra_files type="file" name="output.shp" value="shapefile/output.shp"/>
-                <extra_files type="file" name="output.shx" value="shapefile/output.shx"/>
-                <extra_files type="file" name="output.dbf" value="shapefile/output.dbf" compare="sim_size" delta="50"/>
-                <extra_files type="file" name="output.prj" value="shapefile/output.prj"/>
+                <extra_files type="file" name="shapefile.shp" value="shapefile/shapefile.shp"/>
+                <extra_files type="file" name="shapefile.shx" value="shapefile/shapefile.shx"/>
+                <extra_files type="file" name="shapefile.dbf" value="shapefile/shapefile.dbf" compare="sim_size" delta="50"/>
+                <extra_files type="file" name="shapefile.prj" value="shapefile/shapefile.prj"/>
             </output>
         </test>
         <test expect_num_outputs="1">
