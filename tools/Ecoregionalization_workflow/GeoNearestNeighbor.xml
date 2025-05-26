@@ -34,7 +34,7 @@
     </outputs>
     <tests>
         <test>
-            <section name="env_file"
+            <section name="env_file">
                 <param name="env" value="ceamarc_env.tsv"/>
                 <param name="envgeolat" value="2"/>
                 <param name="envgeolong" value="1"/>
