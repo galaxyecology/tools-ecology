@@ -33,7 +33,7 @@
       <data name="info_out" from_work_dir="infos_file.tsv" format="tabular" label="Information file"/>
     </outputs>
     <tests>
-        <test>x
+        <test>
             <section name="env_file"
                 <param name="env" value="ceamarc_env.tsv"/>
                 <param name="envgeolat" value="2"/>
