@@ -31,7 +31,7 @@ save_as_image_fun <- function(format){
 
 
 save_as_shp_fun <- function(){
-    write_sf(Transformed_spacial_coordinates, "output.shp")
+    write_sf(Transformed_spacial_coordinates, "shapefile.shp")
 }
 
 
