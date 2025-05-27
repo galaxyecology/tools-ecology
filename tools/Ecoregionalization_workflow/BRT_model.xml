@@ -1,4 +1,4 @@
-<tool id="ecoregion_brt_analysis" name="BRT tool prediction" version="0.1.0+galaxy0" profile="22.05">
+<tool id="ecoregion_brt_analysis" name="BRT tool prediction" version="0.1.2+galaxy0" profile="23.2">
     <description>for species distribution modelling</description>
     <requirements>
        <requirement type="package" version="4.3.3">r-base</requirement>
@@ -26,7 +26,7 @@
               <option value=",">Comma</option>
       </param>
       <param type="data" name="species_files" label="Input your occurrences data file(s) containing also the environemental caracteristics where the species has been observe (tabular format only)" format="tabular" multiple="True" help="See example below"/>
-      <param name="dec_species" type="select" label="What's the decimal separator of your occurrences data file(s) ?" help="It must be the same for all your occurences data files" >
+      <param name="dec_species" type="select" label="What's the decimal separator of your occurrences data file(s) ?" help="It must be the same for all your occurences data files">
               <option value=".">Dot</option>
               <option value=",">Comma</option>
       </param>
@@ -51,8 +51,8 @@
             <param name="enviro" value="ceamarc_env.tsv"/>
             <param name="species_files" value="cnidaria_filtered.tsv"/>
             <param name="abioticname" value="3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19"/>
-            <param name="dec_env" value="Dot"/>
-            <param name="dec_species" value="Comma"/>
+            <param name="dec_env" value="."/>
+            <param name="dec_species" value=","/>
             <output_collection name='outputpred' type = "list" count="1"/>
             <output_collection name='outputval' type = "list" count="1"/>
             <output_collection name='outputspdistri' type = "list" count="2"/>
