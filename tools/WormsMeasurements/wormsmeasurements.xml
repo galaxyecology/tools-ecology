@@ -22,8 +22,11 @@ Rscript '$__tool_directory__/wormsmeasurements.R'
 
     <inputs>
         <param name="data" type="data" format="tabular" label="occurrence data"/>
-        <param name="measurement_types" type="text" format="txt" label="list of measurement types"/>
-        <param name="scientic_name" type="text" format="txt" label="scientific names column name" value="scientificName"/>
+        <param name="measurement_types" type="text" format="txt" label="list of measurement types">
+        </param>
+        <param name="scientic_name" type="text" format="txt" label="scientific names column name" value="scientificName" optional="false">
+            <validator type="regex" message="this field can't be empty">.+</validator>
+        </param>
         <param name="include_inherited" type="boolean" label="include attributes inherited from parent taxon" checked="false"/>        
         <param name="pivot_wider" type="boolean" label="one hot encoding on the measurement types" checked="false"/>
         <param name="exclude_NA" type="boolean" label="exclude lines with missing values (NA)" checked="false"/>
