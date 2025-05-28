@@ -22,13 +22,13 @@
     <inputs>
       <param name="enviro" type="data" format="tabular" label="Input your environment data file of your study area (tabular format only)" help="See example below"/>
       <param name="dec_env" type="select" label="What's the decimal separator of your environement data file ?">
-              <option value=".">Dot</option>
-              <option value=",">Comma</option>
+              <option value="Dot">Dot</option>
+              <option value="Comma">Comma</option>
       </param>
       <param type="data" name="species_files" label="Input your occurrences data file(s) containing also the environemental caracteristics where the species has been observe (tabular format only)" format="tabular" multiple="True" help="See example below"/>
       <param name="dec_species" type="select" label="What's the decimal separator of your occurrences data file(s) ?" help="It must be the same for all your occurences data files">
-              <option value=".">Dot</option>
-              <option value=",">Comma</option>
+              <option value="Dot">Dot</option>
+              <option value="Comma">Comma</option>
       </param>
       <param name="abioticname" type="data_column" label="Choose column(s) where your abiotic parameter are in your environment data file." data_ref="enviro" multiple="true" use_header_names="true"/>
     </inputs>
@@ -51,8 +51,8 @@
             <param name="enviro" value="ceamarc_env.tsv"/>
             <param name="species_files" value="cnidaria_filtered.tsv"/>
             <param name="abioticname" value="3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19"/>
-            <param name="dec_env" value="."/>
-            <param name="dec_species" value=","/>
+            <param name="dec_env" value="Dot"/>
+            <param name="dec_species" value="Comma"/>
             <output_collection name='outputpred' type = "list" count="1"/>
             <output_collection name='outputval' type = "list" count="1"/>
             <output_collection name='outputspdistri' type = "list" count="2"/>
@@ -112,5 +112,3 @@ This tool gives in output a file containing the predictions of the probability o
        <citation type="doi">10.32614/CRAN.package.ggplot2</citation>
     </citations>
 </tool>
-
-
