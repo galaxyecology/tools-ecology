@@ -1,11 +1,11 @@
-"decimalLatitude"	"decimalLongitude"	"scientificName"	"Development_direct development"	"Development_planktotrophic"	" Fecundity_"
--49.355	70.215	"Abatus cordatus"	0	1	0
--66.963303	163.223297	"Ctenocidaris spinosa"	1	0	0
--42.45	-74.75833333	"Loxechinus albus"	0	1	0
--37.606167	176.705167	"Ogmocidaris benhami"	0	1	0
--36.201698	175.834198	"Peronella hinemoae"	0	1	0
--37.494667	176.672501	"Phormosoma bursarium"	0	1	0
--43.469	173.572	"Pseudechinus huttoni"	0	1	0
--47.7	179.45	"Pseudechinus novaezealandiae"	0	1	0
--74.72	164.2183333	"Sterechinus neumayeri"	0	1	0
--70.51166667	-8.801	"Sterechinus sp"	NA	NA	0
+"decimalLatitude"	"decimalLongitude"	"scientificName"	"Fecundity"	"Development_direct development"	"Development_planktotrophic"
+-49.355	70.215	"Abatus cordatus"	NA	0	1
+-66.963303	163.223297	"Ctenocidaris spinosa"	NA	1	0
+-42.45	-74.75833333	"Loxechinus albus"	NA	0	1
+-37.606167	176.705167	"Ogmocidaris benhami"	NA	0	1
+-36.201698	175.834198	"Peronella hinemoae"	NA	0	1
+-37.494667	176.672501	"Phormosoma bursarium"	NA	0	1
+-43.469	173.572	"Pseudechinus huttoni"	NA	0	1
+-47.7	179.45	"Pseudechinus novaezealandiae"	NA	0	1
+-74.72	164.2183333	"Sterechinus neumayeri"	NA	0	1
+-70.51166667	-8.801	"Sterechinus sp"	NA	NA	NA

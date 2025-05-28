@@ -21,8 +21,8 @@ if (length(args)==0)
     enviro <- args[1]
     species_files <- args[2]
     abio_para <- args[3]
-    dec_env <- args[8]
-    dec_species <- args[9]
+    dec_env <- ifelse(args[8]=="Dot", ".", ",")
+    dec_species <- ifelse(args[9]=="Dot", ".", ",")
 }
 
 ### load data
