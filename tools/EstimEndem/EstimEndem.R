@@ -43,7 +43,7 @@ if (length(args)<5){stop('Usage : sparseMatrix.csv tree.txt grid.shp nb_clust cl
   select_linkage(phylo_beta[[1]])
   
   #select optimal number of clusters with selected method
-  optim <- optimal_phyloregion(phylo_beta[[3]], k = 30)
+  optim <- optimal_phyloregion(phylo_beta[[3]])
   print(paste("the best number of cluster is :", optim$optimal$k))
   #plot(optim$df$k, optim$df$ev, pch = 20)  # k - nbr of clusters VS explained variance given k
   # k has to be selected by a user
