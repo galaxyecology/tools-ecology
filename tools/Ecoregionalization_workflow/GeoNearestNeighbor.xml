@@ -1,4 +1,4 @@
-<tool id="ecoregion_GeoNearestNeighbor" name="GeoNearestNeighbor" version="0.1.0+galaxy0" profile="21.05">
+<tool id="ecoregion_GeoNearestNeighbor" name="GeoNearestNeighbor" version="0.1.2+galaxy0" profile="23.2">
     <description>Merge two data tables by finding the closest points based on latitude and longitude coordinates (WGS84 projection).</description>
     <requirements>
        <requirement type="package" version="4.3.2">r-base</requirement>
@@ -34,12 +34,16 @@
     </outputs>
     <tests>
         <test>
-            <param name="env" value="ceamarc_env.tsv"/>
-            <param name="envgeolat" value="2"/>
-            <param name="envgeolong" value="1"/>
-            <param name="occ" value="fish_wide.tsv"/>
-            <param name="occgeolat" value="1"/>
-            <param name="occgeolong" value="2"/>
+            <section name="env_file">
+                <param name="env" value="ceamarc_env.tsv"/>
+                <param name="envgeolat" value="2"/>
+                <param name="envgeolong" value="1"/>
+            </section>
+            <section name="occ_file">
+                <param name="occ" value="fish_wide.tsv"/>
+                <param name="occgeolat" value="1"/>
+                <param name="occgeolong" value="2"/>
+            </section>
             <output name='occ_env_out'>
                 <assert_contents>
             	    <has_size value="2234" delta="50"/>
