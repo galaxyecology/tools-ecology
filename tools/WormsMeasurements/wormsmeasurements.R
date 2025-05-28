@@ -21,8 +21,9 @@ include_inherited <- ifelse(args[4]=="true", T, F)
 pivot_wider <- ifelse(args[5]=="true", T, F)
 exclude_NA <- ifelse(args[6]=="true", T, F)
 
-regex_find <- "^([A-Z][a-z]+)\\s+([a-z-]+).*"
-regex_replace <- "\\1 \\2"
+# regex to only keep genus and specific epithet from scientific names
+regex_find <- "^([A-Z][^A-Z(]+)(.*)$"
+regex_replace <- "\\1"
 
 
 # function to extract the measurement values from the attributes data tibble
@@ -49,7 +50,7 @@ extract_traits_values <- function(traits_data) {
 
 # function to call the call the WoRMS API and get the measurement values
 get_life_history_traits <- function(scientific_name) {
-  clean_scientific_name <- gsub(regex_find, regex_replace, scientific_name)
+  clean_scientific_name <- trimws(gsub(regex_find, regex_replace, scientific_name))
 
   if (clean_scientific_name %in% names(cache)) { 
     return(cache[[clean_scientific_name]])  
