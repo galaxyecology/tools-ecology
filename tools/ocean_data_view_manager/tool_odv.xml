@@ -111,7 +111,7 @@
                     <has_n_lines n="26377"/>
                 </assert_contents>
             </output>
-            <output_collection name="files" type="list" count="4"/>
+            <output_collection name="files" type="list" count="3"/>
         </test>
         <test expect_num_outputs="2">
             <param name="input_raw" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-odv-tool/-/raw/7b3557c89438b7347c601d6959af354103b167a1/galaxy_tool/test-data/data_raw.nc"/>
@@ -127,7 +127,7 @@
                     <has_n_lines n="17966"/>
                 </assert_contents>
             </output>
-            <output_collection name="files" type="list" count="4"/>
+            <output_collection name="files" type="list" count="3"/>
         </test>
     </tests>
     <help><![CDATA[
