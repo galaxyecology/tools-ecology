@@ -166,15 +166,17 @@
             <param name="input_raw" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-bgc-tools/-/raw/3ae832154f55c76a7c95a5dc1e6bb19946917233/galaxy_tool/test-data/QCV_harmonizer_NetCDF_data_0_qced.nc"/>
             <conditional name="config">
                 <param name="type" value="yes"/>
-                <conditional name="bypass">
-                    <param name="bypass_value" value="0"/>
-                </conditional>
-                <param name="ml_regression" value="0"/>
-                <param name="favored" value="FALSE"/>
-                <conditional name="method_ref">
-                    <param name="method_ref_name" value="model"/>
-                    <param name="reference" value="woa"/>
-                </conditional>    
+		<repeat name="section_config">
+                    <conditional name="bypass">
+                        <param name="bypass_value" value="0"/>
+                    </conditional>
+                    <param name="ml_regression" value="0"/>
+                    <param name="favored" value="FALSE"/>
+                    <conditional name="method_ref">
+                        <param name="method_ref_name" value="model"/>
+                        <param name="reference" value="woa"/>
+                    </conditional>  
+		</repeat>
             </conditional>
             <output name="output">
                 <assert_contents>
