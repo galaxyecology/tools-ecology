@@ -55,9 +55,9 @@
                             method_raw : 
                                 name : method1
                                 options : 
-                                    bypass_P : '${file.bypass.bypass_value}'
+                                    bypass_P : '${file.bypass.p_value}'
                                     P : '${file.bypass.p_value}'
-                                    multiple_linear_regression : '${file.ml_regression}'
+                                    multiple_linear_regression : '${file.regression.reg_value}'
                                     single_favored : '${file.favored}'
                             method_ref : 
                                 name : '${file.method_ref.method_ref_name}'
@@ -71,11 +71,11 @@
         </configfile>
     </configfiles>
     <inputs>
-        <param name="input_raw" type="data" format="netcdf" multiple="true" label="Input raw data"/>
-        <param name="input_ref" type="data" format="netcdf" optional="true" multiple="true" label="Input reference data"/>
-        <param name="param_qc_bad" type="text" optional="true" value="4" label=""/>
-        <param name="param_qc_toreplaced" type="text" optional="true" value="3" label=""/>
-        <param name="param_qc_replacedby" type="text" optional="true" value="1" label=""/>
+        <param name="input_raw" type="data" format="netcdf" multiple="true" label="Input harmonized netcdf data" help="This netcdf should come from the ODV history manager or the QCV harmonizer."/>
+        <param name="input_ref" type="data" format="netcdf" optional="true" multiple="true" label="Input reference data" help="Comes from QCV harmonizer"/>
+        <param name="param_qc_bad" type="text" optional="true" value="4" label="Bad data QC value"/>
+        <param name="param_qc_toreplaced" type="text" optional="true" value="3" label="Nitrate QC value to be replaced"/>
+        <param name="param_qc_replacedby" type="text" optional="true" value="1" label="QC value of replacement"/>
         <!--<param name="mode" type="select" label="Select in which mode you want to run the tool">
             <option value="R_APP_CN">
                 QV that creates a odv collection with raw and ref files to qualify
@@ -95,9 +95,9 @@
                         <option value="method1">method1<option>
                     </param>-->
                     <conditional name="bypass">
-                        <param name="bypass_value" type="select" label="bypass">
-                            <option value="0">Tool defines the P of reference for adjustment</option>
-                            <option value="1">user defines P and chooses P below</option>
+                        <param name="bypass_value" type="select" label="Bypass">
+                            <option value="0">The tool defines the P of reference for adjustment</option>
+                            <option value="1">The user defines P and chooses P below</option>
                         </param>
                         <when value="0">
                             <param name="p_value" type="select" label="Fixed P_value">
@@ -105,14 +105,29 @@
                             </param>
                         </when>
                         <when value="1">
-                            <param name="p_value" type="integer" value="0" label="Enter P_value"/>
+                            <param name="p_value" type="integer" value="0" min="0" max="20000" label="Enter P_value"/>
                         </when>
                     </conditional>
-                    <param name="ml_regression" type="select" label="Enter multiple linear regression">
-                        <option value="0">Automatic choice of N</option>
-                        <option value="1">Single linear regression</option>
-                        <option value="N>1">N linear regressions</option>
-                    </param>
+                    <conditional name="regression">
+                        <param name="ml_regression" type="select" label="Enter multiple linear regression">
+                            <option value="0">Automatic choice of N</option>
+                            <option value="1">Single linear regression</option>
+                            <option value="N>1">N linear regressions</option>
+                        </param>
+                        <when value="0">
+                            <param name="reg_value" type="select" label="Regression choice">
+                                <option value="0">Automatic choice of N</option>
+                            </param>
+                        </when>    
+                        <when value="1">
+                            <param name="reg_value" type="select" label="Regression choice">
+                                <option value="1">Single linear regression</option>
+                            </param>
+                        </when>
+                        <when value="N>1">
+                            <param name="reg_value" type="integer" min="0" label="Regression choice, enter the N linear regressions">
+                        </when> 
+                    </conditional>                  
                     <param name="favored" type="boolean" label="Enter FALSE or TRUE to favored the single linear regression"/>
                     <conditional name="method_ref">
                         <param name="method_ref_name" type="select" label="Reference method">
@@ -121,7 +136,6 @@
                         </param>
                         <when value="clim">
                             <param name="reference" type="select" label="Reference">
-                                <option value="canyon_b">CanyonB</option>
                                 <option value="woa">WOA</option>
                             </param>
                             <param name="resolution" type="select" label="Resolution">
@@ -133,7 +147,7 @@
                         <when value="model">
                             <param name="reference" type="select" label="Reference">
                                 <option value="canyon_b">CanyonB</option>
-                                <option value="woa">WOA</option>
+                                <option value="canyon_med">Canyon Med</option>
                             </param>
                         </when>
                     </conditional>
@@ -144,9 +158,11 @@
         </conditional>
     </inputs>
     <outputs>
-        <data name="output" format="txt" label="BGC calibration output"/>
-        <collection type="list" name="files" label="BGC calibration collection">
-            <discover_datasets pattern="(?P&lt;designation&gt;.+)" directory="./outputs" recurse="true" format="txt"/>
+        <collection type="list" name="nc_files" label="BGC calibration netcdf collection">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.nc" directory="./outputs" recurse="true" format="netcdf"/>
+        </collection>
+        <collection type="list" name="png_files" label="BGC calibration figure collection">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" directory="./outputs" recurse="true" format="png"/>
         </collection>
     </outputs>
     <tests>
@@ -155,12 +171,9 @@
             <conditional name="config">
                 <param name="type" value="no"/>
             </conditional>
-            <output name="output">
-                <assert_contents>
-                    <has_n_lines n="0"/>
-                </assert_contents>
-            </output>
-            <output_collection name="files" type="list" count="6"/>
+            <output_collection name="nc_files" type="list" count="1"/>
+            <output_collection name="png_files" type="list" count="3"/>
+
         </test>
         <test expect_num_outputs="2">
             <param name="input_raw" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-bgc-tools/-/raw/3ae832154f55c76a7c95a5dc1e6bb19946917233/galaxy_tool/test-data/QCV_harmonizer_NetCDF_data_0_qced.nc"/>
@@ -178,12 +191,8 @@
                     </conditional>  
 		</repeat>
             </conditional>
-            <output name="output">
-                <assert_contents>
-                    <has_n_lines n="0"/>
-                </assert_contents>
-            </output>
-            <output_collection name="files" type="list" count="6"/>
+            <output_collection name="nc_files" type="list" count="1"/>
+            <output_collection name="png_files" type="list" count="3"/>
         </test>
     </tests>
     <help><![CDATA[
