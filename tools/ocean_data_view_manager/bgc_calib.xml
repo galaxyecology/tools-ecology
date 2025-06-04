@@ -125,7 +125,7 @@
                             </param>
                         </when>
                         <when value="N>1">
-                            <param name="reg_value" type="integer" min="0" label="Regression choice, enter the N linear regressions">
+                            <param name="reg_value" type="integer" min="0" label="Regression choice, enter the N linear regressions"/>
                         </when> 
                     </conditional>                  
                     <param name="favored" type="boolean" label="Enter FALSE or TRUE to favored the single linear regression"/>
