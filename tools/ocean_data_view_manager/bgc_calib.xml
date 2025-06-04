@@ -32,7 +32,6 @@
         #set $mode="R_APP_CN"
         /app/launchers/start-app.sh $mode &&
 
-
         cp -r '/runtime/data-out/' './outputs/'
     ]]></command>
     <configfiles>
