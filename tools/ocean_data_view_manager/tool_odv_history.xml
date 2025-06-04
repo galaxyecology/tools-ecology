@@ -17,15 +17,15 @@
 
 	#for $i, $infile in enumerate($input_raw):
         	cp '$infile' '/runtime/data-in-raw/${infile.element_identifier}_${i}.nc' &&
-    #end for
-    #if $input_odv:
-        #for $i, $infile in enumerate($input_odv):            
-                cp '$infile' '/runtime/data-in-history/${infile.element_identifier}_${i}' &&
         #end for
-    #end if	
-    #for $i, $infile in enumerate($input_hist):            
+        #if $input_odv:
+            #for $i, $infile in enumerate($input_odv):            
+                cp '$infile' '/runtime/data-in-history/${infile.element_identifier}_${i}' &&
+            #end for
+        #end if	
+        #for $i, $infile in enumerate($input_hist):            
             cp '$infile' '/runtime/data-in-history/${infile.element_identifier}_${i}' &&
-    #end for
+        #end for
         #if $config.type == 'yes':
             ## Write YAML content
             cp '${config_file}' '/runtime/config/config_user_odv_tool.yml' &&
