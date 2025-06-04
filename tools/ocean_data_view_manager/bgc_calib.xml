@@ -1,0 +1,243 @@
+<tool id="tool_biogeochemical_calibration" name="BioGeoChemical calibration" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="22.05" license="MIT">
+    <description>for sensors according to Argo recommendations</description>
+    <macros>
+        <token name="@VERSION@">0.1</token>
+        <token name="@VERSION_SUFFIX@">0</token>
+    </macros>
+    <requirements>
+        <container type="docker">easyqcvbgc/easy-qcv_calibration-methods_tool:@VERSION@</container>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        export HOME=\$PWD &&
+        mkdir -p /runtime/config &&
+        mkdir -p '/runtime/data-in-raw/' &&
+        mkdir -p '/runtime/data-in-ref/' &&
+        mkdir -p '/runtime/data-out/' &&
+        mkdir -p ./outputs &&
+
+	#for $i, $infile in enumerate($input_raw):
+            cp '$infile' '/runtime/data-in-raw/${infile.element_identifier}_${i}.nc' &&
+        #end for	
+        #if $input_ref:
+            #for $i, $infile in enumerate($input_ref):            
+            	cp '$infile' '/runtime/data-in-ref/${infile.element_identifier}_${i}' &&
+            #end for
+        #end if
+        
+        #if $config.type == 'yes':
+            ## Write YAML content
+            cp '${config_file}' '/runtime/config/config_user_odv_tool.yml' &&
+        #end if 
+
+        #set $mode="R_APP_CN"
+        /app/launchers/start-app.sh $mode &&
+
+        cp -r '/runtime/data-out/' './outputs/'
+    ]]></command>
+    <configfiles>
+        <configfile name="config_file">
+        #if $config.type == 'yes':
+            #for $i, $file in enumerate($config.section_config):
+                default :
+                    file_name_list_raw:
+                        #for $i, $infile in enumerate($input_raw):
+                            #set name_raw='${infile.element_identifier}_${i}.nc'
+                        #end for
+                        - ${name_raw}  
+                    param : nitrate
+                    param_qc :
+                        bad : '${param_qc_bad}'
+                        to_be_replaced : '${param_qc_toreplaced}'
+                        replaced_by : '${param_qc_replacedby}'
+                    calib_configs :
+                        - number : 1  
+                            method_raw : 
+                                name : method1
+                                options : 
+                                    bypass_P : '${file.bypass.p_value}'
+                                    P : '${file.bypass.p_value}'
+                                    multiple_linear_regression : '${file.regression.reg_value}'
+                                    single_favored : '${file.favored}'
+                            method_ref : 
+                                name : '${file.method_ref.method_ref_name}'
+                                reference : 
+                                    name : '${file.method_ref.reference}'
+                                    #if '${file.method_ref.reference}' == 'woa':
+                                        resolution : '${file.method_ref.resolution}'
+                                    #end if
+            #end for
+        #end if
+        </configfile>
+    </configfiles>
+    <inputs>
+        <param name="input_raw" type="data" format="netcdf" multiple="true" label="Input harmonized netcdf data" help="This netcdf should come from the ODV history manager or the QCV harmonizer."/>
+        <param name="input_ref" type="data" format="netcdf" optional="true" multiple="true" label="Input reference data" help="Comes from QCV harmonizer"/>
+        <param name="param_qc_bad" type="text" optional="true" value="4" label="Bad data QC value"/>
+        <param name="param_qc_toreplaced" type="text" optional="true" value="3" label="Nitrate QC value to be replaced"/>
+        <param name="param_qc_replacedby" type="text" optional="true" value="1" label="QC value of replacement"/>
+        <!--<param name="mode" type="select" label="Select in which mode you want to run the tool">
+            <option value="R_APP_CN">
+                QV that creates a odv collection with raw and ref files to qualify
+            </option>
+            <option value="DEMO">
+                Valide with ODV demo that performes the demo
+            </option>
+        </param>-->
+        <conditional name="config">
+            <param name="type" type="select" label="Select if you want to write your own configuration file or not.">   
+                <option value="no">No, I don't want to, I'll use the default one</option>
+                <option value="yes">Yes, I to write my own configuration file</option>
+            </param>
+            <when value="yes">
+                <repeat name="section_config" title="Configurations" min="0" max="10">
+                    <!--<param name="method_name" type="select" label="Enter methode name">
+                        <option value="method1">method1<option>
+                    </param>-->
+                    <conditional name="bypass">
+                        <param name="bypass_value" type="select" label="Bypass">
+                            <option value="0">The tool defines the P of reference for adjustment</option>
+                            <option value="1">The user defines P and chooses P below</option>
+                        </param>
+                        <when value="0">
+                            <param name="p_value" type="select" label="Fixed P_value">
+                                <option value="NULL">In this case the P value is NULL (no option)</option>
+                            </param>
+                        </when>
+                        <when value="1">
+                            <param name="p_value" type="integer" value="0" min="0" max="20000" label="Enter P_value"/>
+                        </when>
+                    </conditional>
+                    <conditional name="regression">
+                        <param name="ml_regression" type="select" label="Enter multiple linear regression">
+                            <option value="0">Automatic choice of N</option>
+                            <option value="1">Single linear regression</option>
+                            <option value="N>1">N linear regressions</option>
+                        </param>
+                        <when value="0">
+                            <param name="reg_value" type="select" label="Regression choice">
+                                <option value="0">Automatic choice of N</option>
+                            </param>
+                        </when>    
+                        <when value="1">
+                            <param name="reg_value" type="select" label="Regression choice">
+                                <option value="1">Single linear regression</option>
+                            </param>
+                        </when>
+                        <when value="N>1">
+                            <param name="reg_value" type="integer" min="0" label="Regression choice, enter the N linear regressions"/>
+                        </when> 
+                    </conditional>                  
+                    <param name="favored" type="boolean" label="Enter FALSE or TRUE to favored the single linear regression"/>
+                    <conditional name="method_ref">
+                        <param name="method_ref_name" type="select" label="Reference method">
+                            <option value="model">Model</option>
+                            <option value="clim">Climatology</option>
+                        </param>
+                        <when value="clim">
+                            <param name="reference" type="select" label="Reference">
+                                <option value="woa">WOA</option>
+                            </param>
+                            <param name="resolution" type="select" label="Resolution">
+                                <option value="annual">Annual</option>
+                                <option value="monthly">Monthly</option>
+                                <option value="seasonal">Seasonal</option>
+                            </param>
+                        </when>
+                        <when value="model">
+                            <param name="reference" type="select" label="Reference">
+                                <option value="canyon_b">CanyonB</option>
+                                <option value="canyon_med">Canyon Med</option>
+                            </param>
+                        </when>
+                    </conditional>
+                </repeat>
+            </when>
+            <when value="no">
+            </when>
+        </conditional>
+    </inputs>
+    <outputs>
+        <collection type="list" name="nc_files" label="BGC calibration netcdf collection">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.nc" directory="./outputs" recurse="true" format="netcdf"/>
+        </collection>
+        <collection type="list" name="png_files" label="BGC calibration figure collection">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" directory="./outputs" recurse="true" format="png"/>
+        </collection>
+    </outputs>
+    <tests>
+        <test expect_num_outputs="2">
+            <param name="input_raw" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-bgc-tools/-/raw/3ae832154f55c76a7c95a5dc1e6bb19946917233/galaxy_tool/test-data/QCV_harmonizer_NetCDF_data_0_qced.nc"/>
+            <conditional name="config">
+                <param name="type" value="no"/>
+            </conditional>
+            <output_collection name="nc_files" type="list" count="1"/>
+            <output_collection name="png_files" type="list" count="4"/>
+
+        </test>
+        <test expect_num_outputs="2">
+            <param name="input_raw" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-bgc-tools/-/raw/3ae832154f55c76a7c95a5dc1e6bb19946917233/galaxy_tool/test-data/QCV_harmonizer_NetCDF_data_0_qced.nc"/>
+            <conditional name="config">
+                <param name="type" value="yes"/>
+		<repeat name="section_config">
+                    <conditional name="bypass">
+                        <param name="bypass_value" value="0"/>
+                    </conditional>
+                    <conditional name="regression">
+                        <param name="ml_regression" value="0"/>
+                        <param name="reg_value" value="0"/>
+                    </conditional>
+                    <param name="favored" value="FALSE"/>
+                    <conditional name="method_ref">
+                        <param name="method_ref_name" value="model"/>
+                        <param name="reference" value="canyon_b"/>
+                    </conditional>  
+		</repeat>
+            </conditional>
+            <output_collection name="nc_files" type="list" count="1"/>
+            <output_collection name="png_files" type="list" count="4"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+======================
+ODV collection manager
+======================
+
+**What it does**
+
+This tool present two type of actions :
+
+    - qualificiation & validation : the tool merges various datasets with a common vocabulary and creates a single generic ODV spreadsheet following ODV user’s guide (v5.7.0) in an automatic way.
+
+**Input description**
+
+    - file_name_raw : nc file to be qualified
+    - file_name_ref : nc file used for validation / comparison. noted NULL if no files
+    - odv_collection$qc_convention : tool makes mapping when its necessary and when global attribute qc_convention is available and filled in file_name_raw
+    - tool_option$subsetting : 1 apply a subbsetting to ref data searching the smallest box (default) / 0 no subsetting / -1 apply an inverse subseting
+    - tool_option$plt : figure option to see the subseted box (0 or 1) - default name subset_box.png
+
+with default values different from NULL :
+
+    - odv_collection$name : odv_collection.txt
+    - odv_collection$qc_convention : ARGO
+    - tool_action :
+    - tool_option$subsetting :
+    - tool_option$plt :
+
+If the list of raw file name is empty, tool stops If the user make an error in the file extension, tool changes it by itself. If the user miss the yaml configuration, tool uses its default config and upload file in data-in-raw and data-in-ref
+
+**Output**
+
+This tool creates a single generic ODV spreadsheet following ODV user’s guide 
+
+    ]]></help>
+    <citations>
+        <citation type="bibtex">
+            @Manual{,
+            title = {ODV tool},
+            author = {Pokapok},
+            year = {2024},
+            note = {https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-odv-tool}
+        </citation>    
+    </citations>
+</tool>

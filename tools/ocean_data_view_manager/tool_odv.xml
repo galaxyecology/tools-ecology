@@ -1,11 +1,11 @@
 <tool id="tool_odv" name="ODV collection manager" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="22.05" license="MIT">
     <description>tool for qualificiation and validation</description>
     <macros>
-        <token name="@VERSION@">0.2</token>
+        <token name="@VERSION@">1.1</token>
         <token name="@VERSION_SUFFIX@">0</token>
     </macros>
     <requirements>
-        <container type="docker">pokapok/qcv-odv-tool:@VERSION@</container>
+        <container type="docker">easyqcvbgc/easy-qcv_odv-coll-manager_tool:@VERSION@</container>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
         export HOME=\$PWD &&
@@ -15,50 +15,53 @@
         mkdir -p '/runtime/data-out/' &&
         mkdir -p ./outputs &&
 
-        cp '$input_raw' '/runtime/data-in-raw/${input_raw.element_identifier}' &&
-        #if $input_ref:            
-            cp '$input_ref' '/runtime/data-in-ref/${input_ref.element_identifier}' &&
+	#for $i, $infile in enumerate($input_raw):
+            cp '$infile' '/runtime/data-in-raw/${infile.element_identifier}_${i}.nc' &&
+        #end for	        
+        #if $input_ref:
+            #for $i, $infile in enumerate($input_ref):            
+            	cp '$infile' '/runtime/data-in-ref/${infile.element_identifier}_${i}' &&
+            #end for
         #end if
-
         
         #if $config.type == 'yes':
             ## Write YAML content
             cp '${config_file}' '/runtime/config/config_user_odv_tool.yml' &&
         #end if 
 
-        /app/launchers/start-app.sh '$mode' &&
+        /app/launchers/start-app.sh &&
+        cp '/runtime/data-out/odv_collection.txt' '$output' &&
 
-        #if $mode == 'R_APP_QV':
-            cp '/runtime/data-out/odv_collection.txt' '$output' &&
-        #else:
-            cp '/runtime/data-out/demo_odv_collection.txt' '$output' &&
-        #end if
         cp -r '/runtime/data-out/' './outputs/'
     ]]></command>
     <configfiles>
         <configfile name="config_file">
-    #if $config.type == 'yes':
-            default:
-                file_name_list_raw: '${input_raw.element_identifier}'
-                operator: '${config.operator}' 
-            QV:
-                file_name_list_ref: '${input_ref.element_identifier}' 
-                odv_collection:
-                    name: "odv_collection.txt"
-                    qc_convention: '${config.qc_convention}' 
-                tool_option:
-                    subsetting: '${config.subsetting}' 
-                    plt: '${config.plt}' 
-    #end if 
+        #if $config.type == 'yes':
+                default:
+                    file_name_list_raw: 
+                        #for $i, $infile in enumerate($input_raw):
+                            #set name_raw='${infile.element_identifier}_${i}.nc'
+                        #end for
+                        - ${name_raw}
+                    operator: '${config.operator}' 
+                QV:
+                    file_name_list_ref: 
+                        #for $i, $infile in enumerate($input_ref):
+                            #set name_ref='${infile.element_identifier}_${i}.nc'
+                        #end for
+                        - ${name_ref}
+                    odv_collection:
+                        name: "odv_collection.txt"
+                        qc_convention: '${config.qc_convention}' 
+                    tool_option:
+                        subsetting: '${config.subsetting}' 
+                        plt: '${config.plt}' 
+        #end if 
         </configfile>
     </configfiles>
     <inputs>
-        <param name="input_raw" type="data" format="netcdf" label="Input raw data"/>
-        <param name="input_ref" type="data" format="netcdf" optional="true" label="Input reference data"/>
-        <param name="mode" type="select" label="Select in which mode you want to run the tool">
-            <option value="R_APP_QV">QV that creates a odv collection with raw and ref files to qualify</option>
-            <option value="DEMO">Valide with ODV demo that performes the demo</option>
-        </param>
+        <param name="input_raw" type="data" format="netcdf" multiple="true" label="Input raw data"/>
+        <param name="input_ref" type="data" format="netcdf" multiple="true" optional="true" label="Input reference data"/>
         <conditional name="config">
             <param name="type" type="select" label="Select if you want to write your own configuration file or not.">   
                 <option value="no">No, I don't want to, I'll use the default one</option>
@@ -100,7 +103,6 @@
         <test expect_num_outputs="2">
             <param name="input_raw" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-odv-tool/-/raw/7b3557c89438b7347c601d6959af354103b167a1/galaxy_tool/test-data/data_raw.nc"/>
             <param name="input_ref" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-odv-tool/-/raw/7b3557c89438b7347c601d6959af354103b167a1/galaxy_tool/test-data/data_ref.nc"/>
-            <param name="mode" value="R_APP_QV"/>
             <conditional name="config">
                 <param name="type" value="no"/>
             </conditional>
@@ -109,11 +111,10 @@
                     <has_n_lines n="26377"/>
                 </assert_contents>
             </output>
-            <output_collection name="files" type="list" count="4"/>
+            <output_collection name="files" type="list" count="3"/>
         </test>
         <test expect_num_outputs="2">
             <param name="input_raw" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-odv-tool/-/raw/7b3557c89438b7347c601d6959af354103b167a1/galaxy_tool/test-data/data_raw.nc"/>
-            <param name="mode" value="R_APP_QV"/>
             <conditional name="config">
                 <param name="type" value="yes"/>
                 <param name="operator" value="anonymous"/>
@@ -126,20 +127,7 @@
                     <has_n_lines n="17966"/>
                 </assert_contents>
             </output>
-            <output_collection name="files" type="list" count="4"/>
-        </test>
-        <test expect_num_outputs="2">
-            <param name="input_raw" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-odv-tool/-/raw/dev_virginie/galaxy_tool/test-data/data_raw.nc?ref_type=heads"/>
-            <param name="mode" value="DEMO"/>
-            <conditional name="config">
-                <param name="type" value="no"/>
-            </conditional>
-            <output name="output">
-                <assert_contents>
-                    <has_n_lines n="17966"/>
-                </assert_contents>
-            </output>
-            <output_collection name="files" type="list" count="4"/>
+            <output_collection name="files" type="list" count="3"/>
         </test>
     </tests>
     <help><![CDATA[
@@ -152,7 +140,6 @@ ODV collection manager
 This tool present two type of actions :
 
     - qualificiation & validation : the tool merges various datasets with a common vocabulary and creates a single generic ODV spreadsheet following ODV user’s guide (v5.7.0) in an automatic way.
-    - history : the tool report in the input file the ODV history including the change of QC flag (not yet operational)
 
 **Input description**
 
