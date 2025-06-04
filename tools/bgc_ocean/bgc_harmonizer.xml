@@ -5,7 +5,7 @@
         <token name="@VERSION_SUFFIX@">0</token>
     </macros>
     <requirements>
-        <container type="docker">pokapok/qcv_ingester:@TOOL_VERSION@</container>
+        <container type="docker">easyqcvbgc/qcv_ingester:@TOOL_VERSION@</container>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
         export HOME=\$PWD &&
@@ -124,3 +124,4 @@ A concatenated and harmonized NetCDF file.
         </citation>    
     </citations>
 </tool>
+
