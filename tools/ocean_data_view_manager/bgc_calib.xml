@@ -172,7 +172,7 @@
                 <param name="type" value="no"/>
             </conditional>
             <output_collection name="nc_files" type="list" count="1"/>
-            <output_collection name="png_files" type="list" count="3"/>
+            <output_collection name="png_files" type="list" count="4"/>
 
         </test>
         <test expect_num_outputs="2">
@@ -183,16 +183,19 @@
                     <conditional name="bypass">
                         <param name="bypass_value" value="0"/>
                     </conditional>
-                    <param name="ml_regression" value="0"/>
+                    <conditional name="regression">
+                        <param name="ml_regression" value="0"/>
+                        <param name="reg_value" value="0"/>
+                    </conditional>
                     <param name="favored" value="FALSE"/>
                     <conditional name="method_ref">
                         <param name="method_ref_name" value="model"/>
-                        <param name="reference" value="woa"/>
+                        <param name="reference" value="canyonb"/>
                     </conditional>  
 		</repeat>
             </conditional>
             <output_collection name="nc_files" type="list" count="1"/>
-            <output_collection name="png_files" type="list" count="3"/>
+            <output_collection name="png_files" type="list" count="4"/>
         </test>
     </tests>
     <help><![CDATA[
