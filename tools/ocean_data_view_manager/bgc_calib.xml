@@ -190,7 +190,7 @@
                     <param name="favored" value="FALSE"/>
                     <conditional name="method_ref">
                         <param name="method_ref_name" value="model"/>
-                        <param name="reference" value="canyonb"/>
+                        <param name="reference" value="canyon_b"/>
                     </conditional>  
 		</repeat>
             </conditional>
