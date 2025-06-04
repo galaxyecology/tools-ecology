@@ -65,8 +65,8 @@
     </configfiles>
     <inputs>
         <param name="input_raw" type="data" format="netcdf" multiple="true" label="Input netcdf data" help="This netcdf should come from the QCV harmonizer tool"/>
-        <param name="input_odv" type="data" format="txt" multiple="true" optionnal="true" label="Input odv file" help="This ODV file should be the odv_collection.txt from the ODV collection manager tool."/>
         <param name="input_hist" type="data" format="txt" multiple="true" label="Input history text file" help="This text file should be the history extracted from the Ocean Data View (ODV) tool"/>
+        <param name="input_odv" type="data" format="txt" multiple="true" optionnal="true" label="Input odv file" help="This ODV file should be the odv_collection.txt from the ODV collection manager tool."/>
         <conditional name="config">
             <param name="type" type="select" label="Select if you want to write your own configuration file or not.">   
                 <option value="no">No, I don't want to, I'll use the default one</option>
@@ -122,7 +122,6 @@
             <param name="input_hist" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-bgc-tools/-/raw/3ae832154f55c76a7c95a5dc1e6bb19946917233/galaxy_tool/test-data/history_from_odv_collection.txt"/>
             <conditional name="config">
                 <param name="type" value="yes"/>
-                <param name="operator" value="anonymous"/>
                 <param name="qc_convention" value="ARGO"/>
                 <param name="change_report" value="EDITDATA"/>
             </conditional>
