@@ -66,7 +66,7 @@
     <inputs>
         <param name="input_raw" type="data" format="netcdf" multiple="true" label="Input netcdf data" help="This netcdf should come from the QCV harmonizer tool"/>
         <param name="input_hist" type="data" format="txt" multiple="true" label="Input history text file" help="This text file should be the history extracted from the Ocean Data View (ODV) tool"/>
-        <param name="input_odv" type="data" format="txt" multiple="true" optionnal="true" label="Input odv file" help="This ODV file should be the odv_collection.txt from the ODV collection manager tool."/>
+        <param name="input_odv" type="data" format="txt" multiple="true" optional="true" label="Input odv file" help="This ODV file should be the odv_collection.txt from the ODV collection manager tool."/>
         <conditional name="config">
             <param name="type" type="select" label="Select if you want to write your own configuration file or not.">   
                 <option value="no">No, I don't want to, I'll use the default one</option>
