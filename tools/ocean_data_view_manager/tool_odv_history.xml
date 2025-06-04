@@ -17,6 +17,9 @@
 
 	#for $i, $infile in enumerate($input_raw):
         	cp '$infile' '/runtime/data-in-raw/${infile.element_identifier}_${i}.nc' &&
+    #end for
+    #for $i, $infile in enumerate($input_odv):            
+            cp '$infile' '/runtime/data-in-history/${infile.element_identifier}_${i}' &&
     #end for	
     #for $i, $infile in enumerate($input_hist):            
             cp '$infile' '/runtime/data-in-history/${infile.element_identifier}_${i}' &&
@@ -39,33 +42,37 @@
                 file_name_list_raw :
                     #for $i, $infile in enumerate($input_raw):
                         #set name_raw='${infile.element_identifier}_${i}.nc'
+                        - ${name_raw}
                     #end for
-                    - ${name_raw}
             #optional
-                operator : '${config.operator}'
+                operator : anonymous
             history : 
                 odv_collection :
-                        name: "odv_collection.txt"
+                        name: 
+                            #for $i, $infile in enumerate($input_odv):
+                                #set name_odv='${infile.element_identifier}_${i}'
+                                - ${name_odv}
+                            #end for                        
                         qc_convention: '${config.qc_convention}' 
                 file_name_odv_history : 
                     #for $i, $infile in enumerate($input_hist):
-                        #set name_hist='${infile.element_identifier}_${i}.nc'
+                        #set name_hist='${infile.element_identifier}_${i}'
+                        - ${name_hist}
                     #end for
-                    - ${name_hist}
                 change_report : '${config.change_report}' 
         #end if
         </configfile>
     </configfiles>
     <inputs>
-        <param name="input_raw" type="data" format="netcdf" multiple="true" label="Input raw data"/>
-        <param name="input_hist" type="data" format="txt" multiple="true" optional="true" label="Input history data"/>
+        <param name="input_raw" type="data" format="netcdf" multiple="true" label="Input netcdf data" help="This netcdf should come from the QCV harmonizer tool"/>
+        <param name="input_odv" type="data" format="txt" multiple="true" optionnal="true" label="Input odv file" help="This ODV file should be the odv_collection.txt from the ODV collection manager tool."/>
+        <param name="input_hist" type="data" format="txt" multiple="true" label="Input history text file" help="This text file should be the history extracted from the Ocean Data View (ODV) tool"/>
         <conditional name="config">
             <param name="type" type="select" label="Select if you want to write your own configuration file or not.">   
                 <option value="no">No, I don't want to, I'll use the default one</option>
                 <option value="yes">Yes, I to write my own configuration file</option>
             </param>
             <when value="yes">
-                <param name="operator" type="text" value="Anonymous" label="Enter operator name"/>
                 <param name="qc_convention" type="select" label="Enter QC convention for the ODV collection output (default: ARGO)">
                     <option value="ARGO">ARGO</option>
                     <option value="ODV">ODV</option>
@@ -83,7 +90,7 @@
                     <option value="OceanSITES">OceanSITES</option>
                     <option value="IODE">IODE</option>
                 </param>
-                <param name="change_report" type="select" multiple="true" label="Enter QC convention for the ODV collection output (default: ARGO)">
+                <param name="change_report" type="select" multiple="true" label="Enter the ODV convention regarding the changes performed on the odv collection.">
                     <option value="EDITFLAGS">EDITFLAGS</option>
                     <option value="EDITDATA">EDITDATA</option>
                 </param>
@@ -93,9 +100,11 @@
         </conditional>
     </inputs>
     <outputs>
-        <data name="output" format="netcdf" label="ODV history manager output"/>
-        <collection type="list" name="files" label="ODV history collection">
-            <discover_datasets pattern="(?P&lt;designation&gt;.+)" directory="./outputs" recurse="true" format="binary"/>
+        <collection type="list" name="nc_files" label="ODV history manager netcdf collection">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.nc" directory="./outputs" recurse="true" format="netcdf"/>
+        </collection>
+        <collection type="list" name="csv_files" label="ODV history manager csv collection">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.csv" directory="./outputs" recurse="true" format="csv"/>
         </collection>
     </outputs>
     <tests>
@@ -105,12 +114,8 @@
             <conditional name="config">
                 <param name="type" value="no"/>
             </conditional>
-            <output name="output">
-                <assert_contents>
-                    <has_n_lines n="0"/>
-                </assert_contents>
-            </output>
-            <output_collection name="files" type="list" count="4"/>
+            <output_collection name="nc_files" type="list" count="1"/>
+            <output_collection name="csv_files" type="list" count="1"/>
         </test>
         <test expect_num_outputs="2">
             <param name="input_raw" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-bgc-tools/-/raw/3ae832154f55c76a7c95a5dc1e6bb19946917233/galaxy_tool/test-data/QCV_harmonizer_NetCDF_data.netcdf"/>
@@ -121,12 +126,8 @@
                 <param name="qc_convention" value="ARGO"/>
                 <param name="change_report" value="EDITDATA"/>
             </conditional>
-            <output name="output">
-                <assert_contents>
-                    <has_n_lines n="0"/>
-                </assert_contents>
-            </output>
-            <output_collection name="files" type="list" count="4"/>
+            <output_collection name="nc_files" type="list" count="1"/>
+            <output_collection name="csv_files" type="list" count="1"/>
         </test>
     </tests>
     <help><![CDATA[
