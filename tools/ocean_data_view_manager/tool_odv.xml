@@ -15,8 +15,8 @@
         mkdir -p '/runtime/data-out/' &&
         mkdir -p ./outputs &&
 
-	    #for $i, $infile in enumerate($input_raw):
-        	cp '$infile' '/runtime/data-in-raw/${infile.element_identifier}_${i}.nc' &&
+	#for $i, $infile in enumerate($input_raw):
+            cp '$infile' '/runtime/data-in-raw/${infile.element_identifier}_${i}.nc' &&
         #end for	        
         #if $input_ref:
             #for $i, $infile in enumerate($input_ref):            
