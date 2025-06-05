@@ -1,7 +1,7 @@
 <tool id="tool_biogeochemical_calibration" name="BioGeoChemical calibration" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="22.05" license="MIT">
     <description>for sensors according to Argo recommendations</description>
     <macros>
-        <token name="@VERSION@">0.1</token>
+        <token name="@VERSION@">1.1</token>
         <token name="@VERSION_SUFFIX@">0</token>
     </macros>
     <requirements>
@@ -124,7 +124,7 @@
                             </param>
                         </when>
                         <when value="N>1">
-                            <param name="reg_value" type="integer" min="0" label="Regression choice, enter the N linear regressions"/>
+                            <param name="reg_value" type="integer" min="2" value="2" label="Regression choice, enter the N linear regressions"/>
                         </when> 
                     </conditional>                  
                     <param name="favored" type="boolean" label="Enter FALSE or TRUE to favored the single linear regression"/>
