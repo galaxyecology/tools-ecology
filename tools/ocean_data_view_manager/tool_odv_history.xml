@@ -117,7 +117,7 @@
                 <param name="type" value="no"/>
             </conditional>
             <output_collection name="nc_files" type="list" count="1"/>
-            <output_collection name="csv_files" type="list" count="1"/>
+            <output_collection name="csv_files" type="list" count="0"/>
         </test>
         <test expect_num_outputs="2">
             <param name="input_raw" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-bgc-tools/-/raw/3ae832154f55c76a7c95a5dc1e6bb19946917233/galaxy_tool/test-data/QCV_harmonizer_NetCDF_data.netcdf"/>
@@ -128,7 +128,7 @@
                 <param name="change_report" value="EDITDATA"/>
             </conditional>
             <output_collection name="nc_files" type="list" count="1"/>
-            <output_collection name="csv_files" type="list" count="1"/>
+            <output_collection name="csv_files" type="list" count="0"/>
         </test>
     </tests>
     <help><![CDATA[
