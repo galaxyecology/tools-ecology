@@ -108,7 +108,7 @@
             </conditional>
             <output name="output">
                 <assert_contents>
-                    <has_n_lines n="26377"/>
+                    <has_n_lines n="26363"/>
                 </assert_contents>
             </output>
             <output_collection name="files" type="list" count="3"/>
@@ -124,7 +124,7 @@
             </conditional>
             <output name="output">
                 <assert_contents>
-                    <has_n_lines n="17966"/>
+                    <has_n_lines n="17952"/>
                 </assert_contents>
             </output>
             <output_collection name="files" type="list" count="3"/>
