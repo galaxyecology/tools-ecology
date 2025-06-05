@@ -1,7 +1,7 @@
 <tool id="tool_odv" name="ODV collection manager" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="22.05" license="MIT">
     <description>tool for qualificiation and validation</description>
     <macros>
-        <token name="@VERSION@">1.1</token>
+        <token name="@VERSION@">1.2</token>
         <token name="@VERSION_SUFFIX@">0</token>
     </macros>
     <requirements>
@@ -108,7 +108,7 @@
             </conditional>
             <output name="output">
                 <assert_contents>
-                    <has_n_lines n="26377"/>
+                    <has_n_lines n="26363"/>
                 </assert_contents>
             </output>
             <output_collection name="files" type="list" count="3"/>
@@ -124,7 +124,7 @@
             </conditional>
             <output name="output">
                 <assert_contents>
-                    <has_n_lines n="17966"/>
+                    <has_n_lines n="17952"/>
                 </assert_contents>
             </output>
             <output_collection name="files" type="list" count="3"/>
