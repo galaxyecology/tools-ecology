@@ -1,4 +1,4 @@
-<tool id="estimate_endem" name="EstimEndem" version="0.1.0+galaxy0" profile="21.05">
+<tool id="estimate_endem" name="EstimEndem" version="0.1.1+galaxy0" profile="21.05">
     <description>
         of each cell of a spatial grid
     </description>
