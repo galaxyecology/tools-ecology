@@ -1,0 +1,76 @@
+<tool id="coriolis_data_processing_chain_for_argo_floats" name="Coriolis data processing" version="@VERSION@" profile="22.05">
+    <description>chain for argo floats</description>
+    <macros>
+        <token name="@VERSION@">061a</token>
+        <token name="@VERSION_DOCKER@">@VERSION@-galaxy</token>
+    </macros>
+    <requirements>
+        <container type="docker">ghcr.io/euroargodev/coriolis-data-processing-chain-for-argo-floats:@VERSION_DOCKER@</container>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        
+        ## prepare outputs directory
+        mkdir -p /mnt/data/output/log &&
+        chmod -R 770 /mnt/data/output &&
+
+        ## load inputs into data directory
+        cp '$raw_data' '/tmp/raw_data.zip' &&
+        unzip /tmp/raw_data.zip -d /mnt/data &&
+
+        ## execute decoder script
+        \$APP_HOME/\$APP_RUN_FILE /mnt/runtime 'rsynclog' 'all' 'configfile' '/app/config/_argo_decoder_conf_ir_sbd.json' 'xmlreport' 'argo-decoder-report.xml' 'floatwmo' '$float_wmo' 'PROCESS_REMAINING_BUFFERS' '1' &&
+
+        ## copy (because we need to be in working directory) and create output archive
+        cd /mnt/data/output &&
+        zip -r argo-decoder-outputs.zip . &&
+        cp argo-decoder-outputs.zip '$outputs_data'
+
+    ]]>
+    </command>
+    <inputs>
+        <param name="raw_data" type="data" format="zip" label="Archived input argo raw data"/>
+        <param name="float_wmo" type="integer" label="Input WMO number" help="Input float WMO number (example: 6903014)"/>
+    </inputs>
+    <outputs>
+        <data name="outputs_data" format="zip" from_work_dir="argo-decoder-outputs.zip" label="Argo decoder netcdf outputs"/>
+    </outputs>
+    <tests>
+        <test expect_num_outputs="1">
+            <param name="raw_data" value="data_input_20240319.zip"/>
+            <param name="float_wmo" value="6903014"/>
+            <output name="outputs_data" value="argo-decoder-outputs.zip"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+======================
+Decode Argo float data
+======================
+
+**What it does**
+
+The Coriolis Argo floats data processing chain decodes, processes, formats and performs quality control on floats data.
+    
+    - The main function of the decoder is to format the float data (float metadata, float measurements, float technical data) into four Argo NetCDF CF files.
+        
+    - The decoder applies Real Time Quality Control (RTQC) tests on Argo profile and trajectory files
+
+**Input description**
+
+Input a zip folder of your Archived Argo data. Within this zip for each float to decod there is a json file with the metadata necessary for the float and its sensors to be decoded.
+
+**Output**
+
+Retrieve a zip folder with your Argo data decoded and ready to be analysed.      
+    ]]>
+    </help>
+    <citations>
+        <citation type="bibtex">
+            @Manual{,
+            title = {Coriolis data processing chain for Argo floats},
+            author = {Ifremer},
+            year = {2024},
+            note = {https://github.com/euroargodev/Coriolis-data-processing-chain-for-Argo-floats}
+        </citation>
+        <citation type="doi">10.17882/45589</citation>
+    </citations>
+</tool>
