@@ -1,5 +1,10 @@
 <macros>
     <token name="@VERSION@">0.0.2</token>
+    <xml name="bio.tools">
+	<xrefs>
+	    <xref type="bio.tools">pampa</xref>
+	</xrefs>
+    </xml>
     <xml name="Pampa_requirements">
         <requirements>
             <requirement type="package" version="1.0.2">r-tidyr</requirement>
