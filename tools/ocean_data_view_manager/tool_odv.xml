@@ -16,11 +16,11 @@
         mkdir -p ./outputs &&
 
 	#for $i, $infile in enumerate($input_raw):
-            cp '$infile' '/runtime/data-in-raw/${infile.element_identifier}_${i}.nc' &&
+            cp '$infile' '/runtime/data-in-raw/${infile.element_identifier}.nc' &&
         #end for	        
         #if $input_ref:
             #for $i, $infile in enumerate($input_ref):            
-            	cp '$infile' '/runtime/data-in-ref/${infile.element_identifier}_${i}' &&
+            	cp '$infile' '/runtime/data-in-ref/${infile.element_identifier}' &&
             #end for
         #end if
         
@@ -40,14 +40,14 @@
                 default:
                     file_name_list_raw: 
                         #for $i, $infile in enumerate($input_raw):
-                            #set name_raw='${infile.element_identifier}_${i}.nc'
+                            #set name_raw='${infile.element_identifier}.nc'
                         #end for
                         - ${name_raw}
                     operator: '${config.operator}' 
                 QV:
                     file_name_list_ref: 
                         #for $i, $infile in enumerate($input_ref):
-                            #set name_ref='${infile.element_identifier}_${i}.nc'
+                            #set name_ref='${infile.element_identifier}.nc'
                         #end for
                         - ${name_ref}
                     odv_collection:
