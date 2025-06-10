@@ -2,7 +2,7 @@
     <description>tool for qualificiation and validation</description>
     <macros>
         <token name="@VERSION@">1.2</token>
-        <token name="@VERSION_SUFFIX@">0</token>
+        <token name="@VERSION_SUFFIX@">0.1</token>
     </macros>
     <requirements>
         <container type="docker">easyqcvbgc/easy-qcv_odv-coll-manager_tool:@VERSION@</container>
