@@ -1,7 +1,7 @@
 <tool id="tool_odv_history" name="ODV history manager" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="22.05" license="MIT">
     <description>reports user action performed with ODV</description>
     <macros>
-        <token name="@VERSION@">1.0</token>
+        <token name="@VERSION@">1.1</token>
         <token name="@VERSION_SUFFIX@">0.1</token>
     </macros>
     <requirements>
