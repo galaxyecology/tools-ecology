@@ -2,7 +2,7 @@
     <description>and aggregator of in-situ marine physical and biogeochemical data</description>
     <macros>
         <token name="@TOOL_VERSION@">2.0</token>
-        <token name="@VERSION_SUFFIX@">0.1</token>
+        <token name="@VERSION_SUFFIX@">1</token>
     </macros>
     <requirements>
         <container type="docker">easyqcvbgc/qcv_ingester:@TOOL_VERSION@</container>
