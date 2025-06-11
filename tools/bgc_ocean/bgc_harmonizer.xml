@@ -2,7 +2,7 @@
     <description>and aggregator of in-situ marine physical and biogeochemical data</description>
     <macros>
         <token name="@TOOL_VERSION@">2.0</token>
-        <token name="@VERSION_SUFFIX@">0</token>
+        <token name="@VERSION_SUFFIX@">1</token>
     </macros>
     <requirements>
         <container type="docker">easyqcvbgc/qcv_ingester:@TOOL_VERSION@</container>
@@ -15,23 +15,22 @@
         #end for
 
         /app/launchers/start-app.sh GALAXY &&
-        
-        cp /runtime/data-out/*.nc '$output_net'
-    ]]></command>
+
+        mkdir ./output/ &&
+        cp /runtime/data-out/*.nc ./output/
+        ]]></command>
     <inputs>
         <param name="infiles" type="data" format="netcdf" multiple="true" label="Input the NetCDF data files" help="This files can NetCDF raw Argo or Gliders data files following CMEMS convention."/>
     </inputs>
     <outputs>
-        <data name="output_net" format="netcdf" label="${tool.name} NetCDF data" />
+        <collection type="list" name="output_net" format="netcdf">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)"  directory="./output/" visible="true"/>
+        </collection>
     </outputs>
     <tests>
         <test expect_num_outputs="1">
             <param name="infiles" value="D6901758_001.nc,D6901758_002.nc,D6901758_003.nc,D6901758_004.nc,D6901758_005.nc"/>
-            <output name="output_net">
-                <assert_contents>
-            	    <has_size value="480666" delta="0"/>
-            	</assert_contents>
-            </output>
+            <output_collection name="output_net" type="list" count="1"/>
         </test>
     </tests>
     <help><![CDATA[
@@ -124,4 +123,3 @@ A concatenated and harmonized NetCDF file.
         </citation>    
     </citations>
 </tool>
-
