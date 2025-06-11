@@ -30,11 +30,13 @@
     <tests>
         <test expect_num_outputs="1">
             <param name="infiles" value="D6901758_001.nc,D6901758_002.nc,D6901758_003.nc,D6901758_004.nc,D6901758_005.nc"/>
-            <output name="output_net">
-                <assert_contents>
-            	    <has_size value="480666" delta="0"/>
-            	</assert_contents>
-            </output>
+            <output_collection name="output_net" type="list" count="1"/>
+                <element name="1638ae6c-d190-4c5c-80b9-06f2eaefe91e.nc">
+                    <assert_contents>
+                        <has_size value="480666" delta="0"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
         </test>
     </tests>
     <help><![CDATA[
