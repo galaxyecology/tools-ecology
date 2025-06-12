@@ -103,10 +103,10 @@
     </inputs>
     <outputs>
         <collection type="list" name="nc_files" label="ODV history manager netcdf collection">
-            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.nc" directory="./outputs" format="netcdf"/>
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.nc" directory="./outputs" recurse="true" format="netcdf"/>
         </collection>
         <collection type="list" name="csv_files" label="ODV history manager csv collection">
-            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.csv" directory="./outputs" format="csv"/>
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.csv" directory="./outputs" recurse="true" format="csv"/>
         </collection>
     </outputs>
     <tests>
