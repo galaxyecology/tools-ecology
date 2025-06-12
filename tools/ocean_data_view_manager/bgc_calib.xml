@@ -50,7 +50,7 @@
                         to_be_replaced : '${param_qc_toreplaced}'
                         replaced_by : '${param_qc_replacedby}'
                     calib_configs :
-                        - number : 1  
+                        - number : '${i}'
                             method_raw : 
                                 name : method1
                                 options : 
