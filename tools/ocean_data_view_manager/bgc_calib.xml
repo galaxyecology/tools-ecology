@@ -2,7 +2,7 @@
     <description>for sensors according to Argo recommendations</description>
     <macros>
         <token name="@VERSION@">1.0</token>
-        <token name="@VERSION_SUFFIX@">0.1</token>
+        <token name="@VERSION_SUFFIX@">1</token>
     </macros>
     <requirements>
         <container type="docker">easyqcvbgc/easy-qcv_calibration-methods_tool:@VERSION@</container>
@@ -16,7 +16,7 @@
         mkdir -p ./outputs &&
 
 	#for $i, $infile in enumerate($input_raw):
-            cp '$infile' '/runtime/data-in-raw/${infile.element_identifier}.nc' &&
+            cp '$infile' '/runtime/data-in-raw/${infile.element_identifier}' &&
         #end for	
         #if $input_ref:
             #for $i, $infile in enumerate($input_ref):            
@@ -41,7 +41,7 @@
                 default :
                     file_name_list_raw:
                         #for $i, $infile in enumerate($input_raw):
-                            #set name_raw='${infile.element_identifier}.nc'
+                            #set name_raw='${infile.element_identifier}'
                             - ${name_raw}  
                         #end for
                     param : nitrate
