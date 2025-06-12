@@ -2,7 +2,7 @@
     <description>reports user action performed with ODV</description>
     <macros>
         <token name="@VERSION@">1.1</token>
-        <token name="@VERSION_SUFFIX@">0.1</token>
+        <token name="@VERSION_SUFFIX@">1</token>
     </macros>
     <requirements>
         <container type="docker">easyqcvbgc/easy-qcv_odv-history-manager_tool:@VERSION@</container>
@@ -103,10 +103,10 @@
     </inputs>
     <outputs>
         <collection type="list" name="nc_files" label="ODV history manager netcdf collection">
-            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.nc" directory="./outputs" recurse="true" format="netcdf"/>
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)" directory="./outputs" recurse="true" format="netcdf"/>
         </collection>
         <collection type="list" name="csv_files" label="ODV history manager csv collection">
-            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.csv" directory="./outputs" recurse="true" format="csv"/>
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)" directory="./outputs" recurse="true" format="csv"/>
         </collection>
     </outputs>
     <tests>
