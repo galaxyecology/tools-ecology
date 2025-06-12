@@ -16,7 +16,7 @@
         mkdir -p ./outputs &&
 
 	#for $i, $infile in enumerate($input_raw):
-            cp '$infile' '/runtime/data-in-raw/${infile.element_identifier}' &&
+            cp '$infile' '/runtime/data-in-raw/${infile.element_identifier}.nc' &&
         #end for	
         #if $input_ref:
             #for $i, $infile in enumerate($input_ref):            
@@ -41,7 +41,7 @@
                 default :
                     file_name_list_raw:
                         #for $i, $infile in enumerate($input_raw):
-                            #set name_raw='${infile.element_identifier}'
+                            #set name_raw='${infile.element_identifier}.nc'
                             - ${name_raw}  
                         #end for
                     param : nitrate
@@ -198,37 +198,43 @@
         </test>
     </tests>
     <help><![CDATA[
-======================
-ODV collection manager
-======================
+==========================
+BioGeoChemical calibration
+==========================
 
 **What it does**
 
-This tool present two type of actions :
+This tool calibrates BioGeoChemical (BGC) data measured by ARGO or GLIDER network. The BGC variables managed by the tool for the moment are :
 
-    - qualificiation & validation : the tool merges various datasets with a common vocabulary and creates a single generic ODV spreadsheet following ODV user’s guide (v5.7.0) in an automatic way.
+- NITRATE using methods published in https://archimer.ifremer.fr/doc/00350/46121/⁠
+
 
 **Input description**
 
-    - file_name_raw : nc file to be qualified
-    - file_name_ref : nc file used for validation / comparison. noted NULL if no files
-    - odv_collection$qc_convention : tool makes mapping when its necessary and when global attribute qc_convention is available and filled in file_name_raw
-    - tool_option$subsetting : 1 apply a subbsetting to ref data searching the smallest box (default) / 0 no subsetting / -1 apply an inverse subseting
-    - tool_option$plt : figure option to see the subseted box (0 or 1) - default name subset_box.png
+- file_name_raw : nc file to be qualified
+- param_qc$bad : qc values to be removed from param before calibration
+- param_qc$to_be_replaced : raw qc values to be replaced for building the adjusted qc values
+- param_qc$replaced_by : good qc value replacing raw qc values for building adjusted qc values
+- method_raw$name which method/equation will be used for estimating the adjusted variable
+- method_raw$options :
+	- bypass_P : 0 (tool defines the P of reference for adjustment ) OR 1 (user defines P and chooses P below)
+        - P : NULL (if bypass_P = 0) OR numeric_values (if bypass_P = 1)
+        - multiple_linear_regression : 0 (automatic choice of N) or 1 (single linear regression) or N>1 (N linear regressions)
+        - single_favored : FALSE or TRUE to favored the single linear regression
+- method_ref$name : which kind of reference method (for example model or climatology) will be used by the method_raw for estimating the adjusted variable.
+- reference : which reference method like canyonb or woa will be used by the method_raw for estimating the adjusted variable.
 
-with default values different from NULL :
+If the list of raw file name is empty, the tool stops If the user makes an error in the file extension, tool changes it by itself. If the user misses the yaml configuration, tool uses its default config and upload available files in data-in-raw
 
-    - odv_collection$name : odv_collection.txt
-    - odv_collection$qc_convention : ARGO
-    - tool_action :
-    - tool_option$subsetting :
-    - tool_option$plt :
+compatibility matrix
 
-If the list of raw file name is empty, tool stops If the user make an error in the file extension, tool changes it by itself. If the user miss the yaml configuration, tool uses its default config and upload file in data-in-raw and data-in-ref
-
+- variable / application mode / [method_raw.name, method_ref.name, reference]
+- nitrate / R_APP_CN / [method1, model, canyon_b] & [method1, model, canyon_med] & [method1, clim, woa]
+	    
 **Output**
 
-This tool creates a single generic ODV spreadsheet following ODV user’s guide 
+- an extended nc file including the _adjusted and _adjusted_qc
+- figures helping to understand the adjustment
 
     ]]></help>
     <citations>
