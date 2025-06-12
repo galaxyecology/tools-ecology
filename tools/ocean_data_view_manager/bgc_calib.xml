@@ -206,7 +206,7 @@ BioGeoChemical calibration
 
 This tool calibrates BioGeoChemical (BGC) data measured by ARGO or GLIDER network. The BGC variables managed by the tool for the moment are :
 
-- NITRATE using methods published in `<https://archimer.ifremer.fr/doc/00350/46121/⁠>`
+- NITRATE using methods published in `archimer <https://archimer.ifremer.fr/doc/00350/46121/>`
 
 
 **Input description**
