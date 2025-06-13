@@ -22,7 +22,8 @@
                 cp '${infile.file_name}' "/runtime/data-in-raw/${infile.element_identifier}" &&
             #else
                 cp '${infile.file_name}' "/runtime/data-in-raw/${infile.element_identifier}.nc" &&
-            #end if        #end for
+            #end if        
+	#end for
         #if $input_odv:
             #for $i, $infile in enumerate($input_odv):            
                 cp '$infile' '/runtime/data-in-history/${infile.element_identifier}' &&
