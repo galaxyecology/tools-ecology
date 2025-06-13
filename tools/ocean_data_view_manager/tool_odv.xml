@@ -16,8 +16,14 @@
         mkdir -p ./outputs &&
 
 	#for $i, $infile in enumerate($input_raw):
-            cp '$infile' '/runtime/data-in-raw/${infile.element_identifier}' &&
-        #end for	        
+            #set real_name = $infile.element_identifier
+            #set extension = $real_name.split('.')[-1]
+            #if  $extension == 'nc':
+                cp '${infile.file_name}' "/runtime/data-in-raw/${infile.element_identifier}" &&
+            #else
+                cp '${infile.file_name}' "/runtime/data-in-raw/${infile.element_identifier}.nc" &&
+            #end if   
+	#end for	        
         #if $input_ref:
             #for $i, $infile in enumerate($input_ref):            
             	cp '$infile' '/runtime/data-in-ref/${infile.element_identifier}' &&
@@ -40,7 +46,13 @@
                 default:
                     file_name_list_raw: 
                         #for $i, $infile in enumerate($input_raw):
-                            #set name_raw='${infile.element_identifier}'
+                            #set real_name = $infile.element_identifier
+                            #set extension = $real_name.split('.')[-1]
+                            #if  $extension == 'nc':
+                                #set name_raw='${infile.element_identifier}'
+                            #else:
+                                #set name_raw='${infile.element_identifier}.nc'
+                            #end if 
                         #end for
                         - ${name_raw}
                     operator: '${config.operator}' 
