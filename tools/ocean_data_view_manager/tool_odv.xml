@@ -2,7 +2,7 @@
     <description>tool for qualificiation and validation</description>
     <macros>
         <token name="@VERSION@">1.2</token>
-        <token name="@VERSION_SUFFIX@">0.1</token>
+        <token name="@VERSION_SUFFIX@">1</token>
     </macros>
     <requirements>
         <container type="docker">easyqcvbgc/easy-qcv_odv-coll-manager_tool:@VERSION@</container>
@@ -16,8 +16,14 @@
         mkdir -p ./outputs &&
 
 	#for $i, $infile in enumerate($input_raw):
-            cp '$infile' '/runtime/data-in-raw/${infile.element_identifier}.nc' &&
-        #end for	        
+            #set real_name = $infile.element_identifier
+            #set extension = $real_name.split('.')[-1]
+            #if  $extension == 'nc':
+                cp '${infile.file_name}' "/runtime/data-in-raw/${infile.element_identifier}" &&
+            #else
+                cp '${infile.file_name}' "/runtime/data-in-raw/${infile.element_identifier}.nc" &&
+            #end if   
+	#end for	        
         #if $input_ref:
             #for $i, $infile in enumerate($input_ref):            
             	cp '$infile' '/runtime/data-in-ref/${infile.element_identifier}' &&
@@ -40,14 +46,20 @@
                 default:
                     file_name_list_raw: 
                         #for $i, $infile in enumerate($input_raw):
-                            #set name_raw='${infile.element_identifier}.nc'
+                            #set real_name = $infile.element_identifier
+                            #set extension = $real_name.split('.')[-1]
+                            #if  $extension == 'nc':
+                                #set name_raw='${infile.element_identifier}'
+                            #else:
+                                #set name_raw='${infile.element_identifier}.nc'
+                            #end if 
                         #end for
                         - ${name_raw}
                     operator: '${config.operator}' 
                 QV:
                     file_name_list_ref: 
                         #for $i, $infile in enumerate($input_ref):
-                            #set name_ref='${infile.element_identifier}.nc'
+                            #set name_ref='${infile.element_identifier}'
                         #end for
                         - ${name_ref}
                     odv_collection:
