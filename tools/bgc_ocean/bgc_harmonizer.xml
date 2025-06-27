@@ -1,7 +1,7 @@
 <tool id="harmonize_insitu_to_netcdf" name="QCV harmonizer" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="22.01" license="MIT">
     <description>and aggregator of in-situ marine physical and biogeochemical data</description>
     <macros>
-        <token name="@TOOL_VERSION@">2.0</token>
+        <token name="@TOOL_VERSION@">3.0</token>
         <token name="@VERSION_SUFFIX@">1</token>
     </macros>
     <requirements>
@@ -20,7 +20,7 @@
         cp /runtime/data-out/*.nc ./output/
         ]]></command>
     <inputs>
-        <param name="infiles" type="data" format="netcdf" multiple="true" label="Input the NetCDF data files" help="This files can NetCDF raw Argo or Gliders data files following CMEMS convention."/>
+        <param name="infiles" type="data" format="netcdf" multiple="true" label="Input the NetCDF data files" help="This files or collection of files can be NetCDF Argo, Gliders, CMEMS, WOA data files"/>
     </inputs>
     <outputs>
         <collection type="list" name="output_net" format="netcdf">
@@ -40,10 +40,9 @@
 **What it does**
 General presentation
 
-The cerb_harmonizer tool aggregates and harmonizes marine in-situ data following the needs of the UseCase 2.1-BCG - Fair-Ease. It converts files of individual or already aggregated data profiles into concatened single file with harmonized vocabullary needed for the project.
-Profiles are concatenated along the time dimension in the order given by the lising : if BGC data preceed CORE profiles, all BGC data will preceed CORE data. Use cycle_number variable to associate them again.
+The qcv-ingester tool aggregates and harmonizes marine in-situ data following the needs of the UseCase 2.1-BCG - Fair-Ease. It converts files of individual or already aggregated data profiles into a concatenated single file with harmonized vocabulary needed for the project. 
+Profiles are concatenated along the time dimension in the order given by the listing : For Argo data, if BGC data precede CORE profiles, all BGC data will precede CORE data. Use cycle_number variable to associate them again. 
 Vocabulary translations are below. On the left, the writing of each variable in the output file, on the right, all possible translations found over data exploration.
-
 Coordinates and variables :
 
     "lon" : ["longitude", "LONGITUDE", "LON", "lon"],
