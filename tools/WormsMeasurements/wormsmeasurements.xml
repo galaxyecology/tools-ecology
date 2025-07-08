@@ -1,0 +1,127 @@
+<tool id="WormsMeasurements" name="Enrich dataset with WoRMS" version="0.1.2" profile="23.2">
+    <description>Enrich dataset with measurement type data from WoRMS</description>
+
+    <requirements>
+        <requirement type="package" version="4.3.3">r-base</requirement>
+        <requirement type="package" version="0.4.3">r-worrms</requirement>
+        <requirement type="package" version="1.1.4">r-dplyr</requirement>
+        <requirement type="package" version="2.0.0">r-tidyverse</requirement>
+        <requirement type="package" version="1.7.5">r-fastDummies</requirement>
+    </requirements>
+
+    <command detect_errors="exit_code"><![CDATA[
+Rscript '$__tool_directory__/wormsmeasurements.R'
+    '$data'
+    '$measurement_types'
+    '$scientic_name'
+    '$include_inherited'
+    '$pivot_wider'
+    '$exclude_NA'
+    '$output'
+    ]]></command>
+
+    <inputs>
+        <param name="data" type="data" format="tabular" label="occurrence data"/>
+        <param name="measurement_types" type="text" format="txt" label="list of measurement types">
+        </param>
+        <param name="scientic_name" type="text" format="txt" label="scientific names column name" value="scientificName" optional="false">
+            <validator type="regex" message="this field can't be empty">.+</validator>
+        </param>
+        <param name="include_inherited" type="boolean" label="include attributes inherited from parent taxon" checked="false"/>        
+        <param name="pivot_wider" type="boolean" label="one hot encoding on the measurement types" checked="false"/>
+        <param name="exclude_NA" type="boolean" label="exclude lines with missing values (NA)" checked="false"/>
+    </inputs>
+
+    <outputs>
+        <data name="output" from_work_dir="enriched_data.tabular" format="tabular" label="dataset enriched with measurments"/>
+    </outputs>
+
+    <tests>
+        <test>
+            <param name="data" value="sample.tabular"/>
+            <param name="measurement_types" value="Development,Fecundity"/>
+            <param name="scientic_name" value="scientificName"/>
+            <param name="include_inherited" value="true"/>
+            <param name="pivot_wider" value="false"/>
+            <param name="exclude_NA" value="false"/>
+            <output name="output" file="enriched_data_inherited.tabular"/>
+        </test>
+        <test>
+            <param name="data" value="sample.tabular"/>
+            <param name="measurement_types" value="Development,Fecundity"/>
+            <param name="scientic_name" value="scientificName"/>
+            <param name="include_inherited" value="false"/>
+            <param name="pivot_wider" value="false"/>
+            <param name="exclude_NA" value="false"/>
+            <output name="output" file="enriched_data.tabular"/>
+        </test>
+        <test>
+            <param name="data" value="sample.tabular"/>
+            <param name="measurement_types" value="Development,Fecundity"/>
+            <param name="include_inherited" value="true"/>
+            <param name="scientic_name" value="scientificName"/>
+            <param name="pivot_wider" value="true"/>
+            <param name="exclude_NA" value="false"/>
+            <output name="output" file="enriched_data_inherited_ohe.tabular"/>
+        </test>
+    </tests>
+
+    <help><![CDATA[
+==================    
+**What it does ?**
+==================
+
+This tool requests WoRMS (World Register of Marine Species) to get data about a specific by accessing the entry returned by an its scientific name, it looks for the measurementType(s) requested by the user and select the associated measurement value to add it to a dataset.
+
+===================         
+**How to use it ?**
+===================
+
+## Parameters:
+
+- **data**: a dataset containing a variable of scientific names.
+- **list of measurement types**: a list of measurements types present in WoRMS (ex: Development, Fecundity, Size ...) separated by ','.
+- **scientific names column name**: the name of column in the dataset containing scientific names.
+- **include attributes inherited from parent taxon**: usefull when the data you are looking for are incomplete.
+- **one hot encoding on the measurement types**: each possible values of a measurementType becomes a column encoded in 0/1
+- **exclude_NA**: exclude lines with missing measurement value
+
+## Outputs:
+
+The inputed dataset with columns of measurement types or measurements
+
+**Example of input data :**
+"decimalLatitude"	"decimalLongitude"	"scientificName"
+-49.355	70.215	"Abatus cordatus"	"planktotrophic"	NA
+-66.963303	163.223297	"Ctenocidaris spinosa"
+-42.45	-74.75833333	"Loxechinus albus"
+-37.606167	176.705167	"Ogmocidaris benhami"
+-36.201698	175.834198	"Peronella hinemoae"
+-37.494667	176.672501	"Phormosoma bursarium"
+-43.469	173.572	"Pseudechinus huttoni"
+-47.7	179.45	"Pseudechinus novaezealandiae"
+-74.72	164.2183333	"Sterechinus neumayeri"
+-70.51166667	-8.801	"Sterechinus sp"
+
+**Example of output data :**
+"decimalLatitude"	"decimalLongitude"	"scientificName"	"Development"	" Fecundity"
+-49.355	70.215	"Abatus cordatus"	"planktotrophic"	NA
+-66.963303	163.223297	"Ctenocidaris spinosa"	"direct development"	NA
+-42.45	-74.75833333	"Loxechinus albus"	"planktotrophic"	NA
+-37.606167	176.705167	"Ogmocidaris benhami"	"planktotrophic"	NA
+-36.201698	175.834198	"Peronella hinemoae"	"planktotrophic"	NA
+-37.494667	176.672501	"Phormosoma bursarium"	"planktotrophic"	NA
+-43.469	173.572	"Pseudechinus huttoni"	"planktotrophic"	NA
+-47.7	179.45	"Pseudechinus novaezealandiae"	"planktotrophic"	NA
+-74.72	164.2183333	"Sterechinus neumayeri"	"planktotrophic"	NA
+-70.51166667	-8.801	"Sterechinus sp"	NA	NA
+
+]]></help>
+
+    <citations>
+        <citation type="doi">10.32614/CRAN.package.dplyr</citation>
+        <citation type="doi">10.32614/CRAN.package.tidyverse</citation>
+        <citation type="doi">10.32614/CRAN.package.worrms</citation>
+        <citation type="doi">10.32614/CRAN.package.fastDummies</citation>
+    </citations>
+</tool>

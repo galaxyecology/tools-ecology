@@ -4,12 +4,8 @@ owner: ecology
 remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/ocean
 homepage_url: https://github.com/Marie59/FE-ft-ESG/tree/main/ocean
 long_description: |
-  Access, process, visualise oceanographic data for the Earth System
+  Access, process, and visualise oceanographic data for the Earth System
 type: unrestricted
 auto_tool_repositories:
   name_template: "{{ tool_id }}"
   description_template: "Wrapper for ocean data tool: {{ tool_name }}."
-suite:
-  name: "ocean_suite"
-  description: "A suite of tools for the ocean compartment of the Earth System"
-  type: unrestricted

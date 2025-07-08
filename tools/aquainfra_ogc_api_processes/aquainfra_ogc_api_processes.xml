@@ -1,10 +1,10 @@
-<tool id="aquainfra_ogc_api_processes" name="AquaINFRA OGC API Processes" version="0.2.0" profile="22.05">
+<tool id="aquainfra_ogc_api_processes" name="AquaINFRA OGC API Processes" version="0.6.1" profile="22.05">
     <description/>
     <macros>
         <import>macros.xml</import>
     </macros>
     <creator>
-	    <organization name="EOSC AquaINFRA" url="https://aquainfra.eu/"/>
+        <organization name="EOSC AquaINFRA" url="https://aquainfra.eu/"/>
     </creator>
     <expand macro="requirements"/>
     <command detect_errors="exit_code"><![CDATA[
@@ -25,74 +25,78 @@
                 <option value="barplot-trend-results">barplot-trend-results: Visualisation of statistical analysis results</option>
                 <option value="map-trends-static">map-trends-static: Spatial visualisation of regions and data points</option>
                 <option value="map-shapefile-points">map-shapefile-points: Spatial visualisation of regions and data points</option>
-                <option value="owt-classification">OWT-classification: Optical Water Type classification for ocean, coastal and inland waters</option>
+                <option value="owt-classification">owt-classification: OWT Classification</option>
+                <option value="tordera-gloria">tordera-gloria: SWAT+, Soil and Water Assessment Tool</option>
+                <option value="tordera-gloria-connection">tordera-gloria-connection: SWAT+ output to MITgcm input connection tool</option>
+                <option value="riverload">riverload: Compute River Load</option>
+                <option value="mitgcm-resultplots">mitgcm-resultplots: Catalunya MITgcm Plotting Tool</option>
             </param>
             <when value="points-att-polygon">
-                <param name="regions" label="Study region or study subregions" optional="false" help="URL (stored in a .txt file) to the study region, or several regions, to classify your input data into groups of interest. Currently it has to be provided as a shapefile. It can be in any coordinate system and will be transformed to WGS84 during this process." type="data" format="txt"/>
-                <param name="input_data" label="Table to be merged with study region" optional="false" help="URL (stored in a .txt file) to the input table containing the in-situ data points with coordinates. Can be provided as Excel file or CSV file (comma-separated text file). The coordinates have to be in WGS84 coordinate system." type="data" format="txt"/>
-                <param name="colname_long" label="Column name for longitude" help="Name of the column that contains longitude values (in WGS84)." type="text"/>
-                <param name="colname_lat" label="Column name for latitude" help="Name of the column that contains latitude values (in WGS84)." type="text"/>
+                <param name="input_data" label="Table to be merged with study region" optional="false" help="URL to the input table containing the in-situ data points with coordinates. Can be provided as Excel file or CSV file (comma-separated text file). The coordinates have to be in WGS84 coordinate system. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="regions" label="Study region or study subregions" optional="false" help="URL to the study region, or several regions, to classify your input data into groups of interest. Currently it has to be provided as a shapefile. It can be in any coordinate system and will be transformed to WGS84 during this process. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="colname_long" label="Column name for longitude" optional="true" help="Only needed for data other than geojson. Name of the column that contains longitude values (in WGS84)." type="text"/>
+                <param name="colname_lat" label="Column name for latiitude" optional="true" help="Only needed for data other than geojson. Name of the column that contains latitude values (in WGS84)." type="text"/>
             </when>
             <when value="peri-conv">
-                <param name="input_data" label="Table to be grouped by date, with date colum" help="URL (stored in a .txt file) to the table with a column containing a date. It can have other columns which will not be changed during this process." type="data" format="txt"/>
-                <param name="colname_date" label="Date column name" optional="false" help="Column name of the date column in the format defined above. Example: 'visit date'." type="text"/>
+                <param name="input_data" label="Table to be grouped by date, with date colum" optional="false" help="URL to the table with a column containing a date. It can have other columns which will not be changed during this process. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="colname_date" label="Date column name" optional="false" help="Column name of the date column in the format defined above. Example: 'visit_date'." type="text"/>
                 <param name="date_format" label="Date format" optional="true" help="The date format used to parse the date, i.e. to extract day, month and year from the date column, e.g.  or 'y-m-d' for dates like '1998-08-22' (this is the default) or 'y/m/d' for dates like '1998/08/22'." type="select">
                     <option value="y-m-d">y-m-d</option>
                     <option value="y/m/d">y/m/d</option>
                 </param>
-                <param name="group_to_periods" label="Periods to group the data into" optional="true" help="Define the periods that you want the data to be grouped into. Please follow the example: 'Dec-01:Mar-01,Mar-02:May-30,Jun-01:Aug-30,Sep-01:Nov-30' (first three letters of each month, then a minus/hyphen, then the day (two digits), then comma, then the next period)." type="text">
+                <param name="group_to_periods" label="Periods to group the data into" optional="true" value="Dec-01:Mar-01,Mar-02:May-30,Jun-01:Aug-30,Sep-01:Nov-30" help="Define the periods that you want the data to be grouped into. Please follow the example (which is also the default): 'Dec-01:Mar-01,Mar-02:May-30,Jun-01:Aug-30,Sep-01:Nov-30' (first three letters of each month, then a minus/hyphen, then the day (two digits), then comma, then the next period)." type="text">
                     <validator type="regex">^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-[0-3][0-9]:(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-[0-3][0-9](,(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-[0-3][0-9]:(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-[0-3][0-9])*$</validator>
                 </param>
-                <param name="group_labels" label="Period labels" optional="true" help="Define names for the periods defined above, separated by a comma. Example: 'winter,spring,summer,autumn'." type="text"/>
-                <param name="year_starts_at_dec1" label="Include December into next year" help="Tell whether the years in your grouping starts at first of December ('true') or not ('false'). This has to be reflected in the period definitions, these should not contradict each other." type="boolean" truevalue="true" falsevalue="false" checked="true"/>
+                <param name="period_labels" label="Period labels" optional="true" value="winter,spring,summer,autumn" help="Define names for the periods defined above, separated by a comma. Example (which is also the default): 'winter,spring,summer,autumn'." type="text"/>
+                <param name="year_starts_at_dec1" label="Include December into next year" optional="true" checked="True" help="Tell whether the years in your grouping starts at first of December ('true') or not ('false'). This has to be reflected in the period definitions, these should not contradict each other. Defaults to 'true'." type="boolean" truevalue="True" falsevalue="False"/>
             </when>
             <when value="mean-by-group">
-                <param name="input_data" label="Input table" optional="false" help="URL (stored in a .txt file) to the input table containing group identifier(s) and a value column. Groups are defined by one or more columns. Other columns present in the table will be removed in the process, retaining only those specified in cols_to_group_by and value_col. For example, use the result table from peri_conv. " type="data" format="txt"/>
+                <param name="input_data" label="Input table" optional="false" help="URL to the input table containing group identifier(s) and a value column. Groups are defined by one or more columns. Other columns present in the table will be removed in the process, retaining only those specified in cols_to_group_by and value_col. For example, use the result table from peri_conv. (URL must be stored in a .txt file)" type="data" format="txt"/>
                 <param name="colnames_to_group_by" label="Column names identifying group" optional="false" help="One or more column names identifying the group. A combination of all specified columns will be used to define unique groups for calculating the average value. Example: 'longitude, latitude, Year_adj_generated, group_labels, HELCOM_ID'. Another example: 'Year_adj_generated, group_labels, HELCOM_ID'." type="text"/>
                 <param name="colname_value" label="Column name for column containing values" optional="false" help="The name of the column that contains the values for which the average will be calculated. Only one column name can be included. Examples: 'transparency_m', 'mean'" type="text"/>
             </when>
             <when value="ts-selection-interpolation">
-                <param name="input_data" label="Input table" optional="false" help="URL (stored in a .txt file) to the input table containing data for selection and interpolation. This table includes grouping variables (if applicable), the year (or other time identifier) and the value columns to be interpolated. For example, use the result from mean_by_group." type="data" format="txt"/>
+                <param name="input_data" label="Input table" optional="false" help="URL to the input table containing data for selection and interpolation. This table includes grouping variables (if applicable), the year (or other time identifier) and the value columns to be interpolated. For example, use the result from mean_by_group. (URL must be stored in a .txt file)" type="data" format="txt"/>
                 <param name="colnames_relevant" label="Column names identifying group(s)" optional="false" help="Column name(s) describing relevant values in the dataset. These columns are treated as grouping identifiers, and a combination of all specified columns will be used to define unique groups. For each group, a separate time series is analyzed and interpolated individually." type="text"/>
-                <param name="missing_threshold_percentage" label="Threshold for missing values" optional="false" help="Threshold for the allowed percentage of missing data points (NAs). For example, a value of 40 means series with more than 40% missing data will be removed. Default = 30." value="30" min="0" max="100" type="float"/>
-                <param name="colname_year" label=" Column name for time" optional="false" help="The name of the column containing the year (or other time identifier, such as quarter, month, or day). Example = 'year'." type="text"/>
+                <param name="missing_threshold_percentage" label="Threshold for missing values" optional="false" value="80" help="Threshold for the allowed percentage of missing data points (NAs). For example, a value of 80 means series with more than 80% missing data will be removed. Example = '80'." type="float" min="0" max="100"/>
+                <param name="colname_year" label="Column name for time" optional="false" help="The name of the column containing the year (or other time identifier, such as quarter, month, or day). Example = 'year'" type="text"/>
                 <param name="colname_value" label="Column name for values" optional="false" help="The name of the column containing the values to be considered for interpolation." type="text"/>
-                <param name="min_data_point" label="Minimum number of data points required" optional="false" help="The minimum number of data points required in a time series for it to be included in the interpolation process. Default = 10." value="10" min="0" type="integer"/>
+                <param name="min_data_point" label="Minimum number of data points required" optional="false" value="10" help="The minimum number of data points required in a time series for it to be included in the interpolation process. Example = '10'." type="integer" min="0"/>
             </when>
             <when value="trend-analysis-mk">
-                <param name="input_data" label="Input table" optional="false" help="URL (stored in a .txt file) to the input table containing the time series data. This table includes grouping identifiers (if applicable), columns for time (e.g., year, month) and values to be analyzed for trends. For example, use the result from ts_selection_interpolation." type="data" format="txt"/>
+                <param name="input_data" label="Input table" optional="false" help="URL to the input table containing the time series data. This table includes grouping identifiers (if applicable), columns for time (e.g., year, month) and values to be analyzed for trends. For example, use the result from ts_selection_interpolation. (URL must be stored in a .txt file)" type="data" format="txt"/>
                 <param name="colnames_relevant" label="Column names identifying group(s)" optional="false" help="Column name(s) identifying relevant groups in the dataset. These columns will be used to define unique groups for which separate trend analyses are performed." type="text"/>
                 <param name="colname_time" label="Column name for time" optional="false" help="The name of the column containing the time variable (e.g., year, month) to be used in the trend analysis. Example = 'year'." type="text"/>
                 <param name="colname_value" label="Column name for values" optional="false" help="The name of the column containing the values to be analyzed in the Man-Kendall trend test." type="text"/>
             </when>
             <when value="barplot-trend-results">
-                <param name="input_data" label="Input table" optional="false" help="URL (stored in a .txt file) to the input table containing statistical analysis results. The table must include columns for test values, p-values, and group identifiers." type="data" format="txt"/>
+                <param name="input_data" label="Input table" optional="false" help="URL to the input table containing statistical analysis results. The table must include columns for test values, p-values, and group identifiers. (URL must be stored in a .txt file)" type="data" format="txt"/>
                 <param name="colname_id" label="Column name for identifier" optional="false" help="The name of the column containing group or sample identifiers, e.g., polygon id. Example = 'polygon_id'" type="text"/>
                 <param name="colname_test_value" label="Column name for test value" optional="false" help="The name of the column containing the test values (e.g., statistical coefficients) to be plotted on the Y-axis, e.g., Tau for Mann-Kendall test." type="text"/>
                 <param name="colname_p_value" label="Column name for p value" optional="false" help="The name of the column containing p values, used to determine bar transparency. Example = 'p_value'" type="text"/>
-                <param name="p_value_threshold" label="p value threshold for significance" optional="false" help="The threshold for distinguishing significant from insignificant values. It adjusts the transparency of bars in the plot. Example = 0.05" value="0.05" min="0.01" max="0.1" type="float"/>
+                <param name="p_value_threshold" label="p value threshold for significance" optional="false" value="0.05" help="The threshold for distinguishing significant from insignificant values. It adjusts the transparency of bars in the plot. Example = '0.05'" type="float" min="0.01" max="0.1"/>
                 <param name="colname_group" label="Column name for subgroups" optional="false" help="The name of the column that defines the subgroups or categories to be displayed on the X-axis, e.g., seasons for every polygon_id." type="text"/>
             </when>
             <when value="map-trends-static">
-                <param name="regions" label="Study region or study subregions" optional="false" help="URL (stored in a .txt file) to the study region, or several regions, used to classify the input data into groups of interest. Currently it has to be provided as a shapefile. It can be in any coordinate system and will be transformed to WGS84 during this process." type="data" format="txt"/>
-                <param name="input_data" label="Input table" optional="false" help="URL to the input table containing statistical analysis results. The table must include columns for test values, p-values, and identifiers linking to study region." type="data" format="txt"/>
-                <param name="colname_id_trend" label="Column name of study region identifier" optional="false" help="The name of the column containing identifiers for study regions, which must correspond to the identifiers in the shapefile (shp). Example = 'id'." type="text"/>
-                <param name="colname_region_id" label="Column name of study region identifier" optional="false" help="The name of the column in the input data that contains identifiers for study regions, corresponding to the identifiers in the shapefile. Example = 'id'." type="text"/>
+                <param name="regions" label="Study region or study subregions" optional="false" help="URL to the study region, or several regions, used to classify the input data into groups of interest. Currently it has to be provided as a shapefile. It can be in any coordinate system and will be transformed to WGS84 during this process. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_data" label="Input table" optional="false" help="URL to the input table containing statistical analysis results. The table must include columns for test values, p-values, and identifiers linking to study region. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="colname_id_trend" label="Column name of study region identifier" optional="false" help="The name of the column containing identifiers for study regions, which must correspond to the identifiers in the shapefile (shp). Example = 'id'" type="text"/>
+                <param name="colname_region_id" label="Column name of study region identifier" optional="false" help="The name of the column in the input data that contains identifiers for study regions, corresponding to the identifiers in the shapefile. Example = 'id'" type="text"/>
                 <param name="colname_group" label="Column name for subgroups" optional="false" help="The name of the column that defines the subgroups or categories to be displayed on the X-axis, e.g., seasons for every polygon_id." type="text"/>
-                <param name="p_value_threshold" label="p value threshold for significance" optional="false" help="The threshold for distinguishing significant from insignificant values. It adjusts the transparency of bars in the plot. Example = 0.05." value="0.05" min="0.01" max="0.1" type="float"/>
+                <param name="p_value_threshold" label="p value threshold for significance" optional="false" value="0.05" help="The threshold for distinguishing significant from insignificant values. It adjusts the transparency of bars in the plot. Default = 0.05" type="float" min="0.01" max="0.1"/>
                 <param name="colname_p_value" label="Column name for p value" optional="false" help="The name of the column containing p values, used to determine bar transparency. Example = 'p_value'" type="text"/>
             </when>
             <when value="map-shapefile-points">
-                <param name="regions" label="Study region or study subregions" optional="false" help="URL (stored in a .txt file) to the study region, or several regions, to classify the input data into groups of interest. Currently it has to be provided as a shapefile. It can be in any coordinate system and will be transformed to WGS84 during this process." type="data" format="txt"/>
-                <param name="input_data" label="Data table to be plotted on top of study regions" optional="false" help="URL (stored in a .txt file) to the input table containing the in-situ data points with coordinates." type="data" format="txt"/>
+                <param name="regions" label="Study region or study subregions" optional="false" help="URL to the study region, or several regions, to classify the input data into groups of interest. Currently it has to be provided as a shapefile. It can be in any coordinate system and will be transformed to WGS84 during this process. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_data" label="Data table to be plotted on top of study regions" optional="false" help="URL to the input table containing the in-situ data points with coordinates. (URL must be stored in a .txt file)" type="data" format="txt"/>
                 <param name="colname_long" label="Column name for longitude" optional="false" help="The name of the column containing longitude values for the data points." type="text"/>
                 <param name="colname_lat" label="Column name for latitude" optional="false" help="The name of the column containing latitude values for the data points." type="text"/>
                 <param name="colname_value_name" label="Column name of data point identifier" optional="false" help="The name of the column containing identifier (e.g., site name) or values (e.g., depth) to color the points according to their corresponding values." type="text"/>
                 <param name="colname_region_id" label="Column name of region identifier" optional="false" help="The name of the column containing identifiers (e.g., basin name) to distinguish the polygons on the map if multiple regions are present." type="text"/>
             </when>
             <when value="owt-classification">
-                <param name="input_data_url" label="Input data" optional="false" help="URL (stored in a .txt file) to your input file. Find example data on https://github.com/bishun945/pyOWT/tree/main/projects/AquaINFRA." type="data" format="txt"/>
-                <param name="input_option" label="Type of input" optional="false" help="csv: for text data input (first line wavelength, following lines remote-sensing reflectance). sat: for satellite product input containing reflectance (e.g., Sentinel-3 OLCI Level-2)." type="select">
+                <param name="input_data_url" label="Input data" optional="false" help="URL to your input file. Find example data on https://github.com/bishun945/pyOWT/tree/main/projects/AquaINFRA. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_option" label="Type of input" optional="false" help="csv: for text data input (first line wavelength, following lines remote-sensing reflectance). sat: for satellite product input containing reflectance (e.g., Sentinel-3 OLCI Level-2)" type="select">
                     <option value="csv">csv</option>
                     <option value="sat">sat</option>
                 </param>
@@ -117,13 +121,47 @@
                     <option value="OLI">OLI</option>
                     <option value="SeaWiFS">SeaWiFS</option>
                     <option value="VIIRS_JPSS1">VIIRS_JPSS1</option>
-                    <option value="VIIRS_JPSS2">VIIRS_JPSS2</option> 
+                    <option value="VIIRS_JPSS2">VIIRS_JPSS2</option>
                     <option value="VIIRS_SNPP">VIIRS_SNPP</option>
                 </param>
-                <param name="output_option" label="Output option" help="1: for standard output with five variables. 2: for extensive output including memberships of all water types" optional="false" type="select">
+                <param name="output_option" label="Output option" optional="false" help="1: for standard output with five variables. 2: for extensive output including memberships of all water types." type="select">
                     <option value="1">1</option>
                     <option value="2">2</option>
                 </param>
+            </when>
+            <when value="tordera-gloria">
+                <param name="TextInOut_URL" label="URL to project folder" optional="true" help="To model a watershed other than the Tordera Basin, users can add a URL to their own zipped project folder. Important: Do not include the SWAT executable to that folder — AquaINFRA has integrated the executable version rev60.5.7_64rel_linux. Defaults to: https://raw.githubusercontent.com/AmandaBatlle/AquaINFRA_CaseUse_MedInlandModel/refs/heads/main/example_inputs/project.zip" type="data" format="txt"/>
+                <param name="par_cal" label="Parameter inputs" optional="true" help="JSON file including the parameter value change as defined by SWATrunR documentation (https://chrisschuerz.github.io/SWATrunR/articles/SWATrunR.html#parameter-inputs). Defaults to: https://raw.githubusercontent.com/AmandaBatlle/AquaINFRA_CaseUse_MedInlandModel/refs/heads/main/example_inputs/par_cal.json" type="data" format="txt"/>
+                <param name="unit" label="Output Spatial unit" optional="true" help="Specify the spatial unit for which to generate output. This corresponds to the ID of a river reach, HRU (Hydrologic Response Unit), or LSU (Landscape Unit) as defined in the SWAT+ watershed delineation. The value can be entered as a single number (e.g., 1), a range (e.g., 1:10), or a list of values (e.g., (1, 3, 25, 40)). The default unit for the La Tordera SWAT+ model is 1." type="integer"/>
+                <param name="file" label="SWAT Output File" optional="true" help="A SWAT+ output file name consists of three elements separated by underscores (_): spatial unit, output category, and time step. For example, 'channel_sd_day'. The spatial unit defines the scale of the output and can be basin, hru, lsunit, channel, aquifer, or reservoir. The output category specifies the type of data such as wb (water balance), nb (nutrient balance), ls (losses), pw (plant and weather), or sd (streamflow and sediment in channels). The time step indicates the temporal resolution and can be day (daily), mon (monthly), yr (yearly), or aa (annual average). Combining these elements forms the output file name. For more details, refer to the SWAT+ OUTPUT FILES section in the SWAT+ documentation (https://swatplus.gitbook.io/io-docs). Defaults to: 'channel_sd_day'" type="text"/>
+                <param name="variable" label="SWAT Variable" optional="true" help="Variable to simulate. Example: 'flo_out'. For more details and extended capabilities, refer to the SWAT+ OUTPUT FILES section in the SWAT+ documentation (https://swatplus.gitbook.io/io-docs). For one variable, enter the variable name. For multiple variables, enter them separated by comma. Defaults to: 'flo_out,water_temp'" type="text"/>
+                <param name="start_date" label="Start Date" optional="true" help="Start date of the simulation in the format yyyymmdd. Defaults to: 20160101. Earliest possible date for the default input project: 20000101." type="integer"/>
+                <param name="start_date_print" label="Start Date for printing" optional="true" help="Start date for printing in the format yyyymmdd. Defaults to: 20190601. Earliest possible date for the default input project: 20020101. It is recommended to allow for at least two warm-up years between the model simulation start and the model output printing to ensure relevant results." type="integer"/>
+                <param name="end_date" label="End Date" optional="true" help="End date of the simulation in the format yyyymmdd. Defaults to: 20201231. Latest possible date for the default input project: 20221231." type="integer"/>
+            </when>
+            <when value="tordera-gloria-connection">
+                <param name="swat_output_file" label="SWAT+ Variable Outputs Database" optional="false" help="SQLite database (thread_1.sqlite) storing the simulated output values based on the defined time range and time step (daily, monthly, yearly, or annual average)." type="data" format="txt"/>
+            </when>
+            <when value="riverload">
+                <param name="input_toc_urls" label="Input Total Organic Carbon (TOC)" optional="false" help="URL to in situ Total Organic Carbon (TOC) data (date, value). If the data is divided into parts, please provide several URLs separated by a comma. All URLs need to start with http(s). (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_discharge_urls" label="Input discharge" optional="false" help="URL to the daily discharge data (date, value). If the data is divided into parts, please provide several URLs separated by a comma. All URLs need to start with http(s). (URL must be stored in a .txt file)" type="data" format="txt"/>
+            </when>
+            <when value="mitgcm-resultplots">
+                <param name="netcdf_input_file" label="NetCDF input file" optional="false" help="The NetCDF input file that should be plotted. It must comply to some specific properties with respect to variables. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="variable" label="Variable to be plotted" optional="false" value="T" help="The variable that should be plotted. You can choose between 'T', 'S', 'U', 'V', 'Eta' and 'W'." type="select">
+                    <option value="T">T</option>
+                    <option value="S">S</option>
+                    <option value="U">U</option>
+                    <option value="V">V</option>
+                    <option value="Eta">Eta</option>
+                    <option value="W">W</option>
+                </param>
+                <param name="plot_time" label="Hour to be plotted" optional="false" value="" help="The time of day (hourly resolution) that should be plotted. Please specify it in this specific format: '20220703-12:00:00'. We assume that the hour is in the simulation period." type="text">
+                    <validator type="empty_field" message="You must specify the hour to be plotted."/>
+                </param>
+                <param name="plot_depth" label="Depth to be plotted" optional="false" value="0.0" help="The depth at which should be plotted. The plot will be at the closest vertical level to this depth. Please specify a negative value. We assume the depth is in the range of our depths." type="float" />
+                <param name="min_var_for_color" label="Minimum value to be considered for color limit" optional="true" help="This is a parameter controlling the color limits to display. Example (for salinity): 35. Leave empty to let the color limits be chosen automatically." type="float"/>
+                <param name="max_var_for_color" label="Maximum value to be considered for color limit" optional="true" help="This is a parameter controlling the color limits to display. Example (for salinity): 38. Leave empty to let the color limits be chosen automatically." type="float"/>
             </when>
         </conditional>
     </inputs>
@@ -131,6 +169,6 @@
         <data name="output_data" format="txt" label="$select_process"/>
     </outputs>
     <expand macro="tests"/>
-    <expand macro="help" />
+    <help>Use the dropdown menu at the top to select the OGC API processes hosted on https://aquainfra.ogc.igb-berlin.de/pygeoapi/ and then complete the corresponding form to run the service.</help>
     <expand macro="citations"/>
 </tool>

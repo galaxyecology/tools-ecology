@@ -1,0 +1,189 @@
+<tool id="tool_odv_history" name="ODV history manager" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="22.05" license="MIT">
+    <description>reports user action performed with ODV</description>
+    <macros>
+        <token name="@VERSION@">1.1</token>
+        <token name="@VERSION_SUFFIX@">1</token>
+    </macros>
+    <requirements>
+        <container type="docker">easyqcvbgc/easy-qcv_odv-history-manager_tool:@VERSION@</container>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        export HOME=\$PWD &&
+        mkdir -p /runtime/config &&
+        mkdir -p '/runtime/data-in-raw/' &&
+        mkdir -p '/runtime/data-in-history/' &&
+        mkdir -p '/runtime/data-out/' &&
+        mkdir -p ./outputs &&
+
+	#for $i, $infile in enumerate($input_raw):
+            #set real_name = $infile.element_identifier
+            #set extension = $real_name.split('.')[-1]
+            #if  $extension == 'nc':
+                cp '${infile.file_name}' "/runtime/data-in-raw/${infile.element_identifier}" &&
+            #else
+                cp '${infile.file_name}' "/runtime/data-in-raw/${infile.element_identifier}.nc" &&
+            #end if        
+	#end for
+        #if $input_odv:
+            #for $i, $infile in enumerate($input_odv):            
+                cp '$infile' '/runtime/data-in-history/${infile.element_identifier}' &&
+            #end for
+        #end if	
+        #for $i, $infile in enumerate($input_hist):            
+            cp '$infile' '/runtime/data-in-history/${infile.element_identifier}' &&
+        #end for
+        #if $config.type == 'yes':
+            ## Write YAML content
+            cp '${config_file}' '/runtime/config/config_user_odv_tool.yml' &&
+        #end if 
+
+        /app/launchers/start-app.sh &&
+        ###cp '/runtime/data-out/*data_0_qced.nc' '$output' &&
+
+        cp -r '/runtime/data-out/' './outputs/'
+    ]]></command>
+    <configfiles>
+        <configfile name="config_file">
+        #if $config.type == 'yes':
+            default :
+            #mandatory information
+                file_name_list_raw :
+                    #for $i, $infile in enumerate($input_raw):
+			#set real_name = $infile.element_identifier
+			#set extension = $real_name.split('.')[-1]
+			#if  $extension == 'nc':
+			    #set name_raw='${infile.element_identifier}'
+			#else:
+			    #set name_raw='${infile.element_identifier}.nc'
+			#end if 
+                        - ${name_raw}
+                    #end for
+            #optional
+                operator : anonymous
+            history : 
+                odv_collection :
+                        name: 
+                            #for $i, $infile in enumerate($input_odv):
+                                #set name_odv='${infile.element_identifier}'
+                                - ${name_odv}
+                            #end for                        
+                        qc_convention: '${config.qc_convention}' 
+                file_name_odv_history : 
+                    #for $i, $infile in enumerate($input_hist):
+                        #set name_hist='${infile.element_identifier}'
+                        - ${name_hist}
+                    #end for
+                change_report : '${config.change_report}' 
+        #end if
+        </configfile>
+    </configfiles>
+    <inputs>
+        <param name="input_raw" type="data" format="netcdf" multiple="true" label="Input netcdf data" help="This netcdf should come from the QCV harmonizer tool"/>
+        <param name="input_hist" type="data" format="txt" multiple="true" label="Input history text file" help="This text file should be the history extracted from the Ocean Data View (ODV) tool"/>
+        <param name="input_odv" type="data" format="txt" multiple="true" optional="true" label="Input odv file" help="This ODV file should be the odv_collection.txt from the ODV collection manager tool."/>
+        <conditional name="config">
+            <param name="type" type="select" label="Select if you want to write your own configuration file or not.">   
+                <option value="no">No, I don't want to, I'll use the default one</option>
+                <option value="yes">Yes, I to write my own configuration file</option>
+            </param>
+            <when value="yes">
+                <param name="qc_convention" type="select" label="Enter QC convention for the ODV collection output (default: ARGO)">
+                    <option value="ARGO">ARGO</option>
+                    <option value="ODV">ODV</option>
+                    <option value="GTSPP">GTSPP</option>
+                    <option value="SEADATANET">SEADATANET</option>
+                    <option value="ESEAS">ESEAS</option>
+                    <option value="WOD">WOD</option>
+                    <option value="WODSTATION">WODSTATION</option>
+                    <option value="WOCEBOTTLE">WOCEBOTTLE</option>
+                    <option value="WOCECTD">WOCECTD</option>
+                    <option value="QARTOD">QARTOD</option>
+                    <option value="BODC">BODC</option>
+                    <option value="PANGAEA">PANGAEA</option>
+                    <option value="SMHI">SMHI</option>
+                    <option value="OceanSITES">OceanSITES</option>
+                    <option value="IODE">IODE</option>
+                </param>
+                <param name="change_report" type="select" multiple="true" label="Enter the ODV convention regarding the changes performed on the odv collection.">
+                    <option value="EDITFLAGS">EDITFLAGS</option>
+                    <option value="EDITDATA">EDITDATA</option>
+                </param>
+            </when>
+            <when value="no">
+            </when>
+        </conditional>
+    </inputs>
+    <outputs>
+        <collection type="list" name="nc_files" label="ODV history manager netcdf collection">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.nc" directory="./outputs" recurse="true" format="netcdf"/>
+        </collection>
+        <collection type="list" name="csv_files" label="ODV history manager csv collection">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.csv" directory="./outputs" recurse="true" format="csv"/>
+        </collection>
+    </outputs>
+    <tests>
+        <test expect_num_outputs="2">
+            <param name="input_raw" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-bgc-tools/-/raw/fe047f301f0c384ad0668a73dfe776d9ac482d0f/galaxy_tool/test-data/QCV_harmonizer_NetCDF_data_0.nc"/>
+            <param name="input_hist" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-bgc-tools/-/raw/fe047f301f0c384ad0668a73dfe776d9ac482d0f/galaxy_tool/test-data/history_from_odv_collection.txt"/>
+            <param name="input_odv" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-bgc-tools/-/raw/fe047f301f0c384ad0668a73dfe776d9ac482d0f/galaxy_tool/test-data/odv_collection.txt"/>
+            <conditional name="config">
+                <param name="type" value="no"/>
+            </conditional>
+            <output_collection name="nc_files" type="list" count="1"/>
+            <output_collection name="csv_files" type="list" count="1"/>
+        </test>
+        <test expect_num_outputs="2">
+            <param name="input_raw" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-bgc-tools/-/raw/fe047f301f0c384ad0668a73dfe776d9ac482d0f/galaxy_tool/test-data/QCV_harmonizer_NetCDF_data_0.nc"/>
+            <param name="input_hist" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-bgc-tools/-/raw/fe047f301f0c384ad0668a73dfe776d9ac482d0f/galaxy_tool/test-data/history_from_odv_collection.txt"/>
+            <param name="input_odv" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-bgc-tools/-/raw/fe047f301f0c384ad0668a73dfe776d9ac482d0f/galaxy_tool/test-data/odv_collection.txt"/>
+            <conditional name="config">
+                <param name="type" value="yes"/>
+                <param name="qc_convention" value="ARGO"/>
+                <param name="change_report" value="EDITDATA"/>
+            </conditional>
+            <output_collection name="nc_files" type="list" count="1"/>
+            <output_collection name="csv_files" type="list" count="1"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+======================
+ODV history manager
+======================
+
+**What it does**
+
+This tool present two type of actions :
+    - history : the tool report in the input file the ODV history including the change of QC flag 
+
+**Input description**
+
+    file_name_raw : nc file to be qualified
+    file_name_history : history txt file extracted from ODV (manualy or automatically)
+    odv_collection$name : name of the odv collection view with webODV and updated
+    odv_collection$qc_convention : tool makes mapping when its necessary and when global attribute qc_convention is available and filled in file_name_raw
+
+with default values different from NULL :
+
+    odv_collection$name : odv_collection.txt
+    odv_collection$qc_convention : ARGO
+    tool_action :
+    tool_option$subsetting :
+    tool_option$plt :
+
+If the list of raw or history file name is empty, tool stops If the user make an error in the file extension, tool changes it by itself. If the user miss the yaml configuration, tool uses its default config and upload file in data-in-raw and data-in-history
+
+**Output**
+
+This tool creates a single generic ODV spreadsheet following ODV user’s guide 
+
+    ]]></help>
+    <citations>
+        <citation type="bibtex">
+            @Manual{,
+            title = {ODV tool},
+            author = {Pokapok},
+            year = {2024},
+            note = {https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-odv-tool}
+        </citation>    
+    </citations>
+</tool>

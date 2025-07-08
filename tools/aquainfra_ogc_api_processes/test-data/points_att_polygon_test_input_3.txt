@@ -1,1 +1,1 @@
-https://aqua.igb-berlin.de/download/data_merged_with_regions-668a3c72-9039-11ef-aad4-8935a9f30073.csv
+https://aquainfra.ogc.igb-berlin.de/download/out/data_merged_with_regions-acd86cde-dfae-11ef-93fb-fa163e42fba0.csv

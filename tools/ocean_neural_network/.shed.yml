@@ -1,0 +1,15 @@
+categories:
+    - Ecology
+owner: ecology
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/ocean_neural_network
+homepage_url: https://github.com/Marie59/FE-ft-ESG/tree/main/ocean
+long_description: |
+  Robust Estimation of Open Ocean CO2 Variables and Nutrient Concentrations From T, S, and O2 Data Using Bayesian Neural Networks
+type: unrestricted
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrapper for ocean biogechemical neural network tool: {{ tool_name }}."
+suite:
+  name: "bgc_ocean_neural_network_tool"
+  description: "A neural network tool for the ocean biogeochemical compartment of the Earth System"
+  type: unrestricted

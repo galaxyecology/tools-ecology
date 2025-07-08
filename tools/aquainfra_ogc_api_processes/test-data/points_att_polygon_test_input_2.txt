@@ -1,1 +1,1 @@
-https://aqua.igb-berlin.de/download/testinputs/in_situ_example.xlsx
+https://vm4072.kaj.pouta.csc.fi/ddas/oapif/collections/lva_secchi/items?f=json&limit=3000
