@@ -1,7 +1,8 @@
 categories:
     - Ecology
 owner: ecology
-remote_repository_url: https://github.com/Marie59/Data_explo_tools
+homepage_url: https://github.com/Marie59/Data_explo_tools
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/data_exploration
 long_description: |
   Explore data through multiple statistical tools
 type: unrestricted
