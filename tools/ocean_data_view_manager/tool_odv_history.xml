@@ -125,7 +125,7 @@
         </collection>
     </outputs>
     <tests>
-        <test expect_num_outputs="3S">
+        <test expect_num_outputs="3">
             <param name="input_raw" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-bgc-tools/-/raw/fe047f301f0c384ad0668a73dfe776d9ac482d0f/galaxy_tool/test-data/QCV_harmonizer_NetCDF_data_0.nc"/>
             <param name="input_hist" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-bgc-tools/-/raw/fe047f301f0c384ad0668a73dfe776d9ac482d0f/galaxy_tool/test-data/history_from_odv_collection.txt"/>
             <param name="input_odv" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-bgc-tools/-/raw/fe047f301f0c384ad0668a73dfe776d9ac482d0f/galaxy_tool/test-data/odv_collection.txt"/>
