@@ -2,7 +2,7 @@
     <description>for sensors according to Argo recommendations</description>
     <macros>
         <token name="@VERSION@">1.0</token>
-        <token name="@VERSION_SUFFIX@">1</token>
+        <token name="@VERSION_SUFFIX@">2</token>
     </macros>
     <requirements>
         <container type="docker">easyqcvbgc/easy-qcv_calibration-methods_tool:@VERSION@</container>
