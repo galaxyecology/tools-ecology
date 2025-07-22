@@ -106,8 +106,8 @@ There are several possible reasons for the absence of significant species in cer
     
     ]]></help>
     <citations>
-      <citation type="doi">doi:10.2307/2963459</citation>
-      <citation type="doi">doi:10.1111/j.1600-0706.2010.18334.x</citation>
+      <citation type="doi">10.2307/2963459</citation>
+      <citation type="doi">10.1111/j.1600-0706.2010.18334.x</citation>
       <citation type="doi">10.32614/CRAN.package.indicspecies</citation>
     </citations>
 </tool>
