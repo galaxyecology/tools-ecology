@@ -1,7 +1,7 @@
 <tool id="indicspecies" name="Indicspecies" version="1.7.15+galaxy0" profile="24.0">
     <description>to identify indicator species within clusters/groups</description>
     <requirements>
-      <requirement type="package" version="4.5.1">r-base</requirement>
+      <requirement type="package" version="4.4.3">r-base</requirement>
       <requirement type="package" version="1.1.4">r-dplyr</requirement>
       <requirement type="package" version="1.8.0">r-indicspecies</requirement>
       <requirement type="package" version="0.9_8">r-permute</requirement>
