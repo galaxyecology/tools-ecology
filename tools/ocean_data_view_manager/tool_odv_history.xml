@@ -2,7 +2,7 @@
     <description>reports user action performed with ODV</description>
     <macros>
         <token name="@VERSION@">1.2</token>
-        <token name="@VERSION_SUFFIX@">1</token>
+        <token name="@VERSION_SUFFIX@">2</token>
     </macros>
     <requirements>
         <container type="docker">easyqcvbgc/easy-qcv_odv-history-manager_tool:oh@VERSION@</container>
@@ -34,7 +34,7 @@
         #end for
         #if $config.type == 'yes':
             ## Write YAML content
-            cp '${config_file}' '/runtime/config/config_user_odv_tool.yml' &&
+            cp '${config_file}' '/runtime/config/config_user_odv_manager.yml' &&
         #end if 
 
         /app/launchers/start-app.sh &&
@@ -48,32 +48,29 @@
             default :
             #mandatory information
                 file_name_list_raw :
-                    #for $i, $infile in enumerate($input_raw):
-			#set real_name = $infile.element_identifier
-			#set extension = $real_name.split('.')[-1]
-			#if  $extension == 'nc':
-			    #set name_raw='${infile.element_identifier}'
-			#else:
-			    #set name_raw='${infile.element_identifier}.nc'
-			#end if 
-                        - ${name_raw}
+                    #for $infile in $input_raw:
+                        #set real_name = $infile.element_identifier
+                        #set extension = $real_name.split('.')[-1]
+                        #if $extension == 'nc':
+                        - ${infile.element_identifier}
+                        #else
+                        - ${infile.element_identifier}.nc
+                        #end if
                     #end for
             #optional
                 operator : anonymous
             history : 
                 odv_collection :
                         name: 
-                            #for $i, $infile in enumerate($input_odv):
-                                #set name_odv='${infile.element_identifier}'
-                                - ${name_odv}
+                            #for $infile in $input_odv:
+                                - ${infile.element_identifier}
                             #end for                        
-                        qc_convention: '${config.qc_convention}' 
+                        qc_convention: ${config.qc_convention} 
                 file_name_odv_history : 
-                    #for $i, $infile in enumerate($input_hist):
-                        #set name_hist='${infile.element_identifier}'
-                        - ${name_hist}
+                    #for $infile in $input_hist:
+                        - ${infile.element_identifier}
                     #end for
-                change_report : '${config.change_report}' 
+                change_report : ${config.change_report} 
         #end if
         </configfile>
     </configfiles>
