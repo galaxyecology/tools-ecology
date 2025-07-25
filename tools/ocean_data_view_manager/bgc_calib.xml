@@ -348,10 +348,10 @@ compatibility matrix
 - an extended nc file including the _adjusted and _adjusted_qc
 - figures helping to understand the adjustment
 The folder where to write the ODV generic spreadsheet. the output folder is organized like this :
-    - /<file_name_raw>_C<calib_configs$number>-<param>
-    - /figures
-    - <file_name_raw>_C<calib_configs$number>-<param>.nc
-    - BDfiles_from_<file_name_raw>_C<calib_configs$number>-<param>.tar.gz (when dmfiller=true)
+- /<file_name_raw>_C<calib_configs$number>-<param>
+- /figures
+- <file_name_raw>_C<calib_configs$number>-<param>.nc
+- /BDfiles_from_<file_name_raw>_C<calib_configs$number>-<param>.tar.gz (when dmfiller=true)
     ]]></help>
     <citations>
         <citation type="bibtex">
