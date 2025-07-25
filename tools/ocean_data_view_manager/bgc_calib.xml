@@ -29,32 +29,33 @@
             	cp '$infile' '/runtime/data-in-ref/${infile.element_identifier}' &&
             #end for
         #end if
-        
+
         #if $config.type == 'yes':
-            #if $config.dmfiller.dmfiller_value == 'yes':
-                #for $i, $infile in enumerate($config.dmfiller.input_origin):
-                    #set real_name = $infile.element_identifier
-                    #set extension = $real_name.split('.')[-1]
-                    #if  $extension == 'nc':
-                        cp '${infile.file_name}' "/runtime/data-in-origin/${infile.element_identifier}" &&
-                    #else
-                        cp '${infile.file_name}' "/runtime/data-in-origin/${infile.element_identifier}.nc" &&
-                    #end if
-                #end for
-                #if $config.dmfiller.input_histo:
-                    #for $j, $infile in enumerate($config.dmfiller.input_histo):
-                        #set real_name = $infile.element_identifier
-                        #set extension = $real_name.split('.')[-1]
-                        #if  $extension == 'csv':
-                            cp '${infile.file_name}' "/runtime/data-in-history/${infile.element_identifier}" &&
-                        #else
-                            cp '${infile.file_name}' "/runtime/data-in-history/${infile.element_identifier}.csv" &&
-                        #end if
-                    #end for
-                #end if
-            #end if
             ## Write YAML content
             cp '${config_file}' '/runtime/config/config_user_calibration.yml' &&   
+        #end if
+
+        #if $dmfiller.dmfiller_value == 'yes':
+            #for $i, $infile in enumerate($dmfiller.input_origin):
+                #set real_name = $infile.element_identifier
+                #set extension = $real_name.split('.')[-1]
+                #if  $extension == 'nc':
+                    cp '${infile.file_name}' "/runtime/data-in-origin/${infile.element_identifier}" &&
+                #else
+                    cp '${infile.file_name}' "/runtime/data-in-origin/${infile.element_identifier}.nc" &&
+                #end if
+            #end for
+            #if $dmfiller.input_histo:
+                #for $j, $infile in enumerate($dmfiller.input_histo):
+                    #set real_name = $infile.element_identifier
+                    #set extension = $real_name.split('.')[-1]
+                    #if  $extension == 'csv':
+                        cp '${infile.file_name}' "/runtime/data-in-history/${infile.element_identifier}" &&
+                    #else
+                        cp '${infile.file_name}' "/runtime/data-in-history/${infile.element_identifier}.csv" &&
+                    #end if
+                #end for
+            #end if
         #end if
 
         #set $mode="R_APP_CN"
@@ -81,21 +82,21 @@
                     bad : ${param_qc_bad}
                     to_be_replaced : ${param_qc_toreplaced}
                     replaced_by : ${param_qc_replacedby}
-                #if $config.dmfiller.dmfiller_value == 'yes':
+                #if $dmfiller.dmfiller_value == 'yes':
                 dmfiller : 
                     active : TRUE
-                    mandating_institution : ${config.dmfiller.mandating_institution}
+                    mandating_institution : ${dmfiller.mandating_institution}
                     dm_operator :
-                        name : ${config.dmfiller.dm_operator_name}
-                        orcid : ${config.dmfiller.orcid}
-                        institution : ${config.dmfiller.institution}
+                        name : ${dmfiller.dm_operator_name}
+                        orcid : ${dmfiller.orcid}
+                        institution : ${dmfiller.institution}
                     contact_point :   
-                        name : ${config.dmfiller.contact_point}
-                        orcid : ${config.dmfiller.orcid_contact}
-                        institution : ${config.dmfiller.institution_contact}
+                        name : ${dmfiller.contact_point}
+                        orcid : ${dmfiller.orcid_contact}
+                        institution : ${dmfiller.institution_contact}
                     file_name_list_history :
-                    #if $config.dmfiller.input_histo
-                        #for $infile in $config.dmfiller.input_histo:
+                    #if $dmfiller.input_histo
+                        #for $infile in $dmfiller.input_histo:
                         - ${infile.element_identifier}
                         #end for
                     #end if
@@ -142,52 +143,6 @@
                 <option value="yes">Yes, I to write my own configuration file</option>
             </param>
             <when value="yes">
-                <conditional name="dmfiller">
-                    <param name="dmfiller_value" type="select" label="Do you want to use the DMfiller option ?" help="To fill the ARGO BD files with DM adjustment according to argo recommendations (scientific calib coef, comment, equations)">
-                        <option value="no">No, I don't want to</option>
-                        <option value="yes">Yes, I want to use it</option>
-                    </param>
-                    <when value="yes">
-                        <param name="input_origin" type="data" format="netcdf" multiple="true" label="Input original raw netcdf data" help="This netcdf should be te same ones than for the QCV harmonizer."/>
-                        <param name="input_histo" type="data" format="csv" optional="true" multiple="true" label="Input csv files" help="This csv should come from the ODV history manager tool."/>
-                        <param name="mandating_institution" type="select" label="Data centres and institutions handling or managing Argo data" help="To know more about the institution go there https://vocab.nerc.ac.uk/collection/R04/current/">
-                            <option value="AO">Atlantic Oceanographic and Meteorological Laboratory (AOML)</option>
-                            <option value="BO">British Oceanographic Data Centre (BODC)</option>
-                            <option value="GE">Federal Maritime and Hydrographic Agency (BSH)</option>
-                            <option value="HZ">China Second Institute of Oceanography (CSIO)</option>
-                            <option value="CS">Commonwealth Scientific and Industrial Research Organisation (CSIRO)</option>
-                            <option value="VL">Far Eastern Regional Hydrometeorological Research Institute of Vladivostock (FERHRI)</option>
-                            <option value="GT">Global Telecommunication System (GTS)</option>
-                            <option value="IN">Indian National Centre for Ocean Information Services (INCOIS)</option>
-                            <option value="PL">Institute of Oceanology Polish Academy of Science (IOPAN)</option>
-                            <option value="IF">French Research Institute for the Sustainable Exploration of the Sea (Ifremer),</option>
-                            <option value="CI">Institute of Ocean Sciences (IOS)</option>
-                            <option value="JA">Japan Meteorological Agency (JMA)</option>
-                            <option value="JM">Japan Agency for Marine-Earth Science and Technology (JAMSTEC)</option>
-                            <option value="KM">Korean Meteorological Administration (KMA)</option>
-                            <option value="KO">Korea Institute of Ocean Science and Technology (KORDI)</option>
-                            <option value="LV">Laboratoire Océanographique de Villefranche</option>
-                            <option value="MB">Monterey Bay Aquarium Research Institute (MBARI)</option>
-                            <option value="ME">Marine Environmental Data Service (MEDS)</option>
-                            <option value="NA">Naval Oceanographic Office (NAVO)</option>
-                            <option value="NM">National Marine Data and Information Service (NMDIS)</option>
-                            <option value="PM">Pacific Marine Environmental Laboratory (PMEL), a National Oceanic and Atmospheric Administration (NOAA) laboratory</option>
-                            <option value="RU">Russia</option>
-                            <option value="SI">Scripps Institution of Oceanography (SIO), a division of the University of California San Diego (UCSD)</option>
-                            <option value="SP">Spain</option>
-                            <option value="UW">University of Washington (UW)</option>
-                            <option value="WH">Woods Hole Oceanographic Institution (WHOI)</option>
-                        </param>
-                        <param name="dm_operator_name" type="text" label="Enter First_name Last_name of the dm operator" help="The dm operator is the person in charge of the dmqc of the float"/>
-                        <param name="orcid" type="text" label="Enter its  orcid number"/>
-                        <param name="institution" type="text" label="Enter its  institution"/>
-                        <param name="contact_point" type="text" label="Enter First_name Last_name of the contact point" help="This refers to the BGC contact point for the dac"/>
-                        <param name="orcid_contact" type="text" label="Enter the contact point's orcid number"/>
-                        <param name="institution_contact" type="text" label="Enter the contact point's institution"/>
-                    </when>
-                    <when value="no">
-                    </when>
-                </conditional>
                 <repeat name="section_config" title="Configurations" min="0" max="10">
                     <!--<param name="method_name" type="select" label="Enter methode name">
                         <option value="method1">method1<option>
@@ -254,6 +209,52 @@
             <when value="no">
             </when>
         </conditional>
+        <conditional name="dmfiller">
+            <param name="dmfiller_value" type="select" label="Do you want to use the DMfiller option ?" help="To fill the ARGO BD files with DM adjustment according to argo recommendations (scientific calib coef, comment, equations)">
+                <option value="no">No, I don't want to</option>
+                <option value="yes">Yes, I want to use it</option>
+            </param>
+            <when value="yes">
+                <param name="input_origin" type="data" format="netcdf" multiple="true" label="Input original raw netcdf data" help="This netcdf should be te same ones than for the QCV harmonizer."/>
+                <param name="input_histo" type="data" format="csv" optional="true" multiple="true" label="Input csv files" help="This csv should come from the ODV history manager tool."/>
+                <param name="mandating_institution" type="select" label="Data centres and institutions handling or managing Argo data" help="To know more about the institution go there https://vocab.nerc.ac.uk/collection/R04/current/">
+                    <option value="LV">Laboratoire Océanographique de Villefranche</option>
+                    <option value="AO">Atlantic Oceanographic and Meteorological Laboratory (AOML)</option>
+                    <option value="BO">British Oceanographic Data Centre (BODC)</option>
+                    <option value="GE">Federal Maritime and Hydrographic Agency (BSH)</option>
+                    <option value="HZ">China Second Institute of Oceanography (CSIO)</option>
+                    <option value="CS">Commonwealth Scientific and Industrial Research Organisation (CSIRO)</option>
+                    <option value="VL">Far Eastern Regional Hydrometeorological Research Institute of Vladivostock (FERHRI)</option>
+                    <option value="GT">Global Telecommunication System (GTS)</option>
+                    <option value="IN">Indian National Centre for Ocean Information Services (INCOIS)</option>
+                    <option value="PL">Institute of Oceanology Polish Academy of Science (IOPAN)</option>
+                    <option value="IF">French Research Institute for the Sustainable Exploration of the Sea (Ifremer),</option>
+                    <option value="CI">Institute of Ocean Sciences (IOS)</option>
+                    <option value="JA">Japan Meteorological Agency (JMA)</option>
+                    <option value="JM">Japan Agency for Marine-Earth Science and Technology (JAMSTEC)</option>
+                    <option value="KM">Korean Meteorological Administration (KMA)</option>
+                    <option value="KO">Korea Institute of Ocean Science and Technology (KORDI)</option>
+                    <option value="MB">Monterey Bay Aquarium Research Institute (MBARI)</option>
+                    <option value="ME">Marine Environmental Data Service (MEDS)</option>
+                    <option value="NA">Naval Oceanographic Office (NAVO)</option>
+                    <option value="NM">National Marine Data and Information Service (NMDIS)</option>
+                    <option value="PM">Pacific Marine Environmental Laboratory (PMEL), a National Oceanic and Atmospheric Administration (NOAA) laboratory</option>
+                    <option value="RU">Russia</option>
+                    <option value="SI">Scripps Institution of Oceanography (SIO), a division of the University of California San Diego (UCSD)</option>
+                    <option value="SP">Spain</option>
+                    <option value="UW">University of Washington (UW)</option>
+                    <option value="WH">Woods Hole Oceanographic Institution (WHOI)</option>
+                </param>
+                <param name="dm_operator_name" type="text"  optional="false" label="Enter First_name Last_name of the dm operator" help="The dm operator is the person in charge of the dmqc of the float (write the name without accent like é or è...)"/>
+                <param name="orcid" type="text" optional="false" label="Enter its  orcid number"/>
+                <param name="institution" type="text" optional="false" label="Enter its  institution"/>
+                <param name="contact_point" type="text" optional="false" label="Enter First_name Last_name of the contact point" help="This refers to the BGC contact point for the dac (write the name without accent like é or è...)"/>
+                <param name="orcid_contact" type="text" optional="false" label="Enter the contact point's orcid number"/>
+                <param name="institution_contact" type="text" optional="false" label="Enter the contact point's institution"/>
+            </when>
+            <when value="no">
+            </when>
+        </conditional>
     </inputs>
     <outputs>
         <collection type="list" name="nc_files" label="BGC calibration netcdf collection">
@@ -282,11 +283,11 @@
         </test>
         <test expect_num_outputs="4">
             <param name="input_raw" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-bgc-tools/-/raw/3ae832154f55c76a7c95a5dc1e6bb19946917233/galaxy_tool/test-data/QCV_harmonizer_NetCDF_data_0_qced.nc"/>
+            <conditional name="dmfiller">
+                <param name="dmfiller_value" value="no"/>
+            </conditional>
             <conditional name="config">
                 <param name="type" value="yes"/>
-                <conditional name="dmfiller">
-                    <param name="dmfiller_value" value="no"/>
-                </conditional>
 		<repeat name="section_config">
                     <conditional name="bypass">
                         <param name="bypass_value" value="0"/>
