@@ -338,20 +338,23 @@ NITRATE using methods published in `archimer <https://archimer.ifremer.fr/doc/00
 
 If the list of raw file name is empty, the tool stops If the user makes an error in the file extension, tool changes it by itself. If the user misses the yaml configuration, tool uses its default config and upload available files in data-in-raw
 
-compatibility matrix
+compatibility matrix :
 
-- variable / application mode / [method_raw.name, method_ref.name, reference]
-- nitrate / R_APP_CN / [method1, model, canyon_b] & [method1, model, canyon_med] & [method1, clim, woa]
+    - variable / application mode / [method_raw.name, method_ref.name, reference]
+    - nitrate / R_APP_CN / [method1, model, canyon_b] & [method1, model, canyon_med] & [method1, clim, woa]
+
 	    
 **Output**
 
 - an extended nc file including the _adjusted and _adjusted_qc
 - figures helping to understand the adjustment
+
 The folder where to write the ODV generic spreadsheet. the output folder is organized like this :
-- /<file_name_raw>_C<calib_configs$number>-<param>
-- /figures
-- <file_name_raw>_C<calib_configs$number>-<param>.nc
-- /BDfiles_from_<file_name_raw>_C<calib_configs$number>-<param>.tar.gz (when dmfiller=true)
+    - /<file_name_raw>_C<calib_configs$number>-<param>
+    - /figures
+    - <file_name_raw>_C<calib_configs$number>-<param>.nc
+    - /BDfiles_from_<file_name_raw>_C<calib_configs$number>-<param>.tar.gz (when dmfiller=true)
+
     ]]></help>
     <citations>
         <citation type="bibtex">
