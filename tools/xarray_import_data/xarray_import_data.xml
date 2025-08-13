@@ -1,0 +1,39 @@
+<tool id="xarray_import_data" name="Xarray Import Data" version="0.1.0" profile="22.05">
+    <description>
+        Import a dataset from an OPeNDAP URL and convert it to a local NetCDF file using xarray.
+    </description>
+    <requirements>
+        <requirement type="package" version="2025.4.0">xarray</requirement>
+        <requirement type="package" version="3">python</requirement>
+        <requirement type="package" version="1.6.0">netcdf4</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        python '$__tool_directory__/xarray_import_data.py' '$opendap_url' '$decode_times' '$decode_cf' '$output_dataset' 
+    ]]></command>
+    <inputs>
+        <param name="opendap_url" type="text" format="netcdf" label="OPeNDAP URL"
+            help="OPeNDAP URL to a dataset, also see https://docs.xarray.dev/en/stable/user-guide/io.html#opendap"
+            optional="false" />
+        <param name="decode_times" type="boolean" label="Decode times"
+            help="If true, decode time variables to datetime objects. If false, keep them as raw data."
+            checked="true" />
+        <param name="decode_cf" type="boolean" label="Decode CF conventions"
+            help="Whether to decode according to CF conventions"
+            checked="true" />
+    </inputs>
+    <outputs>
+        <data name="output_dataset" from_work_dir="xarray_imported_data" format="netcdf"
+            label="xarray dataset" />
+    </outputs>
+    <!-- <tests>
+        <test>
+            <param name="opendap_url"
+                value="https://thredds.niva.no/thredds/dodsC/datasets/samples/cleaned_riverchem_40356.nc" />
+            <output name="output_dataset">
+                <assert_contents>
+                    <has_size min="130K" max="150K" />
+                </assert_contents>
+            </output>
+        </test>
+    </tests> -->
+</tool>
