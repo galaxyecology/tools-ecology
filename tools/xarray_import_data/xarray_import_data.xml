@@ -25,15 +25,40 @@
         <data name="output_dataset" from_work_dir="xarray_imported_data" format="netcdf"
             label="xarray dataset" />
     </outputs>
-    <!-- <tests>
+    <tests>
         <test>
             <param name="opendap_url"
-                value="https://thredds.niva.no/thredds/dodsC/datasets/samples/cleaned_riverchem_40356.nc" />
+                value="http://test.opendap.org:8080/opendap/catalog/data/nc/data.nc" />
             <output name="output_dataset">
                 <assert_contents>
-                    <has_size min="130K" max="150K" />
+                    <has_size min="17K" max="18K" />
                 </assert_contents>
             </output>
         </test>
-    </tests> -->
+    </tests>
+    <help><![CDATA[
+==================
+Xarray Import Data
+==================
+
+**What it does**
+
+Open a dataset from an OPeNDAP URL and convert it to a NetCDF file using xarray.
+
+|
+
+**How to use it**
+
+Pass a valid OPeNDAP URL to the `opendap_url` parameter. The tool will download the dataset and save it as a local NetCDF file.
+
+|
+
+**Links**
+ https://docs.xarray.dev/en/stable/user-guide/io.html#opendap
+ https://www.opendap.org/
+    ]]>
+    </help>
+    <citations>
+        <citation type="doi">10.5334/jors.148</citation>
+    </citations>
 </tool>
