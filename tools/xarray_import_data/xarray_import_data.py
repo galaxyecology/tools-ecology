@@ -1,6 +1,7 @@
-"""Save the xarray dataset to a netCDF file."""
+"""Import OPeNDAP dataset using xarray to a netCDF file."""
 
 import argparse
+
 import xarray as xr
 
 parser = argparse.ArgumentParser()

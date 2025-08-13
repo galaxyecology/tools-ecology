@@ -29,7 +29,7 @@
         <test>
             <param name="opendap_url"
                 value="http://test.opendap.org:8080/opendap/catalog/data/nc/data.nc" />
-            <output name="output_dataset">
+            <output name="output_dataset" ftype="netcdf">
                 <assert_contents>
                     <has_size min="17K" max="18K" />
                 </assert_contents>
@@ -43,13 +43,15 @@ Xarray Import Data
 
 **What it does**
 
-Open a dataset from an OPeNDAP URL and convert it to a NetCDF file using xarray.
+Open a dataset from an OPeNDAP URL and convert it to a NetCDF file using xarray and netcdf4.
 
 |
 
 **How to use it**
 
 Pass a valid OPeNDAP URL to the `opendap_url` parameter. The tool will download the dataset and save it as a local NetCDF file.
+
+For big datasets consider subsetting the dataset in the url using `<URL>?var_name1[start:step:end],var_name2[start:step:end]`
 
 |
 
