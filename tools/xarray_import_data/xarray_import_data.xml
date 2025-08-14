@@ -13,7 +13,9 @@
     <inputs>
         <param name="opendap_url" type="text" format="netcdf" label="OPeNDAP URL"
             help="OPeNDAP URL to a dataset, also see https://docs.xarray.dev/en/stable/user-guide/io.html#opendap"
-            optional="false" />
+            optional="false">
+            <validator type="regex" message="Type a valid url">^(https:|http:|\.)\S*</validator>
+        </param>
         <param name="decode_times" type="boolean" label="Decode times"
             help="If true, decode time variables to datetime objects. If false, keep them as raw data."
             checked="true" />
