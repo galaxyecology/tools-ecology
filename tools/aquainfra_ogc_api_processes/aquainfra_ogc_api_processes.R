@@ -166,6 +166,11 @@ cat("\n2: START PARSING INPUTS\n\n")
 convertedKeys <- c()
 
 for (key in names(inputParameters)) {
+  value_no_spaces <- gsub(" ", "", inputParameters[[key]])
+  if (value_no_spaces == "") {
+    inputParameters[[key]] <- NULL
+  }
+
   if (is.character(inputParameters[[key]]) &&
       (endsWith(inputParameters[[key]], ".dat") ||
        endsWith(inputParameters[[key]], ".txt"))) {
@@ -180,7 +185,61 @@ for (key in names(inputParameters)) {
     inputParameters[[key]] <- json_string
 
     convertedKeys <- append(convertedKeys, key)
-  } else {
+  } else if (
+      grepl("_object", key) &&
+      !is.null(inputParameters[[key]]) &&
+      !is.na(inputParameters[[key]]) &&
+      gsub(" ", "", inputParameters[[key]]) != ""
+    ) {
+    decoded_value <- gsub("__oc__", "{", inputParameters[[key]])
+    decoded_value <- gsub("__cc__", "}", decoded_value)
+    decoded_value <- gsub("__ob__", "[", decoded_value)
+    decoded_value <- gsub("__cb__", "]", decoded_value)
+    decoded_value <- gsub("__dq__", "\"", decoded_value)  # Optional: sometimes used for quotes
+    decoded_value <- gsub("__cn__", ":", decoded_value)   # Optional: used for colon in older versions
+
+    parsed_json <- fromJSON(decoded_value)
+    convertedKey <- gsub("_object", "", key)
+    convertedKeys <- append(convertedKeys, convertedKey)
+    #json_string <- toJSON(parsed_json, auto_unbox = FALSE)
+    inputParameters[[key]] <- parsed_json
+  } else if (grepl("_array", key)) {
+      keyParts <- strsplit(key, split = "_")[[1]]
+      type <- keyParts[length(keyParts)]
+      values <- inputParameters[[key]]
+      if (is.character(values) && grepl(",", values)) {
+        value_list <- unlist(strsplit(values, split = ","))
+      } else if (is.character(values)) {
+        value_list <- c(values)
+      }
+      
+      convertedValues <- c()
+
+      for (value in value_list) {
+        value <- as.character(value)
+        value <- gsub(" ", "", value)
+        #if(type == "integer") {
+        #  value <- as.integer(value)
+        #} else if (type == "numeric") {
+        #  value <- as.numeric(balue)
+        #} else if (type == "character") {
+        #  value <- as.character(value)
+        #  value <- gsub(" ", "", value)
+        #}
+        convertedValues <- append(convertedValues, value)
+        convertedKey <- ""
+        for (part in keyParts) {
+          if(part == "array") {
+            break
+          }
+          convertedKey <- paste(convertedKey, paste(part, "_", sep=""), sep="")
+        }
+        convertedKey <- substr(convertedKey, 1, nchar(convertedKey)-1)
+      }
+      inputParameters[[key]] <- convertedValues
+      convertedKeys <- append(convertedKeys, convertedKey)
+  }
+    else {
     if (!is.null(inputParameters[[key]])) {
       convertedKeys <- append(convertedKeys, key)
     }
