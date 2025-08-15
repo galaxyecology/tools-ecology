@@ -1,11 +1,11 @@
 <tool id="tool_odv_history" name="ODV history manager" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="22.05" license="MIT">
     <description>reports user action performed with ODV</description>
     <macros>
-        <token name="@VERSION@">1.1</token>
-        <token name="@VERSION_SUFFIX@">1</token>
+        <token name="@VERSION@">1.2</token>
+        <token name="@VERSION_SUFFIX@">2</token>
     </macros>
     <requirements>
-        <container type="docker">easyqcvbgc/easy-qcv_odv-history-manager_tool:@VERSION@</container>
+        <container type="docker">easyqcvbgc/easy-qcv_odv-history-manager_tool:oh@VERSION@</container>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
         export HOME=\$PWD &&
@@ -34,11 +34,11 @@
         #end for
         #if $config.type == 'yes':
             ## Write YAML content
-            cp '${config_file}' '/runtime/config/config_user_odv_tool.yml' &&
+            cp '${config_file}' '/runtime/config/config_user_odv_manager.yml' &&
         #end if 
 
         /app/launchers/start-app.sh &&
-        ###cp '/runtime/data-out/*data_0_qced.nc' '$output' &&
+        cp -r '/runtime/log/' './outputs/' &&
 
         cp -r '/runtime/data-out/' './outputs/'
     ]]></command>
@@ -48,37 +48,34 @@
             default :
             #mandatory information
                 file_name_list_raw :
-                    #for $i, $infile in enumerate($input_raw):
-			#set real_name = $infile.element_identifier
-			#set extension = $real_name.split('.')[-1]
-			#if  $extension == 'nc':
-			    #set name_raw='${infile.element_identifier}'
-			#else:
-			    #set name_raw='${infile.element_identifier}.nc'
-			#end if 
-                        - ${name_raw}
+                    #for $infile in $input_raw:
+                        #set real_name = $infile.element_identifier
+                        #set extension = $real_name.split('.')[-1]
+                        #if $extension == 'nc':
+                        - ${infile.element_identifier}
+                        #else
+                        - ${infile.element_identifier}.nc
+                        #end if
                     #end for
             #optional
                 operator : anonymous
             history : 
                 odv_collection :
                         name: 
-                            #for $i, $infile in enumerate($input_odv):
-                                #set name_odv='${infile.element_identifier}'
-                                - ${name_odv}
+                            #for $infile in $input_odv:
+                                - ${infile.element_identifier}
                             #end for                        
-                        qc_convention: '${config.qc_convention}' 
+                        qc_convention: ${config.qc_convention} 
                 file_name_odv_history : 
-                    #for $i, $infile in enumerate($input_hist):
-                        #set name_hist='${infile.element_identifier}'
-                        - ${name_hist}
+                    #for $infile in $input_hist:
+                        - ${infile.element_identifier}
                     #end for
-                change_report : '${config.change_report}' 
+                change_report : ${config.change_report} 
         #end if
         </configfile>
     </configfiles>
     <inputs>
-        <param name="input_raw" type="data" format="netcdf" multiple="true" label="Input netcdf data" help="This netcdf should come from the QCV harmonizer tool"/>
+        <param name="input_raw" type="data" format="netcdf" multiple="true" label="Input netcdf data" help="This netcdf should come from the QCV harmonizer tool or the BioGeoChemical calibration tool "/>
         <param name="input_hist" type="data" format="txt" multiple="true" label="Input history text file" help="This text file should be the history extracted from the Ocean Data View (ODV) tool"/>
         <param name="input_odv" type="data" format="txt" multiple="true" optional="true" label="Input odv file" help="This ODV file should be the odv_collection.txt from the ODV collection manager tool."/>
         <conditional name="config">
@@ -120,9 +117,12 @@
         <collection type="list" name="csv_files" label="ODV history manager csv collection">
             <discover_datasets pattern="(?P&lt;designation&gt;.+)\.csv" directory="./outputs" recurse="true" format="csv"/>
         </collection>
+        <collection type="list" name="log_files" label="ODV history manager log files">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.log" directory="./outputs" recurse="true" format="txt"/>
+        </collection>
     </outputs>
     <tests>
-        <test expect_num_outputs="2">
+        <test expect_num_outputs="3">
             <param name="input_raw" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-bgc-tools/-/raw/fe047f301f0c384ad0668a73dfe776d9ac482d0f/galaxy_tool/test-data/QCV_harmonizer_NetCDF_data_0.nc"/>
             <param name="input_hist" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-bgc-tools/-/raw/fe047f301f0c384ad0668a73dfe776d9ac482d0f/galaxy_tool/test-data/history_from_odv_collection.txt"/>
             <param name="input_odv" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-bgc-tools/-/raw/fe047f301f0c384ad0668a73dfe776d9ac482d0f/galaxy_tool/test-data/odv_collection.txt"/>
@@ -131,8 +131,9 @@
             </conditional>
             <output_collection name="nc_files" type="list" count="1"/>
             <output_collection name="csv_files" type="list" count="1"/>
+            <output_collection name="log_files" type="list" count="3"/>
         </test>
-        <test expect_num_outputs="2">
+        <test expect_num_outputs="3">
             <param name="input_raw" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-bgc-tools/-/raw/fe047f301f0c384ad0668a73dfe776d9ac482d0f/galaxy_tool/test-data/QCV_harmonizer_NetCDF_data_0.nc"/>
             <param name="input_hist" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-bgc-tools/-/raw/fe047f301f0c384ad0668a73dfe776d9ac482d0f/galaxy_tool/test-data/history_from_odv_collection.txt"/>
             <param name="input_odv" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-bgc-tools/-/raw/fe047f301f0c384ad0668a73dfe776d9ac482d0f/galaxy_tool/test-data/odv_collection.txt"/>
@@ -143,6 +144,7 @@
             </conditional>
             <output_collection name="nc_files" type="list" count="1"/>
             <output_collection name="csv_files" type="list" count="1"/>
+            <output_collection name="log_files" type="list" count="3"/>
         </test>
     </tests>
     <help><![CDATA[
@@ -152,12 +154,11 @@ ODV history manager
 
 **What it does**
 
-This tool present two type of actions :
-    - history : the tool report in the input file the ODV history including the change of QC flag 
+This tool reports in the input file (a netcdf from the QCV harmonizer tool or the BioGeoChemical calibration tool) the ODV history including the change of QC flag.
 
 **Input description**
 
-    file_name_raw : nc file to be qualified
+    file_name_raw : nc file to be qualified, this netcdf should come from the QCV harmonizer tool or  from the BioGeoChemical calibration tool 
     file_name_history : history txt file extracted from ODV (manualy or automatically)
     odv_collection$name : name of the odv collection view with webODV and updated
     odv_collection$qc_convention : tool makes mapping when its necessary and when global attribute qc_convention is available and filled in file_name_raw

@@ -1,0 +1,11 @@
+categories:
+    - Ecology
+owner: ecology
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/xarray_import_data
+homepage_url: http://xarray.pydata.org
+long_description: |
+  A data import tool for opening OPeNDAP datasets and storing as netCDF files.
+type: unrestricted
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "A data import tool for opening OPeNDAP datasets and storing as netCDF files: {{ tool_name }}."

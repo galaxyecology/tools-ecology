@@ -1,11 +1,11 @@
 <tool id="tool_odv" name="ODV collection manager" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="22.05" license="MIT">
     <description>tool for qualificiation and validation</description>
     <macros>
-        <token name="@VERSION@">1.2</token>
-        <token name="@VERSION_SUFFIX@">1</token>
+        <token name="@VERSION@">1.3</token>
+        <token name="@VERSION_SUFFIX@">2</token>
     </macros>
     <requirements>
-        <container type="docker">easyqcvbgc/easy-qcv_odv-coll-manager_tool:@VERSION@</container>
+        <container type="docker">easyqcvbgc/easy-qcv_odv-coll-manager_tool:oc@VERSION@</container>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
         export HOME=\$PWD &&
@@ -32,11 +32,12 @@
         
         #if $config.type == 'yes':
             ## Write YAML content
-            cp '${config_file}' '/runtime/config/config_user_odv_tool.yml' &&
+            cp '${config_file}' '/runtime/config/config_user_odv_manager.yml' &&
         #end if 
 
         /app/launchers/start-app.sh &&
         cp '/runtime/data-out/odv_collection.txt' '$output' &&
+        cp -r '/runtime/log/' './outputs/' &&
 
         cp -r '/runtime/data-out/' './outputs/'
     ]]></command>
@@ -45,30 +46,28 @@
         #if $config.type == 'yes':
                 default:
                     file_name_list_raw: 
-                        #for $i, $infile in enumerate($input_raw):
+                        #for $infile in $input_raw:
                             #set real_name = $infile.element_identifier
                             #set extension = $real_name.split('.')[-1]
-                            #if  $extension == 'nc':
-                                #set name_raw='${infile.element_identifier}'
-                            #else:
-                                #set name_raw='${infile.element_identifier}.nc'
-                            #end if 
+                            #if $extension == 'nc':
+                            - ${infile.element_identifier}
+                            #else
+                            - ${infile.element_identifier}.nc
+                            #end if
                         #end for
-                        - ${name_raw}
-                    operator: '${config.operator}' 
+                    operator: ${config.operator} 
                 QV:
                     file_name_list_ref: 
-                        #for $i, $infile in enumerate($input_ref):
-                            #set name_ref='${infile.element_identifier}'
+                        #for $infile in $input_ref :
+                            - ${infile.element_identifier}
                         #end for
-                        - ${name_ref}
                     odv_collection:
                         name: "odv_collection.txt"
-                        qc_convention: '${config.qc_convention}' 
+                        qc_convention: ${config.qc_convention}
                     tool_option:
-                        subsetting: '${config.subsetting}' 
-                        plt: '${config.plt}' 
-        #end if 
+                        subsetting: ${config.subsetting}
+                        plt: ${config.plt}
+        #end if
         </configfile>
     </configfiles>
     <inputs>
@@ -98,15 +97,15 @@
                     <option value="OceanSITES">OceanSITES</option>
                     <option value="IODE">IODE</option>
                 </param>
-                <param name="subsetting" type="float" min="-1" max="1" value="1" label="Enter subsetting (default: 1)"/>
-                <param name="plt" type="float" min="0" max="1" value="0" label="Enter plt (default: 0 for QV, 1 for demo)"/>
+                <param name="subsetting" type="integer" min="-1" max="1" value="1" label="Enter subsetting (default: 1)"/>
+                <param name="plt" type="integer" min="0" max="1" value="0" label="Enter plt (default: 0 for QV, 1 for demo)"/>
             </when>
             <when value="no">
             </when>
         </conditional>
     </inputs>
     <outputs>
-        <data name="output" format="txt" label="ODV tool output"/>
+        <data name="output" format="txt" label="ODV collection manager output"/>
         <collection type="list" name="files" label="ODV tool collection">
             <discover_datasets pattern="(?P&lt;designation&gt;.+)" directory="./outputs" recurse="true" format="txt"/>
         </collection>
@@ -123,7 +122,7 @@
                     <has_n_lines n="26363"/>
                 </assert_contents>
             </output>
-            <output_collection name="files" type="list" count="3"/>
+            <output_collection name="files" type="list" count="6"/>
         </test>
         <test expect_num_outputs="2">
             <param name="input_raw" location="https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-odv-tool/-/raw/7b3557c89438b7347c601d6959af354103b167a1/galaxy_tool/test-data/data_raw.nc"/>
@@ -139,7 +138,7 @@
                     <has_n_lines n="17952"/>
                 </assert_contents>
             </output>
-            <output_collection name="files" type="list" count="3"/>
+            <output_collection name="files" type="list" count="6"/>
         </test>
     </tests>
     <help><![CDATA[
@@ -157,17 +156,11 @@ This tool present two type of actions :
 
     - file_name_raw : nc file to be qualified
     - file_name_ref : nc file used for validation / comparison. noted NULL if no files
-    - odv_collection$qc_convention : tool makes mapping when its necessary and when global attribute qc_convention is available and filled in file_name_raw
-    - tool_option$subsetting : 1 apply a subbsetting to ref data searching the smallest box (default) / 0 no subsetting / -1 apply an inverse subseting
-    - tool_option$plt : figure option to see the subseted box (0 or 1) - default name subset_box.png
-
-with default values different from NULL :
-
-    - odv_collection$name : odv_collection.txt
-    - odv_collection$qc_convention : ARGO
-    - tool_action :
-    - tool_option$subsetting :
-    - tool_option$plt :
+    - operator : (optional) name of the person working on dataset qualification / validation
+    - odv_collection$name : name of the odv collection created by the tool (by default = odv_collection.txt)
+    - odv_collection$qc_convention : tool makes mapping when its necessary and when global attribute qc_convention is available and filled in file_name_raw (by default = ARGO)
+    - tool_option$subsetting : 1 apply a subsetting to ref data searching the smallest box (by default) / 0 no subsetting / -1 apply an inverse subsetting
+    - tool_option$plt : figure option to see the subsetted box (0 - by default - or 1) - default name *subset_box.png*
 
 If the list of raw file name is empty, tool stops If the user make an error in the file extension, tool changes it by itself. If the user miss the yaml configuration, tool uses its default config and upload file in data-in-raw and data-in-ref
 
