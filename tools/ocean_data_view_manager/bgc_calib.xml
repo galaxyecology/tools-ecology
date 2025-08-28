@@ -138,12 +138,12 @@
         <param name="param_qc_toreplaced" type="text" optional="true" value="3" label="Nitrate QC value to be replaced"/>
         <param name="param_qc_replacedby" type="text" optional="true" value="1" label="QC value of replacement"/>
         <conditional name="config">
-            <param name="type" type="select" label="Select if you want to write your own configuration file or not.">   
+            <param name="type" type="select" label="Select if you want to write your own calibration configuration file or not.">   
                 <option value="no">No, I don't want to, I'll use the default one</option>
-                <option value="yes">Yes, I to write my own configuration file</option>
+                <option value="yes">Yes, I to write my own calibration configuration file</option>
             </param>
             <when value="yes">
-                <repeat name="section_config" title="Configurations" min="0" max="10">
+                <repeat name="section_config" title="Calibration Configuration" min="0" max="10">
                     <!--<param name="method_name" type="select" label="Enter methode name">
                         <option value="method1">method1<option>
                     </param>-->
