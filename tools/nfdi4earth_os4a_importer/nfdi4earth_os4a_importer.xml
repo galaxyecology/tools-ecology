@@ -4,8 +4,9 @@
         python '$__tool_directory__/data_source.py' '$output' $__app__.config.output_size_limit
     ]]></command>
     <inputs action="https://onestop4all.nfdi4earth.de/search" check_values="false" method="get">
-        <param name="GALAXY_URL" type="baseurl" value="/" />
+        <param name="GALAXY_URL" type="baseurl" value="/tool_runner" />
         <param name="tool_id" type="hidden" value="nfdi4earth_os4a" />
+        <param name="sendToGalaxy" type="hidden" value="1" />
     </inputs>
     <outputs>
         <data name="output" format="auto" label="OneStop4All Resource"/>
