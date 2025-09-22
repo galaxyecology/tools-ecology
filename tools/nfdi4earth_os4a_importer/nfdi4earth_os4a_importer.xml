@@ -11,4 +11,5 @@
     <outputs>
         <data name="output" format="auto" label="OneStop4All Resource"/>
     </outputs>
+    <options sanitize="False" refresh="True"/>
 </tool>
