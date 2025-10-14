@@ -1,4 +1,4 @@
-<tool id="aquainfra_ogc_api_processes" name="AquaINFRA OGC API Processes" version="0.8.0" profile="22.05">
+<tool id="aquainfra_ogc_api_processes" name="AquaINFRA OGC API Processes" version="0.9.0" profile="22.05">
     <description/>
     <macros>
         <import>macros.xml</import>
@@ -40,6 +40,11 @@
                 <option value="heat3">heat3: Reproducing HEAT HOLAS results: Compute Annual Indicators</option>
                 <option value="heat4">heat4: Reproducing HEAT HOLAS results: Compute Assessment Indicators</option>
                 <option value="heat5">heat5: Reproducing HEAT HOLAS results: Compute Assessment</option>
+                <option value="heat1advanced">heat1advanced: Assessing Eutrophication: Generate the Assessment Units</option>
+                <option value="heat2advanced">heat2advanced: Assessing Eutrophication: Combine the samples</option>
+                <option value="heat3advanced">heat3advanced: Assessing Eutrophication: Compute Annual Indicators</option>
+                <option value="heat4advanced">heat4advanced: Assessing Eutrophication: Compute Assessment Indicators</option>
+                <option value="heat5advanced">heat5advanced: Assessing Eutrophication: Compute Assessment</option>
             </param>
             <when value="points-att-polygon">
                 <param name="input_data" label="Table to be merged with study region" optional="false" help="URL to the input table containing the in-situ data points with coordinates. Can be provided as Excel file or CSV file (comma-separated text file). The coordinates have to be in WGS84 coordinate system. (URL must be stored in a .txt file)" type="data" format="txt"/>
@@ -321,6 +326,34 @@
                     <option value="Other">Other</option>
                 </param>
                 <param name="assessment_indicators" label="Assessment Indicators Table" optional="false" help="CSV file of calculated EQRS per assessment period per assessment unit (AssessmentIndicators.csv). (URL must be stored in a .txt file)" type="data" format="txt"/>
+            </when>
+            <when value="heat1advanced">
+                <param name="spatial_units" label="Spatial Units" optional="false" help="Please provide the spatial units you would like to grid, as vector data/polygons. Each unit must have a UnitID. Please provide a URL to the layer as a shapefile, or possibly other vector formats such as GeoJSON or gpkg, if implemented. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="grid_size_table" label="Table of Grid Sizes" optional="false" help="Table with a grid cell size (GridSize) for each UnitID present in the input layer, to compute grid cells of the specified size. For example, 30000, 60000 and 90000 are originally used by HELCOM for the HOLAS assessment. Please provide a URL to the table as a CSV file. (URL must be stored in a .txt file)" type="data" format="txt"/>
+            </when>
+            <when value="heat2advanced">
+                <param name="units_gridded" label="Gridded assessment units" optional="false" help="Grid to be used for filtering the samples. Has to be in CRS ETRS89-extended / LAEA Europe (EPSG3035. Please provide a URL to the layer as a shapefile. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="bottle_data" label="Input samples (bottle)" optional="true" help="In-situ bottle sample data (nutrients, chl-a)(StationSamplesBOT.csv), ICES Oceanographic data type 'BOT'. Ideally downloaded from the ICES portal. Omit this parameter if you do not want to include bottle data. Please provide a URL to the table as a CSV file." type="text"/>
+                <param name="ctd_data" label="Input samples (CTD)" optional="true" help="CTD depth profiles, relevant for oxygen debt indicator (StationSamplesCTD.csv). ICES Oceanographic data type 'CTD'. Ideally downloaded from the ICES portal. Omit this parameter if you do not want to include CTD data. Please provide a URL to the table as a CSV file." type="text"/>
+                <param name="pump_data" label="Input samples (pump)" optional="true" help="Ferrybox data (chl-a) (StationSamplesPMP.csv). ICES Oceanographic data type 'PMP'. Ideally downloaded from the ICES portal. Omit this parameter if you do not want to include pump/ferrybox data. Please provide a URL to the table as a CSV file." type="text"/>
+            </when>
+            <when value="heat3advanced">
+                <param name="station_samples" label="Station samples (filtered, combined)" optional="false" help="Merged sample data of BOT, PMP and CTD data for indicator calculation (StationSamples.csv). (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="combined_Chlorophylla_IsWeighted" label="Chlorophyll A Weighted?" optional="false" checked="false" help="If true, the script calculates combined chlorophyll A indicator results per assessment unit as a weighted average from BOT, PMP and EO. If false, then simple average." type="boolean" truevalue="True" falsevalue="False"/>
+                <param name="table_indicators" label="Table of Indicators" optional="true" help="A table listing the indicators. Needs the following column names: IndicatorID; CriteriaID; Name; Code; Parameters; Units; YearMin; YearMax; MonthMin; MonthMax; DepthMin; DepthMax; Metric; Response; Applied; Comments; GTC_HM; GTC_ML; STC_HM; STC_ML; SSC_HM; SSC_ML (please ask HELCOM for details). Please provide a URL to the table as a CSV file." type="text"/>
+                <param name="table_indicator_units" label="Table of Indicator Units" optional="true" help="A table listing something about the indicators. Needs the following column names: IndicatorID; UnitID; ET; ACDEV; EQR_HG; EQR_GM; EQR_MP; EQR_PB; IW. Please ask HELCOM for details. Please provide a URL to the table as a CSV file." type="text"/>
+                <param name="table_indicator_unit_results" label="table_indicator_unit_results" optional="true" help="A table listing something about the indicators. Needs the following column names: IndicatorID; UnitID; Period; ES; SD; N; NM; EQR; EQRS; GTC; STC; SSC. Please ask HELCOM for details. Please provide a URL to the table as a CSV file." type="text"/>
+                <param name="spatial_units" label="units_cleaned.shp" optional="false" help="Non-Gridded spatial units, as a shapefile, used for this process. Please provide a URL to the layer as a zipped shapefile. (URL must be stored in a .txt file)" type="data" format="txt"/>
+            </when>
+            <when value="heat4advanced">
+                <param name="annual_indicators" label="Annual Indicators Table" optional="false" help="CSV file of calculated HEAT EQRS per indicator per year per assessment unit (AnnualIndicators.csv). (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="table_indicators" label="Table of Indicators" optional="true" help="A table listing the indicators. Needs the following column names: IndicatorID; CriteriaID; Name; Code; Parameters; Units; YearMin; YearMax; MonthMin; MonthMax; DepthMin; DepthMax; Metric; Response; Applied; Comments; GTC_HM; GTC_ML; STC_HM; STC_ML; SSC_HM; SSC_ML (please ask HELCOM for details). Please provide a URL to the table as a CSV file." type="text"/>
+                <param name="table_indicator_units" label="Table of Indicator Units" optional="true" help="A table listing something about the indicators. Needs the following column names: IndicatorID; UnitID; ET; ACDEV; EQR_HG; EQR_GM; EQR_MP; EQR_PB; IW. Please ask HELCOM for details. Please provide a URL to the table as a CSV file." type="text"/>
+            </when>
+            <when value="heat5advanced">
+                <param name="assessment_indicators" label="Assessment Indicators Table" optional="false" help="CSV file of calculated EQRS per assessment period per assessment unit (AssessmentIndicators.csv). (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="table_indicators" label="Table of Indicators" optional="true" help="A table listing the indicators. Needs the following column names: IndicatorID; CriteriaID; Name; Code; Parameters; Units; YearMin; YearMax; MonthMin; MonthMax; DepthMin; DepthMax; Metric; Response; Applied; Comments; GTC_HM; GTC_ML; STC_HM; STC_ML; SSC_HM; SSC_ML. Please ask HELCOM for details. Please provide a URL to the table as a CSV file." type="text"/>
+                <param name="table_indicator_units" label="Table of Indicator Units" optional="true" help="A table listing something about the indicators. Needs the following column names: IndicatorID; UnitID; ET; ACDEV; EQR_HG; EQR_GM; EQR_MP; EQR_PB; IW. Please ask HELCOM for details. Please provide a URL to the table as a CSV file." type="text"/>
             </when>
         </conditional>
     </inputs>
