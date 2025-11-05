@@ -1,4 +1,4 @@
-<tool id="makeeml" name="Make EML" version="0.1.1+galaxy1" profile="22.05">
+<tool id="makeeml" name="Make EML" version="0.1.2+galaxy1" profile="22.05">
     <description> Create EML from EAL templates</description>
     <requirements>
         <container type="docker">ylebras/metashark:1.7.5</container>
