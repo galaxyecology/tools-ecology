@@ -53,17 +53,19 @@
          <data name="output" from_work_dir="taxonomic_coverage.txt" format="txt" label="taxonomic_coverage.txt"/>
     </outputs>
     <tests>
-        <test>
-            <param name="inputdata" value="taxa.tsv"/>
-             <param name="taxa_col" value="1"/>
-            <param name="name_type" value="scientific"/>
-            <param name="authority_name" value="11"/>
-            <param name="authority_name2" value="0"/>
-            <param name="authority_name3" value="0"/>
-            <param name="empty" value="false"/>
-            <output name="output" value="taxonomic_coverage.txt"/>
-        </test>
-    </tests>
+          <test>
+               <param name="inputdata" value="taxa.tsv"/>
+               <param name="taxa_col" value="1"/>
+               <param name="name_type" value="scientific"/>
+               <section name="authority">
+                    <param name="authority_name" value="11"/>
+                    <param name="authority_name2" value="0"/>
+                    <param name="authority_name3" value="0"/>
+               </section>
+               <param name="empty" value="false"/>
+               <output name="output" value="taxonomic_coverage.txt"/>
+          </test>
+     </tests>
     <help><![CDATA[
 **What it does?**
 --------------------
