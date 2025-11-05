@@ -120,31 +120,45 @@
     </outputs>
     <tests>
         <test expect_num_outputs="1">
-           <param name="input_prod_selector" value="fr_EML"/>
-           <param name="inputEML" value="Assessing_the_importance_of_field_margins_for_bat_species.xml"/>
-           <output name="output" file="annotemp/annotations_template.txt"/>
+            <conditional name="input_prod">
+                <param name="input_prod_selector" value="fr_EML"/>
+                <param name="inputEML" value="Assessing_the_importance_of_field_margins_for_bat_species.xml"/>
+            </conditional>
+            <output name="output" file="annotemp/annotations_template.txt"/>
         </test>
         <test expect_num_outputs="1">
-           <param name="input_prod_selector" value="fr_scratch"/>
-           <param name="input_selector" value="both"/>
-           <param name="inputdata" value = "annotemp/ceamarc_env.tsv"/>
-           <param name="input_other" value="annotemp/pivot_wider_jupytool_notebook.ipynb"/>
-           <param name="input_temp" value="annotemp/abstract.txt,annotemp/personnel.txt,annotemp/keywords.txt,annotemp/geographic_coverage.txt,annotemp/methods.txt,annotemp/custom_units.txt,annotemp/attributes_ceamarc_env.txt"/> 
-           <output name="output" file="annotemp/annotations_template_2.txt"/>
+            <conditional name="input_prod">
+                <param name="input_prod_selector" value="fr_scratch"/>
+                <conditional name="input">
+                    <param name="input_selector" value="both"/>
+                    <param name="inputdata" value="annotemp/ceamarc_env.tsv"/>
+                    <param name="input_other" value="annotemp/pivot_wider_jupytool_notebook.ipynb"/>
+                    <param name="input_temp" value="annotemp/abstract.txt,annotemp/personnel.txt,annotemp/keywords.txt,annotemp/geographic_coverage.txt,annotemp/methods.txt,annotemp/custom_units.txt,annotemp/attributes_ceamarc_env.txt"/>
+                </conditional>
+            </conditional>
+            <output name="output" file="annotemp/annotations_template_2.txt"/>
         </test>
         <test expect_num_outputs="1">
-           <param name="input_prod_selector" value="fr_scratch"/>
-           <param name="input_selector" value="data_table"/>
-           <param name="inputdata" value = "annotemp/ceamarc_env.tsv"/>
-           <param name="input_temp" value="annotemp/abstract.txt,annotemp/personnel.txt,annotemp/keywords.txt,annotemp/geographic_coverage.txt,annotemp/methods.txt,annotemp/custom_units.txt,annotemp/attributes_ceamarc_env.txt"/> 
-           <output name="output" file="annotemp/annotations_template_3.txt"/>
+            <conditional name="input_prod">
+                <param name="input_prod_selector" value="fr_scratch"/>
+                <conditional name="input">
+                    <param name="input_selector" value="data_table"/>
+                    <param name="inputdata" value="annotemp/ceamarc_env.tsv"/>
+                    <param name="input_temp" value="annotemp/abstract.txt,annotemp/personnel.txt,annotemp/keywords.txt,annotemp/geographic_coverage.txt,annotemp/methods.txt,annotemp/custom_units.txt,annotemp/attributes_ceamarc_env.txt"/>
+                </conditional>
+            </conditional>
+            <output name="output" file="annotemp/annotations_template_3.txt"/>
         </test>
         <test expect_num_outputs="1">
-           <param name="input_prod_selector" value="fr_scratch"/>
-           <param name="input_selector" value="other_entities"/>
-           <param name="input_other" value="annotemp/pivot_wider_jupytool_notebook.ipynb"/>
-           <param name="input_temp" value="annotemp/abstract.txt,annotemp/personnel.txt,annotemp/keywords.txt,annotemp/geographic_coverage.txt,annotemp/methods.txt,annotemp/custom_units.txt,annotemp/attributes_ceamarc_env.txt"/> 
-           <output name="output" file="annotemp/annotations_template_4.txt"/>
+            <conditional name="input_prod">
+                <param name="input_prod_selector" value="fr_scratch"/>
+                <conditional name="input">
+                    <param name="input_selector" value="other_entities"/>
+                    <param name="input_other" value="annotemp/pivot_wider_jupytool_notebook.ipynb"/>
+                    <param name="input_temp" value="annotemp/abstract.txt,annotemp/personnel.txt,annotemp/keywords.txt,annotemp/geographic_coverage.txt,annotemp/methods.txt,annotemp/custom_units.txt,annotemp/attributes_ceamarc_env.txt"/>
+                </conditional>
+            </conditional>
+            <output name="output" file="annotemp/annotations_template_4.txt"/>
         </test>
     </tests>
     <help><![CDATA[
