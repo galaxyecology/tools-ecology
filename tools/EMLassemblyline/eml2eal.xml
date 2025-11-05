@@ -1,7 +1,7 @@
-<tool id="eml2eal" name="EML to EAL" version="0.1.0+galaxy0" profile="22.05">
+<tool id="eml2eal" name="EML to EAL" version="0.1.2+galaxy0" profile="22.05">
     <description> Create EAL templates from EML metadata </description>
     <requirements>
-      <container type="docker">outils-patrinat.mnhn.fr/metashark:latest</container>
+      <container type="docker">ylebras/metashark:1.7.5</container>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
        Rscript
@@ -61,3 +61,4 @@ Once edited, this templates can me reassembled to produce a new EML with the **m
        }</citation>
     </citations>
 </tool>
+
