@@ -1,0 +1,87 @@
+<tool id="wildlife_megadetector_huggingface" name="Wildlife Detection using MegaDetector and Hugging Face Models" version="0.1.0+galaxy0" python_template_version="3.5" profile="21.05">
+    <description>
+        Detect and classify wildlife in images and videos using MegaDetector v5 for object detection and Hugging Face fine-tuned models for species classification.
+    </description>
+    <requirements>
+        <container type="docker">
+            quay.io/arthur_barreau/wild_life:latest
+            <!--quay.io/bgruening/cameratrap:1.2.1-->
+        </container>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        mkdir -p output_files ./runs
+        &&
+        python "$__tool_directory__/main.py" '$model_name' 
+            '$classifier_model' 
+            '$config' 
+            '$type_mapping'
+            '$boxing_mode'
+            '$data_dir'
+            '$detection_threshold'
+            '$stride'
+            '$images_max'
+            './runs' 
+        &&
+        cp ./runs/output_predictions.csv output_files/output_predictions.csv
+    ]]></command>
+    <inputs>
+        <param name="model_name" type="text" value="facebook/dinov2-large" label="Hugging Face backbone model name" help="Specify the pretrained model from Hugging Face to use as the image feature extractor" />
+        <param name="classifier_model" type="data" format="data" label="Fine-tuned classifier weights" help="Upload your fine-tuned classification model (.safetensors file)." />
+        <param name="config" type="data" format="json" label="Model configuration (JSON)" help="Provide the JSON configuration file associated with your fine-tuned classifier model." />
+        <param name="type_mapping" type="select" label="Label mapping direction" help="Select how labels are mapped in the model configuration.">
+            <option value="id2label" selected="true">id2label</option>
+            <option value="label2id">label2id</option>
+        </param>
+        <param name="boxing_mode" type="select" label="Save boxed images?" help="Choose whether to save images with detected boxes.">
+            <option value="no_image">No (do not save boxed images)</option>
+            <option value="all_image" selected="true">Yes (save all boxed images)</option>
+        </param>
+        <param name="data_dir" type="data" format="jpg,png,avi,mov,mp4" multiple="true" label="Input files (images or videos)" help="Select one or multiple image or video files containing wildlife to analyze." />
+        <param name="detection_threshold" type="float" value="0.5" min="0.1" max="1" label="Detection confidence threshold" help="Minimum confidence score (0–1) for detecting objects in the image or video frames." />
+        <param name="stride" type="integer" value="1" min="1" label="Frame extraction interval" help="For video input: extract one frame every X seconds." />
+        <param name="images_max" type="integer" value="3000" label="Maximum number of images to process per folder" help="Limit the total number of images extracted and processed per input folder to avoid memory overload." />
+    </inputs>
+    <outputs>
+        <data name="output_predictions" auto_format="true" from_work_dir="output_files/output_predictions.csv" label="Predictions summary (CSV)" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="model_name" value="facebook/dinov2-large" />
+            <param name="classifier_model" location="https://usegalaxy.eu/api/datasets/26c75dcccb616ac8e7d0ef189d9b5600/display?to_ext=data" />
+            <param name="config" value="config.json" />
+            <param name="type_mapping" value="id2label" />
+            <param name="data_dir" value="video.mp4" />
+            <param name="detection_threshold" value="0.8" />
+            <param name="stride" value="4" />
+            <param name="images_max" value="3000" />
+            <output name="output_predictions" file="predictions_stride_1_thresh_0.2.csv" compare="sim_size" />
+        </test>
+    </tests>
+    <help><![CDATA[
+**Wildlife Detection using MegaDetector and Hugging Face Models**
+
+This tool performs **automated wildlife detection and classification** from images or videos captured by camera traps or field sensors.  
+It combines the **MegaDetector v5** model for object detection (animals, humans, vehicles) with a **Hugging Face fine-tuned model** (e.g. DINOv2) for species-level classification.
+
+### Notes  
+
+- Detection is handled by **MegaDetector v5** (Zenodo model).
+- Classification uses your **fine-tuned Hugging Face model**.
+- The tool automatically handles both **images** and **videos**.
+- Outputs are consolidated per file, and saved as a CSV table.
+    ]]></help>
+    <citations>
+        <citation type="bibtex">@article{li2023visual,
+        title={Visual In-Context Prompting},
+        author={Li, Feng and Jiang, Qing and Zhang, Hao and Ren, Tianhe and Liu, Shilong and Zou, Xueyan and Xu, Huaizhe and Li, Hongyang and Li, Chunyuan and Yang, Jianwei and others},
+        journal={arXiv preprint arXiv:2311.13601},
+        year={2023}
+        }</citation>
+        <citation type="bibtex">@article{beery2023megadetector,
+        title={The MegaDetector: Large-Scale Deployment of Computer Vision for Conservation and Biodiversity Monitoring},
+        author={Beery, Sara},
+        journal={California Institute of Technology, Pasadena, CA, USA},
+        year={2023}
+        }</citation>
+    </citations>
+</tool>
