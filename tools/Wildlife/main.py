@@ -36,8 +36,8 @@ json_model = sys.argv[3]
 type_mapping = sys.argv[4] # Id2Label or Label2Id
 boxing_mode = sys.argv[5]  # options: "no_image", "all_image"
 path_input =sys.argv[6] # Images ou videos 
-path_list = path_input.split(',') 
-print(f"DATA_dir {path_input}")
+input_files = [Path(p.strip()) for p in path_input.split(',')]
+print(f"Fichiers d'entrée: {[str(f) for f in input_files]}")
 
 detection_threshold = float(sys.argv[7]) # Minimum detection score
 stride = int(sys.argv[8]) # Frame extraction interval for videos
@@ -56,6 +56,7 @@ os.system(f"cp {json_model} classifier_model_dir/config.json")
 
 extensions_photos = ('.jpg', '.JPG', '.jpeg', '.JPEG', '.png', '.PNG')
 extensions_videos = ('.avi', '.AVI', '.mov', '.MOV', '.mp4', '.MP4',".dat")
+
 
 # -----------------------------
 # INITIALIZE MODELS
@@ -82,12 +83,9 @@ print(f"Boxing mode actif : {boxing_mode}")
 # -----------------------------
 # DETECTION AND CLASSIFICATION
 # -----------------------------
-def predict_images(images_dir, detections_dir, data_dir, predictions, boxing_mode):
+def predict_images(images_dir, detections_dir, predictions, boxing_mode):
     """
     Performs detection and classification on images.
-    Automatically handles saving behavior depending on boxing_mode:
-      - "no_image"  → no cropped images saved, but full CSV is produced
-      - "all_image" → keeps all detections
     """
     print(f"Detecting... (boxing_mode={boxing_mode})")
 
@@ -106,7 +104,7 @@ def predict_images(images_dir, detections_dir, data_dir, predictions, boxing_mod
 
     # --- Step 2: Build list of images to classify ---
     if boxing_mode == "no_image":
-        detections_images = list(detections_dict.keys())  # in-memory images
+        detections_images = list(detections_dict.keys())
     else:
         detections_images = list_photos_videos(detections_dir, extensions_photos + extensions_videos)
     
@@ -116,7 +114,7 @@ def predict_images(images_dir, detections_dir, data_dir, predictions, boxing_mod
         detection_class = detection_info[0]
         detection_score = detection_info[1]
         xyxy = detection_info[2]
-        filename = os.path.basename(detection) 
+        filename = os.path.basename(detection)
         frame = None
 
         for part in filename.split("_"):
@@ -127,9 +125,10 @@ def predict_images(images_dir, detections_dir, data_dir, predictions, boxing_mod
                 except ValueError:
                     continue
         if frame is None:
-            frame = 0  
+            frame = 0
 
-        filepath = os.path.join(data_dir, filename)
+        # filepath reste juste le filename pour simplifier
+        filepath = filename
         print(f"Traitement de la détection {detection} de classe {detection_class} avec score {detection_score}, xyxy {xyxy}")
 
         # --- Classification depending on detection type ---
@@ -143,7 +142,7 @@ def predict_images(images_dir, detections_dir, data_dir, predictions, boxing_mod
             detection_class_str = "animal"
 
         if boxing_mode == "no_image":
-            detection_image = detection_info[3]  # déjà en mémoire
+            detection_image = detection_info[3]
         else:
             detection_image = Image.open(os.path.join(detections_dir, detection))
 
@@ -181,57 +180,48 @@ timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 predictions = pd.DataFrame(
     columns=["Filepath", "Filename", "Frame"] + taxons_all
 )
-filepaths_all = []
 
 
 # -----------------------------
-# LOOP THROUGH DATA
+# PROCESS FILES DIRECTLY
 # -----------------------------
 print(f"USING DETECTION THRESHOLD {detection_threshold} AND STRIDE {stride}")
 
-for path in path_list:
-    print(f"🚀 PROCESSING INPUT: {path}")
+images_count = 0
 
-    # Si c'est un dossier → on liste son contenu
-    if os.path.isdir(path):
-        files = list_photos_videos(path, extensions_photos + extensions_videos)
-        data_dir = path  # pour garder compatibilité avec predict_images()
+for filepath in tqdm(input_files, desc="Extracting frames...", unit="file", colour="green"):
+    if not filepath.exists():
+        print(f"WARNING: File not found: {filepath}")
+        continue
+    
+    filename = filepath.name
+    print(f"FILE {filename}, FILEPATH {filepath}")
+
+    if images_count > images_max:
+        predictions = predict_images(images_dir, detections_dir, predictions, boxing_mode=boxing_mode)
+        images_count = 0
+
+    mime = magic.from_file(str(filepath), mime=True)
+    if mime.startswith("image"):
+        frame_idx = 0
+        shutil.copy(str(filepath), os.path.join(images_dir, f"F{frame_idx}_{filename}.JPG"))
+        images_count += 1
     else:
-        # Sinon c'est un fichier directement
-        files = [path]
-        data_dir = str(Path(path).parent)
+        video = cv2.VideoCapture(str(filepath))
+        fps = video.get(cv2.CAP_PROP_FPS)
 
-    images_count = 0
-
-    for file in tqdm(files, desc="Extracting frames...", unit="step", colour="green"):
-        filepath = os.path.join(data_dir, file)
-        print(f"FILE {file}, FILEPATH {filepath}")
-        filepaths_all.append(filepath)
-
-        if images_count > images_max:
-            predictions = predict_images(images_dir, detections_dir, data_dir, predictions, boxing_mode=boxing_mode)
-            images_count = 0
-
-        mime = magic.from_file(filepath, mime=True)
-        if mime.startswith("image"):
-            frame_idx = 0
-            shutil.copy(filepath, os.path.join(images_dir, f"F{frame_idx}_{file}.JPG"))
+        for idx, frame in enumerate(video_utils.get_video_frames_generator(
+            source_path=str(filepath), stride=int(stride * fps)
+        )):
+            frame_idx = idx + 1
+            ImageSink(target_dir_path=images_dir, overwrite=False).save_image(
+                image=frame, image_name=f"F{frame_idx}_{filename}.JPG"
+            )
             images_count += 1
-        else:
-            video = cv2.VideoCapture(filepath)
-            fps = video.get(cv2.CAP_PROP_FPS)
 
-            for idx, frame in enumerate(video_utils.get_video_frames_generator(
-                source_path=filepath, stride=int(stride * fps)
-            )):
-                frame_idx = idx + 1
-                ImageSink(target_dir_path=images_dir, overwrite=False).save_image(
-                    image=frame, image_name=f"F{frame_idx}_{file}.JPG"
-                )
-                images_count += 1
-
-    predictions = predict_images(images_dir, detections_dir, data_dir, predictions, boxing_mode=boxing_mode)
-
+# Traiter les images restantes
+if images_count > 0:
+    predictions = predict_images(images_dir, detections_dir, predictions, boxing_mode=boxing_mode)
 
 
 # -----------------------------
@@ -248,22 +238,18 @@ predictions["Confidence score"] = predictions[taxons_all].apply(
 def clean_filename(name):
     import re
     base = Path(name).name
-    # enlever préfixes type 0_0_F12_
     base = re.sub(r"^\d+_\d+_F\d+_", "", base)
-    # enlever préfixes type F12_
     base = re.sub(r"^F\d+_", "", base)
-    # enlever double extensions .JPG ou .jpg.JPG
     base = re.sub(r"\.JPG$", "", base, flags=re.IGNORECASE)
     base = re.sub(r"\.jpg\.JPG$", ".jpg", base, flags=re.IGNORECASE)
     return base
 
-# On applique uniquement pour le CSV, pas pour le reste du script
+# CSV principal avec prédictions détaillées
 predictions_csv = predictions.copy()
 predictions_csv["Filename"] = predictions_csv["Filename"].apply(clean_filename)
 predictions_csv = predictions_csv.drop(columns=["Filepath"])
 predictions_csv = predictions_csv.sort_values(by="Filename").reset_index(drop=True)
 
-# Sauvegarde du CSV nettoyé
 output_file_grouped = predictions_dir / "output_predictions.csv"
 predictions_csv.to_csv(output_file_grouped, index=False)
 print(f"Grouped predictions saved: {output_file_grouped}")
@@ -272,7 +258,6 @@ print(f"Grouped predictions saved: {output_file_grouped}")
 # SECOND CSV: "recap" VERSION (compact résumé par vidéo)
 # ============================================================
 
-# Recalcul des colonnes de prédiction et confiance
 predictions["Prediction"] = predictions[taxons_all].apply(
     lambda x: "blank" if sum(x) == 0 else taxons_all[np.argmax(x)], axis=1
 )
@@ -282,15 +267,13 @@ predictions["Confidence score"] = predictions[taxons_all].apply(
 
 predictions['Filename'] = predictions['Filename'].apply(clean_filename)
 
-
-# Filtrer les détections valides (pas "blank")
+# Filtrer les détections valides
 predictions_valid = predictions[predictions["Prediction"] != "blank"].copy()
 
-# Regrouper par fichier (Filename) et espèce (Prediction)
+# Regrouper par fichier et espèce
 recap_rows = []
 for (filename, species), df_group in predictions_valid.groupby(["Filename", "Prediction"]):
-    frames = df_group["Frame"].tolist()  # garder les répétitions
-    # Count = nombre de fois que la frame la plus fréquente apparaît
+    frames = df_group["Frame"].tolist()
     frame_counts = Counter(frames)
     count = frame_counts.most_common(1)[0][1]
 
@@ -301,7 +284,7 @@ for (filename, species), df_group in predictions_valid.groupby(["Filename", "Pre
     recap_rows.append({
         "Filename": filename,
         "Species": species,
-        "Frames": ",".join(map(str, frames)),  # garder toutes les répétitions
+        "Frames": ",".join(map(str, frames)),
         "Count": count,
         "Confidence mean": round(conf_mean, 4),
         "Confidence min": round(conf_min, 4),
@@ -311,10 +294,6 @@ for (filename, species), df_group in predictions_valid.groupby(["Filename", "Pre
 predictions_recap = pd.DataFrame(recap_rows)
 predictions_recap = predictions_recap.sort_values(by="Filename").reset_index(drop=True)
 
-# Sauvegarde finale
 output_file_recap = predictions_dir / "output_predictions_recap.csv"
 predictions_recap.to_csv(output_file_recap, index=False)
 print(f"Recap predictions saved: {output_file_recap}")
-
-
-
