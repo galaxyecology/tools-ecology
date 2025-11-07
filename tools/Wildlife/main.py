@@ -37,8 +37,7 @@ type_mapping = sys.argv[4] # Id2Label or Label2Id
 boxing_mode = sys.argv[5]  # options: "no_image", "all_image"
 path_input =sys.argv[6] # Images ou videos 
 path_list = path_input.split(',') 
-data_dir = str(Path(path_list[0]).parent)
-print(f"DATA_dir {path_input} ET {data_dir} ")
+print(f"DATA_dir {path_input}")
 
 detection_threshold = float(sys.argv[7]) # Minimum detection score
 stride = int(sys.argv[8]) # Frame extraction interval for videos
@@ -189,20 +188,28 @@ filepaths_all = []
 # LOOP THROUGH DATA
 # -----------------------------
 print(f"USING DETECTION THRESHOLD {detection_threshold} AND STRIDE {stride}")
-data_subdirs = [x[0] for x in os.walk(data_dir)]
 
-for data_subdir in data_subdirs:
-    print(f"PROCESSING FOLDER {data_subdir}")
+for path in path_list:
+    print(f"🚀 PROCESSING INPUT: {path}")
+
+    # Si c'est un dossier → on liste son contenu
+    if os.path.isdir(path):
+        files = list_photos_videos(path, extensions_photos + extensions_videos)
+        data_dir = path  # pour garder compatibilité avec predict_images()
+    else:
+        # Sinon c'est un fichier directement
+        files = [path]
+        data_dir = str(Path(path).parent)
+
     images_count = 0
-    files = list_photos_videos(data_subdir, extensions_photos + extensions_videos)
 
     for file in tqdm(files, desc="Extracting frames...", unit="step", colour="green"):
-        filepath = os.path.join(data_subdir, file)
+        filepath = os.path.join(data_dir, file)
         print(f"FILE {file}, FILEPATH {filepath}")
         filepaths_all.append(filepath)
 
         if images_count > images_max:
-            predictions = predict_images(images_dir, detections_dir, data_subdir, predictions, boxing_mode=boxing_mode)
+            predictions = predict_images(images_dir, detections_dir, data_dir, predictions, boxing_mode=boxing_mode)
             images_count = 0
 
         mime = magic.from_file(filepath, mime=True)
@@ -217,14 +224,14 @@ for data_subdir in data_subdirs:
             for idx, frame in enumerate(video_utils.get_video_frames_generator(
                 source_path=filepath, stride=int(stride * fps)
             )):
-                frame_idx = idx + 1  
+                frame_idx = idx + 1
                 ImageSink(target_dir_path=images_dir, overwrite=False).save_image(
                     image=frame, image_name=f"F{frame_idx}_{file}.JPG"
                 )
                 images_count += 1
 
-    predictions = predict_images(images_dir, detections_dir, data_subdir, predictions, boxing_mode=boxing_mode)
-    images_count = 0
+    predictions = predict_images(images_dir, detections_dir, data_dir, predictions, boxing_mode=boxing_mode)
+
 
 
 # -----------------------------
