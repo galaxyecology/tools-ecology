@@ -1,4 +1,6 @@
-# xml a change
+# Les fuchiers n'ont pas le meme path donct je dois pas prendre leur dir masi diretment le path 
+# On se trouve le dossier de sortie 
+# 
 # ==============================
 # Wildlife Detection & Classification 
 # ==============================

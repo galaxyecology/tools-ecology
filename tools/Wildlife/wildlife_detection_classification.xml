@@ -1,6 +1,6 @@
 <tool id="wildlife_megadetector_huggingface" name="Wildlife Detection using MegaDetector and Hugging Face Models" version="0.1.0+galaxy0" python_template_version="3.5" profile="21.05">
     <description>
-        Detect and classify wildlife in images and videos using MegaDetector v5 for object detection and Hugging Face fine-tuned models for species classification.
+        Detect and classify wildlife species in images and videos using MegaDetector and Hugging Face models..
     </description>
     <requirements>
         <container type="docker">
@@ -42,7 +42,11 @@
         <param name="images_max" type="integer" value="3000" label="Maximum number of images to process per folder" help="Limit the total number of images extracted and processed per input folder to avoid memory overload." />
     </inputs>
     <outputs>
-        <data name="output_predictions" auto_format="true" from_work_dir="output_files/output_predictions.csv" label="Predictions summary (CSV)" />
+        <data name="output_predictions" auto_format="true" from_work_dir="output_files/output_predictions.csv" label="Predictions_CSV" />
+        <data name="output_predictions_recap" auto_format="true" from_work_dir="output_files/output_predictions_recap.csv" label="Predictions_recap_CSV" />
+        <collection name="boxed_images" type="list" label="Images with bounding boxes">
+            <discover_datasets pattern=".*\.(png|jpg)" directory="output_files/boxed_images/" />
+        </collection>
     </outputs>
     <tests>
         <test>
@@ -50,11 +54,11 @@
             <param name="classifier_model" location="https://usegalaxy.eu/api/datasets/26c75dcccb616ac8e7d0ef189d9b5600/display?to_ext=data" />
             <param name="config" value="config.json" />
             <param name="type_mapping" value="id2label" />
-            <param name="data_dir" value="video.mp4" />
+            <param name="data_dir" location="https://usegalaxy.eu/api/datasets/26c75dcccb616ac84aa62add07f74be1/display?to_ext=mp4" />
             <param name="detection_threshold" value="0.8" />
             <param name="stride" value="4" />
             <param name="images_max" value="3000" />
-            <output name="output_predictions" file="predictions_stride_1_thresh_0.2.csv" compare="sim_size" />
+            <output name="output_predictions" file="predictions_stride_1_thresh_0.2.csv" compare="diff" />
         </test>
     </tests>
     <help><![CDATA[
@@ -65,10 +69,18 @@ It combines the **MegaDetector v5** model for object detection (animals, humans,
 
 ### Notes  
 
-- Detection is handled by **MegaDetector v5** (Zenodo model).
-- Classification uses your **fine-tuned Hugging Face model**.
+- Detection (find animals, crop bounding boxes) is handled by **MegaDetector v5** (Zenodo model).
+- Classification (species identification) uses your **fine-tuned Hugging Face model**.
 - The tool automatically handles both **images** and **videos**.
-- Outputs are consolidated per file, and saved as a CSV table.
+
+
+### Outputs
+
+**output_predictions.csv** : One line per detected animal with bounding box, species name and confidence score. 
+**Folder of boxed images** *(optional)*: Visual results showing bounding boxes and predicted species. 
+
+
+
     ]]></help>
     <citations>
         <citation type="bibtex">@article{li2023visual,
