@@ -1,5 +1,4 @@
-# Les fuchiers n'ont pas le meme path donct je dois pas prendre leur dir masi diretment le path 
-# On se trouve le dossier de sortie 
+# changer le nom filename
 # 
 # ==============================
 # Wildlife Detection & Classification 
@@ -193,7 +192,9 @@ for filepath in tqdm(input_files, desc="Extracting frames...", unit="file", colo
     if not filepath.exists():
         print(f"WARNING: File not found: {filepath}")
         continue
-    
+    image_counter = 1
+    video_counter = 1
+
     filename = filepath.name
     print(f"FILE {filename}, FILEPATH {filepath}")
 
