@@ -30,11 +30,11 @@ from collections import Counter
 # -----------------------------
 # CONFIGURATION
 # -----------------------------
-model_name=sys.argv[1] # Hugging Face model name
-classifier_model = sys.argv[2] # model perso
+model_name=sys.argv[1].strip()  # Hugging Face model name
+classifier_model = sys.argv[2]  # model perso
 json_model = sys.argv[3]
 type_mapping = sys.argv[4] # Id2Label or Label2Id
-boxing_mode = sys.argv[5]  # options: "no_image", "all_image"
+boxing_mode = sys.argv[5].strip()   # options: "no_image", "all_image"
 path_input =sys.argv[6] # Images ou videos 
 input_files = [Path(p.strip()) for p in path_input.split(',')]
 print(f"Fichiers d'entrée: {[str(f) for f in input_files]}")
@@ -43,11 +43,11 @@ detection_threshold = float(sys.argv[7]) # Minimum detection score
 stride = int(sys.argv[8]) # Frame extraction interval for videos
 images_max = int(sys.argv[9]) 
 
-run_dir = sys.argv[10]
+run_dir = sys.argv[10].strip()
 predictions_dir = Path(run_dir) 
 os.makedirs(predictions_dir, exist_ok=True)
 
-boxed_images_dir = predictions_dir / "boxed_images"
+boxed_images_dir = predictions_dir/"boxed_images/"
 os.makedirs(boxed_images_dir, exist_ok=True)
 
 os.makedirs("classifier_model_dir", exist_ok=True)
@@ -247,12 +247,20 @@ def clean_filename(name):
 # CSV principal avec prédictions détaillées
 predictions_csv = predictions.copy()
 predictions_csv["Filename"] = predictions_csv["Filename"].apply(clean_filename)
+
+# Tri par Filename puis par Frame (en supposant qu'il y a une colonne 'Frame')
+if "Frame" in predictions_csv.columns:
+    predictions_csv = predictions_csv.sort_values(by=["Filename", "Frame"]).reset_index(drop=True)
+else:
+    predictions_csv = predictions_csv.sort_values(by="Filename").reset_index(drop=True)
+
+# Retrait de la colonne Filepath
 predictions_csv = predictions_csv.drop(columns=["Filepath"])
-predictions_csv = predictions_csv.sort_values(by="Filename").reset_index(drop=True)
 
 output_file_grouped = predictions_dir / "output_predictions.csv"
 predictions_csv.to_csv(output_file_grouped, index=False)
 print(f"Grouped predictions saved: {output_file_grouped}")
+
 
 # ============================================================
 # SECOND CSV: "recap" VERSION (compact résumé par vidéo)
@@ -270,11 +278,21 @@ predictions['Filename'] = predictions['Filename'].apply(clean_filename)
 # Filtrer les détections valides
 predictions_valid = predictions[predictions["Prediction"] != "blank"].copy()
 
+def sort_frames(frames_list):
+    # Convertir chaque élément en int
+    return sorted([int(f) for f in frames_list])
+
+
 # Regrouper par fichier et espèce
 recap_rows = []
+
 for (filename, species), df_group in predictions_valid.groupby(["Filename", "Prediction"]):
-    frames = df_group["Frame"].tolist()
-    frame_counts = Counter(frames)
+    # Trier les frames du groupe numériquement
+    frames_sorted = sort_frames(df_group["Frame"].tolist())
+
+    
+    # Compter le nombre d'occurrences de chaque frame et prendre la valeur la plus fréquente
+    frame_counts = Counter(df_group["Frame"])
     count = frame_counts.most_common(1)[0][1]
 
     conf_mean = df_group["Confidence score"].mean()
@@ -284,7 +302,7 @@ for (filename, species), df_group in predictions_valid.groupby(["Filename", "Pre
     recap_rows.append({
         "Filename": filename,
         "Species": species,
-        "Frames": ",".join(map(str, frames)),
+        "Frames": frames_sorted,
         "Count": count,
         "Confidence mean": round(conf_mean, 4),
         "Confidence min": round(conf_min, 4),
@@ -292,8 +310,11 @@ for (filename, species), df_group in predictions_valid.groupby(["Filename", "Pre
     })
 
 predictions_recap = pd.DataFrame(recap_rows)
-predictions_recap = predictions_recap.sort_values(by="Filename").reset_index(drop=True)
+
+# Tri final par Filename (et par Species si nécessaire)
+predictions_recap = predictions_recap.sort_values(by=["Filename", "Species"]).reset_index(drop=True)
 
 output_file_recap = predictions_dir / "output_predictions_recap.csv"
 predictions_recap.to_csv(output_file_recap, index=False)
 print(f"Recap predictions saved: {output_file_recap}")
+

@@ -8,32 +8,23 @@
             <!--quay.io/bgruening/cameratrap:1.2.1-->
         </container>
     </requirements>
-    <command detect_errors="exit_code"><![CDATA[
-        mkdir -p output_files ./runs
-        &&
-        python "$__tool_directory__/main.py" '$model_name' 
-            '$classifier_model' 
-            '$config' 
-            '$type_mapping'
-            '$boxing_mode'
-            '$data_dir'
-            '$detection_threshold'
-            '$stride'
-            '$images_max'
-            './runs' 
-        &&
-        cp "./runs/output_predictions.csv" output_files/output_predictions.csv
-        if [ -f "./runs/output_predictions_recap.csv" ]; then
-            cp "./runs/output_predictions_recap.csv" output_files/output_predictions_recap.csv
-            echo "  → output_predictions_recap.csv copied."
-        fi
-        
-        if [ -d "./runs/boxed_images" ]; then
-            mkdir -p output_files/boxed_images
-            cp -r "./runs/boxed_images/"* output_files/boxed_images/
-            echo "  → boxed images copied."
-        fi
-    ]]></command>
+    <command detect_errors="exit_code">
+    <![CDATA[
+        mkdir -p output_files ./runs_wild &&
+
+        python "$__tool_directory__/main.py" \
+            "${model_name}" \
+            "${classifier_model}" \
+            "${config}" \
+            "${type_mapping}" \
+            "${boxing_mode}" \
+            "${data_dir}" \
+            "${detection_threshold}" \
+            "${stride}" \
+            "${images_max}" \
+            "./runs_wild" 
+    ]]>
+    </command>  
     <inputs>
         <param name="model_name" type="text" value="facebook/dinov2-large" label="Hugging Face backbone model name" help="Specify the pretrained model from Hugging Face to use as the image feature extractor" />
         <param name="classifier_model" type="data" format="data" label="Fine-tuned classifier weights" help="Upload your fine-tuned classification model (.safetensors file)." />
@@ -52,10 +43,10 @@
         <param name="images_max" type="integer" value="3000" label="Maximum number of images to process per folder" help="Limit the total number of images extracted and processed per input folder to avoid memory overload." />
     </inputs>
     <outputs>
-        <data name="output_predictions" auto_format="true" from_work_dir="output_files/output_predictions.csv" label="Predictions_CSV" />
-        <data name="output_predictions_recap" auto_format="true" from_work_dir="output_files/output_predictions_recap.csv" label="Predictions_recap_CSV" />
+        <data name="output_predictions" auto_format="true" from_work_dir="./runs_wild/output_predictions.csv" label="Predictions_CSV" />
+        <data name="output_predictions_recap" auto_format="true" from_work_dir="./runs_wild/output_predictions_recap.csv" label="Predictions_recap_CSV" />
         <collection name="boxed_images" type="list" label="Images with bounding boxes">
-            <discover_datasets pattern=".*\.(png|jpg)" directory="output_files/boxed_images/" />
+            <discover_datasets pattern="*.jpg" directory="./runs_wild/boxed_images/" format="auto" />
         </collection>
     </outputs>
     <tests>
