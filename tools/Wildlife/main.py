@@ -37,10 +37,7 @@ detection_threshold = float(sys.argv[7])
 stride = int(sys.argv[8])
 images_max = int(sys.argv[9])
 run_dir = sys.argv[10].strip()
-
-# Liste de noms à donner aux fichiers
-# name_file = [n.strip() for n in sys.argv[11:]]
-name_file = ["lynx.png", "video.mp4"]
+name_file = [n.strip() for n in sys.argv[11:]]
 
 predictions_dir = Path(run_dir)
 predictions_dir.mkdir(parents=True, exist_ok=True)
