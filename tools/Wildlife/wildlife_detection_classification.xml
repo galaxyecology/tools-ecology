@@ -1,6 +1,6 @@
-<tool id="wildlife_megadetector_huggingface" name="Wildlife Detection using MegaDetector and Hugging Face Models" version="0.1.0+galaxy0" python_template_version="3.5" profile="21.05">
+<tool id="wildlife_megadetector_huggingface" name="Wildlife Detection using MegaDetector and Hugging Face Models" version="0.1.0+galaxy0" profile="21.05">
     <description>
-        Detect and classify wildlife species in images and videos using MegaDetector and Hugging Face models..
+        Detect and classify wildlife species in images and videos using MegaDetector and Hugging Face models.
     </description>
     <requirements>
         <container type="docker">
