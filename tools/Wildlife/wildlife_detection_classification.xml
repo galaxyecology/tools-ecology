@@ -23,7 +23,7 @@
             "${stride}" \
             "${images_max}" \
             "./outputs" \
-            "${data_dir.element_identifier}" \
+
     ]]>
     </command>  
     <inputs>
