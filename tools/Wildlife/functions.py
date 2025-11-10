@@ -1,10 +1,11 @@
-import cv2
 import os
-from PIL import Image
-import numpy as np
 import shutil
-from supervision import ImageSink, crop_image
 from pathlib import Path
+
+import cv2
+import numpy as np
+from PIL import Image
+from supervision import ImageSink, crop_image
 
 
 def list_photos_videos(dir_path, extensions):
@@ -18,8 +19,11 @@ def list_photos_videos(dir_path, extensions):
     """
     photos_videos = []
     for f in os.listdir(dir_path):
-        if os.path.isfile(os.path.join(dir_path, f)) \
-            and not f.startswith('.') and f.endswith(extensions):
+        if (
+            os.path.isfile(os.path.join(dir_path, f))
+            and not f.startswith(".")
+            and f.endswith(extensions)
+        ):
             photos_videos += [f]
     return photos_videos
 
@@ -47,14 +51,18 @@ def save_cropped_images(detections, detections_dir, boxing_mode):
     if boxing_mode == "no_image":
         for entry in detections:
             img = np.array(Image.open(entry["img_id"]).convert("RGB"))
-            for i, (xyxy, _, detection_score, detection_class, _, _) in enumerate(entry["detections"]):
+            for i, (xyxy, _, detection_score, detection_class, _, _) in enumerate(
+                entry["detections"]
+            ):
                 image_cropped = crop_image(img, xyxy)
-                image_name = f"{detection_class}_{i}_{os.path.basename(entry['img_id'])}"
+                image_name = (
+                    f"{detection_class}_{i}_{os.path.basename(entry['img_id'])}"
+                )
                 detections_dict[image_name] = [
                     detection_class,
                     detection_score,
                     list(map(float, xyxy)),
-                    Image.fromarray(image_cropped)
+                    Image.fromarray(image_cropped),
                 ]
         return detections_dict
 
@@ -70,19 +78,34 @@ def save_cropped_images(detections, detections_dir, boxing_mode):
             img = np.array(Image.open(img_path).convert("RGB"))
             img_boxed = img.copy()  # image pour multi-box visuel
 
-            for i, (xyxy, _, detection_score, detection_class, _, _) in enumerate(entry["detections"]):
+            for i, (xyxy, _, detection_score, detection_class, _, _) in enumerate(
+                entry["detections"]
+            ):
                 # --- Crop et sauvegarde ---
                 image_cropped = crop_image(img, xyxy)
                 image_name = f"{detection_class}_{i}_{os.path.basename(img_path)}"
-                sink.save_image(cv2.cvtColor(image_cropped, cv2.COLOR_RGB2BGR), image_name)
-                detections_dict[image_name] = [detection_class, detection_score, list(map(float, xyxy))]
+                sink.save_image(
+                    cv2.cvtColor(image_cropped, cv2.COLOR_RGB2BGR), image_name
+                )
+                detections_dict[image_name] = [
+                    detection_class,
+                    detection_score,
+                    list(map(float, xyxy)),
+                ]
 
                 # --- Dessiner la bbox sur l'image multi-box ---
                 x1, y1, x2, y2 = map(int, xyxy)
                 color = (0, 255, 0)
                 cv2.rectangle(img_boxed, (x1, y1), (x2, y2), color, 2)
-                cv2.putText(img_boxed, f"{detection_class} {detection_score:.2f}",
-                            (x1, max(y1 - 10, 10)), cv2.FONT_HERSHEY_SIMPLEX, 0.6, color, 2)
+                cv2.putText(
+                    img_boxed,
+                    f"{detection_class} {detection_score:.2f}",
+                    (x1, max(y1 - 10, 10)),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    0.6,
+                    color,
+                    2,
+                )
 
             # --- Sauvegarder l'image multi-box ---
             boxed_path = boxed_dir / f"boxed_{os.path.basename(img_path)}"
