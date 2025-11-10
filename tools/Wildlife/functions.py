@@ -8,7 +8,7 @@ from pathlib import Path
 
 
 def list_photos_videos(dir_path, extensions):
-    """
+    """aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     Lists all photos and videos within a directory.
     Args:
         dir_path (str): Path of the directory containing the photos and videos.
@@ -18,7 +18,8 @@ def list_photos_videos(dir_path, extensions):
     """
     photos_videos = []
     for f in os.listdir(dir_path):
-        if os.path.isfile(os.path.join(dir_path, f)) and not f.startswith('.') and f.endswith(extensions):
+        if os.path.isfile(os.path.join(dir_path, f)) \
+            and not f.startswith('.') and f.endswith(extensions):
             photos_videos += [f]
     return photos_videos
 

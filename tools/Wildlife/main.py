@@ -36,7 +36,7 @@ type_mapping = sys.argv[4] # Id2Label or Label2Id
 boxing_mode = sys.argv[5].strip()   # options: "no_image", "all_image"
 path_input =sys.argv[6] # Images ou videos 
 input_files = [Path(p.strip()) for p in path_input.split(',')]
-print(f"Fichiers d'entrée: {[str(f) for f in input_files]}")
+print(f"Fichiers d'entree: {[str(f) for f in input_files]}")
 
 detection_threshold = float(sys.argv[7]) # Minimum detection score
 stride = int(sys.argv[8]) # Frame extraction interval for videos
@@ -55,7 +55,8 @@ os.system(f"cp {json_model} classifier_model_dir/config.json")
 
 extensions_photos = ('.jpg', '.JPG', '.jpeg', '.JPEG', '.png', '.PNG')
 extensions_videos = ('.avi', '.AVI', '.mov', '.MOV', '.mp4', '.MP4',".dat")
-
+name_file = sys.argv[11]
+print(f"NAME FILE {name_file}")
 
 # -----------------------------
 # INITIALIZE MODELS
@@ -91,7 +92,7 @@ def predict_images(images_dir, detections_dir, predictions, boxing_mode):
     # --- Step 1: Run object detection ---
     detections_list = detection_model.batch_image_detection(
         data_path=images_dir,
-        batch_size=16,
+        batch_size=16, #32
         det_conf_thres=detection_threshold
     )
 

@@ -1,4 +1,4 @@
-<tool id="wildlife_megadetector_huggingface" name="Wildlife Detection using MegaDetector and Hugging Face Models" version="0.1.0+galaxy0" profile="21.05">
+<tool id="wildlife_megadetector_huggingface" name="Wildlife Detection" version="0.1.0+galaxy0" profile="24.2">
     <description>
         Detect and classify wildlife species in images and videos using MegaDetector and Hugging Face models.
     </description>
@@ -22,7 +22,8 @@
             "${detection_threshold}" \
             "${stride}" \
             "${images_max}" \
-            "./outputs" 
+            "./outputs" \
+            "${data_dir.element_identifier}" \
     ]]>
     </command>  
     <inputs>
