@@ -10,9 +10,15 @@
     </requirements>
     <command detect_errors="exit_code">
     <![CDATA[
-        mkdir -p output_files  &&
+    mkdir -p output_files &&
 
-        python "$__tool_directory__/main.py" \
+    #set element_ids = []
+    #for f in $data_dir
+        #set _ = $element_ids.append($f.element_identifier)
+    #end for
+    #set element_ids_str = " ".join($element_ids)
+
+    python "$__tool_directory__/main.py" \
             "${model_name}" \
             "${classifier_model}" \
             "${config}" \
@@ -23,9 +29,9 @@
             "${stride}" \
             "${images_max}" \
             "./outputs" \
-            "${data_dir.element_identifier}" \
+            $element_ids_str
     ]]>
-    </command>  
+    </command>
     <inputs>
         <param name="model_name" type="text" value="facebook/dinov2-large" label="Hugging Face backbone model name" help="Specify the pretrained model from Hugging Face to use as the image feature extractor" />
         <param name="classifier_model" type="data" format="data" label="Fine-tuned classifier weights" help="Upload your fine-tuned classification model (.safetensors file)." />
@@ -51,12 +57,27 @@
         </collection>
     </outputs>
     <tests>
+        <!--  
         <test>
             <param name="model_name" value="facebook/dinov2-large" />
             <param name="classifier_model" location="https://usegalaxy.eu/api/datasets/26c75dcccb616ac8e7d0ef189d9b5600/display?to_ext=data" />
             <param name="config" value="config.json" />
             <param name="type_mapping" value="id2label" />
             <param name="data_dir" location="https://usegalaxy.eu/api/datasets/26c75dcccb616ac84aa62add07f74be1/display?to_ext=mp4" />
+            <param name="detection_threshold" value="0.8" />
+            <param name="stride" value="5" />
+            <param name="images_max" value="3000" />
+            <output name="output_predictions" file="predictions_stride_1_thresh_0.2.csv" compare="sim_size" />
+            <output name="output_predictions_recap" file="Predictions_recap.csv" compare="sim_size" />
+            <output_collection name="boxed_images" type="list" count="7"/>
+        </test>
+        -->
+        <test>
+            <param name="model_name" value="facebook/dinov2-large" />
+            <param name="classifier_model" value="model.safetensors" />
+            <param name="config" value="config.json" />
+            <param name="type_mapping" value="id2label" />
+            <param name="data_dir" value="video.mp4" />
             <param name="detection_threshold" value="0.8" />
             <param name="stride" value="5" />
             <param name="images_max" value="3000" />

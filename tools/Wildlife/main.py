@@ -34,9 +34,6 @@ json_model = sys.argv[3]
 type_mapping = sys.argv[4]  # Id2Label or Label2Id
 boxing_mode = sys.argv[5].strip()  # options: "no_image", "all_image"
 path_input = sys.argv[6]  # Images ou videos
-input_files = [Path(p.strip()) for p in path_input.split(",")]
-print(f"Fichiers d'entree: {[str(f) for f in input_files]}")
-
 detection_threshold = float(sys.argv[7])  # Minimum detection score
 stride = int(sys.argv[8])  # Frame extraction interval for videos
 images_max = int(sys.argv[9])
@@ -54,8 +51,18 @@ os.system(f"cp {json_model} classifier_model_dir/config.json")
 
 extensions_photos = (".jpg", ".JPG", ".jpeg", ".JPEG", ".png", ".PNG")
 extensions_videos = (".avi", ".AVI", ".mov", ".MOV", ".mp4", ".MP4", ".dat")
-name_file = sys.argv[11]
+name_file = [n.strip() for n in sys.argv[11:]]
 print(f"NAME FILE {name_file}")
+
+print("PATH INPUT {path_input}")
+input_files = [Path(p.strip()) for p in path_input.split(",")]
+print(f"Fichiers d'entree: {[str(f) for f in input_files]}")
+
+if len(input_files) != len(name_file):
+    raise ValueError("Le nombre de fichiers d'entrée ne correspond pas au nombre de noms fournis")
+
+file_to_name = {str(f): n for f, n in zip(input_files, name_file)}
+
 
 # -----------------------------
 # INITIALIZE MODELS
@@ -271,7 +278,8 @@ def clean_filename(name):
 
 # CSV principal avec prédictions détaillées
 predictions_csv = predictions.copy()
-predictions_csv["Filename"] = predictions_csv["Filename"].apply(clean_filename)
+predictions_csv["Filename"] = predictions_csv["Filepath"].apply(lambda fp: file_to_name.get(fp, clean_filename(fp)))
+
 
 # Tri par Filename puis par Frame (en supposant qu'il y a une colonne 'Frame')
 if "Frame" in predictions_csv.columns:
@@ -300,7 +308,7 @@ predictions["Confidence score"] = predictions[taxons_all].apply(
     lambda x: 0 if sum(x) == 0 else np.max(x), axis=1
 )
 
-predictions["Filename"] = predictions["Filename"].apply(clean_filename)
+predictions["Filename"] = predictions["Filename"].apply(lambda fn: file_to_name.get(fn, clean_filename(fn)))
 
 # Filtrer les détections valides
 predictions_valid = predictions[predictions["Prediction"] != "blank"].copy()
