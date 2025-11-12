@@ -72,9 +72,9 @@
         </test>
     </tests>
     <help>
-===============
+====================================================================
 Wildlife Detection using MegaDetector and Hugging Face Models
-===============
+====================================================================
 
 This tool performs **automated wildlife detection and classification** from images or videos captured by camera traps or field sensors.  
 It combines the **MegaDetector v5** model for object detection (animals, humans, vehicles) with a **Hugging Face fine-tuned model** (e.g. DINOv2) for species-level classification.
