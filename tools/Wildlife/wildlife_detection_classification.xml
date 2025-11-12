@@ -57,27 +57,12 @@
         </collection>
     </outputs>
     <tests>
-        <!--  
         <test>
             <param name="model_name" value="facebook/dinov2-large" />
             <param name="classifier_model" location="https://usegalaxy.eu/api/datasets/26c75dcccb616ac8e7d0ef189d9b5600/display?to_ext=data" />
             <param name="config" value="config.json" />
             <param name="type_mapping" value="id2label" />
             <param name="data_dir" location="https://usegalaxy.eu/api/datasets/26c75dcccb616ac84aa62add07f74be1/display?to_ext=mp4" />
-            <param name="detection_threshold" value="0.8" />
-            <param name="stride" value="5" />
-            <param name="images_max" value="3000" />
-            <output name="output_predictions" file="predictions_stride_1_thresh_0.2.csv" compare="sim_size" />
-            <output name="output_predictions_recap" file="Predictions_recap.csv" compare="sim_size" />
-            <output_collection name="boxed_images" type="list" count="7"/>
-        </test>
-        -->
-        <test>
-            <param name="model_name" value="facebook/dinov2-large" />
-            <param name="classifier_model" value="model.safetensors" />
-            <param name="config" value="config.json" />
-            <param name="type_mapping" value="id2label" />
-            <param name="data_dir" value="video.mp4" />
             <param name="detection_threshold" value="0.8" />
             <param name="stride" value="5" />
             <param name="images_max" value="3000" />
