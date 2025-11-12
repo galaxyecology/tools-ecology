@@ -8,8 +8,11 @@
         <param name="tool_id" type="hidden" value="nfdi4earth_os4a" />
         <param name="sendToGalaxy" type="hidden" value="1" />
     </inputs>
+    <request_param_translation>
+        <request_param galaxy_name="title" remote_name="data_title" missing="unknown title" />
+    </request_param_translation>
     <outputs>
-        <data name="output" format="auto" label="OneStop4All Resource"/>
+        <data name="output" format="auto" label="${title}"/>
     </outputs>
     <options sanitize="False" refresh="True"/>
 </tool>
