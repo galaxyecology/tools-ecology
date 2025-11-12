@@ -5,21 +5,28 @@
 import os
 import shutil
 import sys
-from collections import Counter
+
 from datetime import datetime
 from pathlib import Path
 
+
+from PIL import Image
 import cv2
 import magic
 import numpy as np
 import pandas as pd
-import torch
-from PIL import Image
+
 from PytorchWildlife.models import detection as pw_detection
 from supervision import ImageSink
 from supervision.utils import video as video_utils
+import torch
 from tqdm import tqdm
-from transformers import AutoImageProcessor, AutoModelForImageClassification, pipeline
+from transformers import (
+    AutoImageProcessor, 
+    AutoModelForImageClassification, 
+    pipeline
+)
+
 
 from functions import clean_dir, list_photos_videos, save_cropped_images
 
@@ -198,12 +205,14 @@ predictions["Confidence score"] = predictions[taxons_all].apply(
     lambda x: 0 if sum(x) == 0 else np.max(x), axis=1
 )
 
+
 # Associer chaque Filepath au nom_file correspondant
 def map_to_namefile(filepath):
     for input_path, custom_name in file_to_name.items():
         if Path(input_path).name in Path(filepath).name:
             return custom_name
     return Path(filepath).stem  # fallback
+
 
 # Ajoute une colonne Filename basée sur name_file
 predictions["Filename"] = predictions["Filepath"].apply(map_to_namefile)
