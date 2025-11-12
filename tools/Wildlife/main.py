@@ -2,8 +2,8 @@
 # Wildlife Detection & Classification
 # ==============================
 import os
-import sys
 import shutil
+import sys
 from datetime import datetime
 from pathlib import Path
 
@@ -32,17 +32,17 @@ from functions import clean_dir, list_photos_videos, save_cropped_images
 # ============================================================
 
 # Command-line arguments
-model_name = sys.argv[1].strip()               # Hugging Face model name
-classifier_model = sys.argv[2]                 # Path to classifier model weights (.safetensors)
-json_model = sys.argv[3]                       # Path to classifier config (.json)
-type_mapping = sys.argv[4]                     # "Id2Label" or "Label2Id"
-boxing_mode = sys.argv[5].strip()              # "no_image" or "all_image"
-path_input = sys.argv[6]                       # Comma-separated list of input files
-detection_threshold = float(sys.argv[7])       # Detection confidence threshold
-stride = int(sys.argv[8])                      # Frame extraction stride
-images_max = int(sys.argv[9])                  # Max number of images before processing batch
-run_dir = sys.argv[10].strip()                 # Output directory for predictions
-name_file = [n.strip() for n in sys.argv[11:]] # Custom names for input files
+model_name = sys.argv[1].strip()                # Hugging Face model name
+classifier_model = sys.argv[2]                  # Path to classifier model weights (.safetensors)
+json_model = sys.argv[3]                        # Path to classifier config (.json)
+type_mapping = sys.argv[4]                      # "Id2Label" or "Label2Id"
+boxing_mode = sys.argv[5].strip()               # "no_image" or "all_image"
+path_input = sys.argv[6]                        # Comma-separated list of input files
+detection_threshold = float(sys.argv[7])        # Detection confidence threshold
+stride = int(sys.argv[8])                       # Frame extraction stride
+images_max = int(sys.argv[9])                   # Max number of images before processing batch
+run_dir = sys.argv[10].strip()                  # Output directory for predictions
+name_file = [n.strip() for n in sys.argv[11:]]  # Custom names for input files
 
 # Output directories
 predictions_dir = Path(run_dir)
