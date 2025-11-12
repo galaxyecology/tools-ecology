@@ -7,15 +7,15 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
+from PIL import Image
 import cv2
 import magic
 import numpy as np
 import pandas as pd
 import torch
-from PIL import Image
-from tqdm import tqdm
 from supervision import ImageSink
 from supervision.utils import video as video_utils
+from tqdm import tqdm
 from transformers import (
     AutoImageProcessor,
     AutoModelForImageClassification,
