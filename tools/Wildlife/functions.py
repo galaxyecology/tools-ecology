@@ -9,13 +9,14 @@ from supervision import ImageSink, crop_image
 
 
 def list_photos_videos(dir_path, extensions):
-    """aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    """
     Lists all photos and videos within a directory.
     Args:
         dir_path (str): Path of the directory containing the photos and videos.
         extensions (list): List of allowed photo and video extensions.
     Output:
-        photos_videos (list): List of all filenames of all photos and videos within the directory.
+        photos_videos (list): List of all filenames of all photos and videos 
+        within the directory.
     """
     photos_videos = []
     for f in os.listdir(dir_path):
@@ -41,9 +42,11 @@ def clean_dir(dir_path):
 
 def save_cropped_images(detections, detections_dir, boxing_mode):
     """
-    Sauvegarde les images croppées et, selon boxing_mode, les images avec bounding boxes.
+    Sauvegarde les images croppées et, selon boxing_mode, 
+                        les images avec bounding boxes.
     - boxing_mode = "no_image"   → ne sauvegarde rien
-    - boxing_mode = "all_image"  → sauvegarde toutes les détections et affiche toutes les boxes sur l'image originale
+    - boxing_mode = "all_image"  → sauvegarde toutes les détections et affiche
+                                        toutes les boxes sur l'image originale
     """
     detections_dict = {}
 
@@ -51,12 +54,11 @@ def save_cropped_images(detections, detections_dir, boxing_mode):
     if boxing_mode == "no_image":
         for entry in detections:
             img = np.array(Image.open(entry["img_id"]).convert("RGB"))
-            for i, (xyxy, _, detection_score, detection_class, _, _) in enumerate(
-                entry["detections"]
-            ):
+            for i, (xyxy, _, detection_score, detection_class, _, _) \
+            in enumerate(entry["detections"]):
                 image_cropped = crop_image(img, xyxy)
                 image_name = (
-                    f"{detection_class}_{i}_{os.path.basename(entry['img_id'])}"
+                  f"{detection_class}_{i}_{os.path.basename(entry['img_id'])}"
                 )
                 detections_dict[image_name] = [
                     detection_class,
@@ -78,12 +80,12 @@ def save_cropped_images(detections, detections_dir, boxing_mode):
             img = np.array(Image.open(img_path).convert("RGB"))
             img_boxed = img.copy()  # image pour multi-box visuel
 
-            for i, (xyxy, _, detection_score, detection_class, _, _) in enumerate(
-                entry["detections"]
-            ):
+            for i, (xyxy, _, detection_score, detection_class, _, _) \
+            in enumerate(entry["detections"]):
                 # --- Crop et sauvegarde ---
                 image_cropped = crop_image(img, xyxy)
-                image_name = f"{detection_class}_{i}_{os.path.basename(img_path)}"
+                image_name = \
+                    f"{detection_class}_{i}_{os.path.basename(img_path)}"
                 sink.save_image(
                     cv2.cvtColor(image_cropped, cv2.COLOR_RGB2BGR), image_name
                 )
@@ -109,6 +111,7 @@ def save_cropped_images(detections, detections_dir, boxing_mode):
 
             # --- Sauvegarder l'image multi-box ---
             boxed_path = boxed_dir / f"boxed_{os.path.basename(img_path)}"
-            cv2.imwrite(str(boxed_path), cv2.cvtColor(img_boxed, cv2.COLOR_RGB2BGR))
+            cv2.imwrite(str(boxed_path),\
+                cv2.cvtColor(img_boxed, cv2.COLOR_RGB2BGR))
 
     return detections_dict
