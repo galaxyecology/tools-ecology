@@ -1,7 +1,6 @@
 import os
 import shutil
 from pathlib import Path
-
 import cv2
 import numpy as np
 from PIL import Image
@@ -10,13 +9,14 @@ from supervision import ImageSink, crop_image
 
 def list_photos_videos(dir_path, extensions):
     """
-    Lists all photos and videos within a directory.
+    List all photo and video files within a directory.
+
     Args:
-        dir_path (str): Path of the directory containing the photos and videos.
-        extensions (list): List of allowed photo and video extensions.
-    Output:
-        photos_videos (list): List of all filenames of all photos and videos 
-        within the directory.
+        dir_path (str): Path to the directory containing photos and videos.
+        extensions (tuple): Allowed file extensions (e.g., ('.jpg', '.mp4')).
+
+    Returns:
+        list: List of filenames matching the given extensions.
     """
     photos_videos = []
     for f in os.listdir(dir_path):
@@ -25,41 +25,54 @@ def list_photos_videos(dir_path, extensions):
             and not f.startswith(".")
             and f.endswith(extensions)
         ):
-            photos_videos += [f]
+            photos_videos.append(f)
     return photos_videos
 
 
 def clean_dir(dir_path):
     """
-    Erases directory if it exists and creates a new empty one.
-    Arg:
-        dir_path (str): Path of the directory to clean.
+    Remove and recreate a directory.
+
+    Args:
+        dir_path (str): Path to the directory to reset.
+
+    Note:
+        This function deletes all existing content before recreating the folder.
     """
     if os.path.isdir(dir_path):
         shutil.rmtree(dir_path)
-    os.makedirs(dir_path)
+    os.makedirs(dir_path, exist_ok=True)
 
 
 def save_cropped_images(detections, detections_dir, boxing_mode):
     """
-    Sauvegarde les images croppées et, selon boxing_mode, 
-                        les images avec bounding boxes.
-    - boxing_mode = "no_image"   → ne sauvegarde rien
-    - boxing_mode = "all_image"  → sauvegarde toutes les détections et affiche
-                                        toutes les boxes sur l'image originale
+    Save cropped images from detections and optionally images with bounding boxes.
+
+    Args:
+        detections (list): List of detection entries.
+            Each entry is expected to be a dict with:
+                - "img_id" (str): path to the source image
+                - "detections" (list): list of tuples containing:
+                    (xyxy, _, detection_score, detection_class, _, _)
+        detections_dir (str): Directory to save cropped images.
+        boxing_mode (str): One of:
+            - "no_image": keep cropped images in memory only
+            - "all_image": save cropped and boxed images to disk
+
+    Returns:
+        dict: A dictionary with cropped image information.
+              Keys are image filenames, values contain:
+              [class_name, score, bounding_box, (optional) PIL.Image object]
     """
     detections_dict = {}
 
-    # --- Cas "no_image" : garder juste en mémoire ---
+    # --- Case 1: no_image → Only keep cropped images in memory ---
     if boxing_mode == "no_image":
         for entry in detections:
             img = np.array(Image.open(entry["img_id"]).convert("RGB"))
-            for i, (xyxy, _, detection_score, detection_class, _, _) \
-            in enumerate(entry["detections"]):
+            for i, (xyxy, _, detection_score, detection_class, _, _) in enumerate(entry["detections"]):
                 image_cropped = crop_image(img, xyxy)
-                image_name = (
-                  f"{detection_class}_{i}_{os.path.basename(entry['img_id'])}"
-                )
+                image_name = f"{detection_class}_{i}_{os.path.basename(entry['img_id'])}"
                 detections_dict[image_name] = [
                     detection_class,
                     detection_score,
@@ -68,7 +81,7 @@ def save_cropped_images(detections, detections_dir, boxing_mode):
                 ]
         return detections_dict
 
-    # --- Cas "all_image" ---
+    # --- Case 2: all_image → Save cropped and boxed images ---
     boxed_dir = Path("outputs/boxed_images")
     boxed_dir.mkdir(parents=True, exist_ok=True)
     detections_dir = Path(detections_dir)
@@ -78,24 +91,20 @@ def save_cropped_images(detections, detections_dir, boxing_mode):
         for entry in detections:
             img_path = entry["img_id"]
             img = np.array(Image.open(img_path).convert("RGB"))
-            img_boxed = img.copy()  # image pour multi-box visuel
+            img_boxed = img.copy()
 
-            for i, (xyxy, _, detection_score, detection_class, _, _) \
-            in enumerate(entry["detections"]):
-                # --- Crop et sauvegarde ---
+            for i, (xyxy, _, detection_score, detection_class, _, _) in enumerate(entry["detections"]):
+                # --- Crop and save the detection ---
                 image_cropped = crop_image(img, xyxy)
-                image_name = \
-                    f"{detection_class}_{i}_{os.path.basename(img_path)}"
-                sink.save_image(
-                    cv2.cvtColor(image_cropped, cv2.COLOR_RGB2BGR), image_name
-                )
+                image_name = f"{detection_class}_{i}_{os.path.basename(img_path)}"
+                sink.save_image(cv2.cvtColor(image_cropped, cv2.COLOR_RGB2BGR), image_name)
                 detections_dict[image_name] = [
                     detection_class,
                     detection_score,
                     list(map(float, xyxy)),
                 ]
 
-                # --- Dessiner la bbox sur l'image multi-box ---
+                # --- Draw bounding boxes on the image ---
                 x1, y1, x2, y2 = map(int, xyxy)
                 color = (0, 255, 0)
                 cv2.rectangle(img_boxed, (x1, y1), (x2, y2), color, 2)
@@ -109,9 +118,8 @@ def save_cropped_images(detections, detections_dir, boxing_mode):
                     2,
                 )
 
-            # --- Sauvegarder l'image multi-box ---
+            # --- Save the multi-box image ---
             boxed_path = boxed_dir / f"boxed_{os.path.basename(img_path)}"
-            cv2.imwrite(str(boxed_path),\
-                cv2.cvtColor(img_boxed, cv2.COLOR_RGB2BGR))
+            cv2.imwrite(str(boxed_path), cv2.cvtColor(img_boxed, cv2.COLOR_RGB2BGR))
 
     return detections_dict
