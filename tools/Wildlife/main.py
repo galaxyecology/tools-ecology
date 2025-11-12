@@ -1,32 +1,28 @@
 # ==============================
-# Wildlife Detection & Classification (clean version)
+# Wildlife Detection & Classification
 # ==============================
 
 import os
 import shutil
 import sys
-
 from datetime import datetime
 from pathlib import Path
 
-
-from PIL import Image
 import cv2
 import magic
 import numpy as np
 import pandas as pd
-
+import torch
+from PIL import Image
 from PytorchWildlife.models import detection as pw_detection
 from supervision import ImageSink
 from supervision.utils import video as video_utils
-import torch
 from tqdm import tqdm
 from transformers import (
-    AutoImageProcessor, 
-    AutoModelForImageClassification, 
-    pipeline
+    AutoImageProcessor,
+    AutoModelForImageClassification,
+    pipeline,
 )
-
 
 from functions import clean_dir, list_photos_videos, save_cropped_images
 
@@ -59,15 +55,8 @@ extensions_photos = (".jpg", ".jpeg", ".png", ".JPG", ".JPEG", ".PNG")
 extensions_videos = (".avi", ".mov", ".mp4", ".AVI", ".MOV", ".MP4", ".dat")
 
 print(f"NAME FILE: {name_file}")
-print(f"PATH INPUT: {path_input}")
 
 input_files = [Path(p.strip()) for p in path_input.split(",")]
-print(f"Fichiers d'entrée: {[str(f) for f in input_files]}")
-
-if len(input_files) != len(name_file):
-    raise ValueError("Le nombre de fichiers d'entrée ne correspond pas au nombre de noms fournis")
-
-# Associer chemin d’entrée au nom personnalisé
 file_to_name = {str(f): n for f, n in zip(input_files, name_file)}
 
 
@@ -118,8 +107,6 @@ def predict_images(images_dir, detections_dir, predictions, boxing_mode):
         info = detections_dict[detection]
         det_class, det_score, xyxy = info[:3]
         filename = os.path.basename(detection)
-
-        # Trouver le frame number
         frame = next((int(p[1:]) for p in filename.split("_") if p.startswith("F") and p[1:].isdigit()), 0)
         filepath = filename
 
