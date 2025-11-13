@@ -35,22 +35,20 @@ from transformers import (
     pipeline,
 )
 
-
-
 # ============================================================
 # CONFIGURATION
 # ============================================================
 
 # Command-line arguments
 model_name = sys.argv[1].strip()  # Hugging Face model name
-classifier_model = sys.argv[2]    # Path to classifier model weights (.safetensors)
+classifier_model = sys.argv[2] # Path to classifier model weights .safetensors
 json_model = sys.argv[3]          # Path to classifier config (.json)
 type_mapping = sys.argv[4]        # "Id2Label" or "Label2Id"
 boxing_mode = sys.argv[5].strip()  # "no_image" or "all_image"
 path_input = sys.argv[6]          # Comma-separated list of input files
 detection_threshold = float(sys.argv[7])  # Detection confidence threshold
 stride = int(sys.argv[8])         # Frame extraction stride
-images_max = int(sys.argv[9])     # Max number of images before processing batch
+images_max = int(sys.argv[9])   # Max number of images before processing batch
 run_dir = sys.argv[10].strip()    # Output directory for predictions
 name_file = [n.strip() for n in sys.argv[11:]]  # Custom names for input files
 
@@ -237,9 +235,9 @@ for filepath in tqdm(
 
     if images_count > images_max:
         predictions = predict_images(
-            images_dir, 
-            detections_dir, 
-            predictions, 
+            images_dir,
+            detections_dir,
+            predictions,
             boxing_mode
         )
         images_count = 0
