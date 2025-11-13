@@ -15,13 +15,13 @@ import magic
 
 import numpy as np
 
-import pandas as pd
-
 from PytorchWildlife.models import detection as pw_detection
 
-import torch
+import pandas as pd
 
 from functions import clean_dir, list_photos_videos, save_cropped_images
+
+import torch
 
 from supervision import ImageSink
 from supervision.utils import video as video_utils
