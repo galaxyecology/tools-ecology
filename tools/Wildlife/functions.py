@@ -1,10 +1,11 @@
 import os
 import shutil
-from pathlib import Path
-
-from PIL import Image
 import cv2
+
+from pathlib import Path
+from PIL import Image
 import numpy as np
+
 from supervision import ImageSink, crop_image
 
 
