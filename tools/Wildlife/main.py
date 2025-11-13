@@ -1,6 +1,7 @@
 # ==============================
 # Wildlife Detection & Classification
 # ==============================
+
 import os
 import shutil
 import sys
@@ -41,16 +42,16 @@ from transformers import (
 # ============================================================
 
 # Command-line arguments
-model_name = sys.argv[1].strip()                # Hugging Face model name
-classifier_model = sys.argv[2]                  # Path to classifier model weights (.safetensors)
-json_model = sys.argv[3]                        # Path to classifier config (.json)
-type_mapping = sys.argv[4]                      # "Id2Label" or "Label2Id"
-boxing_mode = sys.argv[5].strip()               # "no_image" or "all_image"
-path_input = sys.argv[6]                        # Comma-separated list of input files
-detection_threshold = float(sys.argv[7])        # Detection confidence threshold
-stride = int(sys.argv[8])                       # Frame extraction stride
-images_max = int(sys.argv[9])                   # Max number of images before processing batch
-run_dir = sys.argv[10].strip()                  # Output directory for predictions
+model_name = sys.argv[1].strip()  # Hugging Face model name
+classifier_model = sys.argv[2]    # Path to classifier model weights (.safetensors)
+json_model = sys.argv[3]          # Path to classifier config (.json)
+type_mapping = sys.argv[4]        # "Id2Label" or "Label2Id"
+boxing_mode = sys.argv[5].strip()  # "no_image" or "all_image"
+path_input = sys.argv[6]          # Comma-separated list of input files
+detection_threshold = float(sys.argv[7])  # Detection confidence threshold
+stride = int(sys.argv[8])         # Frame extraction stride
+images_max = int(sys.argv[9])     # Max number of images before processing batch
+run_dir = sys.argv[10].strip()    # Output directory for predictions
 name_file = [n.strip() for n in sys.argv[11:]]  # Custom names for input files
 
 # Output directories
@@ -80,9 +81,14 @@ file_to_name = {str(f): n for f, n in zip(input_files, name_file)}
 device = "cuda" if torch.cuda.is_available() else "cpu"
 print(f"Using device: {device}")
 
-detection_model = pw_detection.MegaDetectorV5(device=device, pretrained=True)
+detection_model = pw_detection.MegaDetectorV5(
+    device=device,
+    pretrained=True,
+)
 image_processor = AutoImageProcessor.from_pretrained(model_name)
-classifier = AutoModelForImageClassification.from_pretrained("./classifier_model_dir")
+classifier = AutoModelForImageClassification.from_pretrained(
+    "./classifier_model_dir"
+)
 
 pipe = pipeline(
     "image-classification",
@@ -100,7 +106,6 @@ else:
     taxons = list(labels.keys())
 
 taxons_all = taxons + ["human", "vehicle"]
-
 print(f"Active boxing mode: {boxing_mode}")
 
 
@@ -126,42 +131,65 @@ def predict_images(images_dir, detections_dir, predictions, boxing_mode):
     detections_list = detection_model.batch_image_detection(
         data_path=images_dir,
         batch_size=16,
-        det_conf_thres=detection_threshold
+        det_conf_thres=detection_threshold,
     )
 
     detections_dict = save_cropped_images(
         detections=detections_list,
         detections_dir=detections_dir,
-        boxing_mode=boxing_mode
+        boxing_mode=boxing_mode,
     )
 
     if boxing_mode == "no_image":
         detections_images = list(detections_dict.keys())
     else:
-        detections_images = list_photos_videos(detections_dir, extensions_photos + extensions_videos)
+        detections_images = list_photos_videos(
+            detections_dir, extensions_photos + extensions_videos
+        )
 
     # --- Classification ---
-    for detection in tqdm(detections_images, desc="Classifying...", unit="image", colour="yellow"):
+    for detection in tqdm(
+        detections_images,
+        desc="Classifying...",
+        unit="image",
+        colour="yellow",
+    ):
         info = detections_dict[detection]
         det_class, det_score, xyxy = info[:3]
+
         filename = os.path.basename(detection)
-        frame = next((int(p[1:]) for p in filename.split("_") if p.startswith("F") and p[1:].isdigit()), 0)
+        frame = next(
+            (int(p[1:]) for p in filename.split("_")
+             if p.startswith("F") and p[1:].isdigit()),
+            0,
+        )
 
         if det_class == 1:  # human
             scores = [0] * len(taxons) + [1, 0]
         elif det_class == 2:  # vehicle
             scores = [0] * len(taxons) + [0, 1]
         else:
-            image = info[3] if boxing_mode == "no_image" else Image.open(os.path.join(detections_dir, detection))
-            inputs = image_processor(images=image, return_tensors="pt").to(device)
+            image = info[3] if boxing_mode == "no_image" else Image.open(
+                os.path.join(detections_dir, detection)
+            )
+            inputs = image_processor(
+                images=image,
+                return_tensors="pt",
+            ).to(device)
             logits = pipe.model(**inputs).logits
-            softmax_scores = torch.nn.functional.softmax(logits, dim=-1).cpu().tolist()[0]
+            softmax_scores = (
+                torch.nn.functional.softmax(logits, dim=-1)
+                .cpu()
+                .tolist()[0]
+            )
             scores = softmax_scores + [0, 0]
 
         prediction_row = pd.DataFrame(
-            [[detection, filename, frame] + list(det_score * np.array(scores))],
-            columns=list(predictions.columns)
+            [[detection, filename, frame]
+                + list(det_score * np.array(scores))],
+            columns=list(predictions.columns),
         )
+
         predictions = pd.concat([predictions, prediction_row])
 
     if boxing_mode == "all_image":
@@ -181,7 +209,9 @@ clean_dir(images_dir)
 clean_dir(detections_dir)
 
 timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-predictions = pd.DataFrame(columns=["Filepath", "Filename", "Frame"] + taxons_all)
+predictions = pd.DataFrame(
+    columns=["Filepath", "Filename", "Frame"] + taxons_all
+)
 
 print(f"Detection threshold: {detection_threshold} | Stride: {stride}")
 
@@ -192,7 +222,12 @@ print(f"Detection threshold: {detection_threshold} | Stride: {stride}")
 
 images_count = 0
 
-for filepath in tqdm(input_files, desc="Extracting frames...", unit="file", colour="green"):
+for filepath in tqdm(
+    input_files,
+    desc="Extracting frames...",
+    unit="file",
+    colour="green",
+):
     if not filepath.exists():
         print(f"WARNING: file not found: {filepath}")
         continue
@@ -201,7 +236,12 @@ for filepath in tqdm(input_files, desc="Extracting frames...", unit="file", colo
     print(f"Processing file: {filename}")
 
     if images_count > images_max:
-        predictions = predict_images(images_dir, detections_dir, predictions, boxing_mode)
+        predictions = predict_images(
+            images_dir, 
+            detections_dir, 
+            predictions, 
+            boxing_mode
+        )
         images_count = 0
 
     mime = magic.from_file(str(filepath), mime=True)
@@ -227,7 +267,12 @@ for filepath in tqdm(input_files, desc="Extracting frames...", unit="file", colo
             images_count += 1
 
 if images_count > 0:
-    predictions = predict_images(images_dir, detections_dir, predictions, boxing_mode)
+    predictions = predict_images(
+        images_dir,
+        detections_dir,
+        predictions,
+        boxing_mode,
+    )
 
 
 # ============================================================
@@ -255,7 +300,9 @@ def map_to_namefile(filepath):
 predictions["Filename"] = predictions["Filepath"].apply(map_to_namefile)
 
 if "Frame" in predictions.columns:
-    predictions = predictions.sort_values(by=["Filename", "Frame"]).reset_index(drop=True)
+    predictions = predictions.sort_values(
+        by=["Filename", "Frame"]
+    ).reset_index(drop=True)
 else:
     predictions = predictions.sort_values(by="Filename").reset_index(drop=True)
 
@@ -284,7 +331,11 @@ for (filename, species), df in valid.groupby(["Filename", "Prediction"]):
         "Confidence max": round(df["Confidence score"].max(), 4),
     })
 
-recap_df = pd.DataFrame(recap_rows).sort_values(by=["Filename", "Species"]).reset_index(drop=True)
+recap_df = (
+    pd.DataFrame(recap_rows)
+    .sort_values(by=["Filename", "Species"])
+    .reset_index(drop=True)
+)
 output_file_recap = predictions_dir / "output_predictions_recap.csv"
 recap_df.to_csv(output_file_recap, index=False)
 

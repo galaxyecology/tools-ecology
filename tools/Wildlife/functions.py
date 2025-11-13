@@ -41,7 +41,7 @@ def clean_dir(dir_path):
         dir_path (str): Path to the directory to reset.
 
     Note:
-        This function deletes all existing content before recreating the folder.
+      This function deletes all existing content before recreating the folder.
     """
     if os.path.isdir(dir_path):
         shutil.rmtree(dir_path)
@@ -50,7 +50,8 @@ def clean_dir(dir_path):
 
 def save_cropped_images(detections, detections_dir, boxing_mode):
     """
-    Save cropped images from detections and optionally images with bounding boxes.
+    Save cropped images from detections and optionally images with 
+    bounding boxes.
 
     Args:
         detections (list): List of detection entries.
@@ -74,9 +75,14 @@ def save_cropped_images(detections, detections_dir, boxing_mode):
     if boxing_mode == "no_image":
         for entry in detections:
             img = np.array(Image.open(entry["img_id"]).convert("RGB"))
-            for i, (xyxy, _, detection_score, detection_class, _, _) in enumerate(entry["detections"]):
+            for i, (
+                xyxy, _, detection_score, detection_class, _, _
+            ) in enumerate(entry["detections"]):
                 image_cropped = crop_image(img, xyxy)
-                image_name = f"{detection_class}_{i}_{os.path.basename(entry['img_id'])}"
+                image_name = (
+                    f"{detection_class}_{i}_"
+                    f"{os.path.basename(entry['img_id'])}"
+                )
                 detections_dict[image_name] = [
                     detection_class,
                     detection_score,
@@ -97,11 +103,19 @@ def save_cropped_images(detections, detections_dir, boxing_mode):
             img = np.array(Image.open(img_path).convert("RGB"))
             img_boxed = img.copy()
 
-            for i, (xyxy, _, detection_score, detection_class, _, _) in enumerate(entry["detections"]):
+            for i, (
+                xyxy, _, detection_score, detection_class, _, _
+                ) in enumerate(entry["detections"]):
                 # --- Crop and save the detection ---
                 image_cropped = crop_image(img, xyxy)
-                image_name = f"{detection_class}_{i}_{os.path.basename(img_path)}"
-                sink.save_image(cv2.cvtColor(image_cropped, cv2.COLOR_RGB2BGR), image_name)
+                image_name = (
+                    f"{detection_class}_{i}_"
+                    f"{os.path.basename(img_path)}"
+                )
+                sink.save_image(
+                    cv2.cvtColor(image_cropped, cv2.COLOR_RGB2BGR)
+                    , image_name
+                )
                 detections_dict[image_name] = [
                     detection_class,
                     detection_score,
@@ -124,6 +138,8 @@ def save_cropped_images(detections, detections_dir, boxing_mode):
 
             # --- Save the multi-box image ---
             boxed_path = boxed_dir / f"boxed_{os.path.basename(img_path)}"
-            cv2.imwrite(str(boxed_path), cv2.cvtColor(img_boxed, cv2.COLOR_RGB2BGR))
-
+            cv2.imwrite(
+                str(boxed_path),
+                cv2.cvtColor(img_boxed, cv2.COLOR_RGB2BGR),
+            )
     return detections_dict
