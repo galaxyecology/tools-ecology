@@ -41,7 +41,7 @@ from transformers import (
 
 # Command-line arguments
 model_name = sys.argv[1].strip()  # Hugging Face model name
-classifier_model = sys.argv[2] # Path to classifier model weights .safetensors
+classifier_model = sys.argv[2]  # Path classifier model weights .safetensors
 json_model = sys.argv[3]          # Path to classifier config (.json)
 type_mapping = sys.argv[4]        # "Id2Label" or "Label2Id"
 boxing_mode = sys.argv[5].strip()  # "no_image" or "all_image"

@@ -113,8 +113,8 @@ def save_cropped_images(detections, detections_dir, boxing_mode):
                     f"{os.path.basename(img_path)}"
                 )
                 sink.save_image(
-                    cv2.cvtColor(image_cropped, cv2.COLOR_RGB2BGR) 
-                    , image_name
+                    cv2.cvtColor(image_cropped, cv2.COLOR_RGB2BGR)
+                     , image_name
                 )
                 detections_dict[image_name] = [
                     detection_class,
