@@ -15,14 +15,15 @@ import pandas as pd
 from supervision import ImageSink
 from supervision.utils import video as video_utils
 import torch
-from tqdm import tqdm
 from PytorchWildlife.models import detection as pw_detection
+from tqdm import tqdm
+from functions import clean_dir, list_photos_videos, save_cropped_images
 from transformers import (
     AutoImageProcessor,
     AutoModelForImageClassification,
     pipeline,
 )
-from functions import clean_dir, list_photos_videos, save_cropped_images
+
 
 
 # ============================================================
