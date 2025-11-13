@@ -12,18 +12,16 @@ import cv2
 import magic
 import numpy as np
 import pandas as pd
-import torch
 from supervision import ImageSink
 from supervision.utils import video as video_utils
+import torch
 from tqdm import tqdm
+from PytorchWildlife.models import detection as pw_detection
 from transformers import (
     AutoImageProcessor,
     AutoModelForImageClassification,
     pipeline,
 )
-from PytorchWildlife.models import detection as pw_detection
-
-# Local helper functions
 from functions import clean_dir, list_photos_videos, save_cropped_images
 
 
