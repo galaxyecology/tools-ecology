@@ -4,16 +4,19 @@
 import os
 import shutil
 import sys
-from pathlib import Path
-
 from datetime import datetime
+from pathlib import Path
 
 from PIL import Image
 
 import cv2
+
 import magic
+
 import numpy as np
+
 import pandas as pd
+
 import torch
 
 from PytorchWildlife.models import detection as pw_detection
