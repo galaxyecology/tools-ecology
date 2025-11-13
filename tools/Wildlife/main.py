@@ -4,17 +4,18 @@
 import os
 import shutil
 import sys
-from datetime import datetime
-from pathlib import Path
-
-from PIL import Image
 import cv2
 import magic
 import numpy as np
 import pandas as pd
+import torch
+
+from PIL import Image
+from datetime import datetime
+from pathlib import Path
 from supervision import ImageSink
 from supervision.utils import video as video_utils
-import torch
+
 from PytorchWildlife.models import detection as pw_detection
 from tqdm import tqdm
 from functions import clean_dir, list_photos_videos, save_cropped_images
