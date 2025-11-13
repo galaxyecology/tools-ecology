@@ -13,18 +13,18 @@ import cv2
 
 import magic
 
-import numpy as np
-
 from PytorchWildlife.models import detection as pw_detection
-
-import pandas as pd
 
 from functions import clean_dir, list_photos_videos, save_cropped_images
 
-import torch
+import numpy as np
+
+import pandas as pd
 
 from supervision import ImageSink
 from supervision.utils import video as video_utils
+
+import torch
 
 from tqdm import tqdm
 
