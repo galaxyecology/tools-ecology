@@ -9,11 +9,11 @@ from pathlib import Path
 
 from PIL import Image
 
-import cv2
-
 from PytorchWildlife.models import detection as pw_detection
 
 from functions import clean_dir, list_photos_videos, save_cropped_images
+
+import cv2
 
 import magic
 
