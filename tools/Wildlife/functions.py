@@ -50,7 +50,7 @@ def clean_dir(dir_path):
 
 def save_cropped_images(detections, detections_dir, boxing_mode):
     """
-    Save cropped images from detections and optionally images with 
+    Save cropped images from detections and optionally images with
     bounding boxes.
 
     Args:
@@ -105,7 +105,7 @@ def save_cropped_images(detections, detections_dir, boxing_mode):
 
             for i, (
                 xyxy, _, detection_score, detection_class, _, _
-                ) in enumerate(entry["detections"]):
+            ) in enumerate(entry["detections"]):
                 # --- Crop and save the detection ---
                 image_cropped = crop_image(img, xyxy)
                 image_name = (
@@ -113,7 +113,7 @@ def save_cropped_images(detections, detections_dir, boxing_mode):
                     f"{os.path.basename(img_path)}"
                 )
                 sink.save_image(
-                    cv2.cvtColor(image_cropped, cv2.COLOR_RGB2BGR)
+                    cv2.cvtColor(image_cropped, cv2.COLOR_RGB2BGR) 
                     , image_name
                 )
                 detections_dict[image_name] = [
