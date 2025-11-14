@@ -10,7 +10,7 @@
     <required_files>
         <include path="main.py" />
         <include path="fonction.py" />
-        <include path="ftest-data/" />
+        <include path="test-data/" />
     </required_files>
     <command detect_errors="exit_code">
     <![CDATA[
@@ -98,6 +98,9 @@ Outputs:
 - **output_predictions.csv** : One line per detected animal with bounding box, species name and confidence score.  
 - **Folder of boxed images** *(optional)*: Visual results showing bounding boxes and predicted species. 
     </help>
+    <creator>
+        <person name="Arthur Barreau" email="arthurbarreau.ab@gmail.com" />
+    </creator>
     <citations>
         <citation type="bibtex">@article{li2023visual,
         title={Visual In-Context Prompting},
