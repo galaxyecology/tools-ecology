@@ -4,10 +4,14 @@
     </description>
     <requirements>
         <container type="docker">
-            quay.io/arthur_barreau/wild_life:latest
-            <!--quay.io/bgruening/cameratrap:1.2.1-->
+            quay.io/arthur_barreau/wildlife:1.0.0
         </container>
     </requirements>
+    <required_files>
+        <include path="main.py" />
+        <include path="fonction.py" />
+        <include path="ftest-data/" />
+    </required_files>
     <command detect_errors="exit_code">
     <![CDATA[
     mkdir -p output_files &&
@@ -46,8 +50,8 @@
         </param>
         <param name="data_dir" type="data" format="jpg,png,avi,mov,mp4" multiple="true" label="Input files (images or videos)" help="Select one or multiple image or video files containing wildlife to analyze." />
         <param name="detection_threshold" type="float" value="0.5" min="0.1" max="1" label="Detection confidence threshold" help="Minimum confidence score (0–1) for detecting objects in the image or video frames." />
-        <param name="stride" type="integer" value="1" min="1" label="Frame extraction interval" help="For video input: extract one frame every X seconds." />
-        <param name="images_max" type="integer" value="3000" label="Maximum number of images to process per folder" help="Limit the total number of images extracted and processed per input folder to avoid memory overload." />
+        <param name="stride" type="integer" value="1" min="1" max="300" label="Frame extraction interval" help="For video input: extract one frame every X seconds." />
+        <param name="images_max" type="integer" value="3000" min="1" max="10000" label="Maximum number of images to process per folder" help="Limit the total number of images extracted and processed per input folder to avoid memory overload." />
     </inputs>
     <outputs>
         <data name="output_predictions" auto_format="true" from_work_dir="./outputs/output_predictions.csv" label="Predictions_CSV" />
