@@ -50,9 +50,9 @@ parser.add_argument("classifier_model", type=str,
                     help="Path to fine-tuned classifier weights (.safetensors)")
 parser.add_argument("json_model", type=str,
                     help="Path to classifier config (.json)")
-parser.add_argument("type_mapping", type=str, choices=["id2label", "label2id"],
+parser.add_argument("type_mapping", type=str, choices=[" id2label", " label2id"],
                     help="Label mapping direction")
-parser.add_argument("boxing_mode", type=str, choices=["no_image", "all_image"],
+parser.add_argument("boxing_mode", type=str, choices=[" no_image", " all_image"],
                     help="Bounding box output mode")
 parser.add_argument("path_input", type=str,
                     help="Comma-separated list of input files (images or videos)")
@@ -73,7 +73,7 @@ args = parser.parse_args()
 model_name = args.model_name.strip()
 classifier_model = args.classifier_model
 json_model = args.json_model
-type_mapping = args.type_mapping
+type_mapping = args.type_mapping.strip()
 boxing_mode = args.boxing_mode.strip()
 path_input = args.path_input
 detection_threshold = args.detection_threshold
