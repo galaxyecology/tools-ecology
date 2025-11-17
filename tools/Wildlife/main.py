@@ -4,7 +4,6 @@
 
 import os
 import shutil
-import sys
 from datetime import datetime
 from pathlib import Path
 
@@ -13,6 +12,8 @@ from PIL import Image
 from PytorchWildlife.models import detection as pw_detection
 
 import cv2
+
+import argparse
 
 from functions import clean_dir, list_photos_videos, save_cropped_images
 
@@ -38,34 +39,49 @@ from transformers import (
 # ============================================================
 # CONFIGURATION
 # ============================================================
-import argparse
 
 parser = argparse.ArgumentParser(
-    description="Wildlife Detection & Classification using MegaDetector + Hugging Face model"
+    description="Wildlife Detection & Classification using MegaDetector"
+    "+ Hugging Face model"
 )
 
-parser.add_argument("model_name", type=str,
-                    help="Hugging Face model name for feature extraction")
-parser.add_argument("classifier_model", type=str,
-                    help="Path to fine-tuned classifier weights (.safetensors)")
-parser.add_argument("json_model", type=str,
-                    help="Path to classifier config (.json)")
-parser.add_argument("type_mapping", type=str, choices=[" id2label", " label2id"],
-                    help="Label mapping direction")
-parser.add_argument("boxing_mode", type=str, choices=[" no_image", " all_image"],
-                    help="Bounding box output mode")
-parser.add_argument("path_input", type=str,
-                    help="Comma-separated list of input files (images or videos)")
-parser.add_argument("detection_threshold", type=float,
-                    help="Detection confidence threshold (0-1)")
-parser.add_argument("stride", type=int,
-                    help="Frame extraction stride")
-parser.add_argument("images_max", type=int,
-                    help="Maximum number of images to process per folder")
-parser.add_argument("run_dir", type=str,
-                    help="Output directory for predictions")
-parser.add_argument("name_file", nargs=argparse.REMAINDER,
-                    help="Optional custom names for input files")
+parser.add_argument(
+    "model_name", type=str, help="Hugging Face model name for feature extraction"
+)
+parser.add_argument(
+    "classifier_model",
+    type=str,
+    help="Path to fine-tuned classifier weights (.safetensors)",
+)
+parser.add_argument("json_model", type=str, help="Path to classifier config (.json)")
+parser.add_argument(
+    "type_mapping",
+    type=str,
+    choices=[" id2label", " label2id"],
+    help="Label mapping direction",
+)
+parser.add_argument(
+    "boxing_mode",
+    type=str,
+    choices=[" no_image", " all_image"],
+    help="Bounding box output mode",
+)
+parser.add_argument(
+    "path_input",
+    type=str,
+    help="Comma-separated list of input files (images or videos)",
+)
+parser.add_argument(
+    "detection_threshold", type=float, help="Detection confidence threshold (0-1)"
+)
+parser.add_argument("stride", type=int, help="Frame extraction stride")
+parser.add_argument(
+    "images_max", type=int, help="Maximum number of images to process per folder"
+)
+parser.add_argument("run_dir", type=str, help="Output directory for predictions")
+parser.add_argument(
+    "name_file", nargs=argparse.REMAINDER, help="Optional custom names for input files"
+)
 
 args = parser.parse_args()
 
@@ -82,7 +98,7 @@ images_max = args.images_max
 run_dir = args.run_dir.strip()
 name_file = [n.strip() for n in args.name_file]
 
-'''
+"""
 # Command-line arguments
 model_name = sys.argv[1].strip()  # Hugging Face model name
 classifier_model = sys.argv[2]  # Path classifier model weights .safetensors
@@ -95,7 +111,7 @@ stride = int(sys.argv[8])         # Frame extraction stride
 images_max = int(sys.argv[9])   # Max number of images before processing batch
 run_dir = sys.argv[10].strip()    # Output directory for predictions
 name_file = [n.strip() for n in sys.argv[11:]]  # Custom names for input files
-'''
+"""
 # Output directories
 predictions_dir = Path(run_dir)
 predictions_dir.mkdir(parents=True, exist_ok=True)
@@ -128,9 +144,7 @@ detection_model = pw_detection.MegaDetectorV5(
     pretrained=True,
 )
 image_processor = AutoImageProcessor.from_pretrained(model_name)
-classifier = AutoModelForImageClassification.from_pretrained(
-    "./classifier_model_dir"
-)
+classifier = AutoModelForImageClassification.from_pretrained("./classifier_model_dir")
 
 pipe = pipeline(
     "image-classification",
@@ -154,6 +168,7 @@ print(f"Active boxing mode: {boxing_mode}")
 # ============================================================
 # DETECTION + CLASSIFICATION
 # ============================================================
+
 
 def predict_images(images_dir, detections_dir, predictions, boxing_mode):
     """
@@ -201,8 +216,11 @@ def predict_images(images_dir, detections_dir, predictions, boxing_mode):
 
         filename = os.path.basename(detection)
         frame = next(
-            (int(p[1:]) for p in filename.split("_")
-             if p.startswith("F") and p[1:].isdigit()),
+            (
+                int(p[1:])
+                for p in filename.split("_")
+                if p.startswith("F") and p[1:].isdigit()
+            ),
             0,
         )
 
@@ -211,8 +229,10 @@ def predict_images(images_dir, detections_dir, predictions, boxing_mode):
         elif det_class == 2:  # vehicle
             scores = [0] * len(taxons) + [0, 1]
         else:
-            image = info[3] if boxing_mode == "no_image" else Image.open(
-                os.path.join(detections_dir, detection)
+            image = (
+                info[3]
+                if boxing_mode == "no_image"
+                else Image.open(os.path.join(detections_dir, detection))
             )
             inputs = image_processor(
                 images=image,
@@ -220,15 +240,12 @@ def predict_images(images_dir, detections_dir, predictions, boxing_mode):
             ).to(device)
             logits = pipe.model(**inputs).logits
             softmax_scores = (
-                torch.nn.functional.softmax(logits, dim=-1)
-                .cpu()
-                .tolist()[0]
+                torch.nn.functional.softmax(logits, dim=-1).cpu().tolist()[0]
             )
             scores = softmax_scores + [0, 0]
 
         prediction_row = pd.DataFrame(
-            [[detection, filename, frame]
-                + list(det_score * np.array(scores))],
+            [[detection, filename, frame] + list(det_score * np.array(scores))],
             columns=list(predictions.columns),
         )
 
@@ -251,9 +268,7 @@ clean_dir(images_dir)
 clean_dir(detections_dir)
 
 timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-predictions = pd.DataFrame(
-    columns=["Filepath", "Filename", "Frame"] + taxons_all
-)
+predictions = pd.DataFrame(columns=["Filepath", "Filename", "Frame"] + taxons_all)
 
 print(f"Detection threshold: {detection_threshold} | Stride: {stride}")
 
@@ -279,10 +294,7 @@ for filepath in tqdm(
 
     if images_count > images_max:
         predictions = predict_images(
-            images_dir,
-            detections_dir,
-            predictions,
-            boxing_mode
+            images_dir, detections_dir, predictions, boxing_mode
         )
         images_count = 0
 
@@ -298,13 +310,11 @@ for filepath in tqdm(
 
         for idx, frame in enumerate(
             video_utils.get_video_frames_generator(
-                source_path=str(filepath),
-                stride=int(stride * fps)
+                source_path=str(filepath), stride=int(stride * fps)
             )
         ):
             ImageSink(images_dir, overwrite=False).save_image(
-                image=frame,
-                image_name=f"F{idx+1}_{filename}.JPG"
+                image=frame, image_name=f"F{idx + 1}_{filename}.JPG"
             )
             images_count += 1
 
@@ -323,12 +333,10 @@ if images_count > 0:
 
 # Compute top prediction and confidence per detection
 predictions["Prediction"] = predictions[taxons_all].apply(
-    lambda x: "blank" if sum(x) == 0 else taxons_all[np.argmax(x)],
-    axis=1
+    lambda x: "blank" if sum(x) == 0 else taxons_all[np.argmax(x)], axis=1
 )
 predictions["Confidence score"] = predictions[taxons_all].apply(
-    lambda x: 0 if sum(x) == 0 else np.max(x),
-    axis=1
+    lambda x: 0 if sum(x) == 0 else np.max(x), axis=1
 )
 
 
@@ -342,9 +350,9 @@ def map_to_namefile(filepath):
 predictions["Filename"] = predictions["Filepath"].apply(map_to_namefile)
 
 if "Frame" in predictions.columns:
-    predictions = predictions.sort_values(
-        by=["Filename", "Frame"]
-    ).reset_index(drop=True)
+    predictions = predictions.sort_values(by=["Filename", "Frame"]).reset_index(
+        drop=True
+    )
 else:
     predictions = predictions.sort_values(by="Filename").reset_index(drop=True)
 
@@ -363,15 +371,17 @@ valid = predictions[predictions["Prediction"] != "blank"].copy()
 recap_rows = []
 for (filename, species), df in valid.groupby(["Filename", "Prediction"]):
     frames_sorted = sorted(df["Frame"].tolist())
-    recap_rows.append({
-        "Filename": filename,
-        "Species": species,
-        "Frames": frames_sorted,
-        "Count": len(df),
-        "Confidence mean": round(df["Confidence score"].mean(), 4),
-        "Confidence min": round(df["Confidence score"].min(), 4),
-        "Confidence max": round(df["Confidence score"].max(), 4),
-    })
+    recap_rows.append(
+        {
+            "Filename": filename,
+            "Species": species,
+            "Frames": frames_sorted,
+            "Count": len(df),
+            "Confidence mean": round(df["Confidence score"].mean(), 4),
+            "Confidence min": round(df["Confidence score"].min(), 4),
+            "Confidence max": round(df["Confidence score"].max(), 4),
+        }
+    )
 
 recap_df = (
     pd.DataFrame(recap_rows)
