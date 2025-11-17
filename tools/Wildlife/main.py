@@ -38,7 +38,51 @@ from transformers import (
 # ============================================================
 # CONFIGURATION
 # ============================================================
+import argparse
 
+parser = argparse.ArgumentParser(
+    description="Wildlife Detection & Classification using MegaDetector + Hugging Face model"
+)
+
+parser.add_argument("model_name", type=str,
+                    help="Hugging Face model name for feature extraction")
+parser.add_argument("classifier_model", type=str,
+                    help="Path to fine-tuned classifier weights (.safetensors)")
+parser.add_argument("json_model", type=str,
+                    help="Path to classifier config (.json)")
+parser.add_argument("type_mapping", type=str, choices=["id2label", "label2id"],
+                    help="Label mapping direction")
+parser.add_argument("boxing_mode", type=str, choices=["no_image", "all_image"],
+                    help="Bounding box output mode")
+parser.add_argument("path_input", type=str,
+                    help="Comma-separated list of input files (images or videos)")
+parser.add_argument("detection_threshold", type=float,
+                    help="Detection confidence threshold (0-1)")
+parser.add_argument("stride", type=int,
+                    help="Frame extraction stride")
+parser.add_argument("images_max", type=int,
+                    help="Maximum number of images to process per folder")
+parser.add_argument("run_dir", type=str,
+                    help="Output directory for predictions")
+parser.add_argument("name_file", nargs=argparse.REMAINDER,
+                    help="Optional custom names for input files")
+
+args = parser.parse_args()
+
+# Assign variables
+model_name = args.model_name.strip()
+classifier_model = args.classifier_model
+json_model = args.json_model
+type_mapping = args.type_mapping
+boxing_mode = args.boxing_mode.strip()
+path_input = args.path_input
+detection_threshold = args.detection_threshold
+stride = args.stride
+images_max = args.images_max
+run_dir = args.run_dir.strip()
+name_file = [n.strip() for n in args.name_file]
+
+'''
 # Command-line arguments
 model_name = sys.argv[1].strip()  # Hugging Face model name
 classifier_model = sys.argv[2]  # Path classifier model weights .safetensors
@@ -51,7 +95,7 @@ stride = int(sys.argv[8])         # Frame extraction stride
 images_max = int(sys.argv[9])   # Max number of images before processing batch
 run_dir = sys.argv[10].strip()    # Output directory for predictions
 name_file = [n.strip() for n in sys.argv[11:]]  # Custom names for input files
-
+'''
 # Output directories
 predictions_dir = Path(run_dir)
 predictions_dir.mkdir(parents=True, exist_ok=True)
