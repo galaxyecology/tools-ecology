@@ -63,10 +63,10 @@
     <tests>
         <test>
             <param name="model_name" value="facebook/dinov2-large" />
-            <param name="classifier_model" location="https://usegalaxy.eu/api/datasets/26c75dcccb616ac8e7d0ef189d9b5600/display?to_ext=data" />
+            <param name="classifier_model" location="https://zenodo.org/records/17607456/files/model.safetensors?download=1" />
             <param name="config" value="config.json" />
             <param name="type_mapping" value="id2label" />
-            <param name="data_dir" location="https://usegalaxy.eu/api/datasets/26c75dcccb616ac84aa62add07f74be1/display?to_ext=mp4" />
+            <param name="data_dir" location="https://zenodo.org/records/17607456/files/video.mp4?download=1" />
             <param name="detection_threshold" value="0.8" />
             <param name="stride" value="5" />
             <param name="images_max" value="3000" />
