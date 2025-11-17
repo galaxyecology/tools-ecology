@@ -4,9 +4,9 @@
 
 import os
 import shutil
+import argparse
 from datetime import datetime
 from pathlib import Path
-import argparse
 
 from PIL import Image
 
