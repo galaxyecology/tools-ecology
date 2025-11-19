@@ -2,7 +2,7 @@
 	<description>Download data from the Copernicus Marine Service to provide as input to the AquaINFRA marine model. Products: Mediterranean Sea Physics Analysis and Forecast or Mediterranean Sea Physics Reanalysis, depending on the selected temporal period.</description>
 
 	<requirements>
-		<requirement type="package" version="1.0">copernicusmarine</requirement>
+		<requirement type="package" version="2.0">copernicusmarine</requirement>
 		<requirement type="package">boto3</requirement>
 		<requirement type="package">botocore</requirement>
 		<requirement type="package">bash</requirement>
@@ -10,7 +10,7 @@
 		<requirement type="package">python</requirement>
 		<requirement type="package">netcdf4</requirement>
 
-		<credentials name="copernicus_marine" version="1.0">
+		<credentials name="copernicus_marine" version="2.0">
             		<variable name="username" inject_as_env="CMEMS_USERNAME" />
             		<variable name="password" inject_as_env="CMEMS_PASSWORD" />
         	</credentials>
