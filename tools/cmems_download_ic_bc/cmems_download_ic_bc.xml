@@ -1,4 +1,4 @@
-<tool id="cmems_download_ic_bc" name="Copernicus CMEMS Downloader for AquaINFRA marine model" version="1.0.0" profile="22.05">
+<tool id="cmems_download_ic_bc" name="Copernicus CMEMS Downloader for AquaINFRA marine model" version="1.0.0" profile="25.1">
 	<description>Download data from the Copernicus Marine Service to provide as input to the AquaINFRA marine model. Products: Mediterranean Sea Physics Analysis and Forecast or Mediterranean Sea Physics Reanalysis, depending on the selected temporal period.</description>
 
 	<requirements>
