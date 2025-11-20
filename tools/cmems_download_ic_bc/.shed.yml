@@ -1,0 +1,11 @@
+categories:
+    - Ecology
+owner: ecology
+remote_repository_url: https://github.com/AquaINFRA/galaxy_vre
+homepage_url: https://github.com/AquaINFRA/galaxy_vre
+long_description: |
+  Copernicus CMEMS Downloader for AquaINFRA marine model
+type: unrestricted
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Copernicus CMEMS Downloader for AquaINFRA marine model: {{ tool_name }}."
