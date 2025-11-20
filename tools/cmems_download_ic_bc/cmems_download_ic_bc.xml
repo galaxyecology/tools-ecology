@@ -1,6 +1,5 @@
 <tool id="cmems_download_ic_bc" name="Copernicus CMEMS Downloader for AquaINFRA marine model" version="1.0.0" profile="25.1">
 	<description>Download data from the Copernicus Marine Service to provide as input to the AquaINFRA marine model. Products: Mediterranean Sea Physics Analysis and Forecast or Mediterranean Sea Physics Reanalysis, depending on the selected temporal period.</description>
-
 	<requirements>
 		<requirement type="package" version="2.0">copernicusmarine</requirement>
 		<requirement type="package">boto3</requirement>
@@ -9,13 +8,11 @@
 		<requirement type="package">jq</requirement>
 		<requirement type="package">python</requirement>
 		<requirement type="package">netcdf4</requirement>
-
 		<credentials name="copernicus_marine" version="2.0">
-            		<variable name="username" inject_as_env="CMEMS_USERNAME" />
-            		<variable name="password" inject_as_env="CMEMS_PASSWORD" />
-        	</credentials>
+			<variable name="username" inject_as_env="CMEMS_USERNAME" />
+			<variable name="password" inject_as_env="CMEMS_PASSWORD" />
+		</credentials>
 	</requirements>
-
 	<command detect_errors="exit_code"><![CDATA[
 		bash "$__tool_directory__/cmems_download_ic_bc.sh" \
 		"$min_lat" "$max_lat" \
@@ -25,7 +22,6 @@
 		"$bc_south" "$bc_north" \
 		"$bc_west" "$bc_east"
 	]]></command>
-
 	<inputs>
 		<param name="min_lat" type="float" label="Min latitude (ºN)" min="-180" max="180" optional="false" help="Minimum latitude value for the data subset (southern boundary latitude)." />
 		<param name="max_lat" type="float" label="Max latitude (ºN)" min="-180" max="180" optional="false" help="Maximum latitude value for the data subset (northern boundary latitude)." />
@@ -44,11 +40,9 @@
 		<param name="bc_west" type="boolean" label="OBC West" help="Open Boundary Conditions (OBCs) in the western boundary." />
 		<param name="bc_east" type="boolean" label="OBC East" help="Open Boundary Conditions (OBCs) in the eastern boundary." />
 	</inputs>
-
 	<outputs>
 		<data name="zip_output" format="zip" from_work_dir="cmems_ic_bc_data.zip" label="cmems_ic_bc_data.zip"/>
 	</outputs>	
-
 	<help format="markdown"><![CDATA[
 		This tool downloads data subsets from the **Copernicus Marine Service (CMEMS)** using the **Copernicus Marine Toolbox** v2.0, to give later as input to the AquaINFRA marine model.
 

@@ -13,26 +13,26 @@ def arguments():
     ''', formatter_class=argparse.RawTextHelpFormatter)
 
 
-    parser.add_argument(   '--xmin','-xm',
-                                type = str,
-                                required = True,
-                                help = 'xmin in model')
-    parser.add_argument(   '--xmax','-xM',
-                                type = str,
-                                required = True,
-                                help = 'xmax in model')
-    parser.add_argument(   '--ymin','-ym',
-                                type = str,
-                                required = True,
-                                help = 'ymin in model')
-    parser.add_argument(   '--ymax','-yM',
-                                type = str,
-                                required = True,
-                                help = 'ymax in model')
-    parser.add_argument(   '--infile','-i',
-                                type = str,
-                                required = True,
-                                help = 'Copernicus input file')
+    parser.add_argument('--xmin', '-xm',
+            type = str,
+            required = True,
+            help = 'xmin in model')
+    parser.add_argument('--xmax', '-xM',
+            type = str,
+            required = True,
+            help = 'xmax in model')
+    parser.add_argument('--ymin', '-ym',
+            type = str,
+            required = True,
+            help = 'ymin in model')
+    parser.add_argument('--ymax', '-yM',
+            type = str,
+            required = True,
+            help = 'ymax in model')
+    parser.add_argument('--infile', '-i',
+            type = str,
+            required = True,
+            help = 'Copernicus input file')
     return parser.parse_args()
 
 args = arguments()
@@ -56,48 +56,48 @@ lat = SD['latitude'][:]
 Ifound = False
 io = 0
 while not Ifound:
-  Ifound = lon[io] < XMIN and lon[io+1] >= XMIN
-  if not Ifound:
-    io += 1
+    Ifound = lon[io] < XMIN and lon[io+1] >= XMIN
+    if not Ifound:
+      io += 1
 
 Ifound = False
 ie = len(lon)-1
 while not Ifound:
   #print(XMAX,ie, lon[ie], lon[ie-1])
-  Ifound = lon[ie] > XMAX and lon[ie-1] <= XMAX
-  if not Ifound:
-    ie -= 1
+    Ifound = lon[ie] > XMAX and lon[ie-1] <= XMAX
+    if not Ifound:
+      ie -= 1
 
 Jfound = False
 jo = 0
 while not Jfound:
-  Jfound = lat[jo] < YMIN and lat[jo+1] >= YMIN
-  if not Jfound:
-    jo += 1
+    Jfound = lat[jo] < YMIN and lat[jo+1] >= YMIN
+    if not Jfound:
+      jo += 1
 
 Jfound = False
 je = len(lat)-1
 while not Jfound:
-  #print(XMAX,je, lat[je], lat[je-1])
-  Jfound = lat[je] > YMAX and lat[je-1] <= YMAX
-  if not Jfound:
-    je -= 1
+    #print(XMAX,je, lat[je], lat[je-1])
+    Jfound = lat[je] > YMAX and lat[je-1] <= YMAX
+    if not Jfound:
+      je -= 1
 
 # print('>> Model domain:')
 # print('>> Model domain longitudes: ', XMIN, XMAX)
-#print('>> Model domain latitudes: ', YMIN, YMAX)
-#print('>>')
- 
+# print('>> Model domain latitudes: ', YMIN, YMAX)
+# print('>>')
+
 # print('>> Copernicus size: ', len(lon), len(lat))
 # print('>> Adjusted domain Copernicus I indexes: ', io,ie)
 # print('>> Adjusted domain Copernicus J indexes: ', jo,je)
 # print('>> Adjusted domain longitudes: ', lon[io], lon[ie])
 # print('>> Adjusted domain latitudes: ', lat[jo], lat[je])
 
-copernicus_xmin =  lon[io]
-copernicus_xmax =  lon[ie]
-copernicus_ymin =  lat[jo]
-copernicus_ymax =  lat[je]
+copernicus_xmin = lon[io]
+copernicus_xmax = lon[ie]
+copernicus_ymin = lat[jo]
+copernicus_ymax = lat[je]
 
 copernicus_south_y1 = lat[jo]
 copernicus_south_y2 = lat[jo+1]
@@ -109,21 +109,20 @@ copernicus_west_x2 = lon[io+1]
 copernicus_east_x1 = lon[ie-1]
 copernicus_east_x2 = lon[ie]
 
-with open(outFile,'w') as f:
-    f.write('DOMAIN_XMIN=%f\n'%(XMIN))
-    f.write('DOMAIN_XMAX=%f\n'%(XMAX))
-    f.write('DOMAIN_YMIN=%f\n'%(YMIN))
-    f.write('DOMAIN_YMAX=%f\n'%(YMAX))
-    f.write('COPERNICUS_XMIN=%f\n'%(copernicus_xmin))
-    f.write('COPERNICUS_XMAX=%f\n'%(copernicus_xmax))
-    f.write('COPERNICUS_YMIN=%f\n'%(copernicus_ymin))
-    f.write('COPERNICUS_YMAX=%f\n'%(copernicus_ymax))
-    f.write('COPERNICUS_SOUTH_Y1=%f\n'%(copernicus_south_y1))
-    f.write('COPERNICUS_SOUTH_Y2=%f\n'%(copernicus_south_y2))
-    f.write('COPERNICUS_NORTH_Y1=%f\n'%(copernicus_north_y1))
-    f.write('COPERNICUS_NORTH_Y2=%f\n'%(copernicus_north_y2))
-    f.write('COPERNICUS_WEST_X1=%f\n'%(copernicus_west_x1))
-    f.write('COPERNICUS_WEST_X2=%f\n'%(copernicus_west_x2))
-    f.write('COPERNICUS_EAST_X1=%f\n'%(copernicus_east_x1))
-    f.write('COPERNICUS_EAST_X2=%f\n'%(copernicus_east_x2))
-
+with open(outFile, 'w') as f:
+    f.write('DOMAIN_XMIN=%f\n' % (XMIN))
+    f.write('DOMAIN_XMAX=%f\n' % (XMAX))
+    f.write('DOMAIN_YMIN=%f\n' % (YMIN))
+    f.write('DOMAIN_YMAX=%f\n' % (YMAX))
+    f.write('COPERNICUS_XMIN=%f\n' % (copernicus_xmin))
+    f.write('COPERNICUS_XMAX=%f\n' % (copernicus_xmax))
+    f.write('COPERNICUS_YMIN=%f\n' % (copernicus_ymin))
+    f.write('COPERNICUS_YMAX=%f\n' % (copernicus_ymax))
+    f.write('COPERNICUS_SOUTH_Y1=%f\n' % (copernicus_south_y1))
+    f.write('COPERNICUS_SOUTH_Y2=%f\n' % (copernicus_south_y2))
+    f.write('COPERNICUS_NORTH_Y1=%f\n' % (copernicus_north_y1))
+    f.write('COPERNICUS_NORTH_Y2=%f\n' % (copernicus_north_y2))
+    f.write('COPERNICUS_WEST_X1=%f\n' % (copernicus_west_x1))
+    f.write('COPERNICUS_WEST_X2=%f\n' % (copernicus_west_x2))
+    f.write('COPERNICUS_EAST_X1=%f\n' % (copernicus_east_x1))
+    f.write('COPERNICUS_EAST_X2=%f\n' % (copernicus_east_x2))
