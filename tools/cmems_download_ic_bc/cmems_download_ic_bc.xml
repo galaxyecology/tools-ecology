@@ -56,4 +56,34 @@
 
 		Outputs are a zip file containing different NetCDF (.nc) files: IC_cm_t.nc, IC_cm_sal.nc, IC_cm_cur.nc, OB{S/N/W/E}_cm_t.nc, OB{S/N/W/E}_cm_sal.nc, OB{S/N/W/E}_cm_cur.nc 
 	]]></help>
+	<citations>
+		<citation type="bibtex"> 
+			@misc{boto3,
+			title={Boto3},
+			author={Amazon Web Services},
+			url={https://pypi.org/project/boto3/}
+			}
+        </citation>
+		<citation type="bibtex"> 
+			@misc{botocore,
+			title={Botocore},
+			author={Amazon Web Services},
+			url={https://pypi.org/project/botocore/}
+			}
+        </citation>
+		<citation type="bibtex"> 
+			@misc{netcdf4,
+			title={netcdf4},
+			author={Jeff Whitaker},
+			url={https://pypi.org/project/netCDF4/}
+			}
+        </citation>
+		<citation type="bibtex"> 
+			@misc{jq,
+			title={jq},
+			author={Michael Williamson },
+			url={hhttps://pypi.org/project/jq/}
+			}
+        </citation>
+    </citations>
 </tool>
