@@ -10,31 +10,32 @@ import netCDF4
 
 
 def arguments():
-    parser = argparse.ArgumentParser(description = '''
+    parser = argparse.ArgumentParser(description='''
    Find model boundaries in Copernicus products
     ''', formatter_class=argparse.RawTextHelpFormatter)
 
     parser.add_argument('--xmin', '-xm',
-                type=str,
-                required=True,
-                help='xmin in model')
+                        type=str,
+                        required=True,
+                        help='xmin in model')
     parser.add_argument('--xmax', '-xM',
-                type=str,
-                required=True,
-                help='xmax in model')
+                        type=str,
+                        required=True,
+                        help='xmax in model')
     parser.add_argument('--ymin', '-ym',
-                type=str,
-                required=True,
-                help='ymin in model')
+                        type=str,
+                        required=True,
+                        help='ymin in model')
     parser.add_argument('--ymax', '-yM',
-                type=str,
-                required=True,
-                help='ymax in model')
+                        type=str,
+                        required=True,
+                        help='ymax in model')
     parser.add_argument('--infile', '-i',
-                type=str,
-                required=True,
-                help='Copernicus input file')
+                        type=str,
+                        required=True,
+                        help='Copernicus input file')
     return parser.parse_args()
+
 
 args = arguments()
 
@@ -57,30 +58,30 @@ lat = SD['latitude'][:]
 Ifound = False
 io = 0
 while not Ifound:
-        Ifound = lon[io] < XMIN and lon[io+1] >= XMIN
-        if not Ifound:
-                io += 1
+    Ifound = lon[io] < XMIN and lon[io+1] >= XMIN
+    if not Ifound:
+        io += 1
 
 Ifound = False
 ie = len(lon)-1
 while not Ifound:
-        Ifound = lon[ie] > XMAX and lon[ie-1] <= XMAX
-        if not Ifound:
-                ie -= 1
+    Ifound = lon[ie] > XMAX and lon[ie-1] <= XMAX
+    if not Ifound:
+        ie -= 1
 
 Jfound = False
 jo = 0
 while not Jfound:
-        Jfound = lat[jo] < YMIN and lat[jo+1] >= YMIN
-        if not Jfound:
-                jo += 1
+    Jfound = lat[jo] < YMIN and lat[jo+1] >= YMIN
+    if not Jfound:
+        jo += 1
 
 Jfound = False
 je = len(lat)-1
 while not Jfound:
-        Jfound = lat[je] > YMAX and lat[je-1] <= YMAX
-        if not Jfound:
-                je -= 1
+    Jfound = lat[je] > YMAX and lat[je-1] <= YMAX
+    if not Jfound:
+        je -= 1
 
 copernicus_xmin = lon[io]
 copernicus_xmax = lon[ie]
