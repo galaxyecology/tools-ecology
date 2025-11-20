@@ -2,12 +2,12 @@
 	<description>Download data from the Copernicus Marine Service to provide as input to the AquaINFRA marine model. Products: Mediterranean Sea Physics Analysis and Forecast or Mediterranean Sea Physics Reanalysis, depending on the selected temporal period.</description>
 	<requirements>
 		<requirement type="package" version="2.0">copernicusmarine</requirement>
-		<requirement type="package">boto3</requirement>
-		<requirement type="package">botocore</requirement>
-		<requirement type="package">bash</requirement>
-		<requirement type="package">jq</requirement>
-		<requirement type="package">python</requirement>
-		<requirement type="package">netcdf4</requirement>
+		<requirement type="package" version="1.41.0">boto3</requirement>
+		<requirement type="package" version="1.41.0">botocore</requirement>
+		<requirement type="package" version="5.2.37">bash</requirement>
+		<requirement type="package" version="1.8.1">jq</requirement>
+		<requirement type="package" version="3.14.0">python</requirement>
+		<requirement type="package" version="1.7.3">netcdf4</requirement>
 		<!--<credentials name="copernicus_marine" version="2.0">
 			<variable name="username" inject_as_env="CMEMS_USERNAME" />
 			<variable name="password" inject_as_env="CMEMS_PASSWORD" />
@@ -97,7 +97,7 @@ export CMEMS_PASSWORD='$cmems_password'
 			@misc{jq,
 			title={jq},
 			author={Michael Williamson },
-			url={hhttps://pypi.org/project/jq/}
+			url={https://pypi.org/project/jq/}
 			}
         </citation>
     </citations>
