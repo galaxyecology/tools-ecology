@@ -2,6 +2,9 @@
 	<description>
 		Download ERA5 data from the Copernicus Climate Data Store to provide as input to the AquaINFRA marine model. Products: ERA5 hourly data on single levels from 1940 to present, Reanalysis.
 	</description>
+	<creator>
+        <organization name="EOSC AquaINFRA" url="https://aquainfra.eu/"/>
+    </creator>
 	<requirements>
 		<requirement type="package" version="1.41.0">boto3</requirement>
 		<requirement type="package" version="1.41.0">botocore</requirement>
