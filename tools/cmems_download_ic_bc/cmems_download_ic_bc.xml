@@ -92,31 +92,10 @@ export CMEMS_PASSWORD='$cmems_password'
 	]]></help>
 	<citations>
 		<citation type="bibtex"> 
-			@misc{boto3,
-			title={Boto3},
-			author={Amazon Web Services},
-			url={https://pypi.org/project/boto3/}
-			}
-        </citation>
-		<citation type="bibtex"> 
-			@misc{botocore,
-			title={Botocore},
-			author={Amazon Web Services},
-			url={https://pypi.org/project/botocore/}
-			}
-        </citation>
-		<citation type="bibtex"> 
 			@misc{netcdf4,
 			title={netcdf4},
 			author={Jeff Whitaker},
 			url={https://pypi.org/project/netCDF4/}
-			}
-        </citation>
-		<citation type="bibtex"> 
-			@misc{jq,
-			title={jq},
-			author={Michael Williamson },
-			url={https://pypi.org/project/jq/}
 			}
         </citation>
     </citations>
