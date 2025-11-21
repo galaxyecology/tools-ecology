@@ -19,7 +19,7 @@
 	<command detect_errors="exit_code"><![CDATA[
 	bash '$cmems_credentials' &&
 
-	bash "$__tool_directory__/ccds_download_era5_af.sh" \
+	bash '$__tool_directory__/ccds_download_era5_af.sh' \
 	"$min_lat" "$max_lat" \
 	"$min_lon" "$max_lon" \
 	"$start_date" "$end_date"
