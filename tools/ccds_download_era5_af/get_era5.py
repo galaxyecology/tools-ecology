@@ -1,12 +1,9 @@
+import os
 import sys
-
 from datetime import datetime
 
-import cdsapi
-
-import os
-
 import pandas as pd
+import cdsapi
 
 # Read arguments
 # get-era5.py INITIAL_DATE FINAL_DATE XMIN XMAX YMIN YMAX
@@ -26,19 +23,19 @@ date_list = list(
     .strftime('%Y-%m-%d')
 )
 
-VARIABLES = ['10m_u_component_of_wind', 
-            '10m_v_component_of_wind', 
+VARIABLES = ['10m_u_component_of_wind',
+            '10m_v_component_of_wind',
             '2m_dewpoint_temperature',
-            '2m_temperature', 
-            'mean_sea_level_pressure', 
+            '2m_temperature',
+            'mean_sea_level_pressure',
             'surface_solar_radiation_downwards',
-            'surface_thermal_radiation_downwards', 
+            'surface_thermal_radiation_downwards',
             'total_precipitation']
 
 OUTPUT_FILENAME = 'ccds_era5_af_data.zip'
 
 c = cdsapi.Client(
-    url="https://cds.climate.copernicus.eu/api", 
+    url="https://cds.climate.copernicus.eu/api",
     key=os.environ["CDS_TOKEN"]
 )
 
