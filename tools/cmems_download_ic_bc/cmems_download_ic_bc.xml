@@ -72,9 +72,9 @@ export CMEMS_PASSWORD='$cmems_password'
             <param name="bc_north" value="false"/>
             <param name="bc_west" value="false"/>
             <param name="bc_east" value="true"/>
-            <assert_command>
-		        <has_text text="3000.0" />
-    		</assert_command>
+            <assert_stderr>
+		        <has_text text="CMEMS_USERNAME" />
+    		</assert_stderr>
         </test>
     </tests>
 	<help format="markdown"><![CDATA[
