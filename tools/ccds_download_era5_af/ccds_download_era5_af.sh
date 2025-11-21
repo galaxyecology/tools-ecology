@@ -12,6 +12,7 @@ echo ">> Dowloading ERA5 atmospheric fields"
 
 # Detect this script's directory (so we can find the Python helper file)
 TOOL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+echo ">> startdate: ${START_DATE}"
 echo ">> Tool directory set to: ${TOOL_DIR}"
 
 era5_xmin=`echo "${MIN_LON} - 0.5" | bc`
