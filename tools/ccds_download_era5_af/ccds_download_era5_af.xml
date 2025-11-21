@@ -38,18 +38,10 @@ export CMEMS_PASSWORD='$cmems_password'
         </configfile>
 	</configfiles>
 	<inputs>
-		<param name="min_lat" type="float" label="Min latitude (ºN)" min="-180" max="180" optional="false" value="" help="Minimum latitude value for the data subset (southern boundary latitude).">
-			<validator type="empty_field" message="You must provide a value."/>
-		</param>
-		<param name="max_lat" type="float" label="Max latitude (ºN)" min="-180" max="180" optional="false" value="" help="Maximum latitude value for the data subset (northern boundary latitude).">
-			<validator type="empty_field" message="You must provide a value."/>
-		</param>
-		<param name="min_lon" type="float" label="Min longitude (ºE)" min="-180" max="180" optional="false" value="" help="Minimum longitude value for the data subset (western boundary longitude).">
-			<validator type="empty_field" message="You must provide a value."/>
-		</param>
-		<param name="max_lon" type="float" label="Max longitude (ºE)" min="-180" max="180" optional="false" value="" help="Maximum longitude value for the data subset (eastern boundary longitude).">
-			<validator type="empty_field" message="You must provide a value."/>
-		</param>
+		<param name="min_lat" type="float" label="Min latitude (ºN)" min="-180" max="180" optional="false" value="" help="Minimum latitude value for the data subset (southern boundary latitude)." />
+		<param name="max_lat" type="float" label="Max latitude (ºN)" min="-180" max="180" optional="false" value="" help="Maximum latitude value for the data subset (northern boundary latitude)." />
+		<param name="min_lon" type="float" label="Min longitude (ºE)" min="-180" max="180" optional="false" value="" help="Minimum longitude value for the data subset (western boundary longitude)." />
+		<param name="max_lon" type="float" label="Max longitude (ºE)" min="-180" max="180" optional="false" value="" help="Maximum longitude value for the data subset (eastern boundary longitude)." />
 		<param name="start_date" type="text" label="Start date (YYYY-MM-DD)" optional="false" value="" help="The start datetime of the temporal data subset.">
 			<validator type="regex" message="Date must be in YYYY-MM-DD format">^\d{4}-\d{2}-\d{2}$</validator>
 		</param>
