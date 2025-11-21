@@ -73,7 +73,7 @@ export CMEMS_PASSWORD='$cmems_password'
             <param name="bc_west" value="false"/>
             <param name="bc_east" value="true"/>
             <assert_stdout>
-		        <has_text text=">> startdate: 2022-01-01"/>
+		        <has_text text=">> startdate:  2022-01-01"/>
     		</assert_stdout>
         </test>
     </tests>
