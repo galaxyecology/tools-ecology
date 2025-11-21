@@ -1,22 +1,25 @@
-import cdsapi
 import sys
+
+import cdsapi
+
 from datetime import datetime
+
 import pandas as pd
-import zipfile
+
 import os
 
 # Read arguments
 # get-era5.py INITIAL_DATE FINAL_DATE XMIN XMAX YMIN YMAX
 
-SDATE  = sys.argv[1]
-EDATE  = sys.argv[2]
-WEST  = sys.argv[3]
-EAST  = sys.argv[4]
-SOUTH = sys.argv[5]
-NORTH = sys.argv[6]
+SDATE=sys.argv[1]
+EDATE=sys.argv[2]
+WEST=sys.argv[3]
+EAST=sys.argv[4]
+SOUTH=sys.argv[5]
+NORTH=sys.argv[6]
 
-start_date = datetime.strptime(SDATE,"%Y-%m-%d")
-end_date   = datetime.strptime(EDATE,"%Y-%m-%d")
+start_date = datetime.strptime(SDATE, "%Y-%m-%d")
+end_date   = datetime.strptime(EDATE, "%Y-%m-%d")
 
 date_list = list(pd.date_range(start_date, end_date, freq='D').strftime('%Y-%m-%d'))
 
@@ -47,10 +50,8 @@ fl = c.retrieve(
             '18:00', '19:00', '20:00',
             '21:00', '22:00', '23:00',
         ],
-        'area': [ NORTH, WEST, SOUTH, EAST, ],
+        'area': [NORTH, WEST, SOUTH, EAST],
         'data_format': "netcdf4",
         "download_format": "zip"
     },
     OUTPUT_FILENAME)
-
-
