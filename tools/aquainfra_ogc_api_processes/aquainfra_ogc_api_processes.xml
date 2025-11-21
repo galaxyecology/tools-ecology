@@ -1,4 +1,4 @@
-<tool id="aquainfra_ogc_api_processes" name="AquaINFRA OGC API Processes" version="0.9.0" profile="22.05">
+<tool id="aquainfra_ogc_api_processes" name="AquaINFRA OGC API Processes" version="0.10.0" profile="22.05">
     <description/>
     <macros>
         <import>macros.xml</import>
@@ -29,7 +29,9 @@
                 <option value="tordera-gloria">tordera-gloria: SWAT+, Soil and Water Assessment Tool</option>
                 <option value="tordera-gloria-connection">tordera-gloria-connection: SWAT+ output to MITgcm input connection tool</option>
                 <option value="riverload">riverload: Compute River Load</option>
-                <option value="mitgcm-resultplots">mitgcm-resultplots: Catalunya MITgcm Plotting Tool</option>
+                <option value="mitgcm-prep">mitgcm-prep: MITgcm Preprocessing</option>
+                <option value="mitgcm-run-model">mitgcm-run-model: MITgcm Model Run</option>
+                <option value="mitgcm-resultplot">mitgcm-resultplot: MITgcm Plotting Tool</option>
                 <option value="retrieve-biodiversity-data">retrieve-biodiversity-data: Retrieve biodiversity data from the web</option>
                 <option value="match-data">match-data: Combine and match biodiversity data from separate sources</option>
                 <option value="check-names">check-names: Check species names in biodiversity data from separate sources</option>
@@ -161,9 +163,20 @@
                 <param name="input_toc_urls" label="Input Total Organic Carbon (TOC)" optional="false" help="URL to in situ Total Organic Carbon (TOC) data (date, value). If the data is divided into parts, please provide several URLs separated by a comma. All URLs need to start with http(s). (URL must be stored in a .txt file)" type="data" format="txt"/>
                 <param name="input_discharge_urls" label="Input discharge" optional="false" help="URL to the daily discharge data (date, value). If the data is divided into parts, please provide several URLs separated by a comma. All URLs need to start with http(s). (URL must be stored in a .txt file)" type="data" format="txt"/>
             </when>
-            <when value="mitgcm-resultplots">
+            <when value="mitgcm-prep">
+                <param name="input_url_IC_OBS" label="Zipped Copernicus Input Data (URL) input_url_IC_OBS" optional="true" help="URL that points to (zipped) Copernicus data necessary to generate initial and boundary conditions for the model. Optional: If none of the input URLs are provided, pre-downloaded data will be used. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_url_AF" label="Copernicus Input Data (URL) input_url_AF" optional="true" help="URL that points to Copernicus input data that the preprocessing needs. Note that the filename has to match the pattern 'era5_{RUN_DATE}_{RUN_DATE+PREDICTION_DAYS}.zip', otherwise the preprocessing will fail. Optional: If none of the input URLs are provided, pre-downloaded data will be used. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="PREDICTION_DAYS" label="PREDICTION_DAYS" optional="false" value="0" help="Number of days to run the simulation from RUN_DATE. Format: Positive integer" type="integer"/>
+                <param name="RUN_DATE" label="RUN_DATE" optional="false" value="" help="DATE from which the simulation starts. Format: yyyy-mm-dd" type="text">
+                    <validator type="empty_field" message="You must provide a value."/>
+                </param>
+            </when>
+            <when value="mitgcm-run-model">
+                <param name="preprocessing_output_directory" label="preprocessing_output_directory" optional="false" help="Link to the directory containing the preprocessing output to use as input for the model run (URL must be stored in a .txt file)" type="data" format="txt"/>
+            </when>
+            <when value="mitgcm-resultplot">
                 <param name="netcdf_input_file" label="NetCDF input file" optional="false" help="The NetCDF input file that should be plotted. It must comply to some specific properties with respect to variables. (URL must be stored in a .txt file)" type="data" format="txt"/>
-                <param name="variable" label="Variable to be plotted" optional="false" value="T" help="The variable that should be plotted. You can choose between 'T', 'S', 'U', 'V', 'Eta' and 'W'." type="select">
+                <param name="variable" label="Variable to be plotted" optional="false" help="The variable that should be plotted. You can choose between 'T', 'S', 'U', 'V', 'Eta' and 'W'." type="select">
                     <option value="T">T</option>
                     <option value="S">S</option>
                     <option value="U">U</option>
@@ -172,9 +185,9 @@
                     <option value="W">W</option>
                 </param>
                 <param name="plot_time" label="Hour to be plotted" optional="false" value="" help="The time of day (hourly resolution) that should be plotted. Please specify it in this specific format: '20220703-12:00:00'. We assume that the hour is in the simulation period." type="text">
-                    <validator type="empty_field" message="You must specify the hour to be plotted."/>
+                    <validator type="empty_field" message="You must provide a value."/>
                 </param>
-                <param name="plot_depth" label="Depth to be plotted" optional="false" value="0.0" help="The depth at which should be plotted. The plot will be at the closest vertical level to this depth. Please specify a negative value. We assume the depth is in the range of our depths." type="float" />
+                <param name="plot_depth" label="Depth to be plotted" optional="false" value="0.0" help="The depth at which should be plotted. The plot will be at the closest vertical level to this depth. Please specify a negative value. We assume the depth is in the range of our depths." type="float"/>
                 <param name="min_var_for_color" label="Minimum value to be considered for color limit" optional="true" help="This is a parameter controlling the color limits to display. Example (for salinity): 35. Leave empty to let the color limits be chosen automatically." type="float"/>
                 <param name="max_var_for_color" label="Maximum value to be considered for color limit" optional="true" help="This is a parameter controlling the color limits to display. Example (for salinity): 38. Leave empty to let the color limits be chosen automatically." type="float"/>
             </when>
