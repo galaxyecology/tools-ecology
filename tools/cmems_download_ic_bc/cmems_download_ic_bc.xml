@@ -1,0 +1,102 @@
+<tool id="cmems_download_ic_bc" name="Copernicus CMEMS Downloader for AquaINFRA marine model" version="1.0.0" profile="22.05">
+	<description>Download data from the Copernicus Marine Service to provide as input to the AquaINFRA marine model. Products: Mediterranean Sea Physics Analysis and Forecast or Mediterranean Sea Physics Reanalysis, depending on the selected temporal period.</description>
+	<requirements>
+		<requirement type="package" version="2.0">copernicusmarine</requirement>
+		<requirement type="package" version="1.41.0">boto3</requirement>
+		<requirement type="package" version="1.41.0">botocore</requirement>
+		<requirement type="package" version="5.2.37">bash</requirement>
+		<requirement type="package" version="1.8.1">jq</requirement>
+		<requirement type="package" version="3.14.0">python</requirement>
+		<requirement type="package" version="1.7.3">netcdf4</requirement>
+		<!--<credentials name="copernicus_marine" version="2.0">
+			<variable name="username" inject_as_env="CMEMS_USERNAME" />
+			<variable name="password" inject_as_env="CMEMS_PASSWORD" />
+		</credentials>-->
+	</requirements>
+	<command detect_errors="exit_code"><![CDATA[
+		bash '$cmems_credentials' &&
+	
+		bash "$__tool_directory__/cmems_download_ic_bc.sh" \
+		"$min_lat" "$max_lat" \
+		"$min_lon" "$max_lon" \
+		"$min_depth" "$max_depth" \
+		"$start_date" "$end_date" \
+		"$bc_south" "$bc_north" \
+		"$bc_west" "$bc_east"
+	]]></command>
+	<configfiles>
+        <configfile name="cmems_credentials">
+#import os 
+#set $cmems_username = $__user__.extra_preferences.get('cmems_username', "")
+#set $cmems_password = $__user__.extra_preferences.get('cmems_password', "")
+#if $cmems_username == "" or $cmems_password == ""
+    #set $cmems_username = os.getenv('CMEMS_USERNAME', '')
+    #set $cmems_password = os.getenv('CMEMS_PASSWORD', '')
+#end if
+export CMEMS_USERNAME='$cmems_username'
+export CMEMS_PASSWORD='$cmems_password'
+        </configfile>
+	</configfiles>
+	<inputs>
+		<param name="min_lat" type="float" label="Min latitude (ºN)" min="-180" max="180" optional="false" help="Minimum latitude value for the data subset (southern boundary latitude)." />
+		<param name="max_lat" type="float" label="Max latitude (ºN)" min="-180" max="180" optional="false" help="Maximum latitude value for the data subset (northern boundary latitude)." />
+		<param name="min_lon" type="float" label="Min longitude (ºE)" min="-180" max="180" optional="false" help="Minimum longitude value for the data subset (western boundary longitude)." />
+		<param name="max_lon" type="float" label="Max longitude (ºE)" min="-180" max="180" optional="false" help="Maximum longitude value for the data subset (eastern boundary longitude)." />
+		<param name="min_depth" type="float" label="Min depth (m)" optional="false" help="Minimum depth value for the data subset (requires a positive float or 0)." />
+		<param name="max_depth" type="float" label="Max depth (m)" optional="false" help="Maximum depth value for the data subset (requires a positive float or 0)." />
+		<param name="start_date" type="text" label="Start date (YYYY-MM-DD)" optional="false" help="The start datetime of the temporal data subset.">
+			<validator type="regex" message="Date must be in YYYY-MM-DD format">^\d{4}-\d{2}-\d{2}$</validator>
+		</param>
+		<param name="end_date" type="text" label="End date (YYYY-MM-DD)" optional="false" help="The end datetime of the temporal data subset.">
+			<validator type="regex" message="Date must be in YYYY-MM-DD format">^\d{4}-\d{2}-\d{2}$</validator>
+		</param>
+		<param name="bc_south" type="boolean" label="OBC South" help="Open Boundary Conditions (OBCs) in the southern boundary." />
+		<param name="bc_north" type="boolean" label="OBC North" help="Open Boundary Conditions (OBCs) in the northern boundary." />
+		<param name="bc_west" type="boolean" label="OBC West" help="Open Boundary Conditions (OBCs) in the western boundary." />
+		<param name="bc_east" type="boolean" label="OBC East" help="Open Boundary Conditions (OBCs) in the eastern boundary." />
+	</inputs>
+	<outputs>
+		<data name="zip_output" format="zip" from_work_dir="cmems_ic_bc_data.zip" label="cmems_ic_bc_data.zip"/>
+	</outputs>
+	<tests>
+        <test expect_failure="true">
+            <param name="min_lat" value="38.42"/>
+            <param name="max_lat" value="43.60"/>
+            <param name="min_lon" value="-0.46"/>
+            <param name="max_lon" value="6.1728"/>
+            <param name="min_depth" value="0.0"/>
+            <param name="max_depth" value="3000"/>
+            <param name="start_date" value="2022-01-01"/>
+            <param name="end_date" value="2022-01-02"/>
+            <param name="bc_south" value="true"/>
+            <param name="bc_north" value="false"/>
+            <param name="bc_west" value="false"/>
+            <param name="bc_east" value="true"/>
+            <assert_stdout>
+		        <has_text text=">> startdate:  2022-01-01"/>
+    		</assert_stdout>
+        </test>
+    </tests>
+	<help format="markdown"><![CDATA[
+		This tool downloads data subsets from the **Copernicus Marine Service (CMEMS)** using the **Copernicus Marine Toolbox** v2.0, to give later as input to the AquaINFRA marine model.
+
+		### Requirements
+
+                To use this tool, users must:
+
+			- Have a valid account on the Copernicus Marine Service: https://marine.copernicus.eu
+		
+		### Outputs
+
+		Outputs are a zip file containing different NetCDF (.nc) files: IC_cm_t.nc, IC_cm_sal.nc, IC_cm_cur.nc, OB{S/N/W/E}_cm_t.nc, OB{S/N/W/E}_cm_sal.nc, OB{S/N/W/E}_cm_cur.nc 
+	]]></help>
+	<citations>
+		<citation type="bibtex"> 
+			@misc{netcdf4,
+			title={netcdf4},
+			author={Jeff Whitaker},
+			url={https://pypi.org/project/netCDF4/}
+			}
+        </citation>
+    </citations>
+</tool>
