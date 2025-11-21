@@ -24,14 +24,16 @@ date_list = list(
     .strftime('%Y-%m-%d')
 )
 
-VARIABLES = ['10m_u_component_of_wind',
-                '10m_v_component_of_wind',
-                '2m_dewpoint_temperature',
-                '2m_temperature',
-                'mean_sea_level_pressure',
-                'surface_solar_radiation_downwards',
-                'surface_thermal_radiation_downwards',
-                'total_precipitation']
+VARIABLES = [
+    '10m_u_component_of_wind',
+    '10m_v_component_of_wind',
+    '2m_dewpoint_temperature',
+    '2m_temperature',
+    'mean_sea_level_pressure',
+    'surface_solar_radiation_downwards',
+    'surface_thermal_radiation_downwards',
+    'total_precipitation',
+]
 
 OUTPUT_FILENAME = 'ccds_era5_af_data.zip'
 
