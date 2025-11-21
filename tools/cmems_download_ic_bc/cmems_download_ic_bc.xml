@@ -73,7 +73,7 @@ export CMEMS_PASSWORD='$cmems_password'
             <param name="bc_west" value="false"/>
             <param name="bc_east" value="true"/>
             <assert_command>
-		        <has_text text="-max_depth 3000" />
+		        <has_text text="3000.0" />
     		</assert_command>
         </test>
     </tests>
