@@ -81,4 +81,13 @@ export CMEMS_PASSWORD='$cmems_password'
 
 		These files can be used as inputs for the AquaINFRA marine model tool..
 	]]></help>
+	<citations>
+		<citation type="bibtex"> 
+			@misc{netcdf4,
+			title={netcdf4},
+			author={Jeff Whitaker},
+			url={https://pypi.org/project/netCDF4/}
+			}
+        </citation>
+	</citations>
 </tool>
