@@ -6,24 +6,25 @@
         <organization name="EOSC AquaINFRA" url="https://aquainfra.eu/"/>
     </creator>
 	<requirements>
-		<requirement type="package" version="1.41.0">boto3</requirement>
-		<requirement type="package" version="1.41.0">botocore</requirement>
+		<requirement type="package" version="3.11">python</requirement>
+		<requirement type="package" version="2.2.5">copernicusmarine</requirement>
+		<requirement type="package" version="1.41.2">boto3</requirement>
+		<requirement type="package" version="1.41.2">botocore</requirement>
 		<requirement type="package" version="5.2.37">bash</requirement>
-		<requirement type="package" version="3.14.0">python</requirement>
-		<requirement type="package" version="2.3.3">pandas</requirement>
-		<requirement type="package" version="0.7.7">cdsapi</requirement>
+		<requirement type="package" version="1.8.1">jq</requirement>
+		<requirement type="package" version="1.7.3">netcdf4</requirement>
 		<!--<credentials name="cds_api" version="1.0">
 			<variable name="token" inject_as_env="CDS_TOKEN" />
 		</credentials>-->
 	</requirements>
 	<command detect_errors="exit_code"><![CDATA[
-	bash '$cmems_credentials' &&
+		bash '$cmems_credentials' &&
 
-	bash '$__tool_directory__/ccds_download_era5_af.sh' \
-	"$min_lat" "$max_lat" \
-	"$min_lon" "$max_lon" \
-	"$start_date" "$end_date"
-	]]></command>
+		bash '$__tool_directory__/ccds_download_era5_af.sh' \
+		"$min_lat" "$max_lat" \
+		"$min_lon" "$max_lon" \
+		"$start_date" "$end_date"
+		]]></command>
 	<configfiles>
 		<configfile name="cmems_credentials">
 #import os 
