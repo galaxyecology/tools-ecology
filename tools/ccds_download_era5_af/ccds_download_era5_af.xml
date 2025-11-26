@@ -13,6 +13,7 @@
 		<requirement type="package" version="5.2.37">bash</requirement>
 		<requirement type="package" version="1.8.1">jq</requirement>
 		<requirement type="package" version="1.7.3">netcdf4</requirement>
+		<requirement type="package" version="1.7.3">bc</requirement>
 		<!--<credentials name="cds_api" version="1.0">
 			<variable name="token" inject_as_env="CDS_TOKEN" />
 		</credentials>-->
