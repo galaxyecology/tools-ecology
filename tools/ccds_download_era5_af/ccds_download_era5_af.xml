@@ -19,7 +19,7 @@
 		</credentials>-->
 	</requirements>
 	<command detect_errors="exit_code"><![CDATA[
-		source '$cmems_credentials' &&
+		source '$cds_token_api' &&
 
 		bash '$__tool_directory__/ccds_download_era5_af.sh' \
 		"$min_lat" "$max_lat" \
@@ -27,16 +27,13 @@
 		"$start_date" "$end_date"
 		]]></command>
 	<configfiles>
-		<configfile name="cmems_credentials">
+		<configfile name="cds_token_api">
 #import os 
-#set $cmems_username = $__user__.extra_preferences.get('cmems_account|cmems_username', "")
-#set $cmems_password = $__user__.extra_preferences.get('cmems_account|cmems_password', "")
-#if $cmems_username == "" or $cmems_password == ""
-    #set $cmems_username = os.getenv('CMEMS_USERNAME', '')
-    #set $cmems_password = os.getenv('CMEMS_PASSWORD', '')
+#set $c3s_cds_apikey = $__user__.extra_preferences.get('c3s_account|c3s_cds_apikey', "")
+#if $c3s_cds_apikey == ""
+    echo "Error. Set your credentials via: C3S CDS API Key"
 #end if
-export CMEMS_USERNAME='$cmems_username'
-export CMEMS_PASSWORD='$cmems_password'
+export CDS_TOKEN='$c3s_cds_apikey'
         </configfile>
 	</configfiles>
 	<inputs>
