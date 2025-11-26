@@ -84,7 +84,8 @@ export CMEMS_PASSWORD='$cmems_password'
         </test>
     </tests>
 	<help format="markdown"><![CDATA[
-		This tool downloads data subsets from the **Copernicus Marine Service (CMEMS)** using the **Copernicus Marine Toolbox** v2.0, to give later as input to the AquaINFRA marine model.
+		This tool downloads data subsets from the **Copernicus Marine Service (CMEMS)** using the **Copernicus Marine Toolbox** v2.0, to give later as input to the AquaINFRA marine model. 
+		Products: Mediterranean Sea Physics Analysis and Forecast or Mediterranean Sea Physics Reanalysis, depending on the selected temporal period.
 
 		### Requirements
 

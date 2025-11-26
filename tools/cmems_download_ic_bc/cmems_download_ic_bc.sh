@@ -31,7 +31,7 @@ echo ">> startdate: ${START_DATE}"
 echo ">> Tool directory set to: ${TOOL_DIR}"
 
 # Define dataset IDs
-REANALYSIS_TEM_DATASET_ID="med-cmcc-tem-rean-d"
+REANALYSIS_TEM_DATASET_ID="cmems_mod_med_phy-temp_my_4.2km_P1D-m"
 FCANALYSIS_TEM_DATASET_ID="cmems_mod_med_phy-tem_anfc_4.2km_P1D-m"
 
 # Define functions
@@ -127,15 +127,13 @@ check_product_availability(){
 select_datasets() {
 	if check_product_availability "$REANALYSIS_TEM_DATASET_ID" "$START_DATE" "$END_DATE"; then
         	cm_tem_daily_product="$REANALYSIS_TEM_DATASET_ID"
-	        cm_sal_daily_product="med-cmcc-sal-rean-d"
-		cm_cur_daily_product="med-cmcc-cur-rean-d"
-		prod_version="202012"
+	        cm_sal_daily_product="cmems_mod_med_phy-sal_my_4.2km_P1D-m"
+		cm_cur_daily_product="cmems_mod_med_phy-cur_my_4.2km_P1D-m"
 		echo  ">> Using Copernicus Mediterranean Sea Physics Reanalysis product for ${START_DATE} to ${END_DATE}"
 	else
 		cm_tem_daily_product="$FCANALYSIS_TEM_DATASET_ID"
 		cm_sal_daily_product="cmems_mod_med_phy-sal_anfc_4.2km_P1D-m"
 		cm_cur_daily_product="cmems_mod_med_phy-cur_anfc_4.2km_P1D-m"
-		prod_version="202411"
 		echo ">> Using Copernicus Mediterranean Sea Physics Analysis and Forecast product for ${START_DATE} to ${END_DATE}"
 	fi
 }
@@ -157,7 +155,6 @@ download_ic(){
 				esac
 				copernicusmarine subset \
 					--dataset-id "$DATASET" \
-					--dataset-version "${prod_version}" \
 					--minimum-longitude "$cm_xmin" \
 					--maximum-longitude "$cm_xmax" \
 					--minimum-latitude "$cm_ymin" \
@@ -174,7 +171,6 @@ download_ic(){
 				
 				copernicusmarine subset \
 					--dataset-id "$DATASET" \
-					--dataset-version "${prod_version}" \
 					--minimum-longitude "$cm_xmin" \
 					--maximum-longitude "$cm_xmax" \
 					--minimum-latitude "$cm_ymin" \
@@ -208,7 +204,6 @@ download_obc(){
 				esac
 				copernicusmarine subset \
 					--dataset-id "$DATASET" \
-					--dataset-version "${prod_version}" \
 					--minimum-longitude "$cm_bc_xmin" \
 					--maximum-longitude "$cm_bc_xmax" \
 					--minimum-latitude "$cm_bc_ymin" \
@@ -226,7 +221,6 @@ download_obc(){
 			
 				copernicusmarine subset \
 					--dataset-id "$DATASET" \
-					--dataset-version "${prod_version}" \
 					--minimum-longitude "$cm_bc_xmin" \
 					--maximum-longitude "$cm_bc_xmax" \
 					--minimum-latitude "$cm_bc_ymin" \
