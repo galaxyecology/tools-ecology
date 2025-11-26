@@ -1,20 +1,26 @@
-<tool id="cmems_download_ic_bc" name="Copernicus CMEMS Downloader for AquaINFRA marine model" version="1.0.0" profile="22.05">
-	<description>Download data from the Copernicus Marine Service to provide as input to the AquaINFRA marine model. Products: Mediterranean Sea Physics Analysis and Forecast or Mediterranean Sea Physics Reanalysis, depending on the selected temporal period.</description>
+<tool id="cmems_download_ic_bc" name="Copernicus CMEMS Downloader for AquaINFRA marine model" version="1.0.1" profile="22.05">
+	<description>
+		Download data from the Copernicus Marine Service to provide as input to the AquaINFRA marine model. Products: Mediterranean Sea Physics Analysis and Forecast or Mediterranean Sea Physics Reanalysis, depending on the selected temporal period.
+	</description>
+	<creator>
+        <organization name="EOSC AquaINFRA" url="https://aquainfra.eu/"/>
+    </creator>
 	<requirements>
-		<requirement type="package" version="2.0">copernicusmarine</requirement>
-		<requirement type="package" version="1.41.0">boto3</requirement>
-		<requirement type="package" version="1.41.0">botocore</requirement>
+		<requirement type="package" version="3.11">python</requirement>
+		<requirement type="package" version="2.2.5">copernicusmarine</requirement>
+		<requirement type="package" version="1.41.2">boto3</requirement>
+		<requirement type="package" version="1.41.2">botocore</requirement>
 		<requirement type="package" version="5.2.37">bash</requirement>
 		<requirement type="package" version="1.8.1">jq</requirement>
-		<requirement type="package" version="3.14.0">python</requirement>
 		<requirement type="package" version="1.7.3">netcdf4</requirement>
+		<requirement type="package" version="1.7.3">bc</requirement>
 		<!--<credentials name="copernicus_marine" version="2.0">
 			<variable name="username" inject_as_env="CMEMS_USERNAME" />
 			<variable name="password" inject_as_env="CMEMS_PASSWORD" />
 		</credentials>-->
 	</requirements>
 	<command detect_errors="exit_code"><![CDATA[
-		bash '$cmems_credentials' &&
+		source '$cmems_credentials' &&
 	
 		bash "$__tool_directory__/cmems_download_ic_bc.sh" \
 		"$min_lat" "$max_lat" \
@@ -27,8 +33,8 @@
 	<configfiles>
         <configfile name="cmems_credentials">
 #import os 
-#set $cmems_username = $__user__.extra_preferences.get('cmems_username', "")
-#set $cmems_password = $__user__.extra_preferences.get('cmems_password', "")
+#set $cmems_username = $__user__.extra_preferences.get('cmems_account|cmems_username', "")
+#set $cmems_password = $__user__.extra_preferences.get('cmems_account|cmems_password', "")
 #if $cmems_username == "" or $cmems_password == ""
     #set $cmems_username = os.getenv('CMEMS_USERNAME', '')
     #set $cmems_password = os.getenv('CMEMS_PASSWORD', '')
@@ -78,7 +84,8 @@ export CMEMS_PASSWORD='$cmems_password'
         </test>
     </tests>
 	<help format="markdown"><![CDATA[
-		This tool downloads data subsets from the **Copernicus Marine Service (CMEMS)** using the **Copernicus Marine Toolbox** v2.0, to give later as input to the AquaINFRA marine model.
+		This tool downloads data subsets from the **Copernicus Marine Service (CMEMS)** using the **Copernicus Marine Toolbox** v2.0, to give later as input to the AquaINFRA marine model. 
+		Products: Mediterranean Sea Physics Analysis and Forecast or Mediterranean Sea Physics Reanalysis, depending on the selected temporal period.
 
 		### Requirements
 
