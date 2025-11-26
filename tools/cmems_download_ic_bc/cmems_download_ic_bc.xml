@@ -13,6 +13,7 @@
 		<requirement type="package" version="5.2.37">bash</requirement>
 		<requirement type="package" version="1.8.1">jq</requirement>
 		<requirement type="package" version="1.7.3">netcdf4</requirement>
+		<requirement type="package" version="1.7.3">bc</requirement>
 		<!--<credentials name="copernicus_marine" version="2.0">
 			<variable name="username" inject_as_env="CMEMS_USERNAME" />
 			<variable name="password" inject_as_env="CMEMS_PASSWORD" />
