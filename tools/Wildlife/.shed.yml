@@ -1,0 +1,10 @@
+name: wildlife
+owner: ecology 
+description: Detect and classify wildlife species in images and videos using MegaDetector and Hugging Face models.
+homepage_url: https://github.com/TuturBaba/tools-ecology/tree/master/tools/Wildlife
+long_description: |
+  This tool detects and classifies wildlife in images and videos. It first uses MegaDetector to locate animals, then applies a fine-tuned Hugging Face model to identify species. The workflow outputs prediction tables and, optionally, boxed images showing detected wildlife.
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/
+type: unrestricted
+categories:
+- Ecology
