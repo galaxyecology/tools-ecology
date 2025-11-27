@@ -1,0 +1,95 @@
+<tool id="ccds_download_era5_af" name="Copernicus CDS Downloader for AquaINFRA marine model" version="1.0.1" profile="22.05">
+	<description>
+		Download ERA5 data from the Copernicus Climate Data Store to provide as input to the AquaINFRA marine model. Products: ERA5 hourly data on single levels from 1940 to present, Reanalysis.
+	</description>
+	<creator>
+        <organization name="EOSC AquaINFRA" url="https://aquainfra.eu/"/>
+    </creator>
+	<requirements>
+		<requirement type="package" version="3.11">python</requirement>
+		<requirement type="package" version="2.2.5">copernicusmarine</requirement>
+		<requirement type="package" version="1.41.2">boto3</requirement>
+		<requirement type="package" version="1.41.2">botocore</requirement>
+		<requirement type="package" version="5.2.37">bash</requirement>
+		<requirement type="package" version="1.8.1">jq</requirement>
+		<requirement type="package" version="1.7.3">netcdf4</requirement>
+		<requirement type="package" version="1.7.3">bc</requirement>
+		<!--<credentials name="cds_api" version="1.0">
+			<variable name="token" inject_as_env="CDS_TOKEN" />
+		</credentials>-->
+	</requirements>
+	<command detect_errors="exit_code"><![CDATA[
+		source '$cds_token_api' &&
+
+		bash '$__tool_directory__/ccds_download_era5_af.sh' \
+		"$min_lat" "$max_lat" \
+		"$min_lon" "$max_lon" \
+		"$start_date" "$end_date"
+		]]></command>
+	<configfiles>
+		<configfile name="cds_token_api">
+#import os 
+#set $c3s_cds_apikey = $__user__.extra_preferences.get('c3s_account|c3s_cds_apikey', "")
+#if $c3s_cds_apikey == ""
+    echo "Error. Set your credentials via: C3S CDS API Key"
+#end if
+export CDS_TOKEN='$c3s_cds_apikey'
+        </configfile>
+	</configfiles>
+	<inputs>
+		<param name="min_lat" type="float" label="Min latitude (ºN)" min="-180" max="180" optional="false" value="" help="Minimum latitude value for the data subset (southern boundary latitude)." />
+		<param name="max_lat" type="float" label="Max latitude (ºN)" min="-180" max="180" optional="false" value="" help="Maximum latitude value for the data subset (northern boundary latitude)." />
+		<param name="min_lon" type="float" label="Min longitude (ºE)" min="-180" max="180" optional="false" value="" help="Minimum longitude value for the data subset (western boundary longitude)." />
+		<param name="max_lon" type="float" label="Max longitude (ºE)" min="-180" max="180" optional="false" value="" help="Maximum longitude value for the data subset (eastern boundary longitude)." />
+		<param name="start_date" type="text" label="Start date (YYYY-MM-DD)" optional="false" value="" help="The start datetime of the temporal data subset.">
+			<validator type="regex" message="Date must be in YYYY-MM-DD format">^\d{4}-\d{2}-\d{2}$</validator>
+		</param>
+		<param name="end_date" type="text" label="End date (YYYY-MM-DD)" optional="false" value="" help="The end datetime of the temporal data subset.">
+			<validator type="regex" message="Date must be in YYYY-MM-DD format">^\d{4}-\d{2}-\d{2}$</validator>
+		</param>
+	</inputs>
+	<outputs>
+		<data name="zip_output" format="zip" from_work_dir="ccds_era5_af_data.zip" label="ccds_era5_af_data.zip"/>
+	</outputs>	
+	<tests>
+		<test expect_failure="true">
+			<param name="min_lat" value="38.42"/>
+			<param name="max_lat" value="43.60"/>
+			<param name="min_lon" value="-0.46"/>
+			<param name="max_lon" value="6.1728"/>
+			<param name="start_date" value="2022-01-01"/>
+			<param name="end_date" value="2022-01-02"/>
+			<assert_stdout>
+				<has_text text=">> startdate:  2022-01-01"/>
+			</assert_stdout>
+		</test>
+	</tests>
+	<help format="markdown"><![CDATA[
+		This tool downloads ERA5 data subsets from the **Copernicus Climate Data Store (ECMWF)** using the **CDSAPI** to provide later as input to the AquaINFRA marine model.
+
+		### Requirements
+		
+		To use this tool, users must:
+
+			- Have a valid account on the Copernicus Climate Data Store: https://cds.climate.copernicus.eu
+			- Have accepted the *Terms of Use* for the **ERA5 hourly data on single levels** dataset. This must be done manually on the dataset’s webpage (at the bottom of the download form).
+
+		### Outputs
+		
+		The tool produces a ZIP file containing two NetCDF (`.nc`) files:
+
+			- `data_stream-oper_stepType-accum.nc` — accumulated variables  
+			- `data_stream-oper_stepType-instant.nc` — instantaneous variables
+
+		These files can be used as inputs for the AquaINFRA marine model tool..
+	]]></help>
+	<citations>
+		<citation type="bibtex"> 
+			@misc{netcdf4,
+			title={netcdf4},
+			author={Jeff Whitaker},
+			url={https://pypi.org/project/netCDF4/}
+			}
+        </citation>
+	</citations>
+</tool>

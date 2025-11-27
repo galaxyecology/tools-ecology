@@ -1,4 +1,4 @@
-<tool id="nfdi4earth_os4a" name="NFDI4Earth OneStop4All Importer" tool_type="data_source" version="1.0" profile="20.09">
+<tool id="nfdi4earth_os4a" name="NFDI4Earth OneStop4All Importer" tool_type="data_source" version="1.1" profile="20.09">
     <description>downloads content via NFDI4Earth's OS4A search user interface</description>
     <command><![CDATA[
         python '$__tool_directory__/data_source.py' '$output' $__app__.config.output_size_limit
@@ -8,8 +8,11 @@
         <param name="tool_id" type="hidden" value="nfdi4earth_os4a" />
         <param name="sendToGalaxy" type="hidden" value="1" />
     </inputs>
+    <request_param_translation>
+        <request_param galaxy_name="title" remote_name="data_title" missing="unknown title" />
+    </request_param_translation>
     <outputs>
-        <data name="output" format="auto" label="OneStop4All Resource"/>
+        <data name="output" format="auto" label="${title}"/>
     </outputs>
     <options sanitize="False" refresh="True"/>
 </tool>
