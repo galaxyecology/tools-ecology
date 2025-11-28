@@ -1,4 +1,4 @@
-name: wildlife
+name: wildlife_megadetector_huggingface
 owner: ecology 
 description: Detect and classify wildlife species in images and videos using MegaDetector and Hugging Face models.
 homepage_url: https://github.com/TuturBaba/tools-ecology/tree/master/tools/Wildlife
