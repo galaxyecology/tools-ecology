@@ -1,4 +1,4 @@
-<tool id="ccds_download_era5_af" name="Copernicus CDS Downloader for AquaINFRA marine model" version="1.0.1" profile="22.05">
+<tool id="ccds_download_era5_af" name="Copernicus CDS Downloader for AquaINFRA marine model" version="1.0.2" profile="22.05">
 	<description>
 		Download ERA5 data from the Copernicus Climate Data Store to provide as input to the AquaINFRA marine model. Products: ERA5 hourly data on single levels from 1940 to present, Reanalysis.
 	</description>
