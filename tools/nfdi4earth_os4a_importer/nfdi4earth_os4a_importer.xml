@@ -1,5 +1,5 @@
-<tool id="nfdi4earth_os4a" name="NFDI4Earth OneStop4All Importer" tool_type="data_source" version="1.1" profile="20.09">
-    <description>downloads content via NFDI4Earth's OS4A search user interface</description>
+<tool id="nfdi4earth_os4a" name="NFDI4Earth OneStop4All Importer" tool_type="data_source" version="1.2" profile="20.09">
+    <description>downloads content via NFDI4Earth's OneStop4All search user interface</description>
     <command><![CDATA[
         python '$__tool_directory__/data_source.py' '$output' $__app__.config.output_size_limit
     ]]></command>
