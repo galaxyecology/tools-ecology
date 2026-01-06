@@ -123,7 +123,8 @@ detection_model = pw_detection.MegaDetectorV5(
 )
 image_processor = AutoImageProcessor.from_pretrained(model_name)
 classifier = AutoModelForImageClassification.from_pretrained(
-    "./classifier_model_dir"
+    "./classifier_model_dir",
+    use_fast=True
 )
 
 pipe = pipeline(
