@@ -166,7 +166,7 @@ def predict_images(images_dir, detections_dir, predictions, boxing_mode):
 
     detections_list = detection_model.batch_image_detection(
         data_path=images_dir,
-        batch_size=16,
+        batch_size=8,
         det_conf_thres=detection_threshold,
     )
 
