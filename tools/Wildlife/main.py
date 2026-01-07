@@ -70,8 +70,9 @@ parser.add_argument("stride", type=int,
                     help="Frame extraction stride")
 parser.add_argument("images_max", type=int,
                     help="Maximum number of images to process per folder")
-parser.add_argument("batch_size", type=int,
-          help="Batch size for image detection and classification (1–64)")
+parser.add_argument(
+    "batch_size", type=int,
+    help="Batch size for image detection and classification")
 parser.add_argument("run_dir", type=str,
                     help="Output directory for predictions")
 parser.add_argument("name_file", nargs=argparse.REMAINDER,
