@@ -121,7 +121,7 @@ detection_model = pw_detection.MegaDetectorV5(
     device=device,
     pretrained=True,
 )
-image_processor = AutoImageProcessor.from_pretrained(model_name,use_fast=True)
+image_processor = AutoImageProcessor.from_pretrained(model_name, use_fast=True)
 classifier = AutoModelForImageClassification.from_pretrained(
     "./classifier_model_dir"
 )
