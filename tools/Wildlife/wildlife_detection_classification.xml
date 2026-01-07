@@ -32,6 +32,7 @@
             "${detection_threshold}" \
             "${stride}" \
             "${images_max}" \
+            "${batch_size}" \
             "./outputs" \
             $element_ids_str
     ]]>
@@ -52,6 +53,7 @@
         <param name="detection_threshold" type="float" value="0.5" min="0.1" max="1" label="Detection confidence threshold" help="Minimum confidence score (0–1) for detecting objects in the image or video frames." />
         <param name="stride" type="integer" value="1" min="1" max="300" label="Frame extraction interval" help="For video input: extract one frame every X seconds." />
         <param name="images_max" type="integer" value="3000" min="1" max="10000" label="Maximum number of images to process per folder" help="Limit the total number of images extracted and processed per input folder to avoid memory overload." />
+        <param name="batch_size" type="integer" value="16" min="1" max="64" label="Batch size" help="Number of images processed simultaneously (higher = faster but more memory usage)" />
     </inputs>
     <outputs>
         <data name="output_predictions" auto_format="true" from_work_dir="./outputs/output_predictions.csv" label="Predictions_CSV" />
