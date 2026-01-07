@@ -70,6 +70,8 @@ parser.add_argument("stride", type=int,
                     help="Frame extraction stride")
 parser.add_argument("images_max", type=int,
                     help="Maximum number of images to process per folder")
+parser.add_argument("batch_size", type=int,
+          help="Batch size for image detection and classification (1–64)")
 parser.add_argument("run_dir", type=str,
                     help="Output directory for predictions")
 parser.add_argument("name_file", nargs=argparse.REMAINDER,
@@ -87,6 +89,7 @@ path_input = args.path_input
 detection_threshold = args.detection_threshold
 stride = args.stride
 images_max = args.images_max
+batch_size = args.batch_size
 run_dir = args.run_dir.strip()
 name_file = [n.strip() for n in args.name_file]
 
@@ -166,7 +169,7 @@ def predict_images(images_dir, detections_dir, predictions, boxing_mode):
 
     detections_list = detection_model.batch_image_detection(
         data_path=images_dir,
-        batch_size=8,
+        batch_size=batch_size,
         det_conf_thres=detection_threshold,
     )
 
