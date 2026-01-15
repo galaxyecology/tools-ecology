@@ -30,7 +30,6 @@ from supervision import ImageSink
 from supervision.utils import video as video_utils
 
 import torch
-
 from torch.utils.data import DataLoader
 
 import torchvision
