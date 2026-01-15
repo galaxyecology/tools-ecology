@@ -1,4 +1,4 @@
-<tool id="wildlife_megadetector_huggingface" name="Wildlife Detection" version="0.1.1+galaxy0" profile="24.2">
+<tool id="wildlife_megadetector_huggingface" name="Wildlife Detection" version="0.1.0+galaxy0" profile="24.2">
     <description>
         Detect and classify wildlife species in images and videos using MegaDetector and Hugging Face models (AI).
     </description>
@@ -22,24 +22,24 @@
     #end for
     #set element_ids_str = " ".join($element_ids)
 
-    python '$__tool_directory__/main.py'
-            '${model_name}'
-            '${classifier_model}'
-            '${config}'
-            '${type_mapping}'
-            '${boxing_mode}'
-            '${data_dir}'
-            '${detection_threshold}'
-            '${stride}'
-            '${images_max}'
-            '${batch_size}'
-            ./outputs
+    python "$__tool_directory__/main.py" \
+            "${model_name}" \
+            "${classifier_model}" \
+            "${config}" \
+            "${type_mapping}" \
+            "${boxing_mode}" \
+            "${data_dir}" \
+            "${detection_threshold}" \
+            "${stride}" \
+            "${images_max}" \
+            "${time_NMS}" \
+            "./outputs" \
             $element_ids_str
     ]]>
     </command>
     <inputs>
         <param name="model_name" type="text" value="facebook/dinov2-large" label="Hugging Face backbone model name" optional="false" help="Specify the pretrained model from Hugging Face to use as the image feature extractor" />
-        <param name="classifier_model" type="data" format="safetensors" label="Fine-tuned classifier weights" help="Upload your fine-tuned classification model (.safetensors file)." />
+        <param name="classifier_model" type="data" format="data" label="Fine-tuned classifier weights" help="Upload your fine-tuned classification model (.safetensors file)." />
         <param name="config" type="data" format="json" label="Model configuration (JSON)" help="Provide the JSON configuration file associated with your fine-tuned classifier model." />
         <param name="type_mapping" type="select" label="Label mapping direction" help="Select how labels are mapped in the model configuration.">
             <option value="id2label" selected="true">id2label</option>
@@ -53,7 +53,7 @@
         <param name="detection_threshold" type="float" value="0.5" min="0.1" max="1" label="Detection confidence threshold" help="Minimum confidence score (0–1) for detecting objects in the image or video frames." />
         <param name="stride" type="integer" value="1" min="1" max="300" label="Frame extraction interval" help="For video input: extract one frame every X seconds." />
         <param name="images_max" type="integer" value="3000" min="1" max="10000" label="Maximum number of images to process per folder" help="Limit the total number of images extracted and processed per input folder to avoid memory overload." />
-        <param name="batch_size" type="integer" value="16" min="1" max="64" label="Batch size" help="Number of images processed simultaneously (higher = faster but more memory usage)" />
+        <param name="time_NMS" type="integer" value="10" min="1" max="1000" label="NMS processing time limit (seconds)" help="Sets the maximum processing time for Non-Maximum Suppression (NMS), which removes overlapping detections. If a 'NMS time limit exceeded' warning appears, increase this value to allow NMS to complete."/>
     </inputs>
     <outputs>
         <data name="output_predictions" auto_format="true" from_work_dir="./outputs/output_predictions.csv" label="Predictions_CSV" />
@@ -72,6 +72,7 @@
             <param name="detection_threshold" value="0.8" />
             <param name="stride" value="5" />
             <param name="images_max" value="3000" />
+            <param name="images_max" value="10" />
             <output name="output_predictions" file="predictions_stride_1_thresh_0.2.csv" compare="sim_size" />
             <output name="output_predictions_recap" file="Predictions_recap.csv" compare="sim_size" />
             <output_collection name="boxed_images" type="list" count="7"/>
