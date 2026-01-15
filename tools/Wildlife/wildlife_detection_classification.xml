@@ -1,4 +1,4 @@
-<tool id="wildlife_megadetector_huggingface" name="Wildlife Detection" version="0.1.0+galaxy0" profile="24.2">
+<tool id="wildlife_megadetector_huggingface" name="Wildlife Detection" version="0.1.1+galaxy0" profile="24.2">
     <description>
         Detect and classify wildlife species in images and videos using MegaDetector and Hugging Face models (AI).
     </description>
