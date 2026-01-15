@@ -11,21 +11,30 @@ from pathlib import Path
 from PIL import Image
 
 from PytorchWildlife.models import detection as pw_detection
-
+from PytorchWildlife.data import datasets as pw_data
+from PytorchWildlife.models.detection.ultralytics_based.megadetectorv5 import (
+    MegaDetectorV5,
+)
 import cv2
 
 from functions import clean_dir, list_photos_videos, save_cropped_images
 
 import magic
 
+import time
+
 import numpy as np
 
 import pandas as pd
+
+from yolov5.utils.general import xywh2xyxy, scale_boxes
 
 from supervision import ImageSink
 from supervision.utils import video as video_utils
 
 import torch
+import torchvision
+from torch.utils.data import DataLoader
 
 from tqdm import tqdm
 
@@ -35,15 +44,11 @@ from transformers import (
     pipeline,
 )
 
-from PytorchWildlife.data import datasets as pw_data
-from torch.utils.data import DataLoader
-import time
-from yolov5.utils.general import xywh2xyxy, scale_boxes
-import torchvision
 
-from PytorchWildlife.models.detection.ultralytics_based.megadetectorv5 import (
-    MegaDetectorV5,
-)
+
+
+
+
 
 
 def batch_image_detection2(
@@ -59,9 +64,9 @@ def batch_image_detection2(
     Args:
         data_path (str): Path containing all images for inference.
         batch_size (int, optional): Batch size for inference. Defaults to 16.
-        det_conf_thres (float, optional): 
+        det_conf_thres (float, optional):
             Confidence threshold for predictions. Defaults to 0.2.
-        id_strip (str, optional): 
+        id_strip (str, optional):
             Characters to strip from img_id. Defaults to None.
 
     Returns:
@@ -101,7 +106,7 @@ def batch_image_detection2(
                 pred = pred.numpy()
                 size = sizes[i].numpy()
                 path = paths[i]
-                original_coords = pred[:, :4].copy()
+                #original_coords = pred[:, :4].copy()
                 pred[:, :4] = scale_boxes(
                     [self.IMAGE_SIZE] * 2, pred[:, :4], size
                 ).round()
@@ -151,7 +156,7 @@ def non_max_suppression2(
 
     # Settings
     # (pixels) minimum and maximum box width and height
-    min_wh, max_wh = 2, 4096
+    #min_wh, max_wh = 2, 4096
     max_nms = 30000  # maximum number of boxes into torchvision.ops.nms()
     time_limit = time_NMS  # seconds to quit after
     redundant = True  # require redundant detections
