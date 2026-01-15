@@ -5,50 +5,29 @@
 import argparse
 import os
 import shutil
+import time
 from datetime import datetime
 from pathlib import Path
 
-from PIL import Image
-
-from PytorchWildlife.models import detection as pw_detection
-from PytorchWildlife.data import datasets as pw_data
-from PytorchWildlife.models.detection.ultralytics_based.megadetectorv5 import (
-    MegaDetectorV5,
-)
 import cv2
-
-from functions import clean_dir, list_photos_videos, save_cropped_images
-
 import magic
-
-import time
-
 import numpy as np
-
 import pandas as pd
-
-from yolov5.utils.general import xywh2xyxy, scale_boxes
-
-from supervision import ImageSink
-from supervision.utils import video as video_utils
-
 import torch
 import torchvision
+from functions import clean_dir, list_photos_videos, save_cropped_images
+from PIL import Image
+from PytorchWildlife.data import datasets as pw_data
+from PytorchWildlife.models import detection as pw_detection
+from PytorchWildlife.models.detection.ultralytics_based.megadetectorv5 import \
+    MegaDetectorV5
+from supervision import ImageSink
+from supervision.utils import video as video_utils
 from torch.utils.data import DataLoader
-
 from tqdm import tqdm
-
-from transformers import (
-    AutoImageProcessor,
-    AutoModelForImageClassification,
-    pipeline,
-)
-
-
-
-
-
-
+from transformers import (AutoImageProcessor, AutoModelForImageClassification,
+                          pipeline)
+from yolov5.utils.general import scale_boxes, xywh2xyxy
 
 
 def batch_image_detection2(
@@ -106,7 +85,7 @@ def batch_image_detection2(
                 pred = pred.numpy()
                 size = sizes[i].numpy()
                 path = paths[i]
-                #original_coords = pred[:, :4].copy()
+                # original_coords = pred[:, :4].copy()
                 pred[:, :4] = scale_boxes(
                     [self.IMAGE_SIZE] * 2, pred[:, :4], size
                 ).round()
@@ -156,7 +135,7 @@ def non_max_suppression2(
 
     # Settings
     # (pixels) minimum and maximum box width and height
-    #min_wh, max_wh = 2, 4096
+    min_wh, max_wh = 2, 4096
     max_nms = 30000  # maximum number of boxes into torchvision.ops.nms()
     time_limit = time_NMS  # seconds to quit after
     redundant = True  # require redundant detections
@@ -173,11 +152,11 @@ def non_max_suppression2(
 
         # Cat apriori labels if autolabelling
         if labels and len(labels[xi]):
-            l = labels[xi]
-            v = torch.zeros((len(l), nc + 5), device=x.device)
-            v[:, :4] = l[:, 1:5]  # box
+            labelling = labels[xi]
+            v = torch.zeros((len(labelling), nc + 5), device=x.device)
+            v[:, :4] = labelling[:, 1:5]  # box
             v[:, 4] = 1.0  # conf
-            v[range(len(l)), l[:, 0].long() + 5] = 1.0  # cls
+            v[range(len(labelling)), labelling[:, 0].long() + 5] = 1.0  # cls
             x = torch.cat((x, v), 0)
 
         # If none remain process next image
@@ -223,17 +202,6 @@ def non_max_suppression2(
         i = torchvision.ops.nms(boxes, scores, iou_thres)  # NMS
         if i.shape[0] > max_det:  # limit detections
             i = i[:max_det]
-        if merge and (
-            1 < n < 3e3
-        ):  # Merge NMS (boxes merged using weighted mean)
-            # update boxes as boxes(i,4) = weights(i,n) * boxes(n,4)
-            iou = box_iou(boxes[i], boxes) > iou_thres  # iou matrix
-            weights = iou * scores[None]  # box weights
-            x[i, :4] = torch.mm(weights, x[:, :4]).float() / weights.sum(
-                1, keepdim=True
-            )  # merged boxes
-            if redundant:
-                i = i[iou.sum(1) > 1]  # require redundancy
 
         output[xi] = x[i]
         if (time.time() - t) > time_limit:
