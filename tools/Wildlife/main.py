@@ -35,6 +35,168 @@ from transformers import (
     pipeline,
 )
 
+from PytorchWildlife.data import datasets as pw_data
+from torch.utils.data import DataLoader
+import time
+from yolov5.utils.general import xywh2xyxy , scale_boxes
+import torchvision
+
+from PytorchWildlife.models.detection.ultralytics_based.megadetectorv5 import MegaDetectorV5
+
+def batch_image_detection2(self, data_path, batch_size: int = 16, det_conf_thres: float = 0.2, id_strip: str = None) -> list[dict]:
+    """
+    Perform detection on a batch of images.
+
+    Args:
+        data_path (str): Path containing all images for inference.
+        batch_size (int, optional): Batch size for inference. Defaults to 16.
+        det_conf_thres (float, optional): Confidence threshold for predictions. Defaults to 0.2.
+        id_strip (str, optional): Characters to strip from img_id. Defaults to None.
+
+    Returns:
+        list[dict]: List of detection results for all images.
+    """
+# Custom batch image detection for MegaDetectorV5
+# Uses DataLoader + custom NMS and returns normalized bounding boxes.
+# Must be attached to MegaDetectorV5 before model instantiation.
+    dataset = pw_data.DetectionImageFolder(
+        data_path,
+        transform=self.transform,
+    )
+
+    # Creating a DataLoader for batching and parallel processing of the images
+    loader = DataLoader(dataset, batch_size=batch_size, shuffle=False, 
+                        pin_memory=True, num_workers=0, drop_last=False)
+
+    results = []
+    with tqdm(total=len(loader)) as pbar:
+        for batch_index, (imgs, paths, sizes) in enumerate(loader):
+            imgs = imgs.to(self.device)
+            predictions = self.model(imgs)[0].detach().cpu()
+            predictions = non_max_suppression2(predictions, conf_thres=det_conf_thres)
+
+            batch_results = []
+            for i, pred in enumerate(predictions):
+                if pred.size(0) == 0:  
+                    continue
+                pred = pred.numpy()
+                size = sizes[i].numpy()
+                path = paths[i]
+                original_coords = pred[:, :4].copy()
+                # pred[:, :4] = scale_coords([self.IMAGE_SIZE] * 2, pred[:, :4], size).round()
+                pred[:, :4] = scale_boxes([self.IMAGE_SIZE] * 2, pred[:, :4], size).round()
+                # Normalize the coordinates for timelapse compatibility
+                normalized_coords = [[x1 / size[1], y1 / size[0], x2 / size[1], y2 / size[0]] for x1, y1, x2, y2 in pred[:, :4]]
+                res = self.results_generation(pred, path, id_strip)
+                res["normalized_coords"] = normalized_coords
+                batch_results.append(res)
+            pbar.update(1)
+            results.extend(batch_results)
+        return results
+        
+MegaDetectorV5.batch_image_detection2 = batch_image_detection2
+
+
+def non_max_suppression2(prediction, conf_thres=0.25, iou_thres=0.45, classes=None, agnostic=False, multi_label=False,
+                        labels=(), max_det=300):
+    """Runs Non-Maximum Suppression (NMS) on inference results
+
+    Returns:
+         list of detections, on (n,6) tensor per image [xyxy, conf, cls]
+    """
+
+    nc = prediction.shape[2] - 5  # number of classes
+    xc = prediction[..., 4] > conf_thres  # candidates
+
+    # Checks
+    assert 0 <= conf_thres <= 1, f'Invalid Confidence threshold {conf_thres}, valid values are between 0.0 and 1.0'
+    assert 0 <= iou_thres <= 1, f'Invalid IoU {iou_thres}, valid values are between 0.0 and 1.0'
+
+    # Settings
+    # (pixels) minimum and maximum box width and height
+    min_wh, max_wh = 2, 4096
+    max_nms = 30000  # maximum number of boxes into torchvision.ops.nms()
+    time_limit = time_NMS  # seconds to quit after
+    redundant = True  # require redundant detections
+    multi_label &= nc > 1  # multiple labels per box (adds 0.5ms/img)
+    merge = False  # use merge-NMS
+
+    t = time.time()
+    output = [torch.zeros((0, 6), device=prediction.device)
+              ] * prediction.shape[0]
+    for xi, x in enumerate(prediction):  # image index, image inference
+        # Apply constraints
+        # x[((x[..., 2:4] < min_wh) | (x[..., 2:4] > max_wh)).any(1), 4] = 0  # width-height
+        x = x[xc[xi]]  # confidence
+
+        # Cat apriori labels if autolabelling
+        if labels and len(labels[xi]):
+            l = labels[xi]
+            v = torch.zeros((len(l), nc + 5), device=x.device)
+            v[:, :4] = l[:, 1:5]  # box
+            v[:, 4] = 1.0  # conf
+            v[range(len(l)), l[:, 0].long() + 5] = 1.0  # cls
+            x = torch.cat((x, v), 0)
+
+        # If none remain process next image
+        if not x.shape[0]:
+            continue
+
+        # Compute conf
+        x[:, 5:] *= x[:, 4:5]  # conf = obj_conf * cls_conf
+
+        # Box (center x, center y, width, height) to (x1, y1, x2, y2)
+        box = xywh2xyxy(x[:, :4])
+
+        # Detections matrix nx6 (xyxy, conf, cls)
+        if multi_label:
+            i, j = (x[:, 5:] > conf_thres).nonzero(as_tuple=False).T
+            x = torch.cat((box[i], x[i, j + 5, None], j[:, None].float()), 1)
+        else:  # best class only
+            conf, j = x[:, 5:].max(1, keepdim=True)
+            x = torch.cat((box, conf, j.float()), 1)[
+                conf.view(-1) > conf_thres]
+
+        # Filter by class
+        if classes is not None:
+            x = x[(x[:, 5:6] == torch.tensor(classes, device=x.device)).any(1)]
+
+        # Apply finite constraint
+        # if not torch.isfinite(x).all():
+        #     x = x[torch.isfinite(x).all(1)]
+
+        # Check shape
+        n = x.shape[0]  # number of boxes
+        if not n:  # no boxes
+            continue
+        elif n > max_nms:  # excess boxes
+            # sort by confidence
+            x = x[x[:, 4].argsort(descending=True)[:max_nms]]
+
+        # Batched NMS
+        c = x[:, 5:6] * (0 if agnostic else max_wh)  # classes
+        # boxes (offset by class), scores
+        boxes, scores = x[:, :4] + c, x[:, 4]
+        i = torchvision.ops.nms(boxes, scores, iou_thres)  # NMS
+        if i.shape[0] > max_det:  # limit detections
+            i = i[:max_det]
+        if merge and (1 < n < 3E3):  # Merge NMS (boxes merged using weighted mean)
+            # update boxes as boxes(i,4) = weights(i,n) * boxes(n,4)
+            iou = box_iou(boxes[i], boxes) > iou_thres  # iou matrix
+            weights = iou * scores[None]  # box weights
+            x[i, :4] = torch.mm(weights, x[:, :4]).float(
+            ) / weights.sum(1, keepdim=True)  # merged boxes
+            if redundant:
+                i = i[iou.sum(1) > 1]  # require redundancy
+
+        output[xi] = x[i]
+        if (time.time() - t) > time_limit:
+            print(f'WARNING: NMS time limit {time_limit}s exceeded')
+            break  # time limit exceeded
+
+    return output
+
+
 # ============================================================
 # CONFIGURATION
 # ============================================================
@@ -70,9 +232,8 @@ parser.add_argument("stride", type=int,
                     help="Frame extraction stride")
 parser.add_argument("images_max", type=int,
                     help="Maximum number of images to process per folder")
-parser.add_argument(
-    "batch_size", type=int,
-    help="Batch size for image detection and classification")
+parser.add_argument("time_NMS", type=int,
+                    help="Time limit for the process NMS (non maximum suppression)")
 parser.add_argument("run_dir", type=str,
                     help="Output directory for predictions")
 parser.add_argument("name_file", nargs=argparse.REMAINDER,
@@ -90,7 +251,7 @@ path_input = args.path_input
 detection_threshold = args.detection_threshold
 stride = args.stride
 images_max = args.images_max
-batch_size = args.batch_size
+time_NMS= args.time_NMS
 run_dir = args.run_dir.strip()
 name_file = [n.strip() for n in args.name_file]
 
@@ -114,6 +275,7 @@ input_files = [Path(p.strip()) for p in path_input.split(",")]
 file_to_name = {str(f): n for f, n in zip(input_files, name_file)}
 
 
+
 # ============================================================
 # MODEL INITIALIZATION
 # ============================================================
@@ -127,7 +289,8 @@ detection_model = pw_detection.MegaDetectorV5(
 )
 image_processor = AutoImageProcessor.from_pretrained(model_name, use_fast=True)
 classifier = AutoModelForImageClassification.from_pretrained(
-    "./classifier_model_dir"
+    "./classifier_model_dir",
+    use_fast=True
 )
 
 pipe = pipeline(
@@ -168,9 +331,9 @@ def predict_images(images_dir, detections_dir, predictions, boxing_mode):
     """
     print(f"Running detection... (boxing_mode={boxing_mode})")
 
-    detections_list = detection_model.batch_image_detection(
+    detections_list = detection_model.batch_image_detection2(
         data_path=images_dir,
-        batch_size=batch_size,
+        batch_size=8,
         det_conf_thres=detection_threshold,
     )
 
