@@ -9,6 +9,13 @@ import time
 from datetime import datetime
 from pathlib import Path
 
+from PIL import Image
+
+from PytorchWildlife.data import datasets as pw_data
+from PytorchWildlife.models import detection as pw_detection
+from PytorchWildlife.models.detection.ultralytics_based.megadetectorv5 import \
+    MegaDetectorV5
+
 import cv2
 
 from functions import clean_dir, list_photos_videos, save_cropped_images
@@ -19,27 +26,20 @@ import numpy as np
 
 import pandas as pd
 
-from PIL import Image
-
-from PytorchWildlife.data import datasets as pw_data
-from PytorchWildlife.models import detection as pw_detection
-from PytorchWildlife.models.detection.ultralytics_based.megadetectorv5 import \
-    MegaDetectorV5
-
 from supervision import ImageSink
 from supervision.utils import video as video_utils
 
 import torch
 
-import torchvision
-
 from torch.utils.data import DataLoader
+
+import torchvision
 
 from tqdm import tqdm
 
 from transformers import (AutoImageProcessor, AutoModelForImageClassification,
                           pipeline)
-                          
+
 from yolov5.utils.general import scale_boxes, xywh2xyxy
 
 
@@ -148,12 +148,12 @@ def non_max_suppression2(
 
     # Settings
     # (pixels) minimum and maximum box width and height
-    min_wh, max_wh = 2, 4096
+    max_wh = 4096
     max_nms = 30000  # maximum number of boxes into torchvision.ops.nms()
     time_limit = time_NMS  # seconds to quit after
-    redundant = True  # require redundant detections
+    # redundant = True  # require redundant detections
     multi_label &= nc > 1  # multiple labels per box (adds 0.5ms/img)
-    merge = False  # use merge-NMS
+    # merge = False  # use merge-NMS
 
     t = time.time()
     output = [
