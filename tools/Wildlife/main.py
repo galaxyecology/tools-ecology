@@ -38,67 +38,99 @@ from transformers import (
 from PytorchWildlife.data import datasets as pw_data
 from torch.utils.data import DataLoader
 import time
-from yolov5.utils.general import xywh2xyxy , scale_boxes
+from yolov5.utils.general import xywh2xyxy, scale_boxes
 import torchvision
 
-from PytorchWildlife.models.detection.ultralytics_based.megadetectorv5 import MegaDetectorV5
+from PytorchWildlife.models.detection.ultralytics_based.megadetectorv5 import (
+    MegaDetectorV5,
+)
 
-def batch_image_detection2(self, data_path, batch_size: int = 16, det_conf_thres: float = 0.2, id_strip: str = None) -> list[dict]:
+
+def batch_image_detection2(
+    self,
+    data_path,
+    batch_size: int = 16,
+    det_conf_thres: float = 0.2,
+    id_strip: str = None,
+) -> list[dict]:
     """
     Perform detection on a batch of images.
 
     Args:
         data_path (str): Path containing all images for inference.
         batch_size (int, optional): Batch size for inference. Defaults to 16.
-        det_conf_thres (float, optional): Confidence threshold for predictions. Defaults to 0.2.
-        id_strip (str, optional): Characters to strip from img_id. Defaults to None.
+        det_conf_thres (float, optional): 
+            Confidence threshold for predictions. Defaults to 0.2.
+        id_strip (str, optional): 
+            Characters to strip from img_id. Defaults to None.
 
     Returns:
         list[dict]: List of detection results for all images.
     """
-# Custom batch image detection for MegaDetectorV5
-# Uses DataLoader + custom NMS and returns normalized bounding boxes.
-# Must be attached to MegaDetectorV5 before model instantiation.
+    # Custom batch image detection for MegaDetectorV5
+    # Uses DataLoader + custom NMS and returns normalized bounding boxes.
+    # Must be attached to MegaDetectorV5 before model instantiation.
     dataset = pw_data.DetectionImageFolder(
         data_path,
         transform=self.transform,
     )
 
     # Creating a DataLoader for batching and parallel processing of the images
-    loader = DataLoader(dataset, batch_size=batch_size, shuffle=False, 
-                        pin_memory=True, num_workers=0, drop_last=False)
+    loader = DataLoader(
+        dataset,
+        batch_size=batch_size,
+        shuffle=False,
+        pin_memory=True,
+        num_workers=0,
+        drop_last=False,
+    )
 
     results = []
     with tqdm(total=len(loader)) as pbar:
         for batch_index, (imgs, paths, sizes) in enumerate(loader):
             imgs = imgs.to(self.device)
             predictions = self.model(imgs)[0].detach().cpu()
-            predictions = non_max_suppression2(predictions, conf_thres=det_conf_thres)
+            predictions = non_max_suppression2(
+                predictions, conf_thres=det_conf_thres
+            )
 
             batch_results = []
             for i, pred in enumerate(predictions):
-                if pred.size(0) == 0:  
+                if pred.size(0) == 0:
                     continue
                 pred = pred.numpy()
                 size = sizes[i].numpy()
                 path = paths[i]
                 original_coords = pred[:, :4].copy()
-                # pred[:, :4] = scale_coords([self.IMAGE_SIZE] * 2, pred[:, :4], size).round()
-                pred[:, :4] = scale_boxes([self.IMAGE_SIZE] * 2, pred[:, :4], size).round()
+                pred[:, :4] = scale_boxes(
+                    [self.IMAGE_SIZE] * 2, pred[:, :4], size
+                ).round()
                 # Normalize the coordinates for timelapse compatibility
-                normalized_coords = [[x1 / size[1], y1 / size[0], x2 / size[1], y2 / size[0]] for x1, y1, x2, y2 in pred[:, :4]]
+                normalized_coords = [
+                    [x1 / size[1], y1 / size[0], x2 / size[1], y2 / size[0]]
+                    for x1, y1, x2, y2 in pred[:, :4]
+                ]
                 res = self.results_generation(pred, path, id_strip)
                 res["normalized_coords"] = normalized_coords
                 batch_results.append(res)
             pbar.update(1)
             results.extend(batch_results)
         return results
-        
+
+
 MegaDetectorV5.batch_image_detection2 = batch_image_detection2
 
 
-def non_max_suppression2(prediction, conf_thres=0.25, iou_thres=0.45, classes=None, agnostic=False, multi_label=False,
-                        labels=(), max_det=300):
+def non_max_suppression2(
+    prediction,
+    conf_thres=0.25,
+    iou_thres=0.45,
+    classes=None,
+    agnostic=False,
+    multi_label=False,
+    labels=(),
+    max_det=300,
+):
     """Runs Non-Maximum Suppression (NMS) on inference results
 
     Returns:
@@ -109,8 +141,13 @@ def non_max_suppression2(prediction, conf_thres=0.25, iou_thres=0.45, classes=No
     xc = prediction[..., 4] > conf_thres  # candidates
 
     # Checks
-    assert 0 <= conf_thres <= 1, f'Invalid Confidence threshold {conf_thres}, valid values are between 0.0 and 1.0'
-    assert 0 <= iou_thres <= 1, f'Invalid IoU {iou_thres}, valid values are between 0.0 and 1.0'
+    assert 0 <= conf_thres <= 1, (
+        f"Invalid Confidence threshold {conf_thres}, "
+        "valid values are between 0.0 and 1.0"
+    )
+    assert (
+        0 <= iou_thres <= 1
+    ), f"Invalid IoU {iou_thres}, valid values are between 0.0 and 1.0"
 
     # Settings
     # (pixels) minimum and maximum box width and height
@@ -122,11 +159,11 @@ def non_max_suppression2(prediction, conf_thres=0.25, iou_thres=0.45, classes=No
     merge = False  # use merge-NMS
 
     t = time.time()
-    output = [torch.zeros((0, 6), device=prediction.device)
-              ] * prediction.shape[0]
+    output = [
+        torch.zeros((0, 6), device=prediction.device)
+    ] * prediction.shape[0]
     for xi, x in enumerate(prediction):  # image index, image inference
         # Apply constraints
-        # x[((x[..., 2:4] < min_wh) | (x[..., 2:4] > max_wh)).any(1), 4] = 0  # width-height
         x = x[xc[xi]]  # confidence
 
         # Cat apriori labels if autolabelling
@@ -155,7 +192,8 @@ def non_max_suppression2(prediction, conf_thres=0.25, iou_thres=0.45, classes=No
         else:  # best class only
             conf, j = x[:, 5:].max(1, keepdim=True)
             x = torch.cat((box, conf, j.float()), 1)[
-                conf.view(-1) > conf_thres]
+                conf.view(-1) > conf_thres
+            ]
 
         # Filter by class
         if classes is not None:
@@ -180,18 +218,21 @@ def non_max_suppression2(prediction, conf_thres=0.25, iou_thres=0.45, classes=No
         i = torchvision.ops.nms(boxes, scores, iou_thres)  # NMS
         if i.shape[0] > max_det:  # limit detections
             i = i[:max_det]
-        if merge and (1 < n < 3E3):  # Merge NMS (boxes merged using weighted mean)
+        if merge and (
+            1 < n < 3e3
+        ):  # Merge NMS (boxes merged using weighted mean)
             # update boxes as boxes(i,4) = weights(i,n) * boxes(n,4)
             iou = box_iou(boxes[i], boxes) > iou_thres  # iou matrix
             weights = iou * scores[None]  # box weights
-            x[i, :4] = torch.mm(weights, x[:, :4]).float(
-            ) / weights.sum(1, keepdim=True)  # merged boxes
+            x[i, :4] = torch.mm(weights, x[:, :4]).float() / weights.sum(
+                1, keepdim=True
+            )  # merged boxes
             if redundant:
                 i = i[iou.sum(1) > 1]  # require redundancy
 
         output[xi] = x[i]
         if (time.time() - t) > time_limit:
-            print(f'WARNING: NMS time limit {time_limit}s exceeded')
+            print(f"WARNING: NMS time limit {time_limit}s exceeded")
             break  # time limit exceeded
 
     return output
@@ -206,38 +247,60 @@ parser = argparse.ArgumentParser(
     "+ Hugging Face model"
 )
 
-parser.add_argument("model_name", type=str,
-                    help="Hugging Face model name for feature extraction")
 parser.add_argument(
-    "classifier_model", type=str,
-    help="Path to fine-tuned classifier weights (.safetensors)"
-)
-parser.add_argument("json_model", type=str,
-                    help="Path to classifier config (.json)")
-parser.add_argument(
-    "type_mapping", type=str, choices=[" id2label", " label2id"],
-    help="Label mapping direction"
+    "model_name",
+    type=str,
+    help="Hugging Face model name for feature extraction",
 )
 parser.add_argument(
-    "boxing_mode", type=str, choices=[" no_image", " all_image"],
-    help="Bounding box output mode"
+    "classifier_model",
+    type=str,
+    help="Path to fine-tuned classifier weights (.safetensors)",
 )
 parser.add_argument(
-    "path_input", type=str,
-    help="Comma-separated list of input files (images or videos)"
-    )
-parser.add_argument("detection_threshold", type=float,
-                    help="Detection confidence threshold (0-1)")
-parser.add_argument("stride", type=int,
-                    help="Frame extraction stride")
-parser.add_argument("images_max", type=int,
-                    help="Maximum number of images to process per folder")
-parser.add_argument("time_NMS", type=int,
-                    help="Time limit for the process NMS (non maximum suppression)")
-parser.add_argument("run_dir", type=str,
-                    help="Output directory for predictions")
-parser.add_argument("name_file", nargs=argparse.REMAINDER,
-                    help="Optional custom names for input files")
+    "json_model", type=str, help="Path to classifier config (.json)"
+)
+parser.add_argument(
+    "type_mapping",
+    type=str,
+    choices=[" id2label", " label2id"],
+    help="Label mapping direction",
+)
+parser.add_argument(
+    "boxing_mode",
+    type=str,
+    choices=[" no_image", " all_image"],
+    help="Bounding box output mode",
+)
+parser.add_argument(
+    "path_input",
+    type=str,
+    help="Comma-separated list of input files (images or videos)",
+)
+parser.add_argument(
+    "detection_threshold",
+    type=float,
+    help="Detection confidence threshold (0-1)",
+)
+parser.add_argument("stride", type=int, help="Frame extraction stride")
+parser.add_argument(
+    "images_max",
+    type=int,
+    help="Maximum number of images to process per folder",
+)
+parser.add_argument(
+    "time_NMS",
+    type=int,
+    help="Time limit for the process NMS (non maximum suppression)",
+)
+parser.add_argument(
+    "run_dir", type=str, help="Output directory for predictions"
+)
+parser.add_argument(
+    "name_file",
+    nargs=argparse.REMAINDER,
+    help="Optional custom names for input files",
+)
 
 args = parser.parse_args()
 
@@ -251,7 +314,7 @@ path_input = args.path_input
 detection_threshold = args.detection_threshold
 stride = args.stride
 images_max = args.images_max
-time_NMS= args.time_NMS
+time_NMS = args.time_NMS
 run_dir = args.run_dir.strip()
 name_file = [n.strip() for n in args.name_file]
 
@@ -275,7 +338,6 @@ input_files = [Path(p.strip()) for p in path_input.split(",")]
 file_to_name = {str(f): n for f, n in zip(input_files, name_file)}
 
 
-
 # ============================================================
 # MODEL INITIALIZATION
 # ============================================================
@@ -289,8 +351,7 @@ detection_model = pw_detection.MegaDetectorV5(
 )
 image_processor = AutoImageProcessor.from_pretrained(model_name, use_fast=True)
 classifier = AutoModelForImageClassification.from_pretrained(
-    "./classifier_model_dir",
-    use_fast=True
+    "./classifier_model_dir", use_fast=True
 )
 
 pipe = pipeline(
@@ -315,6 +376,7 @@ print(f"Active boxing mode: {boxing_mode}")
 # ============================================================
 # DETECTION + CLASSIFICATION
 # ============================================================
+
 
 def predict_images(images_dir, detections_dir, predictions, boxing_mode):
     """
@@ -362,8 +424,11 @@ def predict_images(images_dir, detections_dir, predictions, boxing_mode):
 
         filename = os.path.basename(detection)
         frame = next(
-            (int(p[1:]) for p in filename.split("_")
-             if p.startswith("F") and p[1:].isdigit()),
+            (
+                int(p[1:])
+                for p in filename.split("_")
+                if p.startswith("F") and p[1:].isdigit()
+            ),
             0,
         )
 
@@ -372,8 +437,10 @@ def predict_images(images_dir, detections_dir, predictions, boxing_mode):
         elif det_class == 2:  # vehicle
             scores = [0] * len(taxons) + [0, 1]
         else:
-            image = info[3] if boxing_mode == "no_image" else Image.open(
-                os.path.join(detections_dir, detection)
+            image = (
+                info[3]
+                if boxing_mode == "no_image"
+                else Image.open(os.path.join(detections_dir, detection))
             )
             inputs = image_processor(
                 images=image,
@@ -381,15 +448,15 @@ def predict_images(images_dir, detections_dir, predictions, boxing_mode):
             ).to(device)
             logits = pipe.model(**inputs).logits
             softmax_scores = (
-                torch.nn.functional.softmax(logits, dim=-1)
-                .cpu()
-                .tolist()[0]
+                torch.nn.functional.softmax(logits, dim=-1).cpu().tolist()[0]
             )
             scores = softmax_scores + [0, 0]
 
         prediction_row = pd.DataFrame(
-            [[detection, filename, frame]
-                + list(det_score * np.array(scores))],
+            [
+                [detection, filename, frame]
+                + list(det_score * np.array(scores))
+            ],
             columns=list(predictions.columns),
         )
 
@@ -440,10 +507,7 @@ for filepath in tqdm(
 
     if images_count > images_max:
         predictions = predict_images(
-            images_dir,
-            detections_dir,
-            predictions,
-            boxing_mode
+            images_dir, detections_dir, predictions, boxing_mode
         )
         images_count = 0
 
@@ -459,13 +523,11 @@ for filepath in tqdm(
 
         for idx, frame in enumerate(
             video_utils.get_video_frames_generator(
-                source_path=str(filepath),
-                stride=int(stride * fps)
+                source_path=str(filepath), stride=int(stride * fps)
             )
         ):
             ImageSink(images_dir, overwrite=False).save_image(
-                image=frame,
-                image_name=f"F{idx+1}_{filename}.JPG"
+                image=frame, image_name=f"F{idx+1}_{filename}.JPG"
             )
             images_count += 1
 
@@ -484,12 +546,10 @@ if images_count > 0:
 
 # Compute top prediction and confidence per detection
 predictions["Prediction"] = predictions[taxons_all].apply(
-    lambda x: "blank" if sum(x) == 0 else taxons_all[np.argmax(x)],
-    axis=1
+    lambda x: "blank" if sum(x) == 0 else taxons_all[np.argmax(x)], axis=1
 )
 predictions["Confidence score"] = predictions[taxons_all].apply(
-    lambda x: 0 if sum(x) == 0 else np.max(x),
-    axis=1
+    lambda x: 0 if sum(x) == 0 else np.max(x), axis=1
 )
 
 
@@ -524,15 +584,17 @@ valid = predictions[predictions["Prediction"] != "blank"].copy()
 recap_rows = []
 for (filename, species), df in valid.groupby(["Filename", "Prediction"]):
     frames_sorted = sorted(df["Frame"].tolist())
-    recap_rows.append({
-        "Filename": filename,
-        "Species": species,
-        "Frames": frames_sorted,
-        "Count": len(df),
-        "Confidence mean": round(df["Confidence score"].mean(), 4),
-        "Confidence min": round(df["Confidence score"].min(), 4),
-        "Confidence max": round(df["Confidence score"].max(), 4),
-    })
+    recap_rows.append(
+        {
+            "Filename": filename,
+            "Species": species,
+            "Frames": frames_sorted,
+            "Count": len(df),
+            "Confidence mean": round(df["Confidence score"].mean(), 4),
+            "Confidence min": round(df["Confidence score"].min(), 4),
+            "Confidence max": round(df["Confidence score"].max(), 4),
+        }
+    )
 
 recap_df = (
     pd.DataFrame(recap_rows)
