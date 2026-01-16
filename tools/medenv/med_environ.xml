@@ -11,7 +11,7 @@
         <person givenName="Jérémy" familyName="Fix" url="http://www.github.com/jeremyfix/" email="jeremy.fix@centralesupelec.fr"/>
     </creator>
     <command><![CDATA[
-        #set $cmems_username = $__user__.extra_preferences.get('cmems_username', "")
+        #set $cmems_username = $__user__.extra_preferences.get('cmems_account|cmems_username', "")
         #if $cmems_username != ""
             cp '$cmems_credentials' ~/.medenvkey &&
         #end if
@@ -30,8 +30,8 @@ python '$__tool_directory__/med_environ.py'
         ]]></command>
     <configfiles>
         <configfile name="cmems_credentials"><![CDATA[
-            #set $cmems_username = $__user__.extra_preferences.get('cmems_username', "")
-            #set $cmems_password = $__user__.extra_preferences.get('cmems_password', "")
+            #set $cmems_username = $__user__.extra_preferences.get('cmems_account|cmems_username', "")
+            #set $cmems_password = $__user__.extra_preferences.get('cmems_account|cmems_password', "")
             cmems_username: $cmems_username
             cmems_password: $cmems_password
         ]]></configfile>
