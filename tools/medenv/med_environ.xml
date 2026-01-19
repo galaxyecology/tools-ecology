@@ -14,8 +14,8 @@
                 optional="false" 
                 label="CMEMS Username" 
                 description="Your Copernicus Marine Service Username. Get it from your Copernicus account."/>
-            <secret name="cmems_password" 
-                inject_as_env="cmems_account|cmems_password" 
+            <secret name="cmems_account|cmems_password" 
+                inject_as_env="cmems_password" 
                 optional="false" 
                 label="CMEMS password" 
                 description="Your Copernicus Marine Service password."/>
