@@ -7,7 +7,7 @@
         <requirement type="package" version="4.9.3">lxml</requirement>
         <requirement type="package" version="1.1.0">medenv</requirement>
         <credentials name="cmems_credentials" version="1.0" label="CMEMS Credentials" description="Credentials for accessing Copernicus Marine Service API.">
-            <secret name="cmems_account|cmems_username" inject_as_env="CMEMS_USERNAME" optional="false" label="CMEMS Username" description="Your Copernicus Marine Service Username. Get it from your Copernicus account."/>
+            <variable name="cmems_account|cmems_username" inject_as_env="CMEMS_USERNAME" optional="false" label="CMEMS Username" description="Your Copernicus Marine Service Username. Get it from your Copernicus account."/>
             <secret name="cmems_account|cmems_password" inject_as_env="CMEMS_PASSWORD" optional="false" label="CMEMS password" description="Your Copernicus Marine Service password."/>
          </credentials>
     </requirements>
