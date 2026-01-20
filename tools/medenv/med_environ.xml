@@ -16,12 +16,6 @@
     </creator>
     <command><![CDATA[
 
-        #if $test_boolean
-            echo "Please provide credentials for CMEMS"
-        #else
-            echo '{"username":"'\$CMEMS_USERNAME'","password":"'\$CMEMS_PASSWORD'"}' > ~/.medenvkey &&
-        #end if
-
 python '$__tool_directory__/med_environ.py'
     --datafile '${input}'
     --out_file '${out_file}'
@@ -31,11 +25,9 @@ python '$__tool_directory__/med_environ.py'
     --depth_key '${depth_key}'
     --variables '${env_variables}'
     --tol_spatial_coordinates '${tol_spatial_coordinates}'
-    --keyfile ~/.medenvkey
     --verbose '${verbose}'
         ]]></command>
     <inputs>
-        <param name="test_boolean" type="boolean" checked="false" hidden="true"/>
         <param name="input" type="data" format="tabular" label="Input dataset"/>
         <param name="env_variables" type="select" label="Which variables to add" multiple="true">
             <option value="temperature">temperature</option>
