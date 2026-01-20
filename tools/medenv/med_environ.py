@@ -50,14 +50,6 @@ def environment_dataset(args):
     # "true" or the string "false" that we need to convert to a bool
     verbose = True if args.verbose == "true" else False
 
-    if args.keyfile is not None and os.path.exists(args.keyfile):
-        with open(args.keyfile, "r") as fh:
-            key_lines = fh.readlines()
-            cmems_username = key_lines[0].split(":")[1].strip()
-            cmems_password = key_lines[1].split(":")[1].strip()
-            os.environ["CMEMS_USERNAME"] = cmems_username
-            os.environ["CMEMS_PASSWORD"] = cmems_password
-
     features = args.variables.split(",")
     fetcher = medenv.Fetcher(features, reduction="mean")
 
@@ -95,7 +87,6 @@ def __main__():
     parser.add_argument("--depth_key", type=int, required=True)
     parser.add_argument("--variables", type=str, required=True)
     parser.add_argument("--tol_spatial_coordinates", type=float, required=True)
-    parser.add_argument("--keyfile", type=pathlib.Path, default=None)
     parser.add_argument("--verbose", type=str, default=False)
     args = parser.parse_args()
 
