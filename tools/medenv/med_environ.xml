@@ -17,6 +17,8 @@
     <command><![CDATA[
 
         #if $test_boolean
+            echo "Please provide credentials for CMEMS"
+        #else
             echo '{"username":"'\$CMEMS_USERNAME'","password":"'\$CMEMS_PASSWORD'"}' > ~/.medenvkey &&
         #end if
 
