@@ -1,6 +1,6 @@
-<tool id="wildlife_megadetector_huggingface" name="Wildlife Detection" version="0.1.1+galaxy0" profile="24.2">
+<tool id="deepforestvision_galaxy" name="DeepForestVision" version="0.1.1+galaxy0" profile="24.2">
     <description>
-        Detect and classify wildlife species in images and videos using MegaDetector and Hugging Face models (AI).
+        DeepForestVision is an AI model designed to identify wildlife on camera trap images and videos from African tropical forests.
     </description>
     <requirements>
         <container type="docker">
@@ -78,38 +78,51 @@
             <output_collection name="boxed_images" type="list" count="7"/>
         </test>
     </tests>
-    <help>
+    <help><![CDATA[
 ====================================================================
-Wildlife Detection using MegaDetector and Hugging Face Models
+DeepForestVision – Wildlife Detection and Classification
 ====================================================================
 
-This tool performs **automated wildlife detection and classification** from images or videos captured by camera traps or field sensors.  
-It combines the **MegaDetector v5** model for object detection (animals, humans, vehicles) with a **Hugging Face fine-tuned model** (e.g. DINOv2) for species-level classification.
+DeepForestVision is an AI model designed to identify wildlife in camera trap images and videos from African tropical forests.
 
-===============
-Notes:
-===============
+The pipeline combines: 
 
-- Detection (find animals, crop bounding boxes) is handled by **MegaDetector v5** (Zenodo model).
-- Classification (species identification) uses your **fine-tuned Hugging Face model**.
-- The tool automatically handles both **images** and **videos**.
+- **MegaDetector v5** for wildlife detection (animals, humans, vehicles)  
+- **A fine-tuned DINOv2 classifier** for species identification
 
-===============
-Outputs:
-===============
+By default, DeepForestVision uses a **DINOv2 backbone** fine-tuned by the MNHN team.  
+Advanced users can also **provide their own Hugging Face model** with corresponding weights and configuration.
 
-- **output_predictions.csv** : One line per detected animal with bounding box, species name and confidence score.  
-- **Folder of boxed images** *(optional)*: Visual results showing bounding boxes and predicted species. 
-    </help>
+====================
+Project and License
+====================
+
+Developed by an academic team from the **Muséum National d’Histoire Naturelle (MNHN)** as part of the `One Forest Vision initiative`_
+
+The original DeepForestVision inference pipeline was developed for the `AddaxAI interface`_, which runs locally on Windows, Linux, and MacOS without programming knowledge.  
+This Galaxy tool adapts the pipeline to allow online execution while preserving the original AddaxAI logic.
+
+License: **CC BY-NC-SA 4.0**  
+https://creativecommons.org/licenses/by-nc-sa/4.0
+
+GitHub repository (model weights and inference code):  
+https://github.com/MNHN-OFVI/DeepForestVision
+
+
+.. _`One Forest Vision initiative`: https://www.oneforestvision.org
+.. _`AddaxAI interface`: https://addaxdatascience.com/addaxai/
+
+]]></help>
     <creator>
         <person name="Arthur Barreau" email="arthurbarreau.ab@gmail.com" />
     </creator>
     <citations>
-        <citation type="bibtex">@article{li2023visual,
-        title={Visual In-Context Prompting},
-        author={Li, Feng and Jiang, Qing and Zhang, Hao and Ren, Tianhe and Liu, Shilong and Zou, Xueyan and Xu, Huaizhe and Li, Hongyang and Li, Chunyuan and Yang, Jianwei and others},
-        journal={arXiv preprint arXiv:2311.13601},
-        year={2023}
+        <citation type="bibtex">@article{magaldi2024deepforestvision,
+        title={DeepForestVision: automated wildlife identification from camera trap images and videos in African tropical forests},
+        author={Magaldi, Hugo and Krief, Sabrina and others},
+        journal={Ecological Solutions and Evidence},
+        year={2024},
+        doi={10.1002/2688-8319.70167}
         }</citation>
         <citation type="bibtex">@article{beery2023megadetector,
         title={The MegaDetector: Large-Scale Deployment of Computer Vision for Conservation and Biodiversity Monitoring},
