@@ -1,4 +1,4 @@
-<tool id="cmems_download_ic_bc" name="Copernicus CMEMS Downloader for AquaINFRA marine model" version="1.0.1" profile="22.05">
+<tool id="cmems_download_ic_bc" name="Copernicus CMEMS Downloader for AquaINFRA marine model" version="2.0.0" profile="25.1">
 	<description>
 		Download data from the Copernicus Marine Service to provide as input to the AquaINFRA marine model. Products: Mediterranean Sea Physics Analysis and Forecast or Mediterranean Sea Physics Reanalysis, depending on the selected temporal period.
 	</description>
@@ -14,14 +14,12 @@
 		<requirement type="package" version="1.8.1">jq</requirement>
 		<requirement type="package" version="1.7.3">netcdf4</requirement>
 		<requirement type="package" version="1.7.3">bc</requirement>
-		<!--<credentials name="copernicus_marine" version="2.0">
+		<credentials name="copernicus_marine" version="2.0">
 			<variable name="username" inject_as_env="CMEMS_USERNAME" />
 			<variable name="password" inject_as_env="CMEMS_PASSWORD" />
-		</credentials>-->
+		</credentials>
 	</requirements>
 	<command detect_errors="exit_code"><![CDATA[
-		source '$cmems_credentials' &&
-	
 		bash "$__tool_directory__/cmems_download_ic_bc.sh" \
 		"$min_lat" "$max_lat" \
 		"$min_lon" "$max_lon" \
@@ -30,19 +28,6 @@
 		"$bc_south" "$bc_north" \
 		"$bc_west" "$bc_east"
 	]]></command>
-	<configfiles>
-        <configfile name="cmems_credentials">
-#import os 
-#set $cmems_username = $__user__.extra_preferences.get('cmems_account|cmems_username', "")
-#set $cmems_password = $__user__.extra_preferences.get('cmems_account|cmems_password', "")
-#if $cmems_username == "" or $cmems_password == ""
-    #set $cmems_username = os.getenv('CMEMS_USERNAME', '')
-    #set $cmems_password = os.getenv('CMEMS_PASSWORD', '')
-#end if
-export CMEMS_USERNAME='$cmems_username'
-export CMEMS_PASSWORD='$cmems_password'
-        </configfile>
-	</configfiles>
 	<inputs>
 		<param name="min_lat" type="float" label="Min latitude (ºN)" min="-180" max="180" optional="false" value="" help="Minimum latitude value for the data subset (southern boundary latitude)." />
 		<param name="max_lat" type="float" label="Max latitude (ºN)" min="-180" max="180" optional="false" value="" help="Maximum latitude value for the data subset (northern boundary latitude)." />
