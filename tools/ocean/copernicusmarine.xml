@@ -16,8 +16,8 @@
     <configfiles>
         <configfile name="cmems_credentials">
 #import os 
-#set $cmems_username = $__user__.extra_preferences.get('cmems_account|cmems_username', "")
-#set $cmems_password = $__user__.extra_preferences.get('cmems_account|cmems_password', "")
+#set $cmems_username = $__user__.extra_preferences.get('cmems_username', "")
+#set $cmems_password = $__user__.extra_preferences.get('cmems_password', "")
 #if $cmems_username == "" or $cmems_password == ""
     #set $cmems_username = os.getenv('CMEMS_USERNAME', '')
     #set $cmems_password = os.getenv('CMEMS_PASSWORD', '')
