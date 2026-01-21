@@ -1,4 +1,4 @@
-<tool id="aquainfra_ogc_api_processes" name="AquaINFRA OGC API Processes" version="0.10.0" profile="22.05">
+<tool id="aquainfra_ogc_api_processes" name="AquaINFRA OGC API Processes" version="0.11.0" profile="22.05">
     <description/>
     <macros>
         <import>macros.xml</import>
@@ -47,6 +47,14 @@
                 <option value="heat3advanced">heat3advanced: Assessing Eutrophication: Compute Annual Indicators</option>
                 <option value="heat4advanced">heat4advanced: Assessing Eutrophication: Compute Assessment Indicators</option>
                 <option value="heat5advanced">heat5advanced: Assessing Eutrophication: Compute Assessment</option>
+                <option value="combine-eurostat-data">combine-eurostat-data: Attach human population statistics to EU NUTS3 regions.</option>
+                <option value="weighting-functions">weighting-functions: Calculating human population density-derived weights for CORINE CLC classes.</option>
+                <option value="clean-catchment-geometry">clean-catchment-geometry: Validate geometries (e.g. river catchments)</option>
+                <option value="filter-clip-clean-extent">filter-clip-clean-extent: Align extents of three datasets (D1=NUTS3 regions; D2=LAU regions; D3=river catchments) including validation steps.</option>
+                <option value="process-dasymetric-refinement">process-dasymetric-refinement: Dasymetric refinement of human population from NUTS3 regions to significant urban CORINE CLC polygons.</option>
+                <option value="process-interpolate-lau">process-interpolate-lau: Measure precision of human population dasymetric refinement by comparing observed and estimated human population for EU LAU regions.</option>
+                <option value="process-interpolate-subbasins">process-interpolate-subbasins: Area-weighted interpolation of ancillary data to calculate human population in target regions</option>
+                <option value="process-create-visualizations">process-create-visualizations: Visualising final outputs of dasymetric refinement process.</option>
             </param>
             <when value="points-att-polygon">
                 <param name="input_data" label="Table to be merged with study region" optional="false" help="URL to the input table containing the in-situ data points with coordinates. Can be provided as Excel file or CSV file (comma-separated text file). The coordinates have to be in WGS84 coordinate system. (URL must be stored in a .txt file)" type="data" format="txt"/>
@@ -367,6 +375,70 @@
                 <param name="assessment_indicators" label="Assessment Indicators Table" optional="false" help="CSV file of calculated EQRS per assessment period per assessment unit (AssessmentIndicators.csv). (URL must be stored in a .txt file)" type="data" format="txt"/>
                 <param name="table_indicators" label="Table of Indicators" optional="true" help="A table listing the indicators. Needs the following column names: IndicatorID; CriteriaID; Name; Code; Parameters; Units; YearMin; YearMax; MonthMin; MonthMax; DepthMin; DepthMax; Metric; Response; Applied; Comments; GTC_HM; GTC_ML; STC_HM; STC_ML; SSC_HM; SSC_ML. Please ask HELCOM for details. Please provide a URL to the table as a CSV file." type="text"/>
                 <param name="table_indicator_units" label="Table of Indicator Units" optional="true" help="A table listing something about the indicators. Needs the following column names: IndicatorID; UnitID; ET; ACDEV; EQR_HG; EQR_GM; EQR_MP; EQR_PB; IW. Please ask HELCOM for details. Please provide a URL to the table as a CSV file." type="text"/>
+            </when>
+            <when value="combine-eurostat-data">
+                <param name="country_code" label="Country code" optional="false" help="Official country code as short text string for country in focus." type="select">
+                    <option value="DE">DE</option>
+                    <option value="CZ">CZ</option>
+                </param>
+                <param name="nuts_year" label="NUTS3 version year" optional="false" help="Year for EU NUTS3 region version to be used and combined with the chosen year EU annual human population statistics. The NUTS3 region version is only valid with temporally close human population year combinations." type="select">
+                    <option value="2003">2003</option>
+                    <option value="2006">2006</option>
+                    <option value="2010">2010</option>
+                    <option value="2013">2013</option>
+                    <option value="2016">2016</option>
+                    <option value="2021">2021</option>
+                    <option value="2024">2024</option>
+                </param>
+                <param name="pop_year" label="human population year" optional="false" value="" help="Chosen human population year (HPY) for statistics. If you selected NUTS3 version (NV) 2013, select HPY &gt;= 2014 &amp; &lt;= 2017. If NV 2016, select HPY &gt;= 2018 &amp; &lt;= 2020. If NV 2021, select HPY &gt;= 2021 &amp; &lt;= 2023. If NV 2024, select HPY &gt;= 2024 &amp; &lt;= 2030." type="text">
+                    <validator type="empty_field" message="You must provide a value."/>
+                </param>
+            </when>
+            <when value="weighting-functions">
+                <param name="inputFile1_tif" label="CORINE CLC Land Cover raster for analysis area in focus" optional="false" value="" help="CORINE CLC Land Cover raster stored as TIF and for chosen analysis year (e.g. for year 2018) and e.g. extent in 100m2 cells. It should cover the analysis area in focus and have same coordinate system as the Census Grid input." type="text">
+                    <validator type="empty_field" message="You must provide a value."/>
+                </param>
+                <param name="inputFile2_gpkg" label="Eurostat 2021 Census Grid in 1 km2 resolution" optional="false" value="" help="Eurostat 2021 Census Grid in 1 km2 resoultion as geopackage. It should cover the analysis area in focus and have same coordinate system as the Corine CLC raster input." type="text">
+                    <validator type="empty_field" message="You must provide a value."/>
+                </param>
+                <param name="inputFile3_dbf" label="CORINE CLC class legend as DBF" optional="false" value="" help="CORINE CLC class legend stored as DBF table. It should contain the column called CODE_18 containing the CLC class IDs. It should be named the same as" type="text">
+                    <validator type="empty_field" message="You must provide a value."/>
+                </param>
+            </when>
+            <when value="clean-catchment-geometry">
+                <param name="inputFile1_gpkg" label="Polygon dataset (e.g. river catchments) to be validated." optional="false" value="" help="URL to the polygon dataset that you want to validate (e.g. river catchments)." type="text">
+                    <validator type="empty_field" message="You must provide a value."/>
+                </param>
+            </when>
+            <when value="filter-clip-clean-extent">
+                <param name="inputFile1_gpkg" label="NUTS3 regions" optional="false" help="EU NUTS3 regions saved in geopackage. It should be in same coordinate system as the inputted river catchment dataset and overlap this - ideally it should fully contain its extent. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile2_gpkg" label="LAU regions." optional="false" value="" help="EU LAU (Local Areal Unit) regions saved in geopackage. It should be in same coordinate system as the other inputted datasets and overlap these - ideally fully contained in the extent of the inputted river catchment dataset." type="text">
+                    <validator type="empty_field" message="You must provide a value."/>
+                </param>
+                <param name="inputFile3_gpkg" label="Validated river catchments dataset" optional="false" value="" help="River catchments dataset stored as geopackage and already validated. An example could be EU Ecrins subcatchments from 2012. It should have the same coordinate system as the inputted NUTS3 dataset and overlap this - ideally it should fully be within its extent." type="text">
+                    <validator type="empty_field" message="You must provide a value."/>
+                </param>
+            </when>
+            <when value="process-dasymetric-refinement">
+                <param name="inputFile1_gpkg" label="NUTS3 geopackage with latest EU annual human population" optional="false" help="NUTS3 geopackage with latest EU annual human population acting as source data for the human population to be modelled finer. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile2_rds" label="Weight table as RDS" optional="false" help="Weights for each significant urban CLC class stored as RDS. It should contain an integer column named 'CODE_18' with the significant CLC category codes and a numeric column named 'percent' (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile3_gpkg" label="Analysis extent." optional="false" help="Analysis extent as one polygon with validated geometry stored as a geopackage. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile4_gpkg" label="CORINE 2018 CLC vector" optional="false" value="" help="CORINE 2018 CLC vector stored as geopackage." type="text">
+                    <validator type="empty_field" message="You must provide a value."/>
+                </param>
+            </when>
+            <when value="process-interpolate-lau">
+                <param name="inputFile1_gpkg" label="Ancillary data: Significant urban CORINE CLC polygons with estimated human population" optional="false" help="Ancillary data for modelling human population finer, stored as geopackage, and cut to analysis extent, and consisting of significant urban CORINE CLC polygons with estimated human population calculated through dasymetric refinement of NUTS3 human population based on density-derived input weights calculated from overlapping CORINE CLC raster with Eurostat 2021 Census Grid. It should have same coordinate system as the LAU input data. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile2_gpkg" label="LAU regions with latest annual human population" optional="false" help="Validated EU LAU (Local Areal Unit) regions with latest annual human population, with validated geometries, stored as geopackage, and cut to analysis extent. It should have same coordinate system as the ancillary input data and be based on same statistical focus year. (URL must be stored in a .txt file)" type="data" format="txt"/>
+            </when>
+            <when value="process-interpolate-subbasins">
+                <param name="inputFile1_gpkg" label="Ancillary data: Significant urban CORINE CLC polygons with estimated human population" optional="false" help="Ancillary data for modelling human population finer, stored as geopackage, and cut to analysis extent, and consisting of significant urban CORINE CLC polygons with estimated human population calculated through dasymetric refinement of NUTS3 human population based on density-derived input weights calculated from overlapping CORINE CLC raster with Eurostat 2021 Census Grid. It should contain a polygon ID column called 'nuts_cor_int_id' and an estimated human population numeric column called 'estPopCor'. It should have same coordinate system as the river catchment input dataset. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile2_gpkg" label="Validated target dataset" optional="false" help="Target dataset stored as geopackage with validated geometries. An example could be EU Ecrins river subcatchments from 2012. It should contain a polygon ID column called 'OBJECTID'. It should have the same coordinate system and extent as the inputted ancillary dataset. (URL must be stored in a .txt file)" type="data" format="txt"/>
+            </when>
+            <when value="process-create-visualizations">
+                <param name="inputFile1_rds" label="Weight table as RDS" optional="false" help="Weights for each significant urban CLC class stored as RDS. It should contain an integer column named 'CODE_18' with the significant CLC category codes and a numeric column named 'percent'. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile2_gpkg" label="Control data: LAU regions with estimated annual human population." optional="false" help="LAU regions stored as geopackage with estimated annual human population based on area-weighted ancillary data and its difference to observed latest annual human population, indicating the precision of the dasymetric refinement process for modelling human population finer in scale. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile3_gpkg" label="Target data with estimated annual human population." optional="false" help="Target data (e.g. Ecrins 2012 river subcatchments) stored as geopackage with estimated annual human population based on area-weighted ancillary data and dasymetric refinement of NUTS3 level human population. (URL must be stored in a .txt file)" type="data" format="txt"/>
             </when>
         </conditional>
     </inputs>
