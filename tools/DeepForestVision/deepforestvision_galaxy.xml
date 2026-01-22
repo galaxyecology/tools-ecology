@@ -117,13 +117,7 @@ https://github.com/MNHN-OFVI/DeepForestVision
         <person name="Arthur Barreau" email="arthurbarreau.ab@gmail.com" />
     </creator>
     <citations>
-        <citation type="bibtex">@article{magaldi2024deepforestvision,
-        title={DeepForestVision: automated wildlife identification from camera trap images and videos in African tropical forests},
-        author={Magaldi, Hugo and Krief, Sabrina and others},
-        journal={Ecological Solutions and Evidence},
-        year={2024},
-        doi={10.1002/2688-8319.70167}
-        }</citation>
+         <citation type="doi">10.1002/2688-8319.70167</citation>
         <citation type="bibtex">@article{beery2023megadetector,
         title={The MegaDetector: Large-Scale Deployment of Computer Vision for Conservation and Biodiversity Monitoring},
         author={Beery, Sara},
