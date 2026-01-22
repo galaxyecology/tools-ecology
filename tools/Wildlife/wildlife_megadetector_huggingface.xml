@@ -1,4 +1,4 @@
-<tool id="deepforestvision_galaxy" name="DeepForestVision" version="0.1.1+galaxy0" profile="24.2">
+<tool id="wildlife_megadetector_huggingface" name="DeepForestVision" version="0.1.1+galaxy0" profile="24.2">
     <description>
         DeepForestVision is an AI model designed to identify wildlife on camera trap images and videos from African tropical forests.
     </description>
@@ -117,7 +117,7 @@ https://github.com/MNHN-OFVI/DeepForestVision
         <person name="Arthur Barreau" email="arthurbarreau.ab@gmail.com" />
     </creator>
     <citations>
-         <citation type="doi">10.1002/2688-8319.70167</citation>
+        <citation type="doi">10.1002/2688-8319.70167</citation>
         <citation type="bibtex">@article{beery2023megadetector,
         title={The MegaDetector: Large-Scale Deployment of Computer Vision for Conservation and Biodiversity Monitoring},
         author={Beery, Sara},
