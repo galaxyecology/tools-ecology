@@ -1,4 +1,4 @@
-<tool id="wildlife_megadetector_huggingface" name="DeepForestVision" version="0.1.1+galaxy0" profile="24.2">
+<tool id="wildlife_megadetector_huggingface" name="DeepForestVision" version="0.1.2+galaxy0" profile="24.2">
     <description>
         DeepForestVision is an AI model designed to identify wildlife on camera trap images and videos from African tropical forests.
     </description>
