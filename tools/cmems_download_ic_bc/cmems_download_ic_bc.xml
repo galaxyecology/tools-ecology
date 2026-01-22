@@ -13,10 +13,10 @@
 		<requirement type="package" version="5.2.37">bash</requirement>
 		<requirement type="package" version="1.8.1">jq</requirement>
 		<requirement type="package" version="1.7.3">netcdf4</requirement>
-		<requirement type="package" version="1.7.3">bc</requirement>
-		<credentials name="copernicus_marine" version="2.0">
-			<variable name="username" inject_as_env="CMEMS_USERNAME" />
-			<variable name="password" inject_as_env="CMEMS_PASSWORD" />
+		<!--<requirement type="package" version="1.7.3">bc</requirement>-->
+		<credentials name="cmems_credentials" version="1.0" label="CMEMS Credentials" description="Credentials for accessing Copernicus Marine Service API.">
+			<variable name="username" inject_as_env="CMEMS_USERNAME" optional="false" label="CMEMS Username" description="Your Copernicus Marine Service Username. Get it from your Copernicus account."/>
+			<secret name="password" inject_as_env="CMEMS_PASSWORD" optional="false" label="CMEMS password" description="Your Copernicus Marine Service password."/>
 		</credentials>
 	</requirements>
 	<command detect_errors="exit_code"><![CDATA[
