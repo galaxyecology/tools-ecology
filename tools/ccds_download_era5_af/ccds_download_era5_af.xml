@@ -1,4 +1,4 @@
-<tool id="ccds_download_era5_af" name="Copernicus CDS Downloader for AquaINFRA marine model" version="1.0.2" profile="22.05">
+<tool id="ccds_download_era5_af" name="Copernicus CDS Downloader for AquaINFRA marine model" version="2.0.0" profile="25.1">
 	<description>
 		Download ERA5 data from the Copernicus Climate Data Store to provide as input to the AquaINFRA marine model. Products: ERA5 hourly data on single levels from 1940 to present, Reanalysis.
 	</description>
@@ -16,28 +16,16 @@
 		<requirement type="package" version="1.7.3">bc</requirement>
 		<requirement type="package" version="2.2.3">pandas</requirement>
 		<requirement type="package" version="0.7.7">cdsapi</requirement>
-		<!--<credentials name="cds_api" version="1.0">
-			<variable name="token" inject_as_env="CDS_TOKEN" />
-		</credentials>-->
+        <credentials name="cds_api" version="1.0">
+			<secret name="token" inject_as_env="CDS_TOKEN" optional="false" label="CDS Token" description="Your Climate Data Store Token. Get it from your Climate Data Store account."/>
+		</credentials>
 	</requirements>
 	<command detect_errors="exit_code"><![CDATA[
-		source '$cds_token_api' &&
-
 		bash '$__tool_directory__/ccds_download_era5_af.sh' \
 		"$min_lat" "$max_lat" \
 		"$min_lon" "$max_lon" \
 		"$start_date" "$end_date"
 		]]></command>
-	<configfiles>
-		<configfile name="cds_token_api">
-#import os 
-#set $c3s_cds_apikey = $__user__.extra_preferences.get('c3s_account|c3s_cds_apikey', "")
-#if $c3s_cds_apikey == ""
-    echo "Error. Set your credentials via: C3S CDS API Key"
-#end if
-export CDS_TOKEN='$c3s_cds_apikey'
-        </configfile>
-	</configfiles>
 	<inputs>
 		<param name="min_lat" type="float" label="Min latitude (ºN)" min="-180" max="180" optional="false" value="" help="Minimum latitude value for the data subset (southern boundary latitude)." />
 		<param name="max_lat" type="float" label="Max latitude (ºN)" min="-180" max="180" optional="false" value="" help="Maximum latitude value for the data subset (northern boundary latitude)." />
