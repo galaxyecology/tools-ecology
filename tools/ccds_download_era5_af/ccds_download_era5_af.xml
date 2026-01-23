@@ -13,7 +13,7 @@
 		<requirement type="package" version="5.2.37">bash</requirement>
 		<requirement type="package" version="1.8.1">jq</requirement>
 		<requirement type="package" version="1.7.3">netcdf4</requirement>
-		<!--<requirement type="package" version="1.7.3">bc</requirement>-->
+		<requirement type="package" version="1.7.3">bc</requirement>
 		<requirement type="package" version="2.2.3">pandas</requirement>
 		<requirement type="package" version="0.7.7">cdsapi</requirement>
         <credentials name="cds_api" version="1.0">
