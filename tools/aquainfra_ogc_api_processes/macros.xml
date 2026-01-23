@@ -13,11 +13,6 @@
             <citation type="doi">10.48550/arXiv.1403.2805</citation>
         </citations>
     </xml>
-    <xml name="help">
-        <help>
-            Use the dropdown menu at the top to select the OGC API processes hosted on https://aqua.igb-berlin.de/pygeoapi-dev/processes and then complete the corresponding form to run the service. 
-        </help>
-    </xml>
     <xml name="tests">
         <tests>
             <test>
