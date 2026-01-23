@@ -1,0 +1,128 @@
+<tool id="wildlife_megadetector_huggingface" name="DeepForestVision" version="0.1.2+galaxy0" profile="24.2">
+    <description>
+        DeepForestVision is an AI model designed to identify wildlife on camera trap images and videos from African tropical forests.
+    </description>
+    <requirements>
+        <container type="docker">
+            quay.io/arthur_barreau/wildlife:1.0.0
+        </container>
+    </requirements>
+    <required_files>
+        <include path="main.py" />
+        <include path="fonction.py" />
+        <include path="test-data/" />
+    </required_files>
+    <command detect_errors="exit_code">
+    <![CDATA[
+    mkdir -p output_files &&
+
+    #set element_ids = []
+    #for f in $data_dir
+        #set _ = $element_ids.append($f.element_identifier)
+    #end for
+    #set element_ids_str = " ".join($element_ids)
+
+    python "$__tool_directory__/main.py" \
+            "${model_name}" \
+            "${classifier_model}" \
+            "${config}" \
+            "${type_mapping}" \
+            "${boxing_mode}" \
+            "${data_dir}" \
+            "${detection_threshold}" \
+            "${stride}" \
+            "${images_max}" \
+            "${time_NMS}" \
+            "./outputs" \
+            $element_ids_str
+    ]]>
+    </command>
+    <inputs>
+        <param name="model_name" type="text" value="facebook/dinov2-large" label="Hugging Face backbone model name" optional="false" help="Specify the pretrained model from Hugging Face to use as the image feature extractor" />
+        <param name="classifier_model" type="data" format="data" label="Fine-tuned classifier weights" help="Upload your fine-tuned classification model (.safetensors file)." />
+        <param name="config" type="data" format="json" label="Model configuration (JSON)" help="Provide the JSON configuration file associated with your fine-tuned classifier model." />
+        <param name="type_mapping" type="select" label="Label mapping direction" help="Select how labels are mapped in the model configuration.">
+            <option value="id2label" selected="true">id2label</option>
+            <option value="label2id">label2id</option>
+        </param>
+        <param name="boxing_mode" type="select" label="Bounding box output" help="Specify whether to generate output images with bounding boxes around detected wildlife.">
+            <option value="no_image">Disable — output only detection data</option>
+            <option value="all_image" selected="true">Enable — output all images with bounding boxes</option>
+        </param>
+        <param name="data_dir" type="data" format="jpg,png,avi,mov,mp4" multiple="true" label="Input files (images or videos)" help="Select one or multiple image or video files containing wildlife to analyze." />
+        <param name="detection_threshold" type="float" value="0.5" min="0.1" max="1" label="Detection confidence threshold" help="Minimum confidence score (0–1) for detecting objects in the image or video frames." />
+        <param name="stride" type="integer" value="1" min="1" max="300" label="Frame extraction interval" help="For video input: extract one frame every X seconds." />
+        <param name="images_max" type="integer" value="3000" min="1" max="10000" label="Maximum number of images to process per folder" help="Limit the total number of images extracted and processed per input folder to avoid memory overload." />
+        <param name="time_NMS" type="integer" value="10" min="1" max="1000" label="NMS processing time limit (seconds)" help="Sets the maximum processing time for Non-Maximum Suppression (NMS), which removes overlapping detections. If a 'NMS time limit exceeded' warning appears, increase this value to allow NMS to complete."/>
+    </inputs>
+    <outputs>
+        <data name="output_predictions" auto_format="true" from_work_dir="./outputs/output_predictions.csv" label="Predictions_CSV" />
+        <data name="output_predictions_recap" auto_format="true" from_work_dir="./outputs/output_predictions_recap.csv" label="Predictions_recap_CSV" />
+        <collection name="boxed_images" type="list" label="Images with bounding boxes">
+            <discover_datasets directory="outputs/boxed_images" pattern="(?P&lt;designation&gt;.+)\.(?i:jpg)" format="jpg" visible="false" />
+        </collection>
+    </outputs>
+    <tests>
+        <test>
+            <param name="model_name" value="facebook/dinov2-large" />
+            <param name="classifier_model" location="https://zenodo.org/records/17607456/files/model.safetensors?download=1" />
+            <param name="config" value="config.json" />
+            <param name="type_mapping" value="id2label" />
+            <param name="data_dir" location="https://zenodo.org/records/17607456/files/video.mp4?download=1" />
+            <param name="detection_threshold" value="0.8" />
+            <param name="stride" value="5" />
+            <param name="images_max" value="3000" />
+            <param name="images_max" value="10" />
+            <output name="output_predictions" file="predictions_stride_1_thresh_0.2.csv" compare="sim_size" />
+            <output name="output_predictions_recap" file="Predictions_recap.csv" compare="sim_size" />
+            <output_collection name="boxed_images" type="list" count="7"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+====================================================================
+DeepForestVision – Wildlife Detection and Classification
+====================================================================
+
+DeepForestVision is an AI model designed to identify wildlife in camera trap images and videos from African tropical forests.
+
+The pipeline combines: 
+
+- **MegaDetector v5** for wildlife detection (animals, humans, vehicles)  
+- **A fine-tuned DINOv2 classifier** for species identification
+
+By default, DeepForestVision uses a **DINOv2 backbone** fine-tuned by the MNHN team.  
+Advanced users can also **provide their own Hugging Face model** with corresponding weights and configuration.
+
+====================
+Project and License
+====================
+
+Developed by an academic team from the **Muséum National d’Histoire Naturelle (MNHN)** as part of the `One Forest Vision initiative`_
+
+The original DeepForestVision inference pipeline was developed for the `AddaxAI interface`_, which runs locally on Windows, Linux, and MacOS without programming knowledge.  
+This Galaxy tool adapts the pipeline to allow online execution while preserving the original AddaxAI logic.
+
+License: **CC BY-NC-SA 4.0**  
+https://creativecommons.org/licenses/by-nc-sa/4.0
+
+GitHub repository (model weights and inference code):  
+https://github.com/MNHN-OFVI/DeepForestVision
+
+
+.. _`One Forest Vision initiative`: https://www.oneforestvision.org
+.. _`AddaxAI interface`: https://addaxdatascience.com/addaxai/
+
+]]></help>
+    <creator>
+        <person name="Arthur Barreau" email="arthurbarreau.ab@gmail.com" />
+    </creator>
+    <citations>
+        <citation type="doi">10.1002/2688-8319.70167</citation>
+        <citation type="bibtex">@article{beery2023megadetector,
+        title={The MegaDetector: Large-Scale Deployment of Computer Vision for Conservation and Biodiversity Monitoring},
+        author={Beery, Sara},
+        journal={California Institute of Technology, Pasadena, CA, USA},
+        year={2023}
+        }</citation>
+    </citations>
+</tool>
