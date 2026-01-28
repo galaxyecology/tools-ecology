@@ -70,7 +70,7 @@
 **What it does?**
 --------------------
 
-This tool produce template for EML metadata. It produce templates for taxonomic coverage. 
+This tool produces template data files for EML metadata. It produce templates for taxonomic coverage. 
 After that, these files can be edited to add information about your data and then be used in the make eml tool to produce EML metadata.
 
 **How to use it?**
