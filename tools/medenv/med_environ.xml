@@ -1,4 +1,4 @@
-<tool id="iabiodiv_smartbiodiv_med_environ" name="Adds environment variables" version="0.1.0" profile="22.05">
+<tool id="iabiodiv_smartbiodiv_med_environ" name="Adds environment variables" version="0.1.1" profile="25.1">
     <description>
         From Copernicus and etopo given geolocalized and timestamped observations
     </description>
@@ -6,15 +6,15 @@
         <requirement type="package" version="2.1.3">pandas</requirement>
         <requirement type="package" version="4.9.3">lxml</requirement>
         <requirement type="package" version="1.1.0">medenv</requirement>
+        <credentials name="cmems_credentials" version="1.0" label="CMEMS Credentials" description="Credentials for accessing Copernicus Marine Service API.">
+            <variable name="username" inject_as_env="CMEMS_USERNAME" optional="false" label="CMEMS Username" description="Your Copernicus Marine Service Username. Get it from your Copernicus account."/>
+            <secret name="password" inject_as_env="CMEMS_PASSWORD" optional="false" label="CMEMS password" description="Your Copernicus Marine Service password."/>
+         </credentials>
     </requirements>
     <creator>
         <person givenName="Jérémy" familyName="Fix" url="http://www.github.com/jeremyfix/" email="jeremy.fix@centralesupelec.fr"/>
     </creator>
     <command><![CDATA[
-        #set $cmems_username = $__user__.extra_preferences.get('cmems_username', "")
-        #if $cmems_username != ""
-            cp '$cmems_credentials' ~/.medenvkey &&
-        #end if
 
 python '$__tool_directory__/med_environ.py'
     --datafile '${input}'
@@ -25,17 +25,8 @@ python '$__tool_directory__/med_environ.py'
     --depth_key '${depth_key}'
     --variables '${env_variables}'
     --tol_spatial_coordinates '${tol_spatial_coordinates}'
-    --keyfile ~/.medenvkey
     --verbose '${verbose}'
         ]]></command>
-    <configfiles>
-        <configfile name="cmems_credentials"><![CDATA[
-            #set $cmems_username = $__user__.extra_preferences.get('cmems_username', "")
-            #set $cmems_password = $__user__.extra_preferences.get('cmems_password', "")
-            cmems_username: $cmems_username
-            cmems_password: $cmems_password
-        ]]></configfile>
-    </configfiles>
     <inputs>
         <param name="input" type="data" format="tabular" label="Input dataset"/>
         <param name="env_variables" type="select" label="Which variables to add" multiple="true">
