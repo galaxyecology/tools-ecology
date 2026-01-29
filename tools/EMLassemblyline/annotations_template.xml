@@ -2,7 +2,7 @@
     <description>from scratch or from EML metadata file</description>
     <requirements>
         <requirement type="package" version="4.4.1">r-base</requirement>
-        <container type="docker">ylebras/metashark:1.7.5</container>
+        <container type="docker">ylebras/metashark:1.7.6</container>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
    
