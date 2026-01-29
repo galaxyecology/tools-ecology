@@ -1,7 +1,7 @@
 <tool id="entities_template" name="Make entities templates for raster, vector and other entities files" version="0.1.2+galaxy0" profile="22.05">
     <description>for EML metadata creation</description>
     <requirements>
-        <container type="docker">ylebras/metashark:1.7.5</container>
+        <container type="docker">ylebras/metashark:1.7.6</container>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
     
