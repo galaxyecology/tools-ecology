@@ -166,7 +166,7 @@
 **What it does?**
 --------------------
 
-This tool is made to produce an annotation template to adds semantic meaning to dataset features (variables, locations, persons, etc.) through links to ontology terms. Template produced can be used in the make EML tool to produce EML metadata Annotating a dataset enables greater human understanding and machine actionability (linked data) and vastly improves the accuracy of future user searches and the interoperability of data in general.
+This tool is made to produce an annotation template to adds semantic meaning to dataset features (variables, locations, persons, etc.) through links to ontology terms. Template produced can be used in the make EML tool to produce EML metadata. Annotating a dataset enables greater human understanding and machine actionability (linked data) and vastly improves the accuracy of future user searches and the interoperability of data in general.
 
 **How to use it?**
 --------------------
