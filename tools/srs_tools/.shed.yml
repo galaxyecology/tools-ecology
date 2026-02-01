@@ -1,7 +1,8 @@
 categories:
     - Ecology
 owner: ecology
-remote_repository_url: https://github.com/Marie59/Sentinel_2A/srs_tools
+homepage_url: https://github.com/Marie59/Sentinel_2A/srs_tools
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/srs_tools
 long_description: |
   Compute biodiversity indicators for remote sensing data from Sentinel 2
 type: unrestricted
