@@ -76,9 +76,9 @@ def main():
         print(error_message)
         sys.exit(1)
 
-    # Append '--force-download' option to the command
-    if "--force-download" not in command:
-        command += " --force-download"
+    # Append '--force-download' option to the command -> depreciated with copernicusmarine V2.0.0
+    #if "--force-download" not in command:
+    #    command += " --force-download"
 
     # Execute the command
     try:
