@@ -1,31 +1,22 @@
-<tool id="copernicusmarine" name="Copernicus Marine Data Store" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="22.01" license="MIT">
+<tool id="copernicusmarine" name="Copernicus Marine Data Store" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="25.1" license="MIT">
     <description>retrieve marine data</description>
     <macros>
-        <token name="@TOOL_VERSION@">1.3.3</token>
-        <token name="@VERSION_SUFFIX@">2</token>
+        <token name="@TOOL_VERSION@">2.3.0</token>
+        <token name="@VERSION_SUFFIX@">3</token>
     </macros>
     <requirements>
         <requirement type="package" version="@TOOL_VERSION@">copernicusmarine</requirement>
+        <credentials name="cmems_credentials" version="1.0" label="CMEMS Credentials" description="Credentials for accessing Copernicus Marine Service API.">
+            <variable name="username" inject_as_env="COPERNICUSMARINE_SERVICE_USERNAME" optional="false" label="CMEMS Username" description="Your Copernicus Marine Service Username. Get it from your Copernicus account."/>
+            <secret name="password" inject_as_env="COPERNICUSMARINE_SERVICE_PASSWORD" optional="false" label="CMEMS password" description="Your Copernicus Marine Service password."/>
+         </credentials>
     </requirements>
-    <command detect_errors="exit_code"><![CDATA[
-        bash '$cmems_credentials' &&
+    <command detect_errors="exit_code"><![CDATA[ 
         
         echo -e '$input_text' > config_file_with_my_command &&
         python '$__tool_directory__/check.py' 'config_file_with_my_command'
+        
     ]]></command>
-    <configfiles>
-        <configfile name="cmems_credentials">
-#import os 
-#set $cmems_username = $__user__.extra_preferences.get('cmems_username', "")
-#set $cmems_password = $__user__.extra_preferences.get('cmems_password', "")
-#if $cmems_username == "" or $cmems_password == ""
-    #set $cmems_username = os.getenv('CMEMS_USERNAME', '')
-    #set $cmems_password = os.getenv('CMEMS_PASSWORD', '')
-#end if
-export cmems_username='$cmems_username'
-export cmems_password='$cmems_password'
-        </configfile>
-    </configfiles>
     <inputs>
         <param name="input_text" label="Paste API Request" type="text" area="true">
             <sanitizer invalid_char="">
