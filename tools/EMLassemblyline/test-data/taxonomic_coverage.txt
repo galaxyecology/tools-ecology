@@ -1,5 +1,5 @@
 name	name_type	name_resolved	authority_system	authority_id
-Achelia_sp	scientific	Achelia	GBIF Backbone Taxonomy	2118396
-Achelia_spicata	scientific	Achelia spicata	GBIF Backbone Taxonomy	4338694
-Achelia_suflata	scientific	NA	NA	NA
-Ammothea_adunca	scientific	Ammothea adunca	GBIF Backbone Taxonomy	5720487
+Achelia_sp	scientific	Achelia	Global Biodiversity Information Facility Backbone Taxonomy	2118396
+Achelia_spicata	scientific	Achelia spicata	Global Biodiversity Information Facility Backbone Taxonomy	4338694
+Achelia_suflata	scientific	Achelia suflata	Global Biodiversity Information Facility Backbone Taxonomy	NA
+Ammothea_adunca	scientific	Ammothea adunca	Global Biodiversity Information Facility Backbone Taxonomy	5720487

@@ -34,8 +34,8 @@
     <inputs>
         <param name="input" type="data" format="zip" multiple="true" label="Input data"/>
         <param name="source_s2" type="select" label="Where does your data come from ?">
-            <option value="SAFE">From Scihub or Peps</option>
-            <option value="THEIA">From Theia</option>
+            <option value="SAFE">From Scihub</option>
+            <option value="THEIA">From Theia or GEODES</option>
         </param>     
         <param name="type_s2" type="select" label="From which satellite are the data ?">
             <option value="2A">Sentinel 2A</option>
@@ -83,7 +83,7 @@ These data can be dowloaded on 3 different platforms:
 
 - Copernicus Open Access Hub, Scihub, which provides complete, free and open access to Sentinel-2 data : https://scihub.copernicus.eu/dhus/#/home
 
-- PEPS, la 'Plateforme d'Exploitation de Produits Sentinel' : https://peps.cnes.fr/rocket/#/search
+- GEODES, le 'Portail du CNES sur l'observation de la Terre' : https://geodes.cnes.fr/#/search
 
 - Theia : https://theia.cnes.fr/atdistrib/rocket/#/search
 
