@@ -21,7 +21,7 @@
     ls -al
     &&
     python "$__tool_directory__/main.py" 
-            --model "$model"
+            --model "$flux_models"
             --prompts "$text_prompt" 
             --conf "$conf" 
             --vid_stride "$vid_stride" 
@@ -31,8 +31,12 @@
 
     ]]></command>
     <inputs>
-        <param name="model" type="data" format="data,safetensors,zip"
-            label="Model" help="Model file" />
+         <param name="flux_models" label="Model data" type="select" help="Contact the administrator of our Galaxy instance if you miss model data">
+            <options from_data_table="huggingface">
+                <filter type="static_value" column="4" value="sam3"/>
+            </options>
+            <validator message="No model annotation is available for FLUX" type="no_options"/>
+        </param>
         <conditional name="input_kind">
             <param name="input_kind" type="select" label="Input type"
                 help="Choose either multiple images or a single video (not both)">
