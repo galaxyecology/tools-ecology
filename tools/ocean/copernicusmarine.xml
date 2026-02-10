@@ -41,7 +41,9 @@
             <output name="output_netcdf">
                 <assert_contents>
                     <has_text text="_NCProperties"/>
-                </assert_contents>
+<assert_stderr>
+    <has_text text="Downloading Copernicus Marine data requires a Copernicus Marine username and password"/>
+</assert_stderr>
             </output>
         </test>
     </tests>
