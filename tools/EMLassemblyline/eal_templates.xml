@@ -1,7 +1,7 @@
-<tool id="eal_templates" name="Make templates" version="0.1.1+galaxy0" profile="22.05">
+<tool id="eal_templates" name="Make templates" version="0.1.2+galaxy0" profile="22.05">
     <description>for core features of a data package for EML metadata creation</description>
     <requirements>
-        <container type="docker">outils-patrinat.mnhn.fr/metashark:latest</container>
+        <container type="docker">ylebras/metashark:1.7.6</container>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
     

@@ -1,4 +1,4 @@
-<tool id="eml_validate" name="Eml validate:" version="0.1.0" profile="21.05">
+<tool id="eml_validate" name="Eml validate:" version="0.1.2" profile="21.05">
     <description>check if your EML file is valid</description>
     <requirements>
         <requirement type="package" version="4.3.3">r-base</requirement>
