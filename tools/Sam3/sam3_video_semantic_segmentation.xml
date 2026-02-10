@@ -18,9 +18,7 @@
         #set $name_file += $input_kind.source.element_identifier + " "
     #end if
     &&
-    ls -al
-    &&
-    python "$__tool_directory__/main.py" 
+    python '$__tool_directory__/main.py' 
             --model "$flux_models"
             --prompts "$text_prompt" 
             --conf "$conf" 
