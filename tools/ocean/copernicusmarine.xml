@@ -43,7 +43,6 @@
 <assert_stderr>
     <has_text text="Downloading Copernicus Marine data requires a Copernicus Marine username and password"/>
 </assert_stderr>
-            </output>
         </test>
     </tests>
     <help><![CDATA[
