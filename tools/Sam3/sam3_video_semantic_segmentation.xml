@@ -26,7 +26,6 @@
             --outdir outputs 
             --outputs $outputs_format
             --name_file $name_file
-
     ]]></command>
     <inputs>
          <param name="sam3_models" label="Model data" type="select" help="Contact the administrator of our Galaxy instance if you miss model data">
@@ -35,7 +34,7 @@
             </options>
             <validator message="No model annotation is available for SAM3" type="no_options"/>
         </param>
-        <conditional name="input_kind">
+        <conditional name="input">
             <param name="input_kind" type="select" label="Input type"
                 help="Choose either multiple images or a single video (not both)">
                 <option value="image">One or more images</option>
@@ -91,8 +90,10 @@
     <tests>
         <test expect_num_outputs="3">
             <param name="model" value="sam3.pt"/>
-            <param name="input_kind|input_kind" value="image"/>
-            <param name="input_kind|source" value="5827603936_3f1d5d715c_z.jpg"/>
+            <conditional name="input">
+                <param name="input_kind" value="image" />
+                <param name="source" value="5827603936_3f1d5d715c_z.jpg" />
+            </conditional>
             <param name="text_prompt" value="elephant"/>
             <param name="conf" value="0.25"/>
             <param name="outputs_format" value="coco,yolo_bbox"/>
@@ -109,9 +110,10 @@
         </test>
         <test expect_num_outputs="2">
             <param name="model" value="sam3.pt"/>
-            <param name="input_kind|input_kind" value="image"/>
-            <param name="input_kind|source"
-                value="5827603936_3f1d5d715c_z.jpg,5925367343_6275de03d6_z.jpg"/>
+            <conditional name="input">
+                <param name="input_kind" value="image" />
+                <param name="source" value="5827603936_3f1d5d715c_z.jpg,5925367343_6275de03d6_z.jpg" />
+            </conditional>
             <param name="text_prompt" value="elephant,human"/>
             <param name="outputs_format" value="coco, yolo_seg"/>
             <output name="Annotations_coco" file="annotations_58_59.json"/>
@@ -130,8 +132,10 @@
         </test>
         <test expect_num_outputs="3">
             <param name="model" value="sam3.pt"/>
-            <param name="input_kind|input_kind" value="video"/>
-            <param name="input_kind|source" value="video_elephant.mp4"/>
+            <conditional name="input">
+                <param name="input_kind" value="video" />
+                <param name="source" value="video_elephant.mp4" />
+            </conditional>
             <param name="text_prompt" value="elephant"/>
             <param name="outputs_format" value="coco,yolo_bbox"/>
             <output name="Annotations_coco" file="annotations_video.json"/>
