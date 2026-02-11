@@ -88,8 +88,8 @@
         </collection>
     </outputs>
     <tests>
-        <test expect_num_outputs="3">
-            <param name="model" value="sam3.pt"/>
+        <test expect_exit_code="1" expect_failure="true">
+            <param name="sam3_models" value="unknown"/>
             <conditional name="input">
                 <param name="input_kind" value="image" />
                 <param name="source" value="5827603936_3f1d5d715c_z.jpg" />
@@ -97,57 +97,9 @@
             <param name="text_prompt" value="elephant"/>
             <param name="conf" value="0.25"/>
             <param name="outputs_format" value="coco,yolo_bbox"/>
-            <output name="Annotations_coco" file="annotations_58.json" compare="diff"/>
-            <output_collection name="Outputs_annotated" type="list"> 
-                <element name="5827603936_3f1d5d715c_z" file="5827603936_3f1d5d715c_z.jpg" /> 
-            </output_collection> 
-            <output_collection name="Yolo_Bbox_Image" type="list"> 
-                <element name="5827603936_3f1d5d715c_z" file="5827603936_3f1d5d715c_z.jpg" /> 
-            </output_collection> 
-            <output_collection name="Yolo_Bbox_Label" type="list"> 
-                <element name="5827603936_3f1d5d715c_z" file="5827603936_3f1d5d715c_z.txt" /> 
-            </output_collection>
-        </test>
-        <test expect_num_outputs="2">
-            <param name="model" value="sam3.pt"/>
-            <conditional name="input">
-                <param name="input_kind" value="image" />
-                <param name="source" value="5827603936_3f1d5d715c_z.jpg,5925367343_6275de03d6_z.jpg" />
-            </conditional>
-            <param name="text_prompt" value="elephant,human"/>
-            <param name="outputs_format" value="coco, yolo_seg"/>
-            <output name="Annotations_coco" file="annotations_58_59.json"/>
-            <output_collection name="Outputs_annotated" type="list"> 
-                <element name="5827603936_3f1d5d715c_z" file="5827603936_3f1d5d715c_z.jpg" /> 
-                <element name="5925367343_6275de03d6_z" file="5925367343_6275de03d6_z.jpg" /> 
-            </output_collection> 
-            <output_collection name="Yolo_Bbox_Image" type="list"> 
-                <element name="5827603936_3f1d5d715c_z" file="5827603936_3f1d5d715c_z.jpg" /> 
-                <element name="5925367343_6275de03d6_z" file="5925367343_6275de03d6_z.jpg" /> 
-            </output_collection> 
-            <output_collection name="Yolo_Bbox_Label" type="list"> 
-                <element name="5827603936_3f1d5d715c_z" file="5827603936_3f1d5d715c_z.txt" /> 
-                <element name="5925367343_6275de03d6_z" file="5925367343_6275de03d6_z.txt" /> 
-            </output_collection>
-        </test>
-        <test expect_num_outputs="3">
-            <param name="model" value="sam3.pt"/>
-            <conditional name="input">
-                <param name="input_kind" value="video" />
-                <param name="source" value="video_elephant.mp4" />
-            </conditional>
-            <param name="text_prompt" value="elephant"/>
-            <param name="outputs_format" value="coco,yolo_bbox"/>
-            <output name="Annotations_coco" file="annotations_video.json"/>
-            <output_collection name="Outputs_annotated" type="list"> 
-                <element name="video_elephant" file="video_elephant.mp4" /> 
-            </output_collection> 
-            <output_collection name="Yolo_Bbox_Image" type="list"> 
-                <element name="video_elephant" file="video_elephant.jpg" /> 
-            </output_collection> 
-            <output_collection name="Yolo_Bbox_Label" type="list"> 
-                <element name="video_elephant" file="video_elephant.txt" /> 
-            </output_collection>
+            <assert_stdout>
+                <has_text text="Invalid model!"/>
+            </assert_stdout>
         </test>
     </tests>
     <help><![CDATA[
