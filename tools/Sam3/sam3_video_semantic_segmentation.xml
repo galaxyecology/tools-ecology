@@ -31,7 +31,7 @@
     <inputs>
          <param name="sam3_models" label="Model data" type="select" help="Contact the administrator of our Galaxy instance if you miss model data">
             <options from_data_table="huggingface">
-                <filter type="static_value" column="4" value="sam3"/>
+                <filter type="static_value" column="4" value="sam3_1.0.0"/>
             </options>
             <validator message="No model annotation is available for SAM3" type="no_options"/>
         </param>
