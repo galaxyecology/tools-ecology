@@ -177,11 +177,11 @@ def create_yolo_bbox_annotation(box: np.ndarray, class_id: int) -> str:
     bbox_width = x2 - x1
     bbox_height = y2 - y1
 
-    return f"{class_id} {
-        x_center:.6f} {
-        y_center:.6f} {
-            bbox_width:.6f} {
-                bbox_height:.6f}"
+    return (
+    f"{class_id} {x_center:.6f} "
+    f"{y_center:.6f} {bbox_width:.6f} "
+    f"{bbox_height:.6f}"
+    )
 
 
 def create_yolo_seg_annotation(polygon: np.ndarray, class_id: int) -> str:
