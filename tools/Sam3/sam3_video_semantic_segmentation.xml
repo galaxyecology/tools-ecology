@@ -15,7 +15,7 @@
         #end for
     #else
         ln -s '$input_kind.source' 'data_files/${input_kind.source.element_identifier}'
-        #set $name_file += $input_kind.source.element_identifier + " "
+        #set $name_file = $input_kind.source.element_identifier + " "
     #end if
     &&
     python '$__tool_directory__/main.py' 
