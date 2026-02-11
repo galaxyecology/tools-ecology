@@ -1,4 +1,4 @@
-name: sam3
+name: sam3_semantic_segmentation
 owner: ecology 
 description: SAM3 video semantic segmentation tool
 homepage_url: https://github.com/TuturBaba/tools-ecology/tree/Sam3/tools/Sam3
