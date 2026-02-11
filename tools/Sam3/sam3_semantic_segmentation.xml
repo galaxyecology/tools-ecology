@@ -76,8 +76,7 @@
         </collection>
         <collection name="Yolo_Bbox_Label" type="list" label="YOLO Bbox Labels">
             <filter>outputs_format and 'yolo_bbox' in outputs_format</filter>
-            <discover_datasets pattern="__name_and_ext__" d
-            irectory="outputs/yolo_bbox/labels"/>
+            <discover_datasets pattern="__name_and_ext__" directory="outputs/yolo_bbox/labels"/>
         </collection>
         <collection name="Yolo_Seg_Image" type="list" label="YOLO Seg Images">
             <filter>outputs_format and 'yolo_seg' in outputs_format</filter>
