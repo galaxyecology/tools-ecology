@@ -1,7 +1,7 @@
 <tool id="argo_getdata" name="Argo data access" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="22.05">
     <description>for global ocean in situ observing system</description>
     <macros>
-        <import>macro.xml</import>
+        <import>macros.xml</import>
     </macros>
     <expand macro="argo_requirements">
     </expand>
