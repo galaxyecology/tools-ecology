@@ -7,6 +7,7 @@ from typing import Any, Dict, List
 
 import cv2
 import numpy as np
+
 import ultralytics
 from pycocotools.coco import COCO
 from ultralytics.models.sam import SAM3SemanticPredictor
@@ -178,9 +179,9 @@ def create_yolo_bbox_annotation(box: np.ndarray, class_id: int) -> str:
     bbox_height = y2 - y1
 
     return (
-    f"{class_id} {x_center:.6f} "
-    f"{y_center:.6f} {bbox_width:.6f} "
-    f"{bbox_height:.6f}"
+        f"{class_id} {x_center:.6f} "
+        f"{y_center:.6f} {bbox_width:.6f} "
+        f"{bbox_height:.6f}"
     )
 
 
