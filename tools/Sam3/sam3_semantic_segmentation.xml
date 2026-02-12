@@ -8,14 +8,14 @@
     <command detect_errors="exit_code"><![CDATA[
     mkdir data_files &&
     #set $name_file = '' 
-    #if $input_kind.input_kind == "image"
-        #for $indata in $input_kind.source
+    #if $input.input_kind == "image"
+        #for $indata in $input.source
             ln -s '$indata' 'data_files/${indata.element_identifier}'
             #set $name_file += $indata.element_identifier + " "
         #end for
     #else
-        ln -s '$input_kind.source' 'data_files/${input_kind.source.element_identifier}'
-        #set $name_file = $input_kind.source.element_identifier + " "
+        ln -s '$input.source' 'data_files/${input.source.element_identifier}'
+        #set $name_file = $input.source.element_identifier + " "
     #end if
     &&
     python '$__tool_directory__/main.py' 
