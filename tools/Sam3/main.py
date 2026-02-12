@@ -6,10 +6,12 @@ from pathlib import Path
 from typing import Any, Dict, List
 
 import cv2
+
 import numpy as np
 
-import ultralytics
 from pycocotools.coco import COCO
+
+import ultralytics
 from ultralytics.models.sam import SAM3SemanticPredictor
 from ultralytics.models.sam.predict import SAM3VideoSemanticPredictor
 
