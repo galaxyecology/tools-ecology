@@ -10,14 +10,13 @@
     #set $name_file = '' 
     #if $input.input_kind == "image"
         #for $indata in $input.source
-            ln -s '$indata' 'data_files/${indata.element_identifier}'
+            ln -s '$indata' 'data_files/${indata.element_identifier}' &&
             #set $name_file += $indata.element_identifier + " "
         #end for
     #else
-        ln -s '$input.source' 'data_files/${input.source.element_identifier}'
+        ln -s '$input.source' 'data_files/${input.source.element_identifier}' &&
         #set $name_file = $input.source.element_identifier + " "
     #end if
-    &&
     python '$__tool_directory__/main.py' 
             --model '$sam3_models'
             --prompts '$text_prompt' 
