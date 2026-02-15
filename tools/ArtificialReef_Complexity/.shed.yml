@@ -1,0 +1,18 @@
+name: ArtificialReef_Complexity 
+owner: ecology 
+description: To do
+homepage_url: https://github.com/EDIorg/EMLassemblyline
+long_description: |
+    todo
+remote_repository_url: https://github.com/ELI-RIERA/ArtificialReef_Complexity.git
+type: unrestricted
+categories:
+- Ecology
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "ArtificialReef_Complexity: {{ tool_name }}"
+suite:
+  name: "suite_ArtificialReef_Complexity"
+  description: Todo
+  long_description: |
+    todo
