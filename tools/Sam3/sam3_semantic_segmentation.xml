@@ -17,7 +17,7 @@
         ln -s '$input.source' 'data_files/${input.source.element_identifier}' &&
         #set $name_file = $input.source.element_identifier + " "
     #end if
-    python '$__tool_directory__/main.py' 
+    python '$__tool_directory__/sam3_semantic_segmentation.py' 
             --model '$sam3_models'
             --prompts '$text_prompt' 
             --conf '$conf' 
