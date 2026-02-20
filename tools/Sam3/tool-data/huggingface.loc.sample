@@ -1,0 +1,17 @@
+
+#This is a sample file distributed with Galaxy that is used to define huggingface
+#models, using 7 columns tab separated
+#(longer whitespace are TAB characters):
+#
+#The entries are as follows:
+#
+#<unique_build_id>	<display_name>	<pipeline_tag>	<domain>	<free_tag>	<version>	<folder_base_path>
+#
+#pipeline_tag (see this URL: https://huggingface.co/models?pipeline_tag=text-to-image they call it that way)
+#domain (defined by the Galaxy community, e.g. image / sequence / text)
+#free_tag (not idea yet, but could be freely used by an admin to specify more filter options)
+#version (if available)
+#Your huggingface.loc file should include the huggingface cached model folder you have stored.
+#For example:
+#
+#1038lab/sam3 sam3  Masker Generation Image sam3 1 /path/to/huggingface/that-contains/hub/1038lab--sam3

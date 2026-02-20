@@ -1,0 +1,10 @@
+name: sam3_semantic_segmentation
+owner: ecology 
+description: SAM3 video semantic segmentation tool
+homepage_url: https://github.com/TuturBaba/tools-ecology/tree/Sam3/tools/Sam3
+long_description: |
+  SAM3 performs text-prompted semantic segmentation on images or videos.
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/Sam3
+type: unrestricted
+categories:
+- Ecology
