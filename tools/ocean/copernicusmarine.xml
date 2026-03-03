@@ -73,7 +73,7 @@ Command line from the Copernicus marine services copy paste as a text.
 
 ** Output **
         
-A netcdf file containing the the data chose by the user from the Copernicus Marine Data Store.
+A netcdf file containing the data chose by the user from the Copernicus Marine Data Store.
 
     ]]></help>
     <citations>
