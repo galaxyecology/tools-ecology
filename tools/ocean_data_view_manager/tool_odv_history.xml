@@ -2,7 +2,7 @@
     <description>reports user action performed with ODV</description>
     <macros>
         <token name="@VERSION@">1.2</token>
-        <token name="@VERSION_SUFFIX@">2</token>
+        <token name="@VERSION_SUFFIX@">3</token>
     </macros>
     <requirements>
         <container type="docker">easyqcvbgc/easy-qcv_odv-history-manager_tool:oh@VERSION@</container>
@@ -101,9 +101,9 @@
                     <option value="OceanSITES">OceanSITES</option>
                     <option value="IODE">IODE</option>
                 </param>
-                <param name="change_report" type="select" multiple="true" label="Enter the ODV convention regarding the changes performed on the odv collection.">
-                    <option value="EDITFLAGS">EDITFLAGS</option>
-                    <option value="EDITDATA">EDITDATA</option>
+                <param name="change_report" type="select" multiple="true" optional="false" label="Enter the ODV convention regarding the changes performed on the odv collection.">
+                    <option value="EDITFLAGS" selected="true">EDITFLAGS</option>
+                    <option value="EDITDATA" selected="true">EDITDATA</option>
                 </param>
             </when>
             <when value="no">
@@ -158,18 +158,18 @@ This tool reports in the input file (a netcdf from the QCV harmonizer tool or th
 
 **Input description**
 
-    file_name_raw : nc file to be qualified, this netcdf should come from the QCV harmonizer tool or  from the BioGeoChemical calibration tool 
-    file_name_history : history txt file extracted from ODV (manualy or automatically)
-    odv_collection$name : name of the odv collection view with webODV and updated
-    odv_collection$qc_convention : tool makes mapping when its necessary and when global attribute qc_convention is available and filled in file_name_raw
+- file_name_raw : nc file to be qualified, this netcdf should come from the QCV harmonizer tool or  from the BioGeoChemical calibration tool 
+- file_name_history : history txt file extracted from ODV (manualy or automatically)
+- odv_collection$name : name of the odv collection view with webODV and updated
+- odv_collection$qc_convention : tool makes mapping when its necessary and when global attribute qc_convention is available and filled in file_name_raw
 
 with default values different from NULL :
 
-    odv_collection$name : odv_collection.txt
-    odv_collection$qc_convention : ARGO
-    tool_action :
-    tool_option$subsetting :
-    tool_option$plt :
+- odv_collection$name : odv_collection.txt
+- odv_collection$qc_convention : ARGO
+- tool_action :
+- tool_option$subsetting :
+- tool_option$plt :
 
 If the list of raw or history file name is empty, tool stops If the user make an error in the file extension, tool changes it by itself. If the user miss the yaml configuration, tool uses its default config and upload file in data-in-raw and data-in-history
 
