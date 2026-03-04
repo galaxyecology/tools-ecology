@@ -33,9 +33,7 @@
         <test>
             <param name="vcf_input" value="test_vcf.vcf"/>
             <param name="MAC" value="2"/>
-            <output name="vcf_filtered">
-                <discovered_dataset designation="test_vcf_MAC" file="test_vcf_MAC.vcf" ftype="vcf"/>
-            </output>
+            <output name="vcf_filtered" file="vcf_filtered_directory/test_vcf_MAC.vcf" count="1"/>
             <output name="SNPs" file="summary/n_snps.tabular"/>
         </test>
     </tests>

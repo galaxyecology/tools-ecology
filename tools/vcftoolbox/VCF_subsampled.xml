@@ -17,6 +17,7 @@
             '$SUBSET_SNPS_NB'
             '$NB_REPLICATE_VCF'
             '$MIN_SNP_NB'
+            '$polymorphic'
         
         ]]></command>
 
@@ -70,6 +71,7 @@
     </tests>
 
     <help><![CDATA[
+
 Usage
 =====
 
@@ -151,4 +153,3 @@ See also examples of VCF formats in :  https://samtools.github.io/hts-specs/VCFv
         </citation>
     </citations>
 </tool>
-

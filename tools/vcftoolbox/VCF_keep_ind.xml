@@ -1,6 +1,6 @@
-<tool id="vcf_keep_ind" name="Select individuals" version="0.1.0" python_template_version="3.5">
+<tool id="vcf_keep_ind" name="Keep selected individuals" version="0.1.0" python_template_version="3.5">
     <description>
-        from a VCF file.
+        from a VCF.
     </description>
     <requirements>
         <requirement type="package" version="1.22">bcftools</requirement>
@@ -19,7 +19,7 @@
         <param name="vcf_input" type="data" format="vcf" label="Upload your VCF file"
             help="File containing SNP data in a VCF format. You can upload a simple file, multiple file or a dataset collection."/>
         <param name="list_ind" type="data" format="tabular" label="Upload the list of individuals to be kept"
-            help="Individuals must be listed one per line. If there are multiple VCF files, the individual list contain all individuals present in all VCF files. "/>
+            help="Individuals must be listed one per line.  If there are multiple VCF files, the individual list contain all individuals present in all VCF files. "/>
     </inputs> 
 
     <outputs>
@@ -40,21 +40,23 @@
 Usage
 =====
 
-As input, the user provides a single VCF file (Danecek *et al.* 2011) and a list of individuals to retain in tabular format. If there are multiple VCF files, the list of individuals contain all individuals present in all VCF files.
+As input, the user provides a single VCF file (Danecek *et al.* 2011) and a list of individuals to retain on tabular format. If there are multiple VCF files, the individual list contain all individuals present in all VCF files as well as their population. 
 
-The tool reads the VCF files and keeps the individuals listed in the list of individuals only. If any individual in the list is not present in the VCF, it is ignored. Please note that identical names should NOT be used for different VCF, otherwise the user will get an ERROR message.
+The tool processes the VCF and keeps only the samples listed in the provided individual list. All other individus are removed. If any individual in the list is not present in the VCF, it is ignored, and processing continues with the available matches. Please note that if there are names that appear in both VCFs, this may skew the results.
 
-Example : If the input VCF file includes individuals id_A, id_B, id_C, id_D and the list_ind contains id_B, id_D and id_E, the ouput will contain only samples id_B and id_D. Samples id_A and id_C are removed and id_E is ignored.
+Example : If the input VCF contains individials id_A, id_B, id_C, id_D and the list contains id_B, id_D and id_E, the ouput will contain only samples id_B and id_D. Samples id_A and id_C are removed and id_E is ignored.
 
-Example of list_ind: 
+Example of individual list : 
+
 ::
-id_B
-id_E
-id_D
-...
+    
+    id_B
+    id_E
+    id_D
 
-The list of individuals does not include a header and there is only one individual per line.
- 
+
+The list of individuals does not contain a header and there is only one individual per line.
+
 See also examples of VCF formats in :  https://samtools.github.io/hts-specs/VCFv4.5.pdf
 
     ]]></help>

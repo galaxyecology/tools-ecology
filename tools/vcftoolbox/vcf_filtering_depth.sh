@@ -82,7 +82,7 @@ vcf_filtering_depth(){
     else
         echo "No read depth data for $vcf file"
         cp "$vcf" "$output_file_n"
-        final_vcf="${output_file}"
+        final_vcf="${output_file_n}"
     fi
     
     ##### Verify that filtered VCF is not empty ######
