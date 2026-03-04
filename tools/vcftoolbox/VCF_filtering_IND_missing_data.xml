@@ -1,0 +1,136 @@
+<tool id="vcf_filtering_IND_missing_data" name="VCF filtering: Individuals with missing data" version="0.1.0" python_template_version="3.5">
+    <description>
+        above the user-defined threshold value
+    </description>
+    <requirements>
+        <requirement type="package" version="1.22">bcftools</requirement>
+        <requirement type="package" version="0.1.17">vcftools</requirement>
+    </requirements>
+
+    <command detect_errors="exit_code"><![CDATA[
+
+        mkdir -p vcf_filtered_directory &&
+        mkdir -p summary &&
+
+        bash '$__tool_directory__/vcf_filtering_IND_missing_data.sh'
+            '${vcf_input}'
+            '${vcf_input.element_identifier}'
+            '$MAX_MISSING_IND'
+        ]]></command>
+    
+    <inputs>
+        <param name="vcf_input" type="data" format="vcf" label="Upload your VCF file"
+            help="File containing DNA sequence data in VCF format. You can upload a simple file, multiple files or a dataset collection."/>
+
+        <param name="MAX_MISSING_IND" type="float" min="0" max="1" value="0.25" label="Maximum missing data per individuals (MAX_MISSING_IND)"
+            help="Maximum fraction of missing genotypes allowed per individual." />
+    </inputs>
+
+        <outputs>
+            <data name="vcf_filtered" format="vcf" label="${tool.name}">
+                <discover_datasets pattern="(?P&lt;designation&gt;.+)\.vcf$" directory="vcf_filtered_directory" visible="true" assign_primary_output="true"/>
+            </data>
+            <data name="Individuals" from_work_dir="summary/n_individuals.tabular" format="tabular" label="Filtering on individuals : Individuals number"/>
+        </outputs>
+        
+        <tests>
+        <test>
+            <param name="vcf_input" value="test_vcf.vcf"/>
+            <param name="MAX_MISSING_IND" value="0.2"/>
+            <output name="vcf_filtered"  file="vcf_filtered_directory/test_vcf_mdIND.vcf" count="1"/>
+            <output name="Individuals" file="summary/n_individuals.tabular"/>
+        </test>
+    </tests>
+
+    <help><![CDATA[
+Usage
+=====
+As input, the user provides one or more VCF files (Danecek *et al.* 2011) and a threshold value indicating a maximum proportion of missing data per individual.
+
+For each VCF file entered, the tool calculates the proportion of missing genotypes for each individual (or sample), and removes those with a value above the user-defined threshold, resulting in the output file.                       
+
+the output VCF file.
+Example: if MAX_MISSING_IND = 0.25 (default value), all individuals with missing data on more than 25% of loci in the input dataset are removed from the output VCF file.
+
+Tips
+====
+Threshold values for missing data depend on the study objectives. 
+They generally vary between 20% and 75% of loci for low-stringency filters, and between 5% and 25% loci for high-stringency filters (Hemstrom *et al.* 2024).
+Using 0.0 (0%) means that only individuals with no missing data are retained for further analysis.
+Using 1.0 (100%) means that no filtering is applied. 
+
+See also examples of VCF formats in :  https://samtools.github.io/hts-specs/VCFv4.5.pdf
+
+]]></help>
+
+    <citations>
+        <citation type="bibtex">
+        @article{10.1093/gigascience/giab008,
+    author = {Danecek, Petr and Bonfield, James K and Liddle, Jennifer and Marshall, John and Ohan, Valeriu and Pollard, Martin O and Whitwham, Andrew and Keane, Thomas and McCarthy, Shane A and Davies, Robert M and Li, Heng},
+    title = "{Twelve years of SAMtools and BCFtools}",
+    journal = {GigaScience},
+    volume = {10},
+    number = {2},
+    year = {2021},
+    abstract = "{SAMtools and BCFtools are widely used programs for processing and analysing high-throughput sequencing data. They include tools for file format conversion and manipulation, sorting, querying, statistics, variant calling, and effect analysis amongst other methods.The first version appeared online 12 years ago and has been maintained and further developed ever since, with many new features and improvements added over the years. The SAMtools and BCFtools packages represent a unique collection of tools that have been used in numerous other software projects and countless genomic pipelines.Both SAMtools and BCFtools are freely available on GitHub under the permissive MIT licence, free for both non-commercial and commercial use. Both packages have been installed \\&gt;1 million times via Bioconda. The source code and documentation are available from https://www.htslib.org.}",
+    issn = {2047-217X},
+    doi = {10.1093/gigascience/giab008},
+    url = {https://doi.org/10.1093/gigascience/giab008},
+    note = {giab008},
+    eprint = {https://academic.oup.com/gigascience/article-pdf/10/2/giab008/36332246/giab008.pdf},
+        }
+        </citation>
+
+        <citation type="bibtex">
+        @article{danecek2011vcf,
+    author = {Danecek, Petr and Auton, Adam and Abecasis, Goncalo and Albers, Cornelis A. and Banks, Eric and DePristo, Mark A. and Handsaker, Robert and Lunter, Gerton and Marth, Gabor and Sherry, Stephen T. and McVean, Gilean and Durbin, Richard and 1000 Genomes Project Analysis Group},
+    title = {The Variant Call Format and VCFtools},
+    journal = {Bioinformatics},
+    volume = {27},
+    number = {15},
+    year = {2011},
+    pages = {2156--2158},
+    doi = {10.1093/bioinformatics/btr330},
+    url = {https://doi.org/10.1093/bioinformatics/btr330},
+    }
+        </citation>
+
+        <citation type="bibtex">
+            @article{hemstrom2024next,
+  author={Hemstrom, William and Grummer, Jared A. and Luikart, Gordon and Beja-Pereira, Albano and Waples, Robin S. and Funk, W. Chris and Shafer, Aaron B. A. and Allendorf, Frederick W.},
+  title={Next-generation data filtering in the genomics era},
+  journal={Nature Reviews Genetics},
+  volume={25},
+  number={11},
+  pages={750--767},
+  year={2024},
+  doi={10.1038/s41576-024-00738-6},
+  url={https://doi.org/10.1038/s41576-024-00738-6}
+}
+        </citation>
+        <citation type="bibtex">
+            @article{Danecek2011,
+  author          = {Danecek, Petr and Auton, Adam and Abecasis, Goncalo and Albers, Cornelis A. and Banks, Erica and DePristo, Mark A. and Handsaker, Robert E. and Lunter, Gerton and Marth, Gabor T. and Sherry, Stephen T. and McVean, Gil and Durbin, Richard and {1000 Genomes Project Analysis Group}},
+  title           = {The variant call format and {VCF}tools},
+  journal         = {Bioinformatics},
+  volume          = {27},
+  number          = {15},
+  pages           = {2156-2158},
+  year            = {2011},
+  doi             = {10.1093/bioinformatics/btr330},
+  URL             = {https://doi.org/10.1093/bioinformatics/btr330},
+  eprint          = {https://academic.oup.com/bioinformatics/article-pdf/27/15/2156/600788/btr330.pdf},
+}
+        </citation>
+    <citation type="bibtex">
+        @manual{VCFv45,
+  title        = {The Variant Call Format (VCF) Specification, Version 4.5},
+  author       = {{HTS-specs team}},
+  organization = {Global Alliance for Genomics and Health},
+  year         = {2024},
+  url          = {https://samtools.github.io/hts-specs/VCFv4.5.pdf},
+  note         = {Accessed: 2025-02-11}
+}
+    </citation>
+    </citations>    
+</tool>
