@@ -8,6 +8,7 @@ vcf_names="$2"
 SUBSET_SNPS_NB="$3"
 NB_REPLICATE_VCF="$4"
 MIN_SNP_NB="$5"
+POLY="$6"
 
 vcf_dir_sub="vcf_subsampled"
 
@@ -67,9 +68,15 @@ vcf_subsampled(){
 
         # Check thresholds
         if (( total_snps <= MIN_SNP_NB )); then
-            echo "$base_name ignored: SNPs=$total_snps < thresholds"
-            local output_vcf="$vcf_dir_sub/${base_name}_full.vcf"
-            cp "$vcf" "$output_vcf"
+            if [[ "$POLY" == "true" ]]; then
+                echo "$base_name ignored: polymocphic SNPs=$total_snps < thresholds ($MIN_SNP_NB)"
+                local output_vcf="$vcf_dir_sub/${base_name}_full.vcf"
+                cp "$vcf" "$output_vcf"
+            else
+                echo "$base_name ignored: SNPs=$total_snps < thresholds ($MIN_SNP_NB)"
+                local output_vcf="$vcf_dir_sub/${base_name}_full.vcf"
+                cp "$vcf" "$output_vcf"
+            fi
             return
         fi
 
@@ -104,4 +111,36 @@ vcf_subsampled(){
 ######################
 # Main execution
 ######################
-vcf_subsampled "$vcf_input" "$vcf_names" "$SUBSET_SNPS_NB" "$NB_REPLICATE_VCF" "$MIN_SNP_NB"
+
+##### Check if file exists #####
+        if [[ ! -f "$vcf_input" ]]; then
+            echo "File not found, ignored: $vcf_input"
+            exit 1
+        fi
+
+        # Extract base name (handle .vcf)
+        regex='\(([^)]+)\)[[:space:]]*$'
+        if [[ "$vcf_name" =~ $regex ]]; then
+            #Extract content between last parentheses
+            base_name="${BASH_REMATCH[1]}"
+        else
+            # No parentheses, use original name
+            base_name=$(basename "$vcf_name")
+        fi
+        
+        base_name=${base_name%.vcf}
+
+if [[ "$POLY" == "true" ]]; then
+    #MAC output file
+        MAC_file_gz="${base_name}_MAC.vcf.gz"
+        MAC_file="${base_name}_MAC.vcf"
+
+        MAC=2
+        bcftools filter -e "MAC < ${MAC}" -O z -o "$MAC_file_gz" "$vcf_input"
+        gunzip "${MAC_file_gz}"
+
+        vcf_subsampled "$MAC_file" "$base_name" "$SUBSET_SNPS_NB" "$NB_REPLICATE_VCF" "$MIN_SNP_NB"
+
+else
+    vcf_subsampled "$vcf_input" "$base_name" "$SUBSET_SNPS_NB" "$NB_REPLICATE_VCF" "$MIN_SNP_NB"
+fi
