@@ -4,7 +4,7 @@
     </requirements>
 
     <command detect_errors="exit_code"><![CDATA[
-        mkdir -p vcf_split_directory &&
+        mkdir -p vcf_filtered_directory &&
         mkdir -p summary &&
 
         bash '$__tool_directory__/vcf_filtering_biallelic_SNP.sh'
@@ -89,4 +89,5 @@ See also examples of VCF formats in :  https://samtools.github.io/hts-specs/VCFv
     </citation>
     </citations>
         
+
 </tool>
