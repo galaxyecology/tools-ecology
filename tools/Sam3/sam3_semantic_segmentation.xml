@@ -136,7 +136,6 @@ Notes
 -------------------
 
 - For large videos, increase the frame stride to reduce processing time
-- Output files are written directly to the Galaxy outputs directory
     ]]></help>
     <creator>
         <person name="Arthur Barreau" email="arthurbarreau.ab@gmail.com" />
