@@ -68,6 +68,7 @@ vcf_filtering_gen_qual(){
   
         elif grep -q "##FORMAT=<ID=GQ" "${vcf}"; then
             bcftools filter -S . -e "FMT/GQ<${MIN_GQ}" -O z -o "$output_file" "$vcf"
+            gunzip "${output_file}"
             final_vcf="${output_file%.gz}"
             
         else
