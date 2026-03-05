@@ -1,4 +1,4 @@
-<tool id="sam3_semantic_segmentation" name="SAM3 Semantic Segmentation" version="0.1.0+galaxy0" profile="25.1">
+<tool id="sam3_semantic_segmentation" name="SAM3 Semantic Segmentation" version="1.0.0+galaxy0" profile="25.1">
     <description>
         SAM3 performs text-prompted semantic segmentation on images or videos.
     </description>
@@ -24,10 +24,10 @@
             --vid_stride '$vid_stride' 
             --outdir outputs 
             --outputs $outputs_format
-            --name_file $name_file
+            --name_file '$name_file'
     ]]></command>
     <inputs>
-         <param name="sam3_models" label="Model data" type="select" help="Contact the administrator of our Galaxy instance if you miss model data">
+        <param name="sam3_models" label="Model data" type="select" help="Contact the administrator of our Galaxy instance if you miss model data">
             <options from_data_table="huggingface">
                 <filter type="static_value" column="5" value="1"/>
             </options>
