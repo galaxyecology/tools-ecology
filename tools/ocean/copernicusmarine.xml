@@ -65,7 +65,7 @@ This tool is a wrapper to retrieve data from the Copernicus Marine Environment M
     - Copy the ">_Command-Line Interface" proposed there
 - Back on Galaxy paste it in the input field "Paste API Request".
 
-For more information on the Command-Line Interface (CLI) go on `Copernicus Marine Toolbox CLI - Subset <https://help.marine.copernicus.eu/en/articles/7972861-copernicus-marine-toolbox-cli-subset>`
+For more information on the Command-Line Interface (CLI) go on `Copernicus Marine Toolbox CLI - Subset <https://help.marine.copernicus.eu/en/articles/7972861-copernicus-marine-toolbox-cli-subset>`.
 
 ** Input **
         
