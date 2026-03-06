@@ -2,26 +2,24 @@ name: Galaxy Tool Linting and Tests for push and PR
 on:
   pull_request:
     paths-ignore:
-      - '.github/**'
       - 'deprecated/**'
       - 'docs/**'
+      - '.github/**'
       - '*'
   push:
     branches:
       - main
       - master
     paths-ignore:
-      - '.github/**'
       - 'deprecated/**'
       - 'docs/**'
+      - '.github/**'
       - '*'
 env:
   GALAXY_FORK: galaxyproject
-  GALAXY_BRANCH: release_25.1
+  GALAXY_BRANCH: release_26.0
   MAX_CHUNKS: 4
   MAX_FILE_SIZE: 1M
-  CMEMS_PASSWORD: ${{ secrets.CMEMS_PASSWORD }}
-  CMEMS_USERNAME: ${{ secrets.CMEMS_USERNAME }}
 concurrency:
   # Group runs by PR, but keep runs on the default branch separate
   # because we do not want to cancel ToolShed uploads
@@ -118,7 +116,7 @@ jobs:
     steps:
     - uses: actions/checkout@v6
       with:
-        fetch-depth: 1
+        persist-credentials: false
     - uses: actions/setup-python@v6
       with:
         python-version: ${{ matrix.python-version }}
@@ -128,7 +126,6 @@ jobs:
       with:
         path: ~/.cache/pip
         key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ needs.setup.outputs.galaxy-head-sha }}
-
     - name: Find Pull Request
       id: find-pr
       uses: sharesight/find-github-pull-request@v1.3.0
@@ -154,17 +151,13 @@ jobs:
           if echo '${{ env.LABELS }}' | jq -e --arg s "skip-version-check" 'index($s)' > /dev/null; then
             to_skip+=("version_bumped")
           fi
+
           if [ ${#to_skip[@]} -gt 0 ]; then
             RESULT=$(IFS=,; echo "${to_skip[*]}")
             echo "EXTRA_SKIP=--skip $RESULT" >> "$GITHUB_ENV"
           else
             echo "EXTRA_SKIP=" >> "$GITHUB_ENV"
           fi
-          - name: Set fail level for pull request
-      if: ${{ github.event_name == 'pull_request' }}
-      run:
-        echo "FAIL_LEVEL=warn" >> "$GITHUB_ENV"
-
     - name: Planemo lint
       uses: galaxyproject/planemo-ci-action@v1
       id: lint
@@ -174,7 +167,7 @@ jobs:
         repository-list: ${{ needs.setup.outputs.repository-list }}
         tool-list: ${{ needs.setup.outputs.tool-list }}
         additional-planemo-options: ${{ env.EXTRA_SKIP }}
-    - uses: actions/upload-artifact@v6
+    - uses: actions/upload-artifact@v7
       if: ${{ failure() }}
       with:
         name: 'Tool linting output'
@@ -207,7 +200,7 @@ jobs:
       run: pip install flake8 flake8-import-order
     - name: Flake8
       run: echo '${{ needs.setup.outputs.repository-list }}' | xargs -d '\n' flake8 --output-file pylint_report.txt --tee
-    - uses: actions/upload-artifact@v6
+    - uses: actions/upload-artifact@v7
       if: ${{ failure() }}
       with:
         name: 'Python linting output'
@@ -240,17 +233,18 @@ jobs:
         packages: |
           any::argparse 
           any::styler
-    - name: |
+    - name: lintr
+      run: |
         set -eo pipefail
         echo '${{ needs.setup.outputs.repository-list }}' | xargs -d '\n' -n 1 ./.github/styler.R --dry off
         git status
         git diff --exit-code | tee rlint_report.txt
-    - uses: actions/upload-artifact@v6
+    - uses: actions/upload-artifact@v7
       if: ${{ failure() }}
       with:
         name: 'R linting output'
         path: rlint_report.txt
-  
+
   file_sizes:
     name: Check file sizes
     needs: setup
@@ -273,7 +267,7 @@ jobs:
           cat file_size_report.txt
           exit 1
         fi
-    - uses: actions/upload-artifact@v6
+    - uses: actions/upload-artifact@v7
       if: ${{ failure() }}
       with:
         name: 'File size report'
@@ -337,7 +331,7 @@ jobs:
         galaxy-slots: ${{ steps.cpu-cores.outputs.count }}
         # Limit each test to 15 minutes
         test_timeout: 900
-    - uses: actions/upload-artifact@v6
+    - uses: actions/upload-artifact@v7
       with:
         name: 'Tool test output ${{ matrix.chunk }}'
         path: upload
@@ -356,7 +350,7 @@ jobs:
       matrix:
         python-version: ['3.11']
     steps:
-    - uses: actions/download-artifact@v7
+    - uses: actions/download-artifact@v8
       with:
         path: artifacts
     - uses: actions/setup-python@v6
@@ -375,7 +369,7 @@ jobs:
         mode: combine
         html-report: true
         markdown-report: true
-    - uses: actions/upload-artifact@v6
+    - uses: actions/upload-artifact@v7
       with:
         name: 'All tool test results'
         path: upload
