@@ -11,6 +11,9 @@
             <secret name="password" inject_as_env="COPERNICUSMARINE_SERVICE_PASSWORD" optional="false" label="CMEMS password" description="Your Copernicus Marine Service password."/>
          </credentials>
     </requirements>
+    <required_files>
+        <include path="check.py" />
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[ 
         
         echo -e '$input_text' > config_file_with_my_command &&
