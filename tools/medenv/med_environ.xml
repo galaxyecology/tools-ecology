@@ -92,18 +92,18 @@ python '$__tool_directory__/med_environ.py'
 
         The `cmems_username` and `cmems_password` are required only if you want to add variables provided by CMEMS. These must be defined in "User -> Preferences -> Manage Information"
 
-        The CMEMS data are collected from the following products :
+        The CMEMS data are collected from the following products:
 
         - med-cmcc: https://resources.marine.copernicus.eu/product-detail/MEDSEA_MULTIYEAR_PHY_006_004/INFORMATION
         - med-ogs: https://resources.marine.copernicus.eu/product-detail/MEDSEA_MULTIYEAR_BGC_006_008/INFORMATION
 
-        The bathymetry is obtained with the ETOPO at : 
+        The bathymetry is obtained with the ETOPO at: 
 
         - https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO1/data/bedrock/grid_registered/netcdf/ETOPO1_Bed_g_gmt4.grd.gz
 
         We request data around the point with a given tolerance and average the collected values. The medenv package does not force that averaging and could return a raster. A later update of the Galaxy tool could take this into account.
 
-        The features you can request are the following, some indexed by depth :
+        The features you can request are the following, some indexed by depth:
 
         - "bathymetry", (etopo)
         - "temperature",
@@ -121,7 +121,7 @@ python '$__tool_directory__/med_environ.py'
         - "northward-water-velocity",
         - "eastward-water-velocity".
 
-        and others not indexed by depth : 
+        and others not indexed by depth: 
 
         - "mixed-layer-thickness",
         - "sea-surface-temperature",
