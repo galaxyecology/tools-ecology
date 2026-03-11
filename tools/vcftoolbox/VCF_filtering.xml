@@ -1,0 +1,388 @@
+<tool id="vcf_filtering" name="VCF filtering" version="0.1.0" python_template_version="3.5">
+    <description>
+        of individuals and variants.
+    </description>
+    <requirements>
+        <requirement type="package" version="1.22">bcftools</requirement>
+        <requirement type="package" version="0.1.17">vcftools</requirement>
+    </requirements>
+
+<command detect_errors="exit_code"><![CDATA[
+    mkdir -p vcf_filtered_tmp &&
+    mkdir -p vcf_filtered_directory &&
+    mkdir -p summary &&
+
+    bash '$__tool_directory__/VCF_filtering.sh'
+        --input '${vcf_input}'
+        --name '${vcf_input.element_identifier}'
+        --order '${filter_order}'
+        --max-missing-ind '${filter_ind_missing_data.MAX_MISSING_IND}'
+        --max-missing-loci '${filter_loci_missing.MAX_MISSING_LOCI}'
+        --min-gq '${filter_GQ.MIN_GQ}'
+        --min-dp '${filter_DP.MIN_DP}'
+        --min-mac '${filter_mac.MAC}'
+        --max-ho '${filter_het.MAX_Ho}'
+]]></command>
+
+    <inputs>
+        <param name="vcf_input" type="data" format="vcf" label="Upload your VCF file"
+            help="File containing DNA sequence data in VCF format. You can upload a simple file, multiple files or a dataset collection"/>
+
+        <param name="filter_order" type="select" multiple="true" display="checkboxes" optional="false"
+            label="Select and order the filters to apply"
+            help="Only the selected filters will be applied, in the exact order chosen here.">
+            <option value="A">A: Individuals with missing data</option>
+            <option value="B">B: Loci with missing data</option>
+            <option value="C">C: Genotype quality (GQ)</option>
+            <option value="D">D: Depth coverage (DP)</option>
+            <option value="E">E: Biallelic SNPs only</option>
+            <option value="F">F: Minor allele count (MAC)</option>
+            <option value="G">G: Heterozygosity</option>
+        </param>
+
+        <section name="filter_ind_missing_data" title="[A] Individuals with missing data" expanded="false">
+            <param name="MAX_MISSING_IND" type="float" value="0.2" min="0.0" max="1.0"
+                   label="Maximum missing data per individual (MAX_MISSING_IND)"
+                   help="Maximum fraction of missing genotypes allowed per individual." />
+        </section>
+
+        <section name="filter_loci_missing" title="[B] Loci with missing data" expanded="false">
+            <param name="MAX_MISSING_LOCI" type="float" min="0" max="1" value="0.20"
+                   label="Maximum missing data per locus (MAX_MISSING_LOCI)"
+                   help="Maximum fraction of missing genotypes allowed per locus." />
+        </section>
+
+        <section name="filter_GQ" title="[C] Genotype quality (GQ)" expanded="false">
+            <param name="MIN_GQ" type="integer" value="20" min="0"
+                   label="GQ minimum"
+                   help="Genotypes with a GQ below this value will be set to missing." />
+        </section>
+
+        <section name="filter_DP" title="[D] Depth coverage (DP)" expanded="false">
+            <param name="MIN_DP" type="integer" value="6" min="1"
+                   label="Minimum read depth (MIN_DP)"
+                   help="Minimum read depth (DP) per genotype required to retain it.
+                   Typical values depend on sequencing coverage: 1-5 for permissive filtering, 10-20 for standard filtering, and >=30 for stringent filtering." />
+        </section>
+
+        <section name="filter_mac" title="[F] Minor allele count (MAC)" expanded="false">
+            <param name="MAC" type="integer" value="2" min="0"
+                   label="Minimum minor allele count per SNP (MIN_MAC)"
+                   help="Minimum number of minor alleles required for a locus to be retained." />
+        </section>
+
+        <section name="filter_het" title="[G] Heterozygosity" expanded="false">
+            <param name="MAX_Ho" type="float" min="0" max="1" value="0.6"
+                   label="Maximum observed heterozygosity per SNP"
+                   help="Maximum proportion of observed heterozygotes allowed to retain a variant. Used to detect paralogues and genotyping errors." />
+        </section>
+
+    </inputs>
+
+    <outputs>
+        <data name="vcf_filtered" format="vcf" label="${tool.name}">
+                <discover_datasets pattern="(?P&lt;designation&gt;.+)\.vcf" directory="vcf_filtered_directory" visible="true" assign_primary_output="true"/>
+        </data>
+        <data name="summary" from_work_dir="summary/summary.tabular" format="tabular" label="Filtering : Number of SNPs and individuals"/>
+    </outputs>
+
+    <tests>
+        <!-- Test : [A] Individuals with missing data -->
+    <test expect_num_outputs="2">
+        <param name="vcf_input" value="test_vcf.vcf"/>
+        <param name="filter_order" value="A"/>
+        <section name="filter_ind_missing_data">
+            <param name="MAX_MISSING_IND" value="0.2"/>
+        </section>
+
+        <output name="summary" ftype="tabular">
+            <assert_contents>
+                <has_n_lines n="3"/>
+                <has_line_matching expression="1\tA_ind_missing\tMAX_MISSING_IND=0.2\t665\t2091"/>
+            </assert_contents>
+        </output>
+
+        <output name="vcf_filtered" ftype="vcf">
+                <assert_contents>
+                    <has_size value="5400000" delta="5500000"/>
+                </assert_contents>
+        </output>
+    </test>
+
+    <!-- Test : [B] Loci with missing data -->
+     <test expect_num_outputs="2">
+        <param name="vcf_input" value="test_vcf.vcf"/>
+        <param name="filter_order" value="B"/>
+        <section name="filter_loci_missing">
+            <param name="MAX_MISSING_LOCI" value="0.2"/>
+        </section>
+
+        <output name="summary" ftype="tabular">
+            <assert_contents>
+                <has_n_lines n="3"/>
+                <has_line_matching expression="1\tB_loci_missing\tMAX_MISSING_LOCI=0.2\t957\t1334"/>
+            </assert_contents>
+        </output>
+
+        <output name="vcf_filtered" ftype="vcf">
+                <assert_contents>
+                    <has_size value="4900000" delta="5000000"/>
+                </assert_contents>
+        </output>
+    </test>
+
+    <!-- Test : Multiple filters -->
+     <test expect_num_outputs="2">
+    <param name="vcf_input" value="test_vcf.vcf"/>
+    <param name="filter_order" value="A,D,C,E,B,F,G"/>
+    <section name="filter_ind_missing_data">
+        <param name="MAX_MISSING_IND" value="0.2"/>
+    </section>
+    <section name="filter_DP">
+        <param name="MIN_DP" value="6"/>
+    </section>
+    <section name="filter_GQ">
+        <param name="MIN_GQ" value="20"/>
+    </section>
+    <section name="filter_loci_missing">
+        <param name="MAX_MISSING_LOCI" value="0.2"/>
+    </section>
+    <section name="filter_mac">
+        <param name="MAC" value="2"/>
+    </section>
+    <section name="filter_het">
+        <param name="MAX_Ho" value="0.6"/>
+    </section>
+
+    <output name="vcf_filtered" count="1">
+            <assert_contents>
+                <has_size value="4200000" delta="4300000"/>
+            </assert_contents>
+    </output>
+
+    <output name="summary" ftype="tabular">
+        <assert_contents>
+            <has_n_lines n="9"/>
+            <has_line_matching expression="0\tinput\traw\t957\t2091"/>
+            <has_line_matching expression="1\tA_ind_missing\tMAX_MISSING_IND=0.2\t665\t2091"/>
+            <has_line_matching expression="2\tD_DP\tNo DP field found\t665\t2091"/>
+            <has_line_matching expression="3\tC_GQ\tNo GQ field found\t665\t2091"/>
+            <has_line_matching expression="4\tE_biallelic\tbiallelic_SNPs_only\t665\t2091"/>
+            <has_line_matching expression="5\tB_loci_missing\tMAX_MISSING_LOCI=0.2\t665\t1623"/>
+            <has_line_matching expression="6\tF_MAC\tMIN_MAC=2\t665\t1622"/>
+            <has_line_matching expression="7\tG_heterozygosity\tMAX_Ho=0.6\t665\t1622"/>
+        </assert_contents>
+    </output>
+</test>
+
+</tests>
+
+<help><![CDATA[
+
+Usage
+-----
+
+This tool applies a series of configurable filters to a VCF file.
+As input, the user provides one or more VCF files (Danecek *et al.* 2011). The user selects the filters in the order of application and completes the sections for each filter with the desired parameters. For more information on the parameters and tips for each filter, see the help section corresponding to the tool.
+
+For each VCF file input, all selected filters are applied and a single VCF file is produced as output. The tool also produces a table summarising SNPs and individuals at each step.
+
+See also examples of VCF formats in: https://samtools.github.io/hts-specs/VCFv4.5.pdf
+
+----
+
+**[A] Individuals with missing data**
+--------------------------------------
+
+As input, the user provides a threshold value indicating a maximum proportion of missing data per individual.
+
+For each VCF file entered, the tool calculates the proportion of missing genotypes for each individual (or sample), and removes those with a value above the user-defined threshold, resulting in the output file.
+
+Example: if MAX_MISSING_IND = 0.25 (default value), all individuals with missing data on more than 25% of loci in the input dataset are removed from the output VCF file.
+
+**Tips**
+
+Threshold values for missing data depend on the study objectives.
+
+They generally vary between 20% and 75% of loci for low-stringency filters, and between 5% and 25% loci for high-stringency filters (Hemstrom *et al.* 2024).
+Using 0.0 (0%) means that only individuals with no missing data are retained for further analysis.
+Using 1.0 (100%) means that no filtering is applied.
+
+----
+
+**[B] Loci with missing data**
+--------------------------------
+
+As input, the user provides a threshold value indicating the maximum proportion of missing data per locus.
+
+For each input VCF file, the tool calculates the proportion of missing genotypes for each locus, and removes those whose value exceeds the user-defined threshold in the output file.
+
+Example: if MAX_MISSING_LOCI = 0.2, all loci with missing data for more than 20% of individuals in the input dataset are removed from the output VCF file.
+
+**Tips**
+
+Threshold values for missing data depend on the study objectives.
+
+They generally vary between 20% and 75% of individuals for low-stringency filters, and between 5% and 25% of individuals for high-stringency filters (Hemstrom *et al.* 2024).
+Using 0.0 (0%) means that only loci without missing data are retained for further analysis.
+Using 1.0 (100%) means that no filtering is applied.
+
+----
+
+**[C] Genotype quality (GQ)**
+-------------------------------
+
+As input, the user provides a threshold value for a minimum genotype quality (GQ).
+
+For each VCF file entered, this tool replaces genotypes with missing values (.) when their quality is below the threshold value (i.e. when we consider that their probability of being incorrect is not acceptable according to this threshold). At this stage, no variants or samples are excluded.
+
+The tool automatically detects whether GQ is stored in the INFO/GQ or FORMAT/GQ field of the VCF file. If no GQ annotation is found, the input and output VCF files are identical.
+
+**Tips**
+
+GQ = 3 means that there is 50% chance that the genotype call is incorrect.
+GQ = 20 means that there is 1% chance that the call is incorrect.
+
+----
+
+**[D] Depth coverage (DP)**
+-----------------------------
+
+As input, the user provides a threshold value indicating a minimum read depth.
+
+For each input VCF file, the tool replaces genotype calls with missing values (./.) if their depth (DP) is less than the user-defined minimum or exceeds a maximum threshold (automatically calculated as twice the average depth observed in the data file).
+
+The tool automatically detects whether DP is stored in the INFO/DP or FORMAT/DP field of the VCF file. If no DP annotation is found, the input and output VCF files are identical.
+
+Example: If the average depth in a VCF data file is 30 and the user sets a minimum threshold of 5, any genotype with DP < 5 or DP > 60 is considered missing data and masked.
+
+**Tips**
+
+The threshold values for minimum read depth depend on the objectives of the study.
+The minimum threshold is generally greater than 5 in order to avoid underestimating certain statistics, such as observed and expected heterozygosity (Kardos and Waples, 2024).
+
+----
+
+**[E] Biallelic SNPs only**
+-----------------------------
+
+For each input VCF file, the tool identifies the number of alleles for each variant and removes all loci that do not possess exactly two alleles (the reference and one alternative allele) in the output file.
+
+Example: if a variant is monomorphic (only reference) or has more than one alternative allele, it is discarded from the output VCF file.
+
+----
+
+**[F] Minor allele count (MAC)**
+----------------------------------
+
+As input, the user provides a threshold value indicating a minimum number of occurrences for the minor allele.
+
+For each input VCF file, the tool calculates the minor allele count (MAC) for each variant, and removes those with a value below the user-defined threshold in the output file.
+
+Example: if MIN_MAC = 2, all variants having a minor allele observed fewer than 2 times in the input dataset (MAC < 2) are removed in the output VCF file.
+
+**Tips**
+
+Threshold values for minimum MAC depend on the study objectives and sample sizes.
+For most types of analyses, a MIN_MAC of 2 is usually recommended. Other analyses might also keep singletons (occurence of 1 for the alternative allele) or apply a more stringent filtering (MIN_MAC of 4 or above, for metagenomics study, Hemstrom *et al.* 2024).
+
+----
+
+**[G] Heterozygosity**
+------------------------
+
+As input, the user provides a threshold value indicating a maximum value for the observed heterozygosity per SNP.
+
+For each input VCF file, the tool calculates the proportion of heterozygous genotypes for each SNP and removes those with a value strictly above the user-defined threshold in the output file.
+
+Example: if MAX_Ho = 0.6, all SNP with an observed heterozygosity above 60% in the input dataset are removed from the output VCF file.
+
+**Tips**
+
+Threshold values for observed heterozygosity help identify technical artifacts. Loci with an observed heterozygosity greater than 0.6 are likely to be more or less divergent paralogous loci due to duplication events rather than single loci (McKinney *et al.* 2017).
+
+    ]]></help>
+
+    <citations>
+        <citation type="bibtex">
+            @article{Danecek2011,
+    author          = {Danecek, Petr and Auton, Adam and Abecasis, Goncalo and Albers, Cornelis A. and Banks, Erica and DePristo, Mark A. and Handsaker, Robert E. and Lunter, Gerton and Marth, Gabor T. and Sherry, Stephen T. and McVean, Gil and Durbin, Richard and {1000 Genomes Project Analysis Group}},
+    title           = {The variant call format and {VCF}tools},
+    journal         = {Bioinformatics},
+    volume          = {27},
+    number          = {15},
+    pages           = {2156-2158},
+    year            = {2011},
+    doi             = {10.1093/bioinformatics/btr330},
+    URL             = {https://doi.org/10.1093/bioinformatics/btr330},
+        }
+        </citation>
+        
+        <citation type="bibtex">
+        @article{10.1093/gigascience/giab008,
+    author = {Danecek, Petr and Bonfield, James K and Liddle, Jennifer and Marshall, John and Ohan, Valeriu and Pollard, Martin O and Whitwham, Andrew and Keane, Thomas and McCarthy, Shane A and Davies, Robert M and Li, Heng},
+    title = "{Twelve years of SAMtools and BCFtools}",
+    journal = {GigaScience},
+    volume = {10},
+    number = {2},
+    year = {2021},
+    abstract = "{SAMtools and BCFtools are widely used programs for processing and analysing high-throughput sequencing data.}",
+    issn = {2047-217X},
+    doi = {10.1093/gigascience/giab008},
+    url = {https://doi.org/10.1093/gigascience/giab008},
+    note = {giab008},
+        }
+        </citation>
+
+        <citation type="bibtex">
+            @article{hemstrom2024next,
+  author={Hemstrom, William and Grummer, Jared A. and Luikart, Gordon and Beja-Pereira, Albano and Waples, Robin S. and Funk, W. Chris and Shafer, Aaron B. A. and Allendorf, Frederick W.},
+  title={Next-generation data filtering in the genomics era},
+  journal={Nature Reviews Genetics},
+  volume={25},
+  number={11},
+  pages={750--767},
+  year={2024},
+  doi={10.1038/s41576-024-00738-6},
+  url={https://doi.org/10.1038/s41576-024-00738-6}
+}
+        </citation>
+
+        <citation type="bibtex">
+        @manual{VCFv45,
+  title        = {The Variant Call Format (VCF) Specification, Version 4.5},
+  author       = {{HTS-specs team}},
+  organization = {Global Alliance for Genomics and Health},
+  year         = {2024},
+  url          = {https://samtools.github.io/hts-specs/VCFv4.5.pdf},
+  note         = {Accessed: 2025-02-11}
+}
+        </citation>
+
+        <citation type="bibtex">
+            @article{Kardos2025LowCoverageWolves,
+  author  = {Kardos, Molly and Waples, Robin S.},
+  title   = {Low-coverage sequencing and Wahlund effect severely bias estimates of inbreeding, heterozygosity and effective population size in North American wolves},
+  journal = {Molecular Ecology},
+  year    = {2025},
+  volume  = {34},
+  number  = {20},
+  pages   = {e17415},
+  doi     = {10.1111/mec.17415},
+    }
+        </citation>
+
+        <citation type="bibtex">
+            @article{McKinney2017,
+  title        = {Paralogs are revealed by proportion of heterozygotes and deviations in read ratios in genotyping-by-sequencing data from natural populations},
+  author       = {McKinney, Garrett J. and Waples, Ryan K. and Seeb, Lisa W. and Seeb, James E.},
+  journal      = {Molecular Ecology Resources},
+  volume       = {17},
+  number       = {4},
+  pages        = {656--669},
+  year         = {2017},
+  doi          = {10.1111/1755-0998.12613},
+}
+        </citation>
+    </citations>
+</tool>
