@@ -5,7 +5,7 @@ homepage_url: https://github.com/lauramtzan/GINAMO/vcftoolbox
 long_description: |
   VCF Toolbox is a suite of tools for filtering and subsetting VCF files used in population genomics. 
   The toolbox allows users to filter SNPs by read depth, genotype quality, missing data, heterozygosity, and minor allele count, 
-  extract or remove individuals, split VCFs by population and perform subsampling. 
+  remove individuals, split VCFs by population and perform subsampling. 
 remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/vcftoolbox
 type: unrestricted
 categories:

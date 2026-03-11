@@ -101,13 +101,13 @@ split_individuals_by_pop(){
         local output_file="${vcf_dir}/Ind_list_${pop}.txt"
         echo -n "${pop_inds[$pop]}" > "$output_file"
         echo "$output_file|$pop" >> "$pop_file_list"
-        echo "DEBUG: Created ind list: $output_file ($(wc -l < "$output_file") individuals)" >&2
+        echo "Created ind list: $output_file ($(wc -l < "$output_file") individuals)" >&2
     done
 
     local pop_count="${#pop_inds[@]}"
     echo "INFO: ${pop_count} population(s) detected: ${!pop_inds[*]}"
 
-    echo "DEBUG: pop_file_list contents:" >&2
+    echo "Pop_file_list contents:" >&2
     cat "$pop_file_list" >&2
 
     unset pop_inds
@@ -131,7 +131,7 @@ split_vcf_by_pop() {
         exit 1
     fi
 
-    echo "DEBUG: pop_file_list has $(wc -l < "$pop_file_list") lines" >&2
+    echo "pop_file_list has $(wc -l < "$pop_file_list") lines" >&2
 
     local vcf_created=0
 
@@ -140,10 +140,10 @@ split_vcf_by_pop() {
         ind_list="${ind_list%$'\r'}"
         pop_name="${pop_name%$'\r'}"
 
-        echo "DEBUG: Reading line -> ind_list='$ind_list' pop_name='$pop_name'" >&2
+        echo "Reading line -> ind_list='$ind_list' pop_name='$pop_name'" >&2
 
         if [[ ! -f "$ind_list" ]]; then
-            echo "DEBUG: ind_list file not found, skipping: $ind_list" >&2
+            echo "ind_list file not found, skipping: $ind_list" >&2
             continue
         fi
 
@@ -176,7 +176,7 @@ split_vcf_by_pop() {
 
         echo "INFO: VCF successfully created for population '${pop_name}': $output_vcf"
         vcf_created=$(( vcf_created + 1 ))
-        echo "DEBUG: vcf_created = $vcf_created" >&2
+        echo "vcf_created = $vcf_created" >&2
 
     done < "$pop_file_list"
 

@@ -4,8 +4,9 @@
 set -e
 
 vcf_input="$1"
-vcf_names="$2"
-list_ind="$3"
+vcf_name="$2"
+action="$3"
+list_ind="$4"
 
 output_dir="vcf_directory"
 
@@ -32,51 +33,47 @@ if [[ -z "$list_ind" ]]; then
     exit 1
 fi
 
-##########################################################
-#Function: vcf_remove_ind
-#Description: Remove individual from a list
-##########################################################
-
-vcf_remove_ind(){
-    ##### Parameters #####
-    local vcft="$1"
-    local original_name="$2"
-    local list_ind="$3"
-
-    ##### Check if file exists #####
-    if [[ ! -f "$vcf" ]]; then
-        echo "File not found, ignored: $vcf"
-        return
-    fi
-
-    local base_name
-    local regex='\(([^)]+)\)[[:space:]]*$'
+##### Build output filename #####
+#Extract basename
+regex='\(([^)]+)\)[[:space:]]*$'
     if [[ "$original_name" =~ $regex ]]; then
         #Extract content between last parentheses
         base_name="${BASH_REMATCH[1]}"
     else
         # No parentheses, use original name
-        base_name=$(basename "$original_name")
+        base_name=$(basename "$vcf_name")
     fi
         
     base_name=${base_name%.vcf}
 
-    ##### Remove individuals #####
-    output_file="${output_dir}/${base_name}.vcf"
+# Output file name
+output_file="${output_dir}/${base_name}.vcf"
 
-    bcftools view -S "${list_ind}" "${vcf}" -o "${output_file}" --force-samples #keep individuals on the list_ind
+##### Main execution #####
+if [[ "$action" == "keep" ]]; then
+    # Keep only the individuals listed in list_ind
+    echo "Keeping individuals listed"
+    bcftools view -S "${list_ind}" "${vcf_input}" -o "${output_file}" --force-samples
+else
+    # Remove the individuals listed in list_ind
+    echo "Removing individuals listed"
+    bcftools view -S "^${list_ind}" "${vcf_input}" -o "${output_file}" --force-samples #remove individuals on the list_ind
+fi
 
-    ##### Verify that filtered VCF is not empty ######
-        if [[ ! -f "$output_file" ]]; then
-            echo "ERROR: Output VCF not created: $output_file" >&2
-            exit 1
-        fi
+##### Verify that filtered VCF is not empty ######
+    if [[ ! -f "$output_file" ]]; then
+        echo "ERROR: Output VCF not created: $output_file" >&2
+        exit 1
+    fi
 
-        if ! bcftools view -H "$output_file" | head -n 1 | grep -q .; then
-            echo "ERROR: Filtered VCF contains no variants."
-            exit 1
-        fi  
-}
+    if ! bcftools view -H "$output_file" | head -n 1 | grep -q .; then
+        echo "ERROR: Filtered VCF contains no variants."
+        exit 1
+    fi  
 
-##### Execution #####
-vcf_remove_ind "$vcf_input" "$vcf_names" "$list_ind"
+##### SUmmary #####
+n_ind_b=$(bcftools query -l "$vcf_input" | wc -l)
+n_ind_a=$(bcftools query -l "$output_file" | wc -l)
+
+echo "Individuals before: ${n_ind_b}"
+echo "Individuals after: ${n_ind_a}"

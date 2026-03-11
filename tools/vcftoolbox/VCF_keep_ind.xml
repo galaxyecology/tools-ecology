@@ -1,4 +1,4 @@
-<tool id="vcf_keep_ind" name="Keep selected individuals" version="0.1.0" python_template_version="3.5">
+<tool id="vcf_keep_remove_individuals" name="Keep or remove selected individuals" version="0.1.0" python_template_version="3.5">
     <description>
         from a VCF.
     </description>
@@ -12,13 +12,21 @@
         bash '$__tool_directory__/VCF_keep_ind.sh'
             '${vcf_input}'
             '${vcf_input.element_identifier}'
+            '$action'
             '$list_ind'
         ]]></command>
 
     <inputs>
         <param name="vcf_input" type="data" format="vcf" label="Upload your VCF file"
             help="File containing SNP data in a VCF format. You can upload a simple file, multiple file or a dataset collection."/>
-        <param name="list_ind" type="data" format="tabular" label="Upload the list of individuals to be kept"
+
+        <param name="action" type="select" label="Action to perform on the listed individuals"
+            help="Choose whether to keep only the listed individuals, or to remove them from the VCF.">
+            <option value="keep" selected="true">Keep listed individuals</option>
+            <option value="remove">Remove listed individuals</option>
+        </param>
+
+        <param name="list_ind" type="data" format="tabular,txt" label="Upload the list of individuals to be kept"
             help="Individuals must be listed one per line.  If there are multiple VCF files, the individual list contain all individuals present in all VCF files. "/>
     </inputs> 
 
@@ -32,7 +40,24 @@
         <test>
             <param name="vcf_input" value="test_vcf.vcf"/>
             <param name="list_ind" value="ind_list.tabular"/>
-            <output name="new_vcf" file="vcf_directory/test_vcf.vcf" count="1"/>
+            <param name="action" value="keep"/>
+            <output name="new_vcf" count="1">
+                <assert_contents>
+                    <has_size value="7600000" delta="7700000"/>
+                </assert_contents>
+            </output>
+        </test>
+
+
+        <test>
+            <param name="vcf_input" value="test_vcf.vcf"/>
+            <param name="list_ind" value="ind_list.tabular"/>
+            <param name="action" value="remove"/>
+            <output name="new_vcf" count="1">
+                <assert_contents>
+                    <has_size value="285700" delta="300000"/>
+                </assert_contents>
+            </output>
         </test>
     </tests>
 
