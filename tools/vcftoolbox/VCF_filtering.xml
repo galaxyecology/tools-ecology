@@ -98,13 +98,13 @@
         <output name="summary" ftype="tabular">
             <assert_contents>
                 <has_n_lines n="3"/>
-                <has_line_matching expression="test_vcf\t1\tA_ind_missing\tMAX_MISSING_IND=0.2\t665\t2091"/>
+                <has_line_matching expression="test_vcf\t1\tA_ind_missing\tMAX_MISSING_IND=0.2\t196\t500"/>
             </assert_contents>
         </output>
 
         <output name="vcf_filtered" ftype="vcf" count="1">
                 <assert_contents>
-                    <has_size value="5400000" delta="5500000"/>
+                    <has_n_lines n="516"/>
                 </assert_contents>
         </output>
     </test>
@@ -120,13 +120,13 @@
         <output name="summary" ftype="tabular">
             <assert_contents>
                 <has_n_lines n="3"/>
-                <has_line_matching expression="1\tB_loci_missing\tMAX_MISSING_LOCI=0.2\t957\t1334"/>
+                <has_line_matching expression="test_vcf\t1\tB_loci_missing\tMAX_MISSING_LOCI=0.2\t273\t331"/>
             </assert_contents>
         </output>
 
         <output name="vcf_filtered" ftype="vcf" count="1">
                 <assert_contents>
-                    <has_size value="4900000" delta="5000000"/>
+                    <has_n_lines n="347"/>
                 </assert_contents>
         </output>
     </test>
@@ -156,25 +156,24 @@
 
     <output name="vcf_filtered" count="1">
             <assert_contents>
-                <has_size value="4200000" delta="4300000"/>
+                <has_n_lines n="411"/>
             </assert_contents>
     </output>
 
     <output name="summary" ftype="tabular">
         <assert_contents>
             <has_n_lines n="9"/>
-            <has_line_matching expression="0\tinput\traw\t957\t2091"/>
-            <has_line_matching expression="1\tA_ind_missing\tMAX_MISSING_IND=0.2\t665\t2091"/>
-            <has_line_matching expression="2\tD_DP\tNo DP field found\t665\t2091"/>
-            <has_line_matching expression="3\tC_GQ\tNo GQ field found\t665\t2091"/>
-            <has_line_matching expression="4\tE_biallelic\tbiallelic_SNPs_only\t665\t2091"/>
-            <has_line_matching expression="5\tB_loci_missing\tMAX_MISSING_LOCI=0.2\t665\t1623"/>
-            <has_line_matching expression="6\tF_MAC\tMIN_MAC=2\t665\t1622"/>
-            <has_line_matching expression="7\tG_heterozygosity\tMAX_Ho=0.6\t665\t1622"/>
+            <has_line_matching expression="test_vcf\t0\tinput\traw\t273\t500"/>
+            <has_line_matching expression="test_vcf\t1\tA_ind_missing\tMAX_MISSING_IND=0.2\t196\t500"/>
+            <has_line_matching expression="test_vcf\t2\tD_DP\tNo DP field found\t196\t500"/>
+            <has_line_matching expression="test_vcf\t3\tC_GQ\tNo GQ field found\t196\t500"/>
+            <has_line_matching expression="test_vcf\t4\tE_biallelic\tbiallelic_SNPs_only\t196\t500"/>
+            <has_line_matching expression="test_vcf\t5\tB_loci_missing\tMAX_MISSING_LOCI=0.2\t196\t394"/>
+            <has_line_matching expression="test_vcf\t6\tF_MAC\tMIN_MAC=2\t196\t391"/>
+            <has_line_matching expression="test_vcf\t7\tG_heterozygosity\tMAX_Ho=0.6\t196\t391"/>
         </assert_contents>
     </output>
 </test>
-
 </tests>
 
 <help><![CDATA[

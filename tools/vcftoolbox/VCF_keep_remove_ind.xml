@@ -38,11 +38,11 @@
     <tests>
         <test>
             <param name="vcf_input" value="test_vcf.vcf"/>
-            <param name="list_ind" value="ind_list.tabular"/>
+            <param name="list_ind" value="ind_list.txt"/>
             <param name="action" value="keep"/>
             <output name="new_vcf" count="1">
                 <assert_contents>
-                    <has_size value="7600000" delta="7700000"/>
+                    <has_text text="GA-2_2021_A11-01-m21_1"/>
                 </assert_contents>
             </output>
         </test>
@@ -50,11 +50,11 @@
 
         <test>
             <param name="vcf_input" value="test_vcf.vcf"/>
-            <param name="list_ind" value="ind_list.tabular"/>
+            <param name="list_ind" value="ind_list.txt"/>
             <param name="action" value="remove"/>
             <output name="new_vcf" count="1">
                 <assert_contents>
-                    <has_size value="285700" delta="300000"/>
+                    <not_has_text text="GA-2_2021_A11-01-m21_1"/>
                 </assert_contents>
             </output>
         </test>
