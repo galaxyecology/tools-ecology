@@ -1,6 +1,6 @@
 <tool id="split_vcf_by_pop" name="Split VCF by pop" version="0.1.0" profile="25.0">
     <description>
-        from an individuals/population table.
+        from an individuals/population table
     </description>
 
     <requirements>
