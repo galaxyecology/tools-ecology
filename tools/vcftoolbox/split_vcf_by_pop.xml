@@ -64,7 +64,7 @@ See also examples of VCF formats in :  https://samtools.github.io/hts-specs/VCFv
 ]]></help>
 
     <citations>
-        <citation type="bibtex">
+        <citation type="doi">10.1093/gigascience/giab008
         @article{10.1093/gigascience/giab008,
     author = {Danecek, Petr and Bonfield, James K and Liddle, Jennifer and Marshall, John and Ohan, Valeriu and Pollard, Martin O and Whitwham, Andrew and Keane, Thomas and McCarthy, Shane A and Davies, Robert M and Li, Heng},
     title = "{Twelve years of SAMtools and BCFtools}",
