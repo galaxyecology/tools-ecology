@@ -259,3 +259,4 @@ retrieveResults(server, inputParameters$select_process, jobId, outputLocation)
 cat("4: END RETRIEVING RESULTS\n")
 
 cat("\n5: DONE.")
+
