@@ -41,7 +41,7 @@
 Usage
 =====
 
-As input, the user provides one or more VCF file (Danecek *et al.* 2011) and a population file (indpop) defining population assigments for each individual. If there are multiple VCF files, then the indpop file contain all individuals present in all VCF files as well as their population.
+As input, the user provides one or more VCF file (Danecek *et al.* 2011) and a population file (indpop) defining population assigments for each individual.
 
 For each population name identified in the indpop file, the tool extracts the corresponding list of individuals and generates a VCF file containing only those samples.
 

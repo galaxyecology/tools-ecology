@@ -77,7 +77,7 @@ Usage
 
 As input, the user provides one or more VCF files (Danecek *et al.* 2011), the desired number of SNPs to subsample per replicate VCF file, the number of replicate VCF files to generate, and a minimum SNP number threshold that needs to be present in the input file for the subsampling to occur.
 
-For each input VCF file (which by assumption is representative of one population), 
+For a input VCF file (which by assumption is representative of one population), 
 
 1. if the SNP number exceeds the MIN_SNP_NB threshold, the tool generates the requested NB_REPLICATE_VCF of VCF files for each population. Then in each replicate VCF file, if the user picks the 'polymorphic loci' option, the tool randomly selects only polymorphic loci in the population under consideration. Otherwise, loci are selected randomly from all loci in the VCF file, with some loci potentially monomorphic in the population.
 
@@ -93,6 +93,7 @@ According to Waples et al. 2024, using 1000 polymorphic SNPs provide sufficient 
 
 
 See also examples of VCF formats in :  https://samtools.github.io/hts-specs/VCFv4.5.pdf
+
     ]]></help>
 
     <citations>
