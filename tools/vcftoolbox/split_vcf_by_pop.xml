@@ -18,10 +18,10 @@
     ]]></command>
 
     <inputs>
-        <param name="vcf_input" type="data" format="vcf" label="Upload your VCF file"
+        <param name="vcf_input" type="data" format="vcf" label="VCF file"
             help="File containing SNP data in VCF format. You can upload a simple file, multiple files or a dataset collection. If multiple files are added, individuals and their populations must be listed in the same file."/>
 
-        <param name="indpop" type="data" format="tabular" label="Upload your population file" 
+        <param name="indpop" type="data" format="tabular" label="Population file" 
             help="File containing individuals in the first column and their population code in the second column, separated by a tabulation character."/>
     </inputs>
 

@@ -25,7 +25,7 @@
 ]]></command>
 
     <inputs>
-        <param name="vcf_input" type="data" format="vcf" label="Upload your VCF file"
+        <param name="vcf_input" type="data" format="vcf" label="VCF file"
             help="File containing DNA sequence data in VCF format. You can upload a simple file, multiple files or a dataset collection"/>
 
         <param name="filter_order" type="select" multiple="true" display="checkboxes"

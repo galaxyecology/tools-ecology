@@ -22,10 +22,9 @@
         ]]></command>
 
     <inputs>
-        <param name="vcf_input" type="data" format="vcf" label="Upload your VCF file"
+        <param name="vcf_input" type="data" format="vcf" label="VCF file"
             help="File containing SNP data in VCF format. You can upload a simple file, multiple file or a dataset collection"/>
-        <param name="SUBSET_SNPS_NB" type="integer" value="1000" min="0" label="Number of SNPs chosen for a number of replicate VCF files per input VCF file" 
-            />
+        <param name="SUBSET_SNPS_NB" type="integer" value="1000" min="0" label="Number of SNPs chosen for a number of replicate VCF files per input VCF file" />
         <param name="NB_REPLICATE_VCF" type="integer" value="5" min="1" label="Number of replicate VCF files"
             help="Number of replicate VCF files to create, each with a chosen subset of SNP."/>
         <param name="MIN_SNP_NB" type="integer" value="4000" min="0" label="Minimum number of SNPs above which SNP subsetting is performed"

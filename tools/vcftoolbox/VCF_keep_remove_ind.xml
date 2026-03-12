@@ -17,7 +17,7 @@
         ]]></command>
 
     <inputs>
-        <param name="vcf_input" type="data" format="vcf" label="Upload your VCF file"
+        <param name="vcf_input" type="data" format="vcf" label="VCF file"
             help="File containing SNP data in a VCF format. You can upload a simple file, multiple file or a dataset collection."/>
 
         <param name="action" type="select" display="radio" optional="false" label="Action to perform:">
@@ -25,7 +25,7 @@
             <option value="remove">Remove listed individuals</option>
         </param>
 
-        <param name="list_ind" type="data" format="tabular,txt" label="Upload the list of individuals to be kept"
+        <param name="list_ind" type="data" format="tabular,txt" label="List of individuals to be kept"
             help="Individuals must be listed one per line.  If there are multiple VCF files, the individual list contain all individuals present in all VCF files. "/>
     </inputs> 
 
