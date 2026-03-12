@@ -29,7 +29,7 @@
             help="File containing DNA sequence data in VCF format. You can upload a simple file, multiple files or a dataset collection"/>
 
         <param name="filter_order" type="select" multiple="true" display="checkboxes"
-            label="Select and order the filters to apply"
+            label="Select your filters in the order you wish to apply them."
             help="Only the selected filters will be applied, in the exact order chosen here.">
             <option value="A">A: Individuals with missing data</option>
             <option value="B">B: Loci with missing data</option>
