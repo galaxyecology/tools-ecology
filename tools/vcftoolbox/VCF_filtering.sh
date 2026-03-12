@@ -63,7 +63,7 @@ base_name=${base_name%.*}
 
 # Initialize summary
 SUMMARY="${summ_dir}/summary.tabular"
-echo -e "Step\tFilter\tParameters\tN_individuals\tN_SNPs" > "$SUMMARY"
+echo -e "File\tStep\tFilter\tParameters\tN_individuals\tN_SNPs" > "$SUMMARY"
 
 log_stats() {
     local step="$1"
@@ -73,7 +73,7 @@ log_stats() {
     local n_ind n_snps
     n_ind=$(bcftools query -l "$vcf" | wc -l)
     n_snps=$(bcftools view -H "$vcf" | wc -l)
-    echo -e "${step}\t${filter}\t${params}\t${n_ind}\t${n_snps}" >> "$SUMMARY"
+    echo -e "${base_name}\t${step}\t${filter}\t${params}\t${n_ind}\t${n_snps}" >> "$SUMMARY"
 }
 
 # Temporary vcf to make connexion between the diferent filter

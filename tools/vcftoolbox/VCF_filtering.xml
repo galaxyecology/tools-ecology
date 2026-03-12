@@ -83,7 +83,7 @@
         <data name="vcf_filtered" format="vcf" label="${tool.name}">
                 <discover_datasets pattern="(?P&lt;designation&gt;.+)\.vcf" directory="vcf_filtered_directory" visible="true" assign_primary_output="true"/>
         </data>
-        <data name="summary" from_work_dir="summary/summary.tabular" format="tabular" label="Filtering : Number of SNPs and individuals"/>
+        <data name="summary" from_work_dir="summary/summary.tabular" format="tabular" label="Filtering: Number of SNPs and individuals"/>
     </outputs>
 
     <tests>
@@ -98,7 +98,7 @@
         <output name="summary" ftype="tabular">
             <assert_contents>
                 <has_n_lines n="3"/>
-                <has_line_matching expression="1\tA_ind_missing\tMAX_MISSING_IND=0.2\t665\t2091"/>
+                <has_line_matching expression="test_vcf\t1\tA_ind_missing\tMAX_MISSING_IND=0.2\t665\t2091"/>
             </assert_contents>
         </output>
 
