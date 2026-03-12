@@ -1,4 +1,4 @@
-<tool id="aquainfra_ogc_api_processes" name="AquaINFRA OGC API Processes" version="0.12.0" profile="25.1">
+<tool id="aquainfra_ogc_api_processes" name="AquaINFRA OGC API Processes" version="0.13.0" profile="25.1">
     <description/>
     <macros>
         <import>macros.xml</import>
@@ -21,6 +21,8 @@
                 <option value="check-names">check-names: Check species names in biodiversity data from separate sources</option>
                 <option value="clean-catchment-geometry">clean-catchment-geometry: Validate geometries (e.g. river catchments)</option>
                 <option value="combine-eurostat-data">combine-eurostat-data: Attach human population statistics to EU NUTS3 regions.</option>
+                <option value="corine-stats-real-areas-europe">corine-stats-real-areas-europe: Compute areas of CORINE classes within polygons (Europe version)</option>
+                <option value="corine-stats-real-areas-finland">corine-stats-real-areas-finland: Compute areas of CORINE classes within polygons (Finland version)</option>
                 <option value="filter-clip-clean-extent">filter-clip-clean-extent: Align extents of three datasets (D1=NUTS3 regions; D2=LAU regions; D3=river catchments) including validation steps.</option>
                 <option value="heat1">heat1: Reproducing HEAT HOLAS results: Generate the Assessment Units</option>
                 <option value="heat1advanced">heat1advanced: Assessing Eutrophication: Generate the Assessment Units</option>
@@ -32,6 +34,7 @@
                 <option value="heat4advanced">heat4advanced: Assessing Eutrophication: Compute Assessment Indicators</option>
                 <option value="heat5">heat5: Reproducing HEAT HOLAS results: Compute Assessment</option>
                 <option value="heat5advanced">heat5advanced: Assessing Eutrophication: Compute Assessment</option>
+                <option value="malta-groundwater">malta-groundwater: Malta Groundwater Model (SEAWAT)</option>
                 <option value="map-shapefile-points">map-shapefile-points: Spatial visualisation of regions and data points</option>
                 <option value="map-trends-static">map-trends-static: Spatial visualisation of regions and data points</option>
                 <option value="match-data">match-data: Combine and match biodiversity data from separate sources</option>
@@ -50,6 +53,7 @@
                 <option value="process-interpolate-subbasins">process-interpolate-subbasins: Area-weighted interpolation of ancillary data to calculate human population in target regions</option>
                 <option value="retrieve-biodiversity-data">retrieve-biodiversity-data: Retrieve biodiversity data from the web</option>
                 <option value="riverload">riverload: Compute River Load</option>
+                <option value="riverload-plot">riverload-plot: Riverload Plot</option>
                 <option value="tordera-gloria">tordera-gloria: SWAT+, Soil and Water Assessment Tool</option>
                 <option value="tordera-gloria-connection">tordera-gloria-connection: SWAT+ output to MITgcm input connection tool</option>
                 <option value="trend-analysis-mk">trend-analysis-mk: Man-Kendall Trend Analysis on Time Series</option>
@@ -104,6 +108,12 @@
                 <param name="pop_year" label="human population year" optional="false" value="" help="Chosen human population year (HPY) for statistics. If you selected NUTS3 version (NV) 2013, select HPY &gt;= 2014 &amp; &lt;= 2017. If NV 2016, select HPY &gt;= 2018 &amp; &lt;= 2020. If NV 2021, select HPY &gt;= 2021 &amp; &lt;= 2023. If NV 2024, select HPY &gt;= 2024 &amp; &lt;= 2030." type="text">
                     <validator type="empty_field" message="You must provide a value."/>
                 </param>
+            </when>
+            <when value="corine-stats-real-areas-europe">
+                <param name="input_url_polygons" label="Input Regions" optional="false" help="URL to the file containing the polygons of interest (e.g. as a geojson file, zipped shapefile, or any file that can be read by geopandas.read_file). It has to contain the attribute areaname and a geometry. (URL must be stored in a .txt file)" type="data" format="txt"/>
+            </when>
+            <when value="corine-stats-real-areas-finland">
+                <param name="input_url_polygons" label="Input Regions" optional="false" help="URL to the file containing the polygons of interest (e.g. as a geojson file, zipped shapefile, or any file that can be read by geopandas.read_file). It has to contain the attribute areaname and a geometry. (URL must be stored in a .txt file)" type="data" format="txt"/>
             </when>
             <when value="filter-clip-clean-extent">
                 <param name="inputFile1_gpkg" label="NUTS3 regions" optional="false" help="EU NUTS3 regions saved in geopackage. It should be in same coordinate system as the inputted river catchment dataset and overlap this - ideally it should fully contain its extent. (URL must be stored in a .txt file)" type="data" format="txt"/>
@@ -185,6 +195,11 @@
                 <param name="assessment_indicators" label="Assessment Indicators Table" optional="false" help="CSV file of calculated EQRS per assessment period per assessment unit (AssessmentIndicators.csv). (URL must be stored in a .txt file)" type="data" format="txt"/>
                 <param name="table_indicators" label="Table of Indicators" optional="true" help="A table listing the indicators. Needs the following column names: IndicatorID; CriteriaID; Name; Code; Parameters; Units; YearMin; YearMax; MonthMin; MonthMax; DepthMin; DepthMax; Metric; Response; Applied; Comments; GTC_HM; GTC_ML; STC_HM; STC_ML; SSC_HM; SSC_ML. Please ask HELCOM for details. Please provide a URL to the table as a CSV file." type="text"/>
                 <param name="table_indicator_units" label="Table of Indicator Units" optional="true" help="A table listing something about the indicators. Needs the following column names: IndicatorID; UnitID; ET; ACDEV; EQR_HG; EQR_GM; EQR_MP; EQR_PB; IW. Please ask HELCOM for details. Please provide a URL to the table as a CSV file." type="text"/>
+            </when>
+            <when value="malta-groundwater">
+                <param name="user_sealevels" label="Sea Level Projections (m)" optional="true" help="A list of sea level values (m), formatted as a single text string with brackets and commas. This allows testing different scenarios. Higher values (simulating sea-level rise) will increase pressure on the aquifer, pushing saltwater further inland (saltwater intrusion)." type="text"/>
+                <param name="sealevel_int" label="Stress Period Duration (Years)" optional="true" help="The duration, in years, for each individual stress period (i.e., for each value in the 'Sea Level Projections' string). The **Total Simulation Time** is this duration multiplied by the number of sea levels provided. (e.g., 30 sea levels * 1 year duration = 30-year simulation)." type="integer"/>
+                <param name="user_recharge" label="Groundwater Recharge Rate (m/day)" optional="true" help="The average rainfall recharge rate, applied uniformly across the model. Units must be in meters per day (m/day). Higher values (e.g., more rainfall) will help push freshwater toward the sea, counteracting saltwater intrusion." type="float"/>
             </when>
             <when value="map-shapefile-points">
                 <param name="regions" label="Study region or study subregions" optional="false" help="URL to the study region, or several regions, to classify the input data into groups of interest. Currently it has to be provided as a shapefile. It can be in any coordinate system and will be transformed to WGS84 during this process. (URL must be stored in a .txt file)" type="data" format="txt"/>
@@ -429,6 +444,20 @@
             <when value="riverload">
                 <param name="input_toc_urls" label="Input Total Organic Carbon (TOC)" optional="false" help="URL to in situ Total Organic Carbon (TOC) data (date, value). If the data is divided into parts, please provide several URLs separated by a comma. All URLs need to start with http(s). (URL must be stored in a .txt file)" type="data" format="txt"/>
                 <param name="input_discharge_urls" label="Input discharge" optional="false" help="URL to the daily discharge data (date, value). If the data is divided into parts, please provide several URLs separated by a comma. All URLs need to start with http(s). (URL must be stored in a .txt file)" type="data" format="txt"/>
+            </when>
+            <when value="riverload-plot">
+                <param name="corine_table_url" label="Values per Area" optional="false" help="A link to the output result csv file of the selected polygon from the output of the CORINE tool. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="riverload_table_url" label="Riverload Table (URL)" optional="false" help="Output of loading tool: A link to a CSV table containing daily loading values (date, Q (m3/s), conc. (mg/l), load (kg/d). (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="vemala_url" label="Input modelled" optional="false" help="A link to the daily modelled data (CSV): A table containing modelled daily loading values (date, Q (m3/s), TOC load (1000 kg/day),...) (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="start_date" label="Input starting date" optional="false" value="" help="Starting date for plotting. Format: YYYY-MM-DD. Constraints: 2000-01-01 &lt; start_date &lt; 2024-12-31. For optimized usage, use the first day of the year YYYY-01-01." type="text">
+                    <validator type="empty_field" message="You must provide a value."/>
+                </param>
+                <param name="end_date" label="Input ending date" optional="false" value="" help="Ending date for plotting. Format: YYYY-MM-DD Constraints: 2000-01-01 &lt; end_date &lt; 2024-12-31. For optimized usage, use the last day of the year YYYY-12-31. Also, for some functionalities of the tool, at least a 2-year period is needed." type="text">
+                    <validator type="empty_field" message="You must provide a value."/>
+                </param>
+                <param name="area_name" label="Input area name" optional="false" value="" help="The name of the plotted area will be used in the titles of the plot and filenames." type="text">
+                    <validator type="empty_field" message="You must provide a value."/>
+                </param>
             </when>
             <when value="tordera-gloria">
                 <param name="TextInOut_URL" label="URL to project folder" optional="true" help="To model a watershed other than the Tordera Basin, users can add a URL to their own zipped project folder. Important: Do not include the SWAT executable to that folder — AquaINFRA has integrated the executable version rev60.5.7_64rel_linux. Defaults to: https://raw.githubusercontent.com/AmandaBatlle/AquaINFRA_CaseUse_MedInlandModel/refs/heads/main/example_inputs/project.zip (URL must be stored in a .txt file)" type="data" format="txt"/>
