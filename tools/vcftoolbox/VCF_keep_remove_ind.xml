@@ -1,4 +1,4 @@
-<tool id="vcf_keep_remove_individuals" name="Keep or remove selected individuals" version="0.1.0" python_template_version="3.5">
+<tool id="vcf_keep_remove_individuals" name="Keep or remove selected individuals" version="0.1.0" python_template_version="3.5" profile="25.0">
     <description>
         from a VCF.
     </description>
@@ -20,9 +20,8 @@
         <param name="vcf_input" type="data" format="vcf" label="Upload your VCF file"
             help="File containing SNP data in a VCF format. You can upload a simple file, multiple file or a dataset collection."/>
 
-        <param name="action" type="select" label="Action to perform on the listed individuals"
-            help="Choose whether to keep only the listed individuals, or to remove them from the VCF.">
-            <option value="keep" selected="true">Keep listed individuals</option>
+        <param name="action" type="select" display="radio" optional="false" label="Action to perform:">
+            <option value="keep" selected="true">Keep listed individuals only</option>
             <option value="remove">Remove listed individuals</option>
         </param>
 
@@ -65,11 +64,11 @@
 Usage
 =====
 
-As input, the user provides a single VCF file (Danecek *et al.* 2011) and a list of individuals (tabular or txt). The user selects whether they wish to keep only the individuals on the list or whether they wish to delete them. If there are multiple VCF files, the individual list contains all individuals present in all VCFs.
+As input, the user provides a single VCF file (Danecek *et al.* 2011) and a list of individuals (tabular or txt). The user selects the action they wish to perform: delete or keep only the individuals listed.
 
-The tool processes the VCF and keeps or removes only the samples listed in the provided individual list. If any individual in the list is not present in the VCF, it is ignored, and processing continues with the available matches. Please note that if there are names that appear in both VCFs, this may skew the results.
+The tool processes the VCF file and writes an output VCF file in which it keeps or removes only the samples listed in the provided individual list. If any individual in the list is not present in the VCF, it is ignored, and processing continues with the available matches. Please note that if there are names that appear in more than on input VCF file, this may skew the results.
 
-Example : The input VCF contains individuals id_A, id_B, id_C, id_D and the list contains id_B, id_D and id_E, If the user decides to keep individuals, the output will contain only samples id_B and id_D. Samples id_A and id_C are removed and id_E is ignored. If the user decides to remove individuals, the output will contain only samples id_A and id_C.
+Example : The input VCF file contains individuals id_A, id_B, id_C, id_D and the list contains id_B, id_D and id_E. If the user decides to keep individuals, the output will contain only samples id_B and id_D. Samples id_A and id_C are removed and id_E is ignored. If the user decides to remove individuals, the output will contain only samples id_A and id_C.
 
 Example of individual list : 
 

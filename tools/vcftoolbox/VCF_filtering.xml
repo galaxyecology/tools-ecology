@@ -1,4 +1,4 @@
-<tool id="vcf_filtering" name="VCF filtering" version="0.1.0" python_template_version="3.5">
+<tool id="vcf_filtering" name="VCF filtering" version="0.1.0" python_template_version="3.5" profile="25.0">
     <description>
         of individuals and variants.
     </description>
@@ -28,7 +28,7 @@
         <param name="vcf_input" type="data" format="vcf" label="Upload your VCF file"
             help="File containing DNA sequence data in VCF format. You can upload a simple file, multiple files or a dataset collection"/>
 
-        <param name="filter_order" type="select" multiple="true" display="checkboxes" optional="false"
+        <param name="filter_order" type="select" multiple="true" display="checkboxes"
             label="Select and order the filters to apply"
             help="Only the selected filters will be applied, in the exact order chosen here.">
             <option value="A">A: Individuals with missing data</option>
@@ -102,7 +102,7 @@
             </assert_contents>
         </output>
 
-        <output name="vcf_filtered" ftype="vcf">
+        <output name="vcf_filtered" ftype="vcf" count="1">
                 <assert_contents>
                     <has_size value="5400000" delta="5500000"/>
                 </assert_contents>
@@ -124,7 +124,7 @@
             </assert_contents>
         </output>
 
-        <output name="vcf_filtered" ftype="vcf">
+        <output name="vcf_filtered" ftype="vcf" count="1">
                 <assert_contents>
                     <has_size value="4900000" delta="5000000"/>
                 </assert_contents>
@@ -194,11 +194,11 @@ See also examples of VCF formats in: https://samtools.github.io/hts-specs/VCFv4.
 **[A] Individuals with missing data**
 --------------------------------------
 
-As input, the user provides a threshold value indicating a maximum proportion of missing data per individual.
+As input, the user provides a threshold value indicating a maximum of missing data allowed per individual.
 
 For each VCF file entered, the tool calculates the proportion of missing genotypes for each individual (or sample), and removes those with a value above the user-defined threshold, resulting in the output file.
 
-Example: if MAX_MISSING_IND = 0.25 (default value), all individuals with missing data on more than 25% of loci in the input dataset are removed from the output VCF file.
+Example: if MAX_MISSING_IND = 0.25 (default value), all individuals with missing data on more than 25% of loci in the input dataset are excluded from the output VCF file.
 
 **Tips**
 
@@ -213,11 +213,11 @@ Using 1.0 (100%) means that no filtering is applied.
 **[B] Loci with missing data**
 --------------------------------
 
-As input, the user provides a threshold value indicating the maximum proportion of missing data per locus.
+As input, the user provides a threshold value indicating the maximum of missing data allowed per locus.
 
 For each input VCF file, the tool calculates the proportion of missing genotypes for each locus, and removes those whose value exceeds the user-defined threshold in the output file.
 
-Example: if MAX_MISSING_LOCI = 0.2, all loci with missing data for more than 20% of individuals in the input dataset are removed from the output VCF file.
+Example: if MAX_MISSING_LOCI = 0.2, all loci with missing data for more than 20% of individuals in the input dataset are excluded from the output VCF file.
 
 **Tips**
 
@@ -232,7 +232,7 @@ Using 1.0 (100%) means that no filtering is applied.
 **[C] Genotype quality (GQ)**
 -------------------------------
 
-As input, the user provides a threshold value for a minimum genotype quality (GQ).
+As input, the user provides a threshold value for a minimum genotype quality (GQ) required.
 
 For each VCF file entered, this tool replaces genotypes with missing values (.) when their quality is below the threshold value (i.e. when we consider that their probability of being incorrect is not acceptable according to this threshold). At this stage, no variants or samples are excluded.
 
@@ -240,26 +240,27 @@ The tool automatically detects whether GQ is stored in the INFO/GQ or FORMAT/GQ 
 
 **Tips**
 
-GQ = 3 means that there is 50% chance that the genotype call is incorrect.
-GQ = 20 means that there is 1% chance that the call is incorrect.
+GQ=-10*log10(p), p being the probability that the call is incorrect.
+GQ = 3 means that there is a 50% chance that the genotype call is incorrect.
+GQ = 20 means that there is a 1% chance that the call is incorrect.
 
 ----
 
 **[D] Depth coverage (DP)**
 -----------------------------
 
-As input, the user provides a threshold value indicating a minimum read depth.
+As input, the user provides a threshold value indicating a minimum read depth required.
 
-For each input VCF file, the tool replaces genotype calls with missing values (./.) if their depth (DP) is less than the user-defined minimum or exceeds a maximum threshold (automatically calculated as twice the average depth observed in the data file).
+For each input VCF file, the tool replaces genotype calls with missing values (./.) if their read depth (DP) is lower than the user-defined minimum or exceeds a maximum threshold (automatically calculated as twice the average depth observed in the data file).
 
 The tool automatically detects whether DP is stored in the INFO/DP or FORMAT/DP field of the VCF file. If no DP annotation is found, the input and output VCF files are identical.
 
-Example: If the average depth in a VCF data file is 30 and the user sets a minimum threshold of 5, any genotype with DP < 5 or DP > 60 is considered missing data and masked.
+Example: If the average depth in a VCF data file is 30 and the user sets a minimum acceptable DP of 5, any genotype with DP < 5 or DP > 60 is considered missing data and masked.
 
 **Tips**
 
 The threshold values for minimum read depth depend on the objectives of the study.
-The minimum threshold is generally greater than 5 in order to avoid underestimating certain statistics, such as observed and expected heterozygosity (Kardos and Waples, 2024).
+The minimum required read depth is recommended to be 5 or larger, in order to avoid underestimating certain statistics, such as observed and expected heterozygosity (Kardos and Waples, 2024).
 
 ----
 
@@ -275,7 +276,7 @@ Example: if a variant is monomorphic (only reference) or has more than one alter
 **[F] Minor allele count (MAC)**
 ----------------------------------
 
-As input, the user provides a threshold value indicating a minimum number of occurrences for the minor allele.
+As input, the user provides a threshold value indicating a minimum required number of occurrences for the minor allele.
 
 For each input VCF file, the tool calculates the minor allele count (MAC) for each variant, and removes those with a value below the user-defined threshold in the output file.
 
@@ -291,11 +292,11 @@ For most types of analyses, a MIN_MAC of 2 is usually recommended. Other analyse
 **[G] Heterozygosity**
 ------------------------
 
-As input, the user provides a threshold value indicating a maximum value for the observed heterozygosity per SNP.
+As input, the user provides a threshold value indicating a maximum acceptable value for the observed heterozygosity per SNP.
 
 For each input VCF file, the tool calculates the proportion of heterozygous genotypes for each SNP and removes those with a value strictly above the user-defined threshold in the output file.
 
-Example: if MAX_Ho = 0.6, all SNP with an observed heterozygosity above 60% in the input dataset are removed from the output VCF file.
+Example: if MAX_Ho = 0.6, all SNPs with an observed heterozygosity above 60% in the input dataset are excluded from the output VCF file.
 
 **Tips**
 
