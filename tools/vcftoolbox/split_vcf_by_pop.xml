@@ -81,7 +81,7 @@ See also examples of VCF formats in :  https://samtools.github.io/hts-specs/VCFv
 }
         </citation>
         
-        <citation type="bibtex">
+        <citation type="doi">10.1093/bioinformatics/btr330
             @article{Danecek2011,
   author          = {Danecek, Petr and Auton, Adam and Abecasis, Goncalo and Albers, Cornelis A. and Banks, Erica and DePristo, Mark A. and Handsaker, Robert E. and Lunter, Gerton and Marth, Gabor T. and Sherry, Stephen T. and McVean, Gil and Durbin, Richard and {1000 Genomes Project Analysis Group}},
   title           = {The variant call format and {VCF}tools},
