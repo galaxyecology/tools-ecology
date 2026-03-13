@@ -1,10 +1,17 @@
-<tool id="vcf_keep_remove_individuals" name="Keep or remove selected individuals" version="0.1.0" python_template_version="3.5" profile="25.0">
+<tool id="vcf_keep_remove_individuals" name="Keep or remove selected individuals" version="@TOOL_VERSION@" profile="@PROFILE@">
     <description>
         from a VCF.
     </description>
-    <requirements>
-        <requirement type="package" version="1.22">bcftools</requirement>
-    </requirements>
+    
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+
+    <expand macro="requirements_bcftools"/>
+
+    <required_files>
+        <include path="VCF_keep_remove_ind.R" />
+    </required_files>
 
     <command detect_errors="exit_code"><![CDATA[
         mkdir -p vcf_directory &&
@@ -17,8 +24,7 @@
         ]]></command>
 
     <inputs>
-        <param name="vcf_input" type="data" format="vcf" label="VCF file"
-            help="File containing SNP data in a VCF format. You can upload a simple file, multiple file or a dataset collection."/>
+        <expand macro="param_vcf_input"/>
 
         <param name="action" type="select" display="radio" optional="false" label="Action to perform:">
             <option value="keep" selected="true">Keep listed individuals only</option>
@@ -31,7 +37,7 @@
 
     <outputs>
         <data name="new_vcf" format="vcf" label="${tool.name}">
-            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.vcf$" directory="vcf_directory" visible="true" assign_primary_output="true"/>
+            <discover_datasets pattern="__designation_and_ext__" directory="vcf_directory" visible="true" assign_primary_output="true"/>
         </data>
     </outputs>
 
@@ -60,7 +66,7 @@
         </test>
     </tests>
 
-            <help><![CDATA[
+    <help><![CDATA[
 Usage
 =====
 
@@ -84,47 +90,8 @@ The list of individuals does not contain a header and there is only one individu
 See also examples of VCF formats in :  https://samtools.github.io/hts-specs/VCFv4.5.pdf
 
     ]]></help>
-
     <citations>
-        <citation type="bibtex">
-        @article{10.1093/gigascience/giab008,
-    author = {Danecek, Petr and Bonfield, James K and Liddle, Jennifer and Marshall, John and Ohan, Valeriu and Pollard, Martin O and Whitwham, Andrew and Keane, Thomas and McCarthy, Shane A and Davies, Robert M and Li, Heng},
-    title = "{Twelve years of SAMtools and BCFtools}",
-    journal = {GigaScience},
-    volume = {10},
-    number = {2},
-    year = {2021},
-    abstract = "{SAMtools and BCFtools are widely used programs for processing and analysing high-throughput sequencing data. They include tools for file format conversion and manipulation, sorting, querying, statistics, variant calling, and effect analysis amongst other methods.The first version appeared online 12 years ago and has been maintained and further developed ever since, with many new features and improvements added over the years. The SAMtools and BCFtools packages represent a unique collection of tools that have been used in numerous other software projects and countless genomic pipelines.Both SAMtools and BCFtools are freely available on GitHub under the permissive MIT licence, free for both non-commercial and commercial use. Both packages have been installed \\&gt;1 million times via Bioconda. The source code and documentation are available from https://www.htslib.org.}",
-    issn = {2047-217X},
-    doi = {10.1093/gigascience/giab008},
-    url = {https://doi.org/10.1093/gigascience/giab008},
-    note = {giab008},
-    eprint = {https://academic.oup.com/gigascience/article-pdf/10/2/giab008/36332246/giab008.pdf},
-        }
-        </citation>
-        <citation type="bibtex">
-            @article{Danecek2011,
-  author          = {Danecek, Petr and Auton, Adam and Abecasis, Goncalo and Albers, Cornelis A. and Banks, Erica and DePristo, Mark A. and Handsaker, Robert E. and Lunter, Gerton and Marth, Gabor T. and Sherry, Stephen T. and McVean, Gil and Durbin, Richard and {1000 Genomes Project Analysis Group}},
-  title           = {The variant call format and {VCF}tools},
-  journal         = {Bioinformatics},
-  volume          = {27},
-  number          = {15},
-  pages           = {2156-2158},
-  year            = {2011},
-  doi             = {10.1093/bioinformatics/btr330},
-  URL             = {https://doi.org/10.1093/bioinformatics/btr330},
-  eprint          = {https://academic.oup.com/bioinformatics/article-pdf/27/15/2156/600788/btr330.pdf},
-}
-        </citation>
-    <citation type="bibtex">
-        @manual{VCFv45,
-  title        = {The Variant Call Format (VCF) Specification, Version 4.5},
-  author       = {{HTS-specs team}},
-  organization = {Global Alliance for Genomics and Health},
-  year         = {2024},
-  url          = {https://samtools.github.io/hts-specs/VCFv4.5.pdf},
-  note         = {Accessed: 2025-02-11}
-}
-    </citation>
+        <expand macro="citations_bcftools_only"/>
     </citations>
+
 </tool>

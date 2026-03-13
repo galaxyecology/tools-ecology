@@ -1,12 +1,17 @@
-<tool id="vcf_subset" name="Subsetting SNPs at random from a VCF file" version="0.1.0" profile="25.0">
+<tool id="vcf_subset" name="Subsetting SNPs at random from a VCF file" version="0@TOOL_VERSION@" profile="@PROFILE@">
     <description>
         given a chosen number of SNPs to use.
     </description>
-        
-    <requirements>
-        <requirement type="package" version="1.22">bcftools</requirement>
-        <requirement type="package" version="0.1.17">vcftools</requirement>
-    </requirements>
+    
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+ 
+    <expand macro="requirements_bcftools_vcftools"/>
+
+    <required_files>
+        <include path="VCF_subsampled.sh" />
+    </required_files>
 
     <command detect_errors="exit_code"><![CDATA[
         mkdir -p vcf_subsampled &&
@@ -22,21 +27,25 @@
         ]]></command>
 
     <inputs>
-        <param name="vcf_input" type="data" format="vcf" label="VCF file"
-            help="File containing SNP data in VCF format. You can upload a simple file, multiple file or a dataset collection"/>
+        <expand macro="param_vcf_input"/>
+        
         <param name="SUBSET_SNPS_NB" type="integer" value="1000" min="0" label="Number of SNPs chosen for a number of replicate VCF files per input VCF file" />
+        
         <param name="NB_REPLICATE_VCF" type="integer" value="5" min="1" label="Number of replicate VCF files"
             help="Number of replicate VCF files to create, each with a chosen subset of SNP."/>
+        
         <param name="MIN_SNP_NB" type="integer" value="4000" min="0" label="Minimum number of SNPs above which SNP subsetting is performed"
             help="To perform SNP subsampling without applying a threshold, enter 0."/>
+        
         <param name="polymorphic" type="boolean" truevalue="true" falsevalue="false"
-                checked="true" label="Subset polymorphic SNPs only ?"
-                help="MAC=2 filter is applicate to subset only polymorphic SNPs"/>
+            checked="true" label="Subset polymorphic SNPs only ?"
+            help="MAC=2 filter is applicate to subset only polymorphic SNPs"/>
+
     </inputs>
 
     <outputs>
         <collection name="vcf_subsampled" format="vcf" type="list" label="${tool.name}">
-            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.vcf$" directory="vcf_subsampled" format="vcf"/>
+            <discover_datasets pattern="__designation_and_ext__" directory="vcf_subsampled" format="vcf"/>
         </collection>
     </outputs>
 
@@ -48,12 +57,12 @@
             <param name="MIN_SNP_NB" value="4000"/>
             <param name="polymorphic" value="true"/>
             <output_collection name="vcf_subsampled" type="list" count="1">
-                    <element name="test_vcf_full">
-                         <assert_contents>
-                            <has_n_lines n="516"/>
-                            <has_text text="#CHROM"/>
-                        </assert_contents>
-                    </element>
+                <element name="test_vcf_full">
+                    <assert_contents>
+                        <has_n_lines n="516"/>
+                        <has_text text="#CHROM"/>
+                    </assert_contents>
+                </element>
             </output_collection>
         </test>
 
@@ -66,9 +75,9 @@
             <output_collection name="vcf_subsampled" type="list" count="5">
                 <element name="test_vcf_50snps_subsample_2">
                     <assert_contents>
-                            <has_n_lines n="67"/>
-                            <has_text text="#CHROM"/>
-                        </assert_contents>
+                        <has_n_lines n="67"/>
+                        <has_text text="#CHROM"/>
+                    </assert_contents>
                 </element>
             </output_collection>
         </test>
@@ -82,9 +91,9 @@
             <output_collection name="vcf_subsampled" type="list" count="5">
                 <element name="test_vcf_200snps_subsample_5">
                     <assert_contents>
-                            <has_n_lines n="216"/>
-                            <has_text text="#CHROM"/>
-                        </assert_contents>
+                        <has_n_lines n="216"/>
+                        <has_text text="#CHROM"/>
+                    </assert_contents>
                 </element>
             </output_collection>
         </test>
@@ -117,60 +126,8 @@ See also examples of VCF formats in :  https://samtools.github.io/hts-specs/VCFv
     ]]></help>
 
     <citations>
-        <citation type="bibtex">
-        @article{10.1093/gigascience/giab008,
-    author = {Danecek, Petr and Bonfield, James K and Liddle, Jennifer and Marshall, John and Ohan, Valeriu and Pollard, Martin O and Whitwham, Andrew and Keane, Thomas and McCarthy, Shane A and Davies, Robert M and Li, Heng},
-    title = "{Twelve years of SAMtools and BCFtools}",
-    journal = {GigaScience},
-    volume = {10},
-    number = {2},
-    year = {2021},
-    abstract = "{SAMtools and BCFtools are widely used programs for processing and analysing high-throughput sequencing data. They include tools for file format conversion and manipulation, sorting, querying, statistics, variant calling, and effect analysis amongst other methods.The first version appeared online 12 years ago and has been maintained and further developed ever since, with many new features and improvements added over the years. The SAMtools and BCFtools packages represent a unique collection of tools that have been used in numerous other software projects and countless genomic pipelines.Both SAMtools and BCFtools are freely available on GitHub under the permissive MIT licence, free for both non-commercial and commercial use. Both packages have been installed \\&gt;1 million times via Bioconda. The source code and documentation are available from https://www.htslib.org.}",
-    issn = {2047-217X},
-    doi = {10.1093/gigascience/giab008},
-    url = {https://doi.org/10.1093/gigascience/giab008},
-    note = {giab008},
-    eprint = {https://academic.oup.com/gigascience/article-pdf/10/2/giab008/36332246/giab008.pdf},
-        }
-        </citation>
-
-        <citation type="bibtex">
-            @article{Danecek2011,
-  author          = {Danecek, Petr and Auton, Adam and Abecasis, Goncalo and Albers, Cornelis A. and Banks, Erica and DePristo, Mark A. and Handsaker, Robert E. and Lunter, Gerton and Marth, Gabor T. and Sherry, Stephen T. and McVean, Gil and Durbin, Richard and {1000 Genomes Project Analysis Group}},
-  title           = {The variant call format and {VCF}tools},
-  journal         = {Bioinformatics},
-  volume          = {27},
-  number          = {15},
-  pages           = {2156-2158},
-  year            = {2011},
-  doi             = {10.1093/bioinformatics/btr330},
-  URL             = {https://doi.org/10.1093/bioinformatics/btr330},
-  eprint          = {https://academic.oup.com/bioinformatics/article-pdf/27/15/2156/600788/btr330.pdf},
-}
-        </citation>
-    <citation type="bibtex">
-        @manual{VCFv45,
-  title        = {The Variant Call Format (VCF) Specification, Version 4.5},
-  author       = {{HTS-specs team}},
-  organization = {Global Alliance for Genomics and Health},
-  year         = {2024},
-  url          = {https://samtools.github.io/hts-specs/VCFv4.5.pdf},
-  note         = {Accessed: 2025-02-11}
-}
-    </citation>
-
-        <citation type="bibtex">
-            @article{Waples2024_linkageLD,
-    author    = {Waples, Robin S.},
-    title     = {Practical application of the linkage disequilibrium method for estimating contemporary effective population size: A review},
-    journal   = {Molecular Ecology Resources},
-    volume    = {24},
-    number    = {1},
-    pages     = {e13879},
-    year      = {2024},
-    doi       = {10.1111/1755-0998.13879},
-    }
-
-        </citation>
+        <expand macro="citations_base"/>
+        <expand macro="citation_waples"/>
     </citations>
+    
 </tool>

@@ -30,6 +30,7 @@ fi
 set +e
 first_variant=$(bcftools view -H "$vcf_input" 2>/dev/null | head -n 1)
 set -e
+
 if [[ -z "$first_variant" ]]; then
     echo "ERROR: Input VCF contains no variant records." >&2
     exit 1
@@ -155,6 +156,7 @@ split_vcf_by_pop() {
         else
             vcf_basename=$(basename "$original_name")
         fi
+        
         vcf_basename=${vcf_basename%.*}
 
         local output_vcf="${vcf_dir}/${vcf_basename}_${pop_name}.vcf"
@@ -169,6 +171,7 @@ split_vcf_by_pop() {
         set +e
         first_variant=$(bcftools view -H "$output_vcf" 2>/dev/null | head -n 1)
         set -e
+        
         if [[ -z "$first_variant" ]]; then
             echo "ERROR: Output VCF contains no variants for population '${pop_name}': $output_vcf" >&2
             exit 1
