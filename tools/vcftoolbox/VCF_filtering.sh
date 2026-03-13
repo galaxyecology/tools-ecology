@@ -79,24 +79,26 @@ log_stats() {
 # Temporary vcf to make connexion between the diferent filter
 CURRENT_VCF="$vcf_input"
 STEP=0
+SUFFIX=""
 
 # Log initial
 log_stats 0 "input" "raw" "$CURRENT_VCF"
 
 ###################################################
 #Function: vcf_filtering_IND_missing_data
-#Description: 
+#Description:Remove individuals with missing data
 ###################################################
 
 vcf_filtering_IND_missing_data(){
     ##### Parameters #####
     local vcf="$1"
     local MAX_MISSING_IND="$2"
+    local tag="_mdIND"
 
         echo ">>> [Step $STEP] Filter A: Individuals missing data (threshold: $MAX_MISSING_IND)"
 
         ##### Filtering on individuals with a high amount of missing data #####
-        local output_file="${tmp_dir}/${base_name}_mdIND.vcf"
+        local output_file="${tmp_dir}/${base_name}${SUFFIX}${tag}.vcf"
         local intermed_files="${tmp_dir}/${base_name}_IND_MISSING_DATA"
         local ind_miss="${tmp_dir}/${base_name}_ind_missing_SNPs.txt"  #list of individuals to be retained
         local imiss="${intermed_files}.imiss"
@@ -119,11 +121,11 @@ vcf_filtering_IND_missing_data(){
         fi  
 
         CURRENT_VCF="$output_file"
+        SUFFIX="${SUFFIX}${tag}"
 
         #Complete summary file
         log_stats "$STEP" "A_ind_missing" "MAX_MISSING_IND=${MAX_MISSING_IND}" "$CURRENT_VCF" 
-
-        #rajouter une ligne pour cleaner le tmp_dir     
+    
 }
 
 ######################################################
@@ -135,12 +137,13 @@ vcf_filtering_SNP_missingdata(){
     ##### Parameters #####
     local vcf="$1"
     local MAX_MISSING_LOCI="$2"
+    local tag="_SNPmd"
 
         echo ">>> [Step $STEP] Filter B: Loci missing data (threshold: $MAX_MISSING_LOCI)"
 
         ##### Remove SNPs with a high amount of missing data and singletons #####
-        local output_file_gz="${tmp_dir}/${base_name}_SNPmd.vcf.gz" #Final output file - gzip
-        local output_file="${tmp_dir}/${base_name}_SNPmd.vcf" #Final output file
+        local output_file_gz="${tmp_dir}/${base_name}${SUFFIX}${tag}.vcf.gz" #Final output file - gzip
+        local output_file="${tmp_dir}/${base_name}${SUFFIX}${tag}.vcf" #Final output file
 
         bcftools filter -e "F_MISSING > ${MAX_MISSING_LOCI}" -O z -o "$output_file_gz" "$vcf"
 
@@ -163,6 +166,7 @@ vcf_filtering_SNP_missingdata(){
         fi  
 
         CURRENT_VCF="$output_file"
+        SUFFIX="${SUFFIX}${tag}"
         log_stats "$STEP" "B_loci_missing" "MAX_MISSING_LOCI=${MAX_MISSING_LOCI}" "$CURRENT_VCF"
 
 }
@@ -178,12 +182,13 @@ vcf_filtering_gen_qual(){
     ##### Parameters #####
     local vcf="$1"
     local MIN_GQ="$2"
+    local tag="_GQ"
 
         echo ">>> [Step $STEP] Filter C: Genotype quality (threshold: $MIN_GQ)"
 
         ###### Filtering variants based on genotype quality (GQ))######
-        local output_file="${tmp_dir}/${base_name}_GQ.vcf.gz"
-        local output_file_n="${tmp_dir}/${base_name}_nGQ.vcf"
+        local output_file="${tmp_dir}/${base_name}${SUFFIX}${tag}.vcf.gz"
+        local output_file_n="${tmp_dir}/${base_name}${SUFFIX}${tag}.vcf"
         local final_vcf
 
         local gq_params="MIN_GQ=${MIN_GQ}"
@@ -217,6 +222,7 @@ vcf_filtering_gen_qual(){
         fi
 
         CURRENT_VCF="$final_vcf"
+        SUFFIX="${SUFFIX}${tag}"
         log_stats "$STEP" "C_GQ" "${gq_params}" "$CURRENT_VCF"
 }
 
@@ -229,12 +235,13 @@ vcf_filtering_depth(){
     ##### Parameters #####
     local vcf="$1"
     local MIN_DP="$2"
+    local tag="_DP"
 
     echo ">>> [Step $STEP] Filter D: Depth coverage (threshold: $MIN_DP)"
 
     ###### Filtering min and maximum read depth ######
-    local output_file="${tmp_dir}/${base_name}_DP.vcf.gz"
-    local output_file_n="${tmp_dir}/${base_name}_DP.vcf"
+    local output_file="${tmp_dir}/${base_name}${SUFFIX}${tag}.vcf.gz"
+    local output_file_n="${tmp_dir}/${base_name}${SUFFIX}${tag}.vcf"
 
     #Estimate maximum reading depth as twice the average reading depth
 
@@ -278,6 +285,7 @@ vcf_filtering_depth(){
         fi
 
         CURRENT_VCF="$final_vcf"
+        SUFFIX="${SUFFIX}${tag}"
         log_stats "$STEP" "D_DP" "${dp_params}" "$CURRENT_VCF"
 }
 
@@ -289,11 +297,12 @@ vcf_filtering_depth(){
 vcf_filtering_biallelic(){
     ##### Parameters #####
     local vcf="$1"
+    local tag="_bialSNP"
 
     echo ">>> [Step $STEP] Filter E: Biallelic SNPs"
 
     ##### Keep biallelic SNPs only #####
-    local output_file="${tmp_dir}/${base_name}_biallelicSNPs.vcf"
+    local output_file="${tmp_dir}/${base_name}${SUFFIX}${tag}.vcf"
         
     # Apply filter
     bcftools view -v snps -m2 -M2 "$vcf" -o "$output_file"
@@ -310,6 +319,7 @@ vcf_filtering_biallelic(){
     fi   
 
     CURRENT_VCF="$output_file"
+    SUFFIX="${SUFFIX}${tag}"
     log_stats "$STEP" "E_biallelic" "biallelic_SNPs_only" "$CURRENT_VCF"
     
 }
@@ -323,12 +333,13 @@ vcf_filtering_MAC(){
     ##### Parameters #####
     local vcf="$1"
     local MAC="$2"
+    local tag="_MAC"
         
         echo ">>> [Step $STEP] Filter F: Minor allele count (threshold: $MAC)"
 
         #Final output file
-        local output_file_gz="${tmp_dir}/${base_name}_MAC.vcf.gz"
-        local output_file="${tmp_dir}/${base_name}_MAC.vcf"
+        local output_file_gz="${tmp_dir}/${base_name}${SUFFIX}${tag}.vcf.gz"
+        local output_file="${tmp_dir}/${base_name}${SUFFIX}${tag}.vcf"
 
         bcftools filter -e "MAC < ${MAC}" -O z -o "$output_file_gz" "$vcf"
         gunzip "${output_file_gz}"
@@ -345,6 +356,7 @@ vcf_filtering_MAC(){
         fi  
 
         CURRENT_VCF="$output_file"
+        SUFFIX="${SUFFIX}${tag}"
         log_stats "$STEP" "F_MAC" "MIN_MAC=${MAC}" "$CURRENT_VCF"
 
 }
@@ -358,12 +370,13 @@ vcf_filtering_heterozygosity(){
     ##### Parameters #####
     local vcf="$1"
     local MAX_Ho="$2"
+    local tag="_Ho"
 
         echo ">>> [Step $STEP] Filter G: Heterozygosity (threshold: $MAX_Ho)"
 
         ##### Heterozygosity filter #####
-        local output_file="${tmp_dir}/${base_name}_Ho.vcf"
-        local positions_file="${tmp_dir}/${base_name}_positions.txt"
+        local output_file="${tmp_dir}/${base_name}${SUFFIX}${tag}.vcf"
+        local positions_file="${tmp_dir}/${base_name}${SUFFIX}${tag}.txt"
         
         # Calculating observed heterozygosity for each variant and conserve position
         #Het : number of heterozygotes
@@ -409,6 +422,7 @@ vcf_filtering_heterozygosity(){
         rm -f "$positions_file"
 
         CURRENT_VCF="$output_file"
+        SUFFIX="${SUFFIX}${tag}"
         log_stats "$STEP" "G_heterozygosity" "MAX_Ho=${MAX_Ho}" "$CURRENT_VCF"
 
 }
