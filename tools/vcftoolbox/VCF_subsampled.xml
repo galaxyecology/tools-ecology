@@ -1,6 +1,6 @@
 <tool id="vcf_subset" name="Subsetting SNPs at random from a VCF file" version="0@TOOL_VERSION@" profile="@PROFILE@">
     <description>
-        given a chosen number of SNPs to use.
+        given a chosen number of SNPs to use
     </description>
     
     <macros>

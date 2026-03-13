@@ -1,6 +1,6 @@
 <tool id="vcf_keep_remove_individuals" name="Keep or remove selected individuals" version="@TOOL_VERSION@" profile="@PROFILE@">
     <description>
-        from a VCF.
+        from a VCF
     </description>
     
     <macros>
@@ -32,7 +32,7 @@
         </param>
 
         <param name="list_ind" type="data" format="tabular,txt" label="List of individuals to be kept"
-            help="Individuals must be listed one per line.  If there are multiple VCF files, the individual list contain all individuals present in all VCF files. "/>
+            help="Individuals must be listed one per line."/>
     </inputs> 
 
     <outputs>

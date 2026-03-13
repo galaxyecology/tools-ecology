@@ -1,6 +1,6 @@
 <tool id="vcf_filtering" name="VCF filtering" version="@TOOL_VERSION@" profile="@PROFILE@">
     <description>
-        of individuals and variants.
+        of individuals and variants
     </description>
     
     <macros>
@@ -107,7 +107,7 @@
                 </assert_contents>
             </output>
 
-            <output name="vcf_filtered" ftype="vcf" count="1">
+            <output name="vcf_filtered" ftype="vcf">
                 <assert_contents>
                     <has_n_lines n="516"/>
                 </assert_contents>
@@ -129,7 +129,7 @@
                 </assert_contents>
             </output>
 
-            <output name="vcf_filtered" ftype="vcf" count="1">
+            <output name="vcf_filtered" ftype="vcf">
                 <assert_contents>
                     <has_n_lines n="347"/>
                 </assert_contents>
@@ -159,7 +159,7 @@
                 <param name="MAX_Ho" value="0.6"/>
             </section>
 
-            <output name="vcf_filtered" count="1">
+            <output name="vcf_filtered">
                 <assert_contents>
                     <has_n_lines n="411"/>
                 </assert_contents>
