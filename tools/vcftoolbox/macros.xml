@@ -1,0 +1,86 @@
+<macros>
+    <token name="@TOOL_VERSION@">0.1.0</token>
+    <token name="@PROFILE@">25.0</token>
+
+    <xml name="requirements_bcftools">
+        <requirements>
+            <requirement type="package" version="1.22">bcftools</requirement>
+            <yield />
+        </requirements>
+    </xml>
+
+    <xml name="requirements_bcftools_vcftools">
+        <requirements>
+            <requirement type="package" version="1.22">bcftools</requirement>
+            <requirement type="package" version="0.1.17">vcftools</requirement>
+        </requirements>
+    </xml>
+
+    <xml name="param_vcf_input">
+        <param name="vcf_input" type="data" format="vcf" label="VCF file"
+            help="File containing SNP data in VCF format. You can upload a simple file, multiple files or a dataset collection."/>
+    </xml>
+
+    <xml name="citation_bcftools">
+        <citation type="doi">10.1093/gigascience/giab008</citation>
+    </xml>
+ 
+    <xml name="citation_vcftools">
+        <citation type="doi">10.1093/bioinformatics/btr330</citation>
+    </xml>
+ 
+    <xml name="citation_vcf_spec">
+        <citation type="bibtex">
+            @manual{VCFv45,
+  title        = {The Variant Call Format (VCF) Specification, Version 4.5},
+  author       = {{HTS-specs team}},
+  organization = {Global Alliance for Genomics and Health},
+  year         = {2024},
+  url          = {https://samtools.github.io/hts-specs/VCFv4.5.pdf},
+  note         = {Accessed: 2025-02-11}
+}
+        </citation>
+    </xml>
+ 
+        <xml name="citation_hemstrom">
+        <citation type="doi">10.1038/s41576-024-00738-6</citation>
+    </xml>
+ 
+    <xml name="citation_kardos">
+        <citation type="doi">10.1111/mec.17415</citation>
+    </xml>
+ 
+    <xml name="citation_mckinney">
+        <citation type="doi">10.1111/1755-0998.12613</citation>
+    </xml>
+ 
+    <xml name="citation_waples">
+        <citation type="doi">10.1111/1755-0998.13879</citation>
+    </xml>
+ 
+    <!-- ===== CITATION GROUPS ===== -->
+ 
+    <!-- BCFtools + VCFtools + VCF spec -->
+    <xml name="citations_base">
+            <expand macro="citation_bcftools"/>
+            <expand macro="citation_vcftools"/>
+            <expand macro="citation_vcf_spec"/>
+    </xml>
+ 
+    <!-- BCFtools only + VCF spec (no VCFtools) -->
+    <xml name="citations_bcftools_only">
+            <expand macro="citation_bcftools"/>
+            <expand macro="citation_vcf_spec"/>
+    </xml>
+
+    <!-- VCF filtering citations -->
+    <xml name="citations_vcf_filtering">
+            <expand macro="citation_bcftools"/>
+            <expand macro="citation_vcftools"/>
+            <expand macro="citation_vcf_spec"/>
+            <expand macro="citation_hemstrom"/>
+            <expand macro="citation_kardos"/>
+            <expand macro="citation_mckinney"/>
+    </xml>
+
+</macros>

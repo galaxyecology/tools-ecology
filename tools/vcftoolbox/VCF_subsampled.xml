@@ -1,0 +1,133 @@
+<tool id="vcf_subset" name="Subsetting SNPs at random from a VCF file" version="0@TOOL_VERSION@" profile="@PROFILE@">
+    <description>
+        given a chosen number of SNPs to use
+    </description>
+    
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+ 
+    <expand macro="requirements_bcftools_vcftools"/>
+
+    <required_files>
+        <include path="VCF_subsampled.sh" />
+    </required_files>
+
+    <command detect_errors="exit_code"><![CDATA[
+        mkdir -p vcf_subsampled &&
+
+        bash '$__tool_directory__/VCF_subsampled.sh'
+            '${vcf_input}'
+            '${vcf_input.element_identifier}'
+            '$SUBSET_SNPS_NB'
+            '$NB_REPLICATE_VCF'
+            '$MIN_SNP_NB'
+            '$polymorphic'
+        
+        ]]></command>
+
+    <inputs>
+        <expand macro="param_vcf_input"/>
+        
+        <param name="SUBSET_SNPS_NB" type="integer" value="1000" min="0" label="Number of SNPs chosen for a number of replicate VCF files per input VCF file" />
+        
+        <param name="NB_REPLICATE_VCF" type="integer" value="5" min="1" label="Number of replicate VCF files"
+            help="Number of replicate VCF files to create, each with a chosen subset of SNP."/>
+        
+        <param name="MIN_SNP_NB" type="integer" value="4000" min="0" label="Minimum number of SNPs above which SNP subsetting is performed"
+            help="To perform SNP subsampling without applying a threshold, enter 0."/>
+        
+        <param name="polymorphic" type="boolean" truevalue="true" falsevalue="false"
+            checked="true" label="Subset polymorphic SNPs only ?"
+            help="MAC=2 filter is applicate to subset only polymorphic SNPs"/>
+
+    </inputs>
+
+    <outputs>
+        <collection name="vcf_subsampled" format="vcf" type="list" label="${tool.name}">
+            <discover_datasets pattern="__designation_and_ext__" directory="vcf_subsampled" format="vcf"/>
+        </collection>
+    </outputs>
+
+    <tests>
+        <test>
+            <param name="vcf_input" value="test_vcf.vcf"/>
+            <param name="SUBSET_SNPS_NB" value="1000"/>
+            <param name="NB_REPLICATE_VCF" value="5"/>
+            <param name="MIN_SNP_NB" value="4000"/>
+            <param name="polymorphic" value="true"/>
+            <output_collection name="vcf_subsampled" type="list" count="1">
+                <element name="test_vcf_full">
+                    <assert_contents>
+                        <has_n_lines n="516"/>
+                        <has_text text="#CHROM"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+        </test>
+
+        <test>
+            <param name="vcf_input" value="test_vcf.vcf"/>
+            <param name="SUBSET_SNPS_NB" value="50"/>
+            <param name="NB_REPLICATE_VCF" value="5"/>
+            <param name="MIN_SNP_NB" value="0"/>
+            <param name="polymorphic" value="true"/>
+            <output_collection name="vcf_subsampled" type="list" count="5">
+                <element name="test_vcf_50snps_subsample_2">
+                    <assert_contents>
+                        <has_n_lines n="67"/>
+                        <has_text text="#CHROM"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+        </test>
+
+        <test>
+            <param name="vcf_input" value="test_vcf.vcf"/>
+            <param name="SUBSET_SNPS_NB" value="200"/>
+            <param name="NB_REPLICATE_VCF" value="5"/>
+            <param name="MIN_SNP_NB" value="450"/>
+            <param name="polymorphic" value="false"/>
+            <output_collection name="vcf_subsampled" type="list" count="5">
+                <element name="test_vcf_200snps_subsample_5">
+                    <assert_contents>
+                        <has_n_lines n="216"/>
+                        <has_text text="#CHROM"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+        </test>
+    </tests>
+
+    <help><![CDATA[
+
+Usage
+=====
+
+As input, the user provides one or more VCF files (Danecek *et al.* 2011), the desired number of SNPs to subsample per replicate VCF file, the number of replicate VCF files to generate, and a minimum SNP number threshold that needs to be present in the input file for the subsampling to occur.
+
+For a input VCF file (which by assumption is representative of one population), 
+
+1. if the SNP number exceeds the MIN_SNP_NB threshold, the tool generates the requested NB_REPLICATE_VCF of VCF files for each population. Then in each replicate VCF file, if the user picks the 'polymorphic loci' option, the tool randomly selects only polymorphic loci in the population under consideration. Otherwise, loci are selected randomly from all loci in the VCF file, with some loci potentially monomorphic in the population.
+
+2. if the SNP number in the file is below MIN_SNP_NB, the original input VCF file(s) is(are) kept unchanged for subsequent analyses and a '_full' suffix is added. To disable the threshold and force subsampling regardless of SNP number, the user can set the MIN_SNP_NB to 0, for example in the case where total number of SNPs per population is not known exactly.
+
+NB:  Please note that the number of polymorphic loci in each population can be less than in all populations, especially for rare variants. This can explain why replicates are not produced in some cases.
+
+Example : If the user requests 5 replicate VCF files with 1 000 SNPs with a minimum threshold of 4 000, a VCF containing 10000 variants will produce 5 distinct subsets of 1 000 SNPs each, while a VCF with only 3 000 variants the input VCF is preserved.
+
+Tips
+====
+According to Waples et al. 2024, using 1000 polymorphic SNPs provide sufficient information for NeLD estimates, with little gain from additional loci.
+
+
+See also examples of VCF formats in :  https://samtools.github.io/hts-specs/VCFv4.5.pdf
+
+    ]]></help>
+
+    <citations>
+        <expand macro="citations_base"/>
+        <expand macro="citation_waples"/>
+    </citations>
+    
+</tool>

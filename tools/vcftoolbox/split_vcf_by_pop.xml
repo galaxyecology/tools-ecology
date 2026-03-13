@@ -1,0 +1,95 @@
+<tool id="split_vcf_by_pop" name="Split VCF by pop" version="@TOOL_VERSION@" profile="@PROFILE@">
+    <description>
+        from an individuals/population table
+    </description>
+
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+
+    <expand macro="requirements_bcftools"/>
+
+    <required_files>
+        <include path="split_vcf_by_pop.sh" />
+    </required_files>
+
+    <command detect_errors="exit_code"><![CDATA[
+        mkdir -p vcf_split_directory &&
+
+        bash '$__tool_directory__/split_vcf_by_pop.sh' 
+            '${vcf_input}'
+            '${vcf_input.element_identifier}'
+            '$indpop'
+        
+    ]]></command>
+
+    <inputs>
+        <expand macro="param_vcf_input"/>
+
+        <param name="indpop" type="data" format="tabular,txt" label="Population file" 
+            help="File containing individuals in the first column and their population code in the second column, separated by a tabulation character."/>
+    </inputs>
+
+    <outputs>
+        <collection name="vcf_split" format="vcf" type="list" label="${tool.name}">
+            <discover_datasets pattern="__designation_and_ext__" directory="vcf_split_directory" format="vcf"/>
+        </collection>
+    </outputs>
+
+    <tests>
+        <test>
+            <param name="vcf_input" value="test_vcf.vcf"/>
+            <param name="indpop" value="test_pop.txt"/>
+            <output_collection name="vcf_split" type="list" count="9">
+                <element name="test_vcf_GB-1_2022">
+                    <assert_contents>
+                        <has_text text="vcf_split_directory/Ind_list_GB-1_2022.txt"/>
+                        <has_n_lines n="516"/>
+                        <has_text text="GB-1_2022_CCR7-03-m22_1"/>
+                        <not_has_text text="GB-2_2022_CCR14-15-m22_1"/>
+                    </assert_contents>
+                </element>
+
+                <element name="test_vcf_S21_2021">
+                    <assert_contents>
+                        <has_text text="vcf_split_directory/Ind_list_S21_2021.txt"/>
+                        <has_n_lines n="516"/>
+                        <has_text text="S21_2021_S21-03-m21_1"/>
+                        <not_has_text text="GB-2_2022_CCR14-15-m22_1"/>
+                    </assert_contents>
+                </element>
+                    
+            </output_collection>
+        </test>
+    </tests>
+
+<help><![CDATA[
+Usage
+=====
+
+As input, the user provides one or more VCF file (Danecek *et al.* 2011) and a population file (indpop) defining population assigments for each individual.
+
+For each population name identified in the indpop file, the tool extracts the corresponding list of individuals and generates a VCF file containing only those samples.
+
+Example : if an indpop file defines three groups (pop1, pop2 and pop3), the tool repeats the extraction process three times to produce three separate VCF files, one for each population.
+
+Example of an indpop file :  
+
+::
+
+    ind1    pop1
+    ind2    pop2
+    ind3    pop2
+    ind4    pop1
+    ind5    pop3
+
+The indpop file must be a tab-separated file where individual names match those included in the VCF header line exactly.
+
+See also examples of VCF formats in :  https://samtools.github.io/hts-specs/VCFv4.5.pdf
+
+]]></help>
+    <citations>
+        <expand macro="citations_bcftools_only"/>
+    </citations>
+  
+</tool>
