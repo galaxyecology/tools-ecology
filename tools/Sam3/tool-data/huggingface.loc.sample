@@ -14,4 +14,4 @@
 #Your huggingface.loc file should include the huggingface cached model folder you have stored.
 #For example:
 #
-#1038lab/sam3 sam3  Masker Generation Image sam3_1.0.0 1 /path/to/huggingface/that-contains/hub/1038lab--sam3
+#1038lab/sam3 sam3  Masker Generation Image sam3 1 /path/to/huggingface/that-contains/hub/1038lab--sam3
