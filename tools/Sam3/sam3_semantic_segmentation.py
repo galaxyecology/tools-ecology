@@ -391,7 +391,7 @@ def main():
         "task": "segment",
         "mode": "predict",
         "model": args.model,
-        "half": True,  # Use FP16 for faster inference
+        "half": False,  # Use FP32
         "save": True,
         "save_dir": str(outputs_annotated),
     }
