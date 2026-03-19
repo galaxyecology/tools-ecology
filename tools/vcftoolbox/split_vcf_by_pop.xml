@@ -17,9 +17,9 @@
         mkdir -p vcf_split_directory &&
 
         bash '$__tool_directory__/split_vcf_by_pop.sh' 
-            '${vcf_input}'
-            '${vcf_input.element_identifier}'
-            '$indpop'
+            --input '${vcf_input}'
+            --name '${vcf_input.element_identifier}'
+            --indpop '$indpop'
         
     ]]></command>
 

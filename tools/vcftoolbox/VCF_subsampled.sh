@@ -1,34 +1,66 @@
 #!/bin/bash
 
-#Exit on error
-set -e
-
-vcf_input="$1"
-vcf_name="$2"
-SUBSET_SNPS_NB="$3"
-NB_REPLICATE_VCF="$4"
-MIN_SNP_NB="$5"
-POLY="$6"
-
-vcf_dir_sub="vcf_subsampled"
-
-##### Check output directory ####
-if [[ ! -d "${vcf_dir_sub}" ]]; then
-    echo "ERROR: Failed to create output VCF directory: ${vcf_dir_sub}" >&2
+# Print an error message to stderr and exit with code 1
+die() {
+    echo "ERROR: $*" >&2
     exit 1
-fi
+}
 
-##### Check input files #####
-if [[ -z "$vcf_input" ]]; then
-    echo "ERROR: VCF file is not provided." >&2
-    exit 1
-fi
+##### Load arguments #####
+vcf_input=""
+vcf_name=""
+SUBSET_SNPS_NB=""
+NB_REPLICATE_VCF=""
+MIN_SNP_NB=""
+POLY=""
 
-# Verify that input VCF contains at least one variant
+# Parse named flags; each flag consumes its value with a first shift,
+# then the outer shift moves to the next flag.
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        --input)            vcf_input="$2";           shift ;;
+        --name)             vcf_name="$2";            shift ;;
+        --subset_snps_nb)   SUBSET_SNPS_NB="$2";               shift ;;
+        --nb_replicate_vcf) NB_REPLICATE_VCF="$2";     shift ;;
+        --min_snp_nb)       MIN_SNP_NB="$2";    shift ;;
+        --poly)             POLY="$2";              shift ;;
+        *) echo "Unknown argument: $1"; exit 1 ;;
+    esac
+    shift
+done
+
+##### Validate inputs #####
+# Ensure bcftools and vcftools are available in PATH
+command -v bcftools >/dev/null 2>&1 || die "bcftools is not installed or not in PATH."
+command -v vcftools >/dev/null 2>&1 || die "vcftools is not installed or not in PATH."
+
+# Check that input files exist on disk
+[[ -f "$vcf_input" ]] || die "Input VCF was not found: $vcf_input"
+
+# Check taht input VCF is not empty
 if ! bcftools view -H "$vcf_input" | head -n 1 | grep -q .; then
-    echo "ERROR: Input VCF contains no variant records."
-    exit 1
+    die "Input VCF contains no variant records"
 fi
+
+##### Output directory #####
+readonly vcf_dir_sub="vcf_subsampled"
+
+##### Build output filename #####
+name_without_ext="$(basename -- "$vcf_name")"
+name_without_ext="${name_without_ext%.vcf.gz}"
+name_without_ext="${name_without_ext%.vcf}"
+
+# In Galaxy, dataset names may contain a trailing label in parentheses,
+# e.g. "Tool name (dataset 42)". Extract the content inside the last
+# parentheses if present; otherwise use the full name.
+regex='\(([^)]+)\)[[:space:]]*$'
+if [[ "$name_without_ext" =~ $regex ]]; then
+    base_name="${BASH_REMATCH[1]}"
+else
+    base_name="$name_without_ext"
+fi
+
+[[ -n "$base_name" ]] || die "Could not derive a valid output filename from: $vcf_name"
 
 ##############################################################
 # Function: detect_filter_mode
@@ -124,13 +156,11 @@ vcf_subsampled(){
         fi
                 ##### Verify that filtered VCF is not empty ######
                 if [[ ! -f "$output_vcf" ]]; then
-                    echo "ERROR: Output VCF not created: $output_vcf" >&2
-                    exit 1
+                    die "ERROR: Output VCF not created: $output_vcf" >&2
                 fi
 
                 if ! bcftools view -H "$output_vcf" | head -n 1 | grep -q .; then
-                    echo "ERROR: Filtered VCF contains no variants."
-                    exit 1
+                    die "ERROR: Filtered VCF contains no variants."
                 fi  
         done
 }
@@ -138,24 +168,6 @@ vcf_subsampled(){
 ######################
 # Main execution
 ######################
-
-##### Check if file exists #####
-        if [[ ! -f "$vcf_input" ]]; then
-            echo "File not found, ignored: $vcf_input"
-            exit 1
-        fi
-
-        # Extract base name (handle .vcf)
-        regex='\(([^)]+)\)[[:space:]]*$'
-        if [[ "$vcf_name" =~ $regex ]]; then
-            #Extract content between last parentheses
-            base_name="${BASH_REMATCH[1]}"
-        else
-            # No parentheses, use original name
-            base_name=$(basename "$vcf_name")
-        fi
-        
-        base_name=${base_name%.vcf}
 
 if [[ "$POLY" == "true" ]]; then
     #MAC output file

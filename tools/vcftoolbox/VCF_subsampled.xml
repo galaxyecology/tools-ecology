@@ -1,4 +1,4 @@
-<tool id="vcf_subset" name="Subsetting SNPs at random from a VCF file" version="0@TOOL_VERSION@" profile="@PROFILE@">
+<tool id="vcf_subset" name="Subsetting SNPs at random from a VCF file" version="@TOOL_VERSION@" profile="@PROFILE@">
     <description>
         given a chosen number of SNPs to use
     </description>
@@ -17,12 +17,12 @@
         mkdir -p vcf_subsampled &&
 
         bash '$__tool_directory__/VCF_subsampled.sh'
-            '${vcf_input}'
-            '${vcf_input.element_identifier}'
-            '$SUBSET_SNPS_NB'
-            '$NB_REPLICATE_VCF'
-            '$MIN_SNP_NB'
-            '$polymorphic'
+            --input '${vcf_input}'
+            --name '${vcf_input.element_identifier}'
+            --subset_snps_nb '$SUBSET_SNPS_NB'
+            --nb_replicate_vcf '$NB_REPLICATE_VCF'
+            --min_snp_nb '$MIN_SNP_NB'
+            --poly '$polymorphic'
         
         ]]></command>
 

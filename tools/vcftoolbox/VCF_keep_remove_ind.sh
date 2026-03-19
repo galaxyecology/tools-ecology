@@ -1,79 +1,108 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-#Exit on error
-set -e
+set -euo pipefail
 
-vcf_input="$1"
-vcf_name="$2"
-action="$3"
-list_ind="$4"
-
-output_dir="vcf_directory"
-
-##### Check output directory #####
-if [[ ! -d "${output_dir}" ]]; then
-    echo "ERROR: Failed to create output Indlist directory" >&2
+# Print an error message to stderr and exit with code 1
+die() {
+    echo "ERROR: $*" >&2
     exit 1
-fi
+}
 
-##### Check input files #####
-if [[ -z "$vcf_input" ]]; then
-    echo "ERROR: VCF file is not provided." >&2
-    exit 1
-fi
+# Count the number of variant records in a VCF file
+count_variants() {
+    bcftools view -H "$1" | awk 'END { print NR }'
+}
 
-# Verify that input VCF contains at least one variant
-if ! bcftools view -H "$vcf_input" | head -n 1 | grep -q .; then
-    echo "ERROR: Input VCF contains no variant records."
-    exit 1
-fi
+# Count the number of individuals (samples) in a VCF file
+count_individuals() {
+    bcftools query -l "$1" | awk 'END { print NR }'
+}
 
-if [[ -z "$list_ind" ]]; then
-    echo "ERROR: Input list of individuals is not provided." >&2
-    exit 1
-fi
+##### Load arguments #####
+vcf_input=""
+vcf_name=""
+action=""
+list_ind=""
+
+# Parse named flags; each flag consumes its value with a first shift,
+# then the outer shift moves to the next flag.
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        --input)    vcf_input="$2";  shift ;;
+        --name)     vcf_name="$2";   shift ;;
+        --action)   action="$2";     shift ;;
+        --list)     list_ind="$2";   shift ;;
+        *) die "Unknown argument: $1" ;;
+    esac
+    shift
+done
+
+
+##### Validate inputs #####
+# Ensure bcftools is available in PATH
+command -v bcftools >/dev/null 2>&1 || die "bcftools is not installed or not in PATH."
+
+# Check that all required arguments were provided
+[[ -n "$vcf_name" ]] || die "VCF name is not provided."
+[[ -n "$vcf_input" ]] || die "Input VCF was not found: $vcf_input"
+[[ -n "$action"    ]] || die "Action is not provided (--action)."
+[[ -n "$list_ind"  ]] || die "Individual list is not provided (--list)."
+
+# Check that input files exist on disk
+[[ -f "$vcf_input" ]] || die "Input VCF was not found: $vcf_input"
+[[ -f "$list_ind"  ]] || die "Individual list was not found: $list_ind"
+
+# Check taht input VCF is not empty
+input_variant_count="$(count_variants "$vcf_input")"
+(( input_variant_count > 0 )) || die "Input VCF contains no variant records."
+
+# Validate the action value
+case "$action" in
+    keep|remove) ;;
+    *) die "Action must be 'keep' or 'remove', got: $action" ;;
+esac
+
+##### Output directory #####
+readonly output_dir="vcf_directory"
 
 ##### Build output filename #####
-#Extract basename
-regex='\(([^)]+)\)[[:space:]]*$'
-    if [[ "$original_name" =~ $regex ]]; then
-        #Extract content between last parentheses
-        base_name="${BASH_REMATCH[1]}"
-    else
-        # No parentheses, use original name
-        base_name=$(basename "$vcf_name")
-    fi
-        
-    base_name=${base_name%.vcf}
+name_without_ext="$(basename -- "$vcf_name")"
+name_without_ext="${name_without_ext%.vcf.gz}"
+name_without_ext="${name_without_ext%.vcf}"
 
-# Output file name
+# In Galaxy, dataset names may contain a trailing label in parentheses,
+# e.g. "Tool name (dataset 42)". Extract the content inside the last
+# parentheses if present; otherwise use the full name.
+regex='\(([^)]+)\)[[:space:]]*$'
+if [[ "$name_without_ext" =~ $regex ]]; then
+    base_name="${BASH_REMATCH[1]}"
+else
+    base_name="$name_without_ext"
+fi
+
+[[ -n "$base_name" ]] || die "Could not derive a valid output filename from: $vcf_name"
+
 output_file="${output_dir}/${base_name}.vcf"
 
 ##### Main execution #####
+
 if [[ "$action" == "keep" ]]; then
-    # Keep only the individuals listed in list_ind
     echo "Keeping individuals listed"
-    bcftools view -S "${list_ind}" "${vcf_input}" -o "${output_file}" --force-samples
+    bcftools view -S "$list_ind" "$vcf_input" -o "$output_file" --force-samples
 else
-    # Remove the individuals listed in list_ind
     echo "Removing individuals listed"
-    bcftools view -S "^${list_ind}" "${vcf_input}" -o "${output_file}" --force-samples #remove individuals on the list_ind
+    bcftools view -S "^${list_ind}" "$vcf_input" -o "$output_file" --force-samples
 fi
 
-##### Verify that filtered VCF is not empty ######
-    if [[ ! -f "$output_file" ]]; then
-        echo "ERROR: Output VCF not created: $output_file" >&2
-        exit 1
-    fi
+##### Verify that filtered VCF is not empty #####
+[[ -f "$output_file" ]] || die "Output VCF was not created: $output_file"
 
-    if ! bcftools view -H "$output_file" | head -n 1 | grep -q .; then
-        echo "ERROR: Filtered VCF contains no variants."
-        exit 1
-    fi  
+output_variant_count="$(count_variants "$output_file")"
+(( output_variant_count > 0 )) || die "Filtered VCF contains no variants."
 
-##### SUmmary #####
-n_ind_b=$(bcftools query -l "$vcf_input" | wc -l)
-n_ind_a=$(bcftools query -l "$output_file" | wc -l)
+##### Summary #####
+n_ind_b="$(count_individuals "$vcf_input")"
+n_ind_a="$(count_individuals "$output_file")"
 
 echo "Individuals before: ${n_ind_b}"
 echo "Individuals after: ${n_ind_a}"

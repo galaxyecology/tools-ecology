@@ -1,5 +1,5 @@
 name: vcftoolbox
-owner: Ecology
+owner: ecology
 description: Tools to filter, manipulate, and manage VCF files for population genomics analyses using vcftools and bcftools.
 homepage_url: https://github.com/lauramtzan/GINAMO/vcftoolbox
 long_description: |

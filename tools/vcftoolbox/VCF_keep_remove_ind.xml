@@ -10,17 +10,17 @@
     <expand macro="requirements_bcftools"/>
 
     <required_files>
-        <include path="VCF_keep_remove_ind.R" />
+        <include path="VCF_keep_remove_ind_v2.sh" />
     </required_files>
 
     <command detect_errors="exit_code"><![CDATA[
         mkdir -p vcf_directory &&
         
         bash '$__tool_directory__/VCF_keep_remove_ind.sh'
-            '${vcf_input}'
-            '${vcf_input.element_identifier}'
-            '$action'
-            '$list_ind'
+            --input '${vcf_input}'
+            --name '${vcf_input.element_identifier}'
+            --action '$action'
+            --list '$list_ind'
         ]]></command>
 
     <inputs>

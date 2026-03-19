@@ -1,9 +1,24 @@
 #!/bin/bash
 
-#Exit on error
-set -e
+# Print an error message to stderr and exit with code 1
+die() {
+    echo "ERROR: $*" >&2
+    exit 1
+}
 
 ##### Load arguments #####
+vcf_input=""
+vcf_name=""
+ORDER=""
+MAX_MISSING_IND=""
+MAX_MISSING_LOCI=""
+MIN_GQ=""
+MIN_DP=""
+MAC=""
+MAX_Ho=""
+
+# Parse named flags; each flag consumes its value with a first shift,
+# then the outer shift moves to the next flag.
 while [[ "$#" -gt 0 ]]; do
     case $1 in
         --input)            vcf_input="$2";           shift ;;
@@ -15,53 +30,47 @@ while [[ "$#" -gt 0 ]]; do
         --min-dp)           MIN_DP="$2";              shift ;;
         --min-mac)          MAC="$2";                 shift ;;
         --max-ho)           MAX_Ho="$2";              shift ;;
-        *) echo "ERROR: Unknown argument: $1"; exit 1 ;;
+        *) echo "Unknown argument: $1"; exit 1 ;;
     esac
     shift
 done
 
-##### Verify that the output directories exist #####
-tmp_dir="vcf_filtered_tmp"
-vcf_dir="vcf_filtered_directory"
-summ_dir="summary"
+##### Validate inputs #####
+# Ensure bcftools and vcftools are available in PATH
+command -v bcftools >/dev/null 2>&1 || die "bcftools is not installed or not in PATH."
+command -v vcftools >/dev/null 2>&1 || die "vcftools is not installed or not in PATH."
 
-if [[ ! -d "${vcf_dir}" ]]; then
-    echo "ERROR: Failed to create output VCF directory" >&2
-    exit 1
-fi
+# Check that input files exist on disk
+[[ -f "$vcf_input" ]] || die "Input VCF was not found: $vcf_input"
 
-if [[ ! -d "${summ_dir}" ]]; then
-    echo "ERROR: Failed to create summary output directory" >&2
-    exit 1
-fi
-
-if [[ ! -d "${tmp_dir}" ]]; then
-    echo "ERROR: Failed to create temporary directory" >&2
-    exit 1
-fi
-
-##### Check input file #####
-if [[ -z "$vcf_input" ]]; then
-    echo "ERROR: VCF file is not provided." >&2
-    exit 1
-fi
-
-# Verify that input VCF contains at least one variant
+# Check taht input VCF is not empty
 if ! bcftools view -H "$vcf_input" | head -n 1 | grep -q .; then
-    echo "ERROR: Input VCF contains no variant records."
-    exit 1
+    die "Input VCF contains no variant records"
 fi
 
-# Extract base name from vcf_name
+##### Output directory #####
+readonly vcf_dir="vcf_filtered_directory"
+readonly summ_dir="summary"
+tmp_dir="vcf_filtered_tmp"
+
+##### Build output filename #####
+name_without_ext="$(basename -- "$vcf_name")"
+name_without_ext="${name_without_ext%.vcf.gz}"
+name_without_ext="${name_without_ext%.vcf}"
+
+# In Galaxy, dataset names may contain a trailing label in parentheses,
+# e.g. "Tool name (dataset 42)". Extract the content inside the last
+# parentheses if present; otherwise use the full name.
 regex='\(([^)]+)\)[[:space:]]*$'
-if [[ "$vcf_name" =~ $regex ]]; then
+if [[ "$name_without_ext" =~ $regex ]]; then
     base_name="${BASH_REMATCH[1]}"
 else
-    base_name=$(basename "$vcf_name")
+    base_name="$name_without_ext"
 fi
-base_name=${base_name%.*}
 
-# Initialize summary
+[[ -n "$base_name" ]] || die "Could not derive a valid output filename from: $vcf_name"
+
+##### Initialize summary #####
 SUMMARY="${summ_dir}/summary.tabular"
 echo -e "File\tStep\tFilter\tParameters\tN_individuals\tN_SNPs" > "$SUMMARY"
 
@@ -111,13 +120,11 @@ vcf_filtering_IND_missing_data(){
 
         ##### Verify that filtered VCF is not empty ######
         if [[ ! -f "$output_file" ]]; then
-            echo "ERROR: Output VCF not created: $output_file" >&2
-            exit 1
+            die "Filter A : Output VCF not created: $output_file" >&2
         fi
 
         if ! bcftools view -H "$output_file" | head -n 1 | grep -q .; then
-            echo "ERROR: Filtered VCF contains no variants."
-            exit 1
+            die "Filter A : Filtered VCF contains no variants."
         fi  
 
         CURRENT_VCF="$output_file"
@@ -148,21 +155,18 @@ vcf_filtering_SNP_missingdata(){
         bcftools filter -e "F_MISSING > ${MAX_MISSING_LOCI}" -O z -o "$output_file_gz" "$vcf"
 
         if [[ ! -f "$output_file_gz" ]]; then
-            echo "ERROR: Output VCF not created: ${output_file_gz}" >&2
-            exit 1
+            die "Filter B : Output VCF not created: ${output_file_gz}" >&2
         fi
 
         gunzip "${output_file_gz}"
 
         ##### Verify that filtered VCF is not empty ######
         if [[ ! -f "$output_file" ]]; then
-            echo "ERROR: Output VCF not created: $output_file" >&2
-            exit 1
+            die "Filter B : Output VCF not created: $output_file" >&2
         fi
 
         if ! bcftools view -H "$output_file" | head -n 1 | grep -q .; then
-            echo "ERROR: Filtered VCF contains no variants."
-            exit 1
+            die "Filter B : Filtered VCF contains no variants."
         fi  
 
         CURRENT_VCF="$output_file"
@@ -212,13 +216,11 @@ vcf_filtering_gen_qual(){
 
         ##### Verify that filtered VCF is not empty ######
         if [[ ! -f "$final_vcf" ]]; then
-            echo "ERROR: Output VCF not created: $final_vcf" >&2
-            exit 1
+            die "Filter C : Output VCF not created: $final_vcf" >&2
         fi
 
         if ! bcftools view -H "$final_vcf" | head -n 1 | grep -q .; then
-            echo "ERROR: Filtered VCF contains no variants."
-            exit 1
+            die "Filter C : Filtered VCF contains no variants."
         fi
 
         CURRENT_VCF="$final_vcf"
@@ -275,13 +277,11 @@ vcf_filtering_depth(){
     
     ##### Verify that filtered VCF is not empty ######
         if [[ ! -f "$final_vcf" ]]; then
-            echo "ERROR: Output VCF not created: $final_vcf" >&2
-            exit 1
+            die "Filter D : Output VCF not created: $final_vcf" >&2
         fi
 
         if ! bcftools view -H "$final_vcf" | head -n 1 | grep -q .; then
-            echo "ERROR: Filtered VCF contains no variants."
-            exit 1
+            die "Filter D :  Filtered VCF contains no variants."
         fi
 
         CURRENT_VCF="$final_vcf"
@@ -309,13 +309,11 @@ vcf_filtering_biallelic(){
 
     ##### Verify that filtered VCF is not empty ######
     if [[ ! -s "$output_file" ]]; then
-        echo "Output VCF not created: $output_file" >&2
-        return
+        die "Filter E : Output VCF not created: $output_file" >&2
     fi
 
     if ! bcftools view -H "$output_file" | head -n 1 | grep -q .; then
-        echo "ERROR: Filtered VCF contains no variants."
-        exit 1
+        die "Filter E : Filtered VCF contains no variants."
     fi   
 
     CURRENT_VCF="$output_file"
@@ -346,13 +344,11 @@ vcf_filtering_MAC(){
 
         ##### Verify that filtered VCF is not empty ######
         if [[ ! -f "$output_file" ]]; then
-            echo "ERROR: Output VCF not created: $output_file" >&2
-            exit 1
+            die "Filter F: Output VCF not created: $output_file" >&2
         fi
 
         if ! bcftools view -H "$output_file" | head -n 1 | grep -q .; then
-            echo "ERROR: Filtered VCF contains no variants."
-            exit 1
+            die "Filter F : Filtered VCF contains no variants."
         fi  
 
         CURRENT_VCF="$output_file"
@@ -409,13 +405,11 @@ vcf_filtering_heterozygosity(){
         
         ##### Verify that filtered VCF is not empty ######
         if [[ ! -f "$output_file" ]]; then
-            echo "ERROR: Output VCF not created: $final_vcf" >&2
-            exit 1
+            die "Filter G : Output VCF not created: $final_vcf" >&2
         fi
 
         if ! bcftools view -H "$output_file" | head -n 1 | grep -q .; then
-            echo "ERROR: Filtered VCF contains no variants."
-            exit 1
+            die "Filter G : Filtered VCF contains no variants."
         fi  
 
         # Cleanup
@@ -443,7 +437,7 @@ for FILTER in "${FILTERS[@]}"; do
         E) vcf_filtering_biallelic "$CURRENT_VCF" ;;
         F) vcf_filtering_MAC "$CURRENT_VCF" "$MAC" ;;
         G) vcf_filtering_heterozygosity "$CURRENT_VCF" "$MAX_Ho" ;;
-        *) echo "ERROR: Unknown filter '$FILTER' in order string." >&2; exit 1 ;;
+        *) die "Unknown filter '$FILTER' in order string." ;;
     esac
 done
 
