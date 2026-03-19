@@ -21,7 +21,7 @@
         #set $name_file = $input.source.element_identifier + " "
     #end if
     python '$__tool_directory__/sam3_semantic_segmentation.py' 
-        --model '$sam3_models'
+        --model '$sam3_models.fields.path'
         --prompts '$text_prompt' 
         --conf '$conf' 
         --vid_stride '$vid_stride' 
