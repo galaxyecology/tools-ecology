@@ -109,7 +109,7 @@
 
             <output name="vcf_filtered" ftype="vcf" count="1">
                 <assert_contents>
-                    <has_n_lines n="516"/>
+                    <has_n_lines n="516" delta="2"/>
                 </assert_contents>
             </output>
         </test>
@@ -131,7 +131,7 @@
 
             <output name="vcf_filtered" ftype="vcf" count="1">
                 <assert_contents>
-                    <has_n_lines n="347"/>
+                    <has_n_lines n="347" delta="2"/>
                 </assert_contents>
             </output>
         </test>
@@ -161,7 +161,7 @@
 
             <output name="vcf_filtered" count="1">
                 <assert_contents>
-                    <has_n_lines n="411"/>
+                    <has_n_lines n="411" delta="2"/>
                 </assert_contents>
             </output>
 

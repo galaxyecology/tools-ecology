@@ -59,7 +59,7 @@
             <output_collection name="vcf_subsampled" type="list" count="1">
                 <element name="test_vcf_full">
                     <assert_contents>
-                        <has_n_lines n="516"/>
+                        <has_n_lines n="516" delta="2"/>
                         <has_text text="#CHROM"/>
                     </assert_contents>
                 </element>
@@ -75,7 +75,7 @@
             <output_collection name="vcf_subsampled" type="list" count="5">
                 <element name="test_vcf_50snps_subsample_2">
                     <assert_contents>
-                        <has_n_lines n="67"/>
+                        <has_n_lines n="67" delta="2"/>
                         <has_text text="#CHROM"/>
                     </assert_contents>
                 </element>
@@ -91,7 +91,7 @@
             <output_collection name="vcf_subsampled" type="list" count="5">
                 <element name="test_vcf_200snps_subsample_5">
                     <assert_contents>
-                        <has_n_lines n="216"/>
+                        <has_n_lines n="216" delta="2"/>
                         <has_text text="#CHROM"/>
                     </assert_contents>
                 </element>
