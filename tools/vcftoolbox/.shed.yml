@@ -9,7 +9,7 @@ long_description: |
 remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/vcftoolbox
 type: unrestricted
 categories:
-- Genomics 
+- Ecology 
 auto_tool_repositories:
   name_template: "{{ tool_id }}"
   description_template: "{{ tool_name }}"
