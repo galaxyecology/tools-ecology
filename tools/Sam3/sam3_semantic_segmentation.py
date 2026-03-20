@@ -67,6 +67,12 @@ def parse_arguments() -> argparse.Namespace:
         default=None,
         help="Specific filename to process (optional)",
     )
+    parser.add_argument(
+        "--do_normalization",
+        type=str,
+        default=False,
+        help="Specific filename to process (optional)",
+    )
     return parser.parse_args()
 
 
@@ -111,7 +117,7 @@ def create_coco_categories(text_prompts: List[str]) -> List[Dict[str, Any]]:
 
 
 def create_coco_output(
-    results: List[Any], text_prompts: List[str], metadata: Dict[str, Any]
+    results: List[Any], text_prompts: List[str], metadata: Dict[str, Any], is_normalized: bool
 ) -> Dict[str, Any]:
     """Convert SAM3 results to COCO format."""
     coco_output = {
@@ -141,16 +147,17 @@ def create_coco_output(
             }
         )
 
-        # Add annotations for each detected object
-        for polygon, bbox, class_id in zip(
-            result.masks.xyn, result.boxes.xyxyn, result.boxes.cls
-        ):
+        polygons = result.masks.xyn if is_normalized else result.masks.xy
+        boxes = result.boxes.xyxyn if is_normalized else result.boxes.xyxy
+
+        for polygon, bbox, class_id in zip(polygons, boxes, result.boxes.cls):
             # Flatten polygon coordinates
             polygon_flat = polygon.flatten().tolist()
 
             # Extract bounding box coordinates (normalized)
             x1, y1, x2, y2 = bbox[:4].tolist()
-
+            bbox_w = x2 - x1
+            bbox_h = y2 - y1
             # Calculate area using contour
             area = float(cv2.contourArea(polygon.astype(np.float32)))
 
@@ -161,7 +168,7 @@ def create_coco_output(
                     "category_id": int(class_id) + 1,
                     "segmentation": [polygon_flat],
                     "area": area,
-                    "bbox": [x1, y1, x2, y2],
+                    "bbox": [x1, y1, bbox_w, bbox_h],
                     "iscrowd": 0,
                 }
             )
@@ -195,7 +202,7 @@ def create_yolo_seg_annotation(polygon: np.ndarray, class_id: int) -> str:
 
 
 def create_yolo_output(
-    annotation_type: str, results: List[Any], output_dir: Path
+    annotation_type: str, results: List[Any], output_dir: Path, is_normalized: bool
 ) -> None:
     """Export annotations in YOLO format for images."""
     # Create subdirectories for images and labels
@@ -221,18 +228,17 @@ def create_yolo_output(
 
         lines = []
 
+        boxes = result.boxes.xyxyn if is_normalized else result.boxes.xyxy
         # Process each detection
         for i, (box, class_id) in enumerate(
-            zip(result.boxes.xyxyn, result.boxes.cls)
+            zip(boxes, result.boxes.cls)
         ):
             class_id = int(class_id)
 
             if annotation_type == "bbox":
                 line = create_yolo_bbox_annotation(box, class_id)
             else:  # segmentation
-                if result.masks is None or not hasattr(result.masks, "xyn"):
-                    continue
-                polygon = result.masks.xyn[i]
+                polygon = result.masks.xyn if is_normalized else result.masks.xy
                 line = create_yolo_seg_annotation(polygon, class_id)
 
             lines.append(line)
@@ -250,6 +256,7 @@ def create_yolo_video_output(
     output_dir: Path,
     video_path: str,
     stride: int,
+    is_normalized: bool
 ) -> None:
     """Export annotations in YOLO format for videos with frame extraction."""
     # Create subdirectories for images and labels
@@ -296,23 +303,19 @@ def create_yolo_video_output(
             lines = []
 
             # Process detections if available
-            if result.boxes is not None:
-                for i, (box, class_id) in enumerate(
-                    zip(result.boxes.xyxyn, result.boxes.cls)
-                ):
-                    class_id = int(class_id)
+            boxes = result.boxes.xyxyn if is_normalized else result.boxes.xyxy
+            for i, (box, class_id) in enumerate(
+                zip(boxes, result.boxes.cls)
+            ):
+                class_id = int(class_id)
 
-                    if annotation_type == "bbox":
-                        line = create_yolo_bbox_annotation(box, class_id)
-                    else:  # segmentation
-                        if result.masks is None or not hasattr(
-                            result.masks, "xyn"
-                        ):
-                            continue
-                        polygon = result.masks.xyn[i]
-                        line = create_yolo_seg_annotation(polygon, class_id)
+                if annotation_type == "bbox":
+                    line = create_yolo_bbox_annotation(box, class_id)
+                else:  # segmentation
+                    polygon = result.masks.xyn if is_normalized else result.masks.xy
+                    line = create_yolo_seg_annotation(polygon, class_id)
 
-                    lines.append(line)
+                lines.append(line)
 
             # Write label file
             with open(label_path, "w") as f:
@@ -353,7 +356,12 @@ def main():
 
     # Parse arguments
     args = parse_arguments()
-
+    print(f'args.do_normalization:{args.do_normalization}')
+    if args.do_normalization == "true":
+        is_normalized = True
+    else:
+        is_normalized = False
+    print(f'args.do_normalization:{args.do_normalization}')
     # Parse text prompts
     text_prompts = [prompt.strip() for prompt in args.prompts.split(",")]
     print(f"\nClass prompts: {text_prompts}")
@@ -391,7 +399,7 @@ def main():
         "task": "segment",
         "mode": "predict",
         "model": args.model,
-        "half": True,  # Use FP16 for faster inference
+        "half": False,  # Use FP32
         "save": True,
         "save_dir": str(outputs_annotated),
     }
@@ -437,7 +445,7 @@ def main():
 
     if "coco" in output_formats:
         print("\n→ Converting to COCO format...")
-        coco_output = create_coco_output(results, text_prompts, metadata)
+        coco_output = create_coco_output(results, text_prompts, metadata,is_normalized)
 
         annotation_file = outdir / "annotations.json"
         with open(annotation_file, "w") as f:
@@ -453,10 +461,10 @@ def main():
 
         if is_video(file_paths[0]):
             create_yolo_video_output(
-                "bbox", results, yolo_bbox_dir, file_paths[0], args.vid_stride
+                "bbox", results, yolo_bbox_dir, file_paths[0], args.vid_stride, is_normalized
             )
         else:
-            create_yolo_output("bbox", results, yolo_bbox_dir)
+            create_yolo_output("bbox", results, yolo_bbox_dir, is_normalized)
             print(f"  Saved to: {yolo_bbox_dir}")
 
     if "yolo_seg" in output_formats:
@@ -466,10 +474,10 @@ def main():
 
         if is_video(file_paths[0]):
             create_yolo_video_output(
-                "seg", results, yolo_seg_dir, file_paths[0], args.vid_stride
+                "seg", results, yolo_seg_dir, file_paths[0], args.vid_stride, is_normalized
             )
         else:
-            create_yolo_output("seg", results, yolo_seg_dir)
+            create_yolo_output("seg", results, yolo_seg_dir, is_normalized)
             print(f"  Saved to: {yolo_seg_dir}")
 
     print("\n" + "=" * 60)
