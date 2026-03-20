@@ -53,7 +53,7 @@
                 </param>
             </when>
             <when value="video">
-                <param name="source" type="data" format="mp4,avi,mov"
+                <param name="source" type="data" format="mp4,avi,mov,gif"
                     multiple="false" label="Input video"/>
             </when>
         </conditional>
