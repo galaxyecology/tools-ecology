@@ -44,10 +44,6 @@
                 <option value="video">One video</option>
             </param>
             <when value="image">
-                <param name="source" type="data" format="jpg,png"
-                    multiple="true" label="Input images"/>
-            </when>
-            <when value="image">
                 <param name="source" type="data" format="jpg,png,tiff,tif" multiple="true" label="Input images">
                     <validator type="dataset_metadata_in_range"
                         metadata_name="channels"
@@ -55,6 +51,10 @@
                         max="3"
                         message="The image must contain exactly 3 channels (RGB)."/>
                 </param>
+            </when>
+            <when value="video">
+                <param name="source" type="data" format="mp4,avi,mov,gif"
+                    multiple="false" label="Input video"/>
             </when>
         </conditional>
         <param name="text_prompt" type="text" label="Text prompt" >
