@@ -1,4 +1,4 @@
-<tool id="sam3_semantic_segmentation" name="SAM3 Semantic Segmentation" version="1.0.0+galaxy0" profile="25.1">
+<tool id="sam3_semantic_segmentation" name="SAM3 Semantic Segmentation" version="1.0.0+galaxy1" profile="25.1">
     <description>
         SAM3 performs text-prompted semantic segmentation on images or videos. 
     </description>
@@ -21,7 +21,7 @@
         #set $name_file = $input.source.element_identifier + " "
     #end if
     python '$__tool_directory__/sam3_semantic_segmentation.py' 
-        --model '$sam3_models'
+        --model '$sam3_models.fields.path'
         --prompts '$text_prompt' 
         --conf '$conf' 
         --vid_stride '$vid_stride' 
@@ -33,6 +33,7 @@
         <param name="sam3_models" label="Model data" type="select" help="Contact the administrator of our Galaxy instance if you miss model data">
             <options from_data_table="huggingface">
                 <filter type="static_value" column="5" value="1"/>
+                <filter type="static_value" column="4" value="sam3"/>
             </options>
             <validator message="No model annotation is available for SAM3" type="no_options"/>
         </param>
@@ -43,11 +44,16 @@
                 <option value="video">One video</option>
             </param>
             <when value="image">
-                <param name="source" type="data" format="jpg,png"
-                    multiple="true" label="Input images"/>
+                <param name="source" type="data" format="jpg,png,tiff,tif" multiple="true" label="Input images">
+                    <validator type="dataset_metadata_in_range"
+                        metadata_name="channels"
+                        min="3"
+                        max="3"
+                        message="The image must contain exactly 3 channels (RGB)."/>
+                </param>
             </when>
             <when value="video">
-                <param name="source" type="data" format="mp4,avi,mov"
+                <param name="source" type="data" format="mp4,avi,mov,gif"
                     multiple="false" label="Input video"/>
             </when>
         </conditional>
