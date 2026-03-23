@@ -1,4 +1,4 @@
-<tool id="sam3_semantic_segmentation" name="SAM3 Semantic Segmentation" version="1.0.0+galaxy1" profile="25.1">
+<tool id="sam3_semantic_segmentation" name="SAM3 Semantic Segmentation" version="1.0.1+galaxy0" profile="25.1">
     <description>
         SAM3 performs text-prompted semantic segmentation on images or videos. 
     </description>
