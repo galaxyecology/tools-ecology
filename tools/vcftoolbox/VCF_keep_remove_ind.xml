@@ -1,0 +1,97 @@
+<tool id="population_genomics_vcf_keep_remove_individuals" name="Keep or remove selected individuals" version="@TOOL_VERSION@" profile="@PROFILE@">
+    <description>
+        from a VCF
+    </description>
+    
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+
+    <expand macro="requirements_bcftools"/>
+
+    <required_files>
+        <include path="VCF_keep_remove_ind.sh" />
+    </required_files>
+
+    <command detect_errors="exit_code"><![CDATA[
+        mkdir -p vcf_directory &&
+        
+        bash '$__tool_directory__/VCF_keep_remove_ind.sh'
+            --input '${vcf_input}'
+            --name '${vcf_input.element_identifier}'
+            --action '$action'
+            --list '$list_ind'
+        ]]></command>
+
+    <inputs>
+        <expand macro="param_vcf_input"/>
+
+        <param name="action" type="select" display="radio" optional="false" label="Action to perform:">
+            <option value="keep" selected="true">Keep listed individuals only</option>
+            <option value="remove">Remove listed individuals</option>
+        </param>
+
+        <param name="list_ind" type="data" format="tabular,txt" label="List of individuals to be kept"
+            help="Individuals must be listed one per line."/>
+    </inputs> 
+
+    <outputs>
+        <data name="new_vcf" format="vcf" label="${tool.name}">
+            <discover_datasets pattern="__designation_and_ext__" directory="vcf_directory" visible="true" assign_primary_output="true"/>
+        </data>
+    </outputs>
+
+    <tests>
+        <test>
+            <param name="vcf_input" value="test_vcf.vcf"/>
+            <param name="list_ind" value="ind_list.txt"/>
+            <param name="action" value="keep"/>
+            <output name="new_vcf" count="1">
+                <assert_contents>
+                    <has_text text="GA-2_2021_A11-01-m21_1"/>
+                </assert_contents>
+            </output>
+        </test>
+
+
+        <test>
+            <param name="vcf_input" value="test_vcf.vcf"/>
+            <param name="list_ind" value="ind_list.txt"/>
+            <param name="action" value="remove"/>
+            <output name="new_vcf" count="1">
+                <assert_contents>
+                    <not_has_text text="GA-2_2021_A11-01-m21_1"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+
+    <help><![CDATA[
+Usage
+=====
+
+As input, the user provides a single VCF file (Danecek *et al.* 2011) and a list of individuals (tabular or txt). The user selects the action they wish to perform: delete or keep only the individuals listed.
+
+The tool processes the VCF file and writes an output VCF file in which it keeps or removes only the samples listed in the provided individual list. If any individual in the list is not present in the VCF, it is ignored, and processing continues with the available matches.
+
+Example : The input VCF file contains individuals id_A, id_B, id_C, id_D and the list contains id_B, id_D and id_E. If the user decides to keep individuals, the output will contain only samples id_B and id_D. Samples id_A and id_C are removed and id_E is ignored. If the user decides to remove individuals, the output will contain only samples id_A and id_C.
+
+Example of individual list : 
+
+::
+    
+    id_B
+    id_E
+    id_D
+
+
+The list of individuals does not contain a header and there is only one individual per line.
+
+See also examples of VCF formats in :  https://samtools.github.io/hts-specs/VCFv4.5.pdf
+
+    ]]></help>
+    <citations>
+        <expand macro="citations_bcftools_only"/>
+    </citations>
+
+</tool>
