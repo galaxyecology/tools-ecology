@@ -111,13 +111,15 @@ def create_coco_categories(text_prompts: List[str]) -> List[Dict[str, Any]]:
     Returns: List of category dictionaries
     """
     return [
-        {"id": i + 1, "name": label}
-        for i, label in enumerate(text_prompts)
+        {"id": i + 1, "name": label} for i, label in enumerate(text_prompts)
     ]
 
 
 def create_coco_output(
-    results: List[Any], text_prompts: List[str], metadata: Dict[str, Any], is_normalized: bool
+    results: List[Any],
+    text_prompts: List[str],
+    metadata: Dict[str, Any],
+    is_normalized: bool,
 ) -> Dict[str, Any]:
     """Convert SAM3 results to COCO format."""
     coco_output = {
@@ -202,7 +204,10 @@ def create_yolo_seg_annotation(polygon: np.ndarray, class_id: int) -> str:
 
 
 def create_yolo_output(
-    annotation_type: str, results: List[Any], output_dir: Path, is_normalized: bool
+    annotation_type: str,
+    results: List[Any],
+    output_dir: Path,
+    is_normalized: bool,
 ) -> None:
     """Export annotations in YOLO format for images."""
     # Create subdirectories for images and labels
@@ -230,15 +235,15 @@ def create_yolo_output(
 
         boxes = result.boxes.xyxyn if is_normalized else result.boxes.xyxy
         # Process each detection
-        for i, (box, class_id) in enumerate(
-            zip(boxes, result.boxes.cls)
-        ):
+        for i, (box, class_id) in enumerate(zip(boxes, result.boxes.cls)):
             class_id = int(class_id)
 
             if annotation_type == "bbox":
                 line = create_yolo_bbox_annotation(box, class_id)
             else:  # segmentation
-                polygon = result.masks.xyn if is_normalized else result.masks.xy
+                polygon = (
+                    result.masks.xyn if is_normalized else result.masks.xy
+                )
                 line = create_yolo_seg_annotation(polygon, class_id)
 
             lines.append(line)
@@ -256,7 +261,7 @@ def create_yolo_video_output(
     output_dir: Path,
     video_path: str,
     stride: int,
-    is_normalized: bool
+    is_normalized: bool,
 ) -> None:
     """Export annotations in YOLO format for videos with frame extraction."""
     # Create subdirectories for images and labels
@@ -304,15 +309,15 @@ def create_yolo_video_output(
 
             # Process detections if available
             boxes = result.boxes.xyxyn if is_normalized else result.boxes.xyxy
-            for i, (box, class_id) in enumerate(
-                zip(boxes, result.boxes.cls)
-            ):
+            for i, (box, class_id) in enumerate(zip(boxes, result.boxes.cls)):
                 class_id = int(class_id)
 
                 if annotation_type == "bbox":
                     line = create_yolo_bbox_annotation(box, class_id)
                 else:  # segmentation
-                    polygon = result.masks.xyn if is_normalized else result.masks.xy
+                    polygon = (
+                        result.masks.xyn if is_normalized else result.masks.xy
+                    )
                     line = create_yolo_seg_annotation(polygon, class_id)
 
                 lines.append(line)
@@ -341,8 +346,9 @@ def create_metadata(
     return {
         "description": "SAM3 semantic segmentation export",
         "model": "sam3.pt",
-        "model_sha256": compute_file_hash(
-            model_path) if model_path.exists() else "N/A",
+        "model_sha256": (
+            compute_file_hash(model_path) if model_path.exists() else "N/A"
+        ),
         "prompts": text_prompts,
         "confidence_threshold": conf_threshold,
         "ultralytics_version": ultralytics.__version__,
@@ -356,12 +362,12 @@ def main():
 
     # Parse arguments
     args = parse_arguments()
-    print(f'args.do_normalization:{args.do_normalization}')
+    print(f"args.do_normalization:{args.do_normalization}")
     if args.do_normalization == "true":
         is_normalized = True
     else:
         is_normalized = False
-    print(f'args.do_normalization:{args.do_normalization}')
+    print(f"args.do_normalization:{args.do_normalization}")
     # Parse text prompts
     text_prompts = [prompt.strip() for prompt in args.prompts.split(",")]
     print(f"\nClass prompts: {text_prompts}")
@@ -445,7 +451,9 @@ def main():
 
     if "coco" in output_formats:
         print("\n→ Converting to COCO format...")
-        coco_output = create_coco_output(results, text_prompts, metadata,is_normalized)
+        coco_output = create_coco_output(
+            results, text_prompts, metadata, is_normalized
+        )
 
         annotation_file = outdir / "annotations.json"
         with open(annotation_file, "w") as f:
@@ -461,7 +469,12 @@ def main():
 
         if is_video(file_paths[0]):
             create_yolo_video_output(
-                "bbox", results, yolo_bbox_dir, file_paths[0], args.vid_stride, is_normalized
+                "bbox",
+                results,
+                yolo_bbox_dir,
+                file_paths[0],
+                args.vid_stride,
+                is_normalized,
             )
         else:
             create_yolo_output("bbox", results, yolo_bbox_dir, is_normalized)
@@ -474,7 +487,12 @@ def main():
 
         if is_video(file_paths[0]):
             create_yolo_video_output(
-                "seg", results, yolo_seg_dir, file_paths[0], args.vid_stride, is_normalized
+                "seg",
+                results,
+                yolo_seg_dir,
+                file_paths[0],
+                args.vid_stride,
+                is_normalized,
             )
         else:
             create_yolo_output("seg", results, yolo_seg_dir, is_normalized)
