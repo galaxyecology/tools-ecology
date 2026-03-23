@@ -1,4 +1,4 @@
-<tool id="vcf_subset" name="Subsetting SNPs at random from a VCF file" version="@TOOL_VERSION@" profile="@PROFILE@">
+<tool id="population_genomics_vcf_subset" name="Subsetting SNPs at random from a VCF file" version="@TOOL_VERSION@" profile="@PROFILE@">
     <description>
         given a chosen number of SNPs to use
     </description>

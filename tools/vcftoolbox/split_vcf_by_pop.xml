@@ -1,4 +1,4 @@
-<tool id="split_vcf_by_pop" name="Split VCF by pop" version="@TOOL_VERSION@" profile="@PROFILE@">
+<tool id="population_genomics_split_vcf_by_pop" name="Split VCF by pop" version="@TOOL_VERSION@" profile="@PROFILE@">
     <description>
         from an individuals/population table
     </description>

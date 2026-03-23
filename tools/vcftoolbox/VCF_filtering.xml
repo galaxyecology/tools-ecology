@@ -1,4 +1,4 @@
-<tool id="vcf_filtering" name="VCF filtering" version="@TOOL_VERSION@" profile="@PROFILE@">
+<tool id="population_genomics_vcf_filtering" name="VCF filtering" version="@TOOL_VERSION@" profile="@PROFILE@">
     <description>
         of individuals and variants
     </description>

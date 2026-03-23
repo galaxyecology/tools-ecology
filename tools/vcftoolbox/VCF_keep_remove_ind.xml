@@ -1,4 +1,4 @@
-<tool id="vcf_keep_remove_individuals" name="Keep or remove selected individuals" version="@TOOL_VERSION@" profile="@PROFILE@">
+<tool id="population_genomics_vcf_keep_remove_individuals" name="Keep or remove selected individuals" version="@TOOL_VERSION@" profile="@PROFILE@">
     <description>
         from a VCF
     </description>
