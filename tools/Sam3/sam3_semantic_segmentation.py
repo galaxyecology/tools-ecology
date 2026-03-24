@@ -401,7 +401,7 @@ def main():
     # Configure predictor overrides
     overrides = {
         "conf": args.conf,
-        "show_conf": False,
+        "show_conf": True,
         "task": "segment",
         "mode": "predict",
         "model": args.model,
