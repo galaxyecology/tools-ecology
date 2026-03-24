@@ -1,7 +1,7 @@
 name: population_genomics_vcftoolbox
 owner: ecology
 description: Tools to filter, manipulate, and manage VCF files for population genomics analyses using vcftools and bcftools.
-homepage_url: https://github.com/lauramtzan/GINAMO/vcftoolbox
+homepage_url: https://github.com/GINAMO-EBVs/ginamo-workflows/vcftoolbox
 long_description: |
   VCF Toolbox is a suite of tools for filtering and subsetting VCF files used in population genomics. 
   The toolbox allows users to filter SNPs by read depth, genotype quality, missing data, heterozygosity, and minor allele count, 
