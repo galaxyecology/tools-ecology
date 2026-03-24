@@ -4,6 +4,7 @@ import json
 import os
 from pathlib import Path
 from typing import Any, Dict, List
+import glob
 
 import cv2
 
@@ -78,6 +79,20 @@ def parse_arguments() -> argparse.Namespace:
 
 # -------- Functions --------
 
+def convert_avi_to_mp4(directory_path):
+    avi_files = glob.glob(os.path.join(directory_path, "*.avi"))
+    if not avi_files:
+        print("Aucun fichier .avi trouvé dans le répertoire.")
+        return False
+    for avi_file_path in avi_files:
+        output_path = os.path.splitext(avi_file_path)[0]
+        print(f"Conversion : {avi_file_path} -> {output_path}.mp4")
+        os.popen(
+            "ffmpeg -i '{input}' -ac 2 -b:v 2000k -c:a aac -c:v libx264 "
+            "-b:a 160k -vprofile high -bf 0 -strict experimental -f mp4 '{output}.mp4'".format(
+                input=avi_file_path, output=output_path
+            )
+        )
 
 def is_video(file_path: str) -> bool:
     """Check if a file is a video based on its extension."""
@@ -435,7 +450,8 @@ def main():
     # Run predictions
     # print(f"\n Running prediction on {source_path}...")
     results = predictor(source=source_path, text=text_prompts, stream=False)
-
+    if is_video(file_paths[0]):
+        convert_avi_to_mp4(outputs_annotated)
     if not results:
         raise RuntimeError("SAM3 returned no results")
 
