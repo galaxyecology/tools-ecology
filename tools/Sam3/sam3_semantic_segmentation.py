@@ -2,9 +2,9 @@ import argparse
 import hashlib
 import json
 import os
+import glob
 from pathlib import Path
 from typing import Any, Dict, List
-import glob
 
 import cv2
 
@@ -79,6 +79,7 @@ def parse_arguments() -> argparse.Namespace:
 
 # -------- Functions --------
 
+
 def convert_avi_to_mp4(directory_path):
     avi_files = glob.glob(os.path.join(directory_path, "*.avi"))
     if not avi_files:
@@ -90,9 +91,8 @@ def convert_avi_to_mp4(directory_path):
         os.popen(
             "ffmpeg -i '{input}' -ac 2 -b:v 2000k -c:a aac -c:v libx264 "
             "-b:a 160k -vprofile high -bf 0 -strict experimental -f mp4 '{output}.mp4'".format(
-                input=avi_file_path, output=output_path
-            )
-        )
+                input=avi_file_path, output=output_path))
+
 
 def is_video(file_path: str) -> bool:
     """Check if a file is a video based on its extension."""
@@ -420,7 +420,7 @@ def main():
         "task": "segment",
         "mode": "predict",
         "model": args.model,
-        "half": True,  # Use FP16 for faster inference
+        "half": False,  # Use FP16 for faster inference
         "save": True,
         "save_dir": str(outputs_annotated),
     }
@@ -430,6 +430,7 @@ def main():
         print("\nVideo input detected → using SAM3VideoSemanticPredictor")
         overrides["vid_stride"] = args.vid_stride
         predictor = SAM3VideoSemanticPredictor(overrides=overrides)
+
     else:
         print("\nImage input detected → using SAM3SemanticPredictor")
         predictor = SAM3SemanticPredictor(overrides=overrides)
@@ -452,6 +453,7 @@ def main():
     results = predictor(source=source_path, text=text_prompts, stream=False)
     if is_video(file_paths[0]):
         convert_avi_to_mp4(outputs_annotated)
+
     if not results:
         raise RuntimeError("SAM3 returned no results")
 
