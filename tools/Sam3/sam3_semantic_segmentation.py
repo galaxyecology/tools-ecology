@@ -85,13 +85,19 @@ def convert_avi_to_mp4(directory_path):
     if not avi_files:
         print("Aucun fichier .avi trouvé dans le répertoire.")
         return False
+
     for avi_file_path in avi_files:
         output_path = os.path.splitext(avi_file_path)[0]
         print(f"Conversion : {avi_file_path} -> {output_path}.mp4")
         os.popen(
-            "ffmpeg -i '{input}' -ac 2 -b:v 2000k -c:a aac -c:v libx264 "
-            "-b:a 160k -vprofile high -bf 0 -strict experimental -f mp4 '{output}.mp4'".format(
-                input=avi_file_path, output=output_path))
+            "ffmpeg -i '{input}' -ac 2 -b:v 2000k "
+            "-c:a aac -c:v libx264 -b:a 160k "
+            "-vprofile high -bf 0 -strict experimental "
+            "-f mp4 '{output}.mp4'".format(
+                input=avi_file_path,
+                output=output_path,
+            )
+        )
 
 
 def is_video(file_path: str) -> bool:
