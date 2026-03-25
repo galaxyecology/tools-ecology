@@ -1,8 +1,8 @@
 import argparse
 import hashlib
+import glob
 import json
 import os
-import glob
 from pathlib import Path
 from typing import Any, Dict, List
 
@@ -507,7 +507,7 @@ def main():
 
         if is_video(file_paths[0]):
             create_yolo_video_output(
-                "seg", results, yolo_seg_dir,file_paths[0], args.vid_stride,
+                "seg", results, yolo_seg_dir,file_paths[0], args.vid_stride, 
                 is_normalized,
             )
         else:
