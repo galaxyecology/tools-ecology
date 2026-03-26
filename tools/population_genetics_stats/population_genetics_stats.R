@@ -22,28 +22,18 @@ if (marker_type == "SNP") {
   indpop_path <- args[4]
   indpop <- read.table(indpop_path, header = FALSE, sep = "\t")
   colnames(indpop) <- c("Ind", "Pop")
-  flag_offset <- 4  # flags start at args[5]
-} else {
-  flag_offset <- 3  # flags start at args[4]
 }
 
 # Statistics selection flags
-# Passed as "true"/"false" strings from Galaxy
-# Safe boolean parser
-parse_bool <- function(x, name) {
-  if (length(x) == 0 || is.na(x) || trimws(x) == "") {
-    warning("Argument '", name, "' is missing/empty => FALSE")
-    return(FALSE)
-  }
-  tolower(trimws(x)) == "true"
-}
+stat_start_index <- if (marker_type == "SNP") 5 else 4
+selected_stats <- args[stat_start_index:length(args)]
 
-calc_heterozygosity <- parse_bool(args[flag_offset + 1], "calc_heterozygosity")
-calc_fis            <- parse_bool(args[flag_offset + 2], "calc_fis")
-calc_ar             <- parse_bool(args[flag_offset + 3], "calc_ar")
-calc_fst            <- parse_bool(args[flag_offset + 4], "calc_fst")
-calc_gst            <- parse_bool(args[flag_offset + 5], "calc_gst")
-calc_djost          <- parse_bool(args[flag_offset + 6], "calc_djost")
+calc_heterozygosity <- "heterozygosity" %in% selected_stats
+calc_fis            <- "fis"            %in% selected_stats
+calc_ar             <- "ar"             %in% selected_stats
+calc_fst            <- "fst"            %in% selected_stats
+calc_gst            <- "gst"            %in% selected_stats
+calc_djost          <- "djost"          %in% selected_stats
 
 # Differentiation stats: at least one must be selected to compute pairwise matrices
 calc_diff <- calc_fst || calc_gst || calc_djost
