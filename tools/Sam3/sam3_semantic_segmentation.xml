@@ -45,11 +45,7 @@
             </param>
             <when value="image">
                 <param name="source" type="data" format="jpg,png,tiff,tif" multiple="true" label="Input images">
-                    <validator type="dataset_metadata_in_range"
-                        metadata_name="channels"
-                        min="3"
-                        max="3"
-                        message="The image must contain exactly 3 channels (RGB)."/>
+                    <validator type="expression" message="TIFF images must contain exactly 3 channels (RGB).">value.ext not in ('tiff', 'tif') or value.metadata.channels == 3</validator>
                 </param>
             </when>
             <when value="video">
@@ -115,7 +111,7 @@ This option will be applied to all selected formats above.<br/>
             <param name="sam3_models" value="unknown"/>
             <conditional name="input">
                 <param name="input_kind" value="image" />
-                <param name="source" value="5827603936_3f1d5d715c_z.jpg" />
+                <param name="source" value="5827603936_3f1d5d715c_z.jpg,shrimp.png"/>
             </conditional>
             <param name="text_prompt" value="elephant"/>
             <param name="conf" value="0.25"/>
