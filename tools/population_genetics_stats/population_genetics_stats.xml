@@ -1,4 +1,4 @@
-<tool id="population_genetics_stats" name="Population Genetics Statistics:" version="0.1.0">
+<tool id="population_genetics_stats" name="Population Genetics Statistics:" version="0.1.0" profile="25.0">
     <description>
         He, Hobs, Fis, allelic richness and pairwise values (Fst, DJost, Gst Nei)
     </description>
@@ -176,17 +176,29 @@
         </output>
         <output name="fst_heatmap" ftype="png">
             <assert_contents>
-                <has_size min="1000"/>
+                <has_size min="10000"/>
+                <has_image_width width="2400" delta="2"/>
+                <has_image_height height="2100" delta="2"/>
+                <has_image_channels channels="3"/>
+                <has_image_mean_intensity min="0.5"/>
             </assert_contents>
         </output>
         <output name="gst_heatmap" ftype="png">
             <assert_contents>
-                <has_size min="1000"/>
+                <has_size min="10000"/>
+                <has_image_width width="2400" delta="2"/>
+                <has_image_height height="2100" delta="2"/>
+                <has_image_channels channels="3"/>
+                <has_image_mean_intensity min="0.5"/>
             </assert_contents>
         </output>
         <output name="djost_heatmap" ftype="png">
             <assert_contents>
-                <has_size min="1000"/>
+                <has_size min="10000"/>
+                <has_image_width width="2400" delta="2"/>
+                <has_image_height height="2100" delta="2"/>
+                <has_image_channels channels="3"/>
+                <has_image_mean_intensity min="0.5"/>
             </assert_contents>
         </output>
     </test>
@@ -262,12 +274,20 @@
         </output>
         <output name="gst_heatmap" ftype="png">
             <assert_contents>
-                <has_size min="1000"/>
+                <has_size min="10000"/>
+                <has_image_width width="2400" delta="2"/>
+                <has_image_height height="2100" delta="2"/>
+                <has_image_channels channels="3"/>
+                <has_image_mean_intensity min="0.5"/>
             </assert_contents>
         </output>
         <output name="djost_heatmap" ftype="png">
             <assert_contents>
-                <has_size min="1000"/>
+                <has_size min="10000"/>
+                <has_image_width width="2400" delta="2"/>
+                <has_image_height height="2100" delta="2"/>
+                <has_image_channels channels="3"/>
+                <has_image_mean_intensity min="0.5"/>
             </assert_contents>
         </output>
     </test>
