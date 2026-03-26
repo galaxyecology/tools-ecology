@@ -82,10 +82,6 @@ def parse_arguments() -> argparse.Namespace:
 
 def convert_avi_to_mp4(directory_path):
     avi_files = glob.glob(os.path.join(directory_path, "*.avi"))
-    if not avi_files:
-        print("Aucun fichier .avi trouvé dans le répertoire.")
-        return False
-
     for avi_file_path in avi_files:
         output_path = os.path.splitext(avi_file_path)[0]
         print(f"Conversion : {avi_file_path} -> {output_path}.mp4")
