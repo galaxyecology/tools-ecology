@@ -57,7 +57,7 @@
             </when>
         </conditional>
         
-        <param name="stats" type="select" multiple="true" optional="false" display="checkboxes"
+        <param name="stats" type="select" multiple="true" display="checkboxes"
             label="Statistics to compute"
             help="Select one or more statistics to compute. Hold Ctrl/Cmd to select multiple.">
             <option value="heterozygosity" selected="true">Heterozygosity (Hobs and Hexp / He)</option>
