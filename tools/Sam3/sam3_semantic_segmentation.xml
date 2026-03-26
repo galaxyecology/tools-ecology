@@ -44,7 +44,7 @@
                 <option value="video">One video</option>
             </param>
             <when value="image">
-                <param name="source" type="data" format="jpg,png,tiff,tif" multiple="true" label="Input images">
+                <param name="source" type="data" format="jpg,png,tiff" multiple="true" label="Input images">
                     <validator type="expression" message="TIFF images must contain exactly 3 channels (RGB).">value.ext not in ('tiff', 'tif') or value.metadata.channels == 3</validator>
                 </param>
             </when>
