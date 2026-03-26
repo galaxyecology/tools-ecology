@@ -1,0 +1,16 @@
+name: population_genetics_stats
+owner: ecology
+description: This tool computes standard genetic diversity statistics and differentiation indices.
+homepage_url: https://github.com/GINAMO-EBVs/ginamo-workflows/population_genetics_stats
+long_description: |
+  This tool computes standard genetic diversity statistics and differentiation indices using several R packages (adegenet, hierfstat and mmod). 
+  It calculates observed and expected heterozygosity (Hobs, Hexp), allelic richness (Ar), and an inbreeding coefficient (Fis) (Weir & Cockerham 1984). 
+  It also performs pairwise population comparisons to provide Fst (Weir & Cockerham 1984), Gst (Nei 1973) and Jost's D statistics (Jost 2008).
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/population_genetics_stats
+type: unrestricted
+categories:
+- Ecology
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "{{ tool_name }}"
+
