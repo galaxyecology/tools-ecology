@@ -1,8 +1,8 @@
 import argparse
+import glob
 import hashlib
 import json
 import os
-import glob
 from pathlib import Path
 from typing import Any, Dict, List
 
@@ -100,9 +100,7 @@ def convert_avi_to_mp4(directory_path, quality):
     avi_file_path = glob.glob(os.path.join(directory_path, "*.avi"))[0]
     output_path = os.path.splitext(avi_file_path)[0]
     print(f"Converting: {avi_file_path} -> {output_path}.mp4")
-
     audio_args = "-an"  # remove audio
-
     # Video
     if quality == "copy":
         video_args = "-c:v copy"  # copy video stream without re-encoding
@@ -518,11 +516,7 @@ def main():
 
         if is_video(file_paths[0]):
             create_yolo_video_output(
-                "bbox",
-                results,
-                yolo_bbox_dir,
-                file_paths[0],
-                args.vid_stride,
+                "bbox", results, yolo_bbox_dir, file_paths[0], args.vid_stride,
                 is_normalized,
             )
         else:
@@ -536,11 +530,7 @@ def main():
 
         if is_video(file_paths[0]):
             create_yolo_video_output(
-                "seg",
-                results,
-                yolo_seg_dir,
-                file_paths[0],
-                args.vid_stride,
+                "seg", results, yolo_seg_dir, file_paths[0], args.vid_stride,
                 is_normalized,
             )
         else:

@@ -1,0 +1,346 @@
+<tool id="population_genetics_stats" name="Population Genetics Statistics:" version="0.1.0" profile="25.0">
+    <description>
+        He, Hobs, Fis, allelic richness and pairwise values (Fst, DJost, Gst Nei)
+    </description>
+
+    <requirements>
+        <requirement type="package" version="1.2.0">r-dplyr</requirement>
+        <requirement type="package" version="1.7_23">r-ade4</requirement>
+        <requirement type="package" version="1.15.0">r-vcfr</requirement>
+        <requirement type="package" version="2.1.11">r-adegenet</requirement>
+        <requirement type="package" version="4.5.2">r-base</requirement>
+        <requirement type="package" version="0.5_11">r-hierfstat</requirement>
+        <requirement type="package" version="1.3.3">r-mmod</requirement>
+        <requirement type="package" version="4.0.2">r-ggplot2</requirement>
+        <requirement type="package" version="0.6.5">r-viridis</requirement>
+        <requirement type="package" version="3.3.1">r-tibble</requirement>
+        <requirement type="package" version="1.3.2">r-tidyr</requirement>
+    </requirements>
+
+    <required_files>
+        <include path="population_genetics_stats.R" />
+    </required_files>
+
+    <command detect_errors="exit_code"><![CDATA[
+    mkdir -p summary_file &&
+    mkdir -p matrices_output &&
+
+    Rscript '$__tool_directory__/population_genetics_stats.R'
+            '$data_conditional.marker_type'
+            '$data_conditional.input_data'
+            '$data_conditional.input_data.element_identifier'
+            #if $data_conditional.marker_type == "SNP":
+                '$data_conditional.indpop'
+            #end if
+            #for $s in $stats:
+                '${s}'
+            #end for
+        ]]></command>
+
+    <inputs>
+        <conditional name="data_conditional">
+            <param name="marker_type" type="select" label="Select your data format">
+                <option value="SNP" selected="true">SNP</option>
+                <option value="SSR">SSR</option>
+            </param>
+        
+            <when value="SNP">
+                <param name="input_data" type="data" format="vcf" label="Upload your VCF file"
+                    help="File containing SNP data in VCF format. You can upload a simple file, multiple file or a dataset collection"/>
+                <param name="indpop" type="data" format="tabular,txt" label="Upload your population file"
+                    help="File containing individuals in the first column and their population in the second, separated by a tabulation character."/>
+            </when>
+        
+            <when value="SSR">
+                <param name="input_data" type="data" format="tabular,txt" label="Upload your SSR data file"
+                    help="File containing SSR/microsatellite data in tabular format."/>
+            </when>
+        </conditional>
+        
+        <param name="stats" type="select" multiple="true" display="checkboxes"
+            label="Statistics to compute"
+            help="Select one or more statistics to compute. Hold Ctrl/Cmd to select multiple.">
+            <option value="heterozygosity" selected="true">Heterozygosity (Hobs and Hexp / He)</option>
+            <option value="fis" selected="true">Inbreeding coefficient (Fis) (Weir &amp; Cockerham 1984)</option>
+            <option value="ar" selected="true">Allelic richness (Ar)</option>
+            <option value="fst">Pairwise Fst (Weir &amp; Cockerham 1984)</option>
+            <option value="gst">Pairwise Gst (Nei 1973)</option>
+            <option value="djost">Pairwise Jost's D (Jost 2008)</option>
+        </param>
+    </inputs>
+
+    <outputs>
+        <data name="summary_div_stats" from_work_dir="summary_file/summary_div_stats.txt"
+            format="tabular" label="Summary diversity statistics (${data_conditional.input_data.element_identifier})"/>
+
+        <data name="fst_matrix" from_work_dir="matrices_output/fst_matrix.txt"
+            format="tabular" label="Pairwise Fst matrix (${data_conditional.input_data.element_identifier})">
+            <filter>'fst' in stats</filter>
+        </data>
+        <data name="gst_matrix" from_work_dir="matrices_output/gst_pr_nei_matrix.txt"
+            format="tabular" label="Pairwise Gst (Nei) matrix (${data_conditional.input_data.element_identifier})">
+            <filter>'gst' in stats</filter>
+        </data>
+        <data name="djost_matrix" from_work_dir="matrices_output/jost_D_matrix.txt"
+            format="tabular" label="Pairwise Jost's D matrix (${data_conditional.input_data.element_identifier})">
+            <filter>'djost' in stats</filter>
+        </data>
+        <data name="fst_heatmap" from_work_dir="matrices_output/fst_heatmap.png"
+            format="png" label="Pairwise Fst heatmap (${data_conditional.input_data.element_identifier})">
+            <filter>'fst' in stats</filter>
+        </data>
+        <data name="gst_heatmap" from_work_dir="matrices_output/gst_pr_nei_heatmap.png"
+            format="png" label="Pairwise Gst (Nei) heatmap (${data_conditional.input_data.element_identifier})">
+            <filter>'gst' in stats</filter>
+        </data>
+        <data name="djost_heatmap" from_work_dir="matrices_output/jost_D_heatmap.png"
+            format="png" label="Pairwise Jost's D heatmap (${data_conditional.input_data.element_identifier})">
+            <filter>'djost' in stats</filter>
+        </data>
+    </outputs>
+
+    <tests>
+    <!-- Test 1: SNP - basics stats (He, Ho, Fis and Ar) -->
+        <test expect_num_outputs="1">
+        <conditional name="data_conditional">       
+            <param name="marker_type" value="SNP"/>
+            <param name="input_data" value="test_vcf.vcf" ftype="vcf"/>
+            <param name="indpop" value="test_pop.txt" ftype="txt"/>
+        </conditional>
+        <param name="stats" value="heterozygosity,fis,ar"/>
+ 
+        <output name="summary_div_stats" ftype="tabular">
+            <assert_contents>
+                <has_n_lines n="12"/>
+                <has_n_columns n="8"/>
+                <has_line_matching expression="Dataset\tPop\tMarker_type\tn_ind\tHobs\tHexp\tAr\tFis"/>
+                <has_line_matching expression="test_vcf\tGA-2_2021\tSNP\t148\t0.2311\t0.2313\t1.23132\t-0.00209"/>
+            </assert_contents>
+        </output>
+    </test>
+
+    <!-- Test 2: SNP - all stats -->
+    <test expect_num_outputs="7">
+        <conditional name="data_conditional">
+            <param name="marker_type" value="SNP"/>
+            <param name="input_data" value="test_vcf.vcf" ftype="vcf"/>
+            <param name="indpop" value="test_pop.txt" ftype="txt"/>
+        </conditional>
+        <param name="stats" value="heterozygosity,fis,ar,fst,gst,djost"/>
+ 
+        <output name="summary_div_stats" ftype="tabular">
+            <assert_contents>
+                <has_n_lines n="12"/>
+                <has_n_columns n="11"/>
+                <has_line_matching expression="Dataset\tPop\tMarker_type\tn_ind\tHobs\tHexp\tAr\tFis\taverage_pairwise_Fst\taverage_Gst_Nei\taverage_Jost_D"/>
+                <has_line_matching expression="test_vcf\tGA-2_2021\tSNP\t148\t0.2311\t0.2313\t1.23132\t-0.00209\t0.01352\t0.00741\t0.00442"/>
+            </assert_contents>
+        </output>
+        <output name="fst_matrix" ftype="tabular">
+            <assert_contents>
+                <has_n_lines n="10" delta="1"/>
+                <has_n_columns n="10"/>
+            </assert_contents>
+        </output>
+        <output name="gst_matrix" ftype="tabular">
+            <assert_contents>
+                <has_n_lines n="10" delta="1"/>
+                <has_n_columns n="10"/>
+            </assert_contents>
+        </output>
+        <output name="djost_matrix" ftype="tabular">
+            <assert_contents>
+                <has_n_lines n="10" delta="1"/>
+                <has_n_columns n="10"/>
+            </assert_contents>
+        </output>
+        <output name="fst_heatmap" ftype="png">
+            <assert_contents>
+                <has_size min="1000"/>
+            </assert_contents>
+        </output>
+        <output name="gst_heatmap" ftype="png">
+            <assert_contents>
+                <has_size min="1000"/>
+            </assert_contents>
+        </output>
+        <output name="djost_heatmap" ftype="png">
+            <assert_contents>
+                <has_size min="1000"/>
+            </assert_contents>
+        </output>
+    </test>
+ 
+    <!-- Test 3: SSR - stats de base (Hobs, Fis, Ar) sans differenciation -->
+    <test expect_num_outputs="1">
+        <conditional name="data_conditional">
+            <param name="marker_type" value="SSR"/>
+            <param name="input_data" value="test_SSR.txt" ftype="txt"/>
+        </conditional>
+        <param name="stats" value="heterozygosity,fis,ar"/>
+ 
+        <output name="summary_div_stats" ftype="tabular">
+            <assert_contents>
+                <has_n_lines n="9"/>
+                <has_n_columns n="8"/>
+                <has_line_matching expression="Dataset\tPop\tMarker_type\tn_ind\tHobs\tHexp\tAr\tFis"/>
+                <has_line_matching expression="test_SSR\tPortugal\tSSR\t47\t0.5732\t0.6249\t1.62436\t0.08559"/>
+            </assert_contents>
+        </output>
+    </test>
+ 
+    <!-- Test 4: SSR - toutes les stats incluant matrices de differenciation -->
+    <test expect_num_outputs="7">
+        <conditional name="data_conditional">
+            <param name="marker_type" value="SSR"/>
+            <param name="input_data" value="test_SSR.txt" ftype="txt"/>
+        </conditional>
+        <param name="stats" value="heterozygosity,fis,ar,fst,gst,djost"/>
+ 
+        <output name="summary_div_stats" ftype="tabular">
+            <assert_contents>
+                <has_n_lines n="9"/>
+                <has_n_columns n="11"/>
+                <has_line_matching expression="Dataset\tPop\tMarker_type\tn_ind\tHobs\tHexp\tAr\tFis\taverage_pairwise_Fst\taverage_Gst_Nei\taverage_Jost_D"/>
+                <has_line_matching expression="test_SSR\tPortugal\tSSR\t47\t0.5732\t0.6249\t1.62436\t0.08559\t0.04389\t0.02793\t0.08192"/>
+            </assert_contents>
+        </output>
+        <output name="fst_matrix" ftype="tabular">
+            <assert_contents>
+                <has_n_lines n="7" delta="1"/>
+                <has_n_columns n="7"/>
+            </assert_contents>
+        </output>
+        <output name="gst_matrix" ftype="tabular">
+            <assert_contents>
+                <has_n_lines n="7" delta="1"/>
+                <has_n_columns n="7"/>
+            </assert_contents>
+        </output>
+        <output name="djost_matrix" ftype="tabular">
+            <assert_contents>
+                <has_n_lines n="7" delta="1"/>
+                <has_n_columns n="7"/>
+            </assert_contents>
+        </output>
+        <output name="fst_heatmap" ftype="png">
+            <assert_contents>
+                <has_size min="1000"/>
+            </assert_contents>
+        </output>
+        <output name="gst_heatmap" ftype="png">
+            <assert_contents>
+                <has_size min="1000"/>
+            </assert_contents>
+        </output>
+        <output name="djost_heatmap" ftype="png">
+            <assert_contents>
+                <has_size min="1000"/>
+            </assert_contents>
+        </output>
+    </test>
+</tests>
+
+<help><![CDATA[
+Usage
+=====
+
+As input, the user provides genetic data depending on the marker type selected. For SNPs, one or more VCF files (Danecek *et al.* 2011) and a population file (see format below). For SSRs, one or more tabular files containing genotypes and population information (see format below). The user selects the statistics they want to compute. 
+
+This tool computes standard genetic diversity statistics and differentiation indices using several R packages (adegenet, hierfstat and mmod). It calculates observed and expected heterozygosity (Hobs, Hexp), allelic richness (Ar), and an inbreeding coefficient (Fis) (Weir & Cockerham 1984). It also performs pairwise population comparisons to provide Fst (Weir & Cockerham 1984), Gst (Nei 1973) and Jost's D statistics (Jost 2008).
+
+The tool generates a summary table with results per population, the average across populations (mean) and the results for all individuals pooled (All_populations_combined). Additionally, if the user chooses to compute pairwise values, the tool generates the full pairwise differentiation matrix for each pairwise statistic and a heatmap in png format.
+
+Examples files
+==============
+**Population file (tab):**
+
+::
+
+    ind1    pop1
+    ind2    pop2
+    ind3    pop2
+    ind4    pop1
+
+
+**SSR Genotype file (tab):**
+
+::
+
+    Ind     Pop     Loc1    Loc2    Loc3
+    ind1    pop1    120/124 200/202 150/150
+    ind2    pop1    120/120 202/204 150/152
+    ind3    pop2    124/126 200/200 152/152
+
+
+**Summary output table:**
+
++----------+------+-------------+-------+-------+-------+------+-------+----------+--------------+-------------+
+| Dataset  | Pop  | Marker_type | n_ind | Hobs  | Hexp  | Ar   | Fis   | mean_Fst | mean_Gst_Nei | mean_Jost_D |
++==========+======+=============+=======+=======+=======+======+=======+==========+==============+=============+
+| MyStudy  | Pop1 | SNP         | 25    | 0.320 | 0.345 | 1.85 | 0.072 | 0.045    | 0.038        | 0.012       |
++----------+------+-------------+-------+-------+-------+------+-------+----------+--------------+-------------+
+| MyStudy  | Pop2 | SNP         | 30    | 0.310 | 0.330 | 1.78 | 0.060 | 0.048    | 0.041        | 0.015       |
++----------+------+-------------+-------+-------+-------+------+-------+----------+--------------+-------------+
+| MyStudy  | tot  | SNP         | 55    | 0.315 | 0.337 | 1.82 | 0.066 | NA       | NA           | NA          |
++----------+------+-------------+-------+-------+-------+------+-------+----------+--------------+-------------+
+| MyStudy  | mean | SNP         | 55    | 0.315 | 0.337 | 1.81 | 0.066 | 0.046    | 0.039        | 0.013       |
++----------+------+-------------+-------+-------+-------+------+-------+----------+--------------+-------------+
+
+**Pairwise matrix output (example for Fst):**
+
+::
+
+            pop1    pop2    pop3
+    pop1    0.000   0.045   0.062
+    pop2    0.045   0.000   0.038
+    pop3    0.062   0.038   0.000
+
+
+See also examples of VCF formats in :  https://samtools.github.io/hts-specs/VCFv4.5.pdf
+
+    ]]></help>
+    
+    <citations>
+        <citation type="doi">10.32614/CRAN.package.dplyr</citation>
+        <citation type="doi">10.32614/CRAN.package.adegenet</citation>
+        <citation type="doi">10.32614/CRAN.package.vcfR</citation>
+        <citation type="doi">10.1093/bioinformatics/btr330</citation>
+        <citation type="bibtex">
+            @manual{VCFv45,
+                title        = {The Variant Call Format (VCF) Specification, Version 4.5},
+                author       = {{HTS-specs team}},
+                organization = {Global Alliance for Genomics and Health},
+                year         = {2024},
+                url          = {https://samtools.github.io/hts-specs/VCFv4.5.pdf},
+                note         = {Accessed: 2025-02-11}
+            }
+        </citation>
+        <citation type="doi">10.18637/jss.v022.i04</citation>
+        <citation type="doi">10.1111/j.1471-8286.2004.00828.x</citation>
+        <citation type="bibtex">
+            @Article{Winter2012,
+                title = {mmod: an R library for the calculation of population differentiation statistics},
+                author = {D.J. Winter},
+                journal = {Molecular Ecology Resources},
+                year = {2012}
+                }
+        </citation>
+        <citation type="doi">10.1073/pnas.70.12.3321</citation>
+        <citation type="doi">10.1111/j.1365-294X.2008.03887.x</citation>
+        <citation type="doi">10.2307/2408641</citation>
+        <citation type="bibtex">
+            @Book{,
+                author = {Hadley Wickham},
+                title = {ggplot2: Elegant Graphics for Data Analysis},
+                publisher = {Springer-Verlag New York},
+                year = {2016},
+                isbn = {978-3-319-24277-4},
+                url = {https://ggplot2.tidyverse.org},
+            }
+        </citation>
+        <citation type="doi">10.5281/zenodo.4679423</citation>
+        <citation type="doi">10.32614/CRAN.package.tibble</citation>
+        <citation type="doi">10.32614/CRAN.package.tidyr</citation>
+    </citations>
+</tool>
