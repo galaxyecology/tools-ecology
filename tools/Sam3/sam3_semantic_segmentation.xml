@@ -28,6 +28,7 @@
         --outdir outputs 
         --outputs $outputs_format
         --name_file '$name_file'
+        --quality '$input.quality'
     ]]></command>
     <inputs>
         <param name="sam3_models" label="Model data" type="select" help="Contact the administrator of our Galaxy instance if you miss model data">
@@ -51,6 +52,15 @@
             <when value="video">
                 <param name="source" type="data" format="mp4,avi,mov,gif"
                     multiple="false" label="Input video"/>
+                <param name="quality" type="select" label="Video quality"
+                    help="Select output video bitrate,does not affect processing speed or annotations. 
+                          Higher quality than the original is not useful and will only increase file size.">
+                    <option value="copy" selected="true">Original quality (copy)</option>
+                    <option value="1000k">1000k - Standard (260p)</option>
+                    <option value="2000k">2000k - Standard (480p~720p)</option>
+                    <option value="4000k">4000k - Good (1080p)</option>
+                    <option value="8000k">8000k - High quality (1080p)</option>
+                </param>
             </when>
         </conditional>
         <param name="text_prompt" type="text" label="Text prompt" >
