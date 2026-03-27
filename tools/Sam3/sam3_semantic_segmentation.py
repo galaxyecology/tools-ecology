@@ -101,7 +101,6 @@ def convert_avi_to_mp4(directory_path, quality):
     output_path = os.path.splitext(avi_file_path)[0]
     print(f"Converting: {avi_file_path} -> {output_path}.mp4")
     audio_args = "-an"  # remove audio
-    # Video
     if quality == "copy":
         video_args = "-c:v copy"  # copy video stream without re-encoding
     else:
@@ -109,17 +108,14 @@ def convert_avi_to_mp4(directory_path, quality):
             f"-c:v libx264 -b:v {quality} "
             "-vprofile high -bf 0"  # re-encode with H.264
         )
-
     cmd = (
         f"ffmpeg -i '{avi_file_path}' "
         f"{video_args} "
         f"{audio_args} "
         f"'{output_path}.mp4'"
     )
-
     print(f"Command : {cmd}")
     os.popen(cmd)
-
     return True
 
 
