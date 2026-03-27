@@ -1,0 +1,15 @@
+name: genetic_format_conversion
+owner: ecology
+description: This tool enables the conversion and formatting of genotyping data between VCF, GENEPOP, SSR (tabular) and BayeScan formats.
+homepage_url: https://github.com/GINAMO-EBVs/ginamo-workflows/genetic_format_converter
+long_description: |
+  This tool allows you to easily convert your genetic data files between VCF, GENEPOP, and BayeScan formats. 
+  Powered by PGDSpider, it transforms your raw data into analysis-ready files while letting you define populations and filter genotype quality. 
+  It is a practical solution for preparing your datasets before using software like BayeScan or LDNe.
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/genetic_format_converter
+type: unrestricted
+categories:
+- Ecology
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "{{ tool_name }}"

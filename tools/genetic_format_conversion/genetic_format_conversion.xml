@@ -1,0 +1,368 @@
+<tool id="genetic_format_conversion" name="Genetic format conversion" version="0.1.0" profile="25.0">
+    <description>
+        using PGDSpider and additional conversion modules.
+    </description>
+    <requirements>
+        <requirement type="package" version="2.1.1.5">pgdspider</requirement>
+    </requirements>
+
+    <command detect_errors="exit_code"><![CDATA[
+        mkdir -p convert_directory &&
+        mkdir -p pop_affiliation &&
+
+        bash '$__tool_directory__/genetic_format_conversion.sh'
+            '${input_file}'
+            '${input_file.element_identifier}'
+            '$data_conditional.input_format'
+            '$data_conditional.output_selection.output_format'
+
+             #if $data_conditional.input_format == "vcf" and $data_conditional.output_selection.output_format == "genepop":
+                '$data_conditional.output_selection.ploidy'
+                '$data_conditional.output_selection.pl_gl'
+                '$data_conditional.output_selection.exclude_loci'
+                '$data_conditional.output_selection.non_polymorphic'
+                '$data_conditional.output_selection.indels'
+            
+                #if $data_conditional.output_selection.input_regions:
+                    '$data_conditional.output_selection.input_regions'
+                #else:
+                    ''
+                #end if
+            
+                #if str($data_conditional.output_selection.phred_scaled) != '':
+                    '$data_conditional.output_selection.phred_scaled'
+                #else:
+                    ''
+                #end if
+            
+                #if str($data_conditional.output_selection.missing_genotype_quality) != '':
+                    '$data_conditional.output_selection.missing_genotype_quality'
+                #else:
+                    ''
+                #end if
+            
+                #if str($data_conditional.output_selection.missing_read_depth) != '':
+                    '$data_conditional.output_selection.missing_read_depth'
+                #else:
+                    ''
+                #end if
+            
+                #if $data_conditional.output_selection.individuals:
+                    '$data_conditional.output_selection.individuals'
+                #else:
+                    ''
+                #end if
+
+                '$data_conditional.output_selection.indpop_file.indpop_inc'
+                #if $data_conditional.output_selection.indpop_file.indpop_inc == "true":
+                    '$data_conditional.output_selection.indpop_file.indpop'
+                #else:
+                    ''                                                      
+                #end if
+            
+            #elif $data_conditional.input_format == "tabular" and $data_conditional.output_selection.output_format == "genepop":
+                '$data_conditional.output_selection.sep_char'
+                '$data_conditional.output_selection.digit_num'
+
+            
+            #elif $data_conditional.input_format == "genepop" and $data_conditional.output_selection.output_format == "bayescan":
+                '$data_conditional.output_selection.indpop'
+                '$data_conditional.output_selection.marker_type'
+                '$data_conditional.output_selection.alleles_coded'
+            
+            #end if
+        
+        ]]></command>
+
+    <inputs>
+        <param name="input_file" type="data" format="vcf,tabular,txt" label="Upload your input file"/>
+        
+        <conditional name="data_conditional">
+            <param name="input_format" type="select" label="Data input file format">
+                <option value="vcf">VCF</option>
+                <option value="genepop">GENEPOP</option>
+                <option value="tabular">Microsatellites (tabular)</option>
+            </param>
+            
+            <when value="vcf">
+                <conditional name="output_selection">
+                    <param name="output_format" type="select" label="Input format">
+                        <option value="genepop">GENEPOP</option>
+                    </param>
+
+                    <when value="genepop">
+                        <param name="ploidy" type="select" label="What is the ploidy of the data?">
+                            <option value="DIPLOID">DIPLOID</option>
+                            <option value="HAPLOID">HAPLOID</option>
+                        </param>
+                        <param name="input_regions" type="text" optional="true" label="Only input following regions (refSeqName:stard:end, multiple regions: whitespace separated):"/>
+                        <param name="pl_gl" type="select" label="Take most likely genotype if 'PL' or 'GL' is given in the genotype field?">
+                            <option value="true">Yes</option>
+                            <option value="false" selected="true">No</option>
+                        </param>
+                        <param name="phred_scaled" type="float" optional="true" label="Only output SNPs with a phred-scaled quality of at least:"/>
+                        <param name="missing_genotype_quality" type="float" optional="true" label="Output genotypes as missing if the phred-scale genotype quality is below:"/>
+                        <param name="missing_read_depth" type="float" optional="true" label="Output genotypes as missing if the read depth of a position for the sample is below:"/>
+                        <param name="exclude_loci" type="select" label="Do you want to exclude loci with only missing data?">
+                            <option value="true">Yes</option>
+                            <option value="false" selected="true">No</option>
+                        </param>
+                        <param name="individuals" type="text" optional="true" label="Only output following individuals (ind1, ind2, ind4, ...):"/>
+                        <param name="non_polymorphic" type="select" label="Do you want to include non-polymorphic SNPs?">
+                            <option value="true">Yes</option>
+                            <option value="false" selected="true">No</option>
+                        </param>
+                        <param name="indels" type="select" label="Do you want to include INDELS as STANDARD genetic markers?">
+                            <option value="true">Yes</option>
+                            <option value="false" selected="true">No</option>
+                        </param>
+                        <conditional name="indpop_file">
+                            <param name="indpop_inc" type="select" label="Do you want to include a file with population definitions?">
+                                <option value="true">Yes</option>
+                                <option value="false" selected="true">No</option>
+                            </param>
+                            <when value="true">
+                                <param name="indpop" type="data" format="txt" label="Upload your population definitions"/> 
+                            </when>
+                            <when value="false">
+                            </when>
+                        </conditional>
+                    </when>
+                </conditional>
+            </when>
+
+             <when value="tabular">
+                <conditional name="output_selection">
+                    <param name="output_format" type="select" label="Output format">
+                        <option value="genepop">GENEPOP</option>
+                    </param>
+                    <when value="genepop">
+                        <param name="sep_char" type="select" label="">
+                            <option value="TAB" selected="true">Tabulation</option>
+                            <option value="COMMA">Comma (,)</option>
+                            <option value="SEMICOLON">Semicolon (;)</option>
+                            <option value="WHITESPACE">Whitespace</option>
+                        </param>
+                        <param name="digit_num" type="integer" label="Number of digits per allele"
+                            help="Enter the number of digits used to represent each allele in your input file. For example, if your microsatellite alleles are coded like 192, 168, 087, then each allele is 3 digits long, enter 3."/>
+                    </when>
+                </conditional>
+            </when>
+
+            <when value="genepop">
+                <conditional name="output_selection">
+                    <param name="output_format" type="select" label="Output format">
+                        <option value="bayescan">GESTE /BayesScan</option>
+                    </param>
+
+                    <when value="bayescan">
+                        <param name="marker_type" type="select" label="Select the type of data">
+                            <option value="SNP">SNP</option>
+                            <option value="MICROSAT">SSR (microsatellites)</option>
+                            <option value="STANDARD">STANDARD</option>
+                        </param>
+                        <param name="indpop" type="data" format="tabular,txt" label="Upload your population file"
+                            help="File containing individuals in the first column and their population in the second, separated by a tabulation character."/>
+                        <param name="alleles_coded" type="select" label="How are Microsat alleles coded?">
+                            <option value="as number of repeats">as number of repeats</option>
+                            <option value="as the length of the PCR fragments">as the length of the PCR fragments</option>
+                        </param>
+                    </when>
+                </conditional>
+            </when>
+        </conditional>
+    </inputs>
+
+    <outputs>
+        <data name="convert_files" format="txt" label="${tool.name}">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)$" directory="convert_directory" visible="true" assign_primary_output="true"/>
+        </data>
+        <data name="number_pop_affiliation" from_work_dir="pop_affiliation/pop_affiliation.txt" 
+            format="tabular" label="${tool.name} : Track number - pop">
+            <filter>data_conditional['input_format'] == "genepop" and data_conditional['output_selection']['output_format'] == "bayescan"</filter>
+        </data>
+    </outputs>
+
+    <tests>
+
+    <!-- Test 1 : VCF → GENEPOP -->
+    <test expect_num_outputs="1">
+        <param name="input_file" value="test_vcf.vcf" ftype="vcf"/>
+        <param name="data_conditional|input_format" value="vcf"/>
+        <param name="data_conditional|output_selection|output_format" value="genepop"/>
+        <param name="data_conditional|output_selection|ploidy" value="DIPLOID"/>
+        <param name="data_conditional|output_selection|pl_gl" value="false"/>
+        <param name="data_conditional|output_selection|exclude_loci" value="false"/>
+        <param name="data_conditional|output_selection|non_polymorphic" value="false"/>
+        <param name="data_conditional|output_selection|indels" value="false"/>
+        <param name="data_conditional|output_selection|indpop_file|indpop_inc" value="true"/>
+        <param name="data_conditional|output_selection|indpop_file|indpop" value="test_pop.txt"/>
+        <output name="convert_files" ftype="txt" count="1">
+            <assert_contents>
+                <has_n_lines n="783"/>
+                <has_text text="Pop"/>
+            </assert_contents>
+        </output>
+    </test>
+
+    <!-- Test 2 : TABULAR → GENEPOP (SSR) -->
+    <test expect_num_outputs="1">
+        <param name="input_file" value="test_SSR.txt" ftype="txt"/>
+        <param name="data_conditional|input_format" value="tabular"/>
+        <param name="data_conditional|output_selection|output_format" value="genepop"/>
+        <param name="data_conditional|output_selection|sep_char" value="TAB"/>
+        <param name="data_conditional|output_selection|digit_num" value="3"/>
+        <output name="convert_files" ftype="txt" count="1">
+            <assert_contents>
+                <has_n_lines n="271"/>
+                <has_text text="Pop"/>
+            </assert_contents>
+        </output>
+    </test>
+
+    <!-- Test 3 : GENEPOP → BAYESCAN (SSR / microsatellites) -->
+    <test expect_num_outputs="2">
+        <param name="input_file" value="test_SSR_genepop.txt" ftype="txt"/>
+        <param name="data_conditional|input_format" value="genepop"/>
+        <param name="data_conditional|output_selection|output_format" value="bayescan"/>
+        <param name="data_conditional|output_selection|indpop" value="test_pop_ssr.txt"/>
+        <param name="data_conditional|output_selection|marker_type" value="MICROSAT"/>
+        <param name="data_conditional|output_selection|alleles_coded" value="as the length of the PCR fragments"/>
+        <output name="convert_files" ftype="txt" count="1">
+            <assert_contents>
+                <has_n_lines n="293"/>
+                    <has_text text="[populations]=6"/>
+                </assert_contents>
+        </output>
+        <output name="number_pop_affiliation" ftype="tabular">
+            <assert_contents>
+                    <has_n_lines n="6"/>
+                    <has_line_matching expression="Portugal\t6"/>
+                </assert_contents>
+        </output>
+    </test>
+
+    <!-- Test 4 : GENEPOP → BAYESCAN (SNP) -->
+    <test expect_num_outputs="2">
+        <param name="input_file" value="test_vcf_genepop.txt" ftype="txt"/>
+        <param name="data_conditional|input_format" value="genepop"/>
+        <param name="data_conditional|output_selection|output_format" value="bayescan"/>
+        <param name="data_conditional|output_selection|indpop" value="test_pop.txt"/>
+        <param name="data_conditional|output_selection|marker_type" value="SNP"/>
+        <param name="data_conditional|output_selection|alleles_coded" value="as the length of the PCR fragments"/>
+        <output name="convert_files" ftype="txt" count="1">
+            <assert_contents>
+                <has_n_lines n="4523"/>
+                <has_text text="[populations]=9"/>
+            </assert_contents>
+        </output>
+        <output name="number_pop_affiliation" ftype="tabular">
+            <assert_contents>
+                    <has_n_lines n="9"/>
+                    <has_line_matching expression="GA-2_2021\t1"/>
+                </assert_contents>
+        </output>
+    </test>
+
+</tests>
+
+    <help><![CDATA[
+
+Usage
+=====
+As input, users provide a file in one of three accepted formats: VCF (Danecek *et al.* 2011), GENEPOP (Raymond & Rousset 1995) or Tabular (see **SSR Genotype file** format below). After selecting the desired output format, users can configure formatting paramters, most of which pre-set default values. 
+
+The tool supports three primary conversion :
+
+1. **VCF → GENEPOP**: The tool uses PGDSpider (Lischer & Excoffier 2012) to parse variant call data. It generates a GENEPOP file containing the list of loci followed by individual genotypes, formatted for use in population genetics software and R packages. Users must provide a population assignment file to define population groupings and specify ploidy as well as filtering options (minimum phred-scaled quality, minimum genotype quality, minimum read depth, INDEL inclusion, etc.).
+
+2. **Tabular → GENEPOP**: SSR genotype data provided in tabular format are converted into GENEPOP format directly (without PGDSpider). The user specifies the allele separator and the number of digits used to encode alleles. The tool parses individual genotypes per population and writes a standard GENEPOP file.
+
+3. **GENEPOP → Geste/BayeScan**: The tool uses PGDSpider to restructure genotype data into allele count matrices formatted according to the BayeScan specification (Foll & Gaggiotti 2008). Users provide a population assignment file to define the population order in the output. The output file declares the number of loci and populations, followed by population-specific allele counts per locus, ensuring compatibility with Bayesian F\ :sub:`ST`\-based inference analyses.  A `pop_affiliation` file is generated, containing the name of the population and the number corresponding to its order of appearance in the Bayes output.
+
+NB: PGDSpider is a powerful automated data conversion tool for population genetics and genomics (https://software.bioinformatics.unibe.ch/pgdspider/). It is used here for VCF → GENEPOP and GENEPOP → Geste/BayeScan conversions.
+
+**SSR Genotype file (tab):**
+
+::
+
+    Ind     Pop     Loc1    Loc2    Loc3
+    ind1    pop1    120/124 200/202 150/150
+    ind2    pop1    120/120 202/204 150/152
+    ind3    pop2    124/126 200/200 152/152
+
+
+**Genepop file (txt or tabular) :**
+
+::
+
+    loc1
+    loc2
+    .
+    .
+    .
+    locX
+    POP 
+    ind1, 0101 0101 ...
+    ind2, 0001 0101 ...
+    POP
+    ind3, 0100 0101 ...
+    ind4, 0100 0101 ...
+
+
+This file can be used as input for the LDNe software to estimate the effective population size.
+
+**GESTE/ BayeScan file (txt or tabular):**
+
+::
+    
+    [loci]=46
+
+    [populations]=6
+
+    [pop]=1
+     1  106 4   0 52 54 0
+     2  104 3   17 86 1
+     3  102 8   0 4 0 25 67 4 2 0
+
+This file can be used as input for the BayeScan tool.
+
+**Population assignement file (tab-separated)**
+
+::
+
+    ind1    pop1
+    ind2    pop2
+    ind3    pop2
+    ind4    pop1
+    ind5    pop3
+
+**Pop affiliation order (tab-separated)**
+
+::
+
+    pop1    1
+    pop2    2
+
+
+See also examples of VCF formats in :  https://samtools.github.io/hts-specs/VCFv4.5.pdf
+        
+        ]]></help>
+
+    <citations>
+        <citation type="doi">10.1093/bioinformatics/btr642</citation>
+        <citation type="doi">10.1093/bioinformatics/btr330</citation>
+
+        <citation type="bibtex">
+            @manual{VCFv45,
+                title        = {The Variant Call Format (VCF) Specification, Version 4.5},
+                author       = {{HTS-specs team}},
+                organization = {Global Alliance for Genomics and Health},
+                year         = {2024},
+                url          = {https://samtools.github.io/hts-specs/VCFv4.5.pdf},
+                note         = {Accessed: 2025-02-11}
+            }
+        </citation>
+    </citations>
+</tool>
+
