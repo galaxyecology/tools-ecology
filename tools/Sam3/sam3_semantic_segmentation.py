@@ -69,6 +69,12 @@ def parse_arguments() -> argparse.Namespace:
         help="Specific filename to process (optional)",
     )
     parser.add_argument(
+        "--do_normalization",
+        type=str,
+        default=False,
+        help="Specific filename to process (optional)",
+    )
+    parser.add_argument(
         "--quality",
         type=str,
         default="copy",  # original quality by default
