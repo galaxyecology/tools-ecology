@@ -74,26 +74,49 @@ def parse_arguments() -> argparse.Namespace:
         default=False,
         help="Specific filename to process (optional)",
     )
+    parser.add_argument(
+        "--quality",
+        type=str,
+        default="copy",  # original quality by default
+        help="Video bitrate: 'copy' (original), '2000k', '4000k', '8000k'",
+    )
     return parser.parse_args()
 
 
 # -------- Functions --------
 
+def convert_avi_to_mp4(directory_path, quality):
+    """
+    Convert AVI file to MP4.
 
-def convert_avi_to_mp4(directory_path):
-    avi_files = glob.glob(os.path.join(directory_path, "*.avi"))
-    for avi_file_path in avi_files:
-        output_path = os.path.splitext(avi_file_path)[0]
-        print(f"Conversion : {avi_file_path} -> {output_path}.mp4")
-        os.popen(
-            "ffmpeg -i '{input}' -ac 2 -b:v 2000k "
-            "-c:a aac -c:v libx264 -b:a 160k "
-            "-vprofile high -bf 0 -strict experimental "
-            "-f mp4 '{output}.mp4'".format(
-                input=avi_file_path,
-                output=output_path,
-            )
+    Parameters:
+        audio   : True = keep audio | False = remove audio
+        quality : "copy"  = original resolution and quality (no re-encoding)
+                  "2000k" = video bitrate 2000 kbps (480p~720p)
+                  "4000k" = video bitrate 4000 kbps (1080p standard)
+                  "8000k" = video bitrate 8000 kbps (1080p high quality)
+    """
+    print(f"Quality : {quality}")
+    avi_file_path = glob.glob(os.path.join(directory_path, "*.avi"))[0]
+    output_path = os.path.splitext(avi_file_path)[0]
+    print(f"Converting: {avi_file_path} -> {output_path}.mp4")
+    audio_args = "-an"  # remove audio
+    if quality == "copy":
+        video_args = "-c:v copy"  # copy video stream without re-encoding
+    else:
+        video_args = (
+            f"-c:v libx264 -b:v {quality} "
+            "-vprofile high -bf 0"  # re-encode with H.264
         )
+    cmd = (
+        f"ffmpeg -i '{avi_file_path}' "
+        f"{video_args} "
+        f"{audio_args} "
+        f"'{output_path}.mp4'"
+    )
+    print(f"Command : {cmd}")
+    os.popen(cmd)
+    return True
 
 
 def is_video(file_path: str) -> bool:
