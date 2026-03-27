@@ -1,0 +1,365 @@
+<tool id="LDNe" name="LDNe estimation" version="0.1.0" profile="25.0">
+    <description>
+        using RLDNe package and NeEstimator.
+    </description>
+    <requirements>  
+        <requirement type="package" version="4.5">r-base</requirement>
+        <requirement type="package" version="0.1.0">r-efglmh</requirement>
+        <requirement type="package" version="1.0.0">r-rldne</requirement>
+        <requirement type="package" version ="1.1.4">r-dplyr</requirement>
+    </requirements>
+
+    <command detect_errors="exit_code"><![CDATA[
+        mkdir -p results_LDNe &&
+        mkdir -p genfiles &&
+        mkdir -p summary_file &&
+        mkdir -p pop_order &&
+
+        Rscript '$__tool_directory__/RLDNe.R'
+            #set $gen_paths = ','.join([str($v) for $v in $input_data])
+            #set $gen_names = ','.join([$v.element_identifier for $v in $input_data])
+            '$gen_paths'
+            '$gen_names'
+            '$indpop'
+            '$marker_type'
+            '$n_critical_values'
+            '$critical_freqs'
+            '$confidence_intervals'
+            '$mating_system'
+            '$max_individuals'
+            '$pop_range'
+            '$loc_range'
+            '$correction.apply_correction'
+            '$harmonic.apply_harmonic'
+            #if str($correction.apply_correction) == 'TRUE':
+                '$correction.nb_chrom'
+            #end if
+            #if $harmonic.apply_harmonic:
+                '$harmonic.maf_harmonic'
+            #end if
+    ]]> </command>
+
+    <inputs>
+        <param name="input_data" type="data" format="txt" label="Upload your genepop file" multiple="true"
+            help="Each file must contain a single population. You can upload a simple file, multiple file or dataset collection."/>
+
+        <param name="indpop" type="data" format="tabular,txt" label="Upload your population file"
+            help="File containing individuals in the first column and their population in the second, separated by a tabulation character."/>
+
+        <param name="marker_type" type="select" label="Marker type"
+            help="Type of genetic marker used (SNPs, microsatellites (SSR)). This value is reported in the output table.">
+            <option value="SNP">SNP</option>
+            <option value="SSR">SSR</option>
+        </param>
+
+        <param name="n_critical_values" type="integer" value="3" min="1" label="Number of critical frequency thresholds"
+            help="Number of minimum allele frequency (MAF) thresholds to apply. Must match the number of values provided in the 'Critical frequencies values' field below."/>
+
+        <param name="critical_freqs" type="text" value="0.02 0.05 1" label="Critical allele frequencies (MAF)"
+            help="Space-separated list of minimum frequencies (e.g. 0.01 0.02 0.05). Alleles below these values are ignored."/>
+
+        <param name="confidence_intervals" type="select" label="Confidence intervals"
+            help="1 = compute Jackknife confidence intervals; 0 = do not compute confidence intervals.">
+            <option value="1">1 = Compute Jackknife confidence intervals</option>
+            <option value="0">0 = Do not compute confidence intervals</option>
+        </param>
+
+        <param name="mating_system" type="select" label="Maiting system"
+            help="0: Random mating, 1: Monogamy (LD Method)">
+            <option value="0">0: Random mating</option>
+            <option value="1">1: Monogamy</option>
+        </param>
+
+        <param name="max_individuals" type="integer" value="0" min="0" label="Maximum number of individuals per population."
+            help="Maximum number of individuals to process per population. Use 0 for no limit." />
+
+        <param name="pop_range" type="text" label="Population range to run"
+            help="Specify the range of populations to process as a pair of integers (e.g., '1 5' to process populations 1 through 5). Set the first value to '0' to process all populations found in the file."/>
+        
+        <param name="loc_range" type="text" label="Loci range to run"
+            help="Specify the range of loci (genetic markers) to include in the analysis as a pair of integers (e.g., '1 100'). Setting the first value to '0' includes all loci present in the dataset."/>
+    
+        <section name="correction" title="Pseudoreplication correction (optional)" expanded="false">
+            <param name="apply_correction" type="boolean" truevalue="TRUE" falsevalue="FALSE" checked="false"
+            label="Apply pseudoreplication correction?"/>
+            <param name="nb_chrom" type="integer" min="1" optional="true"
+                label="Number of chromosomes"
+                help="Required when correction is enabled"/>
+        </section>
+
+        <section name="harmonic" title="Harmonic mean across subsamples (optional)" expanded="false">
+ 
+            <param name="apply_harmonic" type="boolean"
+                truevalue="TRUE" falsevalue="FALSE" checked="false"
+                label="Compute harmonic mean across subsamples?"
+                help="Applied automatically to all numeric Ne columns present (ex. NeLD, confidence intervals, or NeLD_corrected)."/>
+ 
+            <param name="maf_harmonic" type="text" value="1"
+                label="MAF filter(s) for harmonic mean (space-separated)"
+                help="E.g. '1' or '0.02 0.05 1'.">
+      </param>
+
+        </section>
+    </inputs>
+
+    <outputs>
+        <collection name="result_table" type="list" label="${tool.name}: Raw file from NeEstimator">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.txt$" directory="results_LDNe" format="txt"/>
+        </collection>
+        <data name="summary_table" from_work_dir="summary_file/LDNe_results.txt" format="tabular" label="Extract LDNe results" />
+        <data name="summ_harmonic_mean" from_work_dir="summary_file/LDNe_harmonic_mean.txt" format="tabular" label="Extract LDNe results (harmonic mean)">
+            <filter>harmonic['apply_harmonic']</filter>
+        </data>
+    </outputs>
+
+    <tests>
+        <test expect_num_outputs="3">
+            <param name="input_data" value="genepop_SNPs_test.txt"/>
+            <param name="indpop" value="test_pop_ldne.txt"/>
+            <param name="marker_type" value="SNP"/>
+            <param name="n_critical_values" value="3"/>
+            <param name="critical_freqs" value="0.02 0.05 1"/>
+            <param name="confidence_intervals" value="1"/>
+            <param name="mating_system" value="0"/>
+            <param name="max_individuals" value="0"/>
+            <param name="pop_range" value="0"/>
+            <param name="loc_range" value="0"/>
+            <section name="correction">
+                <param name="apply_correction" value="TRUE"/>
+                <param name="nb_chrom" value="14"/>
+            </section>
+            <section name="harmonic">
+                <param name="apply_harmonic" value="TRUE"/>
+                <param name="maf_harmonic" value="1"/>
+            </section>
+            
+            <output_collection name="result_table" type="list" count="1">
+                <element name="genepop_SNPs_test_LDNe_results">
+                    <assert_contents>
+                        <has_n_lines n="36" delta="2"/>
+                        <has_text text="Number of Loci = 1000"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+            <output name="summary_table" ftype="tabular">
+                <assert_contents>
+                    <has_n_columns n="13"/>
+                    <has_n_lines n="5"/>
+                    <has_line_matching expression="Dataset\tPop\tMarker_type\tSubset\tloci\tPolymorphic_loci\tMAF\tNeLD\tJK_CI_down\tJK_CI_up\tOverall_LD_r2\tExpected_LD_r2\tNeLD_corrected"/>
+                </assert_contents>
+            </output>
+
+            <output name="summ_harmonic_mean" ftype="tabular">
+                <assert_contents>
+                    <has_n_columns n="11"/>
+                    <has_n_lines n="2"/>
+                    <has_line_matching expression="Dataset\tPop\tMarker_type\tSubset\tMAF\tNeLD\tJK_CI_down\tJK_CI_up\tOverall_LD_r2\tExpected_LD_r2\tNeLD_corrected"/>
+                </assert_contents>
+            </output>
+        </test>
+
+        <test expect_num_outputs="3">
+            <param name="input_data" value="genepop_SNPs_test.txt"/>
+            <param name="indpop" value="test_pop_ldne.txt"/>
+            <param name="marker_type" value="SNP"/>
+            <param name="n_critical_values" value="3"/>
+            <param name="critical_freqs" value="0.02 0.05 1"/>
+            <param name="confidence_intervals" value="1"/>
+            <param name="mating_system" value="0"/>
+            <param name="max_individuals" value="0"/>
+            <param name="pop_range" value="0"/>
+            <param name="loc_range" value="0"/>
+            <section name="correction">
+                <param name="apply_correction" value="FALSE"/>
+            </section>
+            <section name="harmonic">
+                <param name="apply_harmonic" value="TRUE"/>
+                <param name="maf_harmonic" value="1"/>
+            </section>
+            
+            <output_collection name="result_table" type="list" count="1">
+                <element name="genepop_SNPs_test_LDNe_results">
+                    <assert_contents>
+                        <has_n_lines n="36" delta="2"/>
+                        <has_text text="Number of Loci = 1000"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+
+            <output name="summary_table" ftype="tabular">
+                <assert_contents>
+                    <has_n_columns n="12"/>
+                    <has_n_lines n="5"/>
+                    <has_line_matching expression="Dataset\tPop\tMarker_type\tSubset\tloci\tPolymorphic_loci\tMAF\tNeLD\tJK_CI_down\tJK_CI_up\tOverall_LD_r2\tExpected_LD_r2"/>
+                </assert_contents>
+            </output>
+
+            <output name="summ_harmonic_mean" ftype="tabular">
+                <assert_contents>
+                    <has_n_columns n="10"/>
+                    <has_n_lines n="2"/>
+                    <has_line_matching expression="Dataset\tPop\tMarker_type\tSubset\tMAF\tNeLD\tJK_CI_down\tJK_CI_up\tOverall_LD_r2\tExpected_LD_r2"/>
+                </assert_contents>
+            </output>
+        </test>
+
+        <test expect_num_outputs="2">
+            <param name="input_data" value="genepop_SNPs_test.txt"/>
+            <param name="indpop" value="test_pop_ldne.txt"/>
+            <param name="marker_type" value="SNP"/>
+            <param name="n_critical_values" value="3"/>
+            <param name="critical_freqs" value="0.02 0.05 1"/>
+            <param name="confidence_intervals" value="1"/>
+            <param name="mating_system" value="0"/>
+            <param name="max_individuals" value="0"/>
+            <param name="pop_range" value="0"/>
+            <param name="loc_range" value="0"/>
+            <section name="correction">
+                <param name="apply_correction" value="FALSE"/>
+            </section>
+            <section name="harmonic">
+                <param name="apply_harmonic" value="FALSE"/>
+            </section>
+            
+            <output_collection name="result_table" type="list" count="1">
+                <element name="genepop_SNPs_test_LDNe_results">
+                    <assert_contents>
+                        <has_n_lines n="36" delta="2"/>
+                        <has_text text="Number of Loci = 1000"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+
+            <output name="summary_table" ftype="tabular">
+                <assert_contents>
+                    <has_n_columns n="12"/>
+                    <has_n_lines n="5"/>
+                    <has_line_matching expression="Dataset\tPop\tMarker_type\tSubset\tloci\tPolymorphic_loci\tMAF\tNeLD\tJK_CI_down\tJK_CI_up\tOverall_LD_r2\tExpected_LD_r2"/>
+                </assert_contents>
+            </output>
+        </test>
+        
+    </tests>
+    <help><![CDATA[
+Usage
+=====
+
+As input, the user provides one or more Genepop files, the marker type and a population assignment file containing individual identifiers and their respective population groups. The genepop file may contain several populations.
+The user can select two options : pseudoreplication correction and applying a harmonic mean.
+
+----
+
+**LDNe estimation**
+-------------------
+The user provides the following parameters :
+    - **Number of critical frequencies values** : Number of minimum allele frequency (MAF) thresholds to apply. Must match the number of values provided in the "Critical frequencies values" field below.
+    - **Critical frequencies values (MAF)** : Space-separated list of minimum frequencies (e.g. 0.01 0.02 0.05). Alleles below these values are ignored.
+    - **Confidence intervals** : 1 = compute Jackknife confidence intervals; 0 = do not compute confidence intervals.
+    - **Mating system** : 0: Random mating, 1: Monogamy (LD Method)
+    - **Maximum individuals** : Maximum number of individuals to process per population. Use 0 for no limit.
+    - **Population range** : Specify the range of populations to process as a pair of integers (e.g., '1 5' to process populations 1 through 5). Set the first value to '0' to process all populations found in the file.
+    - **Loci range** : Specify the range of loci (genetic markers) to include in the analysis as a pair of integers (e.g., '1 100'). Setting the first value to '0' includes all loci present in the dataset.
+
+This tool implements the Linkage Disequilibrium (LD) method from **NeEstimator V2.1** via the **RLDNe** R package to estimate Ne by calculating the association between alleles at different loci. The output provides a summary table *(Extract LDNe_results)* containing Ne estimates, the number of polymorphic SNPs, 95% Jackknife confidence intervals, and r2 statistics (observed and expected) for each population and each allele frequency threshold specified.
+
+----
+
+**Pseudoreplication correction**
+--------------------------------
+If users choose to apply the pseudoreplication correction, they must provide the number of chromosomes for the studied species.
+The tool computes the correction using the following equation (Waples *et al.* 2016):
+
+.. math::
+
+    Ne_{corrected} = \frac{Ne_{LD}}{0.098 + 0.219 \times \log(C)}
+
+where *C* is the number of chromosomes.
+
+The output table *(LDNe_results)* contains the same columns as the output of LDNe estimation and an additional column called LDNe_corrected.
+
+----
+
+**Harmonic mean**
+-----------------
+If users choose to apply the harmonic mean, they provide a spaced-separated list of MAF values to process.
+The tool calculates the harmonic mean for all numeric columns available in the input file for each combination of population (Pop) and marker type (marker_type), for each specified MAF. It also counts the number of subsets contributing to each estimate and includes this information in the output. Missing values (NA) are treated as infinite when computing the harmonic mean.
+
+Numeric columns considered are : 'NeLD', 'JK_CI_down', 'JK_CI_up', 'Overall_LD_r2', 'Expected_LD_r2', 'NeLD_corrected'. If the user doesn't apply pseudoreplication correction, the LDNe_corrected column is automatically skipped.
+
+The output provides a summary table *(Extract LDNe results (harmonic_mean))* containing the harmonic mean for the columns mentioned just above. 
+
+Examples files
+==============
+
+Input Genepop file (.txt)
+::
+
+    loc1
+    loc2
+    .
+    .
+    .
+    locX
+    POP 
+    pop.1, 0101 0101 ...
+    pop.1, 0001 0101 ...
+    POP
+    pop.2, 0100 0101 ...
+    pop.2, 0100 0101 ...
+    ...
+
+You can used vcf2genepop tool or PGDSpider on your own computer.
+
+Population file (.tabular or .txt)
+
+::
+
+    ind1    pop1
+    ind2    pop2
+    ind3    pop2
+    ind4    pop1
+    ind5    pop3
+
+**Summary output table (LDNe_results)**
+
++---------+------+-------------+--------+-------+------+-------+------------+----------+----------------+
+| Dataset | Pop  | Marker_type | Subset | Loci  | MAF  | NeLD  | JK_CI_down | JK_CI_up | NeLD_corrected |
++=========+======+=============+========+=======+======+=======+============+==========+================+
+| MyStudy | Pop1 | SNP         | 1      | 1200  | 0.02 | 450.2 | 380.1      | 560.4    | 362            |
++---------+------+-------------+--------+-------+------+-------+------------+----------+----------------+
+| MyStudy | Pop2 | SNP         | 1      | 1150  | 0.05 | 435.0 | 370.5      | 510.2    | 362            |
++---------+------+-------------+--------+-------+------+-------+------------+----------+----------------+
+
+**Summary output table (LDNe results (harmonic_mean))**
+
++---------+------+-------------+-----------------+------+-------+------------+----------+----------------+
+| Dataset | Pop  | Marker_type | Subset          | MAF  | NeLD  | JK_CI_down | JK_CI_up | NeLD_corrected |
++=========+======+=============+=================+======+=======+============+==========+================+
+| MyStudy | Pop1 | SNP         | H_mean_btw_5sub | 1    | 450.2 | 380.1      | 560.4    | 362            |
++---------+------+-------------+-----------------+------+-------+------------+----------+----------------+
+| MyStudy | Pop2 | SNP         | H_mean_btw_5sub | 1    | 435.0 | 370.5      | 510.2    | 362            |
++---------+------+-------------+-----------------+------+-------+------------+----------+----------------+
+
+    ]]></help>
+
+    <citations>
+
+        <citation type="bibtex">
+        @misc{RLDNe,
+  title        = {RLDNe: A Convenient R Interface For NeEstimator V2.1},
+  author       = {Robinson, Zak},
+  year         = {2024},
+  month        = {8},
+  day          = {29},
+  version      = {1.0.0},
+  howpublished = {\url{https://github.com/zakrobinson/RLDNe}},
+  note         = {R package version 1.0.0},
+  license      = {GPL-2}
+}
+        </citation>
+
+        <citation type="doi">10.1111/1755-0998.12157</citation>
+        <citation type="doi">10.32614/CRAN.package.dplyr</citation>
+        <citation type="doi">10.1111/mec.13814</citation>
+    </citations>
+</tool>
