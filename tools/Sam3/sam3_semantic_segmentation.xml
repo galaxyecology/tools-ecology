@@ -1,4 +1,4 @@
-<tool id="sam3_semantic_segmentation" name="SAM3 Semantic Segmentation" version="1.0.0+galaxy1" profile="25.1">
+<tool id="sam3_semantic_segmentation" name="SAM3 Semantic Segmentation" version="1.0.1+galaxy2" profile="25.1">
     <description>
         SAM3 performs text-prompted semantic segmentation on images or videos. 
     </description>
@@ -28,6 +28,7 @@
         --outdir outputs 
         --outputs $outputs_format
         --name_file '$name_file'
+        --quality '$input.quality'
     ]]></command>
     <inputs>
         <param name="sam3_models" label="Model data" type="select" help="Contact the administrator of our Galaxy instance if you miss model data">
@@ -44,17 +45,22 @@
                 <option value="video">One video</option>
             </param>
             <when value="image">
-                <param name="source" type="data" format="jpg,png,tiff,tif" multiple="true" label="Input images">
-                    <validator type="dataset_metadata_in_range"
-                        metadata_name="channels"
-                        min="3"
-                        max="3"
-                        message="The image must contain exactly 3 channels (RGB)."/>
+                <param name="source" type="data" format="jpg,png,tiff" multiple="true" label="Input images">
+                    <validator type="expression" message="TIFF images must contain exactly 3 channels (RGB).">value.ext not in ('tiff') or value.metadata.channels == 3</validator>
                 </param>
             </when>
             <when value="video">
                 <param name="source" type="data" format="mp4,avi,mov,gif"
                     multiple="false" label="Input video"/>
+                <param name="quality" type="select" label="Video quality"
+                    help="Select output video bitrate,does not affect processing speed or annotations. 
+                          Higher quality than the original is not useful and will only increase file size.">
+                    <option value="copy" selected="true">Original quality (copy)</option>
+                    <option value="1000k">1000k - Standard (260p)</option>
+                    <option value="2000k">2000k - Standard (480p~720p)</option>
+                    <option value="4000k">4000k - Good (1080p)</option>
+                    <option value="8000k">8000k - High quality (1080p)</option>
+                </param>
             </when>
         </conditional>
         <param name="text_prompt" type="text" label="Text prompt" >
@@ -76,6 +82,14 @@
             <option value="coco">COCO</option>
             <option value="yolo_bbox">YOLO bounding boxes</option>
             <option value="yolo_seg">YOLO segmentation</option>
+        </param>
+        <param name="do_normalization" type="boolean" checked="false" label="Normalize outputs?" >
+            <help><![CDATA[
+This option will be applied to all selected formats above.<br/>
+<u>Example:</u> (values scaled between 0 and 1 relative to the image size)<br/>
+&nbsp; &nbsp;-<strong> Non-normalized</strong>  bounding box: x=120, y=80, width=50, height=40 (pixel coordinates) <br/>
+&nbsp; &nbsp;-<strong> Normalized </strong>  bounding box: x=0.375, y=0.25, width=0.156, height=0.125
+            ]]></help>
         </param>
     </inputs>
     <outputs>
@@ -107,7 +121,7 @@
             <param name="sam3_models" value="unknown"/>
             <conditional name="input">
                 <param name="input_kind" value="image" />
-                <param name="source" value="5827603936_3f1d5d715c_z.jpg" />
+                <param name="source" value="5827603936_3f1d5d715c_z.jpg,shrimp.png"/>
             </conditional>
             <param name="text_prompt" value="elephant"/>
             <param name="conf" value="0.25"/>

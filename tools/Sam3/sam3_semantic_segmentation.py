@@ -1,4 +1,5 @@
 import argparse
+import glob
 import hashlib
 import json
 import os
@@ -67,10 +68,53 @@ def parse_arguments() -> argparse.Namespace:
         default=None,
         help="Specific filename to process (optional)",
     )
+    parser.add_argument(
+        "--do_normalization",
+        type=str,
+        default=False,
+        help="Specific filename to process (optional)",
+    )
+    parser.add_argument(
+        "--quality",
+        type=str,
+        default="copy",  # original quality by default
+        help="Video bitrate: 'copy' (original), '2000k', '4000k', '8000k'",
+    )
     return parser.parse_args()
 
 
 # -------- Functions --------
+
+def convert_avi_to_mp4(directory_path, quality):
+    """
+    Convert AVI file to MP4.
+    Parameters:
+        quality : "copy"  = original resolution and quality (no re-encoding)
+                  "2000k" = video bitrate 2000 kbps (480p~720p)
+                  "4000k" = video bitrate 4000 kbps (1080p standard)
+                  "8000k" = video bitrate 8000 kbps (1080p high quality)
+    """
+    print(f"Quality : {quality}")
+    avi_file_path = glob.glob(os.path.join(directory_path, "*.avi"))[0]
+    output_path = os.path.splitext(avi_file_path)[0]
+    print(f"Converting: {avi_file_path} -> {output_path}.mp4")
+    audio_args = "-an"  # remove audio
+    if quality == "copy":
+        video_args = "-c:v copy"  # copy video stream without re-encoding
+    else:
+        video_args = (
+            f"-c:v libx264 -b:v {quality} "
+            "-vprofile high -bf 0"  # re-encode with H.264
+        )
+    cmd = (
+        f"ffmpeg -i '{avi_file_path}' "
+        f"{video_args} "
+        f"{audio_args} "
+        f"'{output_path}.mp4'"
+    )
+    print(f"Command : {cmd}")
+    os.popen(cmd)
+    return True
 
 
 def is_video(file_path: str) -> bool:
@@ -105,13 +149,15 @@ def create_coco_categories(text_prompts: List[str]) -> List[Dict[str, Any]]:
     Returns: List of category dictionaries
     """
     return [
-        {"id": i + 1, "name": label}
-        for i, label in enumerate(text_prompts)
+        {"id": i + 1, "name": label} for i, label in enumerate(text_prompts)
     ]
 
 
 def create_coco_output(
-    results: List[Any], text_prompts: List[str], metadata: Dict[str, Any]
+    results: List[Any],
+    text_prompts: List[str],
+    metadata: Dict[str, Any],
+    is_normalized: bool,
 ) -> Dict[str, Any]:
     """Convert SAM3 results to COCO format."""
     coco_output = {
@@ -141,16 +187,17 @@ def create_coco_output(
             }
         )
 
-        # Add annotations for each detected object
-        for polygon, bbox, class_id in zip(
-            result.masks.xyn, result.boxes.xyxyn, result.boxes.cls
-        ):
+        polygons = result.masks.xyn if is_normalized else result.masks.xy
+        boxes = result.boxes.xyxyn if is_normalized else result.boxes.xyxy
+
+        for polygon, bbox, class_id in zip(polygons, boxes, result.boxes.cls):
             # Flatten polygon coordinates
             polygon_flat = polygon.flatten().tolist()
 
             # Extract bounding box coordinates (normalized)
             x1, y1, x2, y2 = bbox[:4].tolist()
-
+            bbox_w = x2 - x1
+            bbox_h = y2 - y1
             # Calculate area using contour
             area = float(cv2.contourArea(polygon.astype(np.float32)))
 
@@ -161,7 +208,7 @@ def create_coco_output(
                     "category_id": int(class_id) + 1,
                     "segmentation": [polygon_flat],
                     "area": area,
-                    "bbox": [x1, y1, x2, y2],
+                    "bbox": [x1, y1, bbox_w, bbox_h],
                     "iscrowd": 0,
                 }
             )
@@ -195,7 +242,10 @@ def create_yolo_seg_annotation(polygon: np.ndarray, class_id: int) -> str:
 
 
 def create_yolo_output(
-    annotation_type: str, results: List[Any], output_dir: Path
+    annotation_type: str,
+    results: List[Any],
+    output_dir: Path,
+    is_normalized: bool,
 ) -> None:
     """Export annotations in YOLO format for images."""
     # Create subdirectories for images and labels
@@ -221,18 +271,17 @@ def create_yolo_output(
 
         lines = []
 
+        boxes = result.boxes.xyxyn if is_normalized else result.boxes.xyxy
         # Process each detection
-        for i, (box, class_id) in enumerate(
-            zip(result.boxes.xyxyn, result.boxes.cls)
-        ):
+        for i, (box, class_id) in enumerate(zip(boxes, result.boxes.cls)):
             class_id = int(class_id)
 
             if annotation_type == "bbox":
                 line = create_yolo_bbox_annotation(box, class_id)
             else:  # segmentation
-                if result.masks is None or not hasattr(result.masks, "xyn"):
-                    continue
-                polygon = result.masks.xyn[i]
+                polygon = (
+                    result.masks.xyn if is_normalized else result.masks.xy
+                )
                 line = create_yolo_seg_annotation(polygon, class_id)
 
             lines.append(line)
@@ -250,6 +299,7 @@ def create_yolo_video_output(
     output_dir: Path,
     video_path: str,
     stride: int,
+    is_normalized: bool,
 ) -> None:
     """Export annotations in YOLO format for videos with frame extraction."""
     # Create subdirectories for images and labels
@@ -296,23 +346,19 @@ def create_yolo_video_output(
             lines = []
 
             # Process detections if available
-            if result.boxes is not None:
-                for i, (box, class_id) in enumerate(
-                    zip(result.boxes.xyxyn, result.boxes.cls)
-                ):
-                    class_id = int(class_id)
+            boxes = result.boxes.xyxyn if is_normalized else result.boxes.xyxy
+            for i, (box, class_id) in enumerate(zip(boxes, result.boxes.cls)):
+                class_id = int(class_id)
 
-                    if annotation_type == "bbox":
-                        line = create_yolo_bbox_annotation(box, class_id)
-                    else:  # segmentation
-                        if result.masks is None or not hasattr(
-                            result.masks, "xyn"
-                        ):
-                            continue
-                        polygon = result.masks.xyn[i]
-                        line = create_yolo_seg_annotation(polygon, class_id)
+                if annotation_type == "bbox":
+                    line = create_yolo_bbox_annotation(box, class_id)
+                else:  # segmentation
+                    polygon = (
+                        result.masks.xyn if is_normalized else result.masks.xy
+                    )
+                    line = create_yolo_seg_annotation(polygon, class_id)
 
-                    lines.append(line)
+                lines.append(line)
 
             # Write label file
             with open(label_path, "w") as f:
@@ -338,8 +384,9 @@ def create_metadata(
     return {
         "description": "SAM3 semantic segmentation export",
         "model": "sam3.pt",
-        "model_sha256": compute_file_hash(
-            model_path) if model_path.exists() else "N/A",
+        "model_sha256": (
+            compute_file_hash(model_path) if model_path.exists() else "N/A"
+        ),
         "prompts": text_prompts,
         "confidence_threshold": conf_threshold,
         "ultralytics_version": ultralytics.__version__,
@@ -353,7 +400,12 @@ def main():
 
     # Parse arguments
     args = parse_arguments()
-
+    print(f"args.do_normalization:{args.do_normalization}")
+    if args.do_normalization == "true":
+        is_normalized = True
+    else:
+        is_normalized = False
+    print(f"args.do_normalization:{args.do_normalization}")
     # Parse text prompts
     text_prompts = [prompt.strip() for prompt in args.prompts.split(",")]
     print(f"\nClass prompts: {text_prompts}")
@@ -387,11 +439,11 @@ def main():
     # Configure predictor overrides
     overrides = {
         "conf": args.conf,
-        "show_conf": False,
+        "show_conf": True,
         "task": "segment",
         "mode": "predict",
         "model": args.model,
-        "half": True,  # Use FP16 for faster inference
+        "half": False,  # Use FP16 for faster inference
         "save": True,
         "save_dir": str(outputs_annotated),
     }
@@ -401,6 +453,7 @@ def main():
         print("\nVideo input detected → using SAM3VideoSemanticPredictor")
         overrides["vid_stride"] = args.vid_stride
         predictor = SAM3VideoSemanticPredictor(overrides=overrides)
+
     else:
         print("\nImage input detected → using SAM3SemanticPredictor")
         predictor = SAM3SemanticPredictor(overrides=overrides)
@@ -421,6 +474,8 @@ def main():
     # Run predictions
     # print(f"\n Running prediction on {source_path}...")
     results = predictor(source=source_path, text=text_prompts, stream=False)
+    if is_video(file_paths[0]):
+        convert_avi_to_mp4(outputs_annotated)
 
     if not results:
         raise RuntimeError("SAM3 returned no results")
@@ -437,7 +492,9 @@ def main():
 
     if "coco" in output_formats:
         print("\n→ Converting to COCO format...")
-        coco_output = create_coco_output(results, text_prompts, metadata)
+        coco_output = create_coco_output(
+            results, text_prompts, metadata, is_normalized
+        )
 
         annotation_file = outdir / "annotations.json"
         with open(annotation_file, "w") as f:
@@ -453,10 +510,11 @@ def main():
 
         if is_video(file_paths[0]):
             create_yolo_video_output(
-                "bbox", results, yolo_bbox_dir, file_paths[0], args.vid_stride
+                "bbox", results, yolo_bbox_dir, file_paths[0], args.vid_stride,
+                is_normalized,
             )
         else:
-            create_yolo_output("bbox", results, yolo_bbox_dir)
+            create_yolo_output("bbox", results, yolo_bbox_dir, is_normalized)
             print(f"  Saved to: {yolo_bbox_dir}")
 
     if "yolo_seg" in output_formats:
@@ -466,10 +524,11 @@ def main():
 
         if is_video(file_paths[0]):
             create_yolo_video_output(
-                "seg", results, yolo_seg_dir, file_paths[0], args.vid_stride
+                "seg", results, yolo_seg_dir, file_paths[0], args.vid_stride,
+                is_normalized,
             )
         else:
-            create_yolo_output("seg", results, yolo_seg_dir)
+            create_yolo_output("seg", results, yolo_seg_dir, is_normalized)
             print(f"  Saved to: {yolo_seg_dir}")
 
     print("\n" + "=" * 60)
