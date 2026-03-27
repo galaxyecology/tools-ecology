@@ -88,9 +88,7 @@ def parse_arguments() -> argparse.Namespace:
 def convert_avi_to_mp4(directory_path, quality):
     """
     Convert AVI file to MP4.
-
     Parameters:
-        audio   : True = keep audio | False = remove audio
         quality : "copy"  = original resolution and quality (no re-encoding)
                   "2000k" = video bitrate 2000 kbps (480p~720p)
                   "4000k" = video bitrate 4000 kbps (1080p standard)
