@@ -137,8 +137,7 @@ This option will be applied to all selected formats above.<br/>
 SAM3 – Text-Prompted Semantic Segmentation
 ===================================================
 
-SAM3 allows semantic segmentation of objects in images and videos using
-natural language prompts.
+SAM3 allows semantic segmentation of objects in images and videos using natural language prompts.
 
 Typical use cases include:
 - Wildlife or object segmentation in videos
