@@ -3,9 +3,9 @@ library(RLDNe)
 library(dplyr)
 
 ##### Give execution permissions to the Ne2-1L binary #####
-ne_binary <- system.file("bin/linux/Ne2-1L", package = "RLDNe")
-if (file.exists(ne_binary)) {
-  Sys.chmod(ne_binary, mode = "0755")
+ne_binary <- Sys.which("Ne2-1L")
+if (ne_binary == "") {
+  ne_binary <- system.file("bin/linux/Ne2-1L", package = "RLDNe")
 }
 
 ##### Load arguments #####
