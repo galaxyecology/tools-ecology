@@ -19,11 +19,11 @@
         mkdir -p summary_file &&
         mkdir -p pop_order &&
 
-
         INTERNAL_BIN=\$(Rscript -e 'cat(system.file("bin/linux/Ne2-1L", package="RLDNe"))') &&
-        if [ -f "\$INTERNAL_BIN" ]; then chmod +x "\$INTERNAL_BIN"; fi &&
+        cp "\$INTERNAL_BIN" bin_local/Ne2-1L &&
+        chmod +x bin_local/Ne2-1L &&
 
-        if command -v Ne2-1L >/dev/null 2>&1; then chmod +x \$(which Ne2-1L); fi &&
+        export PATH="\$PWD/bin_local:\$PATH" &&
 
         Rscript '$__tool_directory__/RLDNe.r'
             #set $gen_paths = ','.join([str($v) for $v in $input_data])
