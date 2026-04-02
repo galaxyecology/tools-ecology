@@ -18,6 +18,7 @@
         mkdir -p genfiles &&
         mkdir -p summary_file &&
         mkdir -p pop_order &&
+        mkdir -p bin_local &&
 
         INTERNAL_BIN=\$(Rscript -e 'cat(system.file("bin/linux/Ne2-1L", package="RLDNe"))') &&
         cp "\$INTERNAL_BIN" bin_local/Ne2-1L &&
