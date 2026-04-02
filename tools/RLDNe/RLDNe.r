@@ -2,14 +2,26 @@
 library(RLDNe)
 library(dplyr)
 
-##### Give execution permissions to the Ne2-1L binary #####
-ne_binary <- Sys.which("Ne2-1L")
-
-if (ne_binary == "") {
-  message("Note: Ne2-1L not found in PATH, relying on RLDNe internal path.")
-} else {
-  message(paste("Using Ne2-1L found at:", ne_binary))
+##### Override run_LDNe to use local binary with correct permissions #####
+local_run_LDNe <- function(x) {
+  if (class(x) == "RLDNe_data") {
+    if (is.null(x$LDNe_paramfile)) {
+      stop("LDNe_paramfile is NULL; have you ran create_LDNe_params() ?")
+    } else {
+      LDNe_params <- x$LDNe_paramfile
+    }
+  } else if (is.character(x) & length(x) == 1) {
+    LDNe_params <- x
+  } else {
+    stop("x should be a RLDNe_data object or a file path")
+  }
+ 
+  Neestimator <- file.path(getwd(), "bin_local", "Ne2-1L")
+  out <- system2(command = Neestimator, args = paste0("c:", LDNe_params), stdout = TRUE)
+  return(out)
 }
+ 
+assignInNamespace("run_LDNe", local_run_LDNe, ns = "RLDNe")
 
 ##### Load arguments #####
 args <- commandArgs(trailingOnly = TRUE)
