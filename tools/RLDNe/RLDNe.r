@@ -4,8 +4,9 @@ library(dplyr)
 
 ##### Give execution permissions to the Ne2-1L binary #####
 ne_binary <- Sys.which("Ne2-1L")
+
 if (ne_binary == "") {
-  ne_binary <- system.file("bin/linux/Ne2-1L", package = "RLDNe")
+  stop("Ne2-1L not found in PATH")
 }
 
 ##### Load arguments #####
