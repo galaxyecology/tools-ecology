@@ -225,7 +225,7 @@
         <param name="input_file" value="test_SSR_genepop.txt" ftype="txt"/>
         <param name="data_conditional|input_format" value="genepop"/>
         <param name="data_conditional|output_selection|output_format" value="bayescan"/>
-        <param name="data_conditional|output_selection|indpop" value="test_pop_ssr.txt"/>
+        <param name="data_conditional|output_selection|indpop" value="test_pop_SSR.txt"/>
         <param name="data_conditional|output_selection|marker_type" value="MICROSAT"/>
         <param name="data_conditional|output_selection|alleles_coded" value="as the length of the PCR fragments"/>
         <output name="convert_files" ftype="txt" count="1">
