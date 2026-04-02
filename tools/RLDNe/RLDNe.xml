@@ -10,7 +10,7 @@
     </requirements>
 
     <required_files>
-        <include path="RLDNe.R" />
+        <include path="RLDNe.r" />
     </required_files>
 
     <command detect_errors="exit_code"><![CDATA[
@@ -19,7 +19,7 @@
         mkdir -p summary_file &&
         mkdir -p pop_order &&
 
-        Rscript '$__tool_directory__/RLDNe.R'
+        Rscript '$__tool_directory__/RLDNe.r'
             #set $gen_paths = ','.join([str($v) for $v in $input_data])
             #set $gen_names = ','.join([$v.element_identifier for $v in $input_data])
             '$gen_paths'
