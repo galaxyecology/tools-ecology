@@ -6,7 +6,9 @@ library(dplyr)
 ne_binary <- Sys.which("Ne2-1L")
 
 if (ne_binary == "") {
-  stop("Ne2-1L not found in PATH")
+  message("Note: Ne2-1L not found in PATH, relying on RLDNe internal path.")
+} else {
+  message(paste("Using Ne2-1L found at:", ne_binary))
 }
 
 ##### Load arguments #####
