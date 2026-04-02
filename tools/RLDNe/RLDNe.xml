@@ -344,6 +344,8 @@ Population file (.tabular or .txt)
 | MyStudy | Pop2 | SNP         | H_mean_btw_5sub | 1    | 435.0 | 370.5      | 510.2    | 362            |
 +---------+------+-------------+-----------------+------+-------+------------+----------+----------------+
 
+**Warning:** The values differ from those estimated in Windows.
+
     ]]></help>
 
     <citations>
