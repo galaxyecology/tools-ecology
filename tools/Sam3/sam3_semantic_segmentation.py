@@ -1,8 +1,8 @@
 import argparse
-import glob
 import hashlib
 import json
 import os
+import glob
 from pathlib import Path
 from typing import Any, Dict, List
 
@@ -97,9 +97,7 @@ def parse_arguments() -> argparse.Namespace:
 def convert_avi_to_mp4(directory_path, quality):
     """
     Convert AVI file to MP4.
-
     Parameters:
-        audio   : True = keep audio | False = remove audio
         quality : "copy"  = original resolution and quality (no re-encoding)
                   "2000k" = video bitrate 2000 kbps (480p~720p)
                   "4000k" = video bitrate 4000 kbps (1080p standard)
@@ -109,10 +107,7 @@ def convert_avi_to_mp4(directory_path, quality):
     avi_file_path = glob.glob(os.path.join(directory_path, "*.avi"))[0]
     output_path = os.path.splitext(avi_file_path)[0]
     print(f"Converting: {avi_file_path} -> {output_path}.mp4")
-
     audio_args = "-an"  # remove audio
-
-    # Video
     if quality == "copy":
         video_args = "-c:v copy"  # copy video stream without re-encoding
     else:
@@ -120,50 +115,15 @@ def convert_avi_to_mp4(directory_path, quality):
             f"-c:v libx264 -b:v {quality} "
             "-vprofile high -bf 0"  # re-encode with H.264
         )
-
     cmd = (
         f"ffmpeg -i '{avi_file_path}' "
         f"{video_args} "
         f"{audio_args} "
         f"'{output_path}.mp4'"
     )
-
     print(f"Command : {cmd}")
     os.popen(cmd)
-
     return True
-
-
-# def convert_avi_to_mp4(directory_path):
-#     avi_files = glob.glob(os.path.join(directory_path, "*.avi"))
-#     if not avi_files:
-#         print("Aucun fichier .avi trouvé dans le répertoire.")
-#         return False
-
-#     for avi_file_path in avi_files:
-#         output_path = os.path.splitext(avi_file_path)[0]
-#         print(f"Conversion : {avi_file_path} -> {output_path}.mp4")
-#         os.popen(
-#             "ffmpeg -i '{input}' -ac 2 -b:v 2000k "
-#             "-c:a aac -c:v libx264 -b:a 160k "
-#             "-vprofile high -bf 0 -strict experimental "
-#             "-f mp4 '{output}.mp4'".format(
-#                 input=avi_file_path,
-#                 output=output_path,
-#             )
-#         )
-# def convert_avi_to_mp4(directory_path):
-#     avi_files = glob.glob(os.path.join(directory_path, "*.avi"))
-#     for avi_file_path in avi_files:
-#         output_path = os.path.splitext(avi_file_path)[0]
-#         print(f"Conversion : {avi_file_path} -> {output_path}.mp4")
-#         os.popen(
-#             "ffmpeg -i '{input}' -c:v copy -c:a aac '{output}.mp4'".format(
-#                 input=avi_file_path,
-#                 output=output_path,
-#             )
-#         )
-        
 
 def is_video(file_path: str) -> bool:
     """Check if a file is a video based on its extension."""
