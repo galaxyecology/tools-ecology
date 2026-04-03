@@ -1,8 +1,8 @@
 import argparse
+import glob
 import hashlib
 import json
 import os
-import glob
 from pathlib import Path
 from typing import Any, Dict, List
 
