@@ -1,8 +1,8 @@
 import argparse
-import glob
 import hashlib
 import json
 import os
+import glob
 from pathlib import Path
 from typing import Any, Dict, List
 
@@ -80,6 +80,15 @@ def parse_arguments() -> argparse.Namespace:
         default="copy",  # original quality by default
         help="Video bitrate: 'copy' (original), '2000k', '4000k', '8000k'",
     )
+    parser.add_argument(
+        "--coco_video_mode",
+        type=str,
+        default="no_coco",
+        choices=["video", "frames", "no_coco"],
+        help="For video input with COCO output: 'video' annotates the video as a single source, "
+            "'frames' extracts each processed frame as an individual image and annotates per frame, "
+            "'no_coco' disables COCO output",
+    )
     return parser.parse_args()
 
 
@@ -100,7 +109,10 @@ def convert_avi_to_mp4(directory_path, quality):
     avi_file_path = glob.glob(os.path.join(directory_path, "*.avi"))[0]
     output_path = os.path.splitext(avi_file_path)[0]
     print(f"Converting: {avi_file_path} -> {output_path}.mp4")
+
     audio_args = "-an"  # remove audio
+
+    # Video
     if quality == "copy":
         video_args = "-c:v copy"  # copy video stream without re-encoding
     else:
@@ -108,16 +120,50 @@ def convert_avi_to_mp4(directory_path, quality):
             f"-c:v libx264 -b:v {quality} "
             "-vprofile high -bf 0"  # re-encode with H.264
         )
+
     cmd = (
         f"ffmpeg -i '{avi_file_path}' "
         f"{video_args} "
         f"{audio_args} "
         f"'{output_path}.mp4'"
     )
+
     print(f"Command : {cmd}")
     os.popen(cmd)
+
     return True
 
+
+# def convert_avi_to_mp4(directory_path):
+#     avi_files = glob.glob(os.path.join(directory_path, "*.avi"))
+#     if not avi_files:
+#         print("Aucun fichier .avi trouvé dans le répertoire.")
+#         return False
+
+#     for avi_file_path in avi_files:
+#         output_path = os.path.splitext(avi_file_path)[0]
+#         print(f"Conversion : {avi_file_path} -> {output_path}.mp4")
+#         os.popen(
+#             "ffmpeg -i '{input}' -ac 2 -b:v 2000k "
+#             "-c:a aac -c:v libx264 -b:a 160k "
+#             "-vprofile high -bf 0 -strict experimental "
+#             "-f mp4 '{output}.mp4'".format(
+#                 input=avi_file_path,
+#                 output=output_path,
+#             )
+#         )
+# def convert_avi_to_mp4(directory_path):
+#     avi_files = glob.glob(os.path.join(directory_path, "*.avi"))
+#     for avi_file_path in avi_files:
+#         output_path = os.path.splitext(avi_file_path)[0]
+#         print(f"Conversion : {avi_file_path} -> {output_path}.mp4")
+#         os.popen(
+#             "ffmpeg -i '{input}' -c:v copy -c:a aac '{output}.mp4'".format(
+#                 input=avi_file_path,
+#                 output=output_path,
+#             )
+#         )
+        
 
 def is_video(file_path: str) -> bool:
     """Check if a file is a video based on its extension."""
@@ -293,6 +339,103 @@ def create_yolo_output(
             f.write("\n".join(lines))
 
     print(f"✓ Created {len(results)} images and labels in {output_dir}")
+
+
+def create_coco_video_frames_output(
+    results: List[Any],
+    text_prompts: List[str],
+    metadata: Dict[str, Any],
+    is_normalized: bool,
+    video_path: str,
+    stride: int,
+    outdir: Path,
+) -> Dict[str, Any]:
+    """Convert SAM3 video results to COCO format with one image entry per extracted frame."""
+    frames_dir = outdir / "frames"
+    frames_dir.mkdir(parents=True, exist_ok=True)
+
+    coco_output = {
+        "info": metadata,
+        "images": [],
+        "annotations": [],
+        "categories": create_coco_categories(text_prompts),
+    }
+
+    cap = cv2.VideoCapture(video_path)
+    if not cap.isOpened():
+        raise RuntimeError(f"Failed to open video: {video_path}")
+
+    video_name = Path(video_path).stem
+    annotation_id = 1
+    frame_idx = 1 if stride > 1 else 0
+    saved_idx = 0
+
+    print(f"Extracting frames and building per-frame COCO annotations (stride={stride})...")
+
+    while cap.isOpened():
+        ret, frame = cap.read()
+        if not ret:
+            break
+
+        if frame_idx % stride == 0:
+            if saved_idx >= len(results):
+                print(f"Warning: No result available for frame {frame_idx}")
+                break
+
+            frame_name = f"{video_name}_frame_{frame_idx:06d}.jpg"
+            frame_path = frames_dir / frame_name
+            cv2.imwrite(str(frame_path), frame)
+
+            result = results[saved_idx]
+            image_id = saved_idx + 1
+            height, width = result.orig_shape
+
+            coco_output["images"].append(
+                {
+                    "id": image_id,
+                    "file_name": frame_name,
+                    "width": width,
+                    "height": height,
+                    "frame_index": frame_idx,
+                }
+            )
+
+            if result.masks is not None:
+                polygons = result.masks.xyn if is_normalized else result.masks.xy
+                boxes = result.boxes.xyxyn if is_normalized else result.boxes.xyxy
+
+                for polygon, bbox, class_id in zip(
+                    polygons, boxes, result.boxes.cls
+                ):
+                    polygon_flat = polygon.flatten().tolist()
+                    x1, y1, x2, y2 = bbox[:4].tolist()
+                    bbox_w = x2 - x1
+                    bbox_h = y2 - y1
+                    area = float(cv2.contourArea(polygon.astype(np.float32)))
+
+                    coco_output["annotations"].append(
+                        {
+                            "id": annotation_id,
+                            "image_id": image_id,
+                            "category_id": int(class_id) + 1,
+                            "segmentation": [polygon_flat],
+                            "area": area,
+                            "bbox": [x1, y1, bbox_w, bbox_h],
+                            "iscrowd": 0,
+                        }
+                    )
+                    annotation_id += 1
+
+            saved_idx += 1
+
+            if saved_idx % 10 == 0:
+                print(f"  Extracted {saved_idx} frames...")
+
+        frame_idx += 1
+
+    cap.release()
+    print(f"✓ Extracted {saved_idx} frames to {frames_dir}")
+    return coco_output
 
 
 def create_yolo_video_output(
@@ -477,7 +620,7 @@ def main():
     # print(f"\n Running prediction on {source_path}...")
     results = predictor(source=source_path, text=text_prompts, stream=False)
     if is_video(file_paths[0]):
-        convert_avi_to_mp4(outputs_annotated)
+        convert_avi_to_mp4(outputs_annotated, args.quality)
 
     if not results:
         raise RuntimeError("SAM3 returned no results")
@@ -494,9 +637,22 @@ def main():
 
     if "coco" in output_formats:
         print("\n→ Converting to COCO format...")
-        coco_output = create_coco_output(
-            results, text_prompts, metadata, is_normalized
-        )
+
+        if is_video(file_paths[0]) and args.coco_video_mode == "frames":
+            print("  Mode: per-frame (extracting individual frames)...")
+            coco_output = create_coco_video_frames_output(
+                results,
+                text_prompts,
+                metadata,
+                is_normalized,
+                file_paths[0],
+                args.vid_stride,
+                outdir,
+            )
+        else:
+            coco_output = create_coco_output(
+                results, text_prompts, metadata, is_normalized
+            )
 
         annotation_file = outdir / "annotations.json"
         with open(annotation_file, "w") as f:
@@ -512,7 +668,11 @@ def main():
 
         if is_video(file_paths[0]):
             create_yolo_video_output(
-                "bbox", results, yolo_bbox_dir, file_paths[0], args.vid_stride,
+                "bbox",
+                results,
+                yolo_bbox_dir,
+                file_paths[0],
+                args.vid_stride,
                 is_normalized,
             )
         else:
