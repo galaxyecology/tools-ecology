@@ -21,12 +21,13 @@
         #set $name_file = $input.source.element_identifier + " "
     #end if
     python '$__tool_directory__/sam3_semantic_segmentation.py' 
-        --model '$models'
+        --model '$sam3_models.fields.path'
         --prompts '$text_prompt' 
         --conf '$conf' 
         --vid_stride '$vid_stride' 
         --outdir outputs 
         --name_file '$name_file'
+        --quality '$input.quality'
         #if $input.input_kind == "image"
             --outputs $input.outputs_format
         #else
@@ -68,6 +69,15 @@
             <when value="video">
                 <param name="source" type="data" format="mp4,avi,mov,gif"
                     multiple="false" label="Input video file"/>
+                <param name="quality" type="select" label="Video quality"
+                    help="Select output video bitrate,does not affect processing speed or annotations. 
+                          Higher quality than the original is not useful and will only increase file size.">
+                    <option value="copy" selected="true">Original quality (copy)</option>
+                    <option value="1000k">1000k - Standard (260p)</option>
+                    <option value="2000k">2000k - Standard (480p~720p)</option>
+                    <option value="4000k">4000k - Good (1080p)</option>
+                    <option value="8000k">8000k - High quality (1080p)</option>
+                </param>
                 <param name="coco_video_mode" type="select"
                     label="COCO output mode"
                     help="Controls whether COCO annotations are generated, and how frames are referenced.">
