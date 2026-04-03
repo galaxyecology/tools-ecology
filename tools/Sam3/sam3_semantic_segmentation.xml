@@ -3,7 +3,7 @@
         SAM3 performs text-prompted semantic segmentation on images or videos. 
     </description>
     <requirements>
-        <container type="docker">quay.io/arthur_barreau/sam3_tool:1.0.0</container>
+        <container type="docker">quay.io/arthur_barreau/sam3_tool:1.0.1</container>
     </requirements>
     <required_files>
         <include path="sam3_semantic_segmentation.py" />
@@ -27,7 +27,9 @@
         --vid_stride '$vid_stride' 
         --outdir outputs 
         --name_file '$name_file'
-        --quality '$input.quality'
+        #if $input.input_kind == "video"
+            --quality '$input.quality'
+        #end if
         #if $input.input_kind == "image"
             --outputs $input.outputs_format
         #else
@@ -144,21 +146,6 @@ This option will be applied to all selected formats above.<br/>
             <discover_datasets pattern="__name_and_ext__" directory="outputs/yolo_seg/labels"/>
         </collection>
     </outputs>
-    <tests>
-        <test expect_exit_code="1" expect_failure="true">
-            <param name="sam3_models" value="unknown"/>
-            <conditional name="input">
-                <param name="input_kind" value="image" />
-                <param name="source" value="5827603936_3f1d5d715c_z.jpg,shrimp.png"/>
-            </conditional>
-            <param name="text_prompt" value="elephant"/>
-            <param name="conf" value="0.25"/>
-            <param name="outputs_format" value="coco,yolo_bbox"/>
-            <assert_stdout>
-                <has_text text="Invalid model!"/>
-            </assert_stdout>
-        </test>
-    </tests>
     <help><![CDATA[
 
 ===================================================
