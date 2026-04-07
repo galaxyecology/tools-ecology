@@ -117,6 +117,14 @@ This option will be applied to all selected formats above.<br/>
 &nbsp; &nbsp;-<strong> Normalized </strong>  bounding box: x=0.375, y=0.25, width=0.156, height=0.125
             ]]></help>
         </param>
+        <param name="do_normalization" type="boolean" checked="false" label="Normalize outputs?" >
+            <help><![CDATA[
+This option will be applied to all selected formats above.<br/>
+<u>Example:</u> (values scaled between 0 and 1 relative to the image size)<br/>
+&nbsp; &nbsp;-<strong> Non-normalized</strong>  bounding box: x=120, y=80, width=50, height=40 (pixel coordinates) <br/>
+&nbsp; &nbsp;-<strong> Normalized </strong>  bounding box: x=0.375, y=0.25, width=0.156, height=0.125
+            ]]></help>
+        </param>
     </inputs>
     <outputs>
         <data name="Annotations_coco" format="json" from_work_dir="./outputs/annotations.json" label="Annotation COCO">
@@ -167,8 +175,7 @@ This option will be applied to all selected formats above.<br/>
 SAM3 – Text-Prompted Semantic Segmentation
 ===================================================
 
-SAM3 allows semantic segmentation of objects in images and videos using
-natural language prompts.
+SAM3 allows semantic segmentation of objects in images and videos using natural language prompts.
 
 Typical use cases include:
 - Wildlife or object segmentation in videos
