@@ -19,6 +19,8 @@
         mkdir -p summary_file &&
         mkdir -p pop_order &&
         mkdir -p bin_local &&
+
+        #import re
  
         INTERNAL_BIN=\$(Rscript -e 'cat(system.file("bin/linux/Ne2-1L", package="RLDNe"))') &&
         cp "\$INTERNAL_BIN" bin_local/Ne2-1L &&
@@ -26,7 +28,7 @@
 
         Rscript '$__tool_directory__/RLDNe.r'
             #set $gen_paths = ','.join([str($v) for $v in $input_data])
-            #set $gen_names = ','.join([$v.element_identifier.replace(" ", "_") for $v in $input_data])
+            #set $gen_names = "','".join([re.sub('[\s]', '_', str($file.element_identifier)) for $file in $input_data])
             '$gen_paths'
             '$gen_names'
             '$indpop'
