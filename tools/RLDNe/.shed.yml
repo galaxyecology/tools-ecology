@@ -1,4 +1,4 @@
-name: genetics_LDNe_RLDNe
+name: effective_population_size_ld_method
 owner: ecology
 description: Tool to estimate the LDNe using NeEstimator via the RLDNe package.
 homepage_url: https://github.com/GINAMO-EBVs/ginamo-workflows/RLDNe
