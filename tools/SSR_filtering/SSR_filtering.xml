@@ -30,39 +30,39 @@
             --multi '${filter_null_allele.multi}'
 
     ]]></command>
+    
+    <inputs>
+        <param name="input_data" type="data" format="tabular,txt" label="Upload your SSR genotype file"
+            help="Tabular file with individuals in rows and loci in columns. See format below."/>
 
-<inputs>
-    <param name="input_data" type="data" format="tabular,txt" label="Upload your SSR genotype file"
-        help="Tabular file with individuals in rows and loci in columns. See format below."/>
-
-    <param name="filter_order" type="select" multiple="true" display="checkboxes"
-        label="Select and order the filters to apply"
-        help="Only the selected filters will be applied, in the exact order chosen here.">
-        <option value="A">A: Individuals with missing data </option>
-        <option value="B">B: Loci with missing data</option>
-        <option value="C">C: Null alleles (paralogues) </option>
-    </param>
+        <param name="filter_order" type="select" multiple="true" display="checkboxes"
+            label="Select and order the filters to apply"
+            help="Only the selected filters will be applied, in the exact order chosen here.">
+            <option value="A">A: Individuals with missing data </option>
+            <option value="B">B: Loci with missing data</option>
+            <option value="C">C: Null alleles (paralogues) </option>
+        </param>
 
     
-    <section name="filter_ind_md" title="[A] Individuals with missing data" expanded="false">
-        <param name="ind_md" type="float" value="0.30" min="0" max="1"
-            label="Maximum of missing data allowed per individual (MAX_MISSING_IND)"/>
-    </section>
+        <section name="filter_ind_md" title="[A] Individuals with missing data" expanded="false">
+            <param name="ind_md" type="float" value="0.30" min="0" max="1"
+                label="Maximum of missing data allowed per individual (MAX_MISSING_IND)"/>
+        </section>
 
-    <section name="filter_ssr_md" title="[B] Loci with missing data" expanded="false">
-        <param name="ssr_md" type="float" value="0.30" min="0" max="1"
-            label="Maximum of missing allowed data per locus (MAX_MISSING_LOCI)"/>
-    </section>
+        <section name="filter_ssr_md" title="[B] Loci with missing data" expanded="false">
+            <param name="ssr_md" type="float" value="0.30" min="0" max="1"
+                label="Maximum of missing allowed data per locus (MAX_MISSING_LOCI)"/>
+        </section>
 
-    <section name="filter_null_allele" title="[C] Null alleles (paralogues)" expanded="false">
-        <param name="low_quar" type="float" value="0.25" min="0" max="1"
-            label="Lower quartile for IQR method"/>
-        <param name="high_quar" type="float" value="0.75" min="0" max="1"
-            label="Upper quartile for IQR method"/>
-        <param name="multi" type="float" value="1.5" min="0"
-            label="IQR multiplier"/>
-    </section>
-</inputs>
+        <section name="filter_null_allele" title="[C] Null alleles (paralogues)" expanded="false">
+            <param name="low_quar" type="float" value="0.25" min="0" max="1"
+                label="Lower quartile for IQR method"/>
+            <param name="high_quar" type="float" value="0.75" min="0" max="1"
+                label="Upper quartile for IQR method"/>
+            <param name="multi" type="float" value="1.5" min="0"
+                label="IQR multiplier"/>
+        </section>
+    </inputs>
 
     <outputs>
         <data name="filtered_data" format="tabular" label="${tool.name}">
@@ -78,118 +78,118 @@
     </outputs>
 
     <tests>
-    <test expect_num_outputs="2">
-        <param name="input_data" value="test_SSR.txt"/>
-        <param name="filter_order" value="A"/>
-        <section name="filter_ind_md">
-            <param name="ind_md" value="0.1"/>
-        </section>
-        <output name="filtered_data" count="1" ftype="tabular">
-            <assert_contents>
-                <has_n_lines n="192"/>
-                <has_n_columns n="48"/>
-                <has_text text="Lobo004"/>
-            </assert_contents>
-        </output>
-        <output name="filtering_summary" ftype="tabular">
-            <assert_contents>
-                <has_n_lines n="3"/>
-                <has_n_columns n="6"/>
-                <has_line_matching expression="File\tStep\tFilter\tParams\tn_ind\tn_loci"/>
-                <has_line_matching expression="test_SSR\t1\tIndividuals missing data\tMAX_MISSING_IND=0.1\t191\t46"/>
-            </assert_contents>
-        </output>
-    </test>
+        <test expect_num_outputs="2">
+            <param name="input_data" value="test_SSR.txt"/>
+            <param name="filter_order" value="A"/>
+            <section name="filter_ind_md">
+                <param name="ind_md" value="0.1"/>
+            </section>
+            <output name="filtered_data" count="1" ftype="tabular">
+                <assert_contents>
+                    <has_n_lines n="192"/>
+                    <has_n_columns n="48"/>
+                    <has_text text="Lobo004"/>
+                </assert_contents>
+            </output>
+            <output name="filtering_summary" ftype="tabular">
+                <assert_contents>
+                    <has_n_lines n="3"/>
+                    <has_n_columns n="6"/>
+                    <has_line_matching expression="File\tStep\tFilter\tParams\tn_ind\tn_loci"/>
+                    <has_line_matching expression="test_SSR\t1\tIndividuals missing data\tMAX_MISSING_IND=0.1\t191\t46"/>
+                </assert_contents>
+            </output>
+        </test>
 
-    <test expect_num_outputs="2">
-        <param name="input_data" value="test_SSR.txt"/>
-        <param name="filter_order" value="B"/>
-        <section name="filter_ssr_md">
-            <param name="ssr_md" value="0.1"/>
-        </section>
-        <output name="filtered_data" count="1" ftype="tabular">
-            <assert_contents>
-                <has_n_lines n="219"/>
-                <has_n_columns n="43"/>
-                <has_text text="Lobo004"/>
-            </assert_contents>
-        </output>
-        <output name="filtering_summary" ftype="tabular">
-            <assert_contents>
-                <has_n_lines n="3"/>
-                <has_n_columns n="6"/>
-                <has_line_matching expression="File\tStep\tFilter\tParams\tn_ind\tn_loci"/>
-                <has_line_matching expression="test_SSR\t1\tLoci missing data\tMAX_MISSING_LOCI=0.1\t218\t41"/>
-            </assert_contents>
-        </output>
-    </test>
+        <test expect_num_outputs="2">
+            <param name="input_data" value="test_SSR.txt"/>
+            <param name="filter_order" value="B"/>
+            <section name="filter_ssr_md">
+                <param name="ssr_md" value="0.1"/>
+            </section>
+            <output name="filtered_data" count="1" ftype="tabular">
+                <assert_contents>
+                    <has_n_lines n="219"/>
+                    <has_n_columns n="43"/>
+                    <has_text text="Lobo004"/>
+                </assert_contents>
+            </output>
+            <output name="filtering_summary" ftype="tabular">
+                <assert_contents>
+                    <has_n_lines n="3"/>
+                    <has_n_columns n="6"/>
+                    <has_line_matching expression="File\tStep\tFilter\tParams\tn_ind\tn_loci"/>
+                    <has_line_matching expression="test_SSR\t1\tLoci missing data\tMAX_MISSING_LOCI=0.1\t218\t41"/>
+                </assert_contents>
+            </output>
+        </test>
 
-    <test expect_num_outputs="3">
-        <param name="input_data" value="test_SSR.txt"/>
-        <param name="filter_order" value="C"/>
-        <section name="filter_null_allele">
-            <param name="low_quar" value="0.25"/>
-            <param name="high_quar" value="0.75"/>
-            <param name="multi" value="1.5"/>
-        </section>
-        <output name="filtered_data" count="1" ftype="tabular">
-            <assert_contents>
-                <has_n_lines n="219"/>
-                <has_n_columns n="48"/>
-                <has_text text="Lobo004"/>
-            </assert_contents>
-        </output>
-        <output name="filtering_summary" ftype="tabular">
-            <assert_contents>
-                <has_n_lines n="3"/>
-                <has_n_columns n="6"/>
-                <has_line_matching expression="File\tStep\tFilter\tParams\tn_ind\tn_loci"/>
-                <has_line_matching expression="test_SSR\t1\tNull alleles\tlow_quar=0.25, high_quar=0.75, IQR_multi=1.5\t218\t46"/>
-            </assert_contents>
-        </output>
-        <output name="boxplot_fis" ftype="png" count="1">
-            <assert_contents>
-                <has_image_height height="600"/>
-            </assert_contents>
-        </output>
-    </test>
+        <test expect_num_outputs="3">
+            <param name="input_data" value="test_SSR.txt"/>
+            <param name="filter_order" value="C"/>
+            <section name="filter_null_allele">
+                <param name="low_quar" value="0.25"/>
+                <param name="high_quar" value="0.75"/>
+                <param name="multi" value="1.5"/>
+            </section>
+            <output name="filtered_data" count="1" ftype="tabular">
+                <assert_contents>
+                    <has_n_lines n="219"/>
+                    <has_n_columns n="48"/>
+                    <has_text text="Lobo004"/>
+                </assert_contents>
+            </output>
+            <output name="filtering_summary" ftype="tabular">
+                <assert_contents>
+                    <has_n_lines n="3"/>
+                    <has_n_columns n="6"/>
+                    <has_line_matching expression="File\tStep\tFilter\tParams\tn_ind\tn_loci"/>
+                    <has_line_matching expression="test_SSR\t1\tNull alleles\tlow_quar=0.25, high_quar=0.75, IQR_multi=1.5\t218\t46"/>
+                </assert_contents>
+            </output>
+            <output name="boxplot_fis" ftype="png" count="1">
+                <assert_contents>
+                    <has_image_height height="600"/>
+                </assert_contents>
+            </output>
+        </test>
 
-    <test expect_num_outputs="3">
-        <param name="input_data" value="test_SSR.txt"/>
-        <param name="filter_order" value="A,B,C"/>
-        <section name="filter_ind_md">
-            <param name="ind_md" value="0.1"/>
-        </section>
-        <section name="filter_ssr_md">
-            <param name="ssr_md" value="0.1"/>
-        </section>
-        <section name="filter_null_allele">
-            <param name="low_quar" value="0.25"/>
-            <param name="high_quar" value="0.75"/>
-            <param name="multi" value="1.5"/>
-        </section>
-        <output name="filtered_data" count="1" ftype="tabular">
-            <assert_contents>
-                <has_n_lines n="192"/>
-                <has_n_columns n="45"/>
-                <has_text text="Lobo004"/>
-            </assert_contents>
-        </output>
-        <output name="filtering_summary" ftype="tabular">
-            <assert_contents>
-                <has_n_lines n="5"/>
-                <has_n_columns n="6"/>
-                <has_line_matching expression="File\tStep\tFilter\tParams\tn_ind\tn_loci"/>
-                <has_line_matching expression="test_SSR\t3\tNull alleles\tlow_quar=0.25, high_quar=0.75, IQR_multi=1.5\t191\t43"/>
-            </assert_contents>
-        </output>
-        <output name="boxplot_fis" ftype="png" count="1">
-            <assert_contents>
-                <has_image_height height="600"/>
-            </assert_contents>
-        </output>
-    </test>
-</tests>
+        <test expect_num_outputs="3">
+            <param name="input_data" value="test_SSR.txt"/>
+            <param name="filter_order" value="A,B,C"/>
+            <section name="filter_ind_md">
+                <param name="ind_md" value="0.1"/>
+            </section>
+            <section name="filter_ssr_md">
+                <param name="ssr_md" value="0.1"/>
+            </section>
+            <section name="filter_null_allele">
+                <param name="low_quar" value="0.25"/>
+                <param name="high_quar" value="0.75"/>
+                <param name="multi" value="1.5"/>
+            </section>
+            <output name="filtered_data" count="1" ftype="tabular">
+                <assert_contents>
+                    <has_n_lines n="192"/>
+                    <has_n_columns n="45"/>
+                    <has_text text="Lobo004"/>
+                </assert_contents>
+            </output>
+            <output name="filtering_summary" ftype="tabular">
+                <assert_contents>
+                    <has_n_lines n="5"/>
+                    <has_n_columns n="6"/>
+                    <has_line_matching expression="File\tStep\tFilter\tParams\tn_ind\tn_loci"/>
+                    <has_line_matching expression="test_SSR\t3\tNull alleles\tlow_quar=0.25, high_quar=0.75, IQR_multi=1.5\t191\t43"/>
+                </assert_contents>
+            </output>
+            <output name="boxplot_fis" ftype="png" count="1">
+                <assert_contents>
+                    <has_image_height height="600"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
 
     <help><![CDATA[
 Usage
