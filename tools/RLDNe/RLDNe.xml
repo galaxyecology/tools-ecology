@@ -26,7 +26,7 @@
 
         Rscript '$__tool_directory__/RLDNe.r'
             #set $gen_paths = ','.join([str($v) for $v in $input_data])
-            #set $gen_names = ','.join([$v.element_identifier for $v in $input_data])
+            #set $gen_names = ','.join([$v.element_identifier.replace(" ", "_") for $v in $input_data])
             '$gen_paths'
             '$gen_names'
             '$indpop'
