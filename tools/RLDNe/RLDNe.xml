@@ -1,4 +1,4 @@
-<tool id="LDNe" name="LDNe estimation" version="0.1.0" profile="25.0">
+<tool id="effective_population_size_ld_method" name="LDNe estimation" version="0.1.0" profile="25.0">
     <description>
         using RLDNe package and NeEstimator.
     </description>
@@ -67,14 +67,12 @@
         <param name="critical_freqs" type="text" value="0.02 0.05 1" label="Critical allele frequencies (MAF)"
             help="Space-separated list of minimum frequencies (e.g. 0.01 0.02 0.05). Alleles below these values are ignored."/>
 
-        <param name="confidence_intervals" type="select" label="Confidence intervals"
-            help="1 = compute Jackknife confidence intervals; 0 = do not compute confidence intervals.">
+        <param name="confidence_intervals" type="select" label="Confidence intervals">
             <option value="1">1 = Compute Jackknife confidence intervals</option>
             <option value="0">0 = Do not compute confidence intervals</option>
         </param>
 
-        <param name="mating_system" type="select" label="Maiting system"
-            help="0: Random mating, 1: Monogamy (LD Method)">
+        <param name="mating_system" type="select" label="Maiting system">
             <option value="0">0: Random mating</option>
             <option value="1">1: Monogamy</option>
         </param>
