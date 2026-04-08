@@ -32,7 +32,7 @@
     ]]></command>
     
     <inputs>
-        <param name="input_data" type="data" format="tabular,txt" label="Upload your SSR genotype file"
+        <param name="input_data" type="data" format="tabular" label="Upload your SSR genotype file"
             help="Tabular file with individuals in rows and loci in columns. See format below."/>
 
         <param name="filter_order" type="select" multiple="true" display="checkboxes"
