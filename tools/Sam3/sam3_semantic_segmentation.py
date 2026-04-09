@@ -197,8 +197,15 @@ def create_coco_output(
 
         polygons = result.masks.xyn if is_normalized else result.masks.xy
         boxes = result.boxes.xyxyn if is_normalized else result.boxes.xyxy
+        track_ids = (
+            result.boxes.id.int().tolist()
+            if result.boxes.id is not None
+            else [None] * len(result.boxes.cls)
+        )
 
-        for polygon, bbox, class_id in zip(polygons, boxes, result.boxes.cls):
+        for polygon, bbox, class_id, track_id in zip(
+            polygons, boxes, result.boxes.cls, track_ids
+        ):
             # Flatten polygon coordinates
             polygon_flat = polygon.flatten().tolist()
 
@@ -214,6 +221,7 @@ def create_coco_output(
                     "id": annotation_id,
                     "image_id": image_id,
                     "category_id": int(class_id) + 1,
+                    "track_id":track_id,
                     "segmentation": [polygon_flat],
                     "area": area,
                     "bbox": [x1, y1, bbox_w, bbox_h],
@@ -363,9 +371,14 @@ def create_coco_video_frames_output(
             if result.masks is not None:
                 polygons = result.masks.xyn if is_normalized else result.masks.xy
                 boxes = result.boxes.xyxyn if is_normalized else result.boxes.xyxy
+                track_ids = (
+                    result.boxes.id.int().tolist()
+                    if result.boxes.id is not None
+                    else [None] * len(result.boxes.cls)
+                )
 
-                for polygon, bbox, class_id in zip(
-                    polygons, boxes, result.boxes.cls
+                for polygon, bbox, class_id, track_id in zip(
+                    polygons, boxes, result.boxes.cls, track_ids
                 ):
                     polygon_flat = polygon.flatten().tolist()
                     x1, y1, x2, y2 = bbox[:4].tolist()
@@ -378,6 +391,7 @@ def create_coco_video_frames_output(
                             "id": annotation_id,
                             "image_id": image_id,
                             "category_id": int(class_id) + 1,
+                            "track_id": track_id,
                             "segmentation": [polygon_flat],
                             "area": area,
                             "bbox": [x1, y1, bbox_w, bbox_h],
