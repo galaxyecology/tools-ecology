@@ -152,10 +152,10 @@ This option will be applied to all selected formats above.<br/>
             <conditional name="input">
                 <param name="input_kind" value="image" />
                 <param name="source" value="5827603936_3f1d5d715c_z.jpg,shrimp.png"/>
+                <param name="outputs_format" value="coco,yolo_bbox"/>
             </conditional>
             <param name="text_prompt" value="elephant"/>
             <param name="conf" value="0.25"/>
-            <param name="outputs_format" value="coco,yolo_bbox"/>
             <assert_stdout>
                 <has_text text="Invalid model!"/>
             </assert_stdout>
