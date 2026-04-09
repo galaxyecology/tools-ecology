@@ -85,7 +85,7 @@ def parse_arguments() -> argparse.Namespace:
         type=str,
         default="no_coco",
         choices=["video", "frames", "no_coco"],
-        help="For video input with COCO output: 'video' annotates the video" 
+        help="For video input with COCO output: 'video' annotates the video"
         "as a single source, 'frames' extracts each processed frame as an "
         "individual image and annotates per frame, 'no_coco' disables "
         "COCO output",
@@ -321,7 +321,7 @@ def create_coco_video_frames_output(
     stride: int,
     outdir: Path,
 ) -> Dict[str, Any]:
-    """Convert SAM3 video results to COCO format with one image entry 
+    """Convert SAM3 video results to COCO format with one image entry
     per extracted frame."""
     frames_dir = outdir / "frames"
     frames_dir.mkdir(parents=True, exist_ok=True)
