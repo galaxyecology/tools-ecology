@@ -86,13 +86,14 @@ def parse_arguments() -> argparse.Namespace:
         default="no_coco",
         choices=["video", "frames", "no_coco"],
         help="For video input with COCO output: 'video' annotates the video as a single source, "
-            "'frames' extracts each processed frame as an individual image and annotates per frame, "
-            "'no_coco' disables COCO output",
+        "'frames' extracts each processed frame as an individual image and annotates per frame, "
+        "'no_coco' disables COCO output",
     )
     return parser.parse_args()
 
 
 # -------- Functions --------
+
 
 def convert_avi_to_mp4(directory_path, quality):
     """
@@ -124,6 +125,7 @@ def convert_avi_to_mp4(directory_path, quality):
     print(f"Command : {cmd}")
     os.popen(cmd)
     return True
+
 
 def is_video(file_path: str) -> bool:
     """Check if a file is a video based on its extension."""
@@ -221,7 +223,7 @@ def create_coco_output(
                     "id": annotation_id,
                     "image_id": image_id,
                     "category_id": int(class_id) + 1,
-                    "track_id":track_id,
+                    "track_id": track_id,
                     "segmentation": [polygon_flat],
                     "area": area,
                     "bbox": [x1, y1, bbox_w, bbox_h],
@@ -338,7 +340,9 @@ def create_coco_video_frames_output(
     frame_idx = 1 if stride > 1 else 0
     saved_idx = 0
 
-    print(f"Extracting frames and building per-frame COCO annotations (stride={stride})...")
+    print(
+        f"Extracting frames and building per-frame COCO annotations (stride={stride})..."
+    )
 
     while cap.isOpened():
         ret, frame = cap.read()
@@ -369,8 +373,12 @@ def create_coco_video_frames_output(
             )
 
             if result.masks is not None:
-                polygons = result.masks.xyn if is_normalized else result.masks.xy
-                boxes = result.boxes.xyxyn if is_normalized else result.boxes.xyxy
+                polygons = (
+                    result.masks.xyn if is_normalized else result.masks.xy
+                )
+                boxes = (
+                    result.boxes.xyxyn if is_normalized else result.boxes.xyxy
+                )
                 track_ids = (
                     result.boxes.id.int().tolist()
                     if result.boxes.id is not None
@@ -660,7 +668,11 @@ def main():
 
         if is_video(file_paths[0]):
             create_yolo_video_output(
-                "seg", results, yolo_seg_dir, file_paths[0], args.vid_stride,
+                "seg",
+                results,
+                yolo_seg_dir,
+                file_paths[0],
+                args.vid_stride,
                 is_normalized,
             )
         else:
