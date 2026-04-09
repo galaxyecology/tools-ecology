@@ -342,7 +342,7 @@ def create_coco_video_frames_output(
     frame_idx = 1 if stride > 1 else 0
     saved_idx = 0
 
-   print(
+    print(
         f"Extracting frames and building per-frame COCO annotations "
         f"(stride={stride})..."
     )
