@@ -1,9 +1,9 @@
-<tool id="sam3_semantic_segmentation" name="SAM3 Semantic Segmentation" version="1.0.1+galaxy2" profile="25.1">
+<tool id="sam3_semantic_segmentation" name="SAM3 Semantic Segmentation" version="1.0.1+galaxy3" profile="25.1">
     <description>
         SAM3 performs text-prompted semantic segmentation on images or videos. 
     </description>
     <requirements>
-        <container type="docker">quay.io/arthur_barreau/sam3_tool:1.0.0</container>
+        <container type="docker">quay.io/arthur_barreau/sam3_tool:1.0.1</container>
     </requirements>
     <required_files>
         <include path="sam3_semantic_segmentation.py" />
@@ -26,9 +26,21 @@
         --conf '$conf' 
         --vid_stride '$vid_stride' 
         --outdir outputs 
-        --outputs $outputs_format
         --name_file '$name_file'
-        --quality '$input.quality'
+        #if $input.input_kind == "video"
+            --quality '$input.quality'
+        #end if
+        #if $input.input_kind == "image"
+            --outputs $input.outputs_format
+        #else
+            #if $input.coco_video_mode != "no_coco"
+                --outputs 'coco, $input.outputs_format'
+                --coco_video_mode '$input.coco_video_mode'
+            #else
+                --outputs $input.outputs_format
+            #end if
+        #end if
+        --do_normalization '$do_normalization' 
     ]]></command>
     <inputs>
         <param name="sam3_models" label="Model data" type="select" help="Contact the administrator of our Galaxy instance if you miss model data">
@@ -48,10 +60,17 @@
                 <param name="source" type="data" format="jpg,png,tiff" multiple="true" label="Input images">
                     <validator type="expression" message="TIFF images must contain exactly 3 channels (RGB).">value.ext not in ('tiff') or value.metadata.channels == 3</validator>
                 </param>
+                <param name="outputs_format" type="select" multiple="true" optional="true"
+                    label="Output formats"
+                    help="Select one or more annotation formats to generate.">
+                    <option value="coco">COCO</option>
+                    <option value="yolo_bbox">YOLO bounding boxes</option>
+                    <option value="yolo_seg">YOLO segmentation masks</option>
+                </param>
             </when>
             <when value="video">
                 <param name="source" type="data" format="mp4,avi,mov,gif"
-                    multiple="false" label="Input video"/>
+                    multiple="false" label="Input video file"/>
                 <param name="quality" type="select" label="Video quality"
                     help="Select output video bitrate,does not affect processing speed or annotations. 
                           Higher quality than the original is not useful and will only increase file size.">
@@ -60,6 +79,19 @@
                     <option value="2000k">2000k - Standard (480p~720p)</option>
                     <option value="4000k">4000k - Good (1080p)</option>
                     <option value="8000k">8000k - High quality (1080p)</option>
+                </param>
+                <param name="coco_video_mode" type="select"
+                    label="COCO output mode"
+                    help="Controls whether COCO annotations are generated, and how frames are referenced.">
+                    <option value="video" selected="true">Annotate the video — one COCO entry per frame, referencing the video file</option>
+                    <option value="frames">Annotate extracted frames — saves JPGs and one COCO entry per frame image</option>
+                    <option value="no_coco">No COCO output</option>
+                </param>
+                <param name="outputs_format" type="select" multiple="true" optional="true"
+                    label="Additional output formats"
+                    help="YOLO formats are optional. COCO output is controlled separately above.">
+                    <option value="yolo_bbox">YOLO bounding boxes</option>
+                    <option value="yolo_seg">YOLO segmentation masks</option>
                 </param>
             </when>
         </conditional>
@@ -77,12 +109,6 @@
         <param name="vid_stride" type="integer" value="5" min="1" max="300"
             label="Video frame stride"
             help="For video input: process one frame every N frames."/>
-        <param name="outputs_format" type="select" multiple="true" optional="true"
-            label="Output formats">
-            <option value="coco">COCO</option>
-            <option value="yolo_bbox">YOLO bounding boxes</option>
-            <option value="yolo_seg">YOLO segmentation</option>
-        </param>
         <param name="do_normalization" type="boolean" checked="false" label="Normalize outputs?" >
             <help><![CDATA[
 This option will be applied to all selected formats above.<br/>
@@ -93,26 +119,30 @@ This option will be applied to all selected formats above.<br/>
         </param>
     </inputs>
     <outputs>
-        <data name="Annotations_coco" format="json" from_work_dir="./outputs/annotations.json" label="Annotation COCO" >
-            <filter>outputs_format and "coco" in outputs_format</filter>
+        <data name="Annotations_coco" format="json" from_work_dir="./outputs/annotations.json" label="Annotation COCO">
+            <filter>input['coco_video_mode'] != "no_coco"</filter>
         </data>
-        <collection name="Outputs_annotated" type="list">
+        <collection name="Coco_Frames" type="list" label="COCO Extracted Frames">
+            <filter>input['coco_video_mode'] == "frames"</filter>
+            <discover_datasets pattern="__name_and_ext__" directory="outputs/frames"/>
+        </collection>
+        <collection name="Outputs_annotated" type="list" label="Annotated Outputs">
             <discover_datasets pattern="__name_and_ext__" directory="outputs/outputs_annotated"/>
         </collection>
         <collection name="Yolo_Bbox_Image" type="list" label="YOLO Bbox Images">
-            <filter>outputs_format and 'yolo_bbox' in outputs_format</filter>
+            <filter>input['outputs_format'] and 'yolo_bbox' in input['outputs_format']</filter>
             <discover_datasets pattern="__name_and_ext__" directory="outputs/yolo_bbox/images"/>
         </collection>
         <collection name="Yolo_Bbox_Label" type="list" label="YOLO Bbox Labels">
-            <filter>outputs_format and 'yolo_bbox' in outputs_format</filter>
+            <filter>input['outputs_format'] and 'yolo_bbox' in input['outputs_format']</filter>
             <discover_datasets pattern="__name_and_ext__" directory="outputs/yolo_bbox/labels"/>
         </collection>
         <collection name="Yolo_Seg_Image" type="list" label="YOLO Seg Images">
-            <filter>outputs_format and 'yolo_seg' in outputs_format</filter>
+            <filter>input['outputs_format'] and 'yolo_seg' in input['outputs_format']</filter>
             <discover_datasets pattern="__name_and_ext__" directory="outputs/yolo_seg/images"/>
         </collection>
         <collection name="Yolo_Seg_Label" type="list" label="YOLO Seg Labels">
-            <filter>outputs_format and 'yolo_seg' in outputs_format</filter>
+            <filter>input['outputs_format'] and 'yolo_seg' in input['outputs_format']</filter>
             <discover_datasets pattern="__name_and_ext__" directory="outputs/yolo_seg/labels"/>
         </collection>
     </outputs>
@@ -122,10 +152,10 @@ This option will be applied to all selected formats above.<br/>
             <conditional name="input">
                 <param name="input_kind" value="image" />
                 <param name="source" value="5827603936_3f1d5d715c_z.jpg,shrimp.png"/>
+                <param name="outputs_format" value="coco,yolo_bbox"/>
             </conditional>
             <param name="text_prompt" value="elephant"/>
             <param name="conf" value="0.25"/>
-            <param name="outputs_format" value="coco,yolo_bbox"/>
             <assert_stdout>
                 <has_text text="Invalid model!"/>
             </assert_stdout>
