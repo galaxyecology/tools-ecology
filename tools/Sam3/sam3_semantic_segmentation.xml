@@ -51,7 +51,7 @@
             </options>
             <validator message="No model annotation is available for SAM3" type="no_options"/>
         </param>
-         <conditional name="input">
+        <conditional name="input">
             <param name="input_kind" type="select" label="Input type"
                 help="Choose either multiple images or a single video (not both)">
                 <option value="image">One or more images</option>
