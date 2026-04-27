@@ -20,6 +20,7 @@
         mkdir -p pop_order &&
         mkdir -p bin_local &&
 
+        ## Give execution permissions to the RLDNe package executable
         #import re
  
         INTERNAL_BIN=\$(Rscript -e 'cat(system.file("bin/linux/Ne2-1L", package="RLDNe"))') &&
