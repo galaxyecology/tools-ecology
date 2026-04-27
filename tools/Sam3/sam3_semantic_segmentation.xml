@@ -1,4 +1,4 @@
-<tool id="sam3_semantic_segmentation" name="SAM3 Semantic Segmentation" version="1.0.1+galaxy3" profile="25.1">
+<tool id="sam3_semantic_segmentation" name="SAM3 Semantic Segmentation" version="1.0.1+galaxy4" profile="25.1">
     <description>
         SAM3 performs text-prompted semantic segmentation on images or videos. 
     </description>
@@ -40,7 +40,8 @@
                 --outputs $input.outputs_format
             #end if
         #end if
-        --do_normalization '$do_normalization' 
+        --do_normalization '$do_normalization'
+        --show_bbox '$show_bbox'
     ]]></command>
     <inputs>
         <param name="sam3_models" label="Model data" type="select" help="Contact the administrator of our Galaxy instance if you miss model data">
@@ -109,6 +110,8 @@
         <param name="vid_stride" type="integer" value="5" min="1" max="300"
             label="Video frame stride"
             help="For video input: process one frame every N frames."/>
+        <param name="show_bbox" type="boolean" checked="true" truevalue="true" falsevalue="false"
+            label="Show bounding boxes on annotated output"/>
         <param name="do_normalization" type="boolean" checked="false" label="Normalize outputs?" >
             <help><![CDATA[
 This option will be applied to all selected formats above.<br/>
@@ -120,10 +123,10 @@ This option will be applied to all selected formats above.<br/>
     </inputs>
     <outputs>
         <data name="Annotations_coco" format="json" from_work_dir="./outputs/annotations.json" label="Annotation COCO">
-            <filter>input['coco_video_mode'] != "no_coco"</filter>
+            <filter>input['outputs_format'] and 'coco' in input['outputs_format'] or input.get('coco_video_mode') == "video" or input.get('coco_video_mode') == "frames"</filter>
         </data>
         <collection name="Coco_Frames" type="list" label="COCO Extracted Frames">
-            <filter>input['coco_video_mode'] == "frames"</filter>
+            <filter>input['input_kind'] == "video" and input.get('coco_video_mode') == "frames"</filter>
             <discover_datasets pattern="__name_and_ext__" directory="outputs/frames"/>
         </collection>
         <collection name="Outputs_annotated" type="list" label="Annotated Outputs">
