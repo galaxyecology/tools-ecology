@@ -1,0 +1,15 @@
+name: ssr_filtering
+owner: ecology
+description: Tool to filter SSR genotype data for missing data and null alleles.
+homepage_url: https://github.com/GINAMO-EBVs/ginamo-workflows/SSR_filtering
+long_description: |
+  This tool provides filtering options for Microsatellite (SSR) data.
+  It includes filters for missing data per individual, missing data per locus, and detection/removal of null alleles (paralogues) using the Fis distribution (IQR method).
+
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/SSR_filtering
+type: unrestricted
+categories:
+- Ecology 
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "{{ tool_name }}"
