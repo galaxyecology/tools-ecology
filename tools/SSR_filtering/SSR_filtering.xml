@@ -1,0 +1,239 @@
+<tool id="ssrfilter" name="Filtering SSR" version="0.1.0" profile="25.0">
+    <description>
+        for missing data (individuals and loci), and null alleles.
+    </description>
+
+    <requirements>
+        <requirement type="package" version="4.3.3">r-base</requirement>
+        <requirement type="package" version="2.9.8">r-poppr</requirement>
+        <requirement type="package" version="2.1.11">r-adegenet</requirement>
+        <requirement type="package" version="0.5_11">r-hierfstat</requirement>
+    </requirements>
+
+    <required_files>
+        <include path="SSR_filtering.R" />
+    </required_files>
+
+    <command detect_errors="exit_code"><![CDATA[
+        mkdir -p filter_output &&
+        mkdir -p summary &&
+        mkdir -p figure_output &&
+
+        Rscript '$__tool_directory__/SSR_filtering.R'
+            --input '${input_data}'
+            --name '${input_data.element_identifier}'
+            --order '${filter_order}'
+            --ind-md '${filter_ind_md.ind_md}'
+            --ssr-md '${filter_ssr_md.ssr_md}'
+            --low-quar '${filter_null_allele.low_quar}'
+            --high-quar '${filter_null_allele.high_quar}'
+            --multi '${filter_null_allele.multi}'
+
+    ]]></command>
+    
+    <inputs>
+        <param name="input_data" type="data" format="tabular" label="Upload your SSR genotype file"
+            help="Tabular file with individuals in rows and loci in columns. See format below."/>
+
+        <param name="filter_order" type="select" multiple="true" display="checkboxes"
+            label="Select and order the filters to apply"
+            help="Only the selected filters will be applied, in the exact order chosen here.">
+            <option value="A">A: Individuals with missing data </option>
+            <option value="B">B: Loci with missing data</option>
+            <option value="C">C: Null alleles (paralogues) </option>
+        </param>
+
+    
+        <section name="filter_ind_md" title="[A] Individuals with missing data" expanded="false">
+            <param name="ind_md" type="float" value="0.30" min="0" max="1"
+                label="Maximum of missing data allowed per individual (MAX_MISSING_IND)"/>
+        </section>
+
+        <section name="filter_ssr_md" title="[B] Loci with missing data" expanded="false">
+            <param name="ssr_md" type="float" value="0.30" min="0" max="1"
+                label="Maximum of missing allowed data per locus (MAX_MISSING_LOCI)"/>
+        </section>
+
+        <section name="filter_null_allele" title="[C] Null alleles (paralogues)" expanded="false">
+            <param name="low_quar" type="float" value="0.25" min="0" max="1"
+                label="Lower quartile for IQR method"/>
+            <param name="high_quar" type="float" value="0.75" min="0" max="1"
+                label="Upper quartile for IQR method"/>
+            <param name="multi" type="float" value="1.5" min="0"
+                label="IQR multiplier"/>
+        </section>
+    </inputs>
+
+    <outputs>
+        <data name="filtered_data" format="tabular" label="${tool.name}">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.txt$" directory="filter_output" visible="true" assign_primary_output="true"/>
+        </data>
+        
+        <data name="filtering_summary" format="tabular" from_work_dir="summary/filtering_summary.txt" label=" Filtering: Number of loci and individuals"/>
+
+        <data name="boxplot_fis" format="png" label="Fis distribution boxplot — null allele filter">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png$" directory="figure_output" visible="true" assign_primary_output="true"/>
+            <filter>'C' in filter_order</filter>
+        </data>
+    </outputs>
+
+    <tests>
+        <test expect_num_outputs="2">
+            <param name="input_data" value="test_SSR.txt"/>
+            <param name="filter_order" value="A"/>
+            <section name="filter_ind_md">
+                <param name="ind_md" value="0.1"/>
+            </section>
+            <output name="filtered_data" count="1" ftype="tabular">
+                <assert_contents>
+                    <has_n_lines n="192"/>
+                    <has_n_columns n="48"/>
+                    <has_text text="Lobo004"/>
+                </assert_contents>
+            </output>
+            <output name="filtering_summary" ftype="tabular">
+                <assert_contents>
+                    <has_n_lines n="3"/>
+                    <has_n_columns n="6"/>
+                    <has_line_matching expression="File\tStep\tFilter\tParams\tn_ind\tn_loci"/>
+                    <has_line_matching expression="test_SSR\t1\tIndividuals missing data\tMAX_MISSING_IND=0.1\t191\t46"/>
+                </assert_contents>
+            </output>
+        </test>
+
+        <test expect_num_outputs="2">
+            <param name="input_data" value="test_SSR.txt"/>
+            <param name="filter_order" value="B"/>
+            <section name="filter_ssr_md">
+                <param name="ssr_md" value="0.1"/>
+            </section>
+            <output name="filtered_data" count="1" ftype="tabular">
+                <assert_contents>
+                    <has_n_lines n="219"/>
+                    <has_n_columns n="43"/>
+                    <has_text text="Lobo004"/>
+                </assert_contents>
+            </output>
+            <output name="filtering_summary" ftype="tabular">
+                <assert_contents>
+                    <has_n_lines n="3"/>
+                    <has_n_columns n="6"/>
+                    <has_line_matching expression="File\tStep\tFilter\tParams\tn_ind\tn_loci"/>
+                    <has_line_matching expression="test_SSR\t1\tLoci missing data\tMAX_MISSING_LOCI=0.1\t218\t41"/>
+                </assert_contents>
+            </output>
+        </test>
+
+        <test expect_num_outputs="3">
+            <param name="input_data" value="test_SSR.txt"/>
+            <param name="filter_order" value="C"/>
+            <section name="filter_null_allele">
+                <param name="low_quar" value="0.25"/>
+                <param name="high_quar" value="0.75"/>
+                <param name="multi" value="1.5"/>
+            </section>
+            <output name="filtered_data" count="1" ftype="tabular">
+                <assert_contents>
+                    <has_n_lines n="219"/>
+                    <has_n_columns n="48"/>
+                    <has_text text="Lobo004"/>
+                </assert_contents>
+            </output>
+            <output name="filtering_summary" ftype="tabular">
+                <assert_contents>
+                    <has_n_lines n="3"/>
+                    <has_n_columns n="6"/>
+                    <has_line_matching expression="File\tStep\tFilter\tParams\tn_ind\tn_loci"/>
+                    <has_line_matching expression="test_SSR\t1\tNull alleles\tlow_quar=0.25, high_quar=0.75, IQR_multi=1.5\t218\t46"/>
+                </assert_contents>
+            </output>
+            <output name="boxplot_fis" ftype="png" count="1">
+                <assert_contents>
+                    <has_image_height height="600"/>
+                </assert_contents>
+            </output>
+        </test>
+
+        <test expect_num_outputs="3">
+            <param name="input_data" value="test_SSR.txt"/>
+            <param name="filter_order" value="A,B,C"/>
+            <section name="filter_ind_md">
+                <param name="ind_md" value="0.1"/>
+            </section>
+            <section name="filter_ssr_md">
+                <param name="ssr_md" value="0.1"/>
+            </section>
+            <section name="filter_null_allele">
+                <param name="low_quar" value="0.25"/>
+                <param name="high_quar" value="0.75"/>
+                <param name="multi" value="1.5"/>
+            </section>
+            <output name="filtered_data" count="1" ftype="tabular">
+                <assert_contents>
+                    <has_n_lines n="192"/>
+                    <has_n_columns n="45"/>
+                    <has_text text="Lobo004"/>
+                </assert_contents>
+            </output>
+            <output name="filtering_summary" ftype="tabular">
+                <assert_contents>
+                    <has_n_lines n="5"/>
+                    <has_n_columns n="6"/>
+                    <has_line_matching expression="File\tStep\tFilter\tParams\tn_ind\tn_loci"/>
+                    <has_line_matching expression="test_SSR\t3\tNull alleles\tlow_quar=0.25, high_quar=0.75, IQR_multi=1.5\t191\t43"/>
+                </assert_contents>
+            </output>
+            <output name="boxplot_fis" ftype="png" count="1">
+                <assert_contents>
+                    <has_image_height height="600"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+
+    <help><![CDATA[
+Usage
+=====
+
+This tool filters microsatellite (SSR) genotype data by applying up to four filters in a user-defined order. The user selects which filters to apply and the order. Each filter has its own set of parameters accessible in the corresponding section below.
+
+**Available filters:**
+
+1. **Remove individuals with too much missing data** — removes individuals whose proportion of missing genotypes exceeds the defined threshold.
+2. **Remove loci with too much missing data** — removes SSR loci whose proportion of missing genotypes across individuals exceeds the defined threshold.
+3. **Filter null alleles (paralogues)** — detects loci likely carrying null or paralogous alleles based on the distribution of Fis across loci. Outlier loci are identified using the IQR method: loci whose Fis falls outside ``[Q1 - k*IQR, Q3 + k*IQR]`` are removed. The quartiles (Q1, Q3) and the multiplier (k) are user-defined. When only one population is present, Fis is estimated per locus as ``1 - Ho/He``.
+
+The order of filter application follows the order selected in the filter list.
+
+Input format
+============
+
+**SSR genotype file (tab-separated):**
+
+::
+
+    Ind     Pop     Loc1    Loc2    Loc3
+    ind1    pop1    120/124 200/202 150/150
+    ind2    pop1    120/120 202/204 150/152
+    ind3    pop2    124/126 200/200 152/152
+    ind4    pop2    NA      200/202 150/152
+
+Missing genotypes should be encoded as ``NA``.
+
+Outputs
+=======
+
+- **Filtered SSR dataset** — genotype table after applying all selected filters, in the same format as the input.
+- **Filtering log** — step-by-step log detailing which individuals or loci were removed at each filter step.
+- **Filtering summary report** — tabular summary of the number of individuals and loci before and after each filter step, with retention rates.
+
+    ]]></help>
+
+    <citations>
+        <citation type="doi">10.32614/CRAN.package.adegenet</citation>
+        <citation type="doi">10.1111/j.1471-8286.2004.00828.x</citation>
+        <citation type="doi">10.32614/CRAN.package.dplyr</citation>
+        <citation type="doi">10.7717/peerj.281</citation>
+        <citation type="doi">10.3389/fgene.2015.00208</citation>
+    </citations>
+</tool>

@@ -81,6 +81,12 @@ def parse_arguments() -> argparse.Namespace:
         help="Video bitrate: 'copy' (original), '2000k', '4000k', '8000k'",
     )
     parser.add_argument(
+        "--show_bbox",
+        type=str,
+        default="true",
+        help="Show bounding boxes on annotated output: 'true' or 'false'",
+    )
+    parser.add_argument(
         "--coco_video_mode",
         type=str,
         default="no_coco",
@@ -298,10 +304,8 @@ def create_yolo_output(
             if annotation_type == "bbox":
                 line = create_yolo_bbox_annotation(box, class_id)
             else:  # segmentation
-                polygon = (
-                    result.masks.xyn if is_normalized else result.masks.xy
-                )
-                line = create_yolo_seg_annotation(polygon, class_id)
+                masks = result.masks.xyn if is_normalized else result.masks.xy
+                line = create_yolo_seg_annotation(masks[i], class_id)
 
             lines.append(line)
 
@@ -566,10 +570,13 @@ def main():
     output_formats = [fmt.strip() for fmt in args.outputs.split(",")]
     print(f"Output formats: {output_formats}")
 
+    show_bbox = args.show_bbox.lower() == "true"
+
     # Configure predictor overrides
     overrides = {
         "conf": args.conf,
         "show_conf": True,
+        "show_boxes": show_bbox,
         "task": "segment",
         "mode": "predict",
         "model": args.model,
