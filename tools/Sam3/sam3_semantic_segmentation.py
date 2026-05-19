@@ -89,8 +89,8 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument(
         "--imgsz",
         type=int,
-        default=1024,
-        help="Inference image size (pixels). Reduce to 640 or 512 to "
+        default=1036,
+        help="Inference image size (pixels). Reduce to 644 or 518 to "
         " lower GPU memory usage on large files.",
     )
     parser.add_argument(
