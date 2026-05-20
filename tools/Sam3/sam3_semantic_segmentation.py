@@ -124,7 +124,7 @@ def convert_avi_to_mp4(directory_path, quality):
     print(f"Converting: {avi_file_path} -> {output_path}.mp4")
     audio_args = "-an"  # remove audio
     if quality == "copy":
-        video_args = "-c:v libx264 -crf 18 -preset slow -profile:v high" 
+        video_args = "-c:v libx264 -crf 18 -preset slow -profile:v high"
     else:
         video_args = (
             f"-c:v libx264 -b:v {quality} "
