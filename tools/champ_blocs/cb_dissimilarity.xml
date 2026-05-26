@@ -18,6 +18,16 @@
         <requirement type="package" version="1.3.2">r-tidyverse</requirement>
         <requirement type="package" version="3.4.1">r-ggplot2</requirement>
     </requirements>
+
+    <edam_topics>
+        <edam_topic>
+            topic_0610
+        </edam_topic>
+        <edam_topic>
+            topic_3050
+        </edam_topic>
+    </edam_topics>
+
     <required_files>
         <include type="literal" path="test-data/champbloc_qecb.csv"/>
         <include type="literal" path="test-data/ficheterrain.csv"/>
