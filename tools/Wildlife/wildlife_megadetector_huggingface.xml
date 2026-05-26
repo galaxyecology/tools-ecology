@@ -12,6 +12,19 @@
         <include path="fonction.py" />
         <include path="test-data/" />
     </required_files>
+
+    <edam_topics>
+        <edam_topic>
+            topic_0610
+        </edam_topic>
+        <edam_topic>
+            topic_3050
+        </edam_topic>
+        <edam_topic>
+            topic_3474
+        </edam_topic>
+    </edam_topics>
+
     <command detect_errors="exit_code">
     <![CDATA[
     mkdir -p output_files &&
