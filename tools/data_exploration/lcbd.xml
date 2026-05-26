@@ -11,6 +11,16 @@
         <requirement type="package" version="1.0.7">r-dplyr</requirement>
         <requirement type="package" version="1.1.3">r-tidyr</requirement>
     </requirements>
+
+    <edam_topics>
+        <edam_topic>
+            topic_0610
+        </edam_topic>
+        <edam_topic>
+            topic_3050
+        </edam_topic>
+    </edam_topics>
+
     <command detect_errors="exit_code"><![CDATA[
         Rscript
         '$__tool_directory__/graph_lcbd.r'
