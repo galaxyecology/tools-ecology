@@ -4,6 +4,16 @@
         <requirement type="package" version="4.4.1">r-base</requirement>
         <container type="docker">ylebras/metashark:1.7.6</container>
     </requirements>
+
+    <edam_topics>
+        <edam_topic>
+            topic_0610
+        </edam_topic>
+        <edam_topic>
+            topic_3050
+        </edam_topic>
+    </edam_topics>
+
     <command detect_errors="exit_code"><![CDATA[
    
    #if str($input_prod.input_prod_selector) == "fr_EML"
