@@ -6,6 +6,16 @@
       <requirement type="package" version="1.8.0">r-indicspecies</requirement>
       <requirement type="package" version="0.9_8">r-permute</requirement>
     </requirements>
+
+    <edam_topics>
+        <edam_topic>
+            topic_0610
+        </edam_topic>
+        <edam_topic>
+            topic_3050
+        </edam_topic>
+    </edam_topics>
+
     <command detect_errors="exit_code"><![CDATA[
     Rscript '$__tool_directory__/indval.R' '$clus' '$occ' '$name_species' '$sign'
     ]]></command>
