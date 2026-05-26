@@ -5,6 +5,16 @@
         <requirement type="package" version="2.0.6.1">r-eml</requirement>
         <requirement type="package" version="0.5.1">r-emld</requirement>
     </requirements>
+
+    <edam_topics>
+        <edam_topic>
+            topic_0610
+        </edam_topic>
+        <edam_topic>
+            topic_3050
+        </edam_topic>
+    </edam_topics>
+
     <command detect_errors="exit_code"><![CDATA[
      Rscript
          '$__tool_directory__/eml_validate.R' > report.txt
