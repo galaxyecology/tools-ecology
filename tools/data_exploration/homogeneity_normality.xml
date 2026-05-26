@@ -9,6 +9,16 @@
         <requirement type="package" version="1.1.1">r-cowplot</requirement>
         <requirement type="package" version="0.4.0">r-ggpubr</requirement>
     </expand>
+
+    <edam_topics>
+        <edam_topic>
+            topic_0610
+        </edam_topic>
+        <edam_topic>
+            topic_3050
+        </edam_topic>
+    </edam_topics>
+
     <command detect_errors="exit_code"><![CDATA[
         Rscript
             '$__tool_directory__/graph_homogeneity_normality.r'
