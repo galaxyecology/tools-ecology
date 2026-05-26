@@ -27,6 +27,16 @@
         <include type="literal" path="loop_col_scale.r"/>
         <include type="literal" path="cb_ivr.r"/>
     </required_files>
+
+    <edam_topics>
+        <edam_topic>
+            topic_0610
+        </edam_topic>
+        <edam_topic>
+            topic_3050
+        </edam_topic>
+    </edam_topics>
+
     <command detect_errors="exit_code"><![CDATA[
         cp '$__tool_directory__/cb_ivr_site_report_col_scale_loop.Rmd' ./cb_ivr_site_report_col_scale_loop.Rmd &&
         Rscript
