@@ -6,6 +6,21 @@
         <requirement type="package" version="2.1.1.5">pgdspider</requirement>
     </requirements>
 
+    <edam_topics>
+        <edam_topic>
+            topic_0610
+        </edam_topic>
+        <edam_topic>
+            topic_3050
+        </edam_topic>
+        <edam_topic>
+            topic_3796
+        </edam_topic>
+        <edam_topic>
+            topic_3056
+        </edam_topic>
+    </edam_topics>
+
     <command detect_errors="exit_code"><![CDATA[
         mkdir -p convert_directory &&
         mkdir -p pop_affiliation &&
