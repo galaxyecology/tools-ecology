@@ -1,20 +1,16 @@
 <tool id="ecoregion_brt_analysis" name="BRT tool prediction" version="0.1.2+galaxy0" profile="23.2">
     <description>for species distribution modelling</description>
+    <macros>
+        <import>macro.xml</import>
+    </macros>
+     <expand macro="edam">
+    </expand>
     <requirements>
        <requirement type="package" version="4.3.3">r-base</requirement>
        <requirement type="package" version="2.1.8">r-gbm</requirement>
        <requirement type="package" version="3.4.2">r-ggplot2</requirement>
        <requirement type="package" version="1.3_14">r-dismo</requirement>
     </requirements>
-
-    <edam_topics>
-        <edam_topic>
-            topic_0610
-        </edam_topic>
-        <edam_topic>
-            topic_3050
-        </edam_topic>
-    </edam_topics>
 
     <command detect_errors="exit_code"><![CDATA[
         Rscript
