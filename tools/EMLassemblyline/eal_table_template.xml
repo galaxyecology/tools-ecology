@@ -1,17 +1,13 @@
 <tool id="eal_table_template" name="Make templates for data tables" version="0.1.2+galaxy0" profile="22.05">
     <description>attributes and categorical variables for EML metadata creation</description>
+    <macros>
+        <import>macro.xml</import>
+    </macros>
+    <expand macro="edam">
+    </expand>
     <requirements>
         <container type="docker">ylebras/metashark:1.7.6</container>
     </requirements>
-
-    <edam_topics>
-        <edam_topic>
-            topic_0610
-        </edam_topic>
-        <edam_topic>
-            topic_3050
-        </edam_topic>
-    </edam_topics>
 
     <command detect_errors="exit_code"><![CDATA[
     
