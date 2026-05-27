@@ -1,20 +1,16 @@
 <tool id="ecoregion_clara_cluster" name="ClaraClust" version="0.1.2+galaxy0" profile="23.2">
     <description>Make cluster from BRT prediction with Clara algorithm</description>
+    <macros>
+        <import>macro.xml</import>
+    </macros>
+     <expand macro="edam">
+    </expand>
     <requirements>
        <requirement type="package" version="4.2.3">r-base</requirement>
        <requirement type="package" version="2.1.4">r-cluster</requirement>
        <requirement type="package" version="1.1.1">r-dplyr</requirement>
        <requirement type="package" version="2.0.0">r-tidyverse</requirement>
     </requirements>
-
-    <edam_topics>
-        <edam_topic>
-            topic_0610
-        </edam_topic>
-        <edam_topic>
-            topic_3050
-        </edam_topic>
-    </edam_topics>
 
     <command detect_errors="exit_code"><![CDATA[
     Rscript
