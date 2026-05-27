@@ -1,18 +1,14 @@
 <tool id="annotations_template" name="Make annotations template" version="0.1.2+galaxy0" python_template_version="3.5" profile="21.05">
     <description>from scratch or from EML metadata file</description>
+    <macros>
+        <import>macro.xml</import>
+    </macros>
+    <expand macro="edam">
+    </expand>
     <requirements>
         <requirement type="package" version="4.4.1">r-base</requirement>
         <container type="docker">ylebras/metashark:1.7.6</container>
     </requirements>
-
-    <edam_topics>
-        <edam_topic>
-            topic_0610
-        </edam_topic>
-        <edam_topic>
-            topic_3050
-        </edam_topic>
-    </edam_topics>
 
     <command detect_errors="exit_code"><![CDATA[
    
