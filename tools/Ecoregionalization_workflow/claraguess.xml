@@ -1,5 +1,10 @@
 <tool id="ClaraGuess" name="Clara Estimate and Clustering" version="0.1.2" profile="23.2">
     <description>Environmental clustering using CLARA and BRT predictions</description>
+    <macros>
+        <import>macro.xml</import>
+    </macros>
+     <expand macro="edam">
+    </expand>
 
     <requirements>
         <requirement type="package" version="4.3.3">r-base</requirement>
@@ -7,16 +12,6 @@
         <requirement type="package" version="1.1.4">r-dplyr</requirement>
         <requirement type="package" version="2.0.0">r-tidyverse</requirement>
     </requirements>
-
-    <edam_topics>
-        <edam_topic>
-            topic_0610
-        </edam_topic>
-        <edam_topic>
-            topic_3050
-        </edam_topic>
-    </edam_topics>
-
 
     <command detect_errors="exit_code"><![CDATA[
 Rscript '$__tool_directory__/claraguess.R'
