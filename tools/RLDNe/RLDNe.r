@@ -102,7 +102,7 @@ population_order <- function(gen_path, indpop, input_name) {
       current_line <- trimws(lines[k])
       
       #Stop if we hit the next POP block
-      if (grepl("^POP", current_line, ignore.case = TRUE)) break
+      if (grepl("^POP$", current_line, ignore.case = TRUE)) break
       
       # Skip empty lines if any
       if (nchar(current_line) == 0) next
@@ -140,7 +140,7 @@ anonymise_genepop <- function(gen_path) {
   lines <- readLines(gen_path)
 
   # Find POP line
-  pop_indices <- grep("^POP", lines, ignore.case = TRUE)
+  pop_indices <- grep("^POP$", lines, ignore.case = TRUE)
 
   # Copy lines (we will modify only individual names)
   new_lines <- lines
@@ -155,7 +155,7 @@ anonymise_genepop <- function(gen_path) {
 
       current_line <- trimws(lines[k])
       #Stop if we hit the next POP block
-      if (grepl("^POP", current_line, ignore.case = TRUE)) break
+      if (grepl("^POP$", current_line, ignore.case = TRUE)) break
 
       # Skip empty lines if any
       if (nchar(current_line) == 0) next

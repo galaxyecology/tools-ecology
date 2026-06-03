@@ -1,4 +1,4 @@
-<tool id="effective_population_size_ld_method" name="LDNe estimation" version="0.1.0" profile="25.0">
+<tool id="effective_population_size_ld_method" name="LDNe estimation" version="0.1.1" profile="25.0">
     <description>
         using RLDNe package and NeEstimator.
     </description>

@@ -28,6 +28,9 @@ if [[ "$input_format" == "vcf" ]] && [[ "$output_format" == "genepop" ]]; then
 elif [[ "$input_format" == "tabular" ]] && [[ "$output_format" == "genepop" ]]; then
     sep_char="$5"
     digit_num="$6"
+
+elif [[ "$input_format" == "genepop" ]] && [[ "$output_format" == "tabular" ]]; then
+    sep_char="$5"
     
 elif [[ "$input_format" == "genepop" ]] && [[ "$output_format" == "bayescan" ]]; then
     indpop="$5"
@@ -157,8 +160,11 @@ EOF
 }
 
 ##########################################################
-#Fonction : ssr2genepop
-# Description : 
+# Function : ssr2genepop
+# Description : Convert tabular files containing microsats
+# data into Genepop file. Microsatellites need to have
+# a specific format : Ind Pop SSR1 SSR2 with alleles 
+# separated by "/" 
 ##########################################################
 ssr2genepop() {
     local input_file="$1"
@@ -296,6 +302,133 @@ head -1 "$input" | xxd | head -3 >&2
     return 0
 }
 
+########################################
+# Function :genepop2ssr
+# Description : Function opposite to 
+# ssr2genepop
+########################################
+genepop2ssr() {
+    local input_file="$1"
+    local output_file="$2"
+    local sep_char="$3"
+
+    case "$sep_char" in
+        TAB)        sep_char=$'\t' ;;
+        COMMA)      sep_char=',' ;;
+        SEMICOLON)  sep_char=';' ;;
+        WHITESPACE) sep_char=' ' ;;
+        *)
+            echo "ERROR: Unknown separator: '$sep_char'" >&2
+            exit 1
+            ;;
+    esac
+
+    local -a loci_names
+    local -a ind_names
+    local -a pop_names
+    declare -A ind_genotypes
+
+    local in_loci=true
+    local first_line=true
+    local pop_name=""
+    local pop_index=0
+    local ind_index=0
+
+    while IFS= read -r line; do
+        line="${line%$'\r'}"           # clean Windows markers
+ 
+        # First line = empty or genepop name
+        if [[ "$first_line" == true ]]; then
+            first_line=false
+            continue
+        fi
+
+        [[ -z "${line// }" ]] && continue  # ignore empty lines
+ 
+        # POP line = population delimitation
+        if [[ "${line,,}" == "pop" ]]; then
+            pop_index=$((pop_index + 1))
+            pop_name="Pop${pop_index}"
+            in_loci=false
+            continue
+        fi
+ 
+        # Loci names (before first POP)
+        if [[ "$in_loci" == true ]]; then
+            loci_names+=("$(echo "$line" | tr -d '[:space:]')")
+            continue
+        fi
+ 
+        # Individuals row
+        # Separate the name and genotype block with a comma (,)
+        local ind_name geno_raw
+        if [[ "$line" == *" ,"* ]]; then
+            ind_name="${line%% ,*}"
+            geno_raw="${line#* ,}"
+        else
+            ind_name="${line%%,*}"
+            geno_raw="${line#*,}"
+        fi
+        ind_name="$(echo "$ind_name" | tr -d '[:space:]')"
+        geno_raw="$(echo "$geno_raw" | tr -d '[:space:]')"  # remove space
+ 
+        # Break down into individual codes by locus
+        # We reinsert the spaces: we divide the text into blocks of a uniform width
+        local n_loci=${#loci_names[@]}
+        local total_len=${#geno_raw}
+        local width=0
+        if [[ $n_loci -gt 0 && $total_len -gt 0 ]]; then
+            width=$((total_len / n_loci))
+        fi
+ 
+        ind_names[$ind_index]="$ind_name"
+        pop_names[$ind_index]="$pop_name"
+ 
+        local genotype_cells=""
+        for ((i=0; i<n_loci; i++)); do
+            local code="${geno_raw:$((i * width)):$width}"
+            local cell
+ 
+            # Missing code or all zeros
+            if [[ -z "$code" ]] || [[ "$code" =~ ^0+$ ]]; then
+                cell="NA"
+            else
+                local digit_num=$((width / 2))
+                local a1="${code:0:$digit_num}"
+                local a2="${code:$digit_num:$digit_num}"
+                cell="${a1}/${a2}"
+            fi
+ 
+            if [[ $i -eq 0 ]]; then
+                genotype_cells="$cell"
+            else
+                genotype_cells+="${sep_char}${cell}"
+            fi
+        done
+ 
+        ind_genotypes[$ind_index]="$genotype_cells"
+        ind_index=$((ind_index + 1))
+ 
+    done < "$input_file"
+ 
+    # Writing the output file
+    {
+        # Header
+        local header="Ind${sep_char}Pop"
+        for locus in "${loci_names[@]}"; do
+            header+="${sep_char}${locus}"
+        done
+        echo "$header"
+ 
+        # Data
+        for ((i=0; i<ind_index; i++)); do
+            echo "${ind_names[$i]}${sep_char}${pop_names[$i]}${sep_char}${ind_genotypes[$i]}"
+        done
+    } > "$output_file"
+ 
+    return 0
+}
+
 #########################################
 # Main execution
 #########################################
@@ -340,12 +473,12 @@ head -1 "$input" | xxd | head -3 >&2
     elif [ "$input_format" = "tabular" ] && [ "$output_format" = "genepop" ]; then
         output_genfile="${output_dir}/${base_name}_genepop.txt" 
         ssr2genepop "$input_file" "$base_name" "$output_genfile" "$sep_char" "$digit_num"
+    
+    elif [ "$input_format" = "genepop" ] && [ "$output_format" = "tabular" ]; then
+        output_genfile="${output_dir}/${base_name}_tabularSSR.txt"
+        genepop2ssr "$input_file" "$output_genfile" "$sep_char"
 
     else
         echo "Unrecognised combination of parameters"
         exit 1
     fi
-
-
-
-

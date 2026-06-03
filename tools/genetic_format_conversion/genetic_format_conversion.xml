@@ -1,4 +1,4 @@
-<tool id="genetic_format_conversion" name="Genetic format conversion" version="0.1.0" profile="25.0">
+<tool id="genetic_format_conversion" name="Genetic format conversion" version="0.2.0" profile="25.0">
     <description>
         using PGDSpider and additional conversion modules.
     </description>
@@ -64,6 +64,8 @@
                 '$data_conditional.output_selection.sep_char'
                 '$data_conditional.output_selection.digit_num'
 
+            #elif $data_conditional.input_format == "genepop" and $data_conditional.output_selection.output_format == "tabular":
+                '$data_conditional.output_selection.sep_char'
             
             #elif $data_conditional.input_format == "genepop" and $data_conditional.output_selection.output_format == "bayescan":
                 '$data_conditional.output_selection.indpop'
@@ -153,6 +155,7 @@
                 <conditional name="output_selection">
                     <param name="output_format" type="select" label="Output format">
                         <option value="bayescan">GESTE /BayesScan</option>
+                        <option value="tabular">Microsatellites (tabular)</option>
                     </param>
 
                     <when value="bayescan">
@@ -166,6 +169,14 @@
                         <param name="alleles_coded" type="select" label="How are Microsat alleles coded?">
                             <option value="as number of repeats">as number of repeats</option>
                             <option value="as the length of the PCR fragments">as the length of the PCR fragments</option>
+                        </param>
+                    </when>
+                    <when value="tabular">
+                        <param name="sep_char" type="select" label="Column separator for the output file">
+                            <option value="TAB" selected="true">Tabulation</option>
+                            <option value="COMMA">Comma (,)</option>
+                            <option value="SEMICOLON">Semicolon (;)</option>
+                            <option value="WHITESPACE">Whitespace</option>
                         </param>
                     </when>
                 </conditional>
@@ -264,6 +275,17 @@
         </output>
     </test>
 
+    <!-- Test 5 : GENEPOP → Tabular (SSR) -->
+    <test expect_num_outputs="1">
+        <param name="input_file" value="test_SSR_genepop.txt" ftype="txt"/>
+        <param name="data_conditional|input_format" value="genepop"/>
+        <param name="data_conditional|output_selection|output_format" value="tabular"/>
+        <output name="convert_files" ftype="txt" count="1">
+            <assert_contents>
+                <has_n_lines n="219"/>
+            </assert_contents>
+        </output>
+    </test>
 </tests>
 
     <help><![CDATA[
@@ -276,13 +298,15 @@ The tool supports three primary conversion :
 
 1. **VCF → GENEPOP**: The tool uses PGDSpider (Lischer & Excoffier 2012) to parse variant call data. It generates a GENEPOP file containing the list of loci followed by individual genotypes, formatted for use in population genetics software and R packages. Users must provide a population assignment file to define population groupings and specify ploidy as well as filtering options (minimum phred-scaled quality, minimum genotype quality, minimum read depth, INDEL inclusion, etc.).
 
-2. **Tabular → GENEPOP**: SSR genotype data provided in tabular format are converted into GENEPOP format directly (without PGDSpider). The user specifies the allele separator and the number of digits used to encode alleles. The tool parses individual genotypes per population and writes a standard GENEPOP file.
+2. **Tabular (Microsatellites) → GENEPOP**: SSR genotype data provided in tabular format are converted into GENEPOP format directly (without PGDSpider). The user specifies the allele separator and the number of digits used to encode alleles. The tool parses individual genotypes per population and writes a standard GENEPOP file.
 
-3. **GENEPOP → Geste/BayeScan**: The tool uses PGDSpider to restructure genotype data into allele count matrices formatted according to the BayeScan specification (Foll & Gaggiotti 2008). Users provide a population assignment file to define the population order in the output. The output file declares the number of loci and populations, followed by population-specific allele counts per locus, ensuring compatibility with Bayesian F\ :sub:`ST`\-based inference analyses.  A `pop_affiliation` file is generated, containing the name of the population and the number corresponding to its order of appearance in the Bayes output.
+3. **GENEPOP → Tabular (Microsatellites)**: SSR genotype data provided in GENEPOP format are converted into tabular format (see below). The inverse conversion from point 2 is applied.
+
+4. **GENEPOP → Geste/BayeScan**: The tool uses PGDSpider to restructure genotype data into allele count matrices formatted according to the BayeScan specification (Foll & Gaggiotti 2008). Users provide a population assignment file to define the population order in the output. The output file declares the number of loci and populations, followed by population-specific allele counts per locus, ensuring compatibility with Bayesian F\ :sub:`ST`\-based inference analyses.  A `pop_affiliation` file is generated, containing the name of the population and the number corresponding to its order of appearance in the Bayes output.
 
 NB: PGDSpider is a powerful automated data conversion tool for population genetics and genomics (https://software.bioinformatics.unibe.ch/pgdspider/). It is used here for VCF → GENEPOP and GENEPOP → Geste/BayeScan conversions.
 
-**SSR Genotype file (tab):**
+**Tabular (Microsatellites) format:**
 
 ::
 
