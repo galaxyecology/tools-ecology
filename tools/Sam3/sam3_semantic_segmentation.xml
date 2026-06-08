@@ -30,7 +30,7 @@
             #set $name_file += $indata.element_identifier + " "
         #end for
     #else
-        ln -s '$input.source' 'data_files/${input.source.element_identifier}.${indata.ext}' &&
+        ln -s '$input.source' 'data_files/${input.source.element_identifier}.${input.source.ext}' &&
         #set $name_file = $input.source.element_identifier + " "
     #end if
     python '$__tool_directory__/sam3_semantic_segmentation.py' 
@@ -131,10 +131,10 @@
                 A higher value preserves more detail and improves boundary accuracy,
                 especially for small objects, but increases computation time and GPU memory usage.
                 If you encounter out-of-memory errors, select a lower value.">
-            <option value="1280">1280 (highest accuracy)</option>
-            <option value="1024">1024 (high accuracy)</option>
-            <option value="640" selected="true">640 (default, balanced)</option>
-            <option value="512">512 (low memory)</option>
+            <option value="1288">1288 (highest accuracy)</option>
+            <option value="1036">1036 (high accuracy)</option>
+            <option value="644" selected="true">644 (default, balanced)</option>
+            <option value="518">518 (low memory)</option>
         </param>
         <param name="do_normalization" type="boolean" checked="false" label="Normalize outputs?" >
             <help><![CDATA[

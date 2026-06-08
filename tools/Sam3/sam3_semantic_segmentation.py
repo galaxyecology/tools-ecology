@@ -89,8 +89,8 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument(
         "--imgsz",
         type=int,
-        default=1024,
-        help="Inference image size (pixels). Reduce to 640 or 512 to "
+        default=1036,
+        help="Inference image size (pixels). Reduce to 644 or 518 to "
         " lower GPU memory usage on large files.",
     )
     parser.add_argument(
@@ -124,7 +124,7 @@ def convert_avi_to_mp4(directory_path, quality):
     print(f"Converting: {avi_file_path} -> {output_path}.mp4")
     audio_args = "-an"  # remove audio
     if quality == "copy":
-        video_args = "-c:v copy"  # copy video stream without re-encoding
+        video_args = "-c:v libx264 -crf 18 -preset slow -profile:v high"
     else:
         video_args = (
             f"-c:v libx264 -b:v {quality} "
