@@ -47,14 +47,14 @@
                 '$harmonic.maf_harmonic'
             #end if
         
-            '$mixed_cohort_params.sampling_scheme'
-            #if $mixed_cohort_params.sampling_scheme == "single_cohort":
-                '$mixed_cohort_params.adult_lifespan'
-                '$mixed_cohort_params.age_at_maturity'
-                '$mixed_cohort_params.use_cvf'
+            '$cohort_sampling.sampling_scheme'
+            #if $cohort_sampling.sampling_scheme == "single_cohort":
+                '$cohort_sampling.adult_lifespan'
+                '$cohort_sampling.age_at_maturity'
+                '$cohort_sampling.use_cvf'
         
-                #if $mixed_cohort_params.use_cvf =="TRUE":
-                    '$mixed_cohort_params.variation_coefficient_bx'
+                #if $cohort_sampling.use_cvf =="TRUE":
+                    '$cohort_sampling.variation_coefficient_bx'
                 #end if
             #end if
     ]]> </command>
@@ -99,49 +99,37 @@
     
         <section name="correction" title="Pseudoreplication correction (optional)" expanded="false">
             <param name="apply_correction" type="boolean" truevalue="TRUE" falsevalue="FALSE" checked="false"
-            label="Apply pseudoreplication correction?"/>
+                label="Apply pseudoreplication correction?"/>
             <param name="nb_chrom" type="integer" min="1" optional="true"
                 label="Number of chromosomes"
                 help="Required when correction is enabled"/>
         </section>
 
         <section name="cohort_sampling" title="Cohort sampling settings (optional)" expanded="false">
+            <param name="sampling_scheme" type="select"
+                label="Sampling scheme"
+                help="Specify whether sampled individuals belong to a single cohort or to a mixture of cohorts.">
 
-            <conditional name="mixed_cohort_params">
+                <option value="single_cohort">Single cohort</option>
+                <option value="mixed_cohorts">Mixed cohorts</option>
+            </param>
 
-                <param name="sampling_scheme" type="select" display="radio"
-                    label="Sampling scheme"
-                    help="Specify whether sampled individuals belong to a single cohort or to a mixture of cohorts.">
+            <param name="adult_lifespan" type="integer" min="1" optional="true"
+                label="Adult lifespan"
+                help="Average adult lifespan of the species, expressed in years or generations depending on the study design."/>
 
-                    <option value="single_cohort">Single cohort</option>
-                    <option value="mixed_cohorts">Mixed cohorts</option>
+            <param name="age_at_maturity" type="integer" min="1" optional="true"
+                label="Single cohort : Age at maturity"
+                help="Age at sexual maturity of the species."/>
 
-                </param>
+            <param name="use_cvf" type="boolean"
+                truevalue="TRUE" falsevalue="FALSE" checked="false" optional="true"
+                label="Single cohort : Do you know the coefficient of variation of breeding for adult lifespan ?"
+                help="Coefficient of variation of bx (mean number of offspring produced at age x) for adult lifespan (using only ages with bx>0)."/>
 
-                <when value="mixed_cohorts">
-                </when>
-
-                <when value="single_cohort">
-
-                    <param name="adult_lifespan" type="integer" min="1"
-                        label="Adult lifespan"
-                        help="Average adult lifespan of the species, expressed in years or generations depending on the study design."/>
-
-                    <param name="age_at_maturity" type="integer" min="1"
-                        label="Age at maturity"
-                        help="Age at sexual maturity of the species."/>
-
-                    <param name="use_cvf" type="boolean"
-                        truevalue="TRUE" falsevalue="FALSE" checked="false"
-                        label="Do you know the coefficient of variation of breeding for adult lifespan ?"
-                        help="Coefficient of variation of bx (mean number of offspring produced at age x) for adult lifespan (using only ages with bx>0)."/>
-
-                    <param name="variation_coefficient_bx" type="float" optional="true"
-                        label="Coefficient of variation of breeding"
-                        help="Required if the above option is checked. Coefficient of variation of bx (mean number of offspring produced at age x) for adult lifespan (using only ages with bx>0)."/>
-                </when>
-
-            </conditional>
+            <param name="variation_coefficient_bx" type="float" optional="true"
+                label="Single cohort : Coefficient of variation of breeding"
+                help="Required if the above option is checked. Coefficient of variation of bx (mean number of offspring produced at age x) for adult lifespan (using only ages with bx>0)."/>
         </section>
 
         <section name="harmonic" title="Harmonic mean across subsamples (optional)" expanded="false">
@@ -190,10 +178,9 @@
                 <param name="maf_harmonic" value="1"/>
             </section>
             <section name="cohort_sampling">
-                <conditional name="mixed_cohort_params">
-                    <param name="sampling_scheme" value="mixed_cohorts"/>
-                </conditional>
+                <param name="sampling_scheme" value="mixed_cohorts"/>
             </section>
+
             
             <output_collection name="result_table" type="list" count="1">
                 <element name="genepop_SNPs_test_LDNe_results">
@@ -239,10 +226,9 @@
                 <param name="maf_harmonic" value="1"/>
             </section>
             <section name="cohort_sampling">
-                <conditional name="mixed_cohort_params">
-                    <param name="sampling_scheme" value="mixed_cohorts"/>
-                </conditional>
+                <param name="sampling_scheme" value="mixed_cohorts"/>
             </section>
+
             
             <output_collection name="result_table" type="list" count="1">
                 <element name="genepop_SNPs_test_LDNe_results">
@@ -288,9 +274,7 @@
                 <param name="apply_harmonic" value="FALSE"/>
             </section>
             <section name="cohort_sampling">
-                <conditional name="mixed_cohort_params">
-                    <param name="sampling_scheme" value="mixed_cohorts"/>
-                </conditional>
+                <param name="sampling_scheme" value="mixed_cohorts"/>
             </section>
             
             <output_collection name="result_table" type="list" count="1">
@@ -330,13 +314,12 @@
                 <param name="apply_harmonic" value="FALSE"/>
             </section>
             <section name="cohort_sampling">
-                <conditional name="mixed_cohort_params">
-                    <param name="sampling_scheme" value="single_cohort"/>
-                    <param name="adult_lifespan" value="5"/>
-                    <param name="age_at_maturity" value="2"/>
-                    <param name="use_cvf" value="FALSE"/>
-                </conditional>
+                <param name="sampling_scheme" value="single_cohort"/>
+                <param name="adult_lifespan" value="5"/>
+                <param name="age_at_maturity" value="2"/>
+                <param name="use_cvf" value="FALSE"/>
             </section>          
+         
             <output_collection name="result_table" type="list" count="1">
                 <element name="genepop_SSR_Nb_LDNe_results">
                     <assert_contents>
