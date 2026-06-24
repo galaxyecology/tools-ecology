@@ -7,7 +7,7 @@
         <import>macros.xml</import>
     </macros>
 
-    <expand macro="requirements_bcftools"/>
+    <expand macro="requirements_bcftools_vcftools"/>
 
     <required_files>
         <include path="VCF_statistics_linked_loci.sh"/>
