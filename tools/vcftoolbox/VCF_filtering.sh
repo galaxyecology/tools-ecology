@@ -52,6 +52,7 @@ fi
 readonly vcf_dir="vcf_filtered_directory"
 readonly summ_dir="summary"
 tmp_dir="vcf_filtered_tmp"
+temp_dir="vcf_tmp_preprocessing"
 
 ##### Build output filename #####
 name_without_ext="$(basename -- "$vcf_name")"
@@ -95,7 +96,7 @@ add_missing_contigs(){
     local vcf_in="$1"
     local -n _out_var="$2"          # nameref: writes directly into the caller's variable
  
-    local vcf_out="${vcf_in%.vcf}_reheadered.vcf"
+    local vcf_out="${temp_dir}/input_reheadered.vcf"
  
     # If contig lines already present, return the original path unchanged
     if bcftools view -h "$vcf_in" 2>/dev/null | grep -q "^##contig="; then
