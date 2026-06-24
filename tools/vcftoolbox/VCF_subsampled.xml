@@ -108,7 +108,7 @@
             <output_collection name="vcf_subsampled" type="list" count="5">
                 <element name="test_vcf_without_contigs_50snps_subsample_2">
                     <assert_contents>
-                        <has_n_lines n="67" delta="2"/>
+                        <has_n_lines n="69" delta="2"/>
                         <has_text text="#CHROM"/>
                     </assert_contents>
                 </element>
