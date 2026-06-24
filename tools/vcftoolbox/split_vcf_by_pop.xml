@@ -15,6 +15,7 @@
 
     <command detect_errors="exit_code"><![CDATA[
         mkdir -p vcf_split_directory &&
+        mkdir -p vcf_tmp_preprocessing &&
 
         bash '$__tool_directory__/split_vcf_by_pop.sh' 
             --input '${vcf_input}'
