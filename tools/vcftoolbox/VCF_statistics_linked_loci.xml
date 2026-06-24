@@ -16,6 +16,7 @@
     <command detect_errors="exit_code"><![CDATA[
         mkdir -p r2_results_directory &&
         mkdir -p temporary &&
+        mkdir -p vcf_tmp_preprocessing &&
 
         bash '$__tool_directory__/VCF_statistics_linked_loci.sh'
             --input '${vcf_input}'
