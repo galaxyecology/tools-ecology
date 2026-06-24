@@ -85,8 +85,53 @@ log_stats() {
     echo -e "${base_name}\t${step}\t${filter}\t${params}\t${n_ind}\t${n_snps}" >> "$SUMMARY"
 }
 
+###############################################################################################################
+# Function : add_missing_contigs
+# Description : Somes VCF do not include #contig= lines, which causes bcftools to faile in sample-subset mode.
+# This function extracts all unique #CHROM values from the VCF body and injects them as ##contig = lines
+# into the header, producing a fixed VCF that bcftools can process fully
+###############################################################################################################
+add_missing_contigs(){
+    local vcf_in="$1"
+    local -n _out_var="$2"          # nameref: writes directly into the caller's variable
+ 
+    local vcf_out="${vcf_in%.vcf}_reheadered.vcf"
+ 
+    # If contig lines already present, return the original path unchanged
+    if bcftools view -h "$vcf_in" 2>/dev/null | grep -q "^##contig="; then
+        echo "INFO: ##contig= lines already present, skipping reheadering." >&2
+        _out_var="$vcf_in"
+        return
+    fi
+ 
+    echo "INFO: Adding missing ##contig= lines to VCF header..." >&2
+ 
+    local tmp_header
+    tmp_header=$(mktemp)
+ 
+    # Rebuild header: original lines minus #CHROM, then contig lines, then #CHROM
+    bcftools view -h "$vcf_in" 2>/dev/null | grep -v "^#CHROM"  >  "$tmp_header"
+    bcftools view -H "$vcf_in" 2>/dev/null | awk '{print $1}' | sort -u | \
+        awk '{print "##contig=<ID=" $1 ">"}' >> "$tmp_header"
+    bcftools view -h "$vcf_in" 2>/dev/null | grep "^#CHROM"     >> "$tmp_header"
+ 
+    bcftools reheader -h "$tmp_header" -o "$vcf_out" "$vcf_in" 2>/dev/null
+    rm -f "$tmp_header"
+ 
+    if [[ ! -s "$vcf_out" ]]; then
+        echo "WARNING: reheadering failed, using original VCF." >&2
+        _out_var="$vcf_in"
+        return
+    fi
+ 
+    echo "INFO: Reheadered VCF written to $vcf_out" >&2
+    _out_var="$vcf_out"
+}
+ 
+# Apply reheadering — result goes directly into CURRENT_VCF via nameref
+add_missing_contigs "$vcf_input" CURRENT_VCF
+
 # Temporary vcf to make connexion between the diferent filter
-CURRENT_VCF="$vcf_input"
 STEP=0
 SUFFIX=""
 
@@ -441,6 +486,7 @@ for FILTER in "${FILTERS[@]}"; do
     esac
 done
 
-FINAL_OUTPUT="${vcf_dir}/${base_name}_filtered.vcf"
+FINAL_OUTPUT="${vcf_dir}/${base_name}${SUFFIX}.vcf"
 cp "$CURRENT_VCF" "$FINAL_OUTPUT"
+
 
