@@ -82,7 +82,7 @@ add_missing_contigs(){
         awk '{print "##contig=<ID=" $1 ">"}' >> "$tmp_header"
     bcftools view -h "$vcf_in" 2>/dev/null | grep "^#CHROM"     >> "$tmp_header"
  
-    bcftools reheader -h "$tmp_header" -o "$vcf_out" "$vcf_in" 2>/dev/null
+    bcftools reheader -h "$tmp_header" "$vcf_in" > "$vcf_out"
     rm -f "$tmp_header"
  
     if [[ ! -s "$vcf_out" ]]; then
