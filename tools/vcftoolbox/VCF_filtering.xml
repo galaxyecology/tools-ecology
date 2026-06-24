@@ -17,6 +17,7 @@
         mkdir -p vcf_filtered_tmp &&
         mkdir -p vcf_filtered_directory &&
         mkdir -p summary &&
+        mkdir -p vcf_tmp_preprocessing &&
 
         bash '$__tool_directory__/VCF_filtering.sh'
             --input '${vcf_input}'
