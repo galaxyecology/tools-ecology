@@ -1,0 +1,77 @@
+<tool id="vcf_statistics_linked_loci" name="Compute genotype-based R²" version="@TOOL_VERSION@" profile="@PROFILE@">
+    <description>
+        from VCF
+    </description>
+
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+
+    <expand macro="requirements_bcftools"/>
+
+    <required_files>
+        <include path="VCF_statistics_linked_loci.sh"/>
+    </required_files>
+
+    <command detect_errors="exit_code"><![CDATA[
+        mkdir -p r2_results_directory &&
+        mkdir -p temporary &&
+
+        bash '$__tool_directory__/VCF_statistics_linked_loci.sh'
+            --input '${vcf_input}'
+            --name '${vcf_input.element_identifier}'   
+            --max_SNPs '${max_SNPs}'   
+        ]]></command>
+
+    <inputs>
+        <expand macro="param_vcf_input"/>
+        <param name="max_SNPs" type="integer" value="1000"
+            label="Maximum number of SNPs per window"
+            help="Maximum number of SNPs between the SNPs being tested for LD."/>
+    </inputs>
+
+    <outputs>
+        <data name="SNP_linked" from_work_dir="r2_results_directory/r2_LD.geno.ld.txt" format="txt" label="r2 statistics table"/>
+    </outputs>
+
+    <tests>
+        <test>
+            <param name="vcf_input" value="test_vcf.vcf"/>
+            <param name="max_SNPs" value="1000"/>
+            <output name="SNP_linked" ftype="txt">
+                <assert_contents>
+                    <has_n_lines n="124751" delta="5"/>
+                    <has_line_matching expression="CHR\tPOS1\tPOS2\tN_INDV\tR\^2"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+        
+Usage
+=====
+
+As input, users provide one VCF file (Danecek *et al.* 2011) and a window size (maximum number of SNPs between between any two tested variants).
+
+If the VCF file contains missing values in the ID fields (.), the tool automatically generates a unique identifier using the following scheme: CHROM_POS_REF_ALT.
+This tool calculates the squared correlation coefficient between genotypes encoded as 0, 1 and 2 to represent the number of non-reference alleles in each individual. This implementation follows the standard LD measure used by PLINK.
+
+The tool produces a tab-separated file containing the r2 values for each pair within the defined window.
+
+**Example of output file**
+
+::
+
+    CHROM    POS1    POS2    N_IND    R^2
+    1        23      25      51       0.0083333
+    1        23      77      52       0.0128144
+
+
+See also examples of VCF formats in: https://samtools.github.io/hts-specs/VCFv4.5.pdf 
+
+]]></help>
+    <citations>
+        <expand macro="citations_base"/>
+    </citations>
+
+</tool>
