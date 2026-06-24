@@ -24,7 +24,8 @@ done
 
 ##### Validate inputs #####
 # Ensure bcftools and vcftools are available in PATH
-command -v bcftools >/dev/null 2>&1 || die "vcftools is not installed or not in PATH."
+command -v bcftools >/dev/null 2>&1 || die "bcftools is not installed or not in PATH."
+command -v vcftools >/dev/null 2>&1 || die "vcftools is not installed or not in PATH."
 
 # Check that input files exist on disk
 [[ -f "$vcf_input" ]] || die "Input VCF was not found: $vcf_input"
