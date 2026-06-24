@@ -15,6 +15,7 @@
 
     <command detect_errors="exit_code"><![CDATA[
         mkdir -p vcf_directory &&
+        mkdir -p vcf_tmp_preprocessing &&
         
         bash '$__tool_directory__/VCF_keep_remove_ind.sh'
             --input '${vcf_input}'
