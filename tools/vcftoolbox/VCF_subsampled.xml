@@ -97,6 +97,22 @@
                 </element>
             </output_collection>
         </test>
+
+        <test>
+            <param name="vcf_input" value="test_vcf_without_contigs.vcf"/>
+            <param name="SUBSET_SNPS_NB" value="50"/>
+            <param name="NB_REPLICATE_VCF" value="5"/>
+            <param name="MIN_SNP_NB" value="0"/>
+            <param name="polymorphic" value="true"/>
+            <output_collection name="vcf_subsampled" type="list" count="5">
+                <element name="test_vcf_without_contigs_50snps_subsample_2">
+                    <assert_contents>
+                        <has_n_lines n="67" delta="2"/>
+                        <has_text text="#CHROM"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+        </test>
     </tests>
 
     <help><![CDATA[
