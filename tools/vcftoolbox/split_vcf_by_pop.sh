@@ -23,6 +23,10 @@ while [[ "$#" -gt 0 ]]; do
     shift
 done
 
+##### Output directory #####
+vcf_dir="vcf_split_directory" 
+temp_dir="vcf_tm_preprocessing"
+
 ##### Validate inputs #####
 # Ensure bcftools is available in PATH
 command -v bcftools >/dev/null 2>&1 || die "bcftools is not installed or not in PATH."
@@ -41,7 +45,7 @@ add_missing_contigs(){
     local vcf_in="$1"
     local -n _out_var="$2"          # nameref: writes directly into the caller's variable
  
-    local vcf_out="${vcf_in%.vcf}_reheadered.vcf"
+    local vcf_out="${tmp_dir}/${vcf_in%.vcf}_reheadered.vcf"
  
     # If contig lines already present, return the original path unchanged
     if bcftools view -h "$vcf_in" 2>/dev/null | grep -q "^##contig="; then
@@ -82,9 +86,6 @@ vcf_input="$CURRENT_VCF"
 if ! bcftools view -H "$vcf_input" | head -n 1 | grep -q .; then
     die "Input VCF contains no variant records"
 fi
-
-##### Output directory #####
-vcf_dir="vcf_split_directory"
 
 ##### Build output filename #####
 name_without_ext="$(basename -- "$vcf_names")"
