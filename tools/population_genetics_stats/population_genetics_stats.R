@@ -26,7 +26,8 @@ if (marker_type == "SNP") {
 
 # Statistics selection flags
 stat_start_index <- if (marker_type == "SNP") 5 else 4
-selected_stats <- args[stat_start_index:length(args)]
+nboot        <- as.integer(args[length(args)])
+selected_stats <- args[stat_start_index:length(args) - 1]
 
 calc_heterozygosity <- "heterozygosity" %in% selected_stats
 calc_fis            <- "fis"            %in% selected_stats
@@ -34,6 +35,7 @@ calc_ar             <- "ar"             %in% selected_stats
 calc_fst            <- "fst"            %in% selected_stats
 calc_gst            <- "gst"            %in% selected_stats
 calc_djost          <- "djost"          %in% selected_stats
+calc_boot_fst       <- "boot_fst"       %in% selected_stats
 
 # Differentiation stats: at least one must be selected to compute pairwise matrices
 calc_diff <- calc_fst || calc_gst || calc_djost
@@ -166,7 +168,6 @@ compute_div_stats <- function(gen_file, dataset_name, marker_type) {
 
 ########################################################################
 # Function : pairwise_values_Fst_DJost
-# Description : 
 ########################################################################
 pairwise_values_Fst_DJost <- function(gen_path) {
   matrix_list <- list()
@@ -187,7 +188,6 @@ pairwise_values_Fst_DJost <- function(gen_path) {
 
 ########################################################################
 # Function : average_pairwise_by_pop
-# Description : 
 ########################################################################
 
 average_pairwise_by_pop <- function(matrix_list, dataset_name) {
@@ -291,6 +291,162 @@ save_matrices <- function(matrix_list, dataset_name) {
   }
 }
 
+###############################################################
+# Function : compute_boot_fst
+# Description : Tests pairwise Fst significance using bootstrap
+# Returns a matrix of p-values
+###############################################################
+compute_boot_fst <- function(gen_file, nboot) {
+  hf <- hierfstat::genind2hierfstat(gen_file)
+  boot_res <- hierfstat::boot.ppfst(dat = hf,
+                                    nboot = nboot,
+                                    quant = c(0.025, 0.975),
+                                    diploid = TRUE)
+
+  ll_mat <- boot_res$ll #lower CI matrix
+  ul_mat <- boot_res$ul #upper CI matrix
+
+  pop_names <- rownames(ll_mat)
+  n <- length(pop_names)
+
+  # Build a significance matrix: TRUE if CI does not overlap 0
+  sig_mat <- matrix(NA_character_,
+                  nrow = n, ncol = n,
+                  dimnames = list(pop_names, pop_names))
+ 
+  for (i in 2:n) {
+    for (j in 1:(i - 1)) {
+      lo <- ll_mat[j, i]
+      hi <- ul_mat[j, i]
+      if (!is.na(lo) && !is.na(hi)) {
+        is_sig <- !(lo <= 0 & hi >= 0)   # CI does not straddle 0
+        sig_val <- ifelse(is_sig, "Significant", "NS")
+      } else {
+        sig_val <- NA_character_
+      }
+      sig_mat[j, i] <- sig_val
+    }
+  }
+
+ 
+  return(list(ll = ll_mat, ul = ul_mat, sig = sig_mat))
+}
+
+##############################
+# Function : save_boot_matrix
+#############################
+save_boot_fst_matrix <- function(boot_result) {
+  #Significance matrix
+  sig_mat <- if (is.list(boot_result) && "sig" %in% names(boot_result)) {
+    boot_result$sig
+  } else {
+    boot_result
+  }
+  write.table(sig_mat,
+              file = "matrices_output/boot_fst_sig_matrix.txt",
+              quote = FALSE,
+              sep = "\t",
+              row.names = TRUE,
+              col.names = NA)
+
+  #CI matrix : upper triangle = lower; lower triangle = upper
+  if (is.list(boot_result) && all(c("ll", "ul") %in% names(boot_result))) {
+    ll_mat <- boot_result$ll
+    ul_mat <- boot_result$ul
+    pop_names <- rownames(ll_mat)
+    n <- length(pop_names)
+
+    #ll matrix (upper triangle already filled by boot.ppfst)
+    combined <- ll_mat
+
+    # Fill lower triangle with ul values
+    for (i in 2:n) {
+      for (j in 1:(i - 1)) {
+        combined[i, j] <- ul_mat[j, i]   # mirror: ul[j,i] -> combined[i,j]
+      }
+    }
+    
+    # Diagonal = NA
+    diag(combined) <- NA
+
+    write.table(combined,
+                file = "matrices_output/boot_fst_CI_matrix.txt",
+                quote = FALSE,
+                sep = "\t",
+                row.names = TRUE,
+                col.names = NA)
+
+  }
+}
+
+
+##########################################################################
+# Function : save_single_pop_placeholders
+# Description : Creates placeholder matrix files and
+# an informative PNG when only one population is present
+# (pairwise stats not applicable).
+# Galaxy requires these files to exist whenever the outputs are filtered in
+###########################################################################
+save_single_pop_placeholders <- function(pop_name) {
+  measures <- c()
+  if (calc_fst)   measures <- c(measures, "fst")
+  if (calc_gst)   measures <- c(measures, "gst_pr_nei")
+  if (calc_djost) measures <- c(measures, "jost_D")
+ 
+  measure_labels <- list(
+    fst        = "Fst",
+    gst_pr_nei = "Gst (Nei)",
+    jost_D     = "Jost's D"
+  )
+ 
+  for (measure in measures) {
+    # 1x1 matrix with "population_unique" as value
+    mat_df <- data.frame(population_unique = "population_unique",
+                         row.names = pop_name, check.names = FALSE)
+    colnames(mat_df) <- pop_name
+    mat_df[1, 1] <- "population_unique"
+ 
+    filename <- paste0("matrices_output/", measure, "_matrix.txt")
+    write.table(mat_df,
+                file      = filename,
+                quote     = FALSE,
+                sep       = "\t",
+                row.names = TRUE,
+                col.names = NA)
+ 
+    # Informative placeholder PNG (Galaxy needs the file to exist)
+    fill_lab <- measure_labels[[measure]]
+    p <- ggplot() +
+      annotate("text",
+               x = 0.5, y = 0.5,
+               label = paste0("Pairwise ", fill_lab,
+                              " cannot be computed:\nonly one population detected (\"",
+                              pop_name, "\")"),
+               size = 5, hjust = 0.5, vjust = 0.5, color = "grey30") +
+      theme_void() +
+      labs(title = paste("Pairwise", fill_lab, ": single population"))
+ 
+    plot_file <- paste0("matrices_output/", measure, "_heatmap.png")
+    ggsave(filename = plot_file, plot = p, width = 8, height = 7, dpi = 300)
+  }
+ 
+  # boot.ppfst placeholders if requested
+  if (calc_boot_fst) {
+      mat_df <- data.frame(population_unique = "population_unique",
+                           row.names = pop_name, check.names = FALSE)
+      colnames(mat_df) <- pop_name
+      mat_df[1, 1] <- "population_unique"
+      filename <- paste0("matrices_output/boot_fst_sig_matrix.txt")
+      write.table(mat_df,
+                  file      = filename,
+                  quote     = FALSE,
+                  sep       = "\t",
+                  row.names = TRUE,
+                  col.names = NA)
+  }
+}
+
+
 #######################################
 # Main execution 
 #######################################
@@ -315,27 +471,50 @@ result <- compute_div_stats(gen_file, input_name, marker_type)
 
 # Pairwise differentiation (only if at least one diff stat selected)
 if (calc_diff) {
-  pairwise_matrices <- pairwise_values_Fst_DJost(gen_file)
-  mean_pairwise <- average_pairwise_by_pop(pairwise_matrices, dataset_name = input_name)
+  n_pop <- nlevels(pop(gen_file))
+ 
+  if (n_pop < 2) {
+    # Single population: pairwise stats cannot be computed
+    warning("Only one population detected: pairwise statistics (Fst, Gst, Jost's D) ",
+            "cannot be computed. Values set to 'population_unique'.")
+ 
+    solo_pop_name <- levels(pop(gen_file))[1]
+ 
+    if (calc_fst)   result$average_pairwise_Fst <- "population_unique"
+    if (calc_gst)   result$average_Gst_Nei      <- "population_unique"
+    if (calc_djost) result$average_Jost_D        <- "population_unique"
+ 
+    # Generate placeholder files so Galaxy outputs are always satisfied
+    save_single_pop_placeholders(solo_pop_name)
+ 
+  } else {
+    pairwise_matrices <- pairwise_values_Fst_DJost(gen_file)
+    mean_pairwise <- average_pairwise_by_pop(pairwise_matrices, dataset_name = input_name)
+ 
+    # Merge mean pairwise values with diversity stats
+    diff_cols <- intersect(c("average_pairwise_Fst", "average_Gst_Nei", "average_Jost_D"),
+                           colnames(mean_pairwise))
+    result <- result %>%
+      left_join(mean_pairwise %>% select(Pop, all_of(diff_cols)),
+                by = "Pop",
+                suffix = c("", "_new"))
+ 
+    for (col in diff_cols) {
+      new_col <- paste0(col, "_new")
+      if (new_col %in% colnames(result)) {
+        result[[col]] <- result[[new_col]]
+        result[[new_col]] <- NULL
+      }
+    }
+    # Save matrices to files
+    save_matrices(pairwise_matrices, input_name)
 
-  # Merge mean pairwise values with diversity stats
-  diff_cols <- intersect(c("average_pairwise_Fst", "average_Gst_Nei", "average_Jost_D"),
-                         colnames(mean_pairwise))
-  result <- result %>%
-    left_join(mean_pairwise %>% select(Pop, all_of(diff_cols)),
-              by = "Pop",
-              suffix = c("", "_new"))
-
-  for (col in diff_cols) {
-    new_col <- paste0(col, "_new")
-    if (new_col %in% colnames(result)) {
-      result[[col]] <- result[[new_col]]
-      result[[new_col]] <- NULL
+        # Bootstrap Fst significance test
+    if (calc_boot_fst) {
+      boot_result <- compute_boot_fst(gen_file, nboot)
+      save_boot_fst_matrix(boot_result)
     }
   }
-
-  # Save matrices to files
-  save_matrices(pairwise_matrices, input_name)
 }
 
 # Add results to the global dataframe

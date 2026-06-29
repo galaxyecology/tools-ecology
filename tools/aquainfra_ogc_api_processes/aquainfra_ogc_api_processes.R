@@ -4,6 +4,10 @@ library("getopt")
 
 cat("START GENERIC WRAPPER SERVICE \n")
 
+server <- "https://aquainfra.ogc.igb-berlin.de/pygeoapi/"
+
+cat ("\n Running the tool from \n", server)
+
 remove_null_values <- function(x) {
   if (is.list(x)) {
     x <- lapply(x, remove_null_values)
@@ -152,8 +156,6 @@ is_url <- function(x) {
   grepl("^https?://", x)
 }
 
-server <- "https://aquainfra.ogc.igb-berlin.de/pygeoapi/"
-
 cat("\n1: START RETRIEVING PARAMETERS\n\n")
 inputParameters <- getParameters()
 print(inputParameters)
@@ -217,7 +219,7 @@ for (key in names(inputParameters)) {
 
       for (value in value_list) {
         value <- as.character(value)
-        value <- gsub(" ", "", value)
+        value <- trimws(value)
         #if(type == "integer") {
         #  value <- as.integer(value)
         #} else if (type == "numeric") {
