@@ -346,7 +346,9 @@ genepop2ssr() {
         [[ -z "${line// }" ]] && continue  # ignore empty lines
  
         # POP line = population delimitation
-        if [[ "${line,,}" == "pop" ]]; then
+        local line_trimmed
+        line_trimmed="$(echo "$line" | sed 's/[[:space:]]*$//')"  # strip trailing spaces
+        if [[ "${line_trimmed,,}" == "pop" ]]; then
             pop_index=$((pop_index + 1))
             pop_name="Pop${pop_index}"
             in_loci=false
