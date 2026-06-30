@@ -9,10 +9,6 @@
  
     <expand macro="requirements_bcftools_vcftools"/>
 
-    <required_files>
-        <include path="VCF_subsampled.sh" />
-    </required_files>
-
     <edam_topics>
         <edam_topic>
             topic_0610
@@ -27,6 +23,10 @@
             topic_3056
         </edam_topic>
     </edam_topics>
+
+    <required_files>
+        <include path="VCF_subsampled.sh" />
+    </required_files>
 
     <command detect_errors="exit_code"><![CDATA[
         mkdir -p vcf_subsampled &&
