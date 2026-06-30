@@ -9,11 +9,7 @@
 
     <expand macro="requirements_bcftools"/>
 
-    <required_files>
-        <include path="split_vcf_by_pop.sh" />
-    </required_files>
-
-    <edam_topics>
+     <edam_topics>
         <edam_topic>
             topic_0610
         </edam_topic>
@@ -27,6 +23,10 @@
             topic_3056
         </edam_topic>
     </edam_topics>
+
+    <required_files>
+        <include path="split_vcf_by_pop.sh" />
+    </required_files>
 
     <command detect_errors="exit_code"><![CDATA[
         mkdir -p vcf_split_directory &&
