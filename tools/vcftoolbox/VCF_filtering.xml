@@ -17,6 +17,7 @@
         mkdir -p vcf_filtered_tmp &&
         mkdir -p vcf_filtered_directory &&
         mkdir -p summary &&
+        mkdir -p vcf_tmp_preprocessing &&
 
         bash '$__tool_directory__/VCF_filtering.sh'
             --input '${vcf_input}'
@@ -176,6 +177,50 @@
                     <has_line_matching expression="test_vcf\t5\tB_loci_missing\tMAX_MISSING_LOCI=0.2\t196\t394"/>
                     <has_line_matching expression="test_vcf\t6\tF_MAC\tMIN_MAC=2\t196\t391"/>
                     <has_line_matching expression="test_vcf\t7\tG_heterozygosity\tMAX_Ho=0.6\t196\t391"/>
+                </assert_contents>
+            </output>
+        </test>
+
+            <!-- Test : Multiple filters + add_contigs function -->
+        <test expect_num_outputs="2">
+            <param name="vcf_input" value="test_vcf_without_contigs.vcf"/>
+            <param name="filter_order" value="A,D,C,E,B,F,G"/>
+            <section name="filter_ind_missing_data">
+                <param name="MAX_MISSING_IND" value="0.2"/>
+            </section>
+            <section name="filter_DP">
+                <param name="MIN_DP" value="6"/>
+            </section>
+            <section name="filter_GQ">
+                <param name="MIN_GQ" value="20"/>
+            </section>
+            <section name="filter_loci_missing">
+                <param name="MAX_MISSING_LOCI" value="0.2"/>
+            </section>
+            <section name="filter_mac">
+                <param name="MAC" value="2"/>
+            </section>
+            <section name="filter_het">
+                <param name="MAX_Ho" value="0.6"/>
+            </section>
+
+            <output name="vcf_filtered" count="1">
+                <assert_contents>
+                    <has_n_lines n="413" delta="2"/>
+                </assert_contents>
+            </output>
+
+            <output name="summary" ftype="tabular">
+                <assert_contents>
+                    <has_n_lines n="9"/>
+                    <has_line_matching expression="test_vcf_without_contigs\t0\tinput\traw\t273\t500"/>
+                    <has_line_matching expression="test_vcf_without_contigs\t1\tA_ind_missing\tMAX_MISSING_IND=0.2\t196\t500"/>
+                    <has_line_matching expression="test_vcf_without_contigs\t2\tD_DP\tNo DP field found\t196\t500"/>
+                    <has_line_matching expression="test_vcf_without_contigs\t3\tC_GQ\tNo GQ field found\t196\t500"/>
+                    <has_line_matching expression="test_vcf_without_contigs\t4\tE_biallelic\tbiallelic_SNPs_only\t196\t500"/>
+                    <has_line_matching expression="test_vcf_without_contigs\t5\tB_loci_missing\tMAX_MISSING_LOCI=0.2\t196\t394"/>
+                    <has_line_matching expression="test_vcf_without_contigs\t6\tF_MAC\tMIN_MAC=2\t196\t391"/>
+                    <has_line_matching expression="test_vcf_without_contigs\t7\tG_heterozygosity\tMAX_Ho=0.6\t196\t391"/>
                 </assert_contents>
             </output>
         </test>

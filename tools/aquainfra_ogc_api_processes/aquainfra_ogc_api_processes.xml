@@ -1,4 +1,4 @@
-<tool id="aquainfra_ogc_api_processes" name="AquaINFRA OGC API Processes" version="0.13.0" profile="25.1">
+<tool id="aquainfra_ogc_api_processes" name="AquaINFRA OGC API Processes" version="0.14.0" profile="25.1">
     <description/>
     <macros>
         <import>macros.xml</import>
@@ -43,6 +43,13 @@
                 <option value="mitgcm-resultplot">mitgcm-resultplot: MITgcm Plotting Tool</option>
                 <option value="mitgcm-run-model">mitgcm-run-model: MITgcm Model Run</option>
                 <option value="multidetect-and-clean">multidetect-and-clean: Run multidetect and clean the data</option>
+                <option value="netcdf-assessment-area">netcdf-assessment-area: Assessment area plot</option>
+                <option value="netcdf-extract-fb-data">netcdf-extract-fb-data: Extract FerryBox data from NetCDF (THREDDS) to CSV</option>
+                <option value="netcdf-join-dataframes">netcdf-join-dataframes: Join dataframes</option>
+                <option value="netcdf-logger-extract">netcdf-logger-extract: Extract river logger data from Baterod from NetCDF (THREDDS) to CSV</option>
+                <option value="netcdf-scatter-datax-vs-datay">netcdf-scatter-datax-vs-datay: Scatterplot FerryBox against logger parameter</option>
+                <option value="netcdf-scatter-plot">netcdf-scatter-plot: Scatterplot between two parameters (faceted by month)</option>
+                <option value="netcdf-tile-plot">netcdf-tile-plot: FerryBox tile plot (Hovmöller-style) for one or more parameters</option>
                 <option value="owt-classification">owt-classification: OWT Classification</option>
                 <option value="peri-conv">peri-conv: Group data to groups based on date</option>
                 <option value="points-att-polygon">points-att-polygon: Group points by region</option>
@@ -197,9 +204,9 @@
                 <param name="table_indicator_units" label="Table of Indicator Units" optional="true" help="A table listing something about the indicators. Needs the following column names: IndicatorID; UnitID; ET; ACDEV; EQR_HG; EQR_GM; EQR_MP; EQR_PB; IW. Please ask HELCOM for details. Please provide a URL to the table as a CSV file." type="text"/>
             </when>
             <when value="malta-groundwater">
-                <param name="user_sealevels" label="Sea Level Projections (m)" optional="true" help="A list of sea level values (m), formatted as a single text string with brackets and commas. This allows testing different scenarios. Higher values (simulating sea-level rise) will increase pressure on the aquifer, pushing saltwater further inland (saltwater intrusion)." type="text"/>
+                <param name="user_sealevels" label="Sea Level Projections (m)" optional="true" help="A list of sea level values (m), formatted as a single text string with brackets and commas (e.g., [-3.0, -2.0, -1.0]). This allows testing different scenarios. Higher values (simulating sea-level rise) will increase pressure on the aquifer, pushing saltwater further inland (saltwater intrusion)." type="text"/>
                 <param name="sealevel_int" label="Stress Period Duration (Years)" optional="true" help="The duration, in years, for each individual stress period (i.e., for each value in the 'Sea Level Projections' string). The **Total Simulation Time** is this duration multiplied by the number of sea levels provided. (e.g., 30 sea levels * 1 year duration = 30-year simulation)." type="integer"/>
-                <param name="user_recharge" label="Groundwater Recharge Rate (m/day)" optional="true" help="The average rainfall recharge rate, applied uniformly across the model. Units must be in meters per day (m/day). Higher values (e.g., more rainfall) will help push freshwater toward the sea, counteracting saltwater intrusion." type="float"/>
+                <param name="user_recharge" label="Groundwater Recharge Rate (m/day)" optional="true" help="The average rainfall recharge rate, applied uniformly across the model (e.g. 0.002). Units must be in meters per day (m/day). Higher values (e.g., more rainfall) will help push freshwater toward the sea, counteracting saltwater intrusion." type="float"/>
             </when>
             <when value="map-shapefile-points">
                 <param name="regions" label="Study region or study subregions" optional="false" help="URL to the study region, or several regions, to classify the input data into groups of interest. Currently it has to be provided as a shapefile. It can be in any coordinate system and will be transformed to WGS84 during this process. (URL must be stored in a .txt file)" type="data" format="txt"/>
@@ -323,6 +330,79 @@
                 <param name="outlierweights_mode" label="Data extraction parameter: Outlier weighting" optional="true" help="Outlier weighting and selection methods. abs uses record proportional to identify an absolute outlier. Example: abs" type="text"/>
                 <param name="classifymode" label="Cuts data into classess" optional="true" help="Categorize data base on the correlation coefficient manner based on Akoglu 2018. Example: med" type="integer"/>
                 <param name="eif_bool" label="Emprical Influence Function" optional="true" help="Computes the Emprical Influence Function for classified outliers." type="boolean" truevalue="True" falsevalue="False"/>
+            </when>
+            <when value="netcdf-assessment-area">
+                <param name="url_input_csv" label="Input FerryBox CSV" optional="false" help="URL of input FerryBox CSV file. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="url_input_river_logger_csv" label="Input river/logger CSV" optional="true" help="URL of input river/logger CSV file. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="river_label_col" label="River name column" optional="true" help="Column specifying the name of river(s) plotted" type="text"/>
+                <param name="url_input_waterbody" label="Waterbodies" optional="true" help="URL of  Waterbodies shapefile/geojson. Can be omitted. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="study_area_layer" label="Study area layer" optional="true" help="If Waterbodies is specified as geojson, layer name to plot is required." type="text"/>
+            </when>
+            <when value="netcdf-extract-fb-data">
+                <param name="url_thredds" label="Source" optional="false" help="THREDDS URL to the NetCDF dataset (e.g. https://thredds.niva.no/thredds/dodsC/datasets/nrt/color_fantasy.nc). (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="parameters_array" label="Parameters" optional="true" help="Comma-separated list of parameters to extract (e.g. temperature,salinity,chlorophyll,turbidity). Use NULL (or omit) to extract all available parameters." type="text"/>
+                <param name="start_date" label="Start date" optional="true" help="Start date (YYYY-MM-DD). If provided, end date must also be provided. Use NULL to omit." type="text"/>
+                <param name="end_date" label="End date" optional="true" help="End date (YYYY-MM-DD). If provided, start date must also be provided. Use NULL to omit." type="text"/>
+                <param name="study_area_bbox_object" label="Boundary box" optional="true" help="Optional bounding box filter. Order: [lat_min, lon_min, lat_max, lon_max]. Example: {'bbox': [58.5, 9.5, 59.9, 11.9]}. Omit to use the full dataset extent." type="text"/>
+            </when>
+            <when value="netcdf-join-dataframes">
+                <param name="url_input_ferrybox_csv" label="FerryBox dataframe CSV" optional="false" help="URL to FerryBox dataframe CSV file. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="url_input_river_logger_csv" label="River/logger dataframe CSV" optional="false" help="URL to River/logger dataframe CSV file. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="param_dataframe1" label="Parameter from first dataframe" optional="false" value="" help="Parameter from first dataframe to join" type="text">
+                    <validator type="empty_field" message="You must provide a value."/>
+                </param>
+                <param name="param_dataframe2" label="Parameter from second dataframe" optional="false" value="" help="Parameter from second dataframe to join" type="text">
+                    <validator type="empty_field" message="You must provide a value."/>
+                </param>
+                <param name="colname_station2" label="Station column name in second dataframe" optional="false" value="" help="Station column name in second dataframe" type="text">
+                    <validator type="empty_field" message="You must provide a value."/>
+                </param>
+                <param name="colname_station_filter2" label="Station ID/name to filter in second dataframe" optional="false" value="" help="Station ID/name to filter in second dataframe" type="text">
+                    <validator type="empty_field" message="You must provide a value."/>
+                </param>
+                <param name="colname_time1" label="Time column in first dataframe" optional="false" value="" help="Time column in first dataframe" type="text">
+                    <validator type="empty_field" message="You must provide a value."/>
+                </param>
+                <param name="colname_time2" label="Time column in second dataframe" optional="false" value="" help="Time column in second dataframe" type="text">
+                    <validator type="empty_field" message="You must provide a value."/>
+                </param>
+            </when>
+            <when value="netcdf-logger-extract">
+                <param name="url_thredds" label="Source" optional="false" help="THREDDS url to the NetCDF dataset (e.g. https://thredds.niva.no/thredds/dodsC/datasets/loggers/glomma/baterod.nc). (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="start_date" label="Start date" optional="true" help="Start date (YYYY-MM-DD). If provided, end date must also be provided. Use NULL to omit." type="text"/>
+                <param name="end_date" label="End date" optional="true" help="End date (YYYY-MM-DD). If provided, start date must also be provided. Use NULL to omit." type="text"/>
+                <param name="parameters_array" label="Parameters" optional="true" help="List of parameters. Use null (or omit) to extract all available parameters." type="text"/>
+            </when>
+            <when value="netcdf-scatter-datax-vs-datay">
+                <param name="url_input_csv" label="Input joined CSV" optional="false" help="URL to Input joined CSV file. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="url_input_waterbody" label="Waterbody shapefile" optional="true" help="Waterbody shapefile. Can be omitted. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="waterbody_ids_to_summarize_array" label="Waterbody IDs/names" optional="true" help="Waterbody IDs/names to summarise across. Can be omitted." type="text">
+                    <sanitizer sanitize="false">
+                        <valid initial="string.printable"/>
+                    </sanitizer>
+                </param>
+                <param name="waterbody_id_col" label="Waterbody ID column name" optional="true" help="Waterbody ID column name in shapefile. Can be omitted." type="text"/>
+                <param name="latitude_min" label="Latitude minimum" optional="true" help="Latitude range to summarise across: Minimum latitude. Can be omitted." type="float"/>
+                <param name="latitude_max" label="Latitude maximum" optional="true" help="Latitude range to summarise across: Maximum latitude. Can be omitted." type="float"/>
+                <param name="study_area_layer" label="Study area layer" optional="true" help="Input of specific layer geometries if multiple are available in input waterbody file." type="text"/>
+            </when>
+            <when value="netcdf-scatter-plot">
+                <param name="url_input_csv" label="Source" optional="false" help="Path to input URL containing at least datetime, parameter, value, and preferably latitude/longitude. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="param1" label="x-axis paramater" optional="false" value="" help="Parameter name for x-axis (e.g. salinity)." type="text">
+                    <validator type="empty_field" message="You must provide a value."/>
+                </param>
+                <param name="param2" label="y-axis parameter" optional="false" value="" help="Parameter name for y-axis (e.g. chlorophyll)." type="text">
+                    <validator type="empty_field" message="You must provide a value."/>
+                </param>
+            </when>
+            <when value="netcdf-tile-plot">
+                <param name="url_input_csv" label="Input FerryBox data" optional="false" help="Path or URL to FerryBox CSV containing datetime, latitude, longitude, parameter and value. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="start_date" label="Start date" optional="true" help="Optional start date (YYYY-MM-DD). Use null or omit for no filter." type="text"/>
+                <param name="end_date" label="End date" optional="true" help="Optional end date (YYYY-MM-DD). Use null or omit for no filter." type="text"/>
+                <param name="parameters_array" label="Parameters" optional="true" help="Optional list of parameters to plot. If omitted or empty, all available parameters are used." type="text"/>
+                <param name="lat1" label="Latitude minimum" optional="true" help="Optional minimum latitude filter." type="float"/>
+                <param name="lat2" label="Latitude maximum" optional="true" help="Optional maximum latitude filter." type="float"/>
+                <param name="storm_date" label="Storm date" optional="true" help="Optional storm date (YYYY-MM-DD) to mark with a dashed vertical line." type="text"/>
             </when>
             <when value="owt-classification">
                 <param name="input_data_url" label="Input data" optional="false" help="URL to your input file. Find example data on https://github.com/bishun945/pyOWT/tree/main/projects/AquaINFRA. (URL must be stored in a .txt file)" type="data" format="txt"/>
