@@ -86,7 +86,7 @@
     <param name="start_date_"
            type="integer"
            optional="true"
-           label="Start Date"
+           label="Starting year"
            help="Start year for climate data extraction (YYYY)." />
 
     <param name="end_date_"
