@@ -38,9 +38,6 @@
   <!-- ============================================================ -->
   <inputs>
 
-    <!-- Marie59: "these are map projections, there's a finite list -
-         could these be select options? could be a macro since both
-         params share the same options" -->
     <param name="input_crs" type="select" optional="false" label="Input CRS"
            help="Coordinate Reference System (CRS) of the input coordinates.">
       <expand macro="crs_options" default_4326="true"/>
@@ -58,9 +55,6 @@
            label="Input CSV"
            help="CSV file containing coordinates to be transformed. Must include columns for latitude and longitude." />
 
-    <!-- Marie59: "could this be constrained? like a column name should
-         only have letters? could add a regex check" (asked identically
-         on lat_col, lon_col and wkt_col) -->
     <param name="lat_col"
            type="text"
            optional="true"
@@ -94,8 +88,6 @@
   <!-- OUTPUTS                                                       -->
   <!-- ============================================================ -->
   <outputs>
-    <!-- Marie59: "could the label be more meaningful, like the label
-         you put in the get safran tool?" -->
     <data name="out"
           format="csv"
           label="${tool.name} on ${on_string}: coordinates reprojected to ${output_crs}"
@@ -224,7 +216,6 @@ Input CRS and Output CRS are chosen from a curated list of 300 EPSG codes (verif
         url          = {https://doi.org/10.5281/zenodo.2592232}
       }
     </citation>
-    <!-- Marie59: "when there is a DOI you have this kind of citation tag" -->
     <citation type="doi">10.5281/zenodo.2592232</citation>
   </citations>
 </tool>
