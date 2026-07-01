@@ -1,71 +1,57 @@
+#!/usr/bin/env python3
+"""Reproject CSV coordinates or WKT geometries between CRS using pyproj."""
+
 import argparse
+
 import pandas as pd
 from pyproj import Transformer
-########
-from shapely import wkt
-from shapely.ops import transform as geom_transform
+from shapely import wkt as shapely_wkt
+from shapely.ops import transform as shapely_transform
 
-parser = argparse.ArgumentParser(
-        description="Transform coordinates in a CSV file using pyproj"
-    )
 
-# CRS arguments
-parser.add_argument("--input-crs", required=True, help="Input CRS (e.g. EPSG:4326)")
-parser.add_argument("--output-crs", required=True, help="Output CRS (e.g. EPSG:3857)")
+def parse_args():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--input-crs", required=True)
+    parser.add_argument("--output-crs", required=True)
+    parser.add_argument("--csv", required=True)
+    parser.add_argument("--lat-col", default="latitude")
+    parser.add_argument("--lon-col", default="longitude")
+    parser.add_argument("--wkt-col", default=None)
+    return parser.parse_args()
 
-# CSV + column arguments
-parser.add_argument("--csv", required=True, help="Path to input CSV file")
-parser.add_argument("--lat-col", required=False, help="Latitude column name")
-parser.add_argument("--lon-col", required=False, help="Longitude column name")
-##########
-parser.add_argument("--wkt-col", required=False, help="Column containing WKT geometries")
 
-# Optional output
-parser.add_argument("--out", default="output.csv", help="Output CSV file")
+def main():
+    args = parse_args()
 
-args = parser.parse_args()
+    df = pd.read_csv(args.csv)
+    transformer = Transformer.from_crs(args.input_crs, args.output_crs, always_xy=True)
 
- # Load data
-df = pd.read_csv(args.csv)
+    if args.wkt_col:
+        out_col = f"{args.wkt_col}_{args.output_crs}"
 
-# Create transformer (force lon/lat order for consistency)
-transformer = Transformer.from_crs(
-    args.input_crs,
-    args.output_crs,
-    always_xy=True
-)
+        def reproject_geom(wkt_str):
+            geom = shapely_wkt.loads(wkt_str)
+            return shapely_wkt.dumps(shapely_transform(transformer.transform, geom))
 
-if args.wkt_col:
-    # Cas géométrie WKT
-    def project_geom(geom_wkt):
-        geom = wkt.loads(geom_wkt)
-        return geom_transform(transformer.transform, geom).wkt
+        df[out_col] = df[args.wkt_col].apply(reproject_geom)
+    else:
+        xs, ys = transformer.transform(df[args.lon_col].values, df[args.lat_col].values)
 
-    new_geom_col = f"{args.wkt_col}_{args.output_crs}"
-    df[new_geom_col] = df[args.wkt_col].apply(project_geom)
+        lon_out = f"{args.lon_col}_{args.output_crs}"
+        lat_out = f"{args.lat_col}_{args.output_crs}"
 
-    old_geom_col = f"{args.wkt_col}_{args.input_crs}"
-    df.rename(columns={args.wkt_col: old_geom_col}, inplace=True)
-else:
-    # Transform coordinates
-    x, y = transformer.transform(
-        df[args.lon_col].values,
-        df[args.lat_col].values
-    )
+        df.rename(
+            columns={
+                args.lon_col: f"{args.lon_col}_{args.input_crs}",
+                args.lat_col: f"{args.lat_col}_{args.input_crs}",
+            },
+            inplace=True,
+        )
+        df[lon_out] = xs
+        df[lat_out] = ys
 
-    # Add results to dataframe
-    old_lon_col = f"{args.lon_col}_{args.input_crs}"
-    old_lat_col = f"{args.lat_col}_{args.input_crs}"
-    new_lon_col = f"{args.lon_col}_{args.output_crs}"
-    new_lat_col = f"{args.lat_col}_{args.output_crs}"
-    df.rename(columns={
-        args.lon_col: old_lon_col,
-        args.lat_col: old_lat_col
-    }, inplace=True)
-    df[new_lon_col] = x
-    df[new_lat_col] = y
+    df.to_csv("output.csv", index=False)
 
-# Save output
-df.to_csv("output.csv", index=False)
 
-print(f"Saved transformed coordinates to output.csv")
+if __name__ == "__main__":
+    main()
