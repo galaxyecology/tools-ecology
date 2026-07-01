@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tool id="pyproj" name="Pyproj" version="1.0.0" profile="25.1">
+<tool id="pyproj" name="Pyproj" version="@TOOL_VERSION@" profile="@PROFILE@">
 
   <description>
     Projection and coordinate transformation
   </description>
+
+  <macros>
+    <import>macros.xml</import>
+  </macros>
 
   <!-- ============================================================ -->
   <!-- REQUIREMENTS                                                 -->
@@ -15,9 +19,7 @@
   </requirements>
 
   <!-- ============================================================ -->
-  <!-- COMMAND
-      ## Link input files into expected locations
-      ln -sf '$site_metadata' metadata/site_metadata.csv &&                                               -->
+  <!-- COMMAND                                                       -->
   <!-- ============================================================ -->
   <command detect_errors="exit_code"><![CDATA[
     python3 '$__tool_directory__/Pyproj.py'
@@ -35,19 +37,19 @@
   <!-- INPUTS                                                        -->
   <!-- ============================================================ -->
   <inputs>
-    <param name="input_crs"
-           type="text"
-           optional="false"
-           value="EPSG:4326"
-           label="Input CRS"
-           help="Coordinate Reference System (CRS) of the input coordinates, e.g., 'EPSG:4326' for WGS84." />
 
-    <param name="output_crs"
-           type="text"
-           optional="false"
-           value="EPSG:3857"
-           label="Output CRS"
-           help="Coordinate Reference System (CRS) of the output coordinates, e.g., 'EPSG:3857' for Web Mercator." />
+    <!-- Marie59: "these are map projections, there's a finite list -
+         could these be select options? could be a macro since both
+         params share the same options" -->
+    <param name="input_crs" type="select" optional="false" label="Input CRS"
+           help="Coordinate Reference System (CRS) of the input coordinates.">
+      <expand macro="crs_options" default_4326="true"/>
+    </param>
+
+    <param name="output_crs" type="select" optional="false" label="Output CRS"
+           help="Coordinate Reference System (CRS) of the output coordinates.">
+      <expand macro="crs_options" default_3857="true"/>
+    </param>
 
     <param name="csv"
            type="data"
@@ -56,26 +58,35 @@
            label="Input CSV"
            help="CSV file containing coordinates to be transformed. Must include columns for latitude and longitude." />
 
+    <!-- Marie59: "could this be constrained? like a column name should
+         only have letters? could add a regex check" (asked identically
+         on lat_col, lon_col and wkt_col) -->
     <param name="lat_col"
            type="text"
            optional="true"
            value="latitude"
            label="Latitude Column"
-           help="Name of the column in the input CSV that contains latitude values." /> 
+           help="Name of the column in the input CSV that contains latitude values.">
+      <expand macro="column_name_validator"/>
+    </param>
 
     <param name="lon_col"
            type="text"
            optional="true"
            value="longitude"
            label="Longitude Column"
-           help="Name of the column in the input CSV that contains longitude values." />
+           help="Name of the column in the input CSV that contains longitude values.">
+      <expand macro="column_name_validator"/>
+    </param>
 
     <param name="wkt_col"
            type="text"
            optional="true"
            value=""
            label="WKT Geometry Column (optional)"
-           help="Name of the column containing WKT geometries to reproject. When provided, lat/lon columns are ignored and a new reprojected WKT geometry column is added instead." />
+           help="Name of the column containing WKT geometries to reproject. When provided, lat/lon columns are ignored and a new reprojected WKT geometry column is added instead.">
+      <expand macro="column_name_validator"/>
+    </param>
 
   </inputs>
 
@@ -83,10 +94,12 @@
   <!-- OUTPUTS                                                       -->
   <!-- ============================================================ -->
   <outputs>
+    <!-- Marie59: "could the label be more meaningful, like the label
+         you put in the get safran tool?" -->
     <data name="out"
-           format="csv"
-           label="Output CSV"
-           from_work_dir="output.csv" />
+          format="csv"
+          label="${tool.name} on ${on_string}: coordinates reprojected to ${output_crs}"
+          from_work_dir="output.csv" />
   </outputs>
 
   <!-- ============================================================ -->
@@ -110,7 +123,7 @@
       <param name="csv" value="wgs84_coordinates.csv" ftype="csv" />
       <param name="wkt_col" value="wkt" />
 
-      <output name="out" ftype="csv" value="output.csv" />
+      <output name="out" ftype="csv" value="output_wkt.csv" />
     </test>
   </tests>
 
@@ -136,19 +149,24 @@ Two modes are available depending on whether a WKT column is provided:
 +---------------------+----------+----------------------------------------------------------+
 | Parameter           | Required | Description                                              |
 +=====================+==========+==========================================================+
-| Input CRS           | Yes      | CRS of the source data (e.g. ``EPSG:4326`` for WGS 84). |
+| Input CRS           | Yes      | CRS of the source data, chosen from the list of          |
+|                     |          | supported EPSG codes (e.g. ``EPSG:4326`` for WGS 84).    |
 +---------------------+----------+----------------------------------------------------------+
-| Output CRS          | Yes      | Target CRS (e.g. ``EPSG:3857`` for Web Mercator).        |
+| Output CRS          | Yes      | Target CRS, chosen from the list of supported EPSG        |
+|                     |          | codes (e.g. ``EPSG:3857`` for Web Mercator).             |
 +---------------------+----------+----------------------------------------------------------+
 | Input CSV           | Yes      | CSV file containing the coordinates to transform.        |
 +---------------------+----------+----------------------------------------------------------+
-| Latitude Column     | Yes      | Name of the column holding latitude values.              |
+| Latitude Column     | Yes      | Name of the column holding latitude values. Letters,      |
+|                     |          | digits and underscores only.                             |
 +---------------------+----------+----------------------------------------------------------+
-| Longitude Column    | Yes      | Name of the column holding longitude values.             |
+| Longitude Column    | Yes      | Name of the column holding longitude values. Letters,     |
+|                     |          | digits and underscores only.                              |
 +---------------------+----------+----------------------------------------------------------+
 | WKT Geometry Column | No       | Name of the column holding WKT geometries. When set,     |
 |                     |          | lat/lon columns are ignored and geometry reprojection    |
-|                     |          | is performed instead.                                    |
+|                     |          | is performed instead. Letters, digits and underscores    |
+|                     |          | only.                                                     |
 +---------------------+----------+----------------------------------------------------------+
  
 -----
@@ -179,36 +197,34 @@ A CSV file containing all original columns plus:
  
 -----
  
-**Common EPSG codes**
+**Supported EPSG codes**
  
-- ``EPSG:4326``  — WGS 84 (GPS latitude/longitude)
-- ``EPSG:3857``  — Web Mercator (Google Maps, OpenStreetMap)
-- ``EPSG:2154``  — RGF93 / Lambert-93 (France)
-- ``EPSG:27572`` — NTF / Lambert Zone II (legacy France)
-- ``EPSG:32631`` — WGS 84 / UTM zone 31N
+Input CRS and Output CRS are chosen from a curated list of 300 EPSG codes (verified against the official PROJ/EPSG geodetic database), grouped by region: worldwide reference frames, world-scale projected systems, the full global UTM grid (WGS 84, NAD83, ETRS89, SIRGAS 2000), and national/regional systems for Europe, Africa, the Middle East, Asia, Oceania, and the Americas. Defaults are ``EPSG:4326`` (WGS 84, GPS latitude/longitude) for Input CRS and ``EPSG:3857`` (Web Mercator) for Output CRS. See ``macros.xml`` for the full list, organised by section comments.
 
   ]]></help>
 
   <!-- ============================================================ -->
   <!-- CITATIONS                                                     -->
   <!-- ============================================================ -->
-<citations>
-  <citation type="bibtex">
-    @software{snow_pyproj,
-      author       = {Snow, Alan D. and
-                      Whitaker, Jeff and
-                      Cochran, Micah and
-                      Van den Bossche, Joris and
-                      Mayo, Chris and
-                      de Kloe, Jos and
-                      Karney, Charles and
-                      others},
-      title        = {{pyproj4/pyproj: Python interface to PROJ (cartographic
-                       projections and coordinate transformations library)}},
-      publisher    = {Zenodo},
-      doi          = {10.5281/zenodo.2592232},
-      url          = {https://doi.org/10.5281/zenodo.2592232}
-    }
-  </citation>
-</citations>
+  <citations>
+    <citation type="bibtex">
+      @software{snow_pyproj,
+        author       = {Snow, Alan D. and
+                        Whitaker, Jeff and
+                        Cochran, Micah and
+                        Van den Bossche, Joris and
+                        Mayo, Chris and
+                        de Kloe, Jos and
+                        Karney, Charles and
+                        others},
+        title        = {{pyproj4/pyproj: Python interface to PROJ (cartographic
+                         projections and coordinate transformations library)}},
+        publisher    = {Zenodo},
+        doi          = {10.5281/zenodo.2592232},
+        url          = {https://doi.org/10.5281/zenodo.2592232}
+      }
+    </citation>
+    <!-- Marie59: "when there is a DOI you have this kind of citation tag" -->
+    <citation type="doi">10.5281/zenodo.2592232</citation>
+  </citations>
 </tool>
