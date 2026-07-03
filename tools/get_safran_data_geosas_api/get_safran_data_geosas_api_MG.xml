@@ -1,234 +1,375 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<tool id="get_safran_data_geosas_api" name="Extract SAFRAN climate data" version="1.0.0" profile="25.1">
+<tool id="safran_extract" name="SAFRAN Climate Data Extractor (GEOSAS)" version="4.0.0" profile="23.0">
 
-  <description>
-    daily for French Long Term Experiment
-  </description>
- 
-  <macros>
-    <import>macros.xml</import>
-  </macros>
- 
-  <requirements>
-    <requirement type="package" version="4.5.1">r-base</requirement>
-    <requirement type="package" version="2.0.0">r-jsonlite</requirement>
-    <requirement type="package" version="2.0.0">r-tidyverse</requirement>
-    <requirement type="package" version="1.7.5">r-optparse</requirement>
-  </requirements>
- 
-  <command detect_errors="exit_code"><![CDATA[
-  Rscript '$__tool_directory__/get_safran_data_geosas_api_MG.R' -m
-  #if $site_metadata
-    '${site_metadata}'
-  #else
-    '${__tool_directory__}/site_metadata.csv'
-  #end if
-  #if $site_name
-    -s '#echo ",".join([ str($s) for $s in $site_name ])#'
-  #end if
-  #if $start_date_
-    -d '$start_date_'
-  #end if
-  #if $end_date_
-    -e '$end_date_'
-  #end if
-  ]]></command>
- 
-  <inputs>
-    <param name="site_metadata"
-           type="data"
-           format="csv"
-           optional="true"
-           label="Site metadata CSV"
-           help="Optional. CSV file containing site names, coordinates, country, and soil C sampling dates.
-                 Must include columns: site_name, country, longitude, latitude, start_date, last_soc_date.
-                 If left empty, the bundled default site metadata file is used instead." />
- 
-    <param name="site_name"
-           type="select"
-           multiple="true"
-           optional="true"
-           label="Sites"
-           help="Select one or more sites for which to extract SAFRAN data.
-                 Leave empty to extract data for all available French sites.">
-      <option value="auzeville">auzeville</option>
-      <option value="doazit">doazit</option>
-      <option value="folleville">folleville</option>
-      <option value="kerbernez">kerbernez</option>
-      <option value="mant">mant</option>
-      <option value="tartas">tartas</option>
-      <option value="colmar_prospective">colmar_prospective</option>
-      <option value="feucherolles_qualiagro">feucherolles_qualiagro</option>
-      <option value="le_rheu_efele_pros">le_rheu_efele_pros</option>
-      <option value="le_rheu_efele_tsmo">le_rheu_efele_tsmo</option>
-      <option value="lusignan_acbb">lusignan_acbb</option>
-      <option value="estrees_mons_sdc">estrees_mons_sdc</option>
-      <option value="versailles_la_cage">versailles_la_cage</option>
-      <option value="grignon_sic">grignon_sic</option>
-      <option value="issoudun">issoudun</option>
-      <option value="estrees_mons_be">estrees_mons_be</option>
-      <option value="pergamino">pergamino</option>
-      <option value="breteniere_res0pest">breteniere_res0pest</option>
-      <option value="estrees_mons_res0pest">estrees_mons_res0pest</option>
-      <option value="lusignan_res0pest">lusignan_res0pest</option>
-      <option value="nouzilly_res0pest">nouzilly_res0pest</option>
-      <option value="askov_ltbf">askov_ltbf</option>
-      <option value="bad_lauchstadt_ltbf">bad_lauchstadt_ltbf</option>
-      <option value="grignon_ltbf">grignon_ltbf</option>
-      <option value="rothamsted_ltbf">rothamsted_ltbf</option>
-      <option value="versailles_ltbf">versailles_ltbf</option>
-      <option value="fagnieres_ltbf">fagnieres_ltbf</option>
-      <option value="ultuna">ultuna</option>
-      <option value="lanna">lanna</option>
-      <option value="lonnstorp">lonnstorp</option>
-      <option value="rothamsted_broadbalk">rothamsted_broadbalk</option>
-      <option value="nelitcse">nelitcse</option>
-      <option value="waite">waite</option>
-      <option value="kbs">kbs</option>
-    </param>
- 
-    <param name="start_date_"
-           type="integer"
-           optional="true"
-           label="Starting year"
-           help="Start year for climate data extraction (YYYY)." />
- 
-    <param name="end_date_"
-           type="integer"
-           optional="true"
-           label="End Date"
-           help="End year for climate data extraction (YYYY)." />
- 
-  </inputs>
- 
-  <!-- ============================================================ -->
-  <!-- OUTPUTS                                                       -->
-  <!-- ============================================================ -->
-  <outputs>
- 
-    <data name="output_safran_filled"
-          format="rds"
-          label="SAFRAN daily climate data — forward simulations (filled)"
-          from_work_dir="outputs/safran_french_sites_filled.rds"/>
- 
-    <data name="output_safran_su"
-          format="rds"
-          label="SAFRAN daily climate data — spin-up initialization"
-          from_work_dir="outputs/safran_french_sites_su.rds"/>
- 
-    <data name="output_safran_french_sites"
-          format="rds"
-          label="SAFRAN daily climate data — French sites"
-          from_work_dir="outputs/safran_french_sites.rds"/>
- 
-    <data name="output_spinup_metadata"
-          format="csv"
-          label="Spin-up metadata (periods and methods)"
-          from_work_dir="outputs/safran_spinup_metadata.csv" />
- 
-  </outputs>
- 
-  <!-- ============================================================ -->
-  <!-- TESTS (se run dans le dossier test-data)                     -->
-  <!-- ============================================================ -->
-  <tests>
-    <test>
-      <param name="site_name" value="folleville" />
-      <param name="start_date_" value="1989" />
-      <param name="end_date_" value="2000" />
- 
-      <!-- These three outputs are serialized R objects built from data
-           fetched live from the GEOSAS API at test time, so their exact
-           bytes are not reproducible run to run. A size-based content
-           check verifies the file was actually produced and is not
-           empty/truncated, without relying on a byte-exact match. -->
-      <output name="output_safran_filled">
-        <assert_contents>
-          <has_size min="5000" />
-        </assert_contents>
-      </output>
-      <output name="output_safran_su">
-        <assert_contents>
-          <has_size min="5000" />
-        </assert_contents>
-      </output>
-      <output name="output_safran_french_sites">
-        <assert_contents>
-          <has_size min="5000" />
-        </assert_contents>
-      </output>
- 
-      <!-- This CSV is derived only from the site metadata and the
-           requested date range (not from live climate values), so its
-           content is deterministic and can be checked precisely. -->
-      <output name="output_spinup_metadata">
-        <assert_contents>
-          <has_n_columns n="7" />
-          <has_text text="site_name" />
-          <has_text text="folleville" />
-          <has_text text="1959-01-01" />
-          <has_text text="Normal data calculated from 1959 to 1989" />
-        </assert_contents>
-      </output>
-    </test>
-  </tests>
- 
-  <!-- ============================================================ -->
-  <!-- HELP                                                          -->
-  <!-- ============================================================ -->
-  <help><![CDATA[
- 
-**What it does**
- 
-This tool extracts daily SAFRAN reanalysis climate data for French long-term
-soil carbon experiments (LTEs), using the `GEOSAS API`_.
- 
-.. _GEOSAS API: https://geosas.fr/web/?page_id=6345
- 
-It extracts four climate variables:
- 
-- **PRENEI_Q** — solid precipitation (mm)
-- **PRELIQ_Q** — liquid precipitation (mm)
-- **T_Q** — daily mean temperature (°C)
-- **ETP_Q** — reference evapotranspiration ET0 (Penman-Monteith, mm)
- 
-**Outputs**
- 
-1. **Forward simulation data** (filled): daily climate from the first to the
-   last soil C stock measurement date. Missing data before 1959 (e.g. for
-   Versailles-LTBF) are filled using daily climatological normals computed
-   over 1959–1989.
- 
-2. **Spin-up data**: daily climate for the model initialization period,
-   ideally 15–30 years before the first soil C measurement.
-   If SAFRAN data are not available for a sufficient spin-up period,
-   the first 30 years of the experiment are used instead.
- 
-3. **Spin-up metadata**: a CSV summarising the spin-up period and method
-   used for each site.
- 
-**Notes**
- 
-- SAFRAN data are available from **1959-01-01** onwards.
-- An internet connection to the GEOSAS API is required.
-- Processing time depends on the number of sites and the length of the
-  requested time period.
- 
-  ]]></help>
- 
-  <!-- ============================================================ -->
-  <!-- CITATIONS                                                     -->
-  <!-- ============================================================ -->
-  <citations>
-    <citation type="bibtex">
-      @misc{geosas_safran,
-        title  = {GEOSAS API for SAFRAN-ISBA data access},
-        author = {GEOSAS},
-        url    = {https://geosas.fr/web/?page_id=6345},
-        year   = {2024}
-      }
-    </citation>
-  </citations>
- 
+    <description>Download SAFRAN daily climate reanalysis data from the GEOSAS OGC-EDR API (France, 1958–present)</description>
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         REQUIREMENTS
+         ════════════════════════════════════════════════════════════════════ -->
+    <requirements>
+        <requirement type="package" version="1.1.3">geopandas</requirement>
+        <requirement type="package" version="2.33.1">requests</requirement>
+        <requirement type="package" version="2.1.2">shapely</requirement>
+        <requirement type="package" version="3.1.5">openpyxl</requirement>
+        <requirement type="package" version="3.0.2">pandas</requirement>
+        <requirement type="package" version="2026.4.0">xarray</requirement>
+    </requirements>
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         COMMAND
+         ════════════════════════════════════════════════════════════════════ -->
+    <command detect_errors="exit_code"><![CDATA[
+        python '$__tool_directory__/safran_extract.py'
+
+        ## ── Climate parameters ─────────────────────────────────────────────
+        --parameters
+        #for $param in $climate_parameters
+            '${param}'
+        #end for
+
+        --coord-format '$coord_file.ext'
+
+        ## ── Date range ─────────────────────────────────────────────────────
+        #if str($date_range.start_date).strip() != ''
+            --start-date '${date_range.start_date}'
+        #end if
+        #if str($date_range.end_date).strip() != ''
+            --end-date '${date_range.end_date}'
+        #end if
+
+        ## ── Coordinate file ────────────────────────────────────────────────
+        --coord-file '$coord_file'
+
+        ## ── Coordinate reference system ────────────────────────────────────
+        --epsg $epsg
+
+        ## ── Output format ──────────────────────────────────────────────────
+        --format '$output_format'
+
+        ## ── Output path (managed by Galaxy) ────────────────────────────────
+        --output '$output'
+
+    ]]></command>
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         INPUTS
+         ════════════════════════════════════════════════════════════════════ -->
+    <inputs>
+
+        <!-- ── 1. Climate parameters (liste chargée dynamiquement depuis l'API GéoSAS) ── -->
+        <param name="climate_parameters"
+               type="select"
+               multiple="true"
+               optional="false"
+               label="Climate variables to download"
+               help="Select one or more SAFRAN daily variables. The list is fetched live
+                     from the GéoSAS API — it reflects the variables actually available
+                     at query time. Hold Ctrl (Windows/Linux) or Cmd (macOS) to select
+                     multiple items.">
+            <options from_url="https://api.geosas.fr/edr/collections/safran-isba/">
+                <postprocess_expression type="ecma5.1"><![CDATA[${
+                    return Object.keys(inputs.parameter_names).map(function(k) {
+                        return [k + " — " + inputs.parameter_names[k].description, k, false];
+                    });
+                }]]></postprocess_expression>
+            </options>
+            <validator type="no_options"
+                       message="Unable to retrieve the parameter list from the GéoSAS API.
+                                Please check your network connection and try again."/>
+        </param>
+
+        <!-- ── 2. Date range ───────────────────────────────────────────────── -->
+        <section name="date_range" title="Date range" expanded="true">
+
+            <param name="start_date"
+                   type="text"
+                   value=""
+                   optional="true"
+                   label="Start date (YYYY-MM-DD)"
+                   help="First day of the extraction period.
+                         Cannot be before 1958-08-01 (oldest SAFRAN record).
+                         Leave blank only if the coordinate file already contains
+                         a 'begin_date' column; otherwise required.
+                         Default fallback: 1960-01-01.
+                         Format is validated by the tool (YYYY-MM-DD required).">
+            </param>
+
+            <param name="end_date"
+                   type="text"
+                   value=""
+                   optional="true"
+                   label="End date (YYYY-MM-DD)"
+                   help="Last day of the extraction period (inclusive).
+                         SAFRAN is updated monthly; data up to near-present is available.
+                         Leave blank only if the coordinate file already contains
+                         an 'end_date' column; otherwise required.
+                         Default fallback: 2020-12-31.
+                         Format is validated by the tool (YYYY-MM-DD required).">
+            </param>
+
+        </section>
+
+        <!-- ── 3. Coordinate / geometry file ──────────────────────────────── -->
+        <param name="coord_file"
+               type="data"
+               format="csv,tabular,xlsx,shp,geojson"
+               label="Coordinate / geometry file"
+               help="File describing the location(s) to query.
+                     Accepted formats: CSV, tabular (TSV), Excel (.xlsx),
+                     Shapefile (.shp), GeoJSON.
+
+                     The geometry type is detected automatically.
+
+                     Routing:
+                       POINT / MULTIPOINT → /position (exact grid cells)
+                       LINESTRING         → /position (each vertex as MULTIPOINT)
+                       POLYGON            → /cube (bounding box of the polygon)
+                       bbox column        → /cube (sent directly)
+
+                     Required columns for CSV / Excel:
+                       • POINT: 'latitude' (or 'lat') + 'longitude' (or 'lon').
+                       • POLYGON / LINESTRING: 'geometry' or 'wkt' column (WKT text).
+
+                     Optional: 'begin_date' and 'end_date' columns (YYYY-MM-DD)
+                     override the global date range for each individual row." />
+
+        <!-- ── 4. EPSG code ────────────────────────────────────────────────── -->
+        <param name="epsg"
+               type="integer"
+               value="4326"
+               label="EPSG code of the coordinates"
+               help="Coordinate reference system of the input geometries.
+                     The GEOSAS API re-projects internally.
+
+                     Most common values:
+                       4326  — WGS84 geographic, decimal degrees (default)
+                       2154  — RGF93 / Lambert-93 (France, metric)
+                       32631 — WGS84 / UTM zone 31N (metric)
+
+                     If unsure, use 4326 and provide decimal-degree coordinates." />
+
+        <!-- ── 5. Output format ────────────────────────────────────────────── -->
+        <param name="output_format"
+               type="select"
+               value="CSV"
+               label="Output file format"
+               help="Format of the downloaded climate data.
+
+                     CSV          — Tabular; easy to open in R, Python, or Excel.
+                     CoverageJSON — OGC CoverageJSON with spatial metadata.
+                     netCDF4      — Gridded format. Recommended for polygon / large queries.
+                     parquet      — Columnar binary. Only for POINT / LINESTRING inputs.">
+            <option value="CSV" selected="true">CSV (.csv)</option>
+            <option value="CoverageJSON">CoverageJSON (.json)</option>
+            <option value="netCDF4">NetCDF-4 (.nc)</option>
+            <option value="parquet">Parquet (.parquet) — /position only</option>
+        </param>
+
+      <!-- DISABLED verbose param – uncomment to re-enable
+              <param name="verbose"
+                    type="boolean"
+                    checked="false"
+                    truevalue="VERBOSE"
+                    falsevalue=""
+                    label="Verbose logging"
+                    help="Enable detailed (DEBUG-level) logging in the job output log.
+                          Useful for diagnosing slow or failing requests." />
+      -->
+
+    </inputs>
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         OUTPUTS
+         ════════════════════════════════════════════════════════════════════ -->
+    <outputs>
+        <data name="output"
+              format="csv"
+              label="SAFRAN ${output_format} on ${on_string}">
+            <change_format>
+                <when input="output_format" value="CoverageJSON" format="json" />
+                <when input="output_format" value="netCDF4"      format="netcdf" />
+                <when input="output_format" value="parquet"      format="parquet" />
+            </change_format>
+        </data>
+    </outputs>
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         TESTS
+         ════════════════════════════════════════════════════════════════════ -->
+    <tests>
+
+        <!-- Test : single point, CSV output -->
+        <test expect_num_outputs="1">
+            <param name="climate_parameters" value="T_Q,ETP_Q" />
+            <section name="date_range">
+                <param name="start_date" value="1990-01-01" />
+                <param name="end_date"   value="1990-01-31" />
+            </section>
+            <param name="coord_file"    value="test_single_point.csv" ftype="csv" />
+            <param name="epsg"          value="4326" />
+            <param name="output_format" value="CSV" />
+            <output name="output" ftype="csv" file="safran_output.csv" />
+        </test>
+
+    </tests>
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         HELP
+         ════════════════════════════════════════════════════════════════════ -->
+    <help><![CDATA[
+
+.. class:: infomark
+
+**What this tool does**
+
+Downloads daily **SAFRAN** climate reanalysis data from the **GEOSAS OGC-EDR API**
+(INRAE, Rennes) for one or more locations in metropolitan France, defined via a
+coordinate or geometry file.
+
+----
+
+**The GEOSAS OGC-EDR API**
+
+The service implements the OGC **Environmental Data Retrieval** (EDR) v1.1 standard:
+
+    https://api.geosas.fr/edr/collections/safran-isba/
+
+It exposes exactly two query endpoints:
+
++------------+---------------------------------------------+---------------------+
+| Endpoint   | Used for                                    | Key parameter       |
++============+=============================================+=====================+
+| /position  | POINT, MULTIPOINT, LINESTRING               | ``coords=WKT``      |
++------------+---------------------------------------------+---------------------+
+| /cube      | Bounding box (POLYGON or bbox column)       | ``bbox=x1,y1,x2,y2``|
++------------+---------------------------------------------+---------------------+
+
+----
+
+**Geometry routing (automatic)**
+
+The geometry type in your file is detected automatically:
+
+* **POINT** (lat/lon columns) → ``/position``
+* **LINESTRING** (WKT column) → ``/position`` (vertices extracted as MULTIPOINT)
+* **POLYGON** (WKT column) → ``/cube`` (bounding box of the polygon extracted)
+* **bbox column** ("minx,miny,maxx,maxy" string) → ``/cube``
+
+Per-row ``begin_date`` / ``end_date`` columns override the global date range.
+
+----
+
+**Available climate variables**
+
+The list of available variables is fetched live from the GéoSAS API at form-load
+time. Each variable is shown as ``CODE — description`` in the selector above.
+For the current full list with units, see:
+
+    https://api.geosas.fr/edr/collections/safran-isba/
+
+The ``parameter_names`` field of that JSON response is the authoritative source.
+
+----
+
+**Coordinate file examples**
+
+*POINT (WGS84, decimal degrees)*::
+
+    id,latitude,longitude
+    montpellier,43.6047,3.8722
+    paris,48.8566,2.3522
+
+*POLYGON (WKT column — bounding box sent to /cube)*::
+
+    id,geometry
+    watershed_A,"POLYGON((3.2 43.4, 3.9 43.4, 3.9 43.9, 3.2 43.9, 3.2 43.4))"
+
+*LINESTRING (vertices extracted as MULTIPOINT)*::
+
+    id,geometry
+    transect_NS,"LINESTRING(2.35 43.0, 2.35 44.0, 2.35 45.0, 2.35 46.0)"
+
+*Bounding box column (sent directly to /cube)*::
+
+    id,bbox,begin_date,end_date
+    bretagne,"-5,47,-1,49",1990-01-01,2000-12-31
+    alsace,"7.0,47.5,8.3,48.9",2000-01-01,2010-12-31
+
+*Per-row date override*::
+
+    id,latitude,longitude,begin_date,end_date
+    site_A,43.6047,3.8722,1970-01-01,1999-12-31
+    site_B,45.7640,4.8357,2000-01-01,2020-12-31
+    site_C,48.8566,2.3522,,
+
+``site_C`` has empty date cells → the global start / end dates are used.
+
+----
+
+.. class:: warningmark
+
+**Known limitations**
+
+* SAFRAN only covers **metropolitan France**. Queries outside this domain will
+  return an API error.
+* The ``/cube`` (polygon / bbox) endpoint returns data for the **bounding box**,
+  not the polygon shape itself.
+* ``parquet`` format is only available for ``/position`` queries (POINT /
+  LINESTRING).
+* Long date ranges or large bounding boxes may exceed the default 120 s timeout.
+  Enable **Verbose logging** to diagnose slow requests.
+
+    ]]></help>
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         CITATIONS
+         ════════════════════════════════════════════════════════════════════ -->
+    <citations>
+
+        <citation type="bibtex">
+@article{vidal2010,
+  author  = {Vidal, Jean-Philippe and Martin, Eric and Franc\`{e}s,
+             F\`{e}lix and Baillon, Martine and Soubeyroux, Jean-Michel},
+  title   = {A 50-year high-resolution atmospheric reanalysis over
+             {France} with the {Safran} system},
+  journal = {International Journal of Climatology},
+  year    = {2010},
+  volume  = {30},
+  number  = {11},
+  pages   = {1627--1644},
+  doi     = {10.1002/joc.2003}
+}
+        </citation>
+
+        <citation type="bibtex">
+@article{habets2008,
+  author  = {Habets, Florence and Boone, Aaron and Champeaux, Jean-Louis
+             and Etchevers, Pierre and Franchist\'{e}guy, Laure
+             and Leblois, Etienne and Ledoux, Emmanuel and Le Moigne, Patrick
+             and Martin, Eric and Morel, Sylvain and Noilhan, Jo\"{e}l
+             and Segu\'{i}, Pere Quintana and Rousset-Regimbeau,
+             Fran\c{c}ois and Viennot, Pascal},
+  title   = {The {SAFRAN-ISBA-MODCOU} hydrometeorological model
+             applied over {France}},
+  journal = {Journal of Geophysical Research: Atmospheres},
+  year    = {2008},
+  volume  = {113},
+  number  = {D6},
+  doi     = {10.1029/2007JD008548}
+}
+        </citation>
+
+        <citation type="bibtex">
+@misc{geosas2024,
+  author       = {{INRAE / UMR SAS -- G\'{e}oSAS}},
+  title        = {{G\'{e}oSAS OGC-EDR SAFRAN-ISBA API}},
+  howpublished = {\url{https://api.geosas.fr/edr/collections/safran-isba/}},
+  year         = {2024},
+  note         = {OGC Environmental Data Retrieval v1.1 service.
+                  Original data: M\'{e}t\'{e}o-France SAFRAN reanalysis.
+                  Licence Ouverte Etalab.}
+}
+        </citation>
+
+    </citations>
+
 </tool>
- 
