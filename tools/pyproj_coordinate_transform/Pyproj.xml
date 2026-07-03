@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tool id="pyproj" name="Pyproj" version="@TOOL_VERSION@" profile="@PROFILE@">
+<tool id="pyproj_coordinate_transform" name="Pyproj coordinate transform" version="@TOOL_VERSION@" profile="@PROFILE@">
 
   <description>
     Projection and coordinate transformation
@@ -138,28 +138,27 @@ Two modes are available depending on whether a WKT column is provided:
  
 **Inputs**
  
-+---------------------+----------+----------------------------------------------------------+
-| Parameter           | Required | Description                                              |
-+=====================+==========+==========================================================+
-| Input CRS           | Yes      | CRS of the source data, chosen from the list of          |
-|                     |          | supported EPSG codes (e.g. ``EPSG:4326`` for WGS 84).    |
-+---------------------+----------+----------------------------------------------------------+
-| Output CRS          | Yes      | Target CRS, chosen from the list of supported EPSG        |
-|                     |          | codes (e.g. ``EPSG:3857`` for Web Mercator).             |
-+---------------------+----------+----------------------------------------------------------+
-| Input CSV           | Yes      | CSV file containing the coordinates to transform.        |
-+---------------------+----------+----------------------------------------------------------+
-| Latitude Column     | Yes      | Name of the column holding latitude values. Letters,      |
-|                     |          | digits and underscores only.                             |
-+---------------------+----------+----------------------------------------------------------+
-| Longitude Column    | Yes      | Name of the column holding longitude values. Letters,     |
-|                     |          | digits and underscores only.                              |
-+---------------------+----------+----------------------------------------------------------+
-| WKT Geometry Column | No       | Name of the column holding WKT geometries. When set,     |
-|                     |          | lat/lon columns are ignored and geometry reprojection    |
-|                     |          | is performed instead. Letters, digits and underscores    |
-|                     |          | only.                                                     |
-+---------------------+----------+----------------------------------------------------------+
++---------------------+----------+------------------------------------------------------------+
+| Parameter           | Required | Description                                                |
++=====================+==========+============================================================+
+| Input CRS           | Yes      | CRS of the source data, chosen from the list of supported  |
+|                     |          | EPSG codes (e.g. ``EPSG:4326`` for WGS 84).                |
++---------------------+----------+------------------------------------------------------------+
+| Output CRS          | Yes      | Target CRS, chosen from the list of supported EPSG codes   |
+|                     |          | (e.g. ``EPSG:3857`` for Web Mercator).                     |
++---------------------+----------+------------------------------------------------------------+
+| Input CSV           | Yes      | CSV file containing the coordinates to transform.          |
++---------------------+----------+------------------------------------------------------------+
+| Latitude Column     | Yes      | Name of the column holding latitude values. Letters,       |
+|                     |          | digits and underscores only.                               |
++---------------------+----------+------------------------------------------------------------+
+| Longitude Column    | Yes      | Name of the column holding longitude values. Letters,      |
+|                     |          | digits and underscores only.                               |
++---------------------+----------+------------------------------------------------------------+
+| WKT Geometry Column | No       | Name of the column holding WKT geometries. When set,       |
+|                     |          | lat/lon columns are ignored and geometry reprojection is   |
+|                     |          | performed instead. Letters, digits and underscores only.   |
++---------------------+----------+------------------------------------------------------------+
  
 -----
  
