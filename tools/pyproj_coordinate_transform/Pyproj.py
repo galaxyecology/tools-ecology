@@ -4,7 +4,9 @@
 import argparse
 
 import pandas as pd
+
 from pyproj import Transformer
+
 from shapely import wkt as shapely_wkt
 from shapely.ops import transform as shapely_transform
 
@@ -24,18 +26,23 @@ def main():
     args = parse_args()
 
     df = pd.read_csv(args.csv)
-    transformer = Transformer.from_crs(args.input_crs, args.output_crs, always_xy=True)
+    transformer = Transformer.from_crs(
+        args.input_crs, args.output_crs, always_xy=True
+    )
 
     if args.wkt_col:
         out_col = f"{args.wkt_col}_{args.output_crs}"
 
         def reproject_geom(wkt_str):
             geom = shapely_wkt.loads(wkt_str)
-            return shapely_wkt.dumps(shapely_transform(transformer.transform, geom))
+            reprojected = shapely_transform(transformer.transform, geom)
+            return shapely_wkt.dumps(reprojected)
 
         df[out_col] = df[args.wkt_col].apply(reproject_geom)
     else:
-        xs, ys = transformer.transform(df[args.lon_col].values, df[args.lat_col].values)
+        xs, ys = transformer.transform(
+            df[args.lon_col].values, df[args.lat_col].values
+        )
 
         lon_out = f"{args.lon_col}_{args.output_crs}"
         lat_out = f"{args.lat_col}_{args.output_crs}"
