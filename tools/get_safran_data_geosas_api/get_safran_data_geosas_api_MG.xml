@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tool id="get_safran_data_geosas_api" name="Extract SAFRAN climate data" version="1.0.0" profile="21.05">
+<tool id="get_safran_data_geosas_api" name="Extract SAFRAN climate data" version="1.0.0" profile="25.1">
 
   <description>
     daily for French Long Term Experiment
   </description>
-
+ 
+  <macros>
+    <import>macros.xml</import>
+  </macros>
+ 
   <requirements>
     <requirement type="package" version="4.5.1">r-base</requirement>
     <requirement type="package" version="2.0.0">r-jsonlite</requirement>
     <requirement type="package" version="2.0.0">r-tidyverse</requirement>
     <requirement type="package" version="1.7.5">r-optparse</requirement>
   </requirements>
-
+ 
   <command detect_errors="exit_code"><![CDATA[
   Rscript '$__tool_directory__/get_safran_data_geosas_api_MG.R' -m
   #if $site_metadata
@@ -29,24 +33,24 @@
     -e '$end_date_'
   #end if
   ]]></command>
-
+ 
   <inputs>
     <param name="site_metadata"
            type="data"
            format="csv"
            optional="true"
-           value="$__tool_directory__/site_metadata.csv"
            label="Site metadata CSV"
-           help="CSV file containing site names, coordinates, country, and soil C sampling dates.
-                 Must include columns: site_name, country, longitude, latitude, start_date, last_soc_date." />
-
+           help="Optional. CSV file containing site names, coordinates, country, and soil C sampling dates.
+                 Must include columns: site_name, country, longitude, latitude, start_date, last_soc_date.
+                 If left empty, the bundled default site metadata file is used instead." />
+ 
     <param name="site_name"
            type="select"
            multiple="true"
            optional="true"
            label="Sites"
-           help="Sélectionnez un ou plusieurs sites pour lesquels extraire les données SAFRAN.
-                 Laissez vide pour extraire tous les sites français disponibles.">
+           help="Select one or more sites for which to extract SAFRAN data.
+                 Leave empty to extract data for all available French sites.">
       <option value="auzeville">auzeville</option>
       <option value="doazit">doazit</option>
       <option value="folleville">folleville</option>
@@ -82,48 +86,48 @@
       <option value="waite">waite</option>
       <option value="kbs">kbs</option>
     </param>
-
+ 
     <param name="start_date_"
            type="integer"
            optional="true"
            label="Starting year"
            help="Start year for climate data extraction (YYYY)." />
-
+ 
     <param name="end_date_"
            type="integer"
            optional="true"
            label="End Date"
            help="End year for climate data extraction (YYYY)." />
-
+ 
   </inputs>
-
+ 
   <!-- ============================================================ -->
   <!-- OUTPUTS                                                       -->
   <!-- ============================================================ -->
   <outputs>
-
+ 
     <data name="output_safran_filled"
           format="rds"
           label="SAFRAN daily climate data — forward simulations (filled)"
           from_work_dir="outputs/safran_french_sites_filled.rds"/>
-
+ 
     <data name="output_safran_su"
           format="rds"
           label="SAFRAN daily climate data — spin-up initialization"
           from_work_dir="outputs/safran_french_sites_su.rds"/>
-
+ 
     <data name="output_safran_french_sites"
           format="rds"
           label="SAFRAN daily climate data — French sites"
           from_work_dir="outputs/safran_french_sites.rds"/>
-
+ 
     <data name="output_spinup_metadata"
           format="csv"
           label="Spin-up metadata (periods and methods)"
           from_work_dir="outputs/safran_spinup_metadata.csv" />
-
+ 
   </outputs>
-
+ 
   <!-- ============================================================ -->
   <!-- TESTS (se run dans le dossier test-data)                     -->
   <!-- ============================================================ -->
@@ -132,57 +136,86 @@
       <param name="site_name" value="folleville" />
       <param name="start_date_" value="1989" />
       <param name="end_date_" value="2000" />
-
-      <output name="output_safran_filled" file="outputs/safran_french_sites_filled.rds" />
-      <output name="output_safran_su" file="outputs/safran_french_sites_su.rds" />
-      <output name="output_safran_french_sites" file="outputs/safran_french_sites.rds" />
-      <output name="output_spinup_metadata" file="outputs/safran_spinup_metadata.csv" />
+ 
+      <!-- These three outputs are serialized R objects built from data
+           fetched live from the GEOSAS API at test time, so their exact
+           bytes are not reproducible run to run. A size-based content
+           check verifies the file was actually produced and is not
+           empty/truncated, without relying on a byte-exact match. -->
+      <output name="output_safran_filled">
+        <assert_contents>
+          <has_size min="5000" />
+        </assert_contents>
+      </output>
+      <output name="output_safran_su">
+        <assert_contents>
+          <has_size min="5000" />
+        </assert_contents>
+      </output>
+      <output name="output_safran_french_sites">
+        <assert_contents>
+          <has_size min="5000" />
+        </assert_contents>
+      </output>
+ 
+      <!-- This CSV is derived only from the site metadata and the
+           requested date range (not from live climate values), so its
+           content is deterministic and can be checked precisely. -->
+      <output name="output_spinup_metadata">
+        <assert_contents>
+          <has_n_columns n="7" />
+          <has_text text="site_name" />
+          <has_text text="folleville" />
+          <has_text text="1959-01-01" />
+          <has_text text="Normal data calculated from 1959 to 1989" />
+        </assert_contents>
+      </output>
     </test>
   </tests>
-
+ 
   <!-- ============================================================ -->
   <!-- HELP                                                          -->
   <!-- ============================================================ -->
   <help><![CDATA[
-
+ 
 **What it does**
-
+ 
 This tool extracts daily SAFRAN reanalysis climate data for French long-term
 soil carbon experiments (LTEs), using the `GEOSAS API`_.
-
+ 
 .. _GEOSAS API: https://geosas.fr/web/?page_id=6345
-
+ 
 It extracts four climate variables:
-
+ 
 - **PRENEI_Q** — solid precipitation (mm)
 - **PRELIQ_Q** — liquid precipitation (mm)
 - **T_Q** — daily mean temperature (°C)
 - **ETP_Q** — reference evapotranspiration ET0 (Penman-Monteith, mm)
-
+ 
 **Outputs**
-
+ 
 1. **Forward simulation data** (filled): daily climate from the first to the
    last soil C stock measurement date. Missing data before 1959 (e.g. for
    Versailles-LTBF) are filled using daily climatological normals computed
    over 1959–1989.
-
+ 
 2. **Spin-up data**: daily climate for the model initialization period,
    ideally 15–30 years before the first soil C measurement.
    If SAFRAN data are not available for a sufficient spin-up period,
    the first 30 years of the experiment are used instead.
-
+ 
 3. **Spin-up metadata**: a CSV summarising the spin-up period and method
    used for each site.
-
+ 
 **Notes**
-
+ 
 - SAFRAN data are available from **1959-01-01** onwards.
 - An internet connection to the GEOSAS API is required.
 - Processing time depends on the number of sites and the length of the
   requested time period.
-
+ 
   ]]></help>
-
+ 
   <!-- ============================================================ -->
   <!-- CITATIONS                                                     -->
   <!-- ============================================================ -->
@@ -196,5 +229,6 @@ It extracts four climate variables:
       }
     </citation>
   </citations>
-
+ 
 </tool>
+ 
