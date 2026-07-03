@@ -3,10 +3,6 @@
     <macros>
         <import>ab1fastq_macros.xml</import>
     </macros>
-    <requirements>
-        <requirement type="package" version="1.28.0">bioconductor-sangerseqr</requirement>
-        <requirement type="package" version="@VERSION@">bioconductor-crisprvariants</requirement>
-    </requirements>
 
     <edam_topics>
         <edam_topic>
@@ -16,6 +12,11 @@
             topic_3050
         </edam_topic>
     </edam_topics>
+    
+    <requirements>
+        <requirement type="package" version="1.28.0">bioconductor-sangerseqr</requirement>
+        <requirement type="package" version="@VERSION@">bioconductor-crisprvariants</requirement>
+    </requirements>
 
     <version_command><![CDATA[
 echo $(R --version | grep version | grep -v GNU)", sangerseqR version" $(R --vanilla --slave -e "library(sangerseqR); cat(sessionInfo()\\$otherPkgs\$sangerseqR\$Version)" 2> /dev/null | grep -v -i "WARNING: ")", CrispRVariants version" $(R --vanilla --slave -e "library(CrispRVariants); cat(sessionInfo()\\$otherPkgs\$CrispRVariants\$Version)" 2> /dev/null | grep -v -i "WARNING: ")
