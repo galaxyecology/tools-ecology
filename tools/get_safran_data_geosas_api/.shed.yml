@@ -1,11 +1,7 @@
-name: get_safran_data_geosas_api
+name: get_safran_data
 owner: MathG
 description: Extract climate data from SAFRAN geosas API
-homepage_url: https://github.com/Mathmath34/tools-ecology/master/tools/get_safran_data_geosas_api
-remote_repository_url:  https://github.com/tools-ecology/tree/master/tools/get_safran_data_geosas_api
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/get_safran_data
 type: unrestricted
 categories:
   - Climate Analysis
-auto_tool_repositories:
-  name_template: "{{ tool_id }}"
-  description_template: "{{ tool_name }}"
