@@ -1,6 +1,12 @@
 name: get_safran_data_geosas_api
 owner: mathmath34
 description: Extract climate data from SAFRAN geosas API
+long_description: |
+  Downloads daily SAFRAN climate reanalysis data (precipitation, temperature,
+  reference evapotranspiration, and other variables) from the GEOSAS OGC-EDR
+  API for one or more locations in metropolitan France, for use in ecological
+  and agronomic modelling.
+homepage_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/get_safran_data_geosas_api
 remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/get_safran_data_geosas_api
 type: unrestricted
 categories:
