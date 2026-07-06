@@ -562,16 +562,16 @@ if (correction_cohort == "single_cohort") {
     } else {
       ldne_results <- ldne_results %>%
         mutate(NeLD_corrected_Nb = ifelse(NeLD_corrected_pseudorep != 999999,
-          NeLD_corrected_pseudorep/(0.458+0.758*log(adult_lifespan/age_at_maturity)), NeLD_corrected_pseudorep),
+          NeLD_corrected_pseudorep/(0.485+0.758*log(adult_lifespan/age_at_maturity)), NeLD_corrected_pseudorep),
         JK_CI_down_Nb = ifelse(
           JK_CI_down == 999999 | is.na(JK_CI_down),
           JK_CI_down,
-          JK_CI_down / (0.458+0.758*log(adult_lifespan/age_at_maturity))
+          JK_CI_down / (0.485+0.758*log(adult_lifespan/age_at_maturity))
         ),
         JK_CI_up_Nb = ifelse(
           JK_CI_up == 999999 | is.na(JK_CI_up),
           JK_CI_up,
-          JK_CI_up / (0.458+0.758*log(adult_lifespan/age_at_maturity))
+          JK_CI_up / (0.485+0.758*log(adult_lifespan/age_at_maturity))
         )
       )
     }
@@ -594,16 +594,16 @@ if (correction_cohort == "single_cohort") {
     } else {
       ldne_results <- ldne_results %>%
         mutate(NeLD_corrected_Nb = ifelse(NeLD != 999999,
-          NeLD/(0.458+0.758*log(adult_lifespan/age_at_maturity)), NeLD),
+          NeLD/(0.485+0.758*log(adult_lifespan/age_at_maturity)), NeLD),
           JK_CI_down_Nb = ifelse(
             JK_CI_down == 999999 | is.na(JK_CI_down),
             JK_CI_down,
-            JK_CI_down / (0.458+0.758*log(adult_lifespan/age_at_maturity))
+            JK_CI_down / (0.485+0.758*log(adult_lifespan/age_at_maturity))
           ),
           JK_CI_up_Nb = ifelse(
             JK_CI_up == 999999 | is.na(JK_CI_up),
             JK_CI_up,
-            JK_CI_up / (0.458+0.758*log(adult_lifespan/age_at_maturity))
+            JK_CI_up / (0.485+0.758*log(adult_lifespan/age_at_maturity))
           )
         )
     }
