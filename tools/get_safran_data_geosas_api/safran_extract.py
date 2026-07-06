@@ -206,17 +206,6 @@ def site_label(row: pd.Series, idx) -> str:
     return str(idx)
 
 
-def site_identifier(row: pd.Series, idx) -> str:
-    """Pick a stable site identifier, preferring a 'site_id'/'id' column.
-
-    Falls back to the row index when no identifier column is present.
-    """
-    for key in ("site_id", "id"):
-        if key in row.index and pd.notna(row[key]):
-            return str(row[key])
-    return str(idx)
-
-
 def detect_dominant_geometry(df: pd.DataFrame) -> str | None:
     for col in ("geometry", "wkt", "WKT", "geom"):
         if col in df.columns:
@@ -351,20 +340,34 @@ def prepare_api_geometry(wkt_str: str, geom_type: str) -> tuple[str, dict]:
 
 def standardize_table(
     df: pd.DataFrame,
-    sid: str,
-    label: str,
+    sid: int,
+    original_row: dict,
     lon: float | None,
     lat: float | None,
 ) -> pd.DataFrame:
     """
     Reshape a single API response table into the target layout:
 
-        site_id, site_name, date, <variable columns…>, longitude, latitude
+        site_id, <all columns from the original input file…>, date,
+        <fetched climate variables…>[, longitude, latitude]
 
-    - the time/datetime column is converted to a pure DATE (YYYY-MM-DD), no time;
-    - any coordinate columns returned by the API are dropped and replaced by the
-      exact longitude/latitude of the input point;
-    - the site label and identifier are written to 'site_name' / 'site_id'.
+    - 'site_id' is always a 0-based sequential integer identifying the site
+      (row processing order), regardless of any 'id'/'site_id' column that
+      may exist in the input file.
+    - every column of the ORIGINAL coordinate/geometry file is preserved
+      as-is and repeated across every date of that site's time series.
+    - the time/datetime column returned by the API is converted to a pure
+      DATE (YYYY-MM-DD, no time-of-day), named 'date'.
+    - the remaining columns returned by the API are the requested climate
+      variables.
+    - 'longitude'/'latitude' convenience columns are appended only if the
+      original file did not already provide them (e.g. for POLYGON /
+      LINESTRING inputs described via a 'geometry'/'wkt' column instead of
+      lat/lon).
+    - if an original column's name collides with a reserved name ('site_id',
+      'date') or with one of the fetched variable names, the original value
+      is dropped for that column and a warning is logged (the fetched data
+      takes precedence).
     """
     df = df.copy()
     cols_lower = {c.lower(): c for c in df.columns}
@@ -378,41 +381,69 @@ def standardize_table(
     else:
         df["date"] = pd.NA
 
-    # 2. Drop API coordinate/housekeeping columns (kept from the input instead)
+    # 2. Drop the API's own coordinate/housekeeping columns (the original
+    #    file's columns, and/or the longitude/latitude below, are used instead)
     drop_cols = [c for c in df.columns if c.lower() in DROP_COORD_CANDIDATES and c != "date"]
     df = df.drop(columns=drop_cols, errors="ignore")
 
-    # 3. Remaining non-date columns are the climate variables
+    # 3. Remaining non-date columns are the fetched climate variables
     variable_cols = [c for c in df.columns if c != "date"]
 
-    # 4. Assemble final layout
-    df.insert(0, "site_name", str(label))
-    df.insert(0, "site_id", str(sid))
-    df["longitude"] = lon
-    df["latitude"] = lat
+    # 4. Original input-file columns, minus anything colliding with a
+    #    reserved/variable name (fetched data takes precedence on collision)
+    reserved = {"site_id", "date", *[c.lower() for c in variable_cols]}
+    orig_items = []
+    for key, value in original_row.items():
+        if key.lower() in reserved:
+            log.warning(
+                "Input column '%s' collides with a reserved or fetched "
+                "variable name; keeping the fetched value instead.", key,
+            )
+            continue
+        if hasattr(value, "wkt"):  # Shapely geometry (GeoDataFrame input)
+            value = value.wkt
+        orig_items.append((key, value))
 
-    ordered = ["site_id", "site_name", "date"] + variable_cols + ["longitude", "latitude"]
+    # 5. Assemble: site_id, original columns, date, variables
+    df["site_id"] = int(sid)
+    for key, value in orig_items:
+        df[key] = value
+
+    ordered = ["site_id"] + [k for k, _ in orig_items] + ["date"] + variable_cols
+
+    # 6. longitude/latitude convenience columns, only if not already present
+    #    among the original file's own columns
+    has_lon = any(k.lower() in LON_COL_CANDIDATES for k, _ in orig_items)
+    has_lat = any(k.lower() in LAT_COL_CANDIDATES for k, _ in orig_items)
+    if not has_lon:
+        df["longitude"] = lon
+        ordered.append("longitude")
+    if not has_lat:
+        df["latitude"] = lat
+        ordered.append("latitude")
+
     return df[ordered]
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Merge functions  (one per output format)
 # ─────────────────────────────────────────────────────────────────────────────
-# Each function receives a list of (site_label, lon, lat, raw_bytes) and returns
-# the merged content as bytes ready to be written to a single file.
+# Each function receives a list of (site_id, site_label, lon, lat, raw_bytes,
+# original_row) tuples and returns the merged content as bytes ready to be
+# written to a single file.
 # ─────────────────────────────────────────────────────────────────────────────
 
 
-def merge_csv(chunks: list[tuple[str, str, float | None, float | None, bytes]]) -> bytes:
+def merge_csv(chunks: list[tuple[int, str, float | None, float | None, bytes, dict]]) -> bytes:
     """
     Parse each CSV response and reshape it to:
-        site_id, site_name, date, <variables…>, longitude, latitude
+        site_id, <original input columns…>, date, <variables…>[, longitude, latitude]
     then concatenate all sites into a single long-format table.
     """
     dfs = []
-    for sid, label, lon, lat, raw in chunks:
+    for sid, label, lon, lat, raw, original_row in chunks:
         try:
             df = pd.read_csv(io.BytesIO(raw))
-            df = standardize_table(df, sid, label, lon, lat)
+            df = standardize_table(df, sid, original_row, lon, lat)
             dfs.append(df)
             log.debug("  Parsed CSV for '%s': %d rows × %d cols", label, *df.shape)
         except Exception as exc:
@@ -429,15 +460,15 @@ def merge_csv(chunks: list[tuple[str, str, float | None, float | None, bytes]]) 
     return merged.to_csv(index=False).encode("utf-8")
 
 
-def merge_parquet(chunks: list[tuple[str, str, float | None, float | None, bytes]]) -> bytes:
+def merge_parquet(chunks: list[tuple[int, str, float | None, float | None, bytes, dict]]) -> bytes:
     """
     Same layout as merge_csv but written to a single parquet file.
     """
     dfs = []
-    for sid, label, lon, lat, raw in chunks:
+    for sid, label, lon, lat, raw, original_row in chunks:
         try:
             df = pd.read_parquet(io.BytesIO(raw))
-            df = standardize_table(df, sid, label, lon, lat)
+            df = standardize_table(df, sid, original_row, lon, lat)
             dfs.append(df)
         except Exception as exc:
             log.warning("Could not parse parquet response for site '%s': %s", label, exc)
@@ -452,22 +483,29 @@ def merge_parquet(chunks: list[tuple[str, str, float | None, float | None, bytes
     return buf.getvalue()
 
 
-def merge_coveragejson(chunks: list[tuple[str, str, float | None, float | None, bytes]]) -> bytes:
+def merge_coveragejson(chunks: list[tuple[int, str, float | None, float | None, bytes, dict]]) -> bytes:
     """
     Wrap each CoverageJSON object in a CoverageCollection, adding
-    'site_id' and 'site_name' properties to each coverage for identification.
+    'site_id' and 'site_name' properties, plus every column from the
+    original input file, to each coverage for identification.
 
     Output follows the OGC CoverageJSON spec for CoverageCollections:
     https://covjson.org/spec/#coverage-collections
     """
     coverages = []
-    for sid, label, lon, lat, raw in chunks:
+    for sid, label, lon, lat, raw, original_row in chunks:
         try:
             cov = json.loads(raw.decode("utf-8"))
             # Inject site_id / site_name as top-level properties
             cov["properties"] = cov.get("properties", {})
-            cov["properties"]["site_id"] = str(sid)
+            cov["properties"]["site_id"] = int(sid)
             cov["properties"]["site_name"] = str(label)
+            for key, value in original_row.items():
+                if key in cov["properties"]:
+                    continue
+                if hasattr(value, "wkt"):  # Shapely geometry
+                    value = value.wkt
+                cov["properties"][key] = value
             coverages.append(cov)
         except Exception as exc:
             log.warning("Could not parse CoverageJSON for site '%s': %s", label, exc)
@@ -483,7 +521,7 @@ def merge_coveragejson(chunks: list[tuple[str, str, float | None, float | None, 
     return json.dumps(collection, indent=2, ensure_ascii=False).encode("utf-8")
 
 
-def merge_netcdf(chunks: list[tuple[str, str, float | None, float | None, bytes]]) -> bytes:
+def merge_netcdf(chunks: list[tuple[int, str, float | None, float | None, bytes, dict]]) -> bytes:
     """
     Concatenate netCDF responses along a new 'site' dimension using xarray.
 
@@ -505,7 +543,7 @@ def merge_netcdf(chunks: list[tuple[str, str, float | None, float | None, bytes]
     datasets: list = []
 
     try:
-        for sid, label, lon, lat, raw in chunks:
+        for sid, label, lon, lat, raw, original_row in chunks:
             tmp = tempfile.NamedTemporaryFile(suffix=".nc", delete=False)
             tmp.write(raw)
             tmp.close()
@@ -513,7 +551,16 @@ def merge_netcdf(chunks: list[tuple[str, str, float | None, float | None, bytes]
             try:
                 ds = xr.open_dataset(tmp.name)
                 # Add scalar 'site' / 'site_id' coords so concat creates the dimension
-                ds = ds.assign_coords(site=str(label), site_id=str(sid)).expand_dims("site")
+                extra_coords = {}
+                for key, value in original_row.items():
+                    if key in ("site", "site_id"):
+                        continue
+                    if hasattr(value, "wkt"):  # Shapely geometry
+                        value = value.wkt
+                    extra_coords[key] = value
+                ds = ds.assign_coords(
+                    site=str(label), site_id=int(sid), **extra_coords
+                ).expand_dims("site")
                 datasets.append(ds)
                 log.debug("  Opened netCDF for '%s': %s", label, list(ds.data_vars))
             except Exception as exc:
@@ -619,10 +666,23 @@ def build_parser() -> argparse.ArgumentParser:
             "      --output results/safran_all_sites\n\n"
             "OUTPUT STRUCTURE (CSV example)\n"
             "------------------------------\n"
-            "  site_id,site_name,date,T_Q,longitude,latitude\n"
-            "  1,Montpellier,1995-01-01,7.5,3.8711,43.6320\n"
-            "  1,Montpellier,1995-01-02,2.7,3.8711,43.6320\n"
-            "  ...\n\n"
+            "  Input file (sites.csv):\n"
+            "    site_name,latitude,longitude,region\n"
+            "    Montpellier,43.6047,3.8722,Occitanie\n"
+            "    Paris,48.8566,2.3522,Ile-de-France\n\n"
+            "  Merged output:\n"
+            "    site_id,site_name,latitude,longitude,region,date,T_Q\n"
+            "    0,Montpellier,43.6047,3.8722,Occitanie,1995-01-01,7.5\n"
+            "    0,Montpellier,43.6047,3.8722,Occitanie,1995-01-02,2.7\n"
+            "    1,Paris,48.8566,2.3522,Ile-de-France,1995-01-01,3.2\n"
+            "    ...\n\n"
+            "Every column from the input file is kept as-is (repeated for each\n"
+            "date). 'site_id' is always a 0-based sequential integer assigned\n"
+            "in row processing order — it ignores any 'id'/'site_id' column\n"
+            "that may already be present in the input file. 'longitude' and\n"
+            "'latitude' are added only if the input file didn't already have\n"
+            "them (e.g. for POLYGON/LINESTRING inputs using a 'geometry'/'wkt'\n"
+            "column instead of lat/lon).\n\n"
             "CITATIONS\n"
             "---------\n"
             "  Vidal et al. (2010). Int. J. Climatol., 30(11), 1627-1644.\n"
@@ -742,14 +802,16 @@ def main(argv=None):
     col_end = col_lower.get("end_date") or col_lower.get("date_fin")
 
     # ── 3. Fetch data for every row, collect raw responses ──────────────────
-    # Each chunk: (site_id, site_label, longitude, latitude, raw_bytes)
-    chunks: list[tuple[str, str, float | None, float | None, bytes]] = []
+    # Each chunk: (site_id, site_label, longitude, latitude, raw_bytes, original_row)
+    # site_id is a 0-based sequential integer (row processing order).
+    # original_row holds every column of the input coordinate/geometry file
+    # for that row, so it can be preserved as-is in the merged output.
+    chunks: list[tuple[int, str, float | None, float | None, bytes, dict]] = []
     errors: list[tuple[int, str]] = []
 
-    for idx, row in df.iterrows():
+    for row_id, (idx, row) in enumerate(df.iterrows()):
         row_label = site_label(row, idx)
-        row_id = site_identifier(row, idx)
-        log.info("── Row %s ──", row_label)
+        log.info("── Row %s (site_id=%d) ──", row_label, row_id)
 
         # Resolve dates
         row_start = global_start
@@ -791,6 +853,9 @@ def main(argv=None):
         # Longitude / latitude of the input point (preserved in the output)
         lon, lat = extract_lonlat(row, wkt_str, geom_type)
 
+        # Every column of the original input file for this row, preserved as-is
+        original_row = row.to_dict()
+
         log.info(
             "  %s | EPSG:%d | %s → %s | vars: %s | fmt: %s",
             geom_type, args.epsg, row_start, row_end,
@@ -808,7 +873,7 @@ def main(argv=None):
                 output_format=args.output_format,
                 timeout=args.timeout,
             )
-            chunks.append((row_id, row_label, lon, lat, raw))
+            chunks.append((row_id, row_label, lon, lat, raw, original_row))
             log.info("  Fetched %d bytes for '%s'.", len(raw), row_label)
         except RuntimeError as exc:
             log.error("API error for row %s: %s", idx, exc)
