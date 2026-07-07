@@ -3,7 +3,8 @@
 safran_extract.py
 -----------------
 Extract SAFRAN climate data from the GEOSAS OGC-EDR API for one or more
-locations defined in a coordinate file, and produce a SINGLE merged output file.
+locations defined in a coordinate file, and produce a SINGLE merged
+output file.
 
 API standard : OGC Environmental Data Retrieval (EDR) v1.1
 Service URL  : https://api.geosas.fr/edr/collections/safran-isba/
@@ -35,18 +36,21 @@ python safran_extract.py \
 import argparse
 import io
 import json
+import logging
 import os
 import sys
-import logging
 import tempfile
-from datetime import datetime, date
+from datetime import date, datetime
 from pathlib import Path
 
-import pandas as pd
 import geopandas as gpd
+
+import pandas as pd
+
 import requests
+
 from shapely import wkt as shapely_wkt
-from shapely.geometry import Point, MultiPoint
+from shapely.geometry import MultiPoint, Point
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Constants
@@ -64,7 +68,7 @@ VALID_PARAMETERS = [
     "T_Q",           # Mean daily air temperature (°C)
     "TINF_H_Q",      # Min of 24 hourly temperatures (°C)
     "TSUP_H_Q",      # Max of 24 hourly temperatures (°C)
-    "ETP_Q",         # Daily potential evapotranspiration – Penman-Monteith (mm)
+    "ETP_Q",         # Daily potential evapotranspiration – Penman-Monteith (mm)  # noqa: E501
     "PRELIQ_Q",      # Daily liquid precipitation (mm)
     "PRENEI_Q",      # Daily solid precipitation / snowfall (mm)
     "FF_Q",          # Mean daily wind speed at 10 m (m/s)
@@ -90,7 +94,7 @@ DATE_FMT = "%Y-%m-%d"
 
 # Column-name detection used to reshape the API responses into the target
 # output layout:  site_name, date, <variables…>, longitude, latitude
-TIME_COL_CANDIDATES = ("time", "date", "datetime", "valid_time", "t", "phenomenontime")
+TIME_COL_CANDIDATES = ("time", "date", "datetime", "valid_time", "t", "phenomenontime")  # noqa: E501
 LON_COL_CANDIDATES = ("longitude", "lon", "long", "x")
 LAT_COL_CANDIDATES = ("latitude", "lat", "y")
 # Coordinate / housekeeping columns coming from the API that we drop, because
@@ -135,10 +139,10 @@ def validate_date_range(start: date, end: date, context: str = "") -> None:
         )
     if end > SAFRAN_NEWEST_DATE:
         raise ValueError(
-            f"End date {end}{ctx} is in the future ({SAFRAN_NEWEST_DATE} is today)."
+            f"End date {end}{ctx} is in the future ({SAFRAN_NEWEST_DATE} is today)."  # noqa: E501
         )
     if start > end:
-        raise ValueError(f"Start date {start}{ctx} is after end date {end}{ctx}.")
+        raise ValueError(f"Start date {start}{ctx} is after end date {end}{ctx}.")  # noqa: E501
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Geometry helpers
@@ -165,27 +169,27 @@ def build_geometry_from_row(row: pd.Series) -> tuple[str, str]:
             geom = shapely_wkt.loads(str(row[col]))
             return geom.wkt, geom.geom_type.upper()
 
-    lat_col = next((c for c in row.index if c.lower() in ("latitude", "lat")), None)
-    lon_col = next((c for c in row.index if c.lower() in ("longitude", "lon", "long")), None)
+    lat_col = next((c for c in row.index if c.lower() in ("latitude", "lat")), None)  # noqa: E501
+    lon_col = next((c for c in row.index if c.lower() in ("longitude", "lon", "long")), None)  # noqa: E501
     if lat_col and lon_col:
         geom = Point(float(row[lon_col]), float(row[lat_col]))
         return geom.wkt, "POINT"
 
     raise ValueError(
         "Cannot determine geometry from row. "
-        "Provide 'latitude'+'longitude' columns, or a 'geometry'/'wkt' column with WKT text."
+        "Provide 'latitude'+'longitude' columns, or a 'geometry'/'wkt' column with WKT text."  # noqa: E501
     )
 
 
-def extract_lonlat(row: pd.Series, wkt_str: str, geom_type: str) -> tuple[float | None, float | None]:
+def extract_lonlat(row: pd.Series, wkt_str: str, geom_type: str) -> tuple[float | None, float | None]:  # noqa: E501
     """
     Return a representative (longitude, latitude) for the row, preferring the
     explicit lat/lon columns of the INPUT file (so the exact input coordinates
     are preserved in the output), and falling back to the geometry otherwise.
     """
-    lat_col = next((c for c in row.index if c.lower() in ("latitude", "lat")), None)
-    lon_col = next((c for c in row.index if c.lower() in ("longitude", "lon", "long")), None)
-    if lat_col and lon_col and pd.notna(row[lat_col]) and pd.notna(row[lon_col]):
+    lat_col = next((c for c in row.index if c.lower() in ("latitude", "lat")), None)  # noqa: E501
+    lon_col = next((c for c in row.index if c.lower() in ("longitude", "lon", "long")), None)  # noqa: E501
+    if lat_col and lon_col and pd.notna(row[lat_col]) and pd.notna(row[lon_col]):  # noqa: E501
         try:
             return float(row[lon_col]), float(row[lat_col])
         except (TypeError, ValueError):
@@ -212,7 +216,7 @@ def detect_dominant_geometry(df: pd.DataFrame) -> str | None:
             sample = df[col].dropna()
             if not sample.empty:
                 try:
-                    return shapely_wkt.loads(str(sample.iloc[0])).geom_type.upper()
+                    return shapely_wkt.loads(str(sample.iloc[0])).geom_type.upper()  # noqa: E501
                 except Exception:
                     pass
     if any(c.lower() in df.columns for c in ("latitude", "lat")):
@@ -243,7 +247,7 @@ def load_coordinate_file(filepath: str, fmt: str = None) -> pd.DataFrame:
     elif suffix in (".xlsx", ".xls"):
         df = pd.read_excel(filepath)
     else:
-        log.warning("Unknown extension '%s', trying auto-detect (sep=None).", suffix)
+        log.warning("Unknown extension '%s', trying auto-detect (sep=None).", suffix)  # noqa: E501
         df = pd.read_csv(filepath, sep=None, engine="python")
 
     log.info("Loaded tabular file '%s': %d row(s).", path.name, len(df))
@@ -317,7 +321,7 @@ def prepare_api_geometry(wkt_str: str, geom_type: str) -> tuple[str, dict]:
         coords = list(geom.coords)
         multipoint = MultiPoint(coords)
         log.info(
-            "  LINESTRING → converting %d vertices to MULTIPOINT for /position",
+            "  LINESTRING → converting %d vertices to MULTIPOINT for /position",  # noqa: E501
             len(coords),
         )
         return "position", {"coords": multipoint.wkt}
@@ -373,9 +377,9 @@ def standardize_table(
     cols_lower = {c.lower(): c for c in df.columns}
 
     # 1. Time → date (date only, no time-of-day)
-    time_col = next((cols_lower[k] for k in TIME_COL_CANDIDATES if k in cols_lower), None)
+    time_col = next((cols_lower[k] for k in TIME_COL_CANDIDATES if k in cols_lower), None)  # noqa: E501
     if time_col is not None:
-        df["date"] = pd.to_datetime(df[time_col], errors="coerce").dt.strftime("%Y-%m-%d")
+        df["date"] = pd.to_datetime(df[time_col], errors="coerce").dt.strftime("%Y-%m-%d")  # noqa: E501
         if time_col != "date":
             df = df.drop(columns=[time_col])
     else:
@@ -383,7 +387,7 @@ def standardize_table(
 
     # 2. Drop the API's own coordinate/housekeeping columns (the original
     #    file's columns, and/or the longitude/latitude below, are used instead)
-    drop_cols = [c for c in df.columns if c.lower() in DROP_COORD_CANDIDATES and c != "date"]
+    drop_cols = [c for c in df.columns if c.lower() in DROP_COORD_CANDIDATES and c != "date"]  # noqa: E501
     df = df.drop(columns=drop_cols, errors="ignore")
 
     # 3. Remaining non-date columns are the fetched climate variables
@@ -409,7 +413,7 @@ def standardize_table(
     for key, value in orig_items:
         df[key] = value
 
-    ordered = ["site_id"] + [k for k, _ in orig_items] + ["date"] + variable_cols
+    ordered = ["site_id"] + [k for k, _ in orig_items] + ["date"] + variable_cols  # noqa: E501
 
     # 6. longitude/latitude convenience columns, only if not already present
     #    among the original file's own columns
@@ -433,10 +437,11 @@ def standardize_table(
 # ─────────────────────────────────────────────────────────────────────────────
 
 
-def merge_csv(chunks: list[tuple[int, str, float | None, float | None, bytes, dict]]) -> bytes:
+def merge_csv(chunks: list[tuple[int, str, float | None, float | None, bytes, dict]]) -> bytes:  # noqa: E501
     """
     Parse each CSV response and reshape it to:
-        site_id, <original input columns…>, date, <variables…>[, longitude, latitude]
+        site_id, <original input columns…>, date, <variables…>[,
+        longitude, latitude]
     then concatenate all sites into a single long-format table.
     """
     dfs = []
@@ -445,9 +450,9 @@ def merge_csv(chunks: list[tuple[int, str, float | None, float | None, bytes, di
             df = pd.read_csv(io.BytesIO(raw))
             df = standardize_table(df, sid, original_row, lon, lat)
             dfs.append(df)
-            log.debug("  Parsed CSV for '%s': %d rows × %d cols", label, *df.shape)
+            log.debug("  Parsed CSV for '%s': %d rows × %d cols", label, *df.shape)  # noqa: E501
         except Exception as exc:
-            log.warning("Could not parse CSV response for site '%s': %s", label, exc)
+            log.warning("Could not parse CSV response for site '%s': %s", label, exc)  # noqa: E501
 
     if not dfs:
         raise ValueError("No valid CSV responses could be parsed for merging.")
@@ -460,7 +465,7 @@ def merge_csv(chunks: list[tuple[int, str, float | None, float | None, bytes, di
     return merged.to_csv(index=False).encode("utf-8")
 
 
-def merge_parquet(chunks: list[tuple[int, str, float | None, float | None, bytes, dict]]) -> bytes:
+def merge_parquet(chunks: list[tuple[int, str, float | None, float | None, bytes, dict]]) -> bytes:  # noqa: E501
     """
     Same layout as merge_csv but written to a single parquet file.
     """
@@ -471,10 +476,10 @@ def merge_parquet(chunks: list[tuple[int, str, float | None, float | None, bytes
             df = standardize_table(df, sid, original_row, lon, lat)
             dfs.append(df)
         except Exception as exc:
-            log.warning("Could not parse parquet response for site '%s': %s", label, exc)
+            log.warning("Could not parse parquet response for site '%s': %s", label, exc)  # noqa: E501
 
     if not dfs:
-        raise ValueError("No valid parquet responses could be parsed for merging.")
+        raise ValueError("No valid parquet responses could be parsed for merging.")  # noqa: E501
 
     merged = pd.concat(dfs, ignore_index=True)
     log.info("Merged %d site(s) → %d total rows.", len(dfs), len(merged))
@@ -483,7 +488,7 @@ def merge_parquet(chunks: list[tuple[int, str, float | None, float | None, bytes
     return buf.getvalue()
 
 
-def merge_coveragejson(chunks: list[tuple[int, str, float | None, float | None, bytes, dict]]) -> bytes:
+def merge_coveragejson(chunks: list[tuple[int, str, float | None, float | None, bytes, dict]]) -> bytes:  # noqa: E501
     """
     Wrap each CoverageJSON object in a CoverageCollection, adding
     'site_id' and 'site_name' properties, plus every column from the
@@ -508,20 +513,20 @@ def merge_coveragejson(chunks: list[tuple[int, str, float | None, float | None, 
                 cov["properties"][key] = value
             coverages.append(cov)
         except Exception as exc:
-            log.warning("Could not parse CoverageJSON for site '%s': %s", label, exc)
+            log.warning("Could not parse CoverageJSON for site '%s': %s", label, exc)  # noqa: E501
 
     if not coverages:
-        raise ValueError("No valid CoverageJSON responses could be parsed for merging.")
+        raise ValueError("No valid CoverageJSON responses could be parsed for merging.")  # noqa: E501
 
     collection = {
         "type": "CoverageCollection",
         "coverages": coverages,
     }
-    log.info("Merged %d coverage(s) into a CoverageCollection.", len(coverages))
+    log.info("Merged %d coverage(s) into a CoverageCollection.", len(coverages))  # noqa: E501
     return json.dumps(collection, indent=2, ensure_ascii=False).encode("utf-8")
 
 
-def merge_netcdf(chunks: list[tuple[int, str, float | None, float | None, bytes, dict]]) -> bytes:
+def merge_netcdf(chunks: list[tuple[int, str, float | None, float | None, bytes, dict]]) -> bytes:  # noqa: E501
     """
     Concatenate netCDF responses along a new 'site' dimension using xarray.
 
@@ -550,7 +555,7 @@ def merge_netcdf(chunks: list[tuple[int, str, float | None, float | None, bytes,
             tmp_paths.append(tmp.name)
             try:
                 ds = xr.open_dataset(tmp.name)
-                # Add scalar 'site' / 'site_id' coords so concat creates the dimension
+                # Add scalar 'site' / 'site_id' coords so concat creates the dimension  # noqa: E501
                 extra_coords = {}
                 for key, value in original_row.items():
                     if key in ("site", "site_id"):
@@ -562,12 +567,12 @@ def merge_netcdf(chunks: list[tuple[int, str, float | None, float | None, bytes,
                     site=str(label), site_id=int(sid), **extra_coords
                 ).expand_dims("site")
                 datasets.append(ds)
-                log.debug("  Opened netCDF for '%s': %s", label, list(ds.data_vars))
+                log.debug("  Opened netCDF for '%s': %s", label, list(ds.data_vars))  # noqa: E501
             except Exception as exc:
-                log.warning("Could not open netCDF for site '%s': %s", label, exc)
+                log.warning("Could not open netCDF for site '%s': %s", label, exc)  # noqa: E501
 
         if not datasets:
-            raise ValueError("No valid netCDF responses could be opened for merging.")
+            raise ValueError("No valid netCDF responses could be opened for merging.")  # noqa: E501
 
         merged = xr.concat(datasets, dim="site")
         log.info(
@@ -609,15 +614,16 @@ MERGE_FUNCTIONS = {
 def build_output_path(base_output: str, fmt: str) -> str:
     """Return the output file path.
 
-    Galaxy passes a fully managed path with an extension (e.g. dataset_uuid.dat)
-    — write to it exactly as given so Galaxy can find the file afterwards.
-    When called from the CLI without any extension, the correct format extension
-    is appended automatically (e.g. safran_output → safran_output.csv).
+    Galaxy passes a fully managed path with an extension (e.g.
+    dataset_uuid.dat) — write to it exactly as given so Galaxy can find
+    the file afterwards. When called from the CLI without any
+    extension, the correct format extension is appended automatically
+    (e.g. safran_output → safran_output.csv).
     """
     base = Path(base_output)
     base.parent.mkdir(parents=True, exist_ok=True)
     if base.suffix:
-        # Already has an extension (Galaxy .dat or explicit CLI path) → use as-is.
+        # Already has an extension (Galaxy .dat or explicit CLI path) → use as-is.  # noqa: E501
         return str(base)
     # No extension → CLI convenience: append the right one.
     ext = FORMAT_EXTENSIONS.get(fmt, fmt.lower())
@@ -638,10 +644,10 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="safran_extract.py",
         description=(
-            "Extract SAFRAN climate reanalysis data from the GEOSAS OGC-EDR API\n"
+            "Extract SAFRAN climate reanalysis data from the GEOSAS OGC-EDR API\n"  # noqa: E501
             "and produce a SINGLE merged output file for all sites.\n\n"
-            "SAFRAN is a French meteorological gridded reanalysis (8 km) produced\n"
-            "by Météo-France, covering metropolitan France from 1958-08-01 to\n"
+            "SAFRAN is a French meteorological gridded reanalysis (8 km) produced\n"  # noqa: E501
+            "by Météo-France, covering metropolitan France from 1958-08-01 to\n"  # noqa: E501
             "near-present (updated monthly).\n\n"
             "API : https://api.geosas.fr/edr/collections/safran-isba/\n"
             "Docs: https://geosas.fr/web/?page_id=6345\n\n"
@@ -651,7 +657,7 @@ def build_parser() -> argparse.ArgumentParser:
             "  POLYGON            → /cube      (bounding box extracted)\n\n"
             "Merge strategy per format:\n"
             "  CSV / parquet  → long-format table, 'site_name' column added\n"
-            "  CoverageJSON   → OGC CoverageCollection wrapping all coverages\n"
+            "  CoverageJSON   → OGC CoverageCollection wrapping all coverages\n"  # noqa: E501
             "  netCDF4        → xarray.concat along a new 'site' dimension"
         ),
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -676,12 +682,12 @@ def build_parser() -> argparse.ArgumentParser:
             "    0,Montpellier,43.6047,3.8722,Occitanie,1995-01-02,2.7\n"
             "    1,Paris,48.8566,2.3522,Ile-de-France,1995-01-01,3.2\n"
             "    ...\n\n"
-            "Every column from the input file is kept as-is (repeated for each\n"
-            "date). 'site_id' is always a 0-based sequential integer assigned\n"
+            "Every column from the input file is kept as-is (repeated for each\n"  # noqa: E501
+            "date). 'site_id' is always a 0-based sequential integer assigned\n"  # noqa: E501
             "in row processing order — it ignores any 'id'/'site_id' column\n"
             "that may already be present in the input file. 'longitude' and\n"
             "'latitude' are added only if the input file didn't already have\n"
-            "them (e.g. for POLYGON/LINESTRING inputs using a 'geometry'/'wkt'\n"
+            "them (e.g. for POLYGON/LINESTRING inputs using a 'geometry'/'wkt'\n"  # noqa: E501
             "column instead of lat/lon).\n\n"
             "CITATIONS\n"
             "---------\n"
@@ -700,7 +706,7 @@ def build_parser() -> argparse.ArgumentParser:
         help=(
             "One or more SAFRAN variable codes (space-separated). "
             "Available: " + ", ".join(VALID_PARAMETERS) + ". "
-            "NOTE: liquid rain = PRELIQ_Q; min/max temp = TINF_H_Q / TSUP_H_Q. "
+            "NOTE: liquid rain = PRELIQ_Q; min/max temp = TINF_H_Q / TSUP_H_Q. "  # noqa: E501
             "Example: --parameters T_Q ETP_Q PRELIQ_Q"
         ),
     )
@@ -711,12 +717,12 @@ def build_parser() -> argparse.ArgumentParser:
         "--coord-file", "-c",
         required=True, metavar="FILE",
         help=(
-            "Coordinate / geometry file (CSV, TSV, Excel, Shapefile, GeoPackage, GeoJSON). "
+            "Coordinate / geometry file (CSV, TSV, Excel, Shapefile, GeoPackage, GeoJSON). "  # noqa: E501
             "For CSV/Excel: 'latitude'+'longitude' columns for POINTs, "
             "or 'geometry'/'wkt' column with WKT text for polygons/lines. "
-            "A 'site_name' (or 'name'/'id') column is used to label each site. "
+            "A 'site_name' (or 'name'/'id') column is used to label each site. "  # noqa: E501
             "Geometry type is auto-detected. "
-            "Optional 'begin_date'/'end_date' columns (YYYY-MM-DD) override dates per row."
+            "Optional 'begin_date'/'end_date' columns (YYYY-MM-DD) override dates per row."  # noqa: E501
         ),
     )
 
@@ -725,7 +731,7 @@ def build_parser() -> argparse.ArgumentParser:
         default=None, metavar="YYYY-MM-DD",
         help=(
             f"Global start date. Cannot be before {SAFRAN_OLDEST_DATE}. "
-            f"Default if omitted and no 'begin_date' column: {DEFAULT_START_DATE}."
+            f"Default if omitted and no 'begin_date' column: {DEFAULT_START_DATE}."  # noqa: E501
         ),
     )
 
@@ -767,7 +773,7 @@ def build_parser() -> argparse.ArgumentParser:
             "Output file path (extension is added automatically if omitted). "
             "All sites are merged into this single file. "
             "The parent directory is created if it does not exist. "
-            "Default: safran_output  →  safran_output.csv (or .json / .nc / .parquet)"
+            "Default: safran_output  →  safran_output.csv (or .json / .nc / .parquet)"  # noqa: E501
         ),
     )
 
@@ -789,20 +795,20 @@ def main(argv=None):
     args = parser.parse_args(argv)
 
     # ── 1. Parse global dates ───────────────────────────────────────────────
-    global_start = parse_date(args.start_date, "start-date") if args.start_date else None
-    global_end = parse_date(args.end_date, "end-date") if args.end_date else None
+    global_start = parse_date(args.start_date, "start-date") if args.start_date else None  # noqa: E501
+    global_end = parse_date(args.end_date, "end-date") if args.end_date else None  # noqa: E501
 
     # ── 2. Load coordinate file ─────────────────────────────────────────────
     df = load_coordinate_file(args.coord_file)
 
-    log.info("Dominant geometry: %s", detect_dominant_geometry(df) or "unknown")
+    log.info("Dominant geometry: %s", detect_dominant_geometry(df) or "unknown")  # noqa: E501
 
     col_lower = {c.lower(): c for c in df.columns}
-    col_begin = col_lower.get("begin_date") or col_lower.get("start_date") or col_lower.get("date_debut")
+    col_begin = col_lower.get("begin_date") or col_lower.get("start_date") or col_lower.get("date_debut")  # noqa: E501
     col_end = col_lower.get("end_date") or col_lower.get("date_fin")
 
     # ── 3. Fetch data for every row, collect raw responses ──────────────────
-    # Each chunk: (site_id, site_label, longitude, latitude, raw_bytes, original_row)
+    # Each chunk: (site_id, site_label, longitude, latitude, raw_bytes, original_row)  # noqa: E501
     # site_id is a 0-based sequential integer (row processing order).
     # original_row holds every column of the input coordinate/geometry file
     # for that row, so it can be preserved as-is in the merged output.
@@ -818,21 +824,21 @@ def main(argv=None):
         row_end = global_end
 
         if col_begin and pd.notna(row.get(col_begin)):
-            row_start = parse_date(str(row[col_begin]), f"begin_date row {idx}")
+            row_start = parse_date(str(row[col_begin]), f"begin_date row {idx}")  # noqa: E501
         if col_end and pd.notna(row.get(col_end)):
             row_end = parse_date(str(row[col_end]), f"end_date row {idx}")
 
         if row_start is None:
             if col_begin is None and global_start is None:
                 parser.error(
-                    "No --start-date provided and no 'begin_date' column in the file."
+                    "No --start-date provided and no 'begin_date' column in the file."  # noqa: E501
                 )
             row_start = parse_date(DEFAULT_START_DATE)
 
         if row_end is None:
             if col_end is None and global_end is None:
                 parser.error(
-                    "No --end-date provided and no 'end_date' column in the file."
+                    "No --end-date provided and no 'end_date' column in the file."  # noqa: E501
                 )
             row_end = parse_date(DEFAULT_END_DATE)
 
@@ -902,7 +908,7 @@ def main(argv=None):
     log.info("Done. %d/%d site(s) merged into '%s'.", success, total, out_path)
 
     if errors:
-        log.warning("%d site(s) failed and were excluded from the output:", len(errors))
+        log.warning("%d site(s) failed and were excluded from the output:", len(errors))  # noqa: E501
         for row_id, msg in errors:
             log.warning("  Row %s — %s", row_id, msg)
         sys.exit(1)
