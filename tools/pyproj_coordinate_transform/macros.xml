@@ -379,7 +379,7 @@
   <!-- digit) - per review comments from Marie59 on PR #277.         -->
   <!-- ============================================================ -->
   <xml name="column_name_validator">
-    <validator type="regex" message="Column name may only contain letters, digits, and underscores, and cannot start with a digit.">^[A-Za-z_][A-Za-z0-9_]*$</validator>
+    <validator type="regex" message="Column name may only contain letters, digits, and underscores, and cannot start with a digit.">^([A-Za-z_][A-Za-z0-9_]*)?$</validator>
   </xml>
 
 </macros>
