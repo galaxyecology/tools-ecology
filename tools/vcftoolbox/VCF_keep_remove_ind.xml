@@ -15,6 +15,7 @@
 
     <command detect_errors="exit_code"><![CDATA[
         mkdir -p vcf_directory &&
+        mkdir -p vcf_tmp_preprocessing &&
         
         bash '$__tool_directory__/VCF_keep_remove_ind.sh'
             --input '${vcf_input}'
@@ -56,6 +57,17 @@
 
         <test>
             <param name="vcf_input" value="test_vcf.vcf"/>
+            <param name="list_ind" value="ind_list.txt"/>
+            <param name="action" value="remove"/>
+            <output name="new_vcf" count="1">
+                <assert_contents>
+                    <not_has_text text="GA-2_2021_A11-01-m21_1"/>
+                </assert_contents>
+            </output>
+        </test>
+
+        <test>
+            <param name="vcf_input" value="test_vcf_without_contigs.vcf"/>
             <param name="list_ind" value="ind_list.txt"/>
             <param name="action" value="remove"/>
             <output name="new_vcf" count="1">

@@ -1,0 +1,24 @@
+name: genetic_clustering
+owner: ecology
+description: Tools for genetic population structure inference using LEA (sNMF) and DPAC (K-means).
+homepage_url: https://github.com/GINAMO-EBVs/ginamo-workflows/genetic_clustering
+long_description: |
+  This tool provides advanced methods for inferring genetic clusters and individual ancestry.
+  It includes LEA (sNMF) for likelihood-nased ancestry estimation with Fst validation,
+  and DAPC for multivariate analysis following Thia (2022) guidelines for PCA axis retention.
+  Both tools support VCF and SSR inputs and produce standardized membership plots.
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/genetic_clustering
+type: unrestricted
+categories:
+- Ecology
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "{{ tool_name }}"
+suite: 
+  name: "suite_genetic_clustering"
+  description: TOols for genetic population structure inference using LEA (sNMF) and DAPC (k-means).
+  long_description: |
+    This toolbox provides advanced methods for inferring genetic clusters and individual ancestry. 
+    It includes LEA (sNMF) for likelihood-based ancestry estimation with Fst validation, 
+    and DAPC for multivariate analysis following Thia (2022) guidelines for PCA axis retention. 
+    Both tools support VCF and SSR inputs and produce standardized membership plots.

@@ -87,14 +87,28 @@ def parse_arguments() -> argparse.Namespace:
         help="Show bounding boxes on annotated output: 'true' or 'false'",
     )
     parser.add_argument(
+        "--imgsz",
+        type=int,
+        default=1036,
+        help="Inference image size (pixels). Reduce to 644 or 518 to "
+        " lower GPU memory usage on large files.",
+    )
+    parser.add_argument(
         "--coco_video_mode",
         type=str,
-        default="no_coco",
-        choices=["video", "frames", "no_coco"],
-        help="For video input with COCO output: 'video' annotates the video"
-        "as a single source, 'frames' extracts each processed frame as an "
-        "individual image and annotates per frame, 'no_coco' disables "
-        "COCO output",
+        default="video",
+        choices=["video"],
+        help="just video",
+    )
+    parser.add_argument(
+        "--output_frames",
+        type=str,
+        default="none",
+        choices=["none", "annotated", "raw", "both"],
+        help="For video input: extract individual frames as images. "
+        "'annotated' saves frames with segmentation overlays, "
+        "'raw' saves original frames without annotations, "
+        "'both' saves both versions.",
     )
     return parser.parse_args()
 
@@ -117,7 +131,10 @@ def convert_avi_to_mp4(directory_path, quality):
     print(f"Converting: {avi_file_path} -> {output_path}.mp4")
     audio_args = "-an"  # remove audio
     if quality == "copy":
-        video_args = "-c:v copy"  # copy video stream without re-encoding
+        video_args = (
+            "-c:v libx264 -crf 18 -preset slow "
+            "-profile:v high -pix_fmt yuv420p"
+        )
     else:
         video_args = (
             f"-c:v libx264 -b:v {quality} "
@@ -509,6 +526,59 @@ def create_yolo_video_output(
     print(f"✓ Created {saved_idx} frames and labels in {output_dir}")
 
 
+def extract_video_frames(
+    video_path: str,
+    stride: int,
+    results: List[Any],
+    raw_dir: Path = None,
+    annotated_dir: Path = None,
+    show_bbox: bool = True,
+) -> None:
+    """Extract video frames as images, annotated and/or raw."""
+    if raw_dir:
+        raw_dir.mkdir(parents=True, exist_ok=True)
+    if annotated_dir:
+        annotated_dir.mkdir(parents=True, exist_ok=True)
+
+    cap = cv2.VideoCapture(video_path)
+    if not cap.isOpened():
+        raise RuntimeError(f"Failed to open video: {video_path}")
+
+    video_name = Path(video_path).stem
+    frame_idx = 1 if stride > 1 else 0
+    saved_idx = 0
+
+    print(f"Extracting frames (stride={stride})...")
+
+    while cap.isOpened():
+        ret, frame = cap.read()
+        if not ret:
+            break
+
+        if frame_idx % stride == 0:
+            if saved_idx >= len(results):
+                print(f"Warning: No result available for frame {frame_idx}")
+                break
+
+            frame_name = f"{video_name}_frame_{frame_idx:06d}.jpg"
+
+            if raw_dir is not None:
+                cv2.imwrite(str(raw_dir / frame_name), frame)
+
+            if annotated_dir is not None:
+                annotated_frame = results[saved_idx].plot(boxes=show_bbox)
+                cv2.imwrite(str(annotated_dir / frame_name), annotated_frame)
+
+            saved_idx += 1
+            if saved_idx % 10 == 0:
+                print(f"  Extracted {saved_idx} frames...")
+
+        frame_idx += 1
+
+    cap.release()
+    print(f"✓ Extracted {saved_idx} frames")
+
+
 def create_metadata(
     text_prompts: List[str], conf_threshold: float, model_path: str
 ) -> Dict[str, Any]:
@@ -580,7 +650,8 @@ def main():
         "task": "segment",
         "mode": "predict",
         "model": args.model,
-        "half": False,  # Use FP16 for faster inference
+        "half": False,
+        "imgsz": args.imgsz,
         "save": True,
         "save_dir": str(outputs_annotated),
     }
@@ -614,6 +685,30 @@ def main():
     if is_video(file_paths[0]):
         convert_avi_to_mp4(outputs_annotated, args.quality)
 
+        if args.output_frames != "none":
+            print(
+                f"\n→ Extracting video frames "
+                f"(mode: {args.output_frames})..."
+            )
+            raw_dir = (
+                outdir / "frames_raw"
+                if args.output_frames in ("raw", "both")
+                else None
+            )
+            annotated_dir = (
+                outdir / "frames_annotated"
+                if args.output_frames in ("annotated", "both")
+                else None
+            )
+            extract_video_frames(
+                file_paths[0],
+                args.vid_stride,
+                results,
+                raw_dir=raw_dir,
+                annotated_dir=annotated_dir,
+                show_bbox=show_bbox,
+            )
+
     if not results:
         raise RuntimeError("SAM3 returned no results")
 
@@ -630,7 +725,7 @@ def main():
     if "coco" in output_formats:
         print("\n→ Converting to COCO format...")
 
-        if is_video(file_paths[0]) and args.coco_video_mode == "frames":
+        if is_video(file_paths[0]) and args.coco_video_mode == "video":
             print("  Mode: per-frame (extracting individual frames)...")
             coco_output = create_coco_video_frames_output(
                 results,

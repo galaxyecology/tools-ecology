@@ -15,6 +15,7 @@
 
     <command detect_errors="exit_code"><![CDATA[
         mkdir -p vcf_split_directory &&
+        mkdir -p vcf_tmp_preprocessing &&
 
         bash '$__tool_directory__/split_vcf_by_pop.sh' 
             --input '${vcf_input}'
@@ -51,6 +52,31 @@
                 </element>
 
                 <element name="test_vcf_S21_2021">
+                    <assert_contents>
+                        <has_text text="vcf_split_directory/Ind_list_S21_2021.txt"/>
+                        <has_n_lines n="516" delta="2"/>
+                        <has_text text="S21_2021_S21-03-m21_1"/>
+                        <not_has_text text="GB-2_2022_CCR14-15-m22_1"/>
+                    </assert_contents>
+                </element>
+                    
+            </output_collection>
+        </test>
+
+        <test>
+            <param name="vcf_input" value="test_vcf_without_contigs.vcf"/>
+            <param name="indpop" value="test_pop.txt"/>
+            <output_collection name="vcf_split" type="list" count="9">
+                <element name="test_vcf_without_contigs_GB-1_2022">
+                    <assert_contents>
+                        <has_text text="vcf_split_directory/Ind_list_GB-1_2022.txt"/>
+                        <has_n_lines n="516" delta="2"/>
+                        <has_text text="GB-1_2022_CCR7-03-m22_1"/>
+                        <not_has_text text="GB-2_2022_CCR14-15-m22_1"/>
+                    </assert_contents>
+                </element>
+
+                <element name="test_vcf_without_contigs_S21_2021">
                     <assert_contents>
                         <has_text text="vcf_split_directory/Ind_list_S21_2021.txt"/>
                         <has_n_lines n="516" delta="2"/>

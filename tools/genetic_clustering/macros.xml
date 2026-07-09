@@ -1,0 +1,45 @@
+<macros>
+    <token name="@TOOL_VERSION@">0.1.0</token>
+    <token name="@PROFILE@">25.0</token>
+
+    <xml name="requirements_commun">
+        <requirement type="package" version="4.0.2">r-ggplot2</requirement>
+        <requirement type="package" version="4.5.2">r-base</requirement>
+        <requirement type="package" version="1.2.1">r-dplyr</requirement>
+    </xml>
+
+    <xml name="inputs_commun">
+        <param name="input_data" type="data" format="vcf,tabular"
+               label="Upload your genetic data"
+               help="File containing SNP data in VCF format or SSR/microsatellite data in tabular format (see help section)."/>
+        <param name="input_format" type="select" label="Select your data format">
+            <option value="VCF">VCF</option>
+            <option value="SSR">SSR</option>
+        </param>
+    </xml>
+
+    <xml name="citations_commun">
+        <citation type="bibtex">
+            @manual{VCFv45,
+                title        = {The Variant Call Format (VCF) Specification, Version 4.5},
+                author       = {{HTS-specs team}},
+                organization = {Global Alliance for Genomics and Health},
+                year         = {2024},
+                url          = {https://samtools.github.io/hts-specs/VCFv4.5.pdf},
+                note         = {Accessed: 2025-02-11}
+            }
+        </citation>
+        <citation type="bibtex">
+            @Book{,
+                author = {Hadley Wickham},
+                title = {ggplot2: Elegant Graphics for Data Analysis},
+                publisher = {Springer-Verlag New York},
+                year = {2016},
+                isbn = {978-3-319-24277-4},
+                url = {https://ggplot2.tidyverse.org},
+            }
+        </citation>
+        <citation type="doi">10.32614/CRAN.package.vcfR</citation>
+        <citation type="doi">10.32614/CRAN.package.dplyr</citation>
+    </xml>
+</macros>

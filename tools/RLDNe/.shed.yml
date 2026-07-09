@@ -1,0 +1,16 @@
+name: effective_population_size_ld_method
+owner: ecology
+description: Tool to estimate the LDNe using NeEstimator via the RLDNe package.
+homepage_url: https://github.com/GINAMO-EBVs/ginamo-workflows/RLDNe
+long_description: |
+  Tools for estimating contemporary effective population size using the linkage disequilibrium method. 
+  This tool uses NeEstimator via the RLDNe package. 
+  It also allows for the application of a correction for pseudoreplication and the calculation of harmonic means for Ne, as well as confidence intervals between subsamples.
+  
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/RLDNe
+type: unrestricted
+categories:
+- Ecology 
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "{{ tool_name }}"

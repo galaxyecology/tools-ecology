@@ -1,0 +1,443 @@
+<tool id="dapc_kmeans" name="Discriminant analysis of principal components (DAPC) to genotype data" version="@TOOL_VERSION@" profile="@PROFILE@">
+
+  <description>
+    using Kmeans or a k-fixed (SNPs and SSRs).
+  </description>
+
+  <macros>
+        <import>macros.xml</import>
+    </macros>
+
+  <requirements>
+    <expand macro="requirements_commun"/>
+    <requirement type="package" version="2.1.11">r-adegenet</requirement>
+    <requirement type="package" version="1.7_23">r-ade4</requirement>
+    <requirement type="package" version="1.15.0">r-vcfr</requirement>
+  </requirements>
+
+  <required_files>
+        <include path="dapc_kmeans.R" />
+    </required_files>
+
+  <command detect_errors="exit_code"><![CDATA[
+    mkdir -p outputs &&
+    Rscript '$__tool_directory__/dapc_kmeans.R'
+      --input  '$input_data'
+      --format '$input_format'
+      #if str($k_mode.k_mode_sel) == 'fixed':
+        --k-fixed '$k_mode.k_fixed'
+      #else:
+        --k-min '$k_mode.k_min'
+        --k-max '$k_mode.k_max'
+        --n-start '$k_mode.n_start'
+        --n-runs '$k_mode.n_runs'
+      #end if
+      --n-pca-max '$n_pca_max'
+      #if str($seed_mode.seed_mode_sel) == 'random':
+        --seed 'NULL'
+      #else if str($seed_mode.seed_mode_sel) == 'custom':
+        --seed '$seed_mode.seed_value'
+      #else:
+        --seed '42'
+      #end if
+  ]]></command>
+
+  <inputs>
+    <expand macro="inputs_commun"/>
+
+    <section name="k_params" title="K parameters" expanded="true">
+
+      <conditional name="k_mode">
+        <param name="k_mode_sel" type="select" label="Method for selecting the number of clusters (K)">
+          <option value="auto" selected="true">Automatic (k-means)</option>
+          <option value="fixed">Fixed</option>
+        </param>
+        <when value="auto">
+          <param name="k_min" type="integer" value="1" min="1" max="20"
+             label="Minimum K"
+             help="Lower limit of the range of K tested."/>
+
+          <param name="k_max" type="integer" value="10" min="2" max="50"
+             label="K maximum (mode auto)"
+             help="Upper limit. Increase if the selected K = K_max." />
+
+          <param name="n_start" type="integer" value="10" min="1" max="100"
+             label="Number of K-means iterations (nstart)"
+             help="Number of random initialisations for K-means. Increasing this value improves stability at the expense of computation time." />
+
+          <param name="n_runs" type="integer" value="10" min="2"
+             label="Number of find.clusters() repetitions (n-runs)"
+             help="Number of independent find.clusters() runs used to compute the confidence interval on the BIC curve. Each run uses a different random seed. More runs produce a more reliable interval but increase computation time." />
+
+        </when>
+        <when value="fixed">
+          <param name="k_fixed" type="integer" value="3" min="2" max="50"
+                 label="Select the value of K"
+                 help="Number of clusters to be used for DAPC." />
+        </when>
+      </conditional>
+    </section>
+
+    <section name="advanced" title="Advanced settings" expanded="false">
+
+      <param name="n_pca_max" type="integer" value="300" min="10"
+             label="Maximum number of PCA axes"
+             help="Maximum number of PCA axes supplied to K-means." />
+      
+      <conditional name="seed_mode">
+        <param name="seed_mode_sel" type="select" label="Random seed"
+               help="Controls reproducibility of K-means initialisations.">
+          <option value="default" selected="true">Fixed — default (42)</option>
+          <option value="custom">Fixed — custom value</option>
+          <option value="random">Random (not reproducible)</option>
+        </param>
+        <when value="default" />
+        <when value="custom">
+          <param name="seed_value" type="integer" value="42" min="0"
+                 label="Seed value"
+                 help="Any positive integer." />
+        </when>
+        <when value="random" />
+      </conditional>
+    </section>
+  </inputs>
+
+  <outputs>
+    <data name="output_ld" from_work_dir="outputs/output_ld.txt" format="tabular" label="${tool.name} - LD scores" />
+    <data name="output_assign" from_work_dir="outputs/output_assign.txt" format="tabular" label="${tool.name} - Assignments" />
+    <data name="output_stats" from_work_dir="outputs/output_stats.txt" format="tabular" label="${tool.name} - Summary stats" />
+    <data name="output_bic" from_work_dir="outputs/output_bic.png" format="png" label="${tool.name} - BIC curve (K selection)">
+      <filter>k_params['k_mode']['k_mode_sel'] == 'auto'</filter>
+    </data>
+    <data name="output_scree" from_work_dir="outputs/output_scree.png" format="png" label="${tool.name} - PCA scree plot" />
+    <data name="output_pca" from_work_dir="outputs/output_pca.png" format="png" label="${tool.name} - PCA figure" />
+    <data name="output_dapc_scatter" from_work_dir="outputs/output_dapc_scatter.png" format="png" label="${tool.name} - DAPC scatter" />
+    <data name="output_posterior" from_work_dir="outputs/output_posterior.png" format="png" label="${tool.name} - Posterior membership" />
+  </outputs>
+
+  <tests>
+    <test expect_num_outputs="8">
+      <param name="input_data"   value="test_VCF_clustering.vcf" />
+      <param name="input_format" value="VCF" />
+      <section name="k_params">
+        <conditional name="k_mode">
+          <param name="k_mode_sel" value="auto" />
+          <param name="k_min"   value="1" />
+          <param name="k_max"   value="10" />
+          <param name="n_start" value="10" />
+          <param name="n_runs" value="10"/>
+        </conditional>
+      </section>
+      <section name="advanced">
+        <param name="n_pca_max" value="100" />
+      </section>
+      <output name="output_stats" ftype="tabular">
+        <assert_contents>
+          <has_n_lines n="26" delta="1"/>
+        </assert_contents>
+      </output>
+      <output name="output_ld" ftype="tabular">
+        <assert_contents>
+          <has_n_lines n="2273" delta="1"/>
+        </assert_contents>
+      </output>
+      <output name="output_assign" ftype="tabular">
+        <assert_contents>
+          <has_n_lines n="2273" delta="1"/>
+          <has_n_columns n="16" delta="1"/>
+        </assert_contents>
+      </output>
+      <output name="output_bic" ftype="png">
+        <assert_contents>
+          <has_image_width width="1050"/>
+          <has_image_height height="750"/>
+        </assert_contents>
+      </output>
+      <output name="output_scree" ftype="png">
+        <assert_contents>
+          <has_image_width width="1200"/>
+          <has_image_height height="750"/>
+        </assert_contents>
+      </output>
+      <output name="output_pca" ftype="png">
+        <assert_contents>
+          <has_image_width width="1200"/>
+          <has_image_height height="900"/>
+        </assert_contents>
+      </output>
+      <output name="output_dapc_scatter" ftype="png">
+        <assert_contents>
+          <has_image_width width="1200"/>
+          <has_image_height height="900"/>
+        </assert_contents>
+      </output>
+      <output name="output_posterior" ftype="png">
+        <assert_contents>
+          <has_image_height height="600"/>
+        </assert_contents>
+      </output>
+    </test>
+
+    <test expect_num_outputs="8">
+      <param name="input_data"   value="test_SSR.txt" />
+      <param name="input_format" value="SSR" />
+      <section name="k_params">
+        <conditional name="k_mode">
+          <param name="k_mode_sel" value="auto" />
+          <param name="k_min"   value="1" />
+          <param name="k_max"   value="10" />
+          <param name="n_start" value="10" />
+          <param name="n_runs" value="10"/>
+        </conditional>
+      </section>
+      <section name="advanced">
+        <param name="n_pca_max" value="100" />
+      </section>
+      <output name="output_stats" ftype="tabular">
+        <assert_contents>
+          <has_n_lines n="25"/>
+        </assert_contents>
+      </output>
+      <output name="output_ld" ftype="tabular">
+        <assert_contents>
+          <has_n_lines n="219"/>
+        </assert_contents>
+      </output>
+      <output name="output_assign" ftype="tabular">
+        <assert_contents>
+          <has_n_lines n="219"/>
+        </assert_contents>
+      </output>
+      <output name="output_bic" ftype="png">
+        <assert_contents>
+          <has_image_width width="1050"/>
+          <has_image_height height="750"/>
+        </assert_contents>
+      </output>
+      <output name="output_scree" ftype="png">
+        <assert_contents>
+          <has_image_width width="1200"/>
+          <has_image_height height="750"/>
+        </assert_contents>
+      </output>
+      <output name="output_pca" ftype="png">
+        <assert_contents>
+          <has_image_width width="1200"/>
+          <has_image_height height="900"/>
+        </assert_contents>
+      </output>
+      <output name="output_dapc_scatter" ftype="png">
+        <assert_contents>
+          <has_image_width width="1200"/>
+          <has_image_height height="900"/>
+        </assert_contents>
+      </output>
+      <output name="output_posterior" ftype="png">
+        <assert_contents>
+          <has_image_height height="600"/>
+        </assert_contents>
+      </output>
+    </test>
+
+    <test expect_num_outputs="7">
+      <param name="input_data"   value="test_VCF_clustering.vcf" />
+      <param name="input_format" value="VCF" />
+      <section name="k_params">
+        <conditional name="k_mode">
+          <param name="k_mode_sel" value="fixed" />
+          <param name="k_fixed" value="3"/>
+        </conditional>
+      </section>
+      <output name="output_stats" ftype="tabular">
+        <assert_contents>
+          <has_n_lines n="26" delta="1"/>
+        </assert_contents>
+      </output>
+      <output name="output_ld" ftype="tabular">
+        <assert_contents>
+          <has_n_lines n="2273" delta="1"/>
+        </assert_contents>
+      </output>
+      <output name="output_assign" ftype="tabular">
+        <assert_contents>
+          <has_n_lines n="2273" delta="1"/>
+        </assert_contents>
+      </output>
+      <output name="output_scree" ftype="png">
+        <assert_contents>
+          <has_image_width width="1200"/>
+          <has_image_height height="750"/>
+        </assert_contents>
+      </output>
+      <output name="output_pca" ftype="png">
+        <assert_contents>
+          <has_image_width width="1200"/>
+          <has_image_height height="900"/>
+        </assert_contents>
+      </output>
+      <output name="output_dapc_scatter" ftype="png">
+        <assert_contents>
+          <has_image_width width="1200"/>
+          <has_image_height height="900"/>
+        </assert_contents>
+      </output>
+      <output name="output_posterior" ftype="png">
+        <assert_contents>
+          <has_image_height height="600"/>
+        </assert_contents>
+      </output>
+    </test>
+
+    <test expect_num_outputs="7">
+      <param name="input_data"   value="test_SSR.txt" />
+      <param name="input_format" value="SSR" />
+      <section name="k_params">
+        <conditional name="k_mode">
+          <param name="k_mode_sel" value="fixed" />
+          <param name="k_fixed" value="3"/>
+        </conditional>
+      </section>
+      <output name="output_stats" ftype="tabular">
+        <assert_contents>
+          <has_n_lines n="26" delta="1"/>
+        </assert_contents>
+      </output>
+      <output name="output_ld" ftype="tabular">
+        <assert_contents>
+          <has_n_lines n="220" delta="1"/>
+        </assert_contents>
+      </output>
+      <output name="output_assign" ftype="tabular">
+        <assert_contents>
+          <has_n_lines n="220" delta="1"/>
+        </assert_contents>
+      </output>
+      <output name="output_scree" ftype="png">
+        <assert_contents>
+          <has_image_width width="1200"/>
+          <has_image_height height="750"/>
+        </assert_contents>
+      </output>
+      <output name="output_pca" ftype="png">
+        <assert_contents>
+          <has_image_width width="1200"/>
+          <has_image_height height="900"/>
+        </assert_contents>
+      </output>
+      <output name="output_dapc_scatter" ftype="png">
+        <assert_contents>
+          <has_image_width width="1200"/>
+          <has_image_height height="900"/>
+        </assert_contents>
+      </output>
+      <output name="output_posterior" ftype="png">
+        <assert_contents>
+          <has_image_height height="600"/>
+        </assert_contents>
+      </output>
+    </test>
+
+  </tests>
+
+  <help><![CDATA[
+
+Usage
+=====
+
+This tool performs a Discriminant Analysis of Principal Components (DAPC) to identify genetic clusters using the R package adegenet (Jombart *et al*. 2010). It is designed to work with SNPs (VCF format) or SSRs (tabular format).
+
+The analysis follows a process in three steps:
+
+**1. Principal Component Analysis**
+
+PCA first reduces the data to a tractable set of orthogonal axes summarising the main axes of genetic variation. For K effective populations, only the first K-1 PC axes carry biologically meaningful structure (Patterson *et al*., 2006).
+
+**2. Clustering**
+
+Groups are identified using K-means clustering applied to the PCA scores, as implemented in the *find.clusters* function of the adegenet package (Jombart, 2008; Jombart & Ahmed, 2011). 
+Two modes are available:
+
+  - *Automatic selection*: K-means is run for a user-defined range of K values (from K-min to K-max). The optimal number of clusters corresponds to the K value with the lowest the Bayesian Information Criterion (BIC), which penalises model complexity and avoids overfitting (Jombart *et al*., 2010). The retained K corresponds to the "elbow" of the BIC curve.
+    To quantify this variability, *find.clusters()* is run **n-runs** independent times, each with a distinct random seed (seed, seed+1, seed+2, …). Every run internally performs **nstart** random initialisations and retains the best one, so the BIC value recorded per run already represents the best solution found across those initialisations.
+    The K retained for downstream analysis is the one with the lowest BIC across all runs and all initialisations (i.e. the global best solution).
+    
+  - *Fixed selection*: The user defines a number of clusters directly, bypassing the BIC inference step.
+
+A random seed can be set to ensure the reproducibility of K-means stochastic initialisation.
+
+**3. Discriminant Analysis of Principal Components (DAPC)**
+
+DAPC (Jombart *et al*., 2010) maximises between-group relative to within-group genetic variance, providing sharper resolution of population structure than PCA alone. 
+To avoid overfitting, the number of PC axes fed to the discriminant analysis is capped at K-1 following Thia (2023), with K determined by K-means or defined by the user, depending on the user’s choice.
+
+The tool generates the following outputs:
+
+- Summary statistics file (label: Summary stats)
+- Individual coordinates on the DAPC discriminant axes (label: LD scores)
+- Assignment table including K-means cluster, DAPC-assigned cluster, K-means/DAPC concordance, and posterior membership probabilities for each cluster (label: Assignments)
+- BIC curve (automatic mode only) with confidence interval.
+- PCA scree plot showing the variance explained by each axis, with cumulative variance overlaid
+- PCA and DAPC scatter plots
+- Posterior membership barplot showing the assignment probability of each individual
+
+Example files
+=============
+
+**SSR Genotype file (tab):**
+
+::
+
+    Ind     Pop     Loc1    Loc2    Loc3
+    ind1    pop1    120/124 200/202 150/150
+    ind2    pop1    120/120 202/204 150/152
+    ind3    pop2    124/126 200/200 152/152
+
+Note : The Pop column must be included, but it may contain 'N/A' entries. 
+
+**LD scores files:**
+
++------------------------+----------------+---------+---------+
+| Individual             | Cluster_kmeans | LD1     | LD2     |
++========================+================+=========+=========+
+| GA-2_2021_A11-01-m21_1 | 1              | -2.0618 |  1.4627 |
++------------------------+----------------+---------+---------+
+| GA-2_2022_A11-01-m22_1 | 2              | -0.9416 | -1.5315 |
++------------------------+----------------+---------+---------+
+| GA-2_2021_A11-02-m21_1 | 2              | -3.6633 | -0.4452 |
++------------------------+----------------+---------+---------+
+| ...                    | ...            | ...     | ...     |
++------------------------+----------------+---------+---------+
+
+Note : The number of LD columns equals K-1.
+
+**Assignments file:**
+
++-------------------------+-------------------+-----------------+---------------------------+-------------------------+-------------------------+---------+---------+---------+
+| Individual              | K_selected_kmeans | K_selected_dapc | Cluster_assignment_kmeans | Cluster_assignment_dapc | Kmeans_DAPC_concordance | Prob_K1 | Prob_K2 | Prob_K3 |
++=========================+===================+=================+===========================+=========================+=========================+=========+=========+=========+
+| GA-2_2021_A11-01-m21_1  | 3                 | 3               | 2                         | 2                       | TRUE                    | 0.9483  | 0.0501  | 0.0016  |
++-------------------------+-------------------+-----------------+---------------------------+-------------------------+-------------------------+---------+---------+---------+
+| GA-2_2022_A11-01-m22_1  | 3                 | 3               | 1                         | 1                       | TRUE                    | 0.0648  | 0.9080  | 0.0271  |
++-------------------------+-------------------+-----------------+---------------------------+-------------------------+-------------------------+---------+---------+---------+
+| GA-2_2021_A11-04-m21_1  | 3                 | 3               | 2                         | 3                       | FALSE                   | 0.2206  | 0.1802  | 0.5992  |
++-------------------------+-------------------+-----------------+---------------------------+-------------------------+-------------------------+---------+---------+---------+
+| ...                     | ...               | ...             | ...                       | ...                     | ...                     | ...     | ...     | ...     |
++-------------------------+-------------------+-----------------+---------------------------+-------------------------+-------------------------+---------+---------+---------+
+
+Notes : 
+    - Kmeans_DAPC_concordance indicates whether K-means and DAPC assignments agree.
+    - Prob_K1, Prob_K2, ... sum to 1 per row. The number of Prob_K columns equals K.
+
+]]></help>
+
+  <citations>
+    <expand macro="citations_commun"/>
+    <citation type="doi"> 10.1111/1755-0998.13706</citation>
+    <citation type="doi">10.32614/CRAN.package.adegenet</citation>
+    <citation type="doi">10.1093/bioiformatics/btn129</citation>
+    <citation type="doi">10.1093/bioinformatics/btr521</citation>
+    <citation type="doi">10.32614/CRAN.package.ade4</citation>
+    <citation type="doi">10.1186/1471-2156-11-94</citation>
+  </citations>
+
+</tool>

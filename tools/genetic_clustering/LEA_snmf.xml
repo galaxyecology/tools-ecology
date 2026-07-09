@@ -1,0 +1,266 @@
+<tool id="LEA_snmf_application" name="Genetic Clustering" version="@TOOL_VERSION@" profile="@PROFILE@">
+    <description>
+        with LEA (sNMF) for VCF or SSR data
+    </description>
+
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+
+    <requirements>
+        <expand macro="requirements_commun"/>
+        <requirement type="package" version="3.22.0">bioconductor-lea</requirement>
+        <requirement type="package" version="1.16.0">r-vcfr</requirement>
+        <requirement type="package" version="0.5_11">r-hierfstat</requirement>
+        <requirement type="package" version="1.3.2">r-tidyr</requirement>
+        <requirement type="package" version="1.0.1">r-forcats</requirement>
+    </requirements>
+
+    <required_files>
+        <include path="LEA_snmf.R"/>
+    </required_files>
+
+    <command detect_errors="exit_code"><![CDATA[
+        mkdir -p outputs &&
+
+        #if str($input_format) == "VCF":
+            cp '$input_data' ./input_data.vcf &&
+            #set $input_path = './input_data.vcf'
+        #else:
+            cp '$input_data' ./input_data.txt &&
+            #set $input_path = './input_data.txt'
+        #end if
+
+        Rscript '$__tool_directory__/LEA_snmf.R'
+            --input '$input_path'
+            --format '$input_format'
+            --repetitions '$repetitions'
+            --threshold-q '$threshold_q'
+            #if str($k_mode.k_mode_sel) == "fixed":
+                --k-fixed '$k_mode.k_fixed'
+            #else:
+                --k-min '$k_mode.k_min'
+                --k-max '$k_mode.k_max'
+                --fst-check '$k_mode.fst_check'
+            #end if
+    ]]></command>
+
+    <inputs>
+        <expand macro="inputs_commun"/>
+
+        <param name="repetitions" type="integer" value="10" min="1" label="Number of repetitions for each value of K"/>
+
+        <param name="threshold_q" type="float" value="0.875"
+                    label="Proportion of ancestry from a cluster required for an individual to be considered pure"/>
+
+        <conditional name="k_mode">
+            <param name="k_mode_sel" type="select" label="K (number of clusters) setting">
+                <option value="fixed">Fixed K</option>
+                <option value="auto">Automatic detection (Cross-entropy)</option>
+            </param>
+
+            <when value="fixed">
+                <param name="k_fixed" type="integer" value="3" min="1"
+                       label="Select the value of K"
+                       help="Number of clusters to be used for analysis."/>
+            </when>
+
+            <when value="auto">
+                <param name="k_min" type="integer" value="1" min="1"
+                       label="Minimum K"
+                       help="Lower limit of the range of K tested."/>
+                <param name="k_max" type="integer" value="10" min="2"
+                       label="Maximum K"
+                       help="Upper limit. Increase if the selected K=K max."/>
+                <param name="fst_check" type="boolean"
+                       truevalue="true" falsevalue="false" checked="false"
+                       label="Validate K with Fst differentiation test"
+                       help="If enabled, the best K from cross-entropy is validated using
+                             pairwise Fst (genet.dist, hierfstat) with a permutation test
+                             (999 permutations). If Fst between clusters is not significant,
+                             K is decremented by 1 and re-tested. Only pure individuals
+                             (ancestry proportion >= 80%) are used for this test.
+                             Warning: this step can be slow on large datasets."/>
+            </when>
+        </conditional>
+    </inputs>
+
+    <outputs>
+        <data name="output_table" from_work_dir="outputs/results_snmf.txt" format="tabular" label="sNMF Population Assignments"/>
+        <data name="cross_entropy" from_work_dir="outputs/cross-entropy.png" format="png" label="Cross-entropy">
+            <filter>k_mode['k_mode_sel'] == 'auto'</filter>
+        </data>
+        <data name="barplot" from_work_dir="outputs/barplot_t_struc.png" format="png" label="Barplot"/>
+    </outputs>
+
+    <tests>
+        <test expect_num_outputs="3">
+            <param name="input_data" value="test_VCF_clustering.vcf"/>
+            <param name="input_format" value="VCF" />
+            <param name="repetitions" value="10"/>
+            <conditional name="k_mode">
+                <param name="k_mode_sel" value="auto"/>
+                <param name="k_min"   value="2" />
+                <param name="k_max"   value="10" />
+                <param name="fst_check" value="true"/>
+            </conditional>
+            <output name="output_table" ftype="tabular">
+                <assert_contents>
+                    <has_n_lines n="2274" delta="1"/>
+                </assert_contents>
+            </output>
+            <output name="cross_entropy" ftype="png">
+                <assert_contents>
+                    <has_image_width width="1800"/>
+                    <has_image_height height="1200"/>
+                </assert_contents>
+            </output>
+            <output name="barplot" ftype="png">
+                <assert_contents>
+                    <has_image_width width="1800"/>
+                    <has_image_height height="1200"/>
+                </assert_contents>
+            </output>
+        </test>
+
+        <test expect_num_outputs="2">
+            <param name="input_data" value="test_VCF_clustering.vcf"/>
+            <param name="input_format" value="VCF" />
+            <param name="repetitions" value="10"/>
+            <conditional name="k_mode">
+                <param name="k_mode_sel" value="fixed"/>
+                <param name="k_fixed"   value="3" />
+            </conditional>
+            <output name="output_table" ftype="tabular">
+                <assert_contents>
+                    <has_n_lines n="2274" delta="1"/>
+                </assert_contents>
+            </output>
+            <output name="barplot" ftype="png">
+                <assert_contents>
+                    <has_image_width width="1800"/>
+                    <has_image_height height="1200"/>
+                </assert_contents>
+            </output>
+        </test>
+
+        <test expect_num_outputs="3">
+            <param name="input_data" value="test_SSR.txt"/>
+            <param name="input_format" value="SSR" />
+            <param name="repetitions" value="10"/>
+            <conditional name="k_mode">
+                <param name="k_mode_sel" value="auto"/>
+                <param name="k_min"   value="1" />
+                <param name="k_max"   value="10" />
+                <param name="fst_check" value="true"/>
+            </conditional>
+            <output name="output_table" ftype="tabular">
+                <assert_contents>
+                    <has_n_lines n="220" delta="1"/>
+                </assert_contents>
+            </output>
+            <output name="cross_entropy" ftype="png">
+                <assert_contents>
+                    <has_image_width width="1800"/>
+                    <has_image_height height="1200"/>
+                </assert_contents>
+            </output>
+            <output name="barplot" ftype="png">
+                <assert_contents>
+                    <has_image_width width="1800"/>
+                    <has_image_height height="1200"/>
+                </assert_contents>
+            </output>
+        </test>
+
+        <test expect_num_outputs="2">
+            <param name="input_data" value="test_SSR.txt"/>
+            <param name="input_format" value="SSR" />
+            <param name="repetitions" value="10"/>
+            <conditional name="k_mode">
+                <param name="k_mode_sel" value="fixed"/>
+                <param name="k_fixed"   value="3" />
+            </conditional>
+            <output name="output_table" ftype="tabular">
+                <assert_contents>
+                    <has_n_lines n="220" delta="1"/>
+                </assert_contents>
+            </output>
+            <output name="barplot" ftype="png">
+                <assert_contents>
+                    <has_image_width width="1800"/>
+                    <has_image_height height="1200"/>
+                </assert_contents>
+            </output>
+        </test>
+
+    </tests>
+
+
+    <help><![CDATA[
+
+Usage
+=====
+
+As input, the user provides genetic data in VCF format for SNPs (Danecek et al. 2011) or in a tabular format for SSRs (see format below).
+
+This tool runs the sNMF algorithm from the R package LEA to estimate individual ancestry proportions and infer population genetic structure. 
+It automatically converts input data to the required .geno format and evaluates a range of ancestral populations (K) from K_min to K_max.
+
+To test the stability of the results, the tool performs a defined number of repetitions for each value of K. 
+
+The tool follows the recommended steps for applying the snmf function, and selects the best K using a cross-entropy criterion (i.e. lowest mean = best fit). 
+Optionally, it can compare the consistency of the chosen K using pairwise Fst estimated between LEA clusters. 
+In this step, only "pure" individuals are used to ensure that admixed individuals don't blur the differentiation signals among clusters. 
+The user defines a threshold ancestry proportion above which individuals are considered purebred. We recommend using a threshold value of 0.875, which is optimal for distinguishing purebred individuals from first-generation backcrosses (Guichoux *et al*. 2013).
+Then to minimise runtime, the minimum pairwise Fst value is tested using the boot.ppfst function of hierfstat package (Goudet *et al*. 2022) which performs bootstrapping over loci of pairwise Fst. 
+If not significant (p≥0.05), K is decreased by 1, the analysis is re-run until the minimum Fst value is no longer significant. If the automatically selected K value is not suitable, the user can choose to set the K value manually.
+
+The tool generates two figures : the cross-entropy plot and the barplot of individuals' assignment probabilities (as in the commonly used STRUCTURE program), as well as a tabular file summarising the ancestry and status (Pure or Admixed) of each individual.
+
+Example files
+==============
+
+**SSR Genotype file (tab):**
+
+::
+
+    Ind     Pop     Loc1    Loc2    Loc3
+    ind1    pop1    120/124 200/202 150/150
+    ind2    pop1    120/120 202/204 150/152
+    ind3    pop2    124/126 200/200 152/152
+
+Note : The 'Population' column must be included, but it may contain 'N/A' entries. 
+
+**Ancestry summary output table:**
+
++-------------------------+----------------+--------------+---------+--------+--------+--------+
+| Individu                | Pop_Assignment | Max_ancestry | Status  | Prop_1 | Prop_2 | Prop_3 |
++=========================+================+==============+=========+========+========+========+
+| GA-2_2021_A11-01-m21_1  | 1              | 0.951        | Pure    | 0.9510 | 0.0320 | 0.0170 |
++-------------------------+----------------+--------------+---------+--------+--------+--------+
+| GA-2_2022_A11-01-m22_1  | 2              | 0.908        | Pure    | 0.0648 | 0.9080 | 0.0272 |
++-------------------------+----------------+--------------+---------+--------+--------+--------+
+| GA-2_2021_A11-04-m21_1  | 1              | 0.621        | Admixed | 0.6210 | 0.1802 | 0.1988 |
++-------------------------+----------------+--------------+---------+--------+--------+--------+
+| ...                     | ...            | ...          | ...     | ...    | ...    | ...    |
++-------------------------+----------------+--------------+---------+--------+--------+--------+
+
+Notes: 
+     - Pop_Assignment indicates the cluster with the highest ancestry proportion for each individual. 
+     - Status is set to Pure if that proportion exceeds the threshold Q, and Admixed otherwise. 
+     - Prop_1, Prop_2, ... are the ancestry proportions estimated by sNMF for each cluster and sum to 1 per row (one column per K).
+
+See also examples of VCF formats in:  https://samtools.github.io/hts-specs/VCFv4.5.pdf
+
+
+    ]]></help>
+    <citations>
+        <expand macro="citations_commun"/>
+        <citation type="doi">10.32614/CRAN.package.adegenet</citation>
+        <citation type="doi">10.32614/CRAN.package.ade4</citation>
+        <citation type="doi">10.1111/mec.12125</citation>
+        <citation type="doi">10.32614/CRAN.package.hierfstat</citation>
+    </citations>
+
+</tool>
