@@ -1,5 +1,5 @@
 name: get_era5_data
-owner: mathmath34
+owner: ecology
 description: Extract daily ERA5 / ERA5-Land climate and soil data via the Open-Meteo API
 long_description: |
   This tool downloads daily climate and soil variables from the ERA5 and
