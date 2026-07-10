@@ -343,38 +343,8 @@ The ``parameter_names`` field of that JSON response is the authoritative source.
          ════════════════════════════════════════════════════════════════════ -->
     <citations>
 
-        <citation type="bibtex">
-@article{vidal2010,
-  author  = {Vidal, Jean-Philippe and Martin, Eric and Franc\`{e}s,
-             F\`{e}lix and Baillon, Martine and Soubeyroux, Jean-Michel},
-  title   = {A 50-year high-resolution atmospheric reanalysis over
-             {France} with the {Safran} system},
-  journal = {International Journal of Climatology},
-  year    = {2010},
-  volume  = {30},
-  number  = {11},
-  pages   = {1627--1644},
-  doi     = {10.1002/joc.2003}
-}
-        </citation>
-
-        <citation type="bibtex">
-@article{habets2008,
-  author  = {Habets, Florence and Boone, Aaron and Champeaux, Jean-Louis
-             and Etchevers, Pierre and Franchist\'{e}guy, Laure
-             and Leblois, Etienne and Ledoux, Emmanuel and Le Moigne, Patrick
-             and Martin, Eric and Morel, Sylvain and Noilhan, Jo\"{e}l
-             and Segu\'{i}, Pere Quintana and Rousset-Regimbeau,
-             Fran\c{c}ois and Viennot, Pascal},
-  title   = {The {SAFRAN-ISBA-MODCOU} hydrometeorological model
-             applied over {France}},
-  journal = {Journal of Geophysical Research: Atmospheres},
-  year    = {2008},
-  volume  = {113},
-  number  = {D6},
-  doi     = {10.1029/2007JD008548}
-}
-        </citation>
+        <citation type="doi">10.1002/joc.2003</citation>
+        <citation type="doi">10.1029/2007JD008548</citation>
 
         <citation type="bibtex">
 @misc{geosas2024,
