@@ -256,7 +256,7 @@ $advanced.verbose
       </conditional>
       <param name="epsg"          value="4326" />
       <param name="output_format" value="csv" />
-      <output name="output_file"  ftype="csv">
+      <output name="output_file_1"  ftype="csv">
         <assert_contents>
           <has_text text="site_name" />
           <has_text text="site_id" />
@@ -276,7 +276,7 @@ $advanced.verbose
         <param name="mode"        value="file" />
       </conditional>
       <param name="output_format" value="tsv" />
-      <output name="output_file"  ftype="tabular">
+      <output name="output_2"  ftype="tabular">
         <assert_contents>
           <has_text text="site_name" />
           <has_text text="temperature_2m_mean" />
