@@ -1,5 +1,5 @@
 name: get_safran_data_geosas_api
-owner: mathmath34
+owner: ecology
 description: Extract climate data from SAFRAN geosas API
 long_description: |
   Downloads daily SAFRAN climate reanalysis data (precipitation, temperature,
