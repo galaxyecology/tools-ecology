@@ -1,4 +1,4 @@
-name: get_ERA5_data
+name: get_era5_data
 owner: mathmath34
 description: Extract daily ERA5 / ERA5-Land climate and soil data via the Open-Meteo API
 long_description: |
@@ -36,6 +36,7 @@ long_description: |
   climate time series are needed for ecological, hydrological, or
   agronomic analyses.
 remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/get_ERA5_data
+homepage_url: https://github.com/Mathmath34/tools-ecology/edit/get_ERA5_data/tools/get_ERA5_data
 type: unrestricted
 categories:
   - Climate Analysis
