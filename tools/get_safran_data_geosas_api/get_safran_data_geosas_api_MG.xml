@@ -1,6 +1,11 @@
-<tool id="get_safran_data_geosas_api" name="SAFRAN Climate Data Extractor (GEOSAS)" version="4.0.0" profile="25.1">
+<tool id="get_safran_data_geosas_api" name="SAFRAN Climate Data Extractor (GEOSAS)" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="25.1">
 
     <description>Download SAFRAN daily climate reanalysis data from the GEOSAS OGC-EDR API (France, 1958–present)</description>
+
+    <macros>
+        <token name="@TOOL_VERSION@">4.0.0</token>
+        <token name="@VERSION_SUFFIX@">0</token>
+    </macros>
 
     <!-- ════════════════════════════════════════════════════════════════════
          REQUIREMENTS
@@ -197,7 +202,10 @@
          ════════════════════════════════════════════════════════════════════ -->
     <tests>
 
-        <!-- Test : single point, CSV output -->
+        <!-- Test : single point, CSV output.
+             Content is checked via assertions rather than diffed against a
+             frozen reference file, since the underlying data source is
+             updated monthly. -->
         <test expect_num_outputs="1">
             <param name="climate_parameters" value="T_Q,ETP_Q" />
             <section name="date_range">
@@ -207,7 +215,17 @@
             <param name="coord_file"    value="test_single_point.csv" ftype="csv" />
             <param name="epsg"          value="4326" />
             <param name="output_format" value="CSV" />
-            <output name="output" ftype="csv" file="safran_output.csv" />
+            <output name="output" ftype="csv">
+                <assert_contents>
+                    <has_n_columns n="7" sep="," />
+                    <has_text text="site_id" />
+                    <has_text text="site_name" />
+                    <has_text text="T_Q" />
+                    <has_text text="ETP_Q" />
+                    <has_text text="montpellier" />
+                    <has_line_matching expression="^montpellier,montpellier,1990-01-0[1-9],.*" />
+                </assert_contents>
+            </output>
         </test>
 
     </tests>
