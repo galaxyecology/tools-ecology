@@ -17,7 +17,8 @@ Key features
 * Smart model routing: variables unavailable in era5_seamless are
   automatically requested against the correct sub-model (era5 / era5_land).
 * Daily parameter always sent as a comma-joined string → correct URL encoding.
-* Validates returned variables against requested ones and warns on silent drops.
+* Validates returned variables against requested ones and warns on
+  silent drops.
 * Configurable sleep between calls to respect Open-Meteo rate limits.
 
 Dependencies
@@ -34,6 +35,9 @@ License : MIT
 from __future__ import annotations
 
 import argparse
+import collections
+import math
+import os
 import sys
 import time
 import warnings
@@ -41,15 +45,16 @@ from datetime import date, datetime
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
-import collections
-import math
 import numpy as np
+
 import pandas as pd
+
 import requests
 
 # ── Shapely (WKT parsing + centroid) — does NOT need the PROJ database ───────
 try:
     from shapely import wkt as shapely_wkt
+
     HAS_SHAPELY = True
 except ImportError:
     HAS_SHAPELY = False
@@ -62,6 +67,7 @@ except ImportError:
 try:
     import geopandas as gpd
     from pyproj import Transformer, CRS as ProjCRS
+
     # Smoke-test: instantiating EPSG:4326 costs nothing and catches the
     # "no database context specified" error early with a clear message.
     ProjCRS.from_epsg(4326)
@@ -72,17 +78,18 @@ except Exception:
 # Backwards-compat alias used in guards below
 HAS_SPATIAL = HAS_SHAPELY
 
-# ── Optional Parquet ──────────────────────────────────────────────────────────
+# ── Optional Parquet ─────────────────────────────────────────────────────────
 try:
     import pyarrow  # noqa: F401
+
     HAS_PARQUET = True
 except ImportError:
     HAS_PARQUET = False
 
 
-# ═══════════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
 #  Constants
-# ═══════════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
 
 SAFRAN_START = date(1960, 1, 1)
 SAFRAN_END = date(2020, 12, 31)
@@ -91,19 +98,20 @@ OPENMETEO_FREE_URL = "https://archive-api.open-meteo.com/v1/archive"
 OPENMETEO_PAID_URL = "https://customer-api.open-meteo.com/v1/archive"
 
 MAX_RETRIES = 4
-RETRY_DELAYS = [5, 15, 30, 60]   # seconds per successive retry
+RETRY_DELAYS = [5, 15, 30, 60]  # seconds per successive retry
 
 VALID_FORMATS = ["csv", "tsv", "json", "parquet"]
 _INTERNAL_MODEL = "era5_seamless"  # routing is automatic, not user-selectable
 
 # Native grid resolutions (degrees)
-ERA5_LAND_RESOLUTION = 0.1    # ~9 km — used for polygon/line grid sampling
-ERA5_RESOLUTION = 0.25   # ~25 km
+ERA5_LAND_RESOLUTION = 0.1  # ~9 km — used for polygon/line grid sampling
+ERA5_RESOLUTION = 0.25  # ~25 km
 
-# How many consecutive total-failure sites trigger a "daily quota: pause until midnight UTC"
+# How many consecutive total-failure sites trigger a "daily quota:
+# pause until midnight UTC"
 QUOTA_PAUSE_THRESHOLD = 2
 
-# ── Complete variable catalogue ───────────────────────────────────────────────
+# ── Complete variable catalogue ──────────────────────────────────────────────
 # Each entry: internal_name → (description, best_model)
 # best_model is used for smart routing when era5_seamless drops a variable.
 PARAMETERS: Dict[str, Tuple[str, str]] = {
@@ -115,19 +123,29 @@ PARAMETERS: Dict[str, Tuple[str, str]] = {
     "precipitation_sum": ("Total precipitation (mm/day)", "era5_seamless"),
     "rain_sum": ("Rainfall only (mm/day)", "era5_seamless"),
     "snowfall_sum": ("Snowfall cm/day (water-equivalent)", "era5_seamless"),
-    "precipitation_hours": ("Duration of precipitation events (h/day)", "era5_seamless"),
+    "precipitation_hours": (
+        "Duration of precipitation events (h/day)",
+        "era5_seamless",
+    ),
     # Evapotranspiration
     "et0_fao_evapotranspiration": (
-        "Reference ET₀ FAO-56 Penman-Monteith (mm/day)", "era5_seamless"
+        "Reference ET₀ FAO-56 Penman-Monteith (mm/day)",
+        "era5_seamless",
     ),
     # Wind
     "wind_speed_10m_mean": ("Mean 10 m wind speed (km/h)", "era5"),
     "wind_speed_10m_max": ("Max  10 m wind speed (km/h)", "era5"),
     "wind_gusts_10m_mean": ("Mean 10 m wind gusts (km/h)", "era5"),
     "wind_gusts_10m_max": ("Max  10 m wind gusts (km/h)", "era5"),
-    "wind_direction_10m_dominant": ("Dominant 10 m wind direction (°, 0=N)", "era5"),
+    "wind_direction_10m_dominant": (
+        "Dominant 10 m wind direction (°, 0=N)",
+        "era5",
+    ),
     # Radiation
-    "shortwave_radiation_sum": ("Solar (shortwave) radiation sum (MJ/m²/day)", "era5"),
+    "shortwave_radiation_sum": (
+        "Solar (shortwave) radiation sum (MJ/m²/day)",
+        "era5",
+    ),
     "sunshine_duration": ("Sunshine duration (s/day)", "era5"),
     "daylight_duration": ("Astronomical daylight duration (s/day)", "era5"),
     # Humidity / pressure
@@ -135,19 +153,46 @@ PARAMETERS: Dict[str, Tuple[str, str]] = {
     "relative_humidity_2m_max": ("Max  2 m relative humidity (%)", "era5"),
     "relative_humidity_2m_min": ("Min  2 m relative humidity (%)", "era5"),
     "surface_pressure_mean": ("Mean surface pressure (hPa)", "era5"),
-    "vapor_pressure_deficit_max": ("Max vapour pressure deficit (kPa)", "era5"),
+    "vapor_pressure_deficit_max": (
+        "Max vapour pressure deficit (kPa)",
+        "era5",
+    ),
     # Cloud cover
     "cloud_cover_mean": ("Mean total cloud cover (%)", "era5"),
     # Soil moisture — ERA5-Land only
-    "soil_moisture_0_to_7cm_mean": ("Mean soil moisture   0–7 cm   (m³/m³)", "era5_land"),
-    "soil_moisture_7_to_28cm_mean": ("Mean soil moisture   7–28 cm  (m³/m³)", "era5_land"),
-    "soil_moisture_28_to_100cm_mean": ("Mean soil moisture  28–100 cm (m³/m³)", "era5_land"),
-    "soil_moisture_100_to_255cm_mean": ("Mean soil moisture 100–255 cm (m³/m³)", "era5_land"),
+    "soil_moisture_0_to_7cm_mean": (
+        "Mean soil moisture   0–7 cm   (m³/m³)",
+        "era5_land",
+    ),
+    "soil_moisture_7_to_28cm_mean": (
+        "Mean soil moisture   7–28 cm  (m³/m³)",
+        "era5_land",
+    ),
+    "soil_moisture_28_to_100cm_mean": (
+        "Mean soil moisture  28–100 cm (m³/m³)",
+        "era5_land",
+    ),
+    "soil_moisture_100_to_255cm_mean": (
+        "Mean soil moisture 100–255 cm (m³/m³)",
+        "era5_land",
+    ),
     # Soil temperature — ERA5-Land only
-    "soil_temperature_0_to_7cm_mean": ("Mean soil temperature   0–7 cm   (°C)", "era5_land"),
-    "soil_temperature_7_to_28cm_mean": ("Mean soil temperature   7–28 cm  (°C)", "era5_land"),
-    "soil_temperature_28_to_100cm_mean": ("Mean soil temperature  28–100 cm (°C)", "era5_land"),
-    "soil_temperature_100_to_255cm_mean": ("Mean soil temperature 100–255 cm (°C)", "era5_land"),
+    "soil_temperature_0_to_7cm_mean": (
+        "Mean soil temperature   0–7 cm   (°C)",
+        "era5_land",
+    ),
+    "soil_temperature_7_to_28cm_mean": (
+        "Mean soil temperature   7–28 cm  (°C)",
+        "era5_land",
+    ),
+    "soil_temperature_28_to_100cm_mean": (
+        "Mean soil temperature  28–100 cm (°C)",
+        "era5_land",
+    ),
+    "soil_temperature_100_to_255cm_mean": (
+        "Mean soil temperature 100–255 cm (°C)",
+        "era5_land",
+    ),
 }
 
 # User-friendly aliases → canonical Open-Meteo variable names
@@ -160,7 +205,7 @@ ALIASES: Dict[str, str] = {
     "tmean": "temperature_2m_mean",
     "temp": "temperature_2m_mean",
     "precip": "precipitation_sum",
-    "rr": "precipitation_sum",       # Météo-France convention
+    "rr": "precipitation_sum",  # Météo-France convention
     "rain": "rain_sum",
     "snow": "snowfall_sum",
     "et0": "et0_fao_evapotranspiration",
@@ -185,26 +230,39 @@ ALIASES: Dict[str, str] = {
 
 # Variables that are ERA5-Land only — cannot be requested via pure era5
 ERA5_LAND_ONLY = {
-    "soil_moisture_0_to_7cm_mean", "soil_moisture_7_to_28cm_mean",
-    "soil_moisture_28_to_100cm_mean", "soil_moisture_100_to_255cm_mean",
-    "soil_temperature_0_to_7cm_mean", "soil_temperature_7_to_28cm_mean",
-    "soil_temperature_28_to_100cm_mean", "soil_temperature_100_to_255cm_mean",
+    "soil_moisture_0_to_7cm_mean",
+    "soil_moisture_7_to_28cm_mean",
+    "soil_moisture_28_to_100cm_mean",
+    "soil_moisture_100_to_255cm_mean",
+    "soil_temperature_0_to_7cm_mean",
+    "soil_temperature_7_to_28cm_mean",
+    "soil_temperature_28_to_100cm_mean",
+    "soil_temperature_100_to_255cm_mean",
 }
 
 # Variables best served by ERA5 (not available in era5_land)
 ERA5_ONLY = {
-    "wind_speed_10m_mean", "wind_speed_10m_max",
-    "wind_gusts_10m_mean", "wind_gusts_10m_max",
+    "wind_speed_10m_mean",
+    "wind_speed_10m_max",
+    "wind_gusts_10m_mean",
+    "wind_gusts_10m_max",
     "wind_direction_10m_dominant",
-    "shortwave_radiation_sum", "sunshine_duration", "daylight_duration",
-    "relative_humidity_2m_mean", "relative_humidity_2m_max", "relative_humidity_2m_min",
-    "surface_pressure_mean", "vapor_pressure_deficit_max", "cloud_cover_mean",
+    "shortwave_radiation_sum",
+    "sunshine_duration",
+    "daylight_duration",
+    "relative_humidity_2m_mean",
+    "relative_humidity_2m_max",
+    "relative_humidity_2m_min",
+    "surface_pressure_mean",
+    "vapor_pressure_deficit_max",
+    "cloud_cover_mean",
 }
 
 
-# ═══════════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
 #  Logging helpers
-# ═══════════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
+
 
 def _ts() -> str:
     return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -227,9 +285,10 @@ def log_debug(msg: str, verbose: bool = False) -> None:
         print(f"{_ts()} [DEBUG] {msg}", flush=True)
 
 
-# ═══════════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
 #  ETA / progress helpers
-# ═══════════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
+
 
 def _fmt_dur(seconds: float) -> str:
     """Format a duration in seconds as h:mm:ss or m:ss."""
@@ -280,6 +339,19 @@ def _print_eta(
     )
 
 
+def _is_ci_environment() -> bool:
+    """
+    Detect common CI environments via the near-universal ``CI`` env var
+    (set to "true" by GitHub Actions, GitLab CI, Travis, CircleCI, etc.).
+
+    Used to avoid sleeping for up to ~24h waiting on the free-tier daily
+    quota to reset at midnight UTC when running inside an automated test
+    pipeline — such a wait would silently blow past any CI job timeout
+    and turn a clear, fast diagnostic into an opaque hang instead.
+    """
+    return os.environ.get("CI", "").strip().lower() in ("1", "true", "yes")
+
+
 def _seconds_until_midnight_utc(buffer_minutes: int = 5) -> float:
     """
     Return the number of seconds until the next midnight UTC,
@@ -289,6 +361,7 @@ def _seconds_until_midnight_utc(buffer_minutes: int = 5) -> float:
     The buffer avoids hitting the API the instant it resets.
     """
     from datetime import datetime as _dt, timezone, timedelta
+
     now = _dt.now(timezone.utc)
     tonight = now.replace(hour=0, minute=0, second=0, microsecond=0)
     midnight = tonight + timedelta(days=1)
@@ -302,11 +375,34 @@ def _wait_for_quota_reset(verbose: bool = False) -> None:
 
     Le script NE s'arrête PAS — il reprend automatiquement dès que
     le quota est remis à zéro.
+
+    Exception: inside a CI environment (detected via the ``CI`` env
+    var), sleeping for up to ~24h would silently exceed any test
+    timeout. In that case, fail immediately with a clear diagnostic
+    instead of hanging.
     """
     from datetime import datetime as _dt, timezone as _tz
+
+    if _is_ci_environment():
+        sys.exit(
+            "[ERROR] Open-Meteo free-tier daily quota exhausted (HTTP "
+            "429) while running in a CI environment.\n"
+            "  Refusing to sleep until midnight UTC in CI — this would "
+            "silently exceed the test timeout.\n"
+            "  Fix options:\n"
+            "  1. Re-run the tests later, once the shared runner IP's "
+            "quota has reset.\n"
+            "  2. Pass --apikey with a paid Open-Meteo key (no daily "
+            "quota) for CI runs.\n"
+            "  3. Increase --sleep to reduce request rate and avoid "
+            "triggering rate limiting."
+        )
+
     wait_s = _seconds_until_midnight_utc(buffer_minutes=5)
     wake_utc = _dt.now(_tz.utc).timestamp() + wait_s
-    wake_str = _dt.fromtimestamp(wake_utc, tz=_tz.utc).strftime("%Y-%m-%d %H:%M UTC")
+    wake_str = _dt.fromtimestamp(wake_utc, tz=_tz.utc).strftime(
+        "%Y-%m-%d %H:%M UTC"
+    )
 
     log_warn(
         "⛔ Quota journalier Open-Meteo épuisé (IP bloquée).\n"
@@ -316,7 +412,7 @@ def _wait_for_quota_reset(verbose: bool = False) -> None:
     )
 
     # Décompte toutes les 10 minutes
-    interval = 600   # 10 min
+    interval = 600  # 10 min
     elapsed = 0.0
     while elapsed < wait_s:
         chunk = min(interval, wait_s - elapsed)
@@ -332,9 +428,10 @@ def _wait_for_quota_reset(verbose: bool = False) -> None:
     log_info("  ✅ Quota remis à zéro — reprise de l'extraction.")
 
 
-# ═══════════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
 #  Date helpers
-# ═══════════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
+
 
 def parse_date(s: str, label: str = "date") -> date:
     """Parse a YYYY-MM-DD string, exit with a clear message on failure."""
@@ -368,9 +465,10 @@ def validate_date_range(start: date, end: date, label: str = "") -> None:
         )
 
 
-# ═══════════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
 #  Alias / parameter resolution
-# ═══════════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
+
 
 def resolve_parameters(raw: List[str]) -> List[str]:
     """
@@ -401,7 +499,9 @@ def resolve_parameters(raw: List[str]) -> List[str]:
     return resolved
 
 
-def _group_by_model(parameters: List[str], _model: str = _INTERNAL_MODEL) -> Dict[str, List[str]]:
+def _group_by_model(
+    parameters: List[str], _model: str = _INTERNAL_MODEL
+) -> Dict[str, List[str]]:
     """
     Split *parameters* into sub-groups by their best sub-model
     (era5 for atmospheric variables, era5_land for soil variables).
@@ -414,21 +514,31 @@ def _group_by_model(parameters: List[str], _model: str = _INTERNAL_MODEL) -> Dic
     return groups
 
 
-# ═══════════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
 #  Coordinate / geometry helpers
-# ═══════════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
+
 
 def _geom_type_from_wkt(wkt_str: str) -> str:
     """Return a normalised geometry type tag from a WKT prefix."""
     upper = wkt_str.strip().upper()
-    for tag in ("MULTIPOLYGON", "MULTILINESTRING", "MULTIPOINT",
-                "POLYGON", "LINESTRING", "POINT", "GEOMETRYCOLLECTION"):
+    for tag in (
+        "MULTIPOLYGON",
+        "MULTILINESTRING",
+        "MULTIPOINT",
+        "POLYGON",
+        "LINESTRING",
+        "POINT",
+        "GEOMETRYCOLLECTION",
+    ):
         if upper.startswith(tag):
             return tag
     return "GEOMETRY"
 
 
-def _centroid_wgs84_from_wkt(wkt_str: str, src_epsg: int) -> Tuple[float, float]:
+def _centroid_wgs84_from_wkt(
+    wkt_str: str, src_epsg: int
+) -> Tuple[float, float]:
     """
     Parse WKT, reproject to WGS-84 if needed, return (lat, lon) of centroid.
 
@@ -448,7 +558,7 @@ def _centroid_wgs84_from_wkt(wkt_str: str, src_epsg: int) -> Tuple[float, float]
     if src_epsg == 4326:
         # Fast path: no reprojection needed — pure shapely, zero pyproj calls.
         c = geom.centroid
-        return float(c.y), float(c.x)   # WKT in 4326: x=lon, y=lat
+        return float(c.y), float(c.x)  # WKT in 4326: x=lon, y=lat
 
     # Reprojection path: needs a working PROJ database.
     if not HAS_PROJ:
@@ -459,8 +569,9 @@ def _centroid_wgs84_from_wkt(wkt_str: str, src_epsg: int) -> Tuple[float, float]
             "  Fix options:\n"
             "  1. Set the PROJ_DATA / PROJ_LIB environment variable to the "
             "directory that contains proj.db.\n"
-            "     Example (conda):  export PROJ_DATA=$(python -c \"import pyproj; "
-            "import os; print(os.path.dirname(pyproj.datadir.get_data_dir()))\")\n"
+            '     Example (conda):  export PROJ_DATA=$(python -c "import '
+            'pyproj; import os; print(os.path.dirname('
+            'pyproj.datadir.get_data_dir()))")\n'
             "  2. Reinstall pyproj:  conda install -c conda-forge pyproj\n"
             "  3. If your coordinates are already in WGS-84, omit --epsg "
             "(default is 4326)."
@@ -471,7 +582,9 @@ def _centroid_wgs84_from_wkt(wkt_str: str, src_epsg: int) -> Tuple[float, float]
     return float(c.y), float(c.x)
 
 
-def _reproject_point(lat: float, lon: float, src_epsg: int) -> Tuple[float, float]:
+def _reproject_point(
+    lat: float, lon: float, src_epsg: int
+) -> Tuple[float, float]:
     """
     Reproject a (lat, lon) point from *src_epsg* to WGS-84 (EPSG:4326).
 
@@ -479,7 +592,7 @@ def _reproject_point(lat: float, lon: float, src_epsg: int) -> Tuple[float, floa
     Other CRS → pyproj Transformer (PROJ database must be available).
     """
     if src_epsg == 4326:
-        return lat, lon   # nothing to do; no PROJ database needed
+        return lat, lon  # nothing to do; no PROJ database needed
 
     if not HAS_PROJ:
         sys.exit(
@@ -488,7 +601,8 @@ def _reproject_point(lat: float, lon: float, src_epsg: int) -> Tuple[float, floa
             "  Fix options:\n"
             "  1. export PROJ_DATA=<path-to-proj-data-dir>\n"
             "  2. conda install -c conda-forge pyproj\n"
-            "  3. If coordinates are already WGS-84, use --epsg 4326 (default)."
+            "  3. If coordinates are already WGS-84, use --epsg 4326 "
+            "(default)."
         )
     transformer = Transformer.from_crs(
         f"EPSG:{src_epsg}", "EPSG:4326", always_xy=True
@@ -527,6 +641,7 @@ def _grid_points_in_polygon(
         geom_wgs84_wkt = gdf.geometry.iloc[0].wkt
 
     from shapely.geometry import Point as _Point
+
     poly = shapely_wkt.loads(geom_wgs84_wkt)
     minx, miny, maxx, maxy = poly.bounds
 
@@ -573,27 +688,29 @@ def resolve_geometry_to_points(
     For POINT inputs without a 'geometry' column, the 'latitude'/'longitude'
     columns are used as before.
     """
-    # ── 1. Resolve raw geometry ───────────────────────────────────────────────
+    # ── 1. Resolve raw geometry ──────────────────────────────────────────────
     if "geometry" in row.index:
         raw = row["geometry"]
         if pd.notna(raw) and str(raw).strip():
             wkt_str = str(raw).strip()
             gtype = _geom_type_from_wkt(wkt_str)
 
-            # ── POINT ─────────────────────────────────────────────────────────
+            # ── POINT ────────────────────────────────────────────────────────
             if gtype == "POINT":
                 lat, lon = _centroid_wgs84_from_wkt(wkt_str, epsg)
                 log_debug(f"POINT → lat={lat:.4f} lon={lon:.4f}", verbose)
                 return [(lat, lon, "")], "POINT"
 
-            # ── MULTIPOINT ────────────────────────────────────────────────────
+            # ── MULTIPOINT ───────────────────────────────────────────────────
             if gtype == "MULTIPOINT":
                 if not HAS_SHAPELY:
                     sys.exit("[ERROR] shapely required for MULTIPOINT.")
                 mp = shapely_wkt.loads(wkt_str)
                 pts_raw = list(mp.geoms)
                 if epsg != 4326:
-                    gdf = gpd.GeoDataFrame(geometry=pts_raw, crs=f"EPSG:{epsg}")
+                    gdf = gpd.GeoDataFrame(
+                        geometry=pts_raw, crs=f"EPSG:{epsg}"
+                    )
                     gdf = gdf.to_crs(epsg=4326)
                     pts_raw = list(gdf.geometry)
                 pts = [
@@ -603,15 +720,13 @@ def resolve_geometry_to_points(
                 log_debug(f"MULTIPOINT → {len(pts)} point(s)", verbose)
                 return pts, "MULTIPOINT"
 
-            # ── LINESTRING — each vertex becomes a query point ────────────────
+            # ── LINESTRING — each vertex becomes a query point ───────────────
             if gtype == "LINESTRING":
                 if not HAS_SHAPELY:
                     sys.exit("[ERROR] shapely required for LINESTRING.")
                 line = shapely_wkt.loads(wkt_str)
                 if epsg != 4326:
-                    gdf = gpd.GeoDataFrame(
-                        geometry=[line], crs=f"EPSG:{epsg}"
-                    )
+                    gdf = gpd.GeoDataFrame(geometry=[line], crs=f"EPSG:{epsg}")
                     gdf = gdf.to_crs(epsg=4326)
                     line = gdf.geometry.iloc[0]
                 pts = [
@@ -621,7 +736,7 @@ def resolve_geometry_to_points(
                 log_debug(f"LINESTRING → {len(pts)} vertex/vertices", verbose)
                 return pts, "LINESTRING"
 
-            # ── POLYGON / MULTIPOLYGON — ERA5-Land grid inside polygon ─────────
+            # ── POLYGON / MULTIPOLYGON — ERA5-Land grid inside polygon ───────
             if gtype in ("POLYGON", "MULTIPOLYGON"):
                 pts_ll = _grid_points_in_polygon(
                     wkt_str, epsg, ERA5_LAND_RESOLUTION
@@ -648,15 +763,18 @@ def resolve_geometry_to_points(
         raw_lat = float(row["latitude"])
         raw_lon = float(row["longitude"])
     except (ValueError, TypeError) as exc:
-        sys.exit(f"[ERROR] Cannot parse lat/lon from row — {exc}\n  {dict(row)}")
+        sys.exit(
+            f"[ERROR] Cannot parse lat/lon from row — {exc}\n  {dict(row)}"
+        )
 
     lat, lon = _reproject_point(raw_lat, raw_lon, epsg)
     return [(lat, lon, "")], "POINT"
 
 
-# ═══════════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
 #  Open-Meteo API
-# ═══════════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
+
 
 def _build_request_params(
     lat: float,
@@ -710,7 +828,7 @@ def _parse_daily(
     """
     daily = data.get("daily")
 
-    # ── FIX #3: distinguish three failure modes ───────────────────────────────
+    # ── FIX #3: distinguish three failure modes ──────────────────────────────
     if daily is None:
         # Key completely absent
         log_error(
@@ -724,8 +842,10 @@ def _parse_daily(
     if not isinstance(daily, dict) or not daily:
         # Key present but empty dict / null
         log_error(
-            f"'daily' block is empty for {label} | lat={lat:.4f} lon={lon:.4f}.\n"
-            f"  This means NONE of the requested variables [{', '.join(requested)}] "
+            f"'daily' block is empty for {label} | "
+            f"lat={lat:.4f} lon={lon:.4f}.\n"
+            f"  This means NONE of the requested variables "
+            f"[{', '.join(requested)}] "
             "are available for the chosen model and date range.\n"
             "  → Check that the variable is available for its assigned model, "
             "or run --list-parameters to review the catalogue."
@@ -740,7 +860,7 @@ def _parse_daily(
         )
         return pd.DataFrame()
 
-    # ── FIX #2: warn on silently-dropped variables ────────────────────────────
+    # ── FIX #2: warn on silently-dropped variables ───────────────────────────
     dropped = [v for v in requested if v not in daily]
     if dropped:
         log_warn(
@@ -789,7 +909,7 @@ def fetch_openmeteo(
         all_429 signals daily-quota exhaustion on the free tier.
         Always False when api_key is provided (paid tier has no quota).
     """
-    # ── Group variables by sub-model ──────────────────────────────────────────
+    # ── Group variables by sub-model ─────────────────────────────────────────
     model_groups = _group_by_model(parameters)
 
     if verbose and len(model_groups) > 1:
@@ -801,7 +921,9 @@ def fetch_openmeteo(
 
     frames: List[pd.DataFrame] = []
     total_elapsed: float = 0.0
-    site_all_429: bool = True   # True until at least one call succeeds or non-429 fails
+    site_all_429: bool = (
+        True  # True until at least one call succeeds or non-429 fails
+    )
 
     for model, variables in model_groups.items():
         url, params = _build_request_params(
@@ -814,7 +936,8 @@ def fetch_openmeteo(
             url=url,
             params=params,
             requested=variables,
-            lat=lat, lon=lon,
+            lat=lat,
+            lon=lon,
             label=f"{model}",
             sleep_s=sleep_s,
             verbose=verbose,
@@ -828,7 +951,7 @@ def fetch_openmeteo(
         return pd.DataFrame(), total_elapsed, site_all_429
 
     if len(frames) == 1:
-        return frames[0], total_elapsed, False   # at least one call succeeded
+        return frames[0], total_elapsed, False  # at least one call succeeded
 
     # Merge multiple sub-model results on date
     merged = frames[0]
@@ -870,7 +993,7 @@ def _call_with_retry(
     """
     t0 = time.perf_counter()
     last_exc: Optional[Exception] = None
-    all_429 = True   # flips to False on any non-429 outcome
+    all_429 = True  # flips to False on any non-429 outcome
 
     for attempt in range(MAX_RETRIES):
         wait = RETRY_DELAYS[min(attempt, len(RETRY_DELAYS) - 1)]
@@ -881,10 +1004,16 @@ def _call_with_retry(
             data = resp.json()
             elapsed = time.perf_counter() - t0
             all_429 = False
-            return _parse_daily(data, requested, lat, lon, label, verbose), elapsed, False
+            return (
+                _parse_daily(data, requested, lat, lon, label, verbose),
+                elapsed,
+                False,
+            )
 
         except requests.exceptions.HTTPError as exc:
-            status = exc.response.status_code if exc.response is not None else 0
+            status = (
+                exc.response.status_code if exc.response is not None else 0
+            )
             body = exc.response.text[:400] if exc.response is not None else ""
             last_exc = exc
 
@@ -906,7 +1035,8 @@ def _call_with_retry(
                     )
                 else:
                     log_warn(
-                        f"HTTP {status} — tentative {attempt + 1}/{MAX_RETRIES} "
+                        f"HTTP {status} — tentative "
+                        f"{attempt + 1}/{MAX_RETRIES} "
                         f"pour '{label}'. Pause {wait}s… ({api_msg})"
                     )
                 time.sleep(wait)
@@ -916,7 +1046,8 @@ def _call_with_retry(
             if status == 400:
                 log_error(
                     f"HTTP 400 pour '{label}': {api_msg}\n"
-                    "  → Cause probable : nom de variable invalide pour ce modèle.\n"
+                    "  → Cause probable : nom de variable invalide "
+                    "pour ce modèle.\n"
                     "  → Lancez --list-parameters pour voir les noms valides."
                 )
                 return pd.DataFrame(), time.perf_counter() - t0, False
@@ -928,7 +1059,8 @@ def _call_with_retry(
             all_429 = False
             last_exc = exc
             log_warn(
-                f"Erreur réseau — tentative {attempt + 1}/{MAX_RETRIES} : {exc}.\n"
+                f"Erreur réseau — tentative "
+                f"{attempt + 1}/{MAX_RETRIES} : {exc}.\n"
                 f"  Nouvelle tentative dans {wait}s…"
             )
             time.sleep(wait)
@@ -937,13 +1069,14 @@ def _call_with_retry(
         f"Abandon après {MAX_RETRIES} tentatives pour '{label}'. "
         f"Dernière erreur : {last_exc}"
     )
-    # all_429=True here means every single attempt got a 429 → daily quota signal
+    # all_429=True means every attempt got a 429 → daily quota signal
     return pd.DataFrame(), time.perf_counter() - t0, all_429
 
 
-# ═══════════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
 #  Coordinate-file reader
-# ═══════════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
+
 
 def read_coord_file(path: str) -> pd.DataFrame:
     """
@@ -988,9 +1121,10 @@ def read_coord_file(path: str) -> pd.DataFrame:
     return df
 
 
-# ═══════════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
 #  Output writer
-# ═══════════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
+
 
 def write_output(df: pd.DataFrame, path: str, fmt: str) -> None:
     """Write *df* to *path* in the requested format."""
@@ -1003,8 +1137,13 @@ def write_output(df: pd.DataFrame, path: str, fmt: str) -> None:
     elif fmt_l == "tsv":
         df.to_csv(out, index=False, sep="\t")
     elif fmt_l == "json":
-        df.to_json(out, orient="records", date_format="iso", indent=2,
-                   force_ascii=False)
+        df.to_json(
+            out,
+            orient="records",
+            date_format="iso",
+            indent=2,
+            force_ascii=False,
+        )
     elif fmt_l == "parquet":
         if not HAS_PARQUET:
             sys.exit(
@@ -1020,21 +1159,18 @@ def write_output(df: pd.DataFrame, path: str, fmt: str) -> None:
             f"Choices: {VALID_FORMATS}."
         )
 
-    log_info(f"Output → {out.resolve()}  ({len(df):,} rows × {len(df.columns)} cols)")
+    log_info(
+        f"Output → {out.resolve()}  "
+        f"({len(df):,} rows × {len(df.columns)} cols)"
+    )
 
 
-# ═══════════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
 #  Argument parser
-# ═══════════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
 
-_PARAM_TABLE = "\n".join(
-    f"  {k:<46} {v[0]}"
-    for k, v in PARAMETERS.items()
-)
-_ALIAS_TABLE = "\n".join(
-    f"  {a:<28} → {c}"
-    for a, c in ALIASES.items()
-)
+_PARAM_TABLE = "\n".join(f"  {k:<46} {v[0]}" for k, v in PARAMETERS.items())
+_ALIAS_TABLE = "\n".join(f"  {a:<28} → {c}" for a, c in ALIASES.items())
 
 _EPILOG = f"""\
 AVAILABLE CLIMATE PARAMETERS
@@ -1053,15 +1189,17 @@ BUGS FIXED IN v2.0.0
   #3  Empty 'daily' block is handled with a descriptive error instead of a
       cryptic crash.
   #4  Smart model routing: era5_seamless requests are automatically split so
-      ERA5-Land-only (soil moisture/temperature) and ERA5-only (wind, radiation)
-      variables each go to the correct sub-model endpoint, then merged on date.
+      ERA5-Land-only (soil moisture/temperature) and ERA5-only (wind,
+      radiation) variables each go to the correct sub-model endpoint,
+      then merged on date.
 
 EXAMPLES
 ─────────────────────────────────────────────────────────────────────────────
   # 1. Basic — temperature + precip for POINT sites in WGS-84
   python era5_extractor.py \\
       --coordinates stations_simple.csv \\
-      --parameters temperature_2m_mean precipitation_sum et0_fao_evapotranspiration \\
+      --parameters temperature_2m_mean precipitation_sum \\
+      et0_fao_evapotranspiration \\
       --start-date 1980-01-01 --end-date 1980-03-31 \\
       --output outputs/climate.csv
 
@@ -1127,9 +1265,11 @@ def build_parser() -> argparse.ArgumentParser:
         epilog=_EPILOG,
     )
 
-    # ── Core inputs ───────────────────────────────────────────────────────────
+    # ── Core inputs ──────────────────────────────────────────────────────────
     parser.add_argument(
-        "--coordinates", "--coord-file", "-c",
+        "--coordinates",
+        "--coord-file",
+        "-c",
         required=True,
         metavar="FILE",
         dest="coord_file",
@@ -1142,51 +1282,59 @@ def build_parser() -> argparse.ArgumentParser:
             "by --epsg). "
             "OPTIONAL COLUMNS — "
             "'site_name': human-readable row label (default: row_N); "
-            "'begin_date' (YYYY-MM-DD): per-site start, overrides --start-date; "
+            "'begin_date' (YYYY-MM-DD): per-site start, overrides "
+            "--start-date; "
             "'end_date'   (YYYY-MM-DD): per-site end,   overrides --end-date. "
-            "The script fails if a date is missing both here and on the command line."
+            "The script fails if a date is missing both here and on "
+            "the command line."
         ),
     )
 
     parser.add_argument(
-        "--parameters", "-p",
+        "--parameters",
+        "-p",
         required=True,
         nargs="+",
         metavar="PARAM",
         help=(
             "One or more climate variables to download (space- or "
             "comma-separated). Accepts both full variable names "
-            "(e.g. temperature_2m_mean) and shorthand aliases (e.g. tmean, rr). "
+            "(e.g. temperature_2m_mean) and shorthand aliases "
+            "(e.g. tmean, rr). "
             "Run --list-parameters for the complete catalogue and alias table."
         ),
     )
 
-    # ── Dates ─────────────────────────────────────────────────────────────────
+    # ── Dates ────────────────────────────────────────────────────────────────
     parser.add_argument(
-        "--start-date", "-s",
+        "--start-date",
+        "-s",
         default=None,
         metavar="YYYY-MM-DD",
         help=(
             "Global extraction start date. "
             "Minimum: 1960-01-01 (oldest SAFRAN-compatible data). "
-            "Overridden per row by a 'begin_date' column in the coordinate file. "
+            "Overridden per row by a 'begin_date' column in the "
+            "coordinate file. "
             "REQUIRED if 'begin_date' is absent from the coordinate file."
         ),
     )
 
     parser.add_argument(
-        "--end-date", "-e",
+        "--end-date",
+        "-e",
         default=None,
         metavar="YYYY-MM-DD",
         help=(
             "Global extraction end date. "
             "Maximum: 2020-12-31 (latest SAFRAN-compatible data). "
-            "Overridden per row by an 'end_date' column in the coordinate file. "
+            "Overridden per row by an 'end_date' column in the "
+            "coordinate file. "
             "REQUIRED if 'end_date' is absent from the coordinate file."
         ),
     )
 
-    # ── Coordinate system ─────────────────────────────────────────────────────
+    # ── Coordinate system ────────────────────────────────────────────────────
     parser.add_argument(
         "--epsg",
         type=int,
@@ -1204,9 +1352,10 @@ def build_parser() -> argparse.ArgumentParser:
         ),
     )
 
-    # ── Output ────────────────────────────────────────────────────────────────
+    # ── Output ───────────────────────────────────────────────────────────────
     parser.add_argument(
-        "--output-format", "-f",
+        "--output-format",
+        "-f",
         default="csv",
         choices=VALID_FORMATS,
         metavar="FORMAT",
@@ -1221,7 +1370,8 @@ def build_parser() -> argparse.ArgumentParser:
     )
 
     parser.add_argument(
-        "--output", "-o",
+        "--output",
+        "-o",
         default=None,
         metavar="FILE",
         help=(
@@ -1230,21 +1380,24 @@ def build_parser() -> argparse.ArgumentParser:
         ),
     )
 
-    # ── Misc ──────────────────────────────────────────────────────────────────
+    # ── Misc ─────────────────────────────────────────────────────────────────
     parser.add_argument(
         "--apikey",
         default=None,
         metavar="KEY",
         help=(
             "Open-Meteo API key for the commercial tier (optional). "
-            "Without a key the free tier is used (archive-api.open-meteo.com), "
+            "Without a key the free tier is used "
+            "(archive-api.open-meteo.com), "
             "limited to 10 000 requests per day per IP address — "
             "unsuitable for shared compute environments such as Galaxy. "
-            "With a key the paid endpoint is used (customer-api.open-meteo.com): "
+            "With a key the paid endpoint is used "
+            "(customer-api.open-meteo.com): "
             "no daily quota, dedicated servers, 99.9%% uptime SLA. "
             "Plans start at ~30 EUR/month (cancellable). "
             "Get a key at https://open-meteo.com/en/pricing. "
-            "When deployed on Galaxy, the admin can inject this via job_conf.xml "
+            "When deployed on Galaxy, the admin can inject this via "
+            "job_conf.xml "
             "so individual users do not need to handle it."
         ),
     )
@@ -1263,7 +1416,8 @@ def build_parser() -> argparse.ArgumentParser:
     )
 
     parser.add_argument(
-        "--verbose", "-v",
+        "--verbose",
+        "-v",
         action="store_true",
         help=(
             "Print per-site progress details, API URLs, and model-routing "
@@ -1280,12 +1434,13 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-# ═══════════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
 #  Main
-# ═══════════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
+
 
 def main() -> None:
-    # ── --list-parameters works without any other argument ────────────────────
+    # ── --list-parameters works without any other argument ───────────────────
     if "--list-parameters" in sys.argv:
         print("Available climate parameters:\n")
         for k, (desc, model) in PARAMETERS.items():
@@ -1298,7 +1453,7 @@ def main() -> None:
     parser = build_parser()
     args = parser.parse_args()
 
-    # ── Environment smoke-test ────────────────────────────────────────────────
+    # ── Environment smoke-test ───────────────────────────────────────────────
     if not HAS_SHAPELY:
         sys.exit(
             "[ERROR] shapely is required but not installed.\n"
@@ -1307,19 +1462,22 @@ def main() -> None:
     if not HAS_PROJ:
         warnings.warn(
             "pyproj cannot locate its PROJ database in this environment.\n"
-            "  WKT geometry and lat/lon reprojection work normally for EPSG:4326 (default).\n"
+            "  WKT geometry and lat/lon reprojection work normally "
+            "for EPSG:4326 (default).\n"
             "  Any other --epsg value will fail at runtime.  To fix:\n"
             "    conda install -c conda-forge pyproj\n"
-            "  or: export PROJ_DATA=$(python -c \"import pyproj, os; "
-            "print(os.path.dirname(pyproj.datadir.get_data_dir()))\")",
+            '  or: export PROJ_DATA=$(python -c "import pyproj, os; '
+            'print(os.path.dirname(pyproj.datadir.get_data_dir()))")',
             stacklevel=2,
         )
 
-    # ── Resolve & validate parameters ─────────────────────────────────────────
+    # ── Resolve & validate parameters ────────────────────────────────────────
     parameters = resolve_parameters(args.parameters)
-    api_key: Optional[str] = args.apikey if args.apikey and args.apikey.strip() else None
+    api_key: Optional[str] = (
+        args.apikey if args.apikey and args.apikey.strip() else None
+    )
 
-    # ── Log which API tier will be used ───────────────────────────────────────
+    # ── Log which API tier will be used ──────────────────────────────────────
     if api_key:
         log_info(
             f"Tier API     : COMMERCIAL (customer-api.open-meteo.com) "
@@ -1333,11 +1491,11 @@ def main() -> None:
         )
     log_info(f"Variables : {parameters}")
 
-    # ── Output path ───────────────────────────────────────────────────────────
+    # ── Output path ──────────────────────────────────────────────────────────
     fmt = args.output_format
     output_path = args.output or f"era5_data.{fmt}"
 
-    # ── Parse global dates ────────────────────────────────────────────────────
+    # ── Parse global dates ───────────────────────────────────────────────────
     global_start: Optional[date] = None
     global_end: Optional[date] = None
 
@@ -1349,7 +1507,7 @@ def main() -> None:
     if global_start and global_end:
         validate_date_range(global_start, global_end, "global")
 
-    # ── Read coordinate file ──────────────────────────────────────────────────
+    # ── Read coordinate file ─────────────────────────────────────────────────
     log_info(f"Reading coordinate file: {args.coord_file}")
     coords = read_coord_file(args.coord_file)
     log_info(f"Loaded {len(coords)} site(s).")
@@ -1361,14 +1519,16 @@ def main() -> None:
     # ── Quota-detection state ────────────────────────────────────────────────
     consecutive_429_failures: int = 0
 
-    # ── ETA setup ─────────────────────────────────────────────────────────────
+    # ── ETA setup ────────────────────────────────────────────────────────────
     # Note: the entire site loop is wrapped in try/except QuotaExhausted below.
     n_sites = len(coords)
     total_calls = _count_api_calls(n_sites, parameters)
     n_groups = total_calls // n_sites  # calls per site
     calls_done = 0
     run_start = time.perf_counter()
-    recent_dur: collections.deque = collections.deque(maxlen=5)  # rolling window
+    recent_dur: collections.deque = collections.deque(
+        maxlen=5
+    )  # rolling window
 
     # Upfront estimate (floor = pure sleep time, no network latency)
     floor_s = total_calls * args.sleep
@@ -1379,10 +1539,12 @@ def main() -> None:
         f"(sleep={args.sleep}s × {total_calls} appels, hors latence réseau)"
     )
 
-    # ── Iterate over sites ────────────────────────────────────────────────────
+    # ── Iterate over sites ───────────────────────────────────────────────────
     results: List[pd.DataFrame] = []
     n_skipped = 0
-    next_site_id = 0   # numeric identifier, unique per extracted point (1, 2, 3, …)
+    next_site_id = (
+        0  # numeric identifier, unique per extracted point (1, 2, 3, …)
+    )
 
     for idx, row in coords.iterrows():
         site_label = (
@@ -1433,11 +1595,13 @@ def main() -> None:
             f"{effective_start} → {effective_end}"
         )
 
-        site_ok = False   # becomes True if at least one point succeeds
+        site_ok = False  # becomes True if at least one point succeeds
 
         for pt_idx, (lat, lon, pt_label) in enumerate(point_list):
             # Build a unique label for this point
-            full_label = f"{site_label}__{pt_label}" if pt_label else site_label
+            full_label = (
+                f"{site_label}__{pt_label}" if pt_label else site_label
+            )
 
             if n_points > 1 and args.verbose:
                 log_info(
@@ -1467,7 +1631,8 @@ def main() -> None:
                 if was_all_429 and not api_key:
                     consecutive_429_failures += 1
                     log_warn(
-                        f"'{full_label}' : toutes les tentatives ont reçu HTTP 429 "
+                        f"'{full_label}' : toutes les tentatives ont "
+                        f"reçu HTTP 429 "
                         f"({consecutive_429_failures}/{QUOTA_PAUSE_THRESHOLD} "
                         "appel(s) consécutif(s) de ce type)."
                     )
@@ -1514,6 +1679,6 @@ def main() -> None:
     )
 
 
-# ─── Entry point ──────────────────────────────────────────────────────────────
+# ─── Entry point ─────────────────────────────────────────────────────────────
 if __name__ == "__main__":
     main()
