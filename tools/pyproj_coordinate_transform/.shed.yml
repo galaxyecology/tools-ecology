@@ -1,5 +1,5 @@
 name: pyproj_coordinate_transform
-owner: mathmath34
+owner: ecology
 description: Reproject CSV coordinates or WKT geometries between CRS using pyproj
 long_description: |
   This tool allows one to convert coordinates from one reference coordinate
