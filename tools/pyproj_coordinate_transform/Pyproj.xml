@@ -198,23 +198,6 @@ Input CRS and Output CRS are chosen from a curated list of 300 EPSG codes (verif
   <!-- CITATIONS                                                     -->
   <!-- ============================================================ -->
   <citations>
-    <citation type="bibtex">
-      @software{snow_pyproj,
-        author       = {Snow, Alan D. and
-                        Whitaker, Jeff and
-                        Cochran, Micah and
-                        Van den Bossche, Joris and
-                        Mayo, Chris and
-                        de Kloe, Jos and
-                        Karney, Charles and
-                        others},
-        title        = {{pyproj4/pyproj: Python interface to PROJ (cartographic
-                         projections and coordinate transformations library)}},
-        publisher    = {Zenodo},
-        doi          = {10.5281/zenodo.2592232},
-        url          = {https://doi.org/10.5281/zenodo.2592232}
-      }
-    </citation>
     <citation type="doi">10.5281/zenodo.2592232</citation>
   </citations>
 </tool>
