@@ -194,7 +194,7 @@ else:
                 short_name=args.short_name,
                 temporal=(date_str, date_str),
                 bounding_box=(args.lon_min, args.lat_min,
-                    args.lon_max, args.lat_max)
+                        args.lon_max, args.lat_max)
             )
 
             if results and isinstance(results, list):
