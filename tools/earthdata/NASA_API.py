@@ -65,18 +65,18 @@ def detect_resolution(short_name):
     -------
     str
         The inferred temporal resolution:
-        - "monthly" if the time difference is approximately one month (>= 27 days)
+        - "monthly" if the time difference is approximately 1 month (>=27days)
         - "daily" if the time difference is 1 day
         - "other" for any other interval
-        - "unknown" if the resolution cannot be determined (e.g., insufficient
-        data or parsing errors)
+        - "unknown" if the resolution cannot be determined (e.g.,
+        insufficient data or parsing errors)
 
     Notes
     -----
-    - This method assumes that consecutive granules are representative of the
-    dataset's temporal frequency.
-    - If fewer than two granules are available or if metadata extraction fails,
-    the function returns "unknown".
+    - This method assumes that consecutive granules are representative of
+    the dataset's temporal frequency.
+    - If fewer than two granules are available or if metadata extraction
+    fails, the function returns "unknown".
     """
     sample = earthaccess.search_data(
         short_name=short_name,
@@ -171,7 +171,7 @@ if RESOLUTION == "monthly":
             short_name=args.short_name,
             temporal=(start_date, end_date),
             bounding_box=(args.lon_min, args.lat_min,
-                          args.lon_max, args.lat_max),
+                          args.lon_max, args.lat_max)
         )
 
         if results and isinstance(results, list):
@@ -194,7 +194,7 @@ else:
                 short_name=args.short_name,
                 temporal=(date_str, date_str),
                 bounding_box=(args.lon_min, args.lat_min,
-                               args.lon_max, args.lat_max),
+                               args.lon_max, args.lat_max)
             )
 
             if results and isinstance(results, list):
