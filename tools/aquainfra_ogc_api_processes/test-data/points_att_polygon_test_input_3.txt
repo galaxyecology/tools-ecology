@@ -1,1 +1,1 @@
-https://aquainfra.ogc.igb-berlin.de/download/out/data_merged_with_regions-4a1b2f95-c620-11f0-8790-fa163e42fba0.csv
+https://github.com/AstraLabuce/aquainfra-usecase-Daugava/blob/containerize/example_results/output1_pointsAttPolygon.csv
