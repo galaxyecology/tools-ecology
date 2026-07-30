@@ -6,7 +6,6 @@ from datetime import datetime, timedelta
 from calendar import monthrange
 from collections import defaultdict
 
-os.system("conda install -c conda-forge earthaccess")
 import earthaccess
 
 # ---------------------------

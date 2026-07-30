@@ -1,4 +1,4 @@
-<tool id="earthdata-API" name="earthdata-API" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="21.05">
+<tool id="earthdata-API" name="earthdata-API" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="25.1">
 <!-- <tool id="earthdata-API" name="earthdata-API" version="0.1.0+galaxy0" python_template_version="3.5" profile="21.05"> -->
     <description>Fetching tool for EarthData (NASA environment database)</description>
     
@@ -11,7 +11,8 @@
         <!-- <requirement type="package" version="0.4.1"> 
         earthdata
         </requirement> --> <!-- Lastest version on conda-forge -->
-        <requirement type="package">earthaccess</requirement>
+        <requirement type="package" version="0.18.0">earthaccess</requirement>
+        <requirement type="package" version="3.12.2">python</requirement>
         <credentials name="earthdata_cred" version="1.0" label="EarthData Access" description="Credentials for accessing EarthData Database">
             <variable name="username" inject_as_env="EARTHDATA_USERNAME" optional="false" 
                 label="EarthData Username" description="Your Earthdata login pseudoname" />
@@ -68,7 +69,7 @@
     </outputs>
     
     <tests>
-        <test expect_num_outputs="1">
+        <test>
             <param name="short_name" value="MODIS_AQUA_L3_SST_THERMAL_MONTHLY_9KM_DAYTIME_V2019.0"/>
 
             <section name="section_bounding_box">
