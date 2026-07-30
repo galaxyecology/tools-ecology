@@ -1,9 +1,9 @@
-"""Earthdata module"""
+"""Python script to fetch NASA Earth science data from Earthdata."""
 
-import os
 import argparse
-from datetime import datetime, timedelta
+import os
 from calendar import monthrange
+from datetime import datetime, timedelta
 from collections import defaultdict
 
 import earthaccess
@@ -44,10 +44,40 @@ if args.exclude_dates:
 # ---------------------------
 earthaccess.login(strategy="environment")
 
+
 # ---------------------------
 # Detect temporal resolution
 # ---------------------------
 def detect_resolution(short_name):
+    """
+    Detect the temporal resolution of a dataset using Earthaccess granules.
+
+    This function queries the Earthaccess API for two granules of the given
+    dataset (`short_name`), extracts their beginning timestamps, and computes
+    the difference in days between them to infer the temporal resolution.
+
+    Parameters
+    ----------
+    short_name : str
+        The Earthdata short name identifying the dataset.
+
+    Returns
+    -------
+    str
+        The inferred temporal resolution:
+        - "monthly" if the time difference is approximately one month (>= 27 days)
+        - "daily" if the time difference is 1 day
+        - "other" for any other interval
+        - "unknown" if the resolution cannot be determined (e.g., insufficient
+        data or parsing errors)
+
+    Notes
+    -----
+    - This method assumes that consecutive granules are representative of the
+    dataset's temporal frequency.
+    - If fewer than two granules are available or if metadata extraction fails,
+    the function returns "unknown".
+    """
     sample = earthaccess.search_data(
         short_name=short_name,
         count=2  # get a couple of granules
@@ -57,8 +87,12 @@ def detect_resolution(short_name):
         return "unknown"
 
     try:
-        t0 = sample[0]["umm"]["TemporalExtent"]["RangeDateTime"]["BeginningDateTime"]
-        t1 = sample[1]["umm"]["TemporalExtent"]["RangeDateTime"]["BeginningDateTime"]
+        t0 = sample[0]["umm"]["TemporalExtent"][
+            "RangeDateTime"
+            ]["BeginningDateTime"]
+        t1 = sample[1]["umm"]["TemporalExtent"][
+            "RangeDateTime"
+            ]["BeginningDateTime"]
 
         d0 = datetime.fromisoformat(t0.replace("Z", ""))
         d1 = datetime.fromisoformat(t1.replace("Z", ""))
@@ -76,7 +110,7 @@ def detect_resolution(short_name):
         return "unknown"
 
 
-resolution = detect_resolution(args.short_name)
+RESOLUTION = detect_resolution(args.short_name)
 
 # ---------------------------
 # Prepare excluded dates
@@ -110,7 +144,7 @@ if hasattr(args, "exclude_ranges") and args.exclude_ranges:
 # ---------------------------
 # MONTHLY logic
 # ---------------------------
-if resolution == "monthly":
+if RESOLUTION == "monthly":
 
     month_days = defaultdict(set)
 
@@ -136,7 +170,8 @@ if resolution == "monthly":
         results = earthaccess.search_data(
             short_name=args.short_name,
             temporal=(start_date, end_date),
-            bounding_box=(args.lon_min, args.lat_min, args.lon_max, args.lat_max),
+            bounding_box=(args.lon_min, args.lat_min,
+                          args.lon_max, args.lat_max),
         )
 
         if results and isinstance(results, list):
@@ -158,7 +193,8 @@ else:
             results = earthaccess.search_data(
                 short_name=args.short_name,
                 temporal=(date_str, date_str),
-                bounding_box=(args.lon_min, args.lat_min, args.lon_max, args.lat_max),
+                bounding_box=(args.lon_min, args.lat_min,
+                               args.lon_max, args.lat_max),
             )
 
             if results and isinstance(results, list):
@@ -180,4 +216,4 @@ with open(args.out_file, "w") as f:
     else:
         f.write("No files downloaded\n")
 
-print(f"Detected temporal resolution: {resolution}")
+print(f"Detected temporal resolution: {RESOLUTION}")
