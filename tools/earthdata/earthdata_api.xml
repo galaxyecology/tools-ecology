@@ -37,7 +37,7 @@
 
     <inputs>
         <param name="short_name" type="text" label="Dataset short name" 
-            optional="false" value="ATL06"/>
+            optional="false" value="ATL06">
             <sanitizer invalid_char="">
                 <valid initial="string.letters,string.digits">
                     <add value="_" />
