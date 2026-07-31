@@ -159,8 +159,6 @@
 
     * Supports spatial bounding box filtering
     * Supports date ranges
-    * Allows exclusion of specific dates
-    * Optimized for monthly datasets
 
     **Output**
 
