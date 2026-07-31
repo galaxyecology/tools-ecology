@@ -120,7 +120,7 @@
 
     <outputs>
         <collection type="list" name="output_net" format="netcdf">
-            <discover_datasets pattern="(?P<designation>.+)\.nc" directory="./test-data" visible="true"/>
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.nc" directory="./test-data" visible="true"/>
         </collection>
         <data format="txt" name="earthdata_output" label="NASA dataset"/>
     </outputs>
