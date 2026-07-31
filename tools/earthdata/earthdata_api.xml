@@ -1,5 +1,4 @@
 <tool id="earthdata_api" name="earthdata API" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="25.1">
-<!-- <tool id="earthdata-API" name="earthdata-API" version="0.1.0+galaxy0" python_template_version="3.5" profile="21.05"> -->
     <description>Fetching EarthData (NASA environment database)</description>
     
     <macros>
@@ -17,12 +16,11 @@
         </credentials>
     </requirements>
     <required_files>
-        <include path="NASA.py" />
-        <include path=".shed.yml" />
+        <include path="nasa_api.py" />
     </required_files>
 
     <command detect_errors="exit_code"><![CDATA[
-    python '$__tool_directory__/NASA_API.py'
+    python '$__tool_directory__/nasa_api.py'
     --short_name '${short_name}'
     --lat_min  '${section_bounding_box.lat_min}'
     --lat_max  '${section_bounding_box.lat_max}'
@@ -36,7 +34,7 @@
     ]]></command>
 
     <inputs>
-        <param name="short_name" type="text" label="Dataset short name" optional="false" value="ATL06">
+        <param name="short_name" type="text" label="Dataset short name" value="ATL06">
             <sanitizer invalid_char="">
                 <valid initial="string.letters,string.digits">
                     <add value="_" />
@@ -47,14 +45,14 @@
             <validator type="regex">[0-9a-zA-Z_\-\. ]</validator>
         </param>
         
-        <section name="section_bounding_box" title="Bounding Box">
+        <section name="section_bounding_box" title="Bounding Box" expanded="true">
             <param name="lat_min" type="float" label="Minimum latitude" value="-90"/>
             <param name="lat_max" type="float" label="Maximum latitude" value="90"/>
             <param name="lon_min" type="float" label="Minimum longitude" value="-180"/>
             <param name="lon_max" type="float" label="Maximum longitude" value="180"/>
         </section>
 
-        <section name="section_time_frame" title="Time Frame (YYYY-MM/ YYYY-MM-DD)">
+        <section name="section_time_frame" title="Time Frame (YYYY-MM/ YYYY-MM-DD)" expanded="true">
             <conditional name="time_input">
                 <param name="temporal_resolution" type="select">
                     <option value="daily" selected="true">Daily</option>
@@ -66,33 +64,22 @@
 
                 <param name="start_date" type="text" value="2018-10-14"
                     label="Start date (YYYY-MM-DD)">
-                    <validator type="regex">
-                        ^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$
-                    </validator>
+                    <validator type="regex">^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$</validator>
                 </param>
 
                 <param name="end_date" type="text" value="2018-10-14"
                     label="End date (YYYY-MM-DD)">
-                    <validator type="regex">
-                        ^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$
-                    </validator>
+                    <validator type="regex">^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$</validator>
                 </param>
 
                 <param name="exclude_dates" type="text" optional="true"
                     label="Exclude dates (comma-separated YYYY-MM-DD)">
-                    <validator type="regex">
-                        ^(\s*(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])\s*)
-                        (,\s*\2-\3-\4\s*)*$
-                    </validator>
+                    <validator type="regex">^(\s*(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])\s*)(,\s*\2-\3-\4\s*)*$</validator>
                 </param>
 
                 <param name="exclude_ranges" type="text" optional="true"
                     label="Exclude ranges (YYYY-MM-DD:YYYY-MM-DD)">
-                    <validator type="regex">
-                        ^(\s*(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]):
-                        (19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])\s*) 
-                        (,\s*\2-\3-\4:\5-\6-\7\s*)*$
-                    </validator>
+                    <validator type="regex">^(\s*(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]):(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])\s*)(,\s*\2-\3-\4:\5-\6-\7\s*)*$</validator>
                 </param>
                 </when>
 
@@ -102,33 +89,22 @@
 
                     <param name="start_date" type="text" value="2018-10"
                         label="Start date (YYYY-MM)">
-                        <validator type="regex">
-                            ^(19|20)\d{2}-(0[1-9]|1[0-2])$
-                        </validator>
+                        <validator type="regex">^(19|20)\d{2}-(0[1-9]|1[0-2])$</validator>
                     </param>
 
                     <param name="end_date" type="text" value="2018-10"
                         label="End date (YYYY-MM)">
-                        <validator type="regex">
-                            ^(19|20)\d{2}-(0[1-9]|1[0-2])$
-                        </validator>
+                        <validator type="regex">^(19|20)\d{2}-(0[1-9]|1[0-2])$</validator>
                     </param>
 
                     <param name="exclude_dates" type="text" optional="true"
                         label="Exclude months (comma-separated YYYY-MM)">
-                        <validator type="regex">
-                            ^(\s*(19|20)\d{2}-(0[1-9]|1[0-2])\s*) 
-                            (,\s*\2-\3\s*)*$
-                        </validator>
+                        <validator type="regex">^(\s*(19|20)\d{2}-(0[1-9]|1[0-2])\s*)(,\s*\2-\3\s*)*$</validator>
                     </param>
 
                     <param name="exclude_ranges" type="text" optional="true"
                         label="Exclude ranges (YYYY-MM:YYYY-MM)">
-                        <validator type="regex">
-                            ^(\s*(19|20)\d{2}-(0[1-9]|1[0-2]): 
-                            (19|20)\d{2}-(0[1-9]|1[0-2])\s*) 
-                            (,\s*\2-\3:\4-\5\s*)*$ 
-                        </validator>
+                        <validator type="regex">^(\s*(19|20)\d{2}-(0[1-9]|1[0-2]):(19|20)\d{2}-(0[1-9]|1[0-2])\s*)(,\s*\2-\3:\4-\5\s*)*$</validator>
                     </param>
                 </when>
                 <!-- SIMPLE XML -->
@@ -188,7 +164,7 @@
 
     **Usage**
 
-    python NASA_API.py --short_name 'MODIS_AQUA_L3_SST_THERMAL_MONTHLY_9KM_DAYTIME_V2019.0' \
+    python nasa_api.py --short_name 'MODIS_AQUA_L3_SST_THERMAL_MONTHLY_9KM_DAYTIME_V2019.0' \
     --lat_min '-70' \
     --lat_max '-60' \
     --lon_min '30' \

@@ -89,10 +89,10 @@ def detect_resolution(short_name):
     try:
         t0 = sample[0]["umm"]["TemporalExtent"][
             "RangeDateTime"
-            ]["BeginningDateTime"]
+        ]["BeginningDateTime"]
         t1 = sample[1]["umm"]["TemporalExtent"][
             "RangeDateTime"
-            ]["BeginningDateTime"]
+        ]["BeginningDateTime"]
 
         d0 = datetime.fromisoformat(t0.replace("Z", ""))
         d1 = datetime.fromisoformat(t1.replace("Z", ""))
@@ -171,7 +171,7 @@ if RESOLUTION == "monthly":
             short_name=args.short_name,
             temporal=(start_date, end_date),
             bounding_box=(args.lon_min, args.lat_min,
-                          args.lon_max, args.lat_max)
+            args.lon_max, args.lat_max)
         )
 
         if results and isinstance(results, list):
@@ -194,7 +194,7 @@ else:
                 short_name=args.short_name,
                 temporal=(date_str, date_str),
                 bounding_box=(args.lon_min, args.lat_min,
-                              args.lon_max, args.lat_max)
+                args.lon_max, args.lat_max)
             )
 
             if results and isinstance(results, list):
