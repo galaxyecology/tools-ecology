@@ -44,7 +44,7 @@
                     <add value="." />
                 </valid>
             </sanitizer>
-                <validator type="regex">[0-9a-zA-Z_\-\. ]+/>
+            <validator type="regex">[0-9a-zA-Z_\-\. ]</validator>
         </param>
         
         <section name="section_bounding_box" title="Bounding Box">
