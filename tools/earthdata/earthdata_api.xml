@@ -12,7 +12,7 @@
             <variable name="username" inject_as_env="EARTHDATA_USERNAME" optional="false" 
                 label="EarthData Username" description="Your Earthdata login pseudoname" />
             <secret name="secret_key" inject_as_env="EARTHDATA_PASSWORD" optional="false" 
-                label="EarthData Secret Access Key" description="Your Earthdata login secret access key/ password" />
+                label="EarthData Secret Access Key" description="Your Earthdata login secret access key / password" />
         </credentials>
     </requirements>
     <required_files>
