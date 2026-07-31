@@ -36,8 +36,7 @@
     ]]></command>
 
     <inputs>
-        <param name="short_name" type="text" label="Dataset short name" 
-            optional="false" value="ATL06">
+        <param name="short_name" type="text" label="Dataset short name" optional="false" value="ATL06">
             <sanitizer invalid_char="">
                 <valid initial="string.letters,string.digits">
                     <add value="_" />
@@ -45,7 +44,8 @@
                     <add value="." />
                 </valid>
             </sanitizer>
-            <validator type="regex">[0-9a-zA-Z_\-\. ]+</validator>
+                <validator type="regex">[0-9a-zA-Z_\-\. ]+/>
+        </param>
         
         <section name="section_bounding_box" title="Bounding Box">
             <param name="lat_min" type="float" label="Minimum latitude" value="-90"/>
