@@ -74,12 +74,12 @@
 
                 <param name="exclude_dates" type="text" optional="true"
                     label="Exclude dates (comma-separated YYYY-MM-DD)">
-                    <validator type="regex">^(\s*(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])\s*)(,\s*\2-\3-\4\s*)*$</validator>
+                    <validator type="regex">^(\s*(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])\s*)(,(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])\s*)*$</validator>
                 </param>
 
                 <param name="exclude_ranges" type="text" optional="true"
                     label="Exclude ranges (YYYY-MM-DD:YYYY-MM-DD)">
-                    <validator type="regex">^(\s*(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]):(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])\s*)(,\s*\2-\3-\4:\5-\6-\7\s*)*$</validator>
+                    <validator type="regex">^(\s*(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]):(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])\s*)(,\s*(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]):(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])\s*)*$</validator>
                 </param>
                 </when>
 
@@ -99,12 +99,12 @@
 
                     <param name="exclude_dates" type="text" optional="true"
                         label="Exclude months (comma-separated YYYY-MM)">
-                        <validator type="regex">^(\s*(19|20)\d{2}-(0[1-9]|1[0-2])\s*)(,\s*\2-\3\s*)*$</validator>
+                        <validator type="regex">^(\s*(19|20)\d{2}-(0[1-9]|1[0-2])\s*)(,\s*(19|20)\d{2}-(0[1-9]|1[0-2])\s*)*$</validator>
                     </param>
 
                     <param name="exclude_ranges" type="text" optional="true"
                         label="Exclude ranges (YYYY-MM:YYYY-MM)">
-                        <validator type="regex">^(\s*(19|20)\d{2}-(0[1-9]|1[0-2]):(19|20)\d{2}-(0[1-9]|1[0-2])\s*)(,\s*\2-\3:\4-\5\s*)*$</validator>
+                        <validator type="regex">^(\s*(19|20)\d{2}-(0[1-9]|1[0-2]):(19|20)\d{2}-(0[1-9]|1[0-2])\s*)(,\s*(19|20)\d{2}-(0[1-9]|1[0-2]):(19|20)\d{2}-(0[1-9]|1[0-2])\s*)*$</validator>
                     </param>
                 </when>
                 <!-- SIMPLE XML -->
@@ -126,22 +126,24 @@
             <param name="short_name" value="MODIS_AQUA_L3_SST_THERMAL_MONTHLY_9KM_DAYTIME_V2019.0"/>
 
             <section name="section_bounding_box">
-                <param name="lat_min" value="-90"/>
-                <param name="lat_max" value="90"/>
-                <param name="lon_min" value="-180"/>
-                <param name="lon_max" value="180"/>
+                <param name="lat_min" value="-70"/>
+                <param name="lat_max" value="-60"/>
+                <param name="lon_min" value="30"/>
+                <param name="lon_max" value="150"/>
             </section>
 
             <section name="section_time_frame">
                 <conditional name="time_input">
-                    <param name="start_date" value="2002-12-01"/>
-                    <param name="end_date" value="2002-12-31"/>
+                    <param name="start_date" value="2001-12-01"/>
+                    <param name="end_date" value="2010-03-31"/>
                     <param name="exclude_dates" value=""/>
-                    <param name="exclude_ranges" value=""/>
+                    <param name="exclude_ranges" value="2002-04-01:2002-11-30,2003-04-01:2003-11-30,2004-04-01:2004-11-30,2005-04-01:2005-11-30,2006-04-01:2006-11-30,2007-04-01:2007-11-30,2008-04-01:2008-11-30,2009-04-01:2009-11-30,2010-04-01:2010-11-30"/>
                 </conditional>
             </section>
 
-            <output name="earthdata_output" file="earthdata_output.txt"/>
+            <assert_stderr>
+                <has_text text="Either the environment variables EARTHDATA_USERNAME and EARTHDATA_PASSWORD must both be set, or EARTHDATA_TOKEN must be set for the 'environment' login strategy."/>
+            </assert_stderr>
         </test>
     </tests>
 
@@ -162,7 +164,8 @@
 
     **Output**
 
-    A text file listing downloaded files.
+    * A repertory containing the available NASA data files correponding to the desired time period and location.   
+    * A text file listing downloaded files.
      
 
     ]]></help>
