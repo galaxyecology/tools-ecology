@@ -1,7 +1,7 @@
 categories:
     - Ecology
 owner: ecology
-remote_repository_url: https://github.com/tools-ecology/tree/master/tools/earthdata
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/earthdata
 homepage_url: https://github.com/C0c0-C00k13/tools-ecology/tree/master/tools/earthdata
 long_description: |
   A NASA Earth science data fetching tool, using the earthaccess API.

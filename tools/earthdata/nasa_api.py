@@ -28,7 +28,7 @@ parser.add_argument("--exclude_dates", type=str, required=False, default="",
 parser.add_argument("--exclude_ranges", type=str, default="",
                     help="Comma-separated date ranges (YYYY-MM-DD:YYYY-MM-DD)")
 
-parser.add_argument("--out_dir", type=str, required=True)
+parser.add_argument("--out_dir", type=str, required=False, defalut="test-data")
 parser.add_argument("--out_file", type=str, required=True)
 
 args = parser.parse_args()

@@ -30,7 +30,7 @@
     --end_date '${section_time_frame.end_date}'
     --exclude_dates '${section_time_frame.exclude_dates}'
     --exclude_ranges '${section_time_frame.exclude_ranges}'
-    --out_dir 'output_net'
+    --out_dir '${output_net}'
     --out_file '${earthdata_output}'
     ]]></command>
 
