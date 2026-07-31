@@ -30,6 +30,7 @@
     --end_date '${section_time_frame.end_date}'
     --exclude_dates '${section_time_frame.exclude_dates}'
     --exclude_ranges '${section_time_frame.exclude_ranges}'
+    --out_dir 'output_net' \
     --out_file '${earthdata_output}'
     ]]></command>
 
@@ -118,6 +119,9 @@
     </inputs>
 
     <outputs>
+        <collection type="list" name="output_net" format="netcdf">
+            <discover_datasets pattern="(?P<designation>.+)\.nc" directory="./test-data" visible="true"/>
+        </collection>
         <data format="txt" name="earthdata_output" label="NASA dataset"/>
     </outputs>
     
@@ -164,7 +168,7 @@
 
     **Output**
 
-    * A repertory containing the available NASA data files correponding to the desired time period and location.   
+    * A collection of available NASA data files correponding to the desired time period and location.   
     * A text file listing downloaded files.
      
 

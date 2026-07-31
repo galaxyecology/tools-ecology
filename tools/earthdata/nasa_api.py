@@ -120,7 +120,7 @@ excluded = excluded_dates
 start = datetime.strptime(args.start_date, "%Y-%m-%d")
 end = datetime.strptime(args.end_date, "%Y-%m-%d")
 
-DOWNLOAD_PATH = "Data"
+DOWNLOAD_PATH = args.out_dir
 os.makedirs(DOWNLOAD_PATH, exist_ok=True)
 
 all_files = []
@@ -170,7 +170,8 @@ if RESOLUTION == "monthly":
         results = earthaccess.search_data(
             short_name=args.short_name,
             temporal=(start_date, end_date),
-            bounding_box=(args.lon_min, args.lat_min,
+            bounding_box=(
+                args.lon_min, args.lat_min,
                 args.lon_max, args.lat_max)
         )
 
@@ -193,7 +194,8 @@ else:
             results = earthaccess.search_data(
                 short_name=args.short_name,
                 temporal=(date_str, date_str),
-                bounding_box=(args.lon_min, args.lat_min,
+                bounding_box=(
+                    args.lon_min, args.lat_min,
                     args.lon_max, args.lat_max)
             )
 
