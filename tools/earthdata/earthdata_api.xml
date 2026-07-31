@@ -157,10 +157,12 @@
             </section>
 
             <section name="section_time_frame">
-                <param name="start_date" value="2002-12-01"/>
-                <param name="end_date" value="2002-12-31"/>
-                <param name="exclude_dates" value=""/>
-                <param name="exclude_ranges" value=""/>
+                <conditional name="time_input">
+                    <param name="start_date" value="2002-12-01"/>
+                    <param name="end_date" value="2002-12-31"/>
+                    <param name="exclude_dates" value=""/>
+                    <param name="exclude_ranges" value=""/>
+                </conditional>
             </section>
 
             <output name="earthdata_output" file="earthdata_output.txt"/>
