@@ -162,18 +162,6 @@
     * Allows exclusion of specific dates
     * Optimized for monthly datasets
 
-    **Usage**
-
-    python nasa_api.py --short_name 'MODIS_AQUA_L3_SST_THERMAL_MONTHLY_9KM_DAYTIME_V2019.0' \
-    --lat_min '-70' \
-    --lat_max '-60' \
-    --lon_min '30' \
-    --lon_max '150' \
-    --start_date '2001-12-01' \
-    --end_date '2010-03-31' \
-    --exclude_ranges '2002-04-01:2002-11-30,2003-04-01:2003-11-30,2004-04-01:2004-11-30,2005-04-01:2005-11-30,2006-04-01:2006-11-30,2007-04-01:2007-11-30,2008-04-01:2008-11-30,2009-04-01:2009-11-30,2010-04-01:2010-11-30' \
-    --out_file 'earthdata_output.txt'
-
     **Output**
 
     A text file listing downloaded files.
