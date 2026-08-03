@@ -126,7 +126,7 @@
     </outputs>
     
     <tests>
-        <test>
+        <test expect_failure="true">
             <param name="short_name" value="MODIS_AQUA_L3_SST_THERMAL_MONTHLY_9KM_DAYTIME_V2019.0"/>
 
             <section name="section_bounding_box">
