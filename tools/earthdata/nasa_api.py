@@ -195,7 +195,7 @@ while current <= end:
 with open(ARGS.out_file, "w") as f:
     if all_files:
         for file in all_files:
-            f.write(f"{file}\n")
+            f.write(f"{os.path.basename(file)}\n")
     else:
         f.write("No files downloaded\n")
 

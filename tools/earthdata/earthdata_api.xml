@@ -138,12 +138,18 @@
 
     **Features**
 
+    * Selects only **one** type of data per request, defined by its *short name*
     * Supports filtering by spatial bounding box
     * Supports querying across date ranges
 
     **Temporal resolution considerations**
 
-    * Users are advised to check the **"Temporal Resolution"** information of their selected dataset on the Earthdata catalog webpage whenever possible on the `Data Catalog <https://www.earthdata.nasa.gov/data/catalog>`_ 
+    * This tool fetches both "monthly" and "daily" data
+    * Users are advised to check the "Temporal Resolution" information of their selected dataset using the Earthdata search interface:
+
+    (search.earthdata.nasa.gov)
+
+    Note: The Earthdata catalog webpage (www.earthdata.nasa.gov/data/catalog) is intended for human browsing only and may block automated requests (HTTP 403). This tool uses the official CMR API via the earthaccess library for data discovery and download.
     * For datasets with a **monthly** temporal resolution, files can start at the 1^st^ of the month and end on the 1st day of **the following month**. Users should therefore set the 'start date to the 2nd day of the month' to avoid unintentionally fetching measures from the previous month.
 
     **Output**
