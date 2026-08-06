@@ -128,8 +128,7 @@
 
     **Requirements**
 
-    You need an Earthdata account:
-    https://urs.earthdata.nasa.gov/
+    You need an Earthdata account. Create one through NASA Earthdata Login (see URLs below).
 
     Once your credentials are set up, enter them in the credentials section:
 
@@ -145,12 +144,10 @@
     **Temporal resolution considerations**
 
     * This tool fetches both "monthly" and "daily" data
-    * Users are advised to check the "Temporal Resolution" information of their selected dataset using the Earthdata search interface:
+    * Users are advised to check the "Temporal Resolution" information of their selected dataset using the Earthdata search interface. Use the NASA Earthdata Search interface to inspect dataset temporal resolution.
 
-    (search.earthdata.nasa.gov)
-
-    Note: The Earthdata catalog webpage (www.earthdata.nasa.gov/data/catalog) is intended for human browsing only and may block automated requests (HTTP 403). This tool uses the official CMR API via the earthaccess library for data discovery and download.
-    * For datasets with a **monthly** temporal resolution, files can start at the 1^st^ of the month and end on the 1st day of **the following month**. Users should therefore set the 'start date to the 2nd day of the month' to avoid unintentionally fetching measures from the previous month.
+    Note: The Earthdata catalog webpage is intended for human browsing only and may block automated requests (HTTP 403). This tool uses the official CMR API via the earthaccess library for data discovery and download.
+    * For datasets with a **monthly** temporal resolution, files can start at the first of the month and end on the 1st day of **the following month**. Users should therefore set the 'start date to the 2nd day of the month' to avoid unintentionally fetching measures from the previous month.
 
     **Output**
 
@@ -158,13 +155,13 @@
     * A text file listing all downloaded files.
      
 
+    **URLs**
+    * NASA Earthdata Login: urs.earthdata.nasa.gov
+    * Earthdata search interface: search.earthdata.nasa.gov
+    * Earthdata catalog webpage: earthdata.nasa.gov/data/catalog
+
     ]]></help>
     <citations>
-        <citation type="bibtex">
-            @misc{Naming conventions - earthaccess,
-                title = {earthaccess documentation},
-                url = {https://earthaccess.readthedocs.io/en/latest/contributor/reference/naming-convention/},
-                language={en} }
-        </citation>
+        <citation type="doi">10.5281/zenodo.8365009</citation>
     </citations>
 </tool>
