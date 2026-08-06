@@ -143,7 +143,7 @@
 
     **Temporal resolution considerations**
 
-    * Users are advised to check the **"Temporal Resolution"** information of their selected dataset on the Earthdata catalog webpage whenever possible: https://www.earthdata.nasa.gov/data/catalog
+    * Users are advised to check the **"Temporal Resolution"** information of their selected dataset on the Earthdata catalog webpage whenever possible on the `Data Catalog <https://www.earthdata.nasa.gov/data/catalog>`_ 
     * For datasets with a **monthly** temporal resolution, files can start at the 1^st^ of the month and end on the 1st day of **the following month**. Users should therefore set the 'start date to the 2nd day of the month' to avoid unintentionally fetching measures from the previous month.
 
     **Output**
