@@ -2,8 +2,6 @@
 
 import argparse
 import os
-from calendar import monthrange
-from collections import defaultdict
 from datetime import datetime, timedelta
 
 import earthaccess
@@ -23,200 +21,183 @@ parser.add_argument("--lon_max", type=float, required=True)
 parser.add_argument("--start_date", type=str, required=True)
 parser.add_argument("--end_date", type=str, required=True)
 
-parser.add_argument("--exclude_dates", type=str, required=False, default="",
-                    help="Comma-separated dates to exclude (YYYY-MM-DD)")
-parser.add_argument("--exclude_ranges", type=str, default="",
-                    help="Comma-separated date ranges (YYYY-MM-DD:YYYY-MM-DD)")
+parser.add_argument(
+    "--exclude_dates",
+    type=str,
+    required=False,
+    default="",
+    help="Comma-separated dates to exclude (YYYY-MM-DD)"
+)
 
-parser.add_argument("--out_dir", type=str, required=False, default="test-data")
+parser.add_argument(
+    "--exclude_ranges",
+    type=str,
+    default="",
+    help="Comma-separated date ranges (YYYY-MM-DD:YYYY-MM-DD)"
+)
+
+parser.add_argument(
+    "--resolution",
+    choices=["daily", "monthly"],
+    required=True,
+    help="Increment dates daily or monthly")
+
 parser.add_argument("--out_file", type=str, required=True)
 
-args = parser.parse_args()
-
-# ---------------------------
-# Parse excluded dates
-# ---------------------------
-excluded_dates = set()
-if args.exclude_dates:
-    excluded_dates = set(d.strip() for d in args.exclude_dates.split(","))
+ARGS = parser.parse_args()
 
 # ---------------------------
 # Login
 # ---------------------------
-earthaccess.login(strategy="environment")
+
+# os.environ["EARTHDATA_USERNAME"] = ""
+# os.environ["EARTHDATA_PASSWORD"] = ""
+
+earthaccess.login(strategy="environment", persist=True)
 
 
-# ---------------------------
-# Detect temporal resolution
-# ---------------------------
-def detect_resolution(short_name):
+def increment(current, step):
     """
-    Detect the temporal resolution of a dataset using Earthaccess granules.
-
-    This function queries the Earthaccess API for two granules of the given
-    dataset (`short_name`), extracts their beginning timestamps, and computes
-    the difference in days between them to infer the temporal resolution.
+    Increment a datetime object by one step based on the specified temporal \
+    resolution.
 
     Parameters
     ----------
-    short_name : str
-        The Earthdata short name identifying the dataset.
+    current : datetime
+        The current datetime to increment.
+    step : str
+        The step type. Supported values:
+        - "monthly": advances to the first day of the next month
+        - "daily": advances by one day
 
     Returns
     -------
-    str
-        The inferred temporal resolution:
-        - "monthly" if the time difference is approximately 1 month (>=27days)
-        - "daily" if the time difference is 1 day
-        - "other" for any other interval
-        - "unknown" if the resolution cannot be determined (e.g.,
-        insufficient data or parsing errors)
+    datetime
+        A new datetime object incremented according to the specified step.
 
     Notes
     -----
-    - This method assumes that consecutive granules are representative of
-    the dataset's temporal frequency.
-    - If fewer than two granules are available or if metadata extraction
-    fails, the function returns "unknown".
+    - For monthly increments, the returned date is always normalized to the
+      first day of the next month to avoid invalid dates (e.g., transitioning
+      from January 31 to February).
+    - For daily increments, a standard timedelta of one day is applied.
     """
-    sample = earthaccess.search_data(
-        short_name=short_name,
-        count=2  # get a couple of granules
-    )
+    if step == "monthly":
+        year = current.year + (current.month // 12)
+        month = (current.month % 12) + 1
+        return datetime(year, month, 1)  # ALWAYS safe
 
-    if len(sample) < 2:
-        return "unknown"
+    return current + timedelta(days=1)
 
+
+# ---------------------------
+# Parse & Prepare excluded dates
+# ---------------------------
+RESOLUTION = ARGS.resolution
+
+DATE_FORMAT = "%Y-%m-%d"
+
+
+def parse_date(value, name):
+    """Validate date format."""
     try:
-        t0 = sample[0]["umm"]["TemporalExtent"][
-            "RangeDateTime"
-        ]["BeginningDateTime"]
-        t1 = sample[1]["umm"]["TemporalExtent"][
-            "RangeDateTime"
-        ]["BeginningDateTime"]
+        return datetime.strptime(value, DATE_FORMAT)
+    except ValueError:
+        raise ValueError(
+            f"Invalid {name}: expected YYYY-MM-DD"
+        )
 
-        d0 = datetime.fromisoformat(t0.replace("Z", ""))
-        d1 = datetime.fromisoformat(t1.replace("Z", ""))
-
-        delta = abs((d1 - d0).days)
-
-        if delta >= 27:
-            return "monthly"
-        elif delta == 1:
-            return "daily"
-        else:
-            return "other"
-
-    except Exception:
-        return "unknown"
-
-
-RESOLUTION = detect_resolution(args.short_name)
 
 # ---------------------------
-# Prepare excluded dates
+# Prepare dates
 # ---------------------------
-excluded = excluded_dates
+start = parse_date(ARGS.start_date, "start_date")
+end = parse_date(ARGS.end_date, "end_date")
 
-start = datetime.strptime(args.start_date, "%Y-%m-%d")
-end = datetime.strptime(args.end_date, "%Y-%m-%d")
+if start > end:
+    raise ValueError("start_date must be earlier than or equal to end_date")
 
-DOWNLOAD_PATH = args.out_dir
+excluded = set()
+
+# Single excluded dates
+if ARGS.exclude_dates:
+    for value in ARGS.exclude_dates.split(","):
+        excluded.add(
+            parse_date(value.strip(), "exclude_date")
+            .strftime(DATE_FORMAT)
+        )
+
+# Excluded ranges
+if ARGS.exclude_ranges:
+    for r in ARGS.exclude_ranges.split(","):
+        begin, finish = r.split(":")
+
+        current = parse_date(begin.strip(), "range start")
+        stop = parse_date(finish.strip(), "range end")
+
+        while current <= stop:
+            excluded.add(current.strftime(DATE_FORMAT))
+            current = increment(current, ARGS.resolution)
+
+
+# ---------------------------
+# Prepare output path
+# ---------------------------
+
+DOWNLOAD_PATH = os.path.join(os.getcwd(), "Data")
 os.makedirs(DOWNLOAD_PATH, exist_ok=True)
 
 all_files = []
 
 # ---------------------------
-# Parse excluded ranges
-# format: YYYY-MM-DD:YYYY-MM-DD
+# Main retrieval loop
 # ---------------------------
-if hasattr(args, "exclude_ranges") and args.exclude_ranges:
-    for r in args.exclude_ranges.split(","):
-        if ":" in r:
-            start_r, end_r = r.split(":")
-            start_r = datetime.strptime(start_r.strip(), "%Y-%m-%d")
-            end_r = datetime.strptime(end_r.strip(), "%Y-%m-%d")
+current = start
 
-            current = start_r
-            while current <= end_r:
-                excluded_dates.add(current.strftime("%Y-%m-%d"))
-                current += timedelta(days=1)
+while current <= end:
 
-# ---------------------------
-# MONTHLY logic
-# ---------------------------
-if RESOLUTION == "monthly":
+    date_str = current.strftime(DATE_FORMAT)
+    if date_str not in excluded:
 
-    month_days = defaultdict(set)
-
-    current = start
-    while current <= end:
-        date_str = current.strftime("%Y-%m-%d")
-        month_key = current.strftime("%Y-%m")
-
-        if date_str not in excluded:
-            month_days[month_key].add(current.day)
-
-        current += timedelta(days=1)
-
-    valid_months = [m for m, days in month_days.items() if days]
-
-    for month in sorted(valid_months):
-        year, mon = map(int, month.split("-"))
-        last_day = monthrange(year, mon)[1]
-
-        start_date = f"{month}-01"
-        end_date = f"{month}-{last_day:02d}"
+        start_period = current
+        end_period = current
+        if RESOLUTION == "monthly":
+            next_month = increment(current, "monthly")
+            end_period = min(next_month - timedelta(days=1), end)
 
         results = earthaccess.search_data(
-            short_name=args.short_name,
-            temporal=(start_date, end_date),
+            short_name=ARGS.short_name,
+            temporal=(
+                start_period.strftime(DATE_FORMAT),
+                end_period.strftime(DATE_FORMAT)
+            ),
             bounding_box=(
-                args.lon_min, args.lat_min,
-                args.lon_max, args.lat_max)
+                ARGS.lon_min, ARGS.lat_min,
+                ARGS.lon_max, ARGS.lat_max)
         )
 
-        if results and isinstance(results, list):
-            files = earthaccess.download(results, DOWNLOAD_PATH)
-            if files:
-                all_files.extend(files)
-        else:
-            print(f"No data found for {start_date} → {end_date}")
-
-# ---------------------------
-# DAILY logic
-# ---------------------------
-else:
-    current = start
-    while current <= end:
-        date_str = current.strftime("%Y-%m-%d")
-
-        if date_str not in excluded:
-            results = earthaccess.search_data(
-                short_name=args.short_name,
-                temporal=(date_str, date_str),
-                bounding_box=(
-                    args.lon_min, args.lat_min,
-                    args.lon_max, args.lat_max)
-            )
-
-            if results and isinstance(results, list):
+        if results:
+            try:
                 files = earthaccess.download(results, DOWNLOAD_PATH)
                 if files:
                     all_files.extend(files)
-            else:
-                print(f"No data found for {start_date} → {end_date}")
 
-        current += timedelta(days=1)
+            except Exception as e:
+                print(f"Download failed: {e}")
+
+    # increment month
+    current = increment(current, ARGS.resolution)
+
 
 # ---------------------------
 # Output
 # ---------------------------
-with open(args.out_file, "w") as f:
+with open(ARGS.out_file, "w") as f:
     if all_files:
         for file in all_files:
             f.write(f"{file}\n")
     else:
         f.write("No files downloaded\n")
 
-print(f"Detected temporal resolution: {RESOLUTION}")
+print(f"Resolution: {RESOLUTION} | Files downloaded: \
+      {len(os.listdir(DOWNLOAD_PATH))}")

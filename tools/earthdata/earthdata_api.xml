@@ -10,7 +10,7 @@
         <requirement type="package" version="0.18.0">earthaccess</requirement>
         <credentials name="earthdata_cred" version="1.0" label="EarthData Access" description="Credentials for accessing EarthData Database">
             <variable name="username" inject_as_env="EARTHDATA_USERNAME" optional="false" 
-                label="EarthData Username" description="Your Earthdata login pseudoname" />
+                label="EarthData Username" description="Your Earthdata login username" />
             <secret name="secret_key" inject_as_env="EARTHDATA_PASSWORD" optional="false" 
                 label="EarthData Secret Access Key" description="Your Earthdata login secret access key / password" />
         </credentials>
@@ -26,11 +26,11 @@
     --lat_max  '${section_bounding_box.lat_max}'
     --lon_min  '${section_bounding_box.lon_min}'
     --lon_max  '${section_bounding_box.lon_max}'
+    --resolution '${section_time_frame.temporal_resolution}'
     --start_date '${section_time_frame.start_date}'
     --end_date '${section_time_frame.end_date}'
     --exclude_dates '${section_time_frame.exclude_dates}'
     --exclude_ranges '${section_time_frame.exclude_ranges}'
-    --out_dir '${output_net}'
     --out_file '${earthdata_output}'
     ]]></command>
 
@@ -43,7 +43,7 @@
                     <add value="." />
                 </valid>
             </sanitizer>
-            <validator type="regex">[0-9a-zA-Z_\-\. ]</validator>
+            <validator type="regex">^[0-9a-zA-Z_\-\. ]+$</validator>
         </param>
         
         <section name="section_bounding_box" title="Bounding Box" expanded="true">
@@ -53,66 +53,36 @@
             <param name="lon_max" type="float" label="Maximum longitude" value="180"/>
         </section>
 
-        <section name="section_time_frame" title="Time Frame (YYYY-MM/ YYYY-MM-DD)" expanded="true">
-            <conditional name="time_input">
-                <param name="temporal_resolution" type="select">
-                    <option value="daily" selected="true">Daily</option>
-                    <option value="monthly">Monthly</option>
-                </param>
+        <section name="section_time_frame" title="Time Frame (YYYY-MM-DD)" expanded="true">
+            <param name="temporal_resolution" type="select">
+                <option value="daily" selected="true">Daily</option>
+                <option value="monthly">Monthly</option>
+            </param>
+
                 
-                <!-- DAILY -->
-                <when value="daily">
+            <param name="start_date" type="text" value="2018-10-14"
+                label="Start date (YYYY-MM-DD)" help="If 'Monthly', please add the second day of the month (e.g:2001-12-02)">
+                <validator type="regex">^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$</validator>
+            </param>
 
-                <param name="start_date" type="text" value="2018-10-14"
-                    label="Start date (YYYY-MM-DD)">
-                    <validator type="regex">^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$</validator>
-                </param>
+            <param name="end_date" type="text" value="2018-10-14"
+                label="End date (YYYY-MM-DD)" help="If 'Monthly', please add the last date of the month (e.g:2001-12-31)">
+                <validator type="regex">^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$</validator>
+            </param>
 
-                <param name="end_date" type="text" value="2018-10-14"
-                    label="End date (YYYY-MM-DD)">
-                    <validator type="regex">^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$</validator>
-                </param>
+            <param name="exclude_dates" type="text" optional="true"
+                label="Exclude dates (comma-separated YYYY-MM-DD)">
+                <validator type="regex">^(\s*(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])\s*)(,(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])\s*)*$</validator>
+            </param>
 
-                <param name="exclude_dates" type="text" optional="true"
-                    label="Exclude dates (comma-separated YYYY-MM-DD)">
-                    <validator type="regex">^(\s*(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])\s*)(,(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])\s*)*$</validator>
-                </param>
-
-                <param name="exclude_ranges" type="text" optional="true"
-                    label="Exclude ranges (YYYY-MM-DD:YYYY-MM-DD)">
-                    <validator type="regex">^(\s*(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]):(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])\s*)(,\s*(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]):(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])\s*)*$</validator>
-                </param>
-                </when>
-
-
-                <!-- MONTHLY -->
-                <when value="monthly">
-
-                    <param name="start_date" type="text" value="2018-10"
-                        label="Start date (YYYY-MM)">
-                        <validator type="regex">^(19|20)\d{2}-(0[1-9]|1[0-2])$</validator>
-                    </param>
-
-                    <param name="end_date" type="text" value="2018-10"
-                        label="End date (YYYY-MM)">
-                        <validator type="regex">^(19|20)\d{2}-(0[1-9]|1[0-2])$</validator>
-                    </param>
-
-                    <param name="exclude_dates" type="text" optional="true"
-                        label="Exclude months (comma-separated YYYY-MM)">
-                        <validator type="regex">^(\s*(19|20)\d{2}-(0[1-9]|1[0-2])\s*)(,\s*(19|20)\d{2}-(0[1-9]|1[0-2])\s*)*$</validator>
-                    </param>
-
-                    <param name="exclude_ranges" type="text" optional="true"
-                        label="Exclude ranges (YYYY-MM:YYYY-MM)">
-                        <validator type="regex">^(\s*(19|20)\d{2}-(0[1-9]|1[0-2]):(19|20)\d{2}-(0[1-9]|1[0-2])\s*)(,\s*(19|20)\d{2}-(0[1-9]|1[0-2]):(19|20)\d{2}-(0[1-9]|1[0-2])\s*)*$</validator>
-                    </param>
-                </when>
-                <!-- SIMPLE XML -->
-                <!-- <validator type="regex">
-                ^\d{4}-(0[1-9]|1[0-2])(-[0-3]\d)?$
-                </validator> -->
-            </conditional>
+            <param name="exclude_ranges" type="text" optional="true"
+                label="Exclude ranges (YYYY-MM-DD:YYYY-MM-DD)">
+                <validator type="regex">^(\s*(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]):(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])\s*)(,\s*(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]):(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])\s*)*$</validator>
+            </param>
+            <!-- SIMPLE XML -->
+            <!-- <validator type="regex">
+            ^\d{4}-(0[1-9]|1[0-2])(-[0-3]\d)?$
+            </validator> -->
 
         </section>
                 
@@ -120,14 +90,14 @@
 
     <outputs>
         <collection type="list" name="output_net" format="netcdf">
-            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.nc" directory="./test-data" visible="true"/>
+            <discover_datasets pattern="__name_and_ext__" directory="Data"/>
         </collection>
         <data format="txt" name="earthdata_output" label="NASA dataset"/>
     </outputs>
     
     <tests>
         <test expect_failure="true">
-            <param name="short_name" value="MODIS_AQUA_L3_SST_THERMAL_MONTHLY_9KM_DAYTIME_V2019.0"/>
+            <param name="short_name" value="ATL06"/>
 
             <section name="section_bounding_box">
                 <param name="lat_min" value="-70"/>
@@ -137,12 +107,11 @@
             </section>
 
             <section name="section_time_frame">
-                <conditional name="time_input">
-                    <param name="start_date" value="2001-12-01"/>
-                    <param name="end_date" value="2010-03-31"/>
-                    <param name="exclude_dates" value=""/>
-                    <param name="exclude_ranges" value="2002-04-01:2002-11-30,2003-04-01:2003-11-30,2004-04-01:2004-11-30,2005-04-01:2005-11-30,2006-04-01:2006-11-30,2007-04-01:2007-11-30,2008-04-01:2008-11-30,2009-04-01:2009-11-30,2010-04-01:2010-11-30"/>
-                </conditional>
+                <param name="temporal_resolution" value="daily"/>
+                <param name="start_date" value="2001-12-01"/>
+                <param name="end_date" value="2010-03-31"/>
+                <param name="exclude_dates" value=""/>
+                <param name="exclude_ranges" value="2002-04-01:2002-11-30,2003-04-01:2003-11-30,2004-04-01:2004-11-30,2005-04-01:2005-11-30,2006-04-01:2006-11-30,2007-04-01:2007-11-30,2008-04-01:2008-11-30,2009-04-01:2009-11-30,2010-04-01:2010-11-30"/>
             </section>
 
             <assert_stderr>
@@ -154,22 +123,33 @@
     <help><![CDATA[
     **What it does**
 
-    This tool fetches NASA Earth science data from Earthdata using the `earthaccess` API.
+    The Earthdata platform provides environmental datasets—often derived from satellite measures taken at different time steps (e.g., daily or monthly observations).
+    This tool retrieves NASA Earth science data from Earthdata using the earthaccess API.
 
     **Requirements**
-    
-    You must have an Earthdata account:
+
+    You need an Earthdata account:
     https://urs.earthdata.nasa.gov/
+
+    Once your credentials are set up, enter them in the credentials section:
+
+    * Galaxy Username → your Earthdata username
+    * EarthData Secret Access Key → your Earthdata password
 
     **Features**
 
-    * Supports spatial bounding box filtering
-    * Supports date ranges
+    * Supports filtering by spatial bounding box
+    * Supports querying across date ranges
+
+    **Temporal resolution considerations**
+
+    * Users are advised to check the **"Temporal Resolution"** information of their selected dataset on the Earthdata catalog webpage whenever possible: https://www.earthdata.nasa.gov/data/catalog
+    * For datasets with a **monthly** temporal resolution, files can start at the 1^st^ of the month and end on the 1st day of **the following month**. Users should therefore set the 'start date to the 2nd day of the month' to avoid unintentionally fetching measures from the previous month.
 
     **Output**
 
-    * A collection of available NASA data files corresponding to the desired time period and location.   
-    * A text file listing downloaded files.
+    * A collection of NASA data files matching the selected time range and geographic area (typically in .netcdf or .h5 format)
+    * A text file listing all downloaded files.
      
 
     ]]></help>
