@@ -1,0 +1,29 @@
+<tool id="interactive_tool_moover_anotae" tool_type="interactive" name="Moover-Anotate" version="1.0.0">
+
+    <description>annotation your images with VIAME</description>
+    <requirements>
+        <container type="docker">neoformit/gtn-gxit:latest</container>
+    </requirements>
+    <entry_points>
+        <entry_point name="Viame" requires_domain="True">
+            <port>9876</port>
+        </entry_point>
+    </entry_points>
+    <command detect_errors="exit_code">
+    <![CDATA[
+       python viame/main.py
+    ]]>
+    </command>
+    <inputs>
+        <param name="infile" type="data" format="txt,netcdf,h5" label="input" optional="true"/>
+    </inputs>
+    <outputs>
+        <collection name="outputs" type="list" label="VRM Editor outputs">
+            <discover_datasets pattern="__name_and_ext__" directory="output"/>
+        </collection>
+    </outputs>
+    <tests>
+    </tests>
+    <help>
+    </help>
+</tool>
