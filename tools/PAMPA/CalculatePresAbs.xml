@@ -3,10 +3,14 @@
     <macros>
         <import>pampa_macros.xml</import>
     </macros>
+    <edam_topics>
+       <edam_topic>topic_0610</edam_topic>
+       <edam_topic>topic_3050</edam_topic>
+    </edam_topics>
     <expand macro="Pampa_requirements"/>
     <required_files>
         <include path="FunctExeCalcPresAbsGalaxy.r"/>
-         <include path="FunctPAMPAGalaxy.r"/>
+        <include path="FunctPAMPAGalaxy.r"/>
     </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript 
@@ -28,10 +32,6 @@
             <output name="output_presabs" value="Presence_absence_table_sansszcl_cropped.tabular"/>      
         </test>
     </tests>
-    <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
-    </edam_topics>
     <help><![CDATA[
 
 ====================================================
