@@ -1,11 +1,17 @@
 <tool id="indicspecies" name="Indicspecies" version="1.7.15+galaxy0" profile="24.0">
     <description>to identify indicator species within clusters/groups</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
     <requirements>
       <requirement type="package" version="4.4.3">r-base</requirement>
       <requirement type="package" version="1.1.4">r-dplyr</requirement>
       <requirement type="package" version="1.8.0">r-indicspecies</requirement>
       <requirement type="package" version="0.9_8">r-permute</requirement>
     </requirements>
+    <required_files>
+        <include path="indval.R"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
     Rscript '$__tool_directory__/indval.R' '$clus' '$occ' '$name_species' '$sign'
     ]]></command>
@@ -110,4 +116,5 @@ There are several possible reasons for the absence of significant species in cer
       <citation type="doi">10.1111/j.1600-0706.2010.18334.x</citation>
       <citation type="doi">10.32614/CRAN.package.indicspecies</citation>
     </citations>
+    <expand macro="creator"/>
 </tool>
