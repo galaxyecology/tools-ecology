@@ -21,9 +21,11 @@
            <edam_topic>topic_3050</edam_topic>
         </edam_topics>
     </xml>
-    <creator>
-        <person givenName="Marie" familyName="Jossé" url="https://github.com/Marie59"/>
-        <organization name="PNDB"  url="https://www.pndb.fr/pages/accueil/"/>
-        <organization name="Data Terra"  url="https://www.data-terra.org/"/>
-    </creator>
+    <xml name="creator">
+        <creator>
+            <person givenName="Marie" familyName="Jossé" url="https://github.com/Marie59"/>
+            <organization name="PNDB"  url="https://www.pndb.fr/pages/accueil/"/>
+            <organization name="Data Terra"  url="https://www.data-terra.org/"/>
+        </creator>
+    </xml>
 </macros>
