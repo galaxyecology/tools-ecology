@@ -1,9 +1,15 @@
 <tool id="bar_plot" name="Bar plot" version="0.1.0+galaxy0">
     <description>for simple discrete data </description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
     <requirements>
        <requirement type="package" version="4.3.2">r-base</requirement>
        <requirement type="package" version="3.4.4">r-ggplot2</requirement>
     </requirements>
+    <required_files>
+        <include path="Bar_plot.R"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript
          '$__tool_directory__/Bar_plot.R'
@@ -63,4 +69,5 @@ The input file must be a tabular file.
 |       ...        |    ...    |              ...                |
 +------------------+-----------+---------------------------------+
     ]]></help>
+    <expand macro="creator"/>
 </tool>
