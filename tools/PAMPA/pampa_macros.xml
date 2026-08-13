@@ -86,4 +86,10 @@
             </citation>
         </citations>
     </xml>
+	<xml name="creator">
+        <creator>
+            <person givenName="Coline" familyName="Royaux" url="https://github.com/colineroyaux"/>
+            <organization name="PNDB"  url="https://www.pndb.fr/pages/accueil/"/>
+        </creator>
+    </xml>
 </macros>
