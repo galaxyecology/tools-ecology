@@ -1,7 +1,11 @@
-<tool id="ccds_download_era5_af" name="Copernicus CDS Downloader for AquaINFRA marine model" version="2.0.0" profile="25.1">
+<tool id="ccds_download_era5_af" name="Copernicus CDS Downloader for AquaINFRA marine model" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="25.1">
 	<description>
 		Download ERA5 data from the Copernicus Climate Data Store to provide as input to the AquaINFRA marine model. Products: ERA5 hourly data on single levels from 1940 to present, Reanalysis.
 	</description>
+	<macros>
+        <token name="@TOOL_VERSION@">2.0.0</token>
+        <token name="@VERSION_SUFFIX@">1</token>
+    </macros>
 	<creator>
         <organization name="EOSC AquaINFRA" url="https://aquainfra.eu/"/>
     </creator>
@@ -20,6 +24,9 @@
 			<secret name="token" inject_as_env="CDS_TOKEN" optional="false" label="CDS Token" description="Your Climate Data Store Token. Get it from your Climate Data Store account."/>
 		</credentials>
 	</requirements>
+    <required_files>
+        <include path="ccds_download_era5_af.sh"/>
+    </required_files>
 	<command detect_errors="exit_code"><![CDATA[
 		bash '$__tool_directory__/ccds_download_era5_af.sh' \
 		"$min_lat" "$max_lat" \
