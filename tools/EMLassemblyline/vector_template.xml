@@ -1,8 +1,14 @@
 <tool id="vector_template" name="Make templates for vector files" version="0.1.2+galaxy0" profile="22.05">
     <description>attributes for EML metadata creation</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
     <requirements>
         <container type="docker">ylebras/metashark:1.7.6</container>
     </requirements>
+    <required_files>
+        <include path="vector_templates.R"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
     
     #set $table = ""
@@ -60,13 +66,6 @@ To use this tool, you need to select, in your history a data collection with you
 '''TIP''' This tool dont accept as inputs composite data like shapefile at the moment. 
 
     ]]></help>
-    <citations>
-       <citation type="bibtex">@Manual{,
-       title = {EMLassemblyline: A tool kit for building EML metadata workflows},
-       author = {Colin Smith},
-       year = {2022},
-       note = {https://github.com/EDIorg/EMLassemblyline,
-       https://ediorg.github.io/EMLassemblyline/},
-       }</citation>
-    </citations>
+    <expand macro="citations"/>
+    <expand macro="creator"/>
 </tool>
