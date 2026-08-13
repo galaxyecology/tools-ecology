@@ -1,4 +1,4 @@
-<tool id="pampa_presabs" name="Calculate presence absence table" version="@VERSION@" profile="@PROFILE@">
+<tool id="pampa_presabs" name="Calculate presence absence table" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>calculate presence absence table from observation data</description>
     <macros>
         <import>pampa_macros.xml</import>
