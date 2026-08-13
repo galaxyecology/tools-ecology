@@ -1,9 +1,15 @@
 <tool id="annotations_template" name="Make annotations template" version="0.1.2+galaxy0" python_template_version="3.5" profile="21.05">
     <description>from scratch or from EML metadata file</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
     <requirements>
         <requirement type="package" version="4.4.1">r-base</requirement>
         <container type="docker">ylebras/metashark:1.7.6</container>
     </requirements>
+    <required_files>
+        <include path="annotations_template.R"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
    
    #if str($input_prod.input_prod_selector) == "fr_EML"
@@ -190,4 +196,5 @@ If you want to generate annotation template from scratch you will need to input 
        https://ediorg.github.io/EMLassemblyline/},
        }</citation>
     </citations>
+    <expand macro="creator"/>
 </tool>
