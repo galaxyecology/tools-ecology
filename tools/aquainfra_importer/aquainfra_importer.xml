@@ -1,5 +1,15 @@
-<tool id="aquainfra_importer" name="AquaINFRA Importer" tool_type="data_source" version="1.0" profile="20.09">
+<tool id="aquainfra_importer" name="AquaINFRA Importer" tool_type="data_source" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="20.09">
     <description>downloads content via the AquaINFRA interaction platform</description>
+    <macros>
+        <token name="@TOOL_VERSION@">1.0</token>
+        <token name="@VERSION_SUFFIX@">1</token>
+    </macros>
+    <creator>
+        <organization name="EOSC AquaINFRA" url="https://aquainfra.eu/"/>
+    </creator>
+    <required_files>
+        <include path="data_source.py"/>
+    </required_files>
     <command><![CDATA[
         python '$__tool_directory__/data_source.py' '$output' $__app__.config.output_size_limit
     ]]></command>
