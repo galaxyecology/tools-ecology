@@ -1,4 +1,4 @@
-<tool id="aquainfra_ogc_api_processes" name="AquaINFRA OGC API Processes" version="0.17.0" profile="25.1">
+<tool id="aquainfra_ogc_api_processes" name="AquaINFRA OGC API Processes" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="25.1">
     <description/>
     <macros>
         <import>macros.xml</import>
@@ -7,6 +7,9 @@
         <organization name="EOSC AquaINFRA" url="https://aquainfra.eu/"/>
     </creator>
     <expand macro="requirements"/>
+    <required_files>
+        <include path="aquainfra_ogc_api_processes.R"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
     Rscript '$__tool_directory__/aquainfra_ogc_api_processes.R'
         --outputData '$output_data'
