@@ -1,4 +1,4 @@
-<tool id="pampa_glmsp" name="Compute GLM on population data" version="@VERSION@" profile="@PROFILE@">
+<tool id="pampa_glmsp" name="Compute GLM on population data" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>Compute a GLM of your choice on population data</description>
     <macros>
         <import>pampa_macros.xml</import>
