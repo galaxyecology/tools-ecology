@@ -1,0 +1,9 @@
+<macros>
+    <xml name="creator">
+        <creator>
+            <person givenName="Pauline" familyName="Seguineau" url="https://github.com/PaulineSGN"/>
+            <organization name="PNDB" url="https://www.pndb.fr/pages/accueil/"/>
+            <organization name="Data Terra" url="https://www.data-terra.org/"/>
+        </creator>
+    </xml>
+</macros>
