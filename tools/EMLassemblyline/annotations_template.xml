@@ -1,4 +1,4 @@
-<tool id="annotations_template" name="Make annotations template" version="0.1.2+galaxy0" python_template_version="3.5" profile="21.05">
+<tool id="annotations_template" name="Make annotations template" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" python_template_version="3.5" profile="21.05">
     <description>from scratch or from EML metadata file</description>
     <macros>
         <import>macros.xml</import>
