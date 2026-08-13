@@ -3,6 +3,10 @@
     <macros>
         <import>pampa_macros.xml</import>
     </macros>
+    <edam_topics>
+       <edam_topic>topic_0610</edam_topic>
+       <edam_topic>topic_3050</edam_topic>
+    </edam_topics>
     <expand macro="GLM_requirements"/>
     <required_files>
         <include path="FunctExeCalcGLMSpGalaxy.r"/>
@@ -90,10 +94,6 @@
             </output_collection>
         </test>
     </tests>
-    <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
-    </edam_topics>
     <help><![CDATA[
 ===============================================================
 Compute GLM on population data with selected interest variables
