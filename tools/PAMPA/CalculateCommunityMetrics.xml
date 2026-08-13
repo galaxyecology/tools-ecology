@@ -1,4 +1,4 @@
-<tool id="pampa_communitymetrics" name="Calculate community metrics" version="@VERSION@" profile="@PROFILE@">
+<tool id="pampa_communitymetrics" name="Calculate community metrics" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>calculate community metrics from abundance data</description>
     <macros>
         <import>pampa_macros.xml</import>
