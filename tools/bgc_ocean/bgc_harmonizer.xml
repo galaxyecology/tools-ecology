@@ -2,7 +2,7 @@
     <description>and aggregator of in-situ marine physical and biogeochemical data</description>
     <macros>
         <token name="@TOOL_VERSION@">3.0</token>
-        <token name="@VERSION_SUFFIX@">1</token>
+        <token name="@VERSION_SUFFIX@">2</token>
     </macros>
     <requirements>
         <container type="docker">easyqcvbgc/qcv_ingester:@TOOL_VERSION@</container>
@@ -121,4 +121,10 @@ A concatenated and harmonized NetCDF file.
             note = {https://gitlab.com/pokapok-projects/PKP8-OGI-BGC/qcv_ingester}
         </citation>    
     </citations>
+    <creator>
+        <person givenName="Marie" familyName="Jossé" url="https://github.com/Marie59"/>
+        <organization name="EOSC Fair-Ease"  url="https://fairease.eu/"/>
+        <organization name="Data Terra"  url="https://www.data-terra.org/"/>
+        <organization name="POKaPOK"  url="https://www.pokapok.org/"/>
+    </creator>
 </tool>
