@@ -1,4 +1,4 @@
-<tool id="eal_templates" name="Make templates" version="0.1.2+galaxy0" profile="22.05">
+<tool id="eal_templates" name="Make templates" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="22.05">
     <description>for core features of a data package for EML metadata creation</description>
     <macros>
         <import>macros.xml</import>
