@@ -1,7 +1,7 @@
 categories:
     - Ecology
 owner: ecology
-remote_repository_url: https://github.com/AquaINFRA/galaxy_vre
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/ccds_download_era5_af
 homepage_url: https://github.com/AquaINFRA/galaxy_vre
 long_description: |
   Copernicus CDS Downloader for AquaINFRA marine model
