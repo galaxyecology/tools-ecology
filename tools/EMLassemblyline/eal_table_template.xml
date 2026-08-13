@@ -1,5 +1,8 @@
 <tool id="eal_table_template" name="Make templates for data tables" version="0.1.2+galaxy0" profile="22.05">
     <description>attributes and categorical variables for EML metadata creation</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
     <requirements>
         <container type="docker">ylebras/metashark:1.7.6</container>
     </requirements>
@@ -52,13 +55,6 @@ After that, these files can be edited to add information about your data table a
 To use this tool, you need to select, in your history a data collection with your data table (one or more). To do so, you can select the **Upload file** tool, select the *Collection* tab, upload all your data table file, click on the *Start* button to integrate the files to Galaxy and then click on *Build*. You will need to choose a name and select *Create collection* to build a collection with your templates. You also can upload your files to Galaxy, select them in the history by clicking the *Select items* button, click on the newly appeared box on the right and select *Build dataset list*.
 
     ]]></help>
-    <citations>
-       <citation type="bibtex">@Manual{,
-       title = {EMLassemblyline: A tool kit for building EML metadata workflows},
-       author = {Colin Smith},
-       year = {2022},
-       note = {https://github.com/EDIorg/EMLassemblyline,
-       https://ediorg.github.io/EMLassemblyline/},
-       }</citation>
-    </citations>
+    <expand macro="citations"/>
+    <expand macro="creator"/>
 </tool>
