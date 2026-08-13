@@ -1,13 +1,17 @@
 <tool id="ClaraGuess" name="Clara Estimate and Clustering" version="0.1.2" profile="23.2">
     <description>Environmental clustering using CLARA and BRT predictions</description>
-
+    <macros>
+        <import>macros.xml</import>
+    </macros>
     <requirements>
         <requirement type="package" version="4.3.3">r-base</requirement>
         <requirement type="package" version="2.1.8.1">r-cluster</requirement>
         <requirement type="package" version="1.1.4">r-dplyr</requirement>
         <requirement type="package" version="2.0.0">r-tidyverse</requirement>
     </requirements>
-
+    <required_files>
+        <include path="claraguess.R"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
 Rscript '$__tool_directory__/claraguess.R'
     '$enviro'
@@ -186,4 +190,5 @@ This tool is useful for ecological modeling and spatial analysis, particularly i
         <citation type="doi">10.32614/CRAN.package.cluster</citation>
         <citation type="doi">10.32614/CRAN.package.tidyverse</citation>
     </citations>
+    <expand macro="creator"/>
 </tool>
