@@ -1,9 +1,13 @@
-<tool id="pampa_glmcomm" name="Compute GLM on community data" version="@VERSION@">
+<tool id="pampa_glmcomm" name="Compute GLM on community data" version="@VERSION@" profile="@PROFILE@">
     <description>Compute a GLM of your choice on community data</description>
     <macros>
         <import>pampa_macros.xml</import>
     </macros>
     <expand macro="GLM_requirements"/>
+    <required_files>
+        <include path="FunctExeCalcGLMGalaxy.r"/>
+        <include path="FunctPAMPAGalaxy.r"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript 
          '$__tool_directory__/FunctExeCalcGLMGalaxy.r' 
@@ -173,5 +177,6 @@ Three text files :
 Derived from PAMPA scripts (https://wwz.ifremer.fr/pampa/Meth.-Outils/Outils) written by Yves Reecht.
 
   ]]></help>
-  <expand macro="pampa_bibref" />
+  <expand macro="pampa_bibref"/>
+  <expand macro="creator"/>
 </tool>
