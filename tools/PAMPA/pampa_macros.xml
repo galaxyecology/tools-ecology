@@ -1,5 +1,6 @@
 <macros>
     <token name="@VERSION@">0.0.2</token>
+	<token name="@VERSION_SUFFIX@">1</token>
     <token name="@PROFILE@">25.1</token>
     <xml name="Pampa_requirements">
         <requirements>
