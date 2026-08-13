@@ -1,4 +1,4 @@
-<tool id="Map_shp" name="Make a map with a shapefile" version="0.1.0+galaxy0" profile="@PROFILE@">
+<tool id="Map_shp" name="Make a map with a shapefile" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <macros>
         <import>macros.xml</import>
     </macros>
