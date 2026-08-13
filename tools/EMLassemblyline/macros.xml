@@ -1,5 +1,5 @@
 <macros>
-    <xml name="citations"
+    <xml name="citations">
         <citations>
            <citation type="bibtex">@Manual{,
            title = {EMLassemblyline: A tool kit for building EML metadata workflows},
