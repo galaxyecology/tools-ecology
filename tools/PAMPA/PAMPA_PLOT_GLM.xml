@@ -1,4 +1,4 @@
-<tool id="pampa_plotglm" name="Create a plot from GLM data" version="@VERSION@" profile="@PROFILE@">
+<tool id="pampa_plotglm" name="Create a plot from GLM data" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>as temporal trend</description>
     <macros>
         <import>pampa_macros.xml</import>
