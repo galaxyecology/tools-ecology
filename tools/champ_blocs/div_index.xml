@@ -1,4 +1,4 @@
-<tool id="cb_div" name="Diversity" version="@VERSION@" profile = "20.01">
+<tool id="cb_div" name="Diversity" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile = "20.01">
     <description>indicators</description>
     <macros>
         <import>macro.xml</import>
@@ -81,4 +81,5 @@ Clean Rdata file from the previous tool Dissimilarity.
 
     ]]>    </help>
         <expand macro="cb_bibref"/>
+        <expand macro="creator"/>
 </tool>
