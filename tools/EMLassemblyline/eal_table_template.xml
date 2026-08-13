@@ -6,6 +6,9 @@
     <requirements>
         <container type="docker">ylebras/metashark:1.7.6</container>
     </requirements>
+    <required_files>
+        <include path="eal_table_template.R"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
     
     #set $table = ""
