@@ -1,4 +1,15 @@
 <macros>
+    <xml name="citations"
+        <citations>
+           <citation type="bibtex">@Manual{,
+           title = {EMLassemblyline: A tool kit for building EML metadata workflows},
+           author = {Colin Smith},
+           year = {2022},
+           note = {https://github.com/EDIorg/EMLassemblyline,
+           https://ediorg.github.io/EMLassemblyline/},
+           }</citation>
+        </citations>
+    </xml>
     <xml name="creator">
         <creator>
             <person givenName="Tanguy" familyName="Genthon" url="https://github.com/TanguyGen"/>
