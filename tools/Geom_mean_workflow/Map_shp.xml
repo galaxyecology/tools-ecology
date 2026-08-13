@@ -1,4 +1,7 @@
 <tool id="Map_shp" name="Make a map with a shapefile" version="0.1.0+galaxy0">
+    <macros>
+        <import>macros.xml</import>
+    </macros>
     <requirements>
        <requirement type="package" version="4.3.2">r-base</requirement>
        <requirement type="package" version="3.4.4">r-ggplot2</requirement>
@@ -7,6 +10,9 @@
        <requirement type="package" version="1.1.3">r-dplyr</requirement>
        <requirement type="package" version="1.1_3">r-rcolorbrewer</requirement>
     </requirements>
+    <required_files>
+        <include path="Map_shp.R"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript
          "$__tool_directory__/Map_shp.R"
@@ -69,4 +75,5 @@
 This tool allows to build a map from a shapefile and color the areas according to a percentage (case study dead wood evolution rate).
 
     ]]></help>
+    <expand macro="creator"/>
 </tool>
