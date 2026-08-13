@@ -1,3 +1,11 @@
 <macros>
     <token name="@VERSION@">1.20.0</token>
+    <token name="@VERSION_SUFFIX@">1</token>
+    <token name="@PROFIL@">25.1</token>
+	<xml name="creator">
+        <creator>
+            <person givenName="Coline" familyName="Royaux" url="https://github.com/colineroyaux"/>
+            <organization name="PNDB"  url="https://www.pndb.fr/pages/accueil/"/>
+        </creator>
+    </xml>
 </macros>
