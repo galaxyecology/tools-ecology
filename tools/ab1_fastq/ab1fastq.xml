@@ -1,4 +1,4 @@
-<tool id="ab1_fastq_converter" name="ab1 to FASTQ converter" version="@VERSION@">
+<tool id="ab1_fastq_converter" name="ab1 to FASTQ converter" version="@VERSION@+galaxy@VERSION_SUFFIX" profile="@PROFILE@"> 
     <description></description>
     <macros>
         <import>ab1fastq_macros.xml</import>
@@ -7,6 +7,9 @@
         <requirement type="package" version="1.28.0">bioconductor-sangerseqr</requirement>
         <requirement type="package" version="@VERSION@">bioconductor-crisprvariants</requirement>
     </requirements>
+    <required_files>
+        <include path="ab1_fastq.R"/>
+    </required_files>
     <version_command><![CDATA[
 echo $(R --version | grep version | grep -v GNU)", sangerseqR version" $(R --vanilla --slave -e "library(sangerseqR); cat(sessionInfo()\\$otherPkgs\$sangerseqR\$Version)" 2> /dev/null | grep -v -i "WARNING: ")", CrispRVariants version" $(R --vanilla --slave -e "library(CrispRVariants); cat(sessionInfo()\\$otherPkgs\$CrispRVariants\$Version)" 2> /dev/null | grep -v -i "WARNING: ")
     ]]></version_command>
@@ -68,4 +71,5 @@ This tool can also trim ends of your sequence based on the quality statistics.
         <citation type="doi">10.1038/nbt.3628</citation>
         <citation type="doi">10.5061/dryad.b331s</citation>
     </citations>
+  <expand macro="creator"/>
 </tool>
