@@ -1,8 +1,14 @@
 <tool id="entities_template" name="Make entities templates for raster, vector and other entities files" version="0.1.2+galaxy0" profile="22.05">
     <description>for EML metadata creation</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
     <requirements>
         <container type="docker">ylebras/metashark:1.7.6</container>
     </requirements>
+    <required_files>
+        <include path="entities_template.R"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
     
     mkdir output_template &&
@@ -62,14 +68,7 @@ After that, this file can be edited to add information about your data and then 
 To use this tool, you need to select, in your history a data collection with all your EAL attributes templates (with if exist catvars and custom units files). To do so, you can select the **Upload file** tool, select the *Collection* tab, upload all your templates, click on the *Start* button to integrate the files to Galaxy and then click on *Build*. You will need to choose a name and select *Create collection* to build a collection with your templates. You also can upload your files to Galaxy, select them in the history by clicking the *Select items* button, click on the newly appeared box on the right and select *Build dataset list*.
 You need also to input all your data files Upload all data files wich are raster and/or vector and/or other entities files.
     ]]></help>
-    <citations>
-       <citation type="bibtex">@Manual{,
-       title = {EMLassemblyline: A tool kit for building EML metadata workflows},
-       author = {Colin Smith},
-       year = {2022},
-       note = {https://github.com/EDIorg/EMLassemblyline,
-       https://ediorg.github.io/EMLassemblyline/},
-       }</citation>
-    </citations>
+    <expand macro="citations"/>
+    <expand macro="creator"/>
 </tool>
 
