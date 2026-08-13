@@ -143,7 +143,8 @@ Two outputs :
 
 **Source**
 
-Derived from PAMPA scripts (https://wwz.ifremer.fr/pampa/Meth.-Outils/Outils) written by Yves Reecht.
+Derived from PAMPA scripts (
+        wwz.ifremer.fr/pampa/Meth.-Outils/Outils) written by Yves Reecht.
 
   ]]></help>
   <expand macro="pampa_bibref"/>
