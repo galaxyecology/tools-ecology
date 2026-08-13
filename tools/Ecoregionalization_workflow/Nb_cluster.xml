@@ -1,4 +1,4 @@
-<tool id="ecoregion_cluster_estimate" name="ClusterEstimate" version="0.1.2+galaxy0" profile="22.05">
+<tool id="ecoregion_cluster_estimate" name="ClusterEstimate" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="22.05">
     <description>Find an optimal number of cluster with SIH index</description>
     <macros>
         <import>macros.xml</import>
