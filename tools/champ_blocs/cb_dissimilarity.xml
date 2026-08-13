@@ -1,4 +1,4 @@
-<tool id="cb_dissim" name="QECB-Dissimilarity" version="@VERSION@" profile = "20.01">
+<tool id="cb_dissim" name="QECB-Dissimilarity" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile = "20.01">
     <description>indicator</description>
     <macros>
         <import>macro.xml</import>
@@ -119,4 +119,5 @@ One input files in Rdata format.
 
     ]]>    </help>
         <expand macro="cb_bibref"/>
+        <expand macro="creator"/>
 </tool>
