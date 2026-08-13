@@ -1,5 +1,8 @@
 <tool id="Mean_geom" name="Geometric means" version="0.1.0+galaxy0">
     <description>- calcul of the geometric means for the "bois mort" indicator</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
     <requirements>
        <requirement type="package" version="4.2.3">r-base</requirement>
        <requirement type="package" version="2.18.0.1">r-gdata</requirement>
@@ -7,6 +10,9 @@
        <requirement type="package" version="6.5-0">r-rms</requirement>
        <requirement type="package" version="1.1-3">r-mvtnorm</requirement>
     </requirements>
+    <required_files>
+        <include path="Moyenne_geom.r"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript
          '$__tool_directory__/Moyenne_geom.r'
@@ -60,5 +66,6 @@ This tool takes in input a table or text or CSV file. Then you need to enter the
 
 
     ]]></help>
+    <expand macro="creator"/>
 </tool>
 
