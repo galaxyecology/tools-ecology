@@ -1,4 +1,4 @@
-<tool id="indicspecies" name="Indicspecies" version="1.7.15+galaxy0" profile="24.0">
+<tool id="indicspecies" name="Indicspecies" version="1.7.15+galaxy@VERSION_SUFFIX@" profile="24.0">
     <description>to identify indicator species within clusters/groups</description>
     <macros>
         <import>macros.xml</import>
