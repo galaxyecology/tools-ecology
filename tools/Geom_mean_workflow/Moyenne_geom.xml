@@ -47,7 +47,7 @@
     <tests>
         <test>
             <param name='input' value="0_RESULTATS_BOIS_BIODIV_2021_V2.csv"/>
-            <param name='separator' value="','"/>
+            <param name='separator' value="[',']"/>
             <param name='colnames' value="TRUE"/>
             <output name='output1' value="res2008_2012_scaled.csv"/>
             <output name='output2' value="res2013_2017_scaled.csv"/>
