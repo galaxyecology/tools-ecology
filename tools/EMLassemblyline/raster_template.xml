@@ -1,4 +1,4 @@
-<tool id="raster_template" name="Make templates for raster files" version="0.1.2+galaxy0" profile="22.05">
+<tool id="raster_template" name="Make templates for raster files" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="22.05">
     <description>attributes for EML metadata creation</description>
     <macros>
         <import>macros.xml</import>
