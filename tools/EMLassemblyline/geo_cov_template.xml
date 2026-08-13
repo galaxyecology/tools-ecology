@@ -7,7 +7,7 @@
         <container type="docker">ylebras/metashark:1.7.6</container>
     </requirements>
     <required_files>
-        <include path="geo_cov_template.R"/>
+        <include path="geo_cov_temp.R"/>
     </required_files>
     <command detect_errors="exit_code"><![CDATA[
     
