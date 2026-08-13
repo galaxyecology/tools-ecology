@@ -1,9 +1,13 @@
-<tool id="pampa_glmsp" name="Compute GLM on population data" version="@VERSION@">
+<tool id="pampa_glmsp" name="Compute GLM on population data" version="@VERSION@" profile="@PROFILE@">
     <description>Compute a GLM of your choice on population data</description>
     <macros>
         <import>pampa_macros.xml</import>
     </macros>
     <expand macro="GLM_requirements"/>
+    <required_files>
+        <include path="FunctExeCalcGLMSpGalaxy.r"/>
+        <include path="FunctPAMPAGalaxy.r"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript 
          '$__tool_directory__/FunctExeCalcGLMSpGalaxy.r' 
@@ -170,6 +174,6 @@ Three text files :
 Derived from PAMPA scripts (https://wwz.ifremer.fr/pampa/Meth.-Outils/Outils) written by Yves Reecht.
 
   ]]></help>
-
-  <expand macro="pampa_bibref" />
+  <expand macro="pampa_bibref"/>
+  <expand macro="creator"/>
 </tool>
