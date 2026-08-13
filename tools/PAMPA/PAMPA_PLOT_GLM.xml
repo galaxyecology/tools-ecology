@@ -1,9 +1,13 @@
-<tool id="pampa_plotglm" name="Create a plot from GLM data" version="@VERSION@">
+<tool id="pampa_plotglm" name="Create a plot from GLM data" version="@VERSION@" profile="@PROFILE@">
     <description>as temporal trend</description>
     <macros>
         <import>pampa_macros.xml</import>
     </macros>
     <expand macro="Plot_requirements"/>
+    <required_files>
+        <include path="FunctExePlotGLMGalaxy.r"/>
+        <include path="FunctPAMPAGalaxy.r"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript 
          '$__tool_directory__/FunctExePlotGLMGalaxy.r' 
@@ -142,6 +146,6 @@ Two outputs :
 Derived from PAMPA scripts (https://wwz.ifremer.fr/pampa/Meth.-Outils/Outils) written by Yves Reecht.
 
   ]]></help>
-
-  <expand macro="pampa_bibref" />
+  <expand macro="pampa_bibref"/>
+  <expand macro="creator"/>
 </tool>
