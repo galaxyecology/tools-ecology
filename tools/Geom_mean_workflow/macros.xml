@@ -1,4 +1,5 @@
 <macros>
+    <token name="@PROFILE@">25.1</token>
     <xml name="creator">
         <creator>
             <person givenName="Pauline" familyName="Seguineau" url="https://github.com/PaulineSGN"/>
