@@ -1,4 +1,4 @@
-<tool id="bar_plot" name="Bar plot" version="0.1.0+galaxy0" profile="@PROFILE@">
+<tool id="bar_plot" name="Bar plot" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>for simple discrete data </description>
     <macros>
         <import>macros.xml</import>
