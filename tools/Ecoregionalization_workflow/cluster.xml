@@ -1,4 +1,4 @@
-<tool id="ecoregion_clara_cluster" name="ClaraClust" version="0.1.2+galaxy0" profile="23.2">
+<tool id="ecoregion_clara_cluster" name="ClaraClust" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="23.2">
     <description>Make cluster from BRT prediction with Clara algorithm</description>
     <macros>
         <import>macros.xml</import>
