@@ -76,17 +76,17 @@
                 </assert_contents> 
             </output>
             <output_collection name="output_GLM"  type="list" count="3">
-                <element name="GLM_Abalstel" ftype="Rdata">
+                <element name="GLM_Abalstel">
                     <assert_contents> 
                         <has_size value="199219" delta="10000"/>
                     </assert_contents> 
                 </element>
-                <element name="GLM_Hemifasc" ftype="Rdata">
+                <element name="GLM_Hemifasc">
                     <assert_contents> 
                         <has_size value="202264" delta="10000"/>
                     </assert_contents> 
                 </element>
-                <element name="GLM_Zebrscop" ftype="Rdata">
+                <element name="GLM_Zebrscop">
                     <assert_contents> 
                         <has_size value="207311" delta="10000"/>
                     </assert_contents> 
@@ -171,7 +171,7 @@ Three text files :
 
 **Source**
 
-Derived from PAMPA scripts (https://wwz.ifremer.fr/pampa/Meth.-Outils/Outils) written by Yves Reecht.
+Derived from PAMPA scripts (wwz.ifremer.fr/pampa/Meth.-Outils/Outils) written by Yves Reecht.
 
   ]]></help>
   <expand macro="pampa_bibref"/>
