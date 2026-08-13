@@ -79,17 +79,17 @@
                 </assert_contents> 
             </output>
             <output_collection name="output_GLM"  type="list" count="3">
-                <element name="GLM_HR" ftype="Rdata">
+                <element name="GLM_HR">
                     <assert_contents> 
                         <has_size value="185018" delta="10000"/>
                     </assert_contents> 
                 </element>
-                <element name="GLM_RE" ftype="Rdata">
+                <element name="GLM_RE">
                     <assert_contents> 
                         <has_size value="168685" delta="10000"/>
                     </assert_contents> 
                 </element>
-                <element name="global_GLM" ftype="Rdata">
+                <element name="global_GLM">
                     <assert_contents> 
                         <has_size value="195910" delta="10000"/>
                     </assert_contents> 
@@ -174,7 +174,7 @@ Three text files :
 
 **Source**
 
-Derived from PAMPA scripts (https://wwz.ifremer.fr/pampa/Meth.-Outils/Outils) written by Yves Reecht.
+Derived from PAMPA scripts (wwz.ifremer.fr/pampa/Meth.-Outils/Outils) written by Yves Reecht.
 
   ]]></help>
   <expand macro="pampa_bibref"/>
