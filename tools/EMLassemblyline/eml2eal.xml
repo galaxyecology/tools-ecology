@@ -3,6 +3,9 @@
     <requirements>
       <container type="docker">ylebras/metashark:1.7.6</container>
     </requirements>
+    <required_files>
+        <include path="eml2eal.R"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
        Rscript
          '$__tool_directory__/eml2eal.R'
@@ -51,15 +54,8 @@ on the bottom of the templates outputs and and then selecting *Editor* in the li
 Once edited, this templates can me reassembled to produce a new EML with the **make_eml** tool in the EMLassemblyline tool section.
 
 ]]></help>
-    <citations>
-       <citation type="bibtex">@Manual{,
-       title = {EMLassemblyline: A tool kit for building EML metadata workflows},
-       author = {Colin Smith},
-       year = {2022},
-       note = {https://github.com/EDIorg/EMLassemblyline,
-       https://ediorg.github.io/EMLassemblyline/},
-       }</citation>
-    </citations>
+    <expand macro="citations"/>
+    <expand macro="creator"/>
 </tool>
 
 
