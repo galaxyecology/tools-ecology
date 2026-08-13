@@ -1,4 +1,4 @@
-<tool id="pampa_glmcomm" name="Compute GLM on community data" version="@VERSION@" profile="@PROFILE@">
+<tool id="pampa_glmcomm" name="Compute GLM on community data" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>Compute a GLM of your choice on community data</description>
     <macros>
         <import>pampa_macros.xml</import>
