@@ -1,8 +1,14 @@
 <tool id="taxo_cov_template" name="Make taxonomic coverage template" version="0.1.2+galaxy0" profile="22.05">
     <description>for EML metadata creation</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
     <requirements>
         <container type="docker">ylebras/metashark:1.7.6</container>
     </requirements>
+    <required_files>
+        <include path="taxo_cov_template.R"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
     
     mkdir data_files && 
@@ -96,13 +102,6 @@ You can also decide to make an empty taxonomic coverage templates.
 |       ...         |       ...         |
 +-------------------+-------------------+
     ]]></help>
-    <citations>
-       <citation type="bibtex">@Manual{,
-       title = {EMLassemblyline: A tool kit for building EML metadata workflows},
-       author = {Colin Smith},
-       year = {2022},
-       note = {https://github.com/EDIorg/EMLassemblyline,
-       https://ediorg.github.io/EMLassemblyline/},
-       }</citation>
-    </citations>
+    <expand macro="citations"/>
+    <expand macro="creator"/>
 </tool>
