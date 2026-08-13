@@ -1,9 +1,13 @@
-<tool id="pampa_communitymetrics" name="Calculate community metrics" version="@VERSION@">
+<tool id="pampa_communitymetrics" name="Calculate community metrics" version="@VERSION@" profile="@PROFILE@">
     <description>calculate community metrics from abundance data</description>
     <macros>
         <import>pampa_macros.xml</import>
     </macros>
     <expand macro="Pampa_requirements"/>
+    <required_files>
+        <include path="FunctExeCalcCommIndexesGalaxy.r"/>
+        <include path="FunctPAMPAGalaxy.r"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript 
          '$__tool_directory__/FunctExeCalcCommIndexesGalaxy.r' 
@@ -94,6 +98,6 @@ A  tabular file with every metrics selected computed per observation unit
 Derived from PAMPA scripts (https://wwz.ifremer.fr/pampa/Meth.-Outils/Outils) written by Yves Reecht.
 
   ]]></help>
-
-  <expand macro="pampa_bibref" />
+    <expand macro="pampa_bibref"/>
+    <expand macro="creator"/>
 </tool>
