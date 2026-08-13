@@ -1,4 +1,4 @@
-<tool id="makeeml" name="Make EML" version="0.1.2+galaxy1" profile="22.05">
+<tool id="makeeml" name="Make EML"version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX_2@" profile="22.05">
     <description> Create EML from EAL templates</description>
 	<macros>
         <import>macros.xml</import>
