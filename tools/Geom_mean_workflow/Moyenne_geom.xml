@@ -1,4 +1,4 @@
-<tool id="Mean_geom" name="Geometric means" version="0.1.0+galaxy0" profile="@PROFILE@">
+<tool id="Mean_geom" name="Geometric means" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>- calcul of the geometric means for the "bois mort" indicator</description>
     <macros>
         <import>macros.xml</import>
