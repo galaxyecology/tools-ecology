@@ -1,4 +1,4 @@
-<tool id="ab1_fastq_converter" name="ab1 to FASTQ converter" version="@VERSION@+galaxy@VERSION_SUFFIX" profile="@PROFILE@"> 
+<tool id="ab1_fastq_converter" name="ab1 to FASTQ converter" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@"> 
     <description></description>
     <macros>
         <import>ab1fastq_macros.xml</import>
