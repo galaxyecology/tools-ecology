@@ -89,7 +89,7 @@
             </collection>
         </outputs>
         <tests>
-            <test>
+            <test expect_num_outputs="3">
                 <param name="input" value="Reel_life_survey_fish_modif.tabular"/>
                 <param name="colnames" value="true"/>
                 <param name="abundance" value="18"/>
