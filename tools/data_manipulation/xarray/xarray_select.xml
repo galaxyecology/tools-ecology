@@ -12,6 +12,9 @@
         <requirement type="package" version="1.4.3">pandas</requirement>
         <requirement type="package" version="0.7.0">geopandas</requirement>
     </requirements>
+	<required_files>
+        <include path="xarray_select.py"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
     mkdir output_dir &&
     #if $condi_source_coord.coord_source=="coord_from_file"
@@ -315,4 +318,5 @@ A data collection where one file is created for every coordinate, if multiple co
 The xarray select tool can be used after the xarray Info.
     ]]>    </help>
     <expand macro="citations"/>
+    <expand macro="creator"/>
 </tool>
