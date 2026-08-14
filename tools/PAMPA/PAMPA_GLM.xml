@@ -60,9 +60,11 @@
             <param name="varrep" value="year,site,habitat"/>
             <param name="varrand" value="site"/>
             <param name="sep" value="22"/>
-            <param name="advanced" value="advanced"/>
-            <param name="distrib" value="None"/>
-            <param name="rdata" value="true"/>
+            <conditional name="settings">
+                <param name="advanced" value="advanced"/>
+                <param name="distrib" value="None"/>
+                <param name="rdata" value="true"/>
+            </conditional>
             <output name="output_summary">
                 <assert_contents> 
                     <has_n_lines n="9"/>
