@@ -56,8 +56,10 @@
     <tests>
         <test expect_num_outputs="2">
             <param name="raster_1" value="EU_CLC_1990.tiff"/>
-            <param name="raster_2" value="EU_CLC_2018.tiff"/>   
-            <param name="json_file" value="yes"/>
+            <param name="raster_2" value="EU_CLC_2018.tiff"/>
+            <conditional name="method">
+                <param name="json_file" value="yes"/>
+            </conditional>
             <output name="contour" value="change_yf_yi0.shp"/>
             <output_collection name="output_tiff" type="list" count="7">
                 <element name="lc_baseline_esa" ftype="tiff">
