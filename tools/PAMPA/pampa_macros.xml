@@ -73,7 +73,7 @@
         <data name="output_recap" from_work_dir="GLMSummaryFull.txt" format="txt" label="Simple statistics on chosen variables on ${on_string}"/>
         <data name="output_rate" from_work_dir="RatingGLM.txt" format="txt" label="Your analysis rating file on ${on_string}"/>
         <collection type="list" name="output_GLM">
-            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.Rdata" visible="false" format="Rdata"/>
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.Rdata" visible="false" format="RData"/>
             <filter> settings['advanced'] == 'advanced' and settings['rdata']</filter>
         </collection>
     </xml>
