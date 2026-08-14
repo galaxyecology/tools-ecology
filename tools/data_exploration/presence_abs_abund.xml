@@ -94,7 +94,7 @@
             <param name="colnames" value="true"/>
             <conditional name="method">
                 <param name="type" value="abund"/>
-                <param name="latitute" value="9"/>
+                <param name="latitude" value="9"/>
                 <param name="longitude" value="10"/>
                 <param name="individual" value="fishes"/>
                 <param name="species" value="15"/>
