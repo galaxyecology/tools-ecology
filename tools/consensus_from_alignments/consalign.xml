@@ -1,4 +1,4 @@
-<tool id="aligned_to_consensus" name="Consensus sequence from aligned FASTA" version="@VERSION@">
+<tool id="aligned_to_consensus" name="Consensus sequence from aligned FASTA" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description></description>
     <macros>
         <import>consalign_macros.xml</import>
@@ -7,6 +7,9 @@
         <requirement type="package" version="0.1.4">r-bioseq</requirement>
         <requirement type="package" version="1.0.14">r-ptxqc</requirement>
     </requirements>
+    <required_files>
+        <include path="consensus_from_alignments.R"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript
          '$__tool_directory__/consensus_from_alignments.R'
@@ -64,4 +67,5 @@ Output is a FASTA file containing the computed consensus sequence (along with or
     <citations>
         <citation type="doi">10.1111/2041-210X.13490</citation>
     </citations>
+    <expand macro="creator"/>
 </tool>
