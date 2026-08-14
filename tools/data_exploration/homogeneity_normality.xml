@@ -40,7 +40,7 @@
         </collection>
     </outputs>
     <tests>
-        <test>
+        <test expect_num_outputs="3">
             <param name="input" value="data_frenchbbs.tabular"/>
             <param name="colnames" value="true"/>
             <param name="date" value="2"/>
