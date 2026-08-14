@@ -149,7 +149,7 @@
             <param name="input" value="ogr2ogr_fromgbif.tabular" ftype="tabular"/>
             <param name="f" value="GeoJSON"/>
             <conditional name="settings">
-                <param name="advanced" value="simple"/>
+                <param name="advanced" value="advanced"/>
                 <repeat name="series_oo">
                     <param name="oo" value="X_POSSIBLE_NAMES=longitude"/>
                 </repeat>
