@@ -30,6 +30,7 @@
                 <option value="dasymetric-refinement">dasymetric-refinement: Dasymetric refinement of LAU population to raster cells</option>
                 <option value="data-intersect">data-intersect: Intersect data with spatial analysis extent</option>
                 <option value="evaluate-refinement">evaluate-refinement: Evaluate dasymetric refinement results</option>
+                <option value="ferrybox-river-eo-plot">ferrybox-river-eo-plot: Plot EO, ferrybox and river discharge data</option>
                 <option value="filter-clip-clean-extent">filter-clip-clean-extent: Align extents of three datasets (D1=NUTS3 regions; D2=LAU regions; D3=river catchments) including validation steps.</option>
                 <option value="get-analysis-extent">get-analysis-extent: Get spatial analysis extent</option>
                 <option value="get-census-grid">get-census-grid: Get Eurostat census grid</option>
@@ -200,6 +201,11 @@
                 <param name="inputFile2_refinementSimpleReference_rds" label="Simple refinement raster (reference year)" optional="false" help="Path to an .rds file containing the packed (terra::wrap) dasymetric refinement output raster from the 'simple' refinement type, for the reference year (2021). (URL must be stored in a .txt file)" type="data" format="txt"/>
                 <param name="inputFile3_censusgrid_rds" label="Census grid" optional="false" help="Path to an .rds file containing the Eurostat census grid with observed population (column 'TOT_P_2021'), used as ground truth for evaluation. (URL must be stored in a .txt file)" type="data" format="txt"/>
                 <param name="inputFile4_corineCLC_rds" label="CORINE CLC raster" optional="false" help="Path to an .rds file containing the CORINE Land Cover raster (SpatRaster), used to derive the subset overlapping populated census grid cells. (URL must be stored in a .txt file)" type="data" format="txt"/>
+            </when>
+            <when value="ferrybox-river-eo-plot">
+                <param name="input1" label="Time series of river discarge data" optional="false" help="URL to Time series of river discarge data. The URL needs to start with http(s). See the example and use only year 2023 or 2024. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input2" label="Aggregated Ferrybox turbidity data" optional="false" help="Ferrybox data aggregated into daily values from areas along the route of the ship. The URL needs to start with http(s). Select the same year as in the discharge data (2023 or 2024). (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input3" label="Aggregated EO turbidity data" optional="false" help="EO data aggregated into daily values from areas along the route of the ship. The URL needs to start with http(s). (URL must be stored in a .txt file)" type="data" format="txt"/>
             </when>
             <when value="filter-clip-clean-extent">
                 <param name="inputFile1_gpkg" label="NUTS3 regions" optional="false" help="EU NUTS3 regions saved in geopackage. It should be in same coordinate system as the inputted river catchment dataset and overlap this - ideally it should fully contain its extent. (URL must be stored in a .txt file)" type="data" format="txt"/>
