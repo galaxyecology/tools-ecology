@@ -1,4 +1,4 @@
-<tool id="gdal_gdalinfo" name="GDAL Informations" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@>
+<tool id="gdal_gdalinfo" name="GDAL Informations" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>lists information about a raster dataset</description>
     <macros>
         <import>gdal_macros.xml</import>
