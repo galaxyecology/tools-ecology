@@ -1,4 +1,4 @@
-<tool id="gdal_gdal_merge" name="GDAL Merge" version="@VERSION@">
+<tool id="gdal_gdal_merge" name="GDAL Merge" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@>
     <description>mosaics a set of images</description>
     <macros>
         <import>gdal_macros.xml</import>
@@ -142,4 +142,5 @@ http://www.gdal.org/gdal_merge.html
 Raster Processing Tutorial : https://trac.osgeo.org/gdal/wiki/UserDocs/RasterProcTutorial
     ]]></help>
     <expand macro="gdal_citation"/>
+    <expand macro="creator"/>
 </tool>
