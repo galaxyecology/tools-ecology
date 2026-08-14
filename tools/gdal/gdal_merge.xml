@@ -1,4 +1,4 @@
-<tool id="gdal_gdal_merge" name="GDAL Merge" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@>
+<tool id="gdal_gdal_merge" name="GDAL Merge" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>mosaics a set of images</description>
     <macros>
         <import>gdal_macros.xml</import>
