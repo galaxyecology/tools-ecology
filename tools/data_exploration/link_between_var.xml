@@ -1,4 +1,4 @@
-<tool id="ecology_link_between_var" name="Variables exploration" version="@VERSION@" profile="20.01">
+<tool id="ecology_link_between_var" name="Variables exploration" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="20.01">
     <description>Shows interaction, correlation, colinearity, produces a PCA and computes VIF for biodiversity abundance data</description>
     <macros>
         <import>macro.xml</import>
@@ -13,6 +13,9 @@
         <requirement type="package" version="2.4">r-factominer</requirement>
         <requirement type="package" version="1.0.7">r-factoextra</requirement>
     </expand>
+    <required_files>
+        <include path="graph_link_var.r"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript
             '$__tool_directory__/graph_link_var.r'
@@ -282,4 +285,5 @@ A text file containing the ACF values.
 
     ]]></help>
     <expand macro="explo_bibref"/>
+    <expand macro="creator"/>
 </tool>
