@@ -152,6 +152,8 @@
                 <param name="advanced" value="simple"/>
                 <repeat name="series_oo">
                     <param name="oo" value="X_POSSIBLE_NAMES=longitude"/>
+                </repeat>
+                <repeat name="series_oo">
                     <param name="oo" value="Y_POSSIBLE_NAMES=latitude"/>
                 </repeat>
             </conditional> 
