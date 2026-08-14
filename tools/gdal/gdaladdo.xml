@@ -1,4 +1,4 @@
-<tool id="gdal_gdaladdo" name="GDAL addo" version="@VERSION@">
+<tool id="gdal_gdaladdo" name="GDAL addo" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@>
     <description>builds or rebuilds overview images</description>
     <macros>
         <import>gdal_macros.xml</import>
@@ -65,4 +65,5 @@ http://www.gdal.org/gdaladdo.html
 Raster Processing Tutorial : https://trac.osgeo.org/gdal/wiki/UserDocs/RasterProcTutorial
     ]]></help>
     <expand macro="gdal_citation"/>
+    <expand macro="creator"/>
 </tool>
