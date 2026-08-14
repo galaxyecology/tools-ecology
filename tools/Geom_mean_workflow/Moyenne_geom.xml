@@ -66,6 +66,10 @@ This tool takes in input a table or text or CSV file. Then you need to enter the
 
 
     ]]></help>
+    <citations>
+       <citation type="doi">10.32614/CRAN.package.gdata</citation>
+       <citation type="doi">10.32614/CRAN.package.xlconnect</citation>
+    </citations>
     <expand macro="creator"/>
 </tool>
 
