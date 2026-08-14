@@ -69,5 +69,9 @@ The input file must be a tabular file.
 |       ...        |    ...    |              ...                |
 +------------------+-----------+---------------------------------+
     ]]></help>
+
+    <citations>
+       <citation type="doi">10.32614/CRAN.package.ggplot2</citation>
+    </citations>
     <expand macro="creator"/>
 </tool>
