@@ -208,7 +208,7 @@
                 <param name="input3" label="Aggregated EO turbidity data" help="EO data aggregated into daily values from areas along the route of the ship. The URL needs to start with http(s). (URL must be stored in a .txt file)" type="data" format="txt"/>
             </when>
             <when value="filter-clip-clean-extent">
-                <param name="inputFile1_gpkg" label="NUTS3 regions" optional="false" help="EU NUTS3 regions saved in geopackage. It should be in same coordinate system as the inputted river catchment dataset and overlap this - ideally it should fully contain its extent. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile1_gpkg" label="NUTS3 regions"  help="EU NUTS3 regions saved in geopackage. It should be in same coordinate system as the inputted river catchment dataset and overlap this - ideally it should fully contain its extent. (URL must be stored in a .txt file)" type="data" format="txt"/>
                 <param name="inputFile2_gpkg" label="LAU regions." value="" help="EU LAU (Local Areal Unit) regions saved in geopackage. It should be in same coordinate system as the other inputted datasets and overlap these - ideally fully contained in the extent of the inputted river catchment dataset." type="text">
                     <validator type="empty_field" message="You must provide a value."/>
                 </param>
