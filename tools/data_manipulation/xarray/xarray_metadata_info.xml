@@ -80,7 +80,7 @@ A summary tabular file.
 
 --------------------------------
 
-The Netcdf Info tool use the netcdf functions : https://www.unidata.ucar.edu/software/netcdf/docs/index.html
+The Netcdf Info tool use the netcdf functions : https://docs.unidata.ucar.edu/netcdf-c/current/
 
 Run this tool before considering using Netcdf Read.
     ]]>    </help>
