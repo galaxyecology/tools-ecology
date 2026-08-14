@@ -1,4 +1,6 @@
 <macros>
+    <token name="@TOOL_VERSION@">0.2.0</token>
+    <token name="@VERSION_SUFFIX@">1</token>
     <xml name="requirements">
         <requirements>
             <requirement type="package" version="4.3.1">r-base</requirement>
@@ -43,5 +45,10 @@
                 </assert_stderr>
             </test>
         </tests>    
+    </xml>
+    <xml name="creator">
+    	<creator>
+            <organization name="EOSC AquaINFRA" url="https://aquainfra.eu/"/>
+        </creator>
     </xml>
 </macros>
