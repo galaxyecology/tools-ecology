@@ -1,4 +1,4 @@
-<tool id="ecology_presence_abs_abund" name="Presence-absence and abundance" version="@VERSION@" profile="20.01">
+<tool id="ecology_presence_abs_abund" name="Presence-absence and abundance" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="20.01">
     <description>Community abundance map, presence barplot and rarefaction curves</description>
     <macros>
         <import>macro.xml</import>
@@ -6,6 +6,9 @@
     <expand macro="Explo_requirements">
         <requirement type="package" version="2.5_7">r-vegan</requirement>
     </expand>
+    <required_files>
+        <include path="graph_pres_abs_abund.r"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript
             '$__tool_directory__/graph_pres_abs_abund.r'
@@ -202,5 +205,5 @@ Output description :
 A png file with one or multiple plots showing the rarefaction curves for each species according to the chosen rarefaction indice.
     ]]>    </help>
     <expand macro="book_bibref"/>
-
+    <expand macro="creator"/>
 </tool>
