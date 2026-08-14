@@ -1,4 +1,4 @@
-<tool id="tool_anonymization" name="Spatial coordinates anonymization" version="@VERSION@" profile="20.01">
+<tool id="tool_anonymization" name="Spatial coordinates anonymization" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="20.01">
     <description> 
         without loss of the spatial relationships
     </description>
@@ -8,6 +8,9 @@
     <requirements> 
         <requirement  type="package" version="0.8.1">r-tangles</requirement>
     </requirements>
+    <required_files>
+        <include path="funct_anomy.r"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript
             '$__tool_directory__/funct_anomy.r'
@@ -67,5 +70,6 @@ A tabular file with your original data file with its longitude and latitude repl
 
     ]]></help>   
     <citations>
-    </citations>               
+    </citations>
+    <expand macro="creator"/>
 </tool>
