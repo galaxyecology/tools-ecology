@@ -1,6 +1,6 @@
 <macros>
     <token name="@VERSION@">0.18.0</token>
-    <token name="@VERSION_SUFFIX@">1</token>
+    <token name="@VERSION_SUFFIX@">2</token>
     <xml name="requirements">
         <requirements>
             <requirement type="package" version="4.3.1">r-base</requirement>
