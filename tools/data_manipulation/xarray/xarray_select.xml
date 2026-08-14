@@ -227,7 +227,7 @@
         </data>
     </outputs>
     <tests>
-        <test>
+        <test expect_num_outputs="1">
             <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
             <param name="var" value="phy"/>
             <param name="var_tab" value="var_tab_dataset-ibi"/>
@@ -248,7 +248,7 @@
                 </assert_contents>
             </output>
         </test>
-        <test>
+        <test expect_num_outputs="1">
             <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
             <param name="var_tab" value="var_tab_dataset-ibi"/>
             <param name="var" value="nh4"/>
