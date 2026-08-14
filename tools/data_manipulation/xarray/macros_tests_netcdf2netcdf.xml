@@ -49,7 +49,7 @@
                     <param name="var" value="chl"/>
                     <param name="scale" value="1000.5"/>
                     <param name="write_all" value="true"/>
-                    <param name="keep_attribute" value="false"/>
+                    <param name="keep_attributes" value="false"/>
                 </section>
                 <section name="subset_coords">
                     <conditional name="tsel">
@@ -218,7 +218,7 @@
                     <param name="var" value="chl"/>
                     <param name="scale" value="1000.5"/>
                     <param name="write_all" value="true"/>
-                    <param name="keep_attribute" value="true"/>
+                    <param name="keep_attributes" value="true"/>
                 </section>
                 <section name="subset_coords">
                     <conditional name="tsel">
