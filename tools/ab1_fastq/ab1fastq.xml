@@ -54,7 +54,9 @@ echo $(R --version | grep version | grep -v GNU)", sangerseqR version" $(R --van
     <tests>
         <test>
             <param name="input" value="test_file.AB1"/>
-            <param name="trim" value="false"/>
+            <conditional name="tr">
+                <param name="trim" value="false"/>
+            </conditional>
             <output name="output" value="out_file.fastq"/>
         </test>
     </tests>
