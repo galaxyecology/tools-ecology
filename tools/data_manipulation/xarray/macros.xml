@@ -25,4 +25,9 @@
             </citation>
         </citations>
     </xml>
+    <xml name="creator">
+        <creator>
+            <person givenName="Anne" familyName="Fouilloux" url="https://github.com/annefou"/>
+        </creator>
+    </xml>
 </macros>
