@@ -2,7 +2,7 @@
     <description>subindicator to track land changes</description>
     <macros>
         <token name="@TOOL_VERSION@">0.1.0</token>
-        <token name="@VERSION_SUFFIX@">0</token>
+        <token name="@VERSION_SUFFIX@">1</token>
     </macros>
     <requirements>
         <requirement type="package" version="1.26.3">numpy</requirement>
@@ -11,6 +11,10 @@
         <requirement type="package" version="2.1.14">trends_earth_algorithms</requirement>
         <requirement type="package" version="2.1.14">trends_earth_schemas</requirement>
     </requirements>
+    <required_files>
+        <include path="land_cover.py"/>
+        <include path="test-data/landcover.json"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
             #if '$method.json_file' == "no"
                 python '$__tool_directory__/land_cover.py'
@@ -148,4 +152,9 @@ For more information go on `the official trends earth documentation<http://docs.
             }
         </citation>
     </citations>
+    <creator>
+        <person givenName="Marie" familyName="Jossé" url="https://github.com/Marie59"/>
+        <organization name="EOSC Fair-Ease"  url="https://fairease.eu/"/>
+        <organization name="Data Terra"  url="https://www.data-terra.org/"/>
+    </creator>
 </tool>
