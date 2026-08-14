@@ -1,9 +1,12 @@
-<tool id="hirondelle_crim" name="Hirondelle CRIM OGC API Processes" version="0.2.0" profile="22.05">
+<tool id="hirondelle_crim" name="Hirondelle CRIM OGC API Processes" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="22.05">
 	<description>executes remote processes.</description>
 	<macros>
 		<import>macros.xml</import>
 	</macros>
 	<expand macro="requirements"/>
+    <required_files>
+        <include path="ogc_api_processes_wrapper.R"/>
+    </required_files>
 	<command detect_errors="exit_code"><![CDATA[
 	Rscript '$__tool_directory__/ogc_api_processes_wrapper.R'
 		--outputData '$output_data'
@@ -118,4 +121,5 @@
 	<expand macro="tests"/>
 	<help>Use the dropdown menu at the top to select the process and then complete the corresponding from, which is different for every process.</help>
 	<expand macro="citations"/>
+    <expand macro="creator"/>
 </tool>
