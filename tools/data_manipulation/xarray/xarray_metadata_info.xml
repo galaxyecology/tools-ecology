@@ -26,7 +26,6 @@
     <tests>
         <test>
             <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
-            <param name="output" value="Metadata_infos_from_dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc.Variables.tab"/>
             <output name="info" value="info_file.txt">
                 <assert_contents>
                     <has_text_matching expression="depth\s+=\s+1"/>
