@@ -6,7 +6,7 @@ long_description: |
 name: consalign
 owner: ecology 
 homepage_url: https://github.com/ColineRoyaux/Galaxy_tool_projects/tree/main/consensus_from_alignments
-remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/consensus_from_alignment
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/consensus_from_alignments
 type: unrestricted
 auto_tool_repositories:
   name_template: "{{ tool_id }}"
