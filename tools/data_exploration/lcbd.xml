@@ -3,6 +3,7 @@
     <macros>
         <import>macro.xml</import>
     </macros>
+    <expand macro="topic"/>  
     <requirements> 
         <requirement type="package" version="3.3.3">r-ggplot2</requirement>
         <requirement type="package" version="2.5_7">r-vegan</requirement>
@@ -124,7 +125,6 @@
                 </output_collection>
             </test>
         </tests>
-        <expand macro="topic"/>  
         <help><![CDATA[
 =======================================================================================
 Computes measures of beta diversity : Species and Local Contributions to Beta Diversity 
