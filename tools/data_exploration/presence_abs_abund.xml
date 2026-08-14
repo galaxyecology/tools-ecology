@@ -93,7 +93,7 @@
             <param name="input" value="Reel_life_survey_fish_modif2.tabular"/>
             <param name="colnames" value="true"/>
             <conditional name="method">
-                <param name="abund" value="true"/>
+                <param name="type" value="abund"/>
                 <param name="latitute" value="9"/>
                 <param name="longitude" value="10"/>
                 <param name="individual" value="fishes"/>
