@@ -109,7 +109,9 @@
     <tests>
         <test>
             <param name="input" value="small_west.dem,small_east.dem"/>
-            <param name="advanced" value="simple"/>
+            <conditional name="settings">
+                <param name="advanced" value="simple"/>
+            </conditional>
             <output name="output" file="small_merged.tif"/>
         </test>
     </tests>
