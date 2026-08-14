@@ -70,6 +70,7 @@ A tabular file with your original data file with its longitude and latitude repl
 
     ]]></help>   
     <citations>
+       <citation type="doi">10.32614/CRAN.package.tangles</citation>
     </citations>
     <expand macro="creator"/>
 </tool>
