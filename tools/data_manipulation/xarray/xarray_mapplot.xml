@@ -149,7 +149,7 @@
                  <param name="time_tab" value="time.tabular"/>
                  <param name="time_values" value="0"/>
              </conditional>
-             <param name="cmap" value="vik_r"/>   
+             <param name="cmap" value="cm.vik_r"/>   
              <param name="proj" value='{"proj":"EquidistantConic", "central_longitude": 20.0, "central_latitude": 70.0 }'/>    
              <param name="land" value="0.1"/>                         
              <param name="ocean" value="0.1"/>                         
