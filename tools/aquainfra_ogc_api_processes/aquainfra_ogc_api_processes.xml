@@ -209,7 +209,7 @@
             </when>
             <when value="filter-clip-clean-extent">
                 <param name="inputFile1_gpkg" label="NUTS3 regions" optional="false" help="EU NUTS3 regions saved in geopackage. It should be in same coordinate system as the inputted river catchment dataset and overlap this - ideally it should fully contain its extent. (URL must be stored in a .txt file)" type="data" format="txt"/>
-                <param name="inputFile2_gpkg" label="LAU regions." optional="false" value="" help="EU LAU (Local Areal Unit) regions saved in geopackage. It should be in same coordinate system as the other inputted datasets and overlap these - ideally fully contained in the extent of the inputted river catchment dataset." type="text">
+                <param name="inputFile2_gpkg" label="LAU regions." value="" help="EU LAU (Local Areal Unit) regions saved in geopackage. It should be in same coordinate system as the other inputted datasets and overlap these - ideally fully contained in the extent of the inputted river catchment dataset." type="text">
                     <validator type="empty_field" message="You must provide a value."/>
                 </param>
                 <param name="inputFile3_gpkg" label="Validated river catchments dataset" optional="false" value="" help="River catchments dataset stored as geopackage and already validated. An example could be EU Ecrins subcatchments from 2012. It should have the same coordinate system as the inputted NUTS3 dataset and overlap this - ideally it should fully be within its extent." type="text">
