@@ -1,4 +1,4 @@
-<tool id="gdal_gdalwarp" name="GDAL Warp" version="@VERSION@">
+<tool id="gdal_gdalwarp" name="GDAL Warp" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@>
     <description>image reprojection and warping utility</description>
     <macros>
         <import>gdal_macros.xml</import>
@@ -187,4 +187,5 @@ http://www.gdal.org/gdalwarp.html
 Raster Processing Tutorial : https://trac.osgeo.org/gdal/wiki/UserDocs/RasterProcTutorial
     ]]></help>
     <expand macro="gdal_citation"/>
+    <expand macro="creator"/>
 </tool>
