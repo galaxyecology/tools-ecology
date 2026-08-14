@@ -3,6 +3,7 @@
     <macros>
         <import>macro.xml</import>
     </macros>
+    <expand macro="topic"/>
     <expand macro="Explo_requirements">
         <requirement type="package" version="2.5_7">r-vegan</requirement>
     </expand>
@@ -113,7 +114,6 @@
             </output_collection>
         </test>
     </tests>
-    <expand macro="topic"/>
     <help><![CDATA[
 =============================================================================
 Map of community abundance, presence barplot of taxons and rarefaction curves
