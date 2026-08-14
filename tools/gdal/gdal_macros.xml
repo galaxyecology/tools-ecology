@@ -1,5 +1,7 @@
 <macros>
     <token name="@VERSION@">3.0.0</token>  
+    <token name="@VERSION_SUFFIX@">1</token>
+    <token name="@PROFILE@">25.1</token>
     <xml name="gdal_requirements">
         <requirements>
             <requirement type="package" version="@VERSION@">gdal</requirement>
@@ -160,5 +162,10 @@
                 }
             </citation>
         </citations>  
+    </xml>
+	<xml name="creator">
+        <creator>
+            <person givenName="Alan" familyName="Amossé" url="https://github.com/Alanamosse"/>
+        </creator>
     </xml>
 </macros>
