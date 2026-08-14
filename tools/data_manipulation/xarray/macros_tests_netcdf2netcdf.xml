@@ -13,7 +13,7 @@
                         <param name="by_click" value="isel_list"/>
                         <repeat name="user_choice">
                             <param name="dim" value="time"/>
-                            <param name="dim_tab" value="latitude.tabular"/>
+                            <param name="dim_tab" value="time.tabular"/>
                             <conditional name="condi_between">
                                 <param name="comparator" value="sl"/>
                                 <param name="t1" value="10"/>
@@ -56,6 +56,7 @@
                         <param name="by_click" value="isel_list"/>
                         <repeat name="user_choice">
                             <param name="dim" value="time"/>
+                            <param name="dim_tab" value="time.tabular"/>
                             <conditional name="condi_between">
                                 <param name="comparator" value="sl"/>
                                 <param name="t1" value="10"/>
@@ -126,7 +127,6 @@
                         <param name="by_click" value="isel"/>
                         <repeat name="user_choice">
                             <param name="dim" value="time"/>
-                            <param name="dim_tab" value="time.tabular"/>
                             <conditional name="condi_between">
                                 <param name="comparator" value="to"/>
                                 <param name="value" value="12"/>
@@ -134,7 +134,6 @@
                         </repeat>
                         <repeat name="user_choice">
                             <param name="dim" value="latitude"/>
-                            <param name="dim_tab" value="latitude.tabular"/>
                             <conditional name="condi_between">
                                 <param name="comparator" value="is"/>
                                 <param name="value" value="5"/>
@@ -142,7 +141,6 @@
                         </repeat>
                         <repeat name="user_choice">
                             <param name="dim" value="longitude"/>
-                            <param name="dim_tab" value="longitude.tabular"/>
                             <conditional name="condi_between">
                                 <param name="comparator" value="is"/>
                                 <param name="value" value="4"/>
@@ -176,7 +174,6 @@
                         <param name="by_click" value="sel"/>
                         <repeat name="user_choice">
                             <param name="dim" value="latitude"/>
-                            <param name="dim_tab" value="latitude.tabular"/>
                             <conditional name="condi_between">
                                 <param name="comparator" value="sl"/>
                                 <param name="t1" value="44.5"/>
@@ -185,7 +182,6 @@
                         </repeat>
                         <repeat name="user_choice">
                             <param name="dim" value="longitude"/>
-                            <param name="dim_tab" value="longitude.tabular"/>
                             <conditional name="condi_between">
                                 <param name="comparator" value="is"/>
                                 <param name="value" value="-3.5"/>
@@ -225,6 +221,7 @@
                         <param name="by_click" value="isel_list"/>
                         <repeat name="user_choice">
                             <param name="dim" value="time"/>
+                            <param name="dim_tab" value="time.tabular"/>
                             <conditional name="condi_between">
                                 <param name="comparator" value="sl"/>
                                 <param name="t1" value="10"/>
