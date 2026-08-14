@@ -75,5 +75,11 @@
 This tool allows to build a map from a shapefile and color the areas according to a percentage (case study dead wood evolution rate).
 
     ]]></help>
+    <citations>
+       <citation type="doi">10.32614/CRAN.package.dplyr</citation>
+       <citation type="doi">10.32614/CRAN.package.ggplot2</citation>
+       <citation type="doi">10.32614/CRAN.package.sf</citation>
+       <citation type="doi">10.32614/CRAN.package.ggspatial</citation>
+    </citations>
     <expand macro="creator"/>
 </tool>
