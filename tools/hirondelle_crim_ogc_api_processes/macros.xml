@@ -34,12 +34,14 @@
     <xml name="tests">
         <tests>
             <test expect_failure="true">
-                <param name="select_process" value="download-band-sentinel2-product-safe"/>
-                <param name="user_credentials" value="crim_test_input.json"/>
-                <param name="cookie" value=""/>
-                <param name="product_url" value="product_url.txt"/>
-                <param name="resolution" value="10m"/>
-                <param name="band" value="B04"/>
+                <conditional name="conditional_process">
+                    <param name="select_process" value="download-band-sentinel2-product-safe"/>
+                    <param name="user_credentials" value="crim_test_input.json"/>
+                    <param name="cookie" value=""/>
+                    <param name="product_url" value="product_url.txt"/>
+                    <param name="resolution" value="10m"/>
+                    <param name="band" value="B04"/>
+                </conditional>
                 <assert_stderr>
                     <has_text text="HTTP 401 Unauthorized"/>
                 </assert_stderr>
