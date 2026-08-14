@@ -82,18 +82,22 @@
             <param name="input1" value="stere.tif"/>
             <param name="format" value="json" />
             <param name="subdataset" value="subd_n" />
-            <param name="advanced" value="simple"/>
+            <conditional name="settings">
+                <param name="advanced" value="simple"/>
+            </conditional>
             <output name="outputJson" file="stere_info.json" lines_diff="4"/>
         </test>
         <test>
             <param name="input1" value="stere.tif"/>
             <param name="format" value="default" />
             <param name="subdataset" value="subd_n" />
-            <param name="advanced" value="advanced"/>
-            <param name="stats" value="-stats"/>
-            <param name="hist" value="-hist"/>
-            <param name="checksum" value="-checksum"/>
-            <param name="mdd" value="all"/>
+            <conditional name="settings">
+                <param name="advanced" value="advanced"/>
+                <param name="stats" value="-stats"/>
+                <param name="hist" value="-hist"/>
+                <param name="checksum" value="-checksum"/>
+                <param name="mdd" value="all"/>
+            </conditional>
             <output name="outputDefault" file="stere_advanced_info.txt" lines_diff="6"/>
         </test>
     </tests>
