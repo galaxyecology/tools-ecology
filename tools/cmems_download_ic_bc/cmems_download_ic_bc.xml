@@ -1,7 +1,11 @@
-<tool id="cmems_download_ic_bc" name="Copernicus CMEMS Downloader for AquaINFRA marine model" version="2.0.0" profile="25.1">
+<tool id="cmems_download_ic_bc" name="Copernicus CMEMS Downloader for AquaINFRA marine model" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="25.1">
 	<description>
 		Download data from the Copernicus Marine Service to provide as input to the AquaINFRA marine model. Products: Mediterranean Sea Physics Analysis and Forecast or Mediterranean Sea Physics Reanalysis, depending on the selected temporal period.
 	</description>
+    <macros>
+        <token name="@TOOL_VERSION@">2.0.0</token>
+        <token name="@VERSION_SUFFIX@">1</token>
+    </macros>
 	<creator>
         <organization name="EOSC AquaINFRA" url="https://aquainfra.eu/"/>
     </creator>
@@ -19,6 +23,9 @@
 			<secret name="password" inject_as_env="CMEMS_PASSWORD" optional="false" label="CMEMS password" description="Your Copernicus Marine Service password."/>
 		</credentials>
 	</requirements>
+	<required_files>
+        <include path="cmems_download_ic_bc.sh"/>
+    </required_files>
 	<command detect_errors="exit_code"><![CDATA[
 		bash "$__tool_directory__/cmems_download_ic_bc.sh" \
 		"$min_lat" "$max_lat" \
