@@ -124,10 +124,12 @@
             </conditional> 
             <output file="ogr2ogr_test2_geojson.json" name="output"/> 
         </test>   
-        <test>
+        <test expect_num_outputs="1">
             <param name="input" value="ogr2ogr_KML.kml" ftype="xml"/>
             <param name="f" value="ESRI Shapefile"/>
-            <param name="advanced" value="simple"/>
+            <conditional name="settings">
+                <param name="advanced" value="simple"/>
+            </conditional> 
             <output file="shp_compositefiles/ogr2ogr_shapefile2.html" name="shapefile">
                 <extra_files type="file" name="shapefile.dbf" value="shp_compositefiles/ogr2ogr_shapefile2.dbf" compare="sim_size" delta="50"/>
                 <extra_files type="file" name="shapefile.prj" value="shp_compositefiles/ogr2ogr_shapefile2.prj"/>
@@ -148,8 +150,10 @@
             <param name="f" value="GeoJSON"/>
             <conditional name="settings">
                 <param name="advanced" value="simple"/>
-                <param name="oo" value="X_POSSIBLE_NAMES=longitude"/>
-                <param name="oo" value="Y_POSSIBLE_NAMES=latitude"/>
+                <repeat name="series_oo">
+                    <param name="oo" value="X_POSSIBLE_NAMES=longitude"/>
+                    <param name="oo" value="Y_POSSIBLE_NAMES=latitude"/>
+                </repeat>
             </conditional> 
             <output file="ogr2ogr_gbif_to_json.json" name="output" lines_diff="2"/> 
         </test>
