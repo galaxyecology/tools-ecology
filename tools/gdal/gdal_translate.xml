@@ -197,7 +197,9 @@
     </outputs>
     <tests>
         <test>
-            <param name="input1" value="tinyworld.png"/>
+            <conditional name="typeinput">
+                <param name="input1" value="tinyworld.png"/>
+            </conditional>
             <param name="of" value="GTiff" />
             <conditional name="settings">    
                 <param name="advanced" value="advanced"/>
