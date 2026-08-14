@@ -64,7 +64,9 @@
                 <composite_data value="shp_compositefiles/shapefile.sbn"/>
                 <composite_data value="shp_compositefiles/shapefile.sbx"/>
             </param>
-            <param name="advanced" value="simple"/>
+            <conditional name="settings">
+                <param name="advanced" value="simple"/>
+            </conditional>
             <output name="output" file="ogrinfo_shp.txt" lines_diff="2"/>
         </test>
     </tests>
