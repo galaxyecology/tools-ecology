@@ -1,4 +1,4 @@
-<tool id="gdal_ogr2ogr" name="OGR2ogr" version="@VERSION@">
+<tool id="gdal_ogr2ogr" name="OGR2ogr" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>converts simple features data between file formats</description>
     <macros>
         <import>gdal_macros.xml</import>
@@ -170,4 +170,5 @@ https://gdal.org/programs/ogr2ogr.html
 http://download.osgeo.org/gdal/workshop/foss4ge2015/workshop_gdal.pdf
     ]]></help>
     <expand macro="gdal_citation"/>
+    <expand macro="creator"/>
 </tool>
