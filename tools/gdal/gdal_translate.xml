@@ -199,13 +199,15 @@
         <test>
             <param name="input1" value="tinyworld.png"/>
             <param name="of" value="GTiff" />
-            <param name="advanced" value="advanced"/>
-            <param name="a_ullr" value="a_ullr"/>
-            <param name="ulx" value="-180"/>
-            <param name="uly" value="90"/>
-            <param name="lrx" value="180"/>
-            <param name="lry" value="-90"/>
-            <param name="a_srs" value="WGS84"/>
+            <conditional name="settings">    
+                <param name="advanced" value="advanced"/>
+                <param name="a_ullr" value="a_ullr"/>
+                <param name="ulx" value="-180"/>
+                <param name="uly" value="90"/>
+                <param name="lrx" value="180"/>
+                <param name="lry" value="-90"/>
+                <param name="a_srs" value="WGS84"/>
+            </conditional>
             <output name="output" file="tinyworld.tif"/>
         </test>
     </tests>
