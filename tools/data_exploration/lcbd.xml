@@ -81,7 +81,7 @@
         <outputs>
             <data name="output_lcbd" from_work_dir="LCBD.txt" format="txt" label="LCBD"/>
             <data name="output_scbd" from_work_dir="SCBD.txt" format="txt" label="Which species have a SCBD larger than the mean SCBD?"/>
-            <data name="output_beta" from_work_dir="beta_diversity.Rdata" format="RData" label="Beta diversity, LCDB, SCBD - R object">
+            <data name="output_beta" from_work_dir="beta_diversity.Rdata" format="rdata" label="Beta diversity, LCDB, SCBD - R object">
                 <filter>rdata</filter>
             </data>
             <collection type="list" name="plots">
