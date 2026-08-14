@@ -74,7 +74,7 @@
         </data>
     </outputs>
     <tests>
-        <test>
+        <test expect_num_outputs="1">
             <param name="input" value="shp_compositefiles/shapefile.xml" ftype="shp">
                 <composite_data value="shp_compositefiles/shapefile.shp"/>
                 <composite_data value="shp_compositefiles/shapefile.shx"/>
@@ -83,10 +83,12 @@
                 <composite_data value="shp_compositefiles/shapefile.sbx"/>
             </param>
             <param name="f" value="KML"/>
-            <param name="advanced" value="simple"/>
+            <conditional name="settings">
+                <param name="advanced" value="simple"/>
+            </conditional> 
             <output file="ogr2ogr_KML.kml" name="output"/> 
         </test>
-        <test>
+        <test expect_num_outputs="1">
             <param name="input" value="shp_compositefiles/shapefile.xml" ftype="shp">
                 <composite_data value="shp_compositefiles/shapefile.shp"/>
                 <composite_data value="shp_compositefiles/shapefile.shx"/>
@@ -95,10 +97,12 @@
                 <composite_data value="shp_compositefiles/shapefile.sbx"/>
             </param>
             <param name="f" value="GML"/>
-            <param name="advanced" value="simple"/>
+            <conditional name="settings">
+                <param name="advanced" value="simple"/>
+            </conditional> 
             <output file="ogr2ogr_GML.gml" name="output"/> 
         </test>
-        <test>
+        <test expect_num_outputs="1">
             <param name="input" value="shp_compositefiles/shapefile.xml" ftype="shp">
                 <composite_data value="shp_compositefiles/shapefile.shp"/>
                 <composite_data value="shp_compositefiles/shapefile.shx"/>
@@ -107,13 +111,17 @@
                 <composite_data value="shp_compositefiles/shapefile.sbx"/>
             </param>
             <param name="f" value="GeoJSON"/>
-            <param name="advanced" value="simple"/>
+            <conditional name="settings">
+                <param name="advanced" value="simple"/>
+            </conditional> 
             <output file="ogr2ogr_geojson.json" name="output"/> 
         </test>   
-        <test>
+        <test expect_num_outputs="1">
             <param name="input" value="ogr2ogr_KML.kml" ftype="xml"/>
             <param name="f" value="GeoJSON"/>
-            <param name="advanced" value="simple"/>
+            <conditional name="settings">
+                <param name="advanced" value="simple"/>
+            </conditional> 
             <output file="ogr2ogr_test2_geojson.json" name="output"/> 
         </test>   
         <test>
@@ -127,18 +135,22 @@
                 <extra_files type="file" name="shapefile.shx" value="shp_compositefiles/ogr2ogr_shapefile2.shx"/>
             </output>
         </test>
-        <test>
+        <test expect_num_outputs="1">
             <param name="input" value="ogr2ogr_KML.kml" ftype="xml"/>
             <param name="f" value="GML"/>
-            <param name="advanced" value="simple"/>
+            <conditional name="settings">
+                <param name="advanced" value="simple"/>
+            </conditional> 
             <output file="ogr2ogr_GML2.gml" name="output"/> 
         </test>
-        <test>
+        <test expect_num_outputs="1">
             <param name="input" value="ogr2ogr_fromgbif.tabular" ftype="tabular"/>
             <param name="f" value="GeoJSON"/>
-            <param name="advanced" value="advanced"/>
-            <param name="oo" value="X_POSSIBLE_NAMES=longitude"/>
-            <param name="oo" value="Y_POSSIBLE_NAMES=latitude"/>
+            <conditional name="settings">
+                <param name="advanced" value="simple"/>
+                <param name="oo" value="X_POSSIBLE_NAMES=longitude"/>
+                <param name="oo" value="Y_POSSIBLE_NAMES=latitude"/>
+            </conditional> 
             <output file="ogr2ogr_gbif_to_json.json" name="output" lines_diff="2"/> 
         </test>
     </tests>
