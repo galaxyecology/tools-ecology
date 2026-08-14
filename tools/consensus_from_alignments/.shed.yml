@@ -1,9 +1,12 @@
 categories:
   - Sequence Analysis
 description: Tool to compute a consensus sequence from several aligned fasta sequences
+long_description: |
+  Tool to compute a consensus sequence from several aligned fasta sequences
 name: consalign
 owner: ecology 
-remote_repository_url: https://github.com/ColineRoyaux/Galaxy_tool_projects/tree/main/consensus_from_alignments
+homepage_url: https://github.com/ColineRoyaux/Galaxy_tool_projects/tree/main/consensus_from_alignments
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/consensus_from_alignment
 type: unrestricted
 auto_tool_repositories:
   name_template: "{{ tool_id }}"
