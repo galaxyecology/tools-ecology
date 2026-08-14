@@ -4,6 +4,7 @@
     <macros>
         <import>macro.xml</import>
     </macros>
+    <expand macro="topic"/>
     <expand macro="Explo_requirements">
         <requirement type="package" version="3.0_10">r-car</requirement>
         <requirement type="package" version="1.1.1">r-cowplot</requirement>
@@ -65,7 +66,6 @@
             </output_collection>
         </test>
     </tests>
-    <expand macro="topic"/>
     <help><![CDATA[
 ===============================================================
 Checks homogeneity of variance (homoscedasticity) and normality
