@@ -78,7 +78,7 @@
         </data>
     </outputs>
     <tests>
-        <test>
+        <test expect_num_outputs="1">
             <param name="input1" value="stere.tif"/>
             <param name="format" value="json" />
             <param name="subdataset" value="subd_n" />
@@ -87,7 +87,7 @@
             </conditional>
             <output name="outputJson" file="stere_info.json" lines_diff="4"/>
         </test>
-        <test>
+        <test expect_num_outputs="1">
             <param name="input1" value="stere.tif"/>
             <param name="format" value="default" />
             <param name="subdataset" value="subd_n" />
