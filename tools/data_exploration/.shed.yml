@@ -12,4 +12,4 @@ auto_tool_repositories:
 suite:
   name: "data_exploration"
   description: "A suite of data exploration tools"
-  type: repository_data_exploration
+  type: unrestricted
