@@ -203,7 +203,7 @@
                 <param name="inputFile4_corineCLC_rds" label="CORINE CLC raster" optional="false" help="Path to an .rds file containing the CORINE Land Cover raster (SpatRaster), used to derive the subset overlapping populated census grid cells. (URL must be stored in a .txt file)" type="data" format="txt"/>
             </when>
             <when value="ferrybox-river-eo-plot">
-                <param name="input1" label="Time series of river discarge data" optional="false" help="URL to Time series of river discarge data. The URL needs to start with http(s). See the example and use only year 2023 or 2024. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input1" label="Time series of river discarge data" help="URL to Time series of river discarge data. The URL needs to start with http(s). See the example and use only year 2023 or 2024. (URL must be stored in a .txt file)" type="data" format="txt"/>
                 <param name="input2" label="Aggregated Ferrybox turbidity data" optional="false" help="Ferrybox data aggregated into daily values from areas along the route of the ship. The URL needs to start with http(s). Select the same year as in the discharge data (2023 or 2024). (URL must be stored in a .txt file)" type="data" format="txt"/>
                 <param name="input3" label="Aggregated EO turbidity data" optional="false" help="EO data aggregated into daily values from areas along the route of the ship. The URL needs to start with http(s). (URL must be stored in a .txt file)" type="data" format="txt"/>
             </when>
