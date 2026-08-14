@@ -51,7 +51,9 @@
     <tests>
         <test>
             <param name="input1" value="custom.geo.json"/>
-            <param name="advanced" value="simple"/>
+            <conditional name="settings">
+                <param name="advanced" value="simple"/>
+            </conditional>
             <output name="output" file="ogrinfo_test1_out2.txt" lines_diff="85"/>
         </test>
         <test>
