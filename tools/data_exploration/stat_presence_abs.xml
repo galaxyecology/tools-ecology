@@ -1,4 +1,4 @@
-<tool id="ecology_stat_presence_abs" name="Statistics on presence-absence" version="@VERSION@" profile = "20.01">
+<tool id="ecology_stat_presence_abs" name="Statistics on presence-absence" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile = "20.01">
     <description>of a numeric variable</description>
     <macros>
         <import>macro.xml</import>
@@ -8,6 +8,10 @@
         <requirement type="package" version="0.1.3">r-ggcorrplot</requirement>
         <requirement type="package" version="1.0.5">r-dplyr</requirement>
     </expand>
+    <required_files>
+        <include path="graph_stat_presence_abs.r"/>
+        <include path="functions.r"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript
             '$__tool_directory__/graph_stat_presence_abs.r'
@@ -85,5 +89,5 @@ A tabular file with observation data. Must at least contain four columns a numer
 Two png files containing the three plots.
     ]]>    </help>
     <expand macro="explo_bibref"/>
-
+    <expand macro="creator"/>
 </tool>
