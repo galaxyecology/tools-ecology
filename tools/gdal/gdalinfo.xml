@@ -1,4 +1,4 @@
-<tool id="gdal_gdalinfo" name="GDAL Informations" version="@VERSION@">
+<tool id="gdal_gdalinfo" name="GDAL Informations" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@>
     <description>lists information about a raster dataset</description>
     <macros>
         <import>gdal_macros.xml</import>
@@ -148,4 +148,5 @@ Raster Processing Tutorial : https://trac.osgeo.org/gdal/wiki/UserDocs/RasterPro
 
     ]]></help>
     <expand macro="gdal_citation"/>
+    <expand macro="creator"/>
 </tool>
