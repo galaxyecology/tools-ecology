@@ -104,7 +104,9 @@
     <tests>
         <test>
             <param name="input" value="small_east.dem,small_west.dem"/>
-            <param name="advanced" value="simple"/>
+            <conditional name="settings">    
+                <param name="advanced" value="simple"/>
+            </conditional>
             <output name="output" file="small_dem.vrt" lines_diff="4"/>
         </test>    
     </tests>
