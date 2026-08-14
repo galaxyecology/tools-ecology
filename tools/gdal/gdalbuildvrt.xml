@@ -1,4 +1,4 @@
-<tool id="gdal_gdalbuildvrt" name="GDAL Build VRT" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@>
+<tool id="gdal_gdalbuildvrt" name="GDAL Build VRT" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>builds a VRT from a list of datasets</description>
     <macros>
         <import>gdal_macros.xml</import>
