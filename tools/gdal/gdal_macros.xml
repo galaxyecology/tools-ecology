@@ -137,11 +137,11 @@
     </xml>
 
     <xml name="gdal_input_raster_multiple">
-        <param type="data" name="input" format="gtiff,tiff,netcdf,VRT,txt,xml" help="Formats currently supported are : GTiff, netCDF and VRT" label="Gdal supported input file" multiple="true"/>
+        <param type="data" name="input" format="tiff,netcdf,txt,xml" help="Formats currently supported are : GTiff, netCDF and VRT" label="Gdal supported input file" multiple="true"/>
     </xml>
 
     <xml name="gdal_output_change_format">
-        <data name="output" format="GTiff" label="${on_string}.${of}">
+        <data name="output" format="tiff" label="${on_string}.${of}">
             <change_format>
                 <when input="of" value="GTiff" format="tiff"/>
                 <when input="of" value="netCDF" format="netcdf"/>
