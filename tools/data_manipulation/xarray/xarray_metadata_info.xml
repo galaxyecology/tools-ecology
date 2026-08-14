@@ -10,6 +10,9 @@
         <requirement type="package" version="1.6.0">netcdf4</requirement>
         <requirement type="package" version="1.4.3">pandas</requirement>
     </requirements>
+    <required_files>
+        <include path="xarray_info.py"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         python3 '$__tool_directory__/xarray_info.py' '$input' --info '$info' --summary '$output'
     ]]>    </command>
@@ -82,4 +85,5 @@ The Netcdf Info tool use the netcdf functions : https://www.unidata.ucar.edu/sof
 Run this tool before considering using Netcdf Read.
     ]]>    </help>
     <expand macro="citations"/>
+    <expand macro="creator"/>
 </tool>
