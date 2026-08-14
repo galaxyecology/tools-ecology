@@ -125,34 +125,44 @@
             <param name="input" value="stere.tif"/>
             <param name="of" value="GTiff" />
             <param name="t_srs" value="EPSG:2154" />
-            <param name="advanced" value="simple"/>
+            <conditional name="settings">
+                <param name="advanced" value="simple"/>
+            </conditional>
             <output name="output" file="stere_warp1.tiff" compare="sim_size" />
         </test>
         <test>
             <param name="input" value="tinyworld.tif"/>
             <param name="t_srs" value="+proj=ortho +datum=WGS84" />
-            <param name="advanced" value="simple"/>
+            <conditional name="settings">
+                <param name="advanced" value="simple"/>
+            </conditional>
             <output name="output" file="gdalwarp_test2_out.tif"/>
         </test>
         <test>
             <param name="input" value="tinyworld.tif"/>
             <param name="t_srs" value="+proj=ortho +datum=WGS84" />
-            <param name="advanced" value="advanced"/>
-            <param name="wo" value="SOURCE_EXTRA=125"/>
+            <conditional name="settings">
+                <param name="advanced" value="advanced"/>
+                <param name="wo" value="SOURCE_EXTRA=125"/>
+            </conditional>
             <output name="output" file="gdalwarp_test3_out.tif"/>
         </test>
         <test>
             <param name="input" value="tinyworld.tif"/>
             <param name="t_srs" value="+proj=ortho +datum=WGS84" />
-            <param name="advanced" value="advanced"/>
-            <param name="wo" value="SOURCE_EXTRA=125"/>
-            <param name="dstalpha" value="-dstalpha"/>
-            <param name="srcnodata" value="11 10 50"/>
+            <conditional name="settings">
+                <param name="advanced" value="advanced"/>
+                <param name="wo" value="SOURCE_EXTRA=125"/>
+                <param name="dstalpha" value="-dstalpha"/>
+                <param name="srcnodata" value="11 10 50"/>
+            </conditional>
             <output name="output" file="gdalwarp_test4_out.tif"/>
         </test>
         <test>
             <param name="input" value="small_east.dem,small_west.dem"/>
-            <param name="advanced" value="simple"/>
+            <conditional name="settings">
+                <param name="advanced" value="simple"/>
+            </conditional>
             <output name="output" file="small_warpmerged.tif"/>
         </test>     
     </tests>
