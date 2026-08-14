@@ -3,6 +3,7 @@
     <macros>
         <import>macro.xml</import>
     </macros>
+    <expand macro="topic"/>
     <expand macro="Explo_requirements">
         <requirement type="package" version="1.1.1">r-cowplot</requirement>
         <requirement type="package" version="0.1.3">r-ggcorrplot</requirement>
@@ -54,7 +55,6 @@
             </output>
         </test>
     </tests>
-    <expand macro="topic"/>
     <help><![CDATA[
 ===================================================================================================================
 Create a boxplot, visualize the dispersion of a numeric variable and visualize correlation between species absences
