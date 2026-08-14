@@ -1,4 +1,4 @@
-<tool id="aquainfra_ogc_api_processes" name="AquaINFRA OGC API Processes" version="0.18.0" profile="25.1">
+<tool id="aquainfra_ogc_api_processes" name="AquaINFRA OGC API Processes" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="25.1">
     <description/>
     <macros>
         <import>macros.xml</import>
