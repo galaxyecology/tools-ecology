@@ -1,5 +1,6 @@
 <macros>
     <token name="@VERSION@">0.0.2</token>
+    <token name="@VERSION_SUFFIX@">1</token>
     <xrefs>
         <xref type="bio.tools">obisindicators</xref>
     </xrefs>
@@ -38,6 +39,12 @@
            <edam_topic>topic_0610</edam_topic>
            <edam_topic>topic_3050</edam_topic>
         </edam_topics>
+    </xml>
+    <xml name="creator">
+        <creator>
+            <person givenName="Marie" familyName="Jossé" url="https://orcid.org/0009-0008-0622-604X"/>
+            <organization name="Data Terra"  url="https://www.data-terra.org/"/>
+        </creator>
     </xml>
 </macros>
 
