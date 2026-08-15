@@ -90,7 +90,7 @@
     </xml>
 	<xml name="creator">
         <creator>
-            <person givenName="Coline" familyName="Royaux" url="https://github.com/colineroyaux" orcid="0000-0003-4308-5617"/>
+            <person givenName="Coline" familyName="Royaux" url="https://orcid.org/0000-0003-4308-5617"/>
             <organization name="PNDB"  url="https://www.pndb.fr/pages/accueil/"/>
         </creator>
     </xml>
