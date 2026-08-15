@@ -2,7 +2,7 @@
     <description>in genomic and metagenomic data</description>
     <macros>
         <token name="@TOOL_VERSION@">0.9.3.5</token>
-        <token name="@VERSION_SUFFIX@">1</token>
+        <token name="@VERSION_SUFFIX@">2</token>
     </macros>
     <edam_topics>
         <edam_topic>topic_3387</edam_topic>
@@ -82,4 +82,9 @@ This tool can also create a Genbank adapted to be used in sanntis
     <citations>
         <citation type="doi">10.1101/2023.05.23.540769</citation>
     </citations>
+    <creator>
+        <person givenName="Marie" familyName="Jossé" url="https://orcid.org/0009-0008-0622-604X"/>
+        <organization name="EOSC Fair-Ease"  url="https://fairease.eu/"/>
+        <organization name="Data Terra"  url="https://www.data-terra.org/"/>
+    </creator>
 </tool>
