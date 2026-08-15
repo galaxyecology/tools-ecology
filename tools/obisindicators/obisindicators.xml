@@ -1,4 +1,4 @@
-<tool id="obisindicators" name="Ocean biodiversity indicators" version="@VERSION@" profile="20.01">
+<tool id="obisindicators" name="Ocean biodiversity indicators" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="20.01">
     <description>from OBIS</description>
     <macros>
         <import>macro.xml</import>
@@ -133,4 +133,5 @@ A tabular file with observation data. Must at least contain four columns longitu
 - Multiple PNG files representing the indicators on a map (according to the choice of map made).
     ]]></help>
     <expand macro="obis_bibref"/>
+    <expand macro="creator"/>
 </tool>
