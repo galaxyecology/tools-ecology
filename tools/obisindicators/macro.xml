@@ -31,7 +31,7 @@
     </xml>
     <xml name="obis_doiref">
         <citations>
-            <citation type="doi">DOI:10.5281/zenodo.6969395</citation>
+            <citation type="doi">10.5281/zenodo.6969395</citation>
         </citations>
     </xml>
     <xml name="topic">
