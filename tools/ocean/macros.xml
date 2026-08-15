@@ -1,6 +1,6 @@
 <macros>
     <token name="@TOOL_VERSION@">0.1.15</token>
-    <token name="@VERSION_SUFFIX@">0</token>
+    <token name="@VERSION_SUFFIX@">1</token>
     <xml name="argo_requirements">
         <requirements>
             <requirement type="package" version="@TOOL_VERSION@">argopy</requirement>
@@ -20,5 +20,12 @@
        <citations>
             <citation type="doi">doi:10.21105/joss.02425</citation>
         </citations>
+    </xml>
+    <xml name="creator">
+        <creator>
+            <person givenName="Marie" familyName="Jossé" url="https://orcid.org/0009-0008-0622-604X"/>
+            <organization name="EOSC Fair-Ease"  url="https://fairease.eu/"/>
+            <organization name="Data Terra"  url="https://www.data-terra.org/"/>
+        </creator>
     </xml>
 </macros>
