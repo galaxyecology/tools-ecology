@@ -1,0 +1,11 @@
+<macros>
+    <token name="@VERSION_SUFFIX@">3</token>
+    <xml name="creator">
+        <creator>
+            <person givenName="Marie" familyName="Jossé" url="https://orcid.org/0009-0008-0622-604X"/>
+            <organization name="EOSC Fair-Ease"  url="https://fairease.eu/"/>
+            <organization name="Data Terra"  url="https://www.data-terra.org/"/>
+            <organization name="POKaPOK"  url="https://www.pokapok.org/"/>
+        </creator>
+    </xml>
+</macros>
