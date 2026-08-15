@@ -27,7 +27,7 @@
     </xml>
     <xml name="creator">
         <creator>
-            <person givenName="Anne" familyName="Fouilloux" url="https://github.com/annefou" orcid="0000-0002-1784-2920"/>
+            <person givenName="Anne" familyName="Fouilloux" url="https://orcid.org/0000-0002-1784-2920"/>
         </creator>
     </xml>
 </macros>
