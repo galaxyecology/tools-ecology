@@ -413,4 +413,5 @@ https://argopy.readthedocs.io/en/latest/index.html
 
     ]]></help>
     <expand macro="argo_bibref"/>
+    <expand macro="creator"/>
 </tool>
