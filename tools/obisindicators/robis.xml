@@ -1,4 +1,4 @@
-<tool id="obis_data" name="OBIS occurences" version="@VERSION@" profile="20.01">
+<tool id="obis_data" name="OBIS occurences" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="20.01">
     <description>retrieve data</description>
     <macros>
         <import>macro.xml</import>
@@ -95,4 +95,5 @@ This tool use the robis R package.
 Includes functionality for retrieving species occurrence data, and combining those data.
     ]]></help>
     <expand macro="obis_doiref"/>
+    <expand macro="creator"/>
 </tool>
