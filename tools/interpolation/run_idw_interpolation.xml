@@ -1,7 +1,7 @@
 <tool id="interpolation_run_idw_interpolation" name="Run interpolation" version="@VERSION_TOOL@+galaxy@VERSION_SUFFIX@" profile="22.05">
     <description>based on Inverse Distance Weighting (IDW)</description>
     <macros>
-        <token name="@TOOL_VERSION@">1.0</token>
+        <token name="@VERSION_TOOL@">1.0</token>
         <token name="@VERSION_SUFFIX@">1</token>
     </macros>
     <requirements>
