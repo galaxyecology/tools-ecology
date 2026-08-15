@@ -67,10 +67,10 @@
             <param name="input" value="occ_at.tabular"/>
             <param name="colnames" value="true"/>
             <param name="separator" value="t"/>
-            <param name="longitude" value="c1: decimalLongitude"/>
-            <param name="latitude" value="c2: decimalLatitude"/>
-            <param name="species" value="c3: species"/>
-            <param name="records" value="c5: records"/>
+            <param name="longitude" value="1"/>
+            <param name="latitude" value="2"/>
+            <param name="species" value="3"/>
+            <param name="records" value="5"/>
             <param name="type" value="0"/>
             <param name="resolution" value="9"/>
             <output name="output_index" value="Index.csv"/>
