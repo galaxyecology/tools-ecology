@@ -1,7 +1,11 @@
-<tool id="iabiodiv_smartbiodiv_med_environ" name="Adds environment variables" version="0.1.2" profile="25.1">
+<tool id="iabiodiv_smartbiodiv_med_environ" name="Adds environment variables" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="25.1">
     <description>
         From Copernicus and etopo given geolocalized and timestamped observations
     </description>
+    <macros>
+        <token name="@TOOL_VERSION@">0.1.2</token>
+        <token name="@VERSION_SUFFIX@">1</token>
+    </macros>
     <requirements>
         <requirement type="package" version="2.1.3">pandas</requirement>
         <requirement type="package" version="4.9.3">lxml</requirement>
@@ -11,6 +15,9 @@
             <secret name="password" inject_as_env="CMEMS_PASSWORD" optional="false" label="CMEMS password" description="Your Copernicus Marine Service password."/>
          </credentials>
     </requirements>
+    <required_files>
+        <include path="med_environ.py"/>
+    </required_files>
     <creator>
         <person givenName="Jérémy" familyName="Fix" url="http://www.github.com/jeremyfix/" email="jeremy.fix@centralesupelec.fr"/>
     </creator>
