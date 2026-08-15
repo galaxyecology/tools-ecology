@@ -1,10 +1,10 @@
 categories:
     - Ecology
 owner: ecology
-remote_repository_url: https://git.rwth-aachen.de/nfdi4earth/onestop4all/onestop4all-implementation/-/tree/develop
-homepage_url: https://onestop4all.nfdi4earth.de/
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/nfdi4earth_os4a_importer
+homepage_url: https://git.rwth-aachen.de/nfdi4earth/onestop4all/onestop4all-implementation/-/tree/develop
 long_description: |
-  A data source tool for downloading datasets via NFDI4Earth's OneStop4All search user interface.
+  A data source tool for downloading datasets via NFDI4Earth's OneStop4All search user interface (https://onestop4all.nfdi4earth.de/).
 type: unrestricted
 auto_tool_repositories:
   name_template: "{{ tool_id }}"
