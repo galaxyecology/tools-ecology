@@ -2,13 +2,16 @@
     <description>from environmental predictors for species distribution modeling</description>
     <macros>
         <token name="@TOOL_VERSION@">0.2.15</token> 
-        <token name="@VERSION_SUFFIX@">0</token>
+        <token name="@VERSION_SUFFIX@">1</token>
     </macros>
     <requirements> 
         <requirement type="package" version="4.3.2">r-base</requirement>
         <requirement type="package" version="@TOOL_VERSION@">r-sdmpredictors</requirement>
         <requirement type="package" version="0.2_19">r-codetools</requirement>
     </requirements>
+    <required_files>
+        <include path="sdmpredictors_list_layers.R"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         
         Rscript
