@@ -150,21 +150,6 @@
         </test>
         <test>
             <param name ="taxa_list" value="taxa.list" />
-            <section name="animal_marker">
-                <param name="marker" value=""/>
-            </section>
-            <section name="vegetal_marker">
-                <param name="marker" value=""/>
-            </section>
-            <section name="bacterial_marker">
-                <param name="marker" value=""/>
-            </section>
-            <section name="fungal_marker">
-                <param name="marker" value=""/>
-            </section>
-            <section name="protist_marker">
-                <param name="marker" value=""/>
-            </section>
             <output name="Log" file="Log_test2.txt" compare="diff"/>
             <output_collection name="datasets_output" type="list" count="0">
             </output_collection>
