@@ -2,7 +2,7 @@
     <description>for sensors according to Argo recommendations</description>
     <macros>
         <token name="@VERSION@">2.1</token>
-        <token name="@VERSION_SUFFIX@">2</token>
+		<import>macro.xml</import>
     </macros>
     <requirements>
         <container type="docker">easyqcvbgc/easy-qcv_calibration-methods_tool:cm@VERSION@</container>
@@ -365,4 +365,5 @@ The folder where to write the ODV generic spreadsheet. the output folder is orga
             note = {https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-odv-tool}
         </citation>    
     </citations>
+    <expand macro="creator"/>
 </tool>
