@@ -23,8 +23,8 @@
         <expand macro="rg_gls_model"/>
     </inputs>
     <outputs>
-        <data format="png" name="output" from_work_dir="output-plot-trend.png" />
-        <data format="tabular" name="output_tsv" from_work_dir="s_trend.tsv" />
+        <data format="png" name="output" from_work_dir="output-plot-trend.png" label="Trend estimation on ${on_string}"/>
+        <data format="tabular" name="output_tsv" from_work_dir="s_trend.tsv" label="Tabular raw values"/>
     </outputs>
     <tests>
         <test>
