@@ -3,6 +3,10 @@
     <macros>
         <import>regionalgam_macros.xml</import>
     </macros>
+    <edam_topics>
+       <edam_topic>topic_0610</edam_topic>
+       <edam_topic>topic_3050</edam_topic>
+    </edam_topics>
     <expand macro="rg_nlme_mass_requirements"/>
     <required_files>
         <include path="gls-adjusted.R"/>
@@ -29,10 +33,6 @@
             <output name="output2" file="s_gls-adju_rda.rda" compare="sim_size" delta="100"/>
         </test>
     </tests>
-    <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
-    </edam_topics>
     <help><![CDATA[
 ==========================
 Linear regression ajusted
