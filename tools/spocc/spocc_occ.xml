@@ -1,10 +1,13 @@
-<tool id="spocc_occ" name="Get species occurrences data" version="@VERSION@">
+<tool id="spocc_occ" name="Get species occurrences data" version="@VERSION@+galaxy@VERSION_SUFFIX@">
     <description>from GBIF, OBIS, ALA, iNAT and others</description>
     <macros>
         <import>macro.xml</import>
     </macros>
     <expand macro="occ_requirements">
     </expand>
+    <required_files>
+        <include path="spocc_occ.R"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript '$__tool_directory__/spocc_occ.R' 
             '$sname' 
@@ -123,5 +126,7 @@ Original source : https://cran.r-project.org/web/packages/spocc/index.html
 
 Reference manual : https://cran.r-project.org/web/packages/spocc/spocc.pdf
     ]]></help>
+    <expand macro="citation">
+    <expand macro="creator">
 </tool>
 
