@@ -86,7 +86,7 @@
                 <param type="data" label="Input data" format="data" help="Select a file you want to convert in GTiff, VRT or netCDF" name="input1"/>
             </when>    
             <when value="subdataset">
-                <param type="data" label="Tabular of subdatasets" name="subdata_tab"/>
+                <param type="data" format="data" label="Tabular of subdatasets" name="subdata_tab"/>
                 <param name="input1" type="select" label="Chose your subdata">
                    <options from_dataset="subdata_tab">
                        <column name="value" index="0"/>
