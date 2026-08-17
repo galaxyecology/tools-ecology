@@ -154,4 +154,5 @@ the first version written by Romain Lorrilliere
 
   ]]></help>
   <expand macro="stoceps_bibref" />
+  <expand macro="creator" />
 </tool>
