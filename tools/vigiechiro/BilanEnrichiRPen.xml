@@ -1,11 +1,20 @@
-<tool id="vigiechiro_bilanenrichirp" name="Advanced restitution: 'Routier'or 'Pedestre' protocols" version="@VERSION@">
+<tool id="vigiechiro_bilanenrichirp" name="Advanced restitution: 'Routier'or 'Pedestre' protocols" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>from Animal Detection on Acoustic Recordings</description>
     <macros>
         <import>vigiechiro_macros.xml</import>
     </macros>  
+    <edam_topics>
+       <edam_topic>topic_0610</edam_topic>
+       <edam_topic>topic_3050</edam_topic>
+    </edam_topics>
     <expand macro="vigiechiro_requirements">
         <expand macro="vigiechiro_bilanenrichi_requirements"/>
     </expand>
+    <required_files>
+        <include path="BilanEnrichiRP.R"/>
+        <include path="refRPSeuil50.csv"/>
+        <include path="SpeciesList.csv"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript '$__tool_directory__/BilanEnrichiRP.R' 
             '$idc2' 
@@ -45,10 +54,6 @@
  	    <output name="output_summary_tabular" file="BilanEnrichiRP_Test1_summarised.tabular" ftype="tabular"/>
         </test>
     </tests>
-    <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
-    </edam_topics>
     <help><![CDATA[
 **What it does**
 
@@ -59,5 +64,7 @@ The tool analyzes the observations made with the "Routier" or "Pedestre" protoco
 - Input is an observation/participation file corrected by the tools Tadarida data cleaner and Tadarida identifications integration.
 - Outputs are Summary and details raw tabulars, and html visualisations.
     ]]></help>
-    <expand macro="vigiechiro_bibref" />    
+    <expand macro="vigiechiro_bibref"/>    
+    <expand macro="creator"/>    
+
 </tool>
