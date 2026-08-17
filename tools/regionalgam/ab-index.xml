@@ -1,9 +1,13 @@
-<tool id="regionalgam_ab_index" name="Abundance index" version="@VERSION@">
+<tool id="regionalgam_ab_index" name="Abundance index" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>computation across species, sites and years</description>
     <macros>
         <import>regionalgam_macros.xml</import>
     </macros>
     <expand macro="rg_r_requirements"/>
+    <required_files>
+        <include path="ab-index.R"/>
+        <include path="dennis-gam-initial-functions.R"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript '$__tool_directory__/ab-index.R'
             '$__tool_directory__/dennis-gam-initial-functions.R' 
@@ -46,4 +50,5 @@ The tool returns computed abundance indices in tabular format.
 
     ]]></help>
     <expand macro="rg_citation"/>
+    <expand macro="creator"/>
 </tool>
