@@ -85,11 +85,11 @@ Sentinel-2 L2A images can be produced or obtained from various data hubs or atmo
 A zip folder with Sentinel 2 data. 
 These data can be dowloaded on 3 different platforms: 
 
-- Copernicus Open Access Hub, Scihub, which provides complete, free and open access to Sentinel-2 data : https://scihub.copernicus.eu/dhus/#/home
+- Copernicus Open Access Hub, Scihub, which provides complete, free and open access to Sentinel-2 data : scihub.copernicus.eu/dhus/#/home
 
-- GEODES, le 'Portail du CNES sur l'observation de la Terre' : https://geodes.cnes.fr/#/search
+- GEODES, le 'Portail du CNES sur l'observation de la Terre' : geodes.cnes.fr/#/search
 
-- Theia : https://theia.cnes.fr/atdistrib/rocket/#/search
+- Theia : theia.cnes.fr/atdistrib/rocket/#/search
 
 For each of those 3 platforms you will need to create an account.
 
