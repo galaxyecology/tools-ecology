@@ -2,7 +2,7 @@
     <description>tool for qualificiation and validation</description>
     <macros>
         <token name="@VERSION@">1.3</token>
-		<import>macro.xml</import>
+		<import>macros.xml</import>
 	</macros>
     <requirements>
         <container type="docker">easyqcvbgc/easy-qcv_odv-coll-manager_tool:oc@VERSION@</container>
