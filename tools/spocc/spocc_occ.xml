@@ -126,7 +126,7 @@ Original source : https://cran.r-project.org/web/packages/spocc/index.html
 
 Reference manual : https://cran.r-project.org/web/packages/spocc/spocc.pdf
     ]]></help>
-    <expand macro="citation">
-    <expand macro="creator">
+    <expand macro="citation"/>
+    <expand macro="creator"/>
 </tool>
 
