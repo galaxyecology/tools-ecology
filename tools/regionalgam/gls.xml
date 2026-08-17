@@ -1,9 +1,12 @@
-<tool id="regionalgam_gls" name="Model temporal trend" version="@VERSION@">
+<tool id="regionalgam_gls" name="Model temporal trend" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>with a simple linear regression</description>
     <macros>
         <import>regionalgam_macros.xml</import>
     </macros>
     <expand macro="rg_nlme_mass_requirements"/>
+    <required_files>
+        <include path="gls.R"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript '$__tool_directory__/gls.R' 
             '$collated_index' '$ab_indices' 
@@ -48,4 +51,5 @@ The tool returns the linear regression model in an Rdata file.
 It also returns a summary of this model in txt format.
     ]]></help>
     <expand macro="rg_citation"/>
+    <expand macro="creator"/>
 </tool>
