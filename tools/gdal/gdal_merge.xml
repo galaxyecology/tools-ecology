@@ -98,7 +98,7 @@
                 <expand macro="gdal_param_separate"/>
                 <param name="pct" type="boolean" truevalue="-pct" falsevalue="" checked="false" help="-pct. Merging pseudo-colored images this way assumes that all input files use the same color table" label="Grab a pseudo-color table from the first input image" />
                 <param name="n" type="text" argument="-n nodata_value" label="Ignore pixels from files being merged in with this pixel value" value="nodata_value" />
-                <param name="a_nodata" type="text" argument="-a_nodata" label="Assign a specified nodata value to output bands" value="output_nodata_value" />
+                <param type="text" argument="-a_nodata" label="Assign a specified nodata value to output bands" value="output_nodata_value" />
                 <param name="init" type="text" help="-init values(s). It is not marked as the nodata value in the output file. If only one value is given, the same value is used in all the bands" label="Pre-initialize the output image bands with values" value="" />
             </when>
         </conditional>
