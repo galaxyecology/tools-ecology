@@ -1,9 +1,12 @@
-<tool id="regionalgam_plot_trend" name="Plot abundance" version="@VERSION@">
+<tool id="regionalgam_plot_trend" name="Plot abundance" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>with trend line</description>
     <macros>
         <import>regionalgam_macros.xml</import>
     </macros>
     <expand macro="rg_nlme_mass_requirements"/>
+    <required_files>
+        <include path="plot-trend.R"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript '$__tool_directory__/plot-trend.R' 
             '$ab_indices' '$gls_model'  
@@ -55,4 +58,5 @@ Trend estimation plotted in an image png file, and raw values in a tabular file.
 
     ]]></help>
     <expand macro="rg_citation"/>
+    <expand macro="creator"/>
 </tool>
