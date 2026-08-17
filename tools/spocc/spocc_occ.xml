@@ -1,4 +1,4 @@
-<tool id="spocc_occ" name="Get species occurrences data" version="@VERSION@+galaxy@VERSION_SUFFIX@">
+<tool id="spocc_occ" name="Get species occurrences data" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>from GBIF, OBIS, ALA, iNAT and others</description>
     <macros>
         <import>macro.xml</import>
