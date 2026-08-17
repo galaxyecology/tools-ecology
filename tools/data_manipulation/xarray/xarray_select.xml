@@ -218,11 +218,11 @@
         </repeat>
     </inputs>
     <outputs>
-        <collection type="list" name="output">
+        <collection type="list" name="output" label="${tool.name} on ${on_string}">
             <discover_datasets pattern="__designation_and_ext__" visible="false" format="tabular" directory="output_dir"/>
             <filter>condi_source_coord['coord_source'] == 'coord_from_file'</filter>
         </collection>
-        <data name="simpleoutput" from_work_dir="final.tabular" format="tabular">
+        <data name="simpleoutput" from_work_dir="final.tabular" format="tabular" label="Single tabular">
             <filter>condi_source_coord['coord_source'] == 'coord_from_stdin'</filter>
         </data>
     </outputs>
