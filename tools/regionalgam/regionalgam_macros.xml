@@ -1,5 +1,7 @@
 <macros>
     <token name="@VERSION@">1.5</token>  
+    <token name="@VERSION_SUFFIX@">1</token>  
+    <token name="@PROFILE@">25.1</token>  
     <xml name="rg_r_requirements">
         <requirements>
             <requirement type="package" version="3.5.1">r-base</requirement>
@@ -27,5 +29,10 @@
         <citations>
             <citation type="doi">10.1111/1365-2664.12561</citation>  
         </citations>
+    </xml>
+	<xml name="creator">
+        <creator>
+            <person givenName="Alan" familyName="Amossé" url="https://github.com/Alanamosse"/>
+        </creator>
     </xml>
 </macros>
