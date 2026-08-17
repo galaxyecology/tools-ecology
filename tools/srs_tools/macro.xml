@@ -1,5 +1,6 @@
 <macros>
     <token name="@VERSION@">0.0.1</token>
+    <token name="@VERSION_SUFFIX@">1</token>
     <xml name="SRS_requirements">
         <requirements>
             <requirement type="package" version="4.2.2">r-base</requirement>
@@ -66,8 +67,8 @@
     </xml>
     <xml name="SRS_rasterdivref">
         <citations>
-            <citation type="doi">doi:10.1016/j.ecolind.2016.07.039</citation> 
-            <citation type="doi">doi:10.1101/2021.01.23.427872</citation>     
+            <citation type="doi">10.1016/j.ecolind.2016.07.039</citation> 
+            <citation type="doi">10.1101/2021.01.23.427872</citation>     
         </citations>
     </xml>
     <xml name="SRS_prosailref">
@@ -85,12 +86,12 @@
     </xml>
     <xml name="SRS_metaref">
         <citations>
-            <citation type="doi">doi.org/10.5281/zenodo.5907920</citation>
+            <citation type="doi">10.5281/zenodo.5907920</citation>
         </citations>
     </xml>
     <xml name="SRS_vegetpheno">
         <citations>
-            <citation type="doi">doi.org/10.1016/j.rse.2013.09.022</citation>
+            <citation type="doi">10.1016/j.rse.2013.09.022</citation>
         </citations>
     </xml>
     <xml name="topic">
@@ -98,5 +99,12 @@
            <edam_topic>topic_0610</edam_topic>
            <edam_topic>topic_3050</edam_topic>
         </edam_topics>
+    </xml>
+    <xml name="creator">
+        <creator>
+            <person givenName="Marie" familyName="Jossé" url="https://orcid.org/0009-0008-0622-604X"/>
+            <organization name="PNDB" url="https://www.pndb.fr/pages/accueil/"/>
+            <organization name="Data Terra" url="https://www.data-terra.org/"/>
+        </creator>
     </xml>
 </macros>
