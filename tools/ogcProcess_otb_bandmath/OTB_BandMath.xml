@@ -52,7 +52,7 @@
             <change_format>
                 <when input="output_format" value="getUrl" format="txt" />
                 <when input="output_type" value="tiff" format="tiff" />
-                <when input="output_type" value="jpeg" format="jpeg" />
+                <when input="output_type" value="jpeg" format="jpg" />
             </change_format>
         </data>
     </outputs>
