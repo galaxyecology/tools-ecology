@@ -1,5 +1,7 @@
 <macros>
     <token name="@VERSION@">0.1.1</token>
+    <token name="@VERSION_SUFFIX@">1</token>
+    <token name="@PROFILE@">25.1</token>
     <xml name="vigiechiro_bibref">
         <citations>
             <citation type="bibtex">
@@ -40,4 +42,11 @@
         <requirement type="package" version="1.2">r-htmlwidgets</requirement>
         <requirement type="package" version="2.6">pandoc</requirement>
     </xml>
+	<xml name="creator">
+		<creator>
+            <person givenName="Alan" familyName="Amossé" url="https://github.com/Alanamosse"/>
+            <person givenName="Yvan" familyName="Le Bras" url="https://orcid.org/0000-0002-8504-068X"/>
+            <organization name="PNDB"  url="https://www.pndb.fr/pages/accueil/"/>
+		</creator>
+	</xml>
 </macros>
