@@ -21,8 +21,8 @@
         <expand macro="rg_ab_indices"/>
     </inputs>
     <outputs>
-        <data format="png" name="output" from_work_dir="output-plot.png" />
-        <data format="tabular" name="output2" from_work_dir="output-glmmpql" />
+        <data format="png" name="output" from_work_dir="output-plot.png" label="Vizualisation on ${on_string}"/>
+        <data format="tabular" name="output2" from_work_dir="output-glmmpql" label="Collated index on ${on_string}"/>
     </outputs>
     <tests>
         <test>
