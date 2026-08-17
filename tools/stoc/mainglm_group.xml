@@ -1,9 +1,18 @@
-<tool id="stoceps_glm_group" name="Estimate temporal population variation" version="@VERSION@">
+<tool id="stoceps_glm_group" name="Estimate temporal population variation" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>by specialization group</description>
     <macros>
         <import>stoceps_macros.xml</import>
     </macros>
+    <edam_topics>
+       <edam_topic>topic_0610</edam_topic>
+       <edam_topic>topic_3050</edam_topic>
+    </edam_topics>
     <expand macro="mainglm_requirements"/>
+    <required_files>
+        <include path="ExeMainglmParGroupGalaxy.r"/>
+        <include path="FunctTrendSTOCGalaxy.r"/>
+        <include path="biais.tabular"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript 
          '$__tool_directory__/ExeMainglmParGroupGalaxy.r' 
@@ -56,7 +65,9 @@
             <param name="inputtabSpecies" value="tabSpecies.csv"/>
             <param name="input_y_var" value="mainglm_tab_years.tabular"/>
             <param name="input_glob_tendencies" value ="mainglm_tab_global.tabular"/>
-            <param name="advanced" value="simple"/>
+            <conditional name="settings">
+                <param name="advanced" value="simple"/>
+            </conditional>
             <output name="data_group">
                 <assert_contents>
                     <has_n_lines n="37"/>
@@ -82,10 +93,6 @@
             </output>
         </test>
     </tests>
-    <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
-    </edam_topics>
     <help><![CDATA[
 =================================================
 STOC Estimate species population variation
@@ -117,9 +124,10 @@ One tabular file describing species with several columns as species ID, species 
 
 **Source**
 
-UnPublished script available at http://www.vigienature.fr/sites/vigienature/files/atoms/files/analysestoceps_0.zip
+UnPublished script available at www.vigienature.fr/sites/vigienature/files/atoms/files/analysestoceps_0.zip
 the first version written by Romain Lorrilliere.
 
   ]]></help>
   <expand macro="stoceps_bibref" />
+  <expand macro="creator" />
 </tool>
