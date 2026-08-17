@@ -2,8 +2,8 @@
     <description>reports user action performed with ODV</description>
     <macros>
         <token name="@VERSION@">1.2</token>
-        <token name="@VERSION_SUFFIX@">2</token>
-    </macros>
+        <import>macro.xml</import>
+	</macros>
     <requirements>
         <container type="docker">easyqcvbgc/easy-qcv_odv-history-manager_tool:oh@VERSION@</container>
     </requirements>
@@ -187,4 +187,5 @@ This tool creates a single generic ODV spreadsheet following ODV user’s guide
             note = {https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-odv-tool}
         </citation>    
     </citations>
+	<expand macro="creator"/>
 </tool>
