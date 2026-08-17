@@ -1,5 +1,7 @@
 <macros>
     <token name="@VERSION@">0.0.2</token>
+    <token name="@VERSION_SUFFIX@">1</token>
+    <token name="@PROFILE@">25.1</token>
     <xml name="reshape_requirements">
         <requirements>
             <requirement type="package" version="0.8.8">r-reshape</requirement>
@@ -69,4 +71,10 @@
             </citation>
         </citations>
     </xml>
+	<xml name="creator">
+		<creator>
+            <person givenName="Coline" familyName="Royaux" url="https://orcid.org/0000-0003-4308-5617"/>
+            <person givenName="Yvan" familyName="Le Bras" url="https://orcid.org/0000-0002-8504-068X"/>
+            <organization name="PNDB"  url="https://www.pndb.fr/pages/accueil/"/>
+		</creator>
 </macros>
