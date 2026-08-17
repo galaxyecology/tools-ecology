@@ -77,7 +77,7 @@
         </test>
     </tests>
     <help><![CDATA[
-        OGC API Process documentation: https://ospd.geolabs.fr:8300/ogc-api/processes/OTB.BandMath.html
+        OGC API Process documentation: ospd.geolabs.fr:8300/ogc-api/processes/OTB.BandMath.html
         
         This application performs a mathematical operation on several multi-band images and outputs the result into a monoband image. 
         The given expression is computed at each pixel position. Evaluation of the mathematical formula is done by the muParser libraries.
