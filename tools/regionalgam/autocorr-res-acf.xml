@@ -1,9 +1,12 @@
-<tool id="regionalgam_autocor_acf" name="Autocorrelation test" version="@VERSION@">
+<tool id="regionalgam_autocor_acf" name="Autocorrelation test" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>check for temporal autocorrelation in the residuals</description>
     <macros>
         <import>regionalgam_macros.xml</import>
     </macros>
     <expand macro="rg_r_requirements"/>
+    <required_files>
+        <include path="autocorr-res-acf.R"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript '$__tool_directory__/autocorr-res-acf.R'
             '$gls_model' 
@@ -48,4 +51,5 @@ The tools returns residuals visualization in an image png file, and raw values i
 
     ]]></help>
     <expand macro="rg_citation"/>
+    <expand macro="creator"/>
 </tool>
