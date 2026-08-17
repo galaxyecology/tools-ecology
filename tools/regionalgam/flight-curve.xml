@@ -1,4 +1,4 @@
-<tool id="regionalgam_flight_curve" name="Flight curve" version="@VERSION@">
+<tool id="regionalgam_flight_curve" name="Flight curve" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>compute the regional expected pattern of abundance</description>
     <macros>
         <import>regionalgam_macros.xml</import>
@@ -6,6 +6,10 @@
     <requirements>
         <requirement type="package" version="1.8_28">r-mgcv</requirement>
     </requirements>
+    <required_files>
+        <include path="flight-curve.R"/>
+        <include path="dennis-gam-initial-functions.R"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript '$__tool_directory__/flight-curve.R' 
             '$__tool_directory__/dennis-gam-initial-functions.R' 
@@ -59,4 +63,6 @@ The output tabular file can be used to impute expected count values with the abu
 Regional expected pattern computation in a tabular file.
     ]]></help>
     <expand macro="rg_citation"/>
+    <expand macro="creator"/>
+
 </tool>
