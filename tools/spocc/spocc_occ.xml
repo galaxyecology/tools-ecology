@@ -3,6 +3,10 @@
     <macros>
         <import>macro.xml</import>
     </macros>
+    <edam_topics>
+       <edam_topic>topic_0610</edam_topic>
+       <edam_topic>topic_3050</edam_topic>
+    </edam_topics>
     <expand macro="occ_requirements">
     </expand>
     <required_files>
@@ -50,10 +54,6 @@
             </output>
         </test>
     </tests>
-    <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
-    </edam_topics>
     <help><![CDATA[
 ===========================
 Get species occurences data
@@ -89,31 +89,31 @@ This tool use the spocc R package (Spocc::occ) :
 A programmatic interface to many species occurrence data sources, including :
 
   - Global Biodiversity Information Facility : GBIF
-    https://www.gbif.org/
+    www.gbif.org/
 
   - USGSs' Biodiversity Information Serving Our Nation : BISON
-    https://bison.usgs.gov/#home
+    bison.usgs.gov/#home
     
   - iNaturalist : iNat
-    https://www.inaturalist.org/,
+    www.inaturalist.org/,
 
   - eBird
-    https://ebird.org/home
+    ebird.org/home
 
   - Berkeley Ecoinformatics Engine : EcoEngine
-    https://ecoengine.berkeley.edu/
+    ecoengine.berkeley.edu/
 
   - VertNet
     http://vertnet.org/
 
   - Integrated Digitized Biocollections : iDigBio
-    https://www.idigbio.org/
+    www.idigbio.org/
 
   - Ocean Biogeographic Information System : OBIS 
-    https://obis.org/
+    obis.org/
 
   - Atlas of Living Australia : ALA
-    https://www.ala.org.au/. 
+    www.ala.org.au/. 
 
 
 Includes functionality for retrieving species occurrence data, and combining those data.
@@ -122,9 +122,9 @@ Includes functionality for retrieving species occurrence data, and combining tho
 
 **Sources**
 
-Original source : https://cran.r-project.org/web/packages/spocc/index.html
+Original source : cran.r-project.org/web/packages/spocc/index.html
 
-Reference manual : https://cran.r-project.org/web/packages/spocc/spocc.pdf
+Reference manual : cran.r-project.org/web/packages/spocc/spocc.pdf
     ]]></help>
     <expand macro="citation"/>
     <expand macro="creator"/>
