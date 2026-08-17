@@ -1,7 +1,7 @@
 categories:
     - Ecology
 owner: ecology
-remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/OtbBandMath
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/ogcProcess_otb_bandmath
 homepage_url: https://github.com/AquaINFRA/galaxy
 long_description: |
   Outputs a monoband image which is the result of a mathematical operation on several multi-band images.
