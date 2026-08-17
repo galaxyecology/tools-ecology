@@ -21,8 +21,8 @@
         <expand macro="rg_ab_indices"/> 
     </inputs>
     <outputs>
-        <data format="txt" name="output" from_work_dir="mod-summary.txt" />
-        <data format="rdata" name="output2" from_work_dir="mod.rda" />
+        <data format="txt" name="output" from_work_dir="mod-summary.txt" label="Summary on ${on_string}"/>
+        <data format="rdata" name="output2" from_work_dir="mod.rda" label="Linear regression model on ${on_string}" />
     </outputs>
     <tests>
         <test> 
