@@ -2,7 +2,7 @@
     <description>reports user action performed with ODV</description>
     <macros>
         <token name="@VERSION@">1.2</token>
-        <import>macro.xml</import>
+        <import>macros.xml</import>
 	</macros>
     <requirements>
         <container type="docker">easyqcvbgc/easy-qcv_odv-history-manager_tool:oh@VERSION@</container>
