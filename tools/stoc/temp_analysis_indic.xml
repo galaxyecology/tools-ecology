@@ -1,9 +1,17 @@
-<tool id="stoceps_trend_indic" name="Temporal trend indicator" version="@VERSION@">
+<tool id="stoceps_trend_indic" name="Temporal trend indicator" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>using GlmmTMB or GAM models</description>
     <macros>
         <import>stoceps_macros.xml</import>
     </macros>
+    <edam_topics>
+       <edam_topic>topic_0610</edam_topic>
+       <edam_topic>topic_3050</edam_topic>
+    </edam_topics>
     <expand macro="temp_indic_requirements"/>
+    <required_files>
+        <include path="FunctExeTemporalAnalysisofIndicatorTrait.r"/>
+        <include path="FunctTrendSTOCGalaxy.r"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript 
          '$__tool_directory__/FunctExeTemporalAnalysisofIndicatorTrait.r' 
@@ -39,7 +47,6 @@
     </command>
     <inputs>
         <expand macro="stoceps_input_filtered"/>
-
         <param name="inputtabSpecies" type="data" format="tabular" label="Species file" help="Input species tabular file, with 5 columns (species ID, species name, species scientific name, specialization status)." />
         <param name="inputspeciesindic" type="data" format="tabular" label="indicators info file" help="Input indicator info tabular file, with a `species ID` column and at least one index column (named `ssi` or `sti` or `stri`)." />
         <param name="index" type="select" help="Available index" label="Chose the index you want to compute">
@@ -99,10 +106,14 @@
             <param name="inputcoord" value="coordCarreSTOCfaux.tabular"/>
             <param name="inputspeciesindic" value="species_indicateur_fonctionnel.tabular"/>
             <param name="inputtabSpecies" value="tabSpecies.csv"/>
-            <param name="advanced" value="advanced"/>
-            <param name="smooth_plot" value="TRUE"/>
-            <param name="model" value="gam"/>
-            <param name="compute_ic" value="FALSE"/>
+            <conditional name="settings">
+                <param name="advanced" value="advanced"/>
+                <param name="smooth_plot" value="TRUE"/>
+            </conditional>
+            <conditional name="method">
+                <param name="model" value="gam"/>
+                <param name="compute_ic" value="FALSE"/>
+            </conditional>
             <output name="output_tab_gammcomplet">
                 <assert_contents>
                     <has_n_lines n="20"/>
@@ -136,10 +147,14 @@
             <param name="input" value="Datafilteredfortrendanalysis.tabular"/>
             <param name="inputspeciesindic" value="species_indicateur_fonctionnel.tabular"/>
             <param name="inputtabSpecies" value="tabSpecies.csv"/>
-            <param name="advanced" value="advanced"/>
-            <param name="smooth_plot" value="FALSE"/>
-            <param name="model" value="glmmtmb"/>
-            <param name="compute_ic" value="TRUE"/>
+            <conditional name="settings">
+                <param name="advanced" value="advanced"/>
+                <param name="smooth_plot" value="FALSE"/>
+            </conditional>
+                <conditional name="method">
+                <param name="model" value="glmmtmb"/>
+                <param name="compute_ic" value="TRUE"/>
+            </conditional>
             <output name="output_plot_glmmtb_csiplot">
                 <assert_contents>
                     <has_text text="PNG"/>
@@ -159,10 +174,6 @@
             </output>
         </test>
     </tests>
-    <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
-    </edam_topics>
     <help><![CDATA[
 =================================================
 STOC Temporal population trend indicator
@@ -218,9 +229,10 @@ GlmmTMB method ::
 
 **Source**
 
-UnPublished script available at http://www.vigienature.fr/sites/vigienature/files/atoms/files/analysestoceps_0.zip
+UnPublished script available at www.vigienature.fr/sites/vigienature/files/atoms/files/analysestoceps_0.zip
 and the first version written by Romain Lorrilliere
 
   ]]></help>
-  <expand macro="stoceps_bibref" />
+  <expand macro="stoceps_bibref"/>
+  <expand macro="creator" />
 </tool>
