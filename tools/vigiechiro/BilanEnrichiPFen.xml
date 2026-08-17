@@ -1,11 +1,20 @@
-<tool id="vigiechiro_bilanenrichipf" name="Advanced restitution: 'Point fixe' protocol" version="@VERSION@">
+<tool id="vigiechiro_bilanenrichipf" name="Advanced restitution: 'Point fixe' protocol" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>from Animal Detection on Acoustic Recordings</description>
     <macros>
         <import>vigiechiro_macros.xml</import>
-    </macros>   
+    </macros>
+    <edam_topics>
+       <edam_topic>topic_0610</edam_topic>
+       <edam_topic>topic_3050</edam_topic>
+    </edam_topics>
     <expand macro="vigiechiro_requirements">
         <expand macro="vigiechiro_bilanenrichi_requirements"/>
     </expand>
+    <required_files>
+        <include path="BilanEnrichiPF.R"/>
+        <include path="refPF.csv"/>
+        <include path="SpeciesList.csv"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript '$__tool_directory__/BilanEnrichiPF.R' 
             '$idc2' 
@@ -54,10 +63,6 @@
             <output name="output_nightly_tabular" file="BilanEnrichiPF_Test1_nightly.tabular" ftype="tabular"/>
         </test>
     </tests>
-    <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
-    </edam_topics>
     <help><![CDATA[
 .. class:: infomark 
 
@@ -74,5 +79,6 @@ The tool treats observations made with the "Point fixe" protocol:
 - Input is an observation/participation file corrected by the tools Tadarida data cleaner and Tadarida identifications integration.
 - Outputs are Summary/Nightly/Hourly raw tabulars, and html visualisations.
     ]]></help>
-    <expand macro="vigiechiro_bibref" />
+    <expand macro="vigiechiro_bibref"/>
+    <expand macro="creator"/>
 </tool>
