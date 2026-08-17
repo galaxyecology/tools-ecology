@@ -73,8 +73,9 @@
     </xml>
 	<xml name="creator">
 		<creator>
-            <person givenName="Coline" familyName="Royaux" url="https://orcid.org/0000-0003-4308-5617"/>
             <person givenName="Yvan" familyName="Le Bras" url="https://orcid.org/0000-0002-8504-068X"/>
+            <person givenName="Alan" familyName="Amossé" url="https://github.com/Alanamosse"/>
+            <person givenName="Coline" familyName="Royaux" url="https://orcid.org/0000-0003-4308-5617"/>
             <organization name="PNDB"  url="https://www.pndb.fr/pages/accueil/"/>
 		</creator>
 </macros>
