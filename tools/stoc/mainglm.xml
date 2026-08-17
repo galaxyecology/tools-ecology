@@ -1,9 +1,17 @@
-<tool id="stoceps_glm" name="Estimate temporal population variation" version="@VERSION@">
+<tool id="stoceps_glm" name="Estimate temporal population variation" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>by species</description>
     <macros>
         <import>stoceps_macros.xml</import>
     </macros>
+    <edam_topics>
+       <edam_topic>topic_0610</edam_topic>
+       <edam_topic>topic_3050</edam_topic>
+    </edam_topics>
     <expand macro="mainglm_requirements"/>
+    <required_files>
+        <include path="ExeMainGlmGalaxy.r"/>
+        <include path="FunctTrendSTOCGalaxy.r"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript
          '$__tool_directory__/ExeMainGlmGalaxy.r'
@@ -64,7 +72,9 @@
         <test>
             <param name="inputtabSpecies" value="tabSpecies.csv"/>
             <param name="input" value="Datafilteredfortrendanalysis.tabular"/>
-            <param name="advanced" value="simple"/>
+            <conditional name="settings">
+                <param name="advanced" value="simple"/>
+            </conditional>
             <output name="yearly_variations">
                 <assert_contents>
                     <has_n_lines n="37"/>
@@ -92,10 +102,6 @@
             </output_collection>
         </test>
     </tests>
-    <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
-    </edam_topics>
     <help><![CDATA[
 =================================================
 STOC Estimate species population variation
