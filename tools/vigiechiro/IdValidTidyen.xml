@@ -1,9 +1,12 @@
-<tool id="vigiechiro_idvalid" name="Tadarida identifications validation" version="@VERSION@">
+<tool id="vigiechiro_idvalid" name="Tadarida identifications validation" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>Integrate identifications from animal detection on acoustic recordings</description>
     <macros>
         <import>vigiechiro_macros.xml</import>
     </macros>
     <expand macro="vigiechiro_requirements"/>
+    <required_files>
+        <include path="IdValidTidy.R"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript '$__tool_directory__/IdValidTidy.R' 
             '$inputfile'  
@@ -39,5 +42,7 @@ This tool allows to integrate identifications made by observers and validators a
 - The input is a tabular file, output from the tool Tadarida data cleaner.
 - The output is a single tabular file with validated Ids
   ]]></help>
-    <expand macro="vigiechiro_bibref" />
+    <expand macro="vigiechiro_bibref"/>
+    <expand macro="creator"/>
+
 </tool>
