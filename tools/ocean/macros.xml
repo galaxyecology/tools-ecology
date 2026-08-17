@@ -18,7 +18,7 @@
     </xml>
     <xml name="argo_bibref">
        <citations>
-            <citation type="doi">doi:10.21105/joss.02425</citation>
+            <citation type="doi">10.21105/joss.02425</citation>
         </citations>
     </xml>
     <xml name="creator">
