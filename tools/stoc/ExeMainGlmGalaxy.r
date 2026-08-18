@@ -31,6 +31,7 @@ if ( (length(args)<8) || (length(args)>9)) {
     id<-args[3]  ##### nom du dossier de sortie des resultats / name of the output folder
     spExclude <- strsplit(args [4],",")[[1]] ##### liste d'espece qu on veut exclure de l analyse  / list of species that will be excluded
     AssessIC <-args [5] ##########  TRUE ou FALSE réalise glm "standard" avec calcul d'intervalle de confiance ou speedglm sans IC bien plus rapide / TRUE or FALSE perform a "standard" glm with confidance interval or speedglm without CI much more fast
+    source(args[6]) ###### LInk to the FunctTrendSTOCGalaxy.r script
 }
 
 ## creation d'un dossier pour y mettre les resultats / create folder for the output of the analyses
