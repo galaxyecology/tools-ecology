@@ -43,7 +43,7 @@
                 <param name="sp_code" type="select" label="Filter species to exclude" help="Create a subsample by selecting the species codes you don't want to use." multiple="true" optional="true">
                     <options from_dataset="input_glob_tendencies">
                         <column name="value" index="1"/>
-                        <filter type="unique_value" name="espece" column="1"/>
+                        <filter type="unique_value" column="1"/>
                     </options>
                     <sanitizer>
                         <valid initial="string.printable">
