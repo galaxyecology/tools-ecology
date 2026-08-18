@@ -1,5 +1,6 @@
 <macros>
     <token name="@TOOL_VERSION@">0.2.0</token>
+    <token name="@VERSION_SUFFIX@">1</token>
     <token name="@PROFILE@">25.0</token>
 
     <xml name="requirements_bcftools">
@@ -82,5 +83,9 @@
             <expand macro="citation_kardos"/>
             <expand macro="citation_mckinney"/>
     </xml>
-
+    <xml name="creator">
+        <creator>
+            <organization name="PNDB" url="https://www.pndb.fr/pages/accueil/"/>
+        </creator>
+    </xml>
 </macros>
