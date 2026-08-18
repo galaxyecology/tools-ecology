@@ -1,12 +1,19 @@
-<tool id="xarray_import_data" name="Xarray Import Data" version="0.1.0" profile="22.05">
+<tool id="xarray_import_data" name="Xarray Import Data" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="22.05">
     <description>
         Import a dataset from an OPeNDAP URL and convert it to a local NetCDF file using xarray.
     </description>
+    <macros>
+        <token name="@VERSION@">0.1.0</token>
+        <token name="@VERSION_SUFFIX@">1</token>
+    </macros>
     <requirements>
         <requirement type="package" version="2025.4.0">xarray</requirement>
         <requirement type="package" version="3">python</requirement>
         <requirement type="package" version="1.6.0">netcdf4</requirement>
     </requirements>
+    <required_files>
+        <include path="xarray_import_data.py"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         python '$__tool_directory__/xarray_import_data.py' '$opendap_url' '$decode_times' '$decode_cf' '$output_dataset' 
     ]]></command>
@@ -58,11 +65,14 @@ For big datasets consider subsetting the dataset in the url using `<URL>?var_nam
 |
 
 **Links**
- https://docs.xarray.dev/en/stable/user-guide/io.html#opendap
- https://www.opendap.org/
+docs.xarray.dev/en/stable/user-guide/io.html#opendap
+www.opendap.org/
     ]]>
     </help>
     <citations>
         <citation type="doi">10.5334/jors.148</citation>
     </citations>
+        <creator>
+            <person givenName="Kim" familyName="Nes Leirvik" url="https://github.com/knl88"/>
+        </creator>
 </tool>
