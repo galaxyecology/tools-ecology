@@ -47,11 +47,13 @@
         </data>
     </outputs>
     <tests>
-        <test expect_num_outputs="2">
+        <test expect_num_outputs="4">
             <param name="idc2" value="BilanEnrichiRP_Test1.tabular"/>
 		    <param name="output_choice" value="detailed,summarised"/>
 	 	    <output name="output_detail_tabular" file="BilanEnrichiRP_Test1_out_tab.tabular" ftype="tabular"/>
 	 	    <output name="output_summary_tabular" file="BilanEnrichiRP_Test1_summarised.tabular" ftype="tabular"/>
+	 	    <output name="output_detail_html" file="BilanEnrichiRP_Test1_out_tab.html" ftype="html"/>
+	 	    <output name="output_summary_html" file="BilanEnrichiRP_Test1_summarised.html" ftype="html"/>
         </test>
     </tests>
     <help><![CDATA[
