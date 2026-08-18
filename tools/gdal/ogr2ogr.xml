@@ -157,7 +157,7 @@
                     <param name="oo" value="Y_POSSIBLE_NAMES=latitude"/>
                 </repeat>
             </conditional> 
-            <output file="ogr2ogr_gbif_to_json.json" name="output" lines_diff="2"/> 
+            <output value="ogr2ogr_gbif_to_json.json" name="output" lines_diff="2"/> 
         </test>
     </tests>
     <help><![CDATA[
