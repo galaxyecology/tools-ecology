@@ -1,5 +1,6 @@
 <macros>
     <token name="@TOOL_VERSION@">0.1.0</token>
+    <token name="@VERSION_SUFFIX@">1</token>
     <token name="@PROFILE@">25.0</token>
 
     <xml name="requirements_commun">
@@ -41,5 +42,10 @@
         </citation>
         <citation type="doi">10.32614/CRAN.package.vcfR</citation>
         <citation type="doi">10.32614/CRAN.package.dplyr</citation>
+    </xml>
+    <xml name="creator">
+        <creator>
+            <organization name="PNDB" url="https://www.pndb.fr/pages/accueil/"/>
+        </creator>
     </xml>
 </macros>
