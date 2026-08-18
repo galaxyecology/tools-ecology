@@ -1,11 +1,11 @@
-<tool id="estimate_endem" name="EstimEndem" version="0.1.1+galaxy0" profile="21.05">
+<tool id="estimate_endem" name="EstimEndem" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="21.05">
     <description>
         of each cell of a spatial grid
     </description>
 
     <macros>
-        <token name="@TOOL_VERSION@">1.0</token> 
-        <token name="@VERSION_SUFFIX@">0</token>
+        <token name="@TOOL_VERSION@">0.1.1</token> 
+        <token name="@VERSION_SUFFIX@">1</token>
     </macros>
     
     <requirements> 
@@ -242,5 +242,7 @@
         <citation type="doi">10.32614/CRAN.package.raster</citation>
         <citation type="doi">10.32614/CRAN.package.dplyr</citation>
     </citations>
-    
+    <creator>
+        <organization name="PNDB" url="https://www.pndb.fr/pages/accueil/"/>
+    </creator>
 </tool>
