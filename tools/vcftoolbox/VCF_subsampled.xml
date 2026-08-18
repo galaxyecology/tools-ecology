@@ -1,4 +1,4 @@
-<tool id="population_genomics_vcf_subset" name="Subsetting SNPs at random from a VCF file" version="@TOOL_VERSION@" profile="@PROFILE@">
+<tool id="population_genomics_vcf_subset" name="Subsetting SNPs at random from a VCF file" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>
         given a chosen number of SNPs to use
     </description>
@@ -146,5 +146,5 @@ See also examples of VCF formats in :  https://samtools.github.io/hts-specs/VCFv
         <expand macro="citations_base"/>
         <expand macro="citation_waples"/>
     </citations>
-    
+    <expand macro="creator"/>
 </tool>
