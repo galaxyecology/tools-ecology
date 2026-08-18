@@ -1,4 +1,4 @@
-<tool id="vcf_statistics_linked_loci" name="Compute genotype-based R²" version="@TOOL_VERSION@" profile="@PROFILE@">
+<tool id="vcf_statistics_linked_loci" name="Compute genotype-based R²" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>
         from VCF
     </description>
@@ -74,5 +74,5 @@ See also examples of VCF formats in: https://samtools.github.io/hts-specs/VCFv4.
     <citations>
         <expand macro="citations_base"/>
     </citations>
-
+    <expand macro="creator"/>
 </tool>
