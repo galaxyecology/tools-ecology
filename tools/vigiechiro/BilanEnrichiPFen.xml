@@ -61,9 +61,9 @@
             <output name="output_summary_tabular" file="BilanEnrichiPF_Test1_out_tab.tabular" ftype="tabular"/>
             <output name="output_hourly_tabular" file="BilanEnrichiPF_Test1_hourly.tabular" ftype="tabular"/>
             <output name="output_nightly_tabular" file="BilanEnrichiPF_Test1_nightly.tabular" ftype="tabular"/>
-            <output name="output_summary_html" file="BilanEnrichiPF_Test1_out_tab.tabular" ftype="html"/>
-            <output name="output_hourly_html" file="BilanEnrichiPF_Test1_hourly.tabular" ftype="html"/>
-            <output name="output_nightly_html" file="BilanEnrichiPF_Test1_nightly.tabular" ftype="html"/>
+            <output name="output_summary_html" file="BilanEnrichiPF_Test1_out_tab.html" ftype="html"/>
+            <output name="output_hourly_html" file="BilanEnrichiPF_Test1_hourly.html" ftype="html"/>
+            <output name="output_nightly_html" file="BilanEnrichiPF_Test1_nightly.html" ftype="html"/>
         </test>
     </tests>
     <help><![CDATA[
