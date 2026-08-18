@@ -1,4 +1,6 @@
 <macros>
+    <token name="@TOOL_VERSION@">0.1.0</token>
+    <token name="@VERSION_SUFFIX@">1</token>
     <xml name="requirements">
         <requirements>
             <requirement type="package" version="4.3.1">r-base</requirement>
@@ -26,18 +28,25 @@
             <citation type="doi">10.48550/arXiv.1403.2805</citation>
         </citations>
     </xml>
+    <xml name="creator">
+    	<creator>
+            <organization name="EOSC AquaINFRA" url="https://aquainfra.eu/"/>
+        </creator>
+    <xml>
     <xml name="help">
         <help>This tool is a wrapper for OGC API Processes (OTB) coming from the Zoo Project (https://zoo-project.github.io/docs/intro.html) and was created using the OGC-API-Process2Galaxy tool (https://github.com/AquaINFRA/OGC-API-Process2Galaxy). Check the README in the repository for more information.</help>
     </xml>
     <xml name="tests">
         <tests>
             <test>
-                <param name="select_process" value="OTB.BandMath"/>
-                <param name="il" value="otb_band_math_test_input.txt"/>
-                <param name="out" value="float"/>
-                <param name="ram" value="256"/>
-                <param name="exp" value="im1b3,im1b2,im1b1"/>
-                <param name="out_outformat" value="image/tiff"/>
+    		    <conditional name="conditional_process">
+                    <param name="select_process" value="OTB.BandMath"/>
+                    <param name="il" value="otb_band_math_test_input.txt"/>
+                    <param name="out" value="float"/>
+                    <param name="ram" value="256"/>
+                    <param name="exp" value="im1b3,im1b2,im1b1"/>
+                    <param name="out_outformat" value="image/tiff"/>
+                </conditional>
                 <output name="output_data">
                     <assert_contents>
                         <has_n_lines n="1"/>
@@ -45,18 +54,20 @@
                 </output>
             </test>
             <test>
-                <param name="select_process" value="OTB.MeanShiftSmoothing"/>
-                <param name="in" value="otb_mean_shift_smoothing_test_input.txt"/>
-                <param name="fout" value="float"/>
-                <param name="foutpos" value="float"/>
-                <param name="spatialr" value="5"/>
-                <param name="ranger" value="15"/>
-                <param name="thres" value="0.1"/>
-                <param name="maxiter" value="100"/>
-                <param name="rangeramp" value="0"/>
-                <param name="modesearch" value="False"/>
-                <param name="fout_outformat" value="image/tiff"/>
-                <param name="foutpos_outformat" value="image/tiff"/>
+    		    <conditional name="conditional_process">
+                    <param name="select_process" value="OTB.MeanShiftSmoothing"/>
+                    <param name="in" value="otb_mean_shift_smoothing_test_input.txt"/>
+                    <param name="fout" value="float"/>
+                    <param name="foutpos" value="float"/>
+                    <param name="spatialr" value="5"/>
+                    <param name="ranger" value="15"/>
+                    <param name="thres" value="0.1"/>
+                    <param name="maxiter" value="100"/>
+                    <param name="rangeramp" value="0"/>
+                    <param name="modesearch" value="False"/>
+                    <param name="fout_outformat" value="image/tiff"/>
+                    <param name="foutpos_outformat" value="image/tiff"/>
+                </conditional>
                 <output name="output_data">
                     <assert_contents>
                         <has_n_lines n="2"/>
