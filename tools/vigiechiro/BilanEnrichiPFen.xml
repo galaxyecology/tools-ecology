@@ -55,12 +55,15 @@
        </data>    
     </outputs>
     <tests>
-        <test expect_num_outputs="3">
+        <test expect_num_outputs="6">
             <param name="idc2" value="BilanEnrichiPF_Test1.tabular"/>
             <param name="output_choice" value="global,nightly,hourly"/> 
             <output name="output_summary_tabular" file="BilanEnrichiPF_Test1_out_tab.tabular" ftype="tabular"/>
             <output name="output_hourly_tabular" file="BilanEnrichiPF_Test1_hourly.tabular" ftype="tabular"/>
             <output name="output_nightly_tabular" file="BilanEnrichiPF_Test1_nightly.tabular" ftype="tabular"/>
+            <output name="output_summary_html" file="BilanEnrichiPF_Test1_out_tab.tabular" ftype="html"/>
+            <output name="output_hourly_html" file="BilanEnrichiPF_Test1_hourly.tabular" ftype="html"/>
+            <output name="output_nightly_html" file="BilanEnrichiPF_Test1_nightly.tabular" ftype="html"/>
         </test>
     </tests>
     <help><![CDATA[
