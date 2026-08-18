@@ -1,5 +1,13 @@
-<tool id="interactive_tool_openrefine" tool_type="interactive" name="OpenRefine" version="0.1">
+<tool id="interactive_tool_openrefine" tool_type="interactive" name="OpenRefine"version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="25.1">
     <description>Working with messy data</description>
+    <macros>
+        <token name="@TOOL_VERSION@">0.1</token>
+        <token name="@VERSION_SUFFIX@">1</token>
+    </macros>
+    <edam_topics>
+       <edam_topic>topic_0610</edam_topic>
+       <edam_topic>topic_3050</edam_topic>
+    </edam_topics>
     <requirements>
         <container type="docker">ylebras/openrefine-docker</container>
     </requirements>
@@ -54,10 +62,6 @@ tail -f /dev/null
         <test expect_num_outputs="1">
         </test>
     </tests>
-    <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
-    </edam_topics>
     <help><![CDATA[
 
 `Openrefine <https://openrefine.org/>`_ (previously Google Refine) is a powerful tool for working with messy data:
@@ -78,4 +82,8 @@ Example input file (TAB separated)::
 
 ]]>
     </help>
+    <creator>
+        <person givenName="Yvan" familyName="Le Bras" url="https://orcid.org/0000-0002-8504-068X"/>
+        <organization name="PNDB"  url="https://www.pndb.fr/pages/accueil/"/>
+	</creator>
 </tool>
