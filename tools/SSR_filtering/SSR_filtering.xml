@@ -1,8 +1,11 @@
-<tool id="ssrfilter" name="Filtering SSR" version="0.1.0" profile="25.0">
+<tool id="ssrfilter" name="Filtering SSR" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="25.0">
     <description>
         for missing data (individuals and loci), and null alleles.
     </description>
-
+    <macros>
+        <token name="@TOOL_VERSION@">0.1.0</token>
+        <token name="@VERSION_SUFFIX@">1</token>
+    </macros>
     <requirements>
         <requirement type="package" version="4.3.3">r-base</requirement>
         <requirement type="package" version="2.9.8">r-poppr</requirement>
@@ -236,4 +239,7 @@ Outputs
         <citation type="doi">10.7717/peerj.281</citation>
         <citation type="doi">10.3389/fgene.2015.00208</citation>
     </citations>
+    <creator>
+        <organization name="PNDB" url="https://www.pndb.fr/pages/accueil/"/>
+    </creator>
 </tool>
