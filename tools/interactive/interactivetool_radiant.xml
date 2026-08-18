@@ -1,5 +1,13 @@
-<tool id="interactive_tool_radiant" tool_type="interactive" name="radiant" version="0.1">
+<tool id="interactive_tool_radiant" tool_type="interactive" name="radiant" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="25.1">
     <description>Data analytics using Radiant R Shiny app</description>
+    <macros>
+        <token name="@TOOL_VERSION@">0.1</token>
+        <token name="@VERSION_SUFFIX@">1</token>
+    </macros>
+    <edam_topics>
+       <edam_topic>topic_0610</edam_topic>
+       <edam_topic>topic_3050</edam_topic>
+    </edam_topics>
     <requirements>
         <container type="docker">ylebras/radiant-docker</container>
     </requirements>
@@ -37,10 +45,6 @@
     </outputs>
     <tests>
     </tests>
-    <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
-    </edam_topics>
     <help>
 <![CDATA[
 `Radiant <https://radiant-rstats.github.io/docs/>`_ is an open-source platform-independent browser-based interface for business analytics in R. The application is based on the Shiny package and can be run locally or on a server. Radiant was developed by Vincent Nijs. Please use the issue tracker on GitHub to suggest enhancements or report problems: https://github.com/radiant-rstats/radiant/issues. For other questions and comments please use radiant@rady.ucsd.edu.
@@ -76,4 +80,8 @@ Example input file (TAB separated)::
            }
           }</citation>
     </citations>
+    <creator>
+        <person givenName="Yvan" familyName="Le Bras" url="https://orcid.org/0000-0002-8504-068X"/>
+        <organization name="PNDB"  url="https://www.pndb.fr/pages/accueil/"/>
+	</creator>
 </tool>
