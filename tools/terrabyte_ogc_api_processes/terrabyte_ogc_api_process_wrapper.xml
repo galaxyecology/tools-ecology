@@ -1,9 +1,9 @@
 <tool id="terrabyte_ogc_api_processes" name="Terrabyte OGC API Processes" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="22.05">
+	<description>Water quality EO Application Package</description>
 	<macros>
         <token name="@TOOL_VERSION@">0.1.0</token>
         <token name="@VERSION_SUFFIX@">1</token>
     </macros>
-	<description>Water quality EO Application Package</description>
 	<requirements>
 		<requirement type="package" version="4.3.1">r-base</requirement>
 		<requirement type="package" version="1.20.4">r-getopt</requirement>
@@ -46,7 +46,7 @@
 		This process takes a Sentinel-2 Scene as input, and calculates chlorophyll-a concentration and turbidity in water bodies in an EO Application Package. 
 		It returns the results as tiffs representing the input scene. You need to have an account at the Leibniz Supercomputing Center (LRZ) with a grant for "terrabyte". 
 		If you are associated with an educational organisation, you can likely create an account with your account using the eduGAIN federation. 
-		Please have a look at our documentation: https://docs.terrabyte.lrz.de/services/identity/get-account/.
+		Please have a look at our documentation: docs.terrabyte.lrz.de/services/identity/get-account/.
 	</help>
 	<citations>
 		<citation type="bibtex">@Manual{httr2, title = {httr2: Perform HTTP Requests and Process the Responses}, author = {Hadley Wickham}, year = {2023}, note = {R package version 1.0.0, https://github.com/r-lib/httr2}, url = {https://httr2.r-lib.org},}</citation>
