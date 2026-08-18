@@ -1,8 +1,11 @@
-<tool id="population_genetics_stats" name="Population Genetics Statistics:" version="0.2.0" profile="25.0">
+<tool id="population_genetics_stats" name="Population Genetics Statistics:"  version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="25.0">
     <description>
         He, Hobs, Fis, allelic richness and pairwise values (Fst, DJost, Gst Nei)
     </description>
-
+    <macros>
+        <token name="@TOOL_VERSION@">0.2.0</token>
+        <token name="@VERSION_SUFFIX@">1</token>
+    </macros>
     <requirements>
         <requirement type="package" version="1.2.0">r-dplyr</requirement>
         <requirement type="package" version="1.7_23">r-ade4</requirement>
@@ -460,4 +463,7 @@ Reading example: for the pair (pop1, pop2), the lower CI bound is found at row p
         <citation type="doi">10.32614/CRAN.package.tibble</citation>
         <citation type="doi">10.32614/CRAN.package.tidyr</citation>
     </citations>
+    <creator>
+        <organization name="PNDB" url="https://www.pndb.fr/pages/accueil/"/>
+    </creator>
 </tool>
