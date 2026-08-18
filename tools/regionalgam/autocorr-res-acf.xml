@@ -28,7 +28,7 @@
     <tests>
         <test>
             <param name="gls_model" value="s_gls_rda.rda"/>
-            <output name="output_res_values" file="s_res.txt"/>
+            <output name="output_res_values" value="s_res.txt"/>
         </test>
     </tests>
     <help><![CDATA[
