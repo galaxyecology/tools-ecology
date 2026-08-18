@@ -3,7 +3,7 @@
 
     <macros>
         <token name="@TOOL_VERSION@">1.1</token> 
-        <token name="@VERSION_SUFFIX@">0</token>
+        <token name="@VERSION_SUFFIX@">1</token>
     </macros>
 
     <requirements> 
@@ -247,4 +247,7 @@
         <citation type="doi">10.32614/CRAN.package.sf</citation>
         <citation type="doi">10.32614/CRAN.package.tidyr</citation>
     </citations>
+    <creator>
+        <organization name="PNDB" url="https://www.pndb.fr/pages/accueil/"/>
+    </creator>
 </tool>
