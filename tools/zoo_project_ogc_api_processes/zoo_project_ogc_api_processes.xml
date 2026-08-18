@@ -1,9 +1,12 @@
-<tool id="zoo_project_ogc_api_processes" name="Zoo Project OGC API Processes" version="0.1.0" profile="22.05">
+<tool id="zoo_project_ogc_api_processes" name="Zoo Project OGC API Processes" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="22.05">
 	<description>executes remote OTB processes</description>
 	<macros>
 		<import>macros.xml</import>
 	</macros>
 	<expand macro="requirements"/>
+    <required_files>
+        <include path="terrabyte_ogc_api_process_wrapper.R"/>
+    </required_files>
 	<command detect_errors="exit_code"><![CDATA[
 	Rscript '$__tool_directory__/ogc_api_processes_wrapper.R'
 		--outputData '$output_data'
@@ -2273,4 +2276,5 @@
 	<expand macro="tests"/>
 	<expand macro="help"/>
 	<expand macro="citations"/>
+	<expand macro="creator"/>
 </tool>
