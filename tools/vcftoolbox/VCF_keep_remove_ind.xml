@@ -1,4 +1,4 @@
-<tool id="population_genomics_vcf_keep_remove_individuals" name="Keep or remove selected individuals" version="@TOOL_VERSION@" profile="@PROFILE@">
+<tool id="population_genomics_vcf_keep_remove_individuals" name="Keep or remove selected individuals" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>
         from a VCF
     </description>
@@ -105,5 +105,5 @@ See also examples of VCF formats in :  https://samtools.github.io/hts-specs/VCFv
     <citations>
         <expand macro="citations_bcftools_only"/>
     </citations>
-
+    <expand macro="creator"/>
 </tool>
