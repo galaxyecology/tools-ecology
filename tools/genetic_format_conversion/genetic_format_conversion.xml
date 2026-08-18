@@ -1,11 +1,17 @@
-<tool id="genetic_format_conversion" name="Genetic format conversion" version="0.2.1" profile="25.0">
+<tool id="genetic_format_conversion" name="Genetic format conversion" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="25.0">
     <description>
         using PGDSpider and additional conversion modules.
     </description>
+    <macros>
+        <token name="@TOOL_VERSION@">0.2.1</token>
+        <token name="@VERSION_SUFFIX@">1</token>
+    </macros>
     <requirements>
         <requirement type="package" version="2.1.1.5">pgdspider</requirement>
     </requirements>
-
+    <required_files>
+        <include path="genetic_format_conversion.sh" />
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         mkdir -p convert_directory &&
         mkdir -p pop_affiliation &&
@@ -388,5 +394,8 @@ See also examples of VCF formats in :  https://samtools.github.io/hts-specs/VCFv
             }
         </citation>
     </citations>
+    <creator>
+        <organization name="PNDB" url="https://www.pndb.fr/pages/accueil/"/>
+    </creator>
 </tool>
 
