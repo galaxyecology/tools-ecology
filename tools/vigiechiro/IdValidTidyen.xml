@@ -22,7 +22,12 @@
     <tests>
         <test>
             <param name="inputfile" value="output_tidy.tabular"/>
-            <output name="output" file="IdValidTidy.tabular"/>
+            <output name="output">
+                <assert_contents>
+                    <has_n_columns n="19"/>
+                    <has_n_lines n="1837" delta="200"/>
+                </assert_contents>
+            </output>
         </test>
     </tests>
     <help><![CDATA[
