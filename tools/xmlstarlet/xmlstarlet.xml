@@ -1,5 +1,10 @@
-<tool id="xmlstarlet" name="xmlstarlet" version="1.6.1">
+<tool id="xmlstarlet" name="xmlstarlet" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>convert a metadata XML file in one standard to another</description>
+    <macros>
+        <token name="@TOOL_VERSION@">1.6.1</token>
+        <token name="@VERSION_SUFFIX@">1</token>
+        <token name="@PROFILE@">25.1</token>
+    </macros>
     <requirements>
         <requirement type="package" version="1.6.1">xmlstarlet</requirement>
     </requirements>
@@ -51,4 +56,8 @@ A xml metadata file using a new standard (for example ISO19115, EML, ...).
        note = "{online; accessed 08-November-2021}"
        }</citation>
    </citations>
+    <creator>
+        <person givenName="Yvan" familyName="Le Bras" url="https://orcid.org/0000-0002-8504-068X"/>
+        <organization name="PNDB"  url="https://www.pndb.fr/pages/accueil/"/>
+    </creator>
 </tool>
