@@ -1,5 +1,13 @@
-<tool id="interactive_tool_wallace" tool_type="interactive" name="Wallace" version="0.1">
+<tool id="interactive_tool_wallace" tool_type="interactive" name="Wallace" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="25.1">
     <description>Webbased Interactive modeling of species niches and distributions</description>
+    <macros>
+        <token name="@TOOL_VERSION@">0.1</token>
+        <token name="@VERSION_SUFFIX@">1</token>
+    </macros>
+    <edam_topics>
+       <edam_topic>topic_0610</edam_topic>
+       <edam_topic>topic_3050</edam_topic>
+    </edam_topics>
     <requirements>
         <container type="docker">ylebras/wallace-docker</container>
     </requirements>
@@ -38,10 +46,6 @@
     </outputs>
     <tests>
     </tests>
-    <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
-    </edam_topics>
     <help>
 <![CDATA[
 
@@ -68,4 +72,8 @@ Example input file (TAB separated)::
     <citations>
         <citation type="doi">10.1111/2041-210X.12945</citation>
     </citations>
+    <creator>
+        <person givenName="Yvan" familyName="Le Bras" url="https://orcid.org/0000-0002-8504-068X"/>
+        <organization name="PNDB"  url="https://www.pndb.fr/pages/accueil/"/>
+	</creator>
 </tool>
