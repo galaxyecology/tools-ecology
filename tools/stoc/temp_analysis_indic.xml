@@ -80,7 +80,7 @@
         <data name="output_tab_gam_annee" from_work_dir="Output/csi_gammParannee_France.tabular" format="tabular" label="GAM - Temp trends per year - on ${on_string}">
             <expand macro="stoceps_filter_gam"/>
         </data>
-        <data name="output_plot_carre" from_work_dir="Output/figcsi_carre_France.png" format="png" label="GAM - Temp trends plot on ${on_string}">
+        <data name="output_plot_carre" from_work_dir="Output/figcsi_carre_France.png" format="png" label="GAM - Temp trends square plot on ${on_string}">
             <expand macro="stoceps_filter_gam"/>
         </data>
         <data name="output_plot__gam_csiplot" from_work_dir="Output/figcsi_plotFrance.png" format="png" label="GAM - Temp trends plot on ${on_string}">
@@ -96,14 +96,16 @@
         <data name="output_tab_glmmtb_annee" from_work_dir="Output/ggdata_csiFrance.tabular" format="tabular" label="GlmmTMB - Temp trends per year - on ${on_string}">
             <expand macro="stoceps_filter_glmmtmb"/>
         </data>
-        <data name="output_tab_glmmtb_gammcomplet" from_work_dir="Output/GlmmTMB_coefficient_csiFrance.tabular" format="tabular" label="GlmmTMB - Temp trends per year - on ${on_string}">
+        <data name="output_tab_glmmtb_gammcomplet" from_work_dir="Output/GlmmTMB_coefficient_csiFrance.tabular" format="tabular" label="GlmmTMB - Temp trends all data - on ${on_string}">
             <expand macro="stoceps_filter_glmmtmb"/>
         </data>
     </outputs>
     <tests>
-        <test>
+        <test expect_num_outputs="5">
             <param name="input" value="data_FrenchBBS_squarre_dataSTOCallSp_France_trend_2001_2017_ALAARV-PARCAE_2001_2018.tabular"/>
-            <param name="inputcoord" value="coordCarreSTOCfaux.tabular"/>
+            <conditional name="method">
+                <param name="inputcoord" value="coordCarreSTOCfaux.tabular"/>
+            </conditional>
             <param name="inputspeciesindic" value="species_indicateur_fonctionnel.tabular"/>
             <param name="inputtabSpecies" value="tabSpecies.csv"/>
             <conditional name="settings">
@@ -143,17 +145,17 @@
                 </assert_contents>
             </output>
         </test>
-        <test>
+        <test expect_num_outputs="3">
             <param name="input" value="Datafilteredfortrendanalysis.tabular"/>
             <param name="inputspeciesindic" value="species_indicateur_fonctionnel.tabular"/>
             <param name="inputtabSpecies" value="tabSpecies.csv"/>
             <conditional name="settings">
                 <param name="advanced" value="advanced"/>
                 <param name="smooth_plot" value="FALSE"/>
+                <param name="compute_ic" value="TRUE"/>
             </conditional>
                 <conditional name="method">
                 <param name="model" value="glmmtmb"/>
-                <param name="compute_ic" value="TRUE"/>
             </conditional>
             <output name="output_plot_glmmtb_csiplot">
                 <assert_contents>
