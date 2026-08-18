@@ -1,4 +1,4 @@
-<tool id="population_genomics_split_vcf_by_pop" name="Split VCF by pop" version="@TOOL_VERSION@" profile="@PROFILE@">
+<tool id="population_genomics_split_vcf_by_pop" name="Split VCF by pop"  version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>
         from an individuals/population table
     </description>
@@ -117,5 +117,5 @@ See also examples of VCF formats in :  https://samtools.github.io/hts-specs/VCFv
     <citations>
         <expand macro="citations_bcftools_only"/>
     </citations>
-  
+    <expand macro="creator"/>
 </tool>
