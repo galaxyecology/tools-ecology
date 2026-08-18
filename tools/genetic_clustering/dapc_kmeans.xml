@@ -1,4 +1,4 @@
-<tool id="dapc_kmeans" name="Discriminant analysis of principal components (DAPC) to genotype data" version="@TOOL_VERSION@+galaxy@VERSION_SUFFX" profile="@PROFILE@">
+<tool id="dapc_kmeans" name="Discriminant analysis of principal components (DAPC) to genotype data" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
 
   <description>
     using Kmeans or a k-fixed (SNPs and SSRs).
