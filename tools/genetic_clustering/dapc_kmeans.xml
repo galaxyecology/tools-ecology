@@ -1,4 +1,4 @@
-<tool id="dapc_kmeans" name="Discriminant analysis of principal components (DAPC) to genotype data" version="@TOOL_VERSION@" profile="@PROFILE@">
+<tool id="dapc_kmeans" name="Discriminant analysis of principal components (DAPC) to genotype data" version="@TOOL_VERSION@+galaxy@VERSION_SUFFX" profile="@PROFILE@">
 
   <description>
     using Kmeans or a k-fixed (SNPs and SSRs).
@@ -439,5 +439,6 @@ Notes :
     <citation type="doi">10.32614/CRAN.package.ade4</citation>
     <citation type="doi">10.1186/1471-2156-11-94</citation>
   </citations>
+  <expand macro="creator"/>
 
 </tool>
