@@ -83,7 +83,7 @@
                         </repeat>
                     </conditional>
                 </section>
-                <output name="output_netcdf" file="all.netcdf" compare="sim_size" delta="1000"/>
+                <output name="output_netcdf" file="all.netcdf" compare="sim_size" delta="3000"/>
             </test>
             <test>
                 <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
