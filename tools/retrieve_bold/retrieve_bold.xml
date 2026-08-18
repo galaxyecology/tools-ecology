@@ -159,17 +159,8 @@
             <section name="animal_marker">
                 <param name="marker" value="CYTB"/>
             </section>
-            <section name="vegetal_marker">
-                <param name="marker" value=""/>
-            </section>
-            <section name="bacterial_marker">
-                <param name="marker" value=""/>
-            </section>
             <section name="fungal_marker">
                 <param name="marker" value="Beta-tubulin,RPB2"/>
-            </section>
-            <section name="protist_marker">
-                <param name="marker" value=""/>
             </section>
             <output name="Log" file="Log_test3.txt" compare="diff"/>
             <output_collection name="datasets_output" type="list" count="1">
