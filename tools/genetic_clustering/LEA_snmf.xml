@@ -1,4 +1,4 @@
-<tool id="LEA_snmf_application" name="Genetic Clustering" version="@TOOL_VERSION@" profile="@PROFILE@">
+<tool id="LEA_snmf_application" name="Genetic Clustering" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>
         with LEA (sNMF) for VCF or SSR data
     </description>
@@ -262,5 +262,5 @@ See also examples of VCF formats in:  https://samtools.github.io/hts-specs/VCFv4
         <citation type="doi">10.1111/mec.12125</citation>
         <citation type="doi">10.32614/CRAN.package.hierfstat</citation>
     </citations>
-
+    <expand macro="creator"/>
 </tool>
