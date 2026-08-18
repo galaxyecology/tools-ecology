@@ -111,10 +111,10 @@
             <conditional name="settings">
                 <param name="advanced" value="advanced"/>
                 <param name="smooth_plot" value="TRUE"/>
+                <param name="compute_ic" value="FALSE"/>
             </conditional>
             <conditional name="method">
                 <param name="model" value="gam"/>
-                <param name="compute_ic" value="FALSE"/>
             </conditional>
             <output name="output_tab_gammcomplet">
                 <assert_contents>
