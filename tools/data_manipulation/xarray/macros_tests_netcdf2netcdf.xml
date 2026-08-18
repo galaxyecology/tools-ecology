@@ -156,6 +156,10 @@
                 <section name="variable">
                     <param name="var" value="chl,nh4"/>
                 </section>
+                <section name="subset_coords">
+                    <conditional name="tsel">
+                    </conditional>
+                </section>
                 <output name="output_netcdf" file="chl_nh4.netcdf" compare="sim_size" delta="500"/>
             </test>
             <test>
@@ -163,6 +167,10 @@
                 <param name="var_tab" value="var_tab_dataset-ibi"/>
                 <section name="variable">
                     <param name="var" value="nh4"/>
+                </section>
+                <section name="subset_coords">
+                    <conditional name="tsel">
+                    </conditional>
                 </section>
                 <output name="output_netcdf" file="chl_alltimes.nc" compare="sim_size" delta="500"/>
             </test>
@@ -204,6 +212,10 @@
                         <param name="set_other" value="1000"/>
                     </conditional>
                     <param name="where_condition" ftype="txt" value="where_condition.txt"/>
+                </section>
+                <section name="subset_coords">
+                    <conditional name="tsel">
+                    </conditional>
                 </section>
                 <output name="output_netcdf" file="chl_phy_where.netcdf" compare="sim_size" delta="500"/>
             </test>
