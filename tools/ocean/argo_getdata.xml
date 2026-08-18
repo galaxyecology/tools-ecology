@@ -7,7 +7,6 @@
     </expand>
     <required_files>
         <include type="literal" path="argo_getdata.py"/>
-        <include type="literal" path="macros.xml"/>
     </required_files>
     <command detect_errors="exit_code"><![CDATA[ 
         python '$__tool_directory__/argo_getdata.py'
