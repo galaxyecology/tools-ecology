@@ -10,4 +10,4 @@ remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/maste
 type: unrestricted
 categories:
   - Ecology
-  - Sequence Analysis
+  - Climate
