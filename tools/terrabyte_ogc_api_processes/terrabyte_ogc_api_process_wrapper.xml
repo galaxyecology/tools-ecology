@@ -1,4 +1,4 @@
-<tool id="terrabyte_ogc_api_processes" name="Terrabyte OGC API Processes" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="22.05">
+<!--<tool id="terrabyte_ogc_api_processes" name="Terrabyte OGC API Processes" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="22.05">
 	<description>Water quality EO Application Package</description>
 	<macros>
         <token name="@TOOL_VERSION@">0.1.0</token>
@@ -55,4 +55,4 @@
 	<creator>
         <organization name="EOSC AquaINFRA" url="https://aquainfra.eu/"/>
     </creator>
-</tool>
+</tool>-->
