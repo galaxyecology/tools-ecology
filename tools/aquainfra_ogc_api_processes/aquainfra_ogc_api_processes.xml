@@ -1,4 +1,4 @@
-<tool id="aquainfra_ogc_api_processes" name="AquaINFRA OGC API Processes" version="0.17.0" profile="25.1">
+<tool id="aquainfra_ogc_api_processes" name="AquaINFRA OGC API Processes" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="25.1">
     <description/>
     <macros>
         <import>macros.xml</import>
@@ -30,6 +30,7 @@
                 <option value="dasymetric-refinement">dasymetric-refinement: Dasymetric refinement of LAU population to raster cells</option>
                 <option value="data-intersect">data-intersect: Intersect data with spatial analysis extent</option>
                 <option value="evaluate-refinement">evaluate-refinement: Evaluate dasymetric refinement results</option>
+                <option value="ferrybox-river-eo-plot">ferrybox-river-eo-plot: Plot EO, ferrybox and river discharge data</option>
                 <option value="filter-clip-clean-extent">filter-clip-clean-extent: Align extents of three datasets (D1=NUTS3 regions; D2=LAU regions; D3=river catchments) including validation steps.</option>
                 <option value="get-analysis-extent">get-analysis-extent: Get spatial analysis extent</option>
                 <option value="get-census-grid">get-census-grid: Get Eurostat census grid</option>
@@ -198,12 +199,17 @@
             <when value="evaluate-refinement">
                 <param name="inputFile1_refinementWeightedReference_rds" label="Weighted refinement raster (reference year)" optional="false" help="Path to an .rds file containing the packed (terra::wrap) dasymetric refinement output raster from the 'weighted' refinement type, for the reference year (2021). (URL must be stored in a .txt file)" type="data" format="txt"/>
                 <param name="inputFile2_refinementSimpleReference_rds" label="Simple refinement raster (reference year)" optional="false" help="Path to an .rds file containing the packed (terra::wrap) dasymetric refinement output raster from the 'simple' refinement type, for the reference year (2021). (URL must be stored in a .txt file)" type="data" format="txt"/>
-                <param name="inputFile3_censusgrid_rds" label="Census grid" optional="false" help="Path to an .rds file containing the Eurostat census grid with observed population (column 'TOT_P_2021'), used as ground truth for evaluation. (URL must be stored in a .txt file)" type="data" format="txt"/>
-                <param name="inputFile4_corineCLC_rds" label="CORINE CLC raster" optional="false" help="Path to an .rds file containing the CORINE Land Cover raster (SpatRaster), used to derive the subset overlapping populated census grid cells. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile3_censusgrid_rds" label="Census grid" help="Path to an .rds file containing the Eurostat census grid with observed population (column 'TOT_P_2021'), used as ground truth for evaluation. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile4_corineCLC_rds" label="CORINE CLC raster" help="Path to an .rds file containing the CORINE Land Cover raster (SpatRaster), used to derive the subset overlapping populated census grid cells. (URL must be stored in a .txt file)" type="data" format="txt"/>
+            </when>
+            <when value="ferrybox-river-eo-plot">
+                <param name="input1" label="Time series of river discarge data" help="URL to Time series of river discarge data. The URL needs to start with http(s). See the example and use only year 2023 or 2024. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input2" label="Aggregated Ferrybox turbidity data" help="Ferrybox data aggregated into daily values from areas along the route of the ship. The URL needs to start with http(s). Select the same year as in the discharge data (2023 or 2024). (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input3" label="Aggregated EO turbidity data" help="EO data aggregated into daily values from areas along the route of the ship. The URL needs to start with http(s). (URL must be stored in a .txt file)" type="data" format="txt"/>
             </when>
             <when value="filter-clip-clean-extent">
-                <param name="inputFile1_gpkg" label="NUTS3 regions" optional="false" help="EU NUTS3 regions saved in geopackage. It should be in same coordinate system as the inputted river catchment dataset and overlap this - ideally it should fully contain its extent. (URL must be stored in a .txt file)" type="data" format="txt"/>
-                <param name="inputFile2_gpkg" label="LAU regions." optional="false" value="" help="EU LAU (Local Areal Unit) regions saved in geopackage. It should be in same coordinate system as the other inputted datasets and overlap these - ideally fully contained in the extent of the inputted river catchment dataset." type="text">
+                <param name="inputFile1_gpkg" label="NUTS3 regions"  help="EU NUTS3 regions saved in geopackage. It should be in same coordinate system as the inputted river catchment dataset and overlap this - ideally it should fully contain its extent. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile2_gpkg" label="LAU regions." value="" help="EU LAU (Local Areal Unit) regions saved in geopackage. It should be in same coordinate system as the other inputted datasets and overlap these - ideally fully contained in the extent of the inputted river catchment dataset." type="text">
                     <validator type="empty_field" message="You must provide a value."/>
                 </param>
                 <param name="inputFile3_gpkg" label="Validated river catchments dataset" optional="false" value="" help="River catchments dataset stored as geopackage and already validated. An example could be EU Ecrins subcatchments from 2012. It should have the same coordinate system as the inputted NUTS3 dataset and overlap this - ideally it should fully be within its extent." type="text">
@@ -533,38 +539,52 @@
                 <param name="storm_date" label="Storm date" optional="true" help="Optional storm date (YYYY-MM-DD) to mark with a dashed vertical line." type="text"/>
             </when>
             <when value="owt-classification">
-                <param name="input_data_url" label="Input data" optional="false" help="URL to your input file. Find example data on https://github.com/bishun945/pyOWT/tree/main/projects/AquaINFRA. (URL must be stored in a .txt file)" type="data" format="txt"/>
-                <param name="input_option" label="Type of input" optional="false" help="csv: for text data input (first line wavelength, following lines remote-sensing reflectance). sat: for satellite product input containing reflectance (e.g., Sentinel-3 OLCI Level-2)" type="select">
-                    <option value="csv">csv</option>
-                    <option value="sat">sat</option>
-                </param>
-                <param name="sensor" label="Sensor name" optional="false" help="Spectral band configuration of satellite mission (includes adaptation to sensor spectral response functions)." type="select">
-                    <option value="HYPER">HYPER</option>
-                    <option value="AERONET_OC_1">AERONET_OC_1</option>
-                    <option value="AERONET_OC_2">AERONET_OC_2</option>
-                    <option value="CMEMS_BAL_HROC">CMEMS_BAL_HROC</option>
-                    <option value="CMEMS_BAL_NRT">CMEMS_BAL_NRT</option>
-                    <option value="CMEMS_MED_MYINT">CMEMS_MED_MYINT</option>
-                    <option value="CZCS">CZCS</option>
-                    <option value="GOCI">GOCI</option>
-                    <option value="HawkEye">HawkEye</option>
-                    <option value="MERIS">MERIS</option>
-                    <option value="ODIS_Aqua">ODIS_Aqua</option>
-                    <option value="MODIS_Terra">MODIS_Terra</option>
-                    <option value="MSI_S2A">MSI_S2A</option>
-                    <option value="MSI_S2B">MSI_S2B</option>
-                    <option value="OCTS">OCTS</option>
-                    <option value="OLCI_S3A">OLCI_S3A</option>
-                    <option value="OLCI_S3B">OLCI_S3B</option>
-                    <option value="OLI">OLI</option>
-                    <option value="SeaWiFS">SeaWiFS</option>
-                    <option value="VIIRS_JPSS1">VIIRS_JPSS1</option>
-                    <option value="VIIRS_JPSS2">VIIRS_JPSS2</option>
-                    <option value="VIIRS_SNPP">VIIRS_SNPP</option>
-                </param>
-                <param name="output_option" label="Output option" optional="false" help="1: for standard output with five variables. 2: for extensive output including memberships of all water types." type="select">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
+                <param name="input_data_url" label="Input data" help="URL to your input file. Find example data on https://github.com/bishun945/pyOWT/tree/main/projects/AquaINFRA. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_sensor_option" label="Sensor and type of input" optional="false" help="Type of input (e.g. in-situ, satellite) and spectral band configuration of satellite mission (includes adaptation to sensor spectral response functions)." type="select">
+                    <option value="SATELLITE - CMEMS_ARC_HROC">SATELLITE - CMEMS_ARC_HROC</option>
+                    <option value="SATELLITE - CMEMS_BAL_HROC">SATELLITE - CMEMS_BAL_HROC</option>
+                    <option value="SATELLITE - CMEMS_BAL_MYINT">SATELLITE - CMEMS_BAL_MYINT</option>
+                    <option value="SATELLITE - CMEMS_BAL_NRT">SATELLITE - CMEMS_BAL_NRT</option>
+                    <option value="SATELLITE - CMEMS_BLK_HROC">SATELLITE - CMEMS_BLK_HROC</option>
+                    <option value="SATELLITE - CMEMS_BLK_MYINT">SATELLITE - CMEMS_BLK_MYINT</option>
+                    <option value="SATELLITE - CMEMS_BLK_NRT">SATELLITE - CMEMS_BLK_NRT</option>
+                    <option value="SATELLITE - CMEMS_IBI_HROC">SATELLITE - CMEMS_IBI_HROC</option>
+                    <option value="SATELLITE - CMEMS_MED_HROC">SATELLITE - CMEMS_MED_HROC</option>
+                    <option value="SATELLITE - CMEMS_MED_MYINT">SATELLITE - CMEMS_MED_MYINT</option>
+                    <option value="SATELLITE - CMEMS_MED_NRT">SATELLITE - CMEMS_MED_NRT</option>
+                    <option value="SATELLITE - CMEMS_NWS_HROC">SATELLITE - CMEMS_NWS_HROC</option>
+                    <option value="SATELLITE - SENTINEL3-OLCI">SATELLITE - SENTINEL3-OLCI</option>
+                    <option value="INSITU - SEABASS">INSITU - SEABASS</option>
+                    <option value="INSITU - WATERHYPERNET">INSITU - WATERHYPERNET</option>
+                    <option value="INSITU - HYPER">INSITU - HYPER</option>
+                    <option value="INSITU - AERONET_OC_1">INSITU - AERONET_OC_1</option>
+                    <option value="INSITU - AERONET_OC_2">INSITU - AERONET_OC_2</option>
+                    <option value="INSITU - CLMS_OLCI">INSITU - CLMS_OLCI</option>
+                    <option value="INSITU - CLMS_MSI">INSITU - CLMS_MSI</option>
+                    <option value="INSITU - CMEMS_ARC_HROC">INSITU - CMEMS_ARC_HROC</option>
+                    <option value="INSITU - CMEMS_BAL_HROC">INSITU - CMEMS_BAL_HROC</option>
+                    <option value="INSITU - CMEMS_BAL_MYINT">INSITU - CMEMS_BAL_MYINT</option>
+                    <option value="INSITU - CMEMS_BAL_NRT">INSITU - CMEMS_BAL_NRT</option>
+                    <option value="INSITU - CMEMS_BLK_HROC">INSITU - CMEMS_BLK_HROC</option>
+                    <option value="INSITU - CMEMS_BLK_MYINT">INSITU - CMEMS_BLK_MYINT</option>
+                    <option value="INSITU - CMEMS_BLK_NRT">INSITU - CMEMS_BLK_NRT</option>
+                    <option value="INSITU - CMEMS_IBI_HROC">INSITU - CMEMS_IBI_HROC</option>
+                    <option value="INSITU - CMEMS_MED_HROC">INSITU - CMEMS_MED_HROC</option>
+                    <option value="INSITU - CMEMS_MED_MYINT">INSITU - CMEMS_MED_MYINT</option>
+                    <option value="INSITU - CMEMS_MED_NRT">INSITU - CMEMS_MED_NRT</option>
+                    <option value="INSITU - CMEMS_NWS_HROC">INSITU - CMEMS_NWS_HROC</option>
+                    <option value="INSITU - GOCI">INSITU - GOCI</option>
+                    <option value="INSITU - HAWKEYE">INSITU - HAWKEYE</option>
+                    <option value="INSITU - ENMAP">INSITU - ENMAP</option>
+                    <option value="INSITU - MERIS">INSITU - MERIS</option>
+                    <option value="INSITU - PACE">INSITU - PACE</option>
+                    <option value="INSITU - OCTS">INSITU - OCTS</option>
+                    <option value="INSITU - LANDSAT-8">INSITU - LANDSAT-8</option>
+                    <option value="INSITU - SeaWiFS">INSITU - SeaWiFS</option>
+                    <option value="INSITU - MODIS">INSITU - MODIS</option>
+                    <option value="INSITU - SENTINEL2-MSI">INSITU - SENTINEL2-MSI</option>
+                    <option value="INSITU - SENTINEL3-OLCI">INSITU - SENTINEL3-OLCI</option>
+                    <option value="INSITU - VIIRS">INSITU - VIIRS</option>
                 </param>
             </when>
             <when value="peri-conv">
