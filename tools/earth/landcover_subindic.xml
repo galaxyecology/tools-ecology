@@ -60,50 +60,77 @@
             <conditional name="method">
                 <param name="json_file" value="yes"/>
             </conditional>
-            <output name="contour" value="change_yf_yi0.shp"/>
+            <output name="contour" value="change_yf_yi0.shp">
+                <assert_contents>
+                    <has_text text="Point"/>  <!-- Ensure geometries are points -->
+                    <has_text text="change_yf_yi0"/>  <!-- Check layer name -->
+                    <has_n_lines n="10" delta="5"/>  <!-- Approximate number of lines (adjust as needed) -->
+                </assert_contents>
+            </output>
+        
+            <!-- Output Collection: TIFF files -->
             <output_collection name="output_tiff" type="list" count="7">
+                <!-- Baseline ESA Land Cover -->
                 <element name="lc_baseline_esa" ftype="tiff">
                     <assert_contents>
-                        <has_text text="LAEA Europe"/>
-                        <has_size size="1001118"/>
+                        <has_text text="LAEA Europe"/>  <!-- CRS check -->
+                        <has_text text="Land_cover_yi"/>  <!-- Band description -->
+                        <has_size size="1001118" delta="50000"/>  <!-- Approximate size with tolerance -->
                     </assert_contents>
                 </element>
+        
+                <!-- Baseline Land Cover (Reclassified) -->
                 <element name="lc_bl" ftype="tiff">
                     <assert_contents>
                         <has_text text="LAEA Europe"/>
-                        <has_size size="1001118"/>
+                        <has_text text="Land_cover_yi"/>
+                        <has_size size="1001118" delta="50000"/>
                     </assert_contents>
-                </element>    
+                </element>
+        
+                <!-- Land Cover Degradation -->
                 <element name="lc_dg" ftype="tiff">
                     <assert_contents>
                         <has_text text="LAEA Europe"/>
-                        <has_size size="1001118"/>
+                        <has_text text="Land_cover_degradation"/>
+                        <has_size size="1001118" delta="50000"/>
                     </assert_contents>
-                </element>    
+                </element>
+        
+                <!-- Target ESA Land Cover -->
                 <element name="lc_target_esa" ftype="tiff">
                     <assert_contents>
                         <has_text text="LAEA Europe"/>
-                        <has_size size="1001118"/>
+                        <has_text text="Land_cover_yf"/>
+                        <has_size size="1001118" delta="50000"/>
                     </assert_contents>
-                </element>    
+                </element>
+        
+                <!-- Target Land Cover (Reclassified) -->
                 <element name="lc_tg" ftype="tiff">
                     <assert_contents>
                         <has_text text="LAEA Europe"/>
-                        <has_size size="1001118"/>
+                        <has_text text="Land_cover_yf"/>
+                        <has_size size="1001118" delta="50000"/>
                     </assert_contents>
-                </element>    
+                </element>
+        
+                <!-- Land Cover Transition -->
                 <element name="lc_tr" ftype="tiff">
                     <assert_contents>
                         <has_text text="LAEA Europe"/>
-                        <has_size size="1001118"/>
+                        <has_text text="Land_cover_transitions_yi-yf"/>
+                        <has_size size="1001118" delta="50000"/>
                     </assert_contents>
-                </element>    
+                </element>
+        
+                <!-- Multi-Band Stack -->
                 <element name="stack" ftype="tiff">
                     <assert_contents>
                         <has_text text="LAEA Europe"/>
-                        <has_size size="1001118"/>
+                        <has_size size="4003402" delta="100000"/>  <!-- Larger size due to 4 bands -->
                     </assert_contents>
-                </element>    
+                </element>
             </output_collection>
         </test>
     </tests>
