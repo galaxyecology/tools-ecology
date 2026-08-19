@@ -1,0 +1,24 @@
+site_name,start_date,end_date,start_spinup,end_spinup,spinup_duration_yr,method_spinup,api_source
+auzeville,1975-01-01,2010-12-31,1959-01-01,1975-01-01,16,Climate normals computed from 1959 to 1975 (16 yr before the experiment),geosas
+doazit,1977-01-01,1989-12-31,1959-01-01,1977-01-01,18,Climate normals computed from 1959 to 1977 (18 yr before the experiment),geosas
+folleville,1989-01-01,2008-12-31,1959-01-01,1989-01-01,30,Climate normals computed from 1959 to 1989 (30 yr before the experiment),geosas
+kerbernez,1978-01-01,2005-12-31,1959-01-01,1978-01-01,19,Climate normals computed from 1959 to 1978 (19 yr before the experiment),geosas
+mant,1975-01-01,1992-12-31,1959-01-01,1975-01-01,16,Climate normals computed from 1959 to 1975 (16 yr before the experiment),geosas
+tartas,1976-01-01,1997-12-31,1959-01-01,1976-01-01,17,Climate normals computed from 1959 to 1976 (17 yr before the experiment),geosas
+colmar_prospective,2000-01-01,2018-12-31,1970-01-01,2000-01-01,30,Climate normals computed from 1970 to 2000 (30 yr before the experiment),geosas
+feucherolles_qualiagro,1998-01-01,2021-12-31,1968-01-01,1998-01-01,30,Climate normals computed from 1968 to 1998 (30 yr before the experiment),geosas
+le_rheu_efele_pros,2012-01-01,2021-12-31,1982-01-01,2012-01-01,30,Climate normals computed from 1982 to 2012 (30 yr before the experiment),geosas
+le_rheu_efele_tsmo,2012-01-01,2021-12-31,1982-01-01,2012-01-01,30,Climate normals computed from 1982 to 2012 (30 yr before the experiment),geosas
+lusignan_acbb,2005-01-01,2020-12-31,1975-01-01,2005-01-01,30,Climate normals computed from 1975 to 2005 (30 yr before the experiment),geosas
+estrees_mons_sdc,2001-01-01,2008-12-31,1971-01-01,2001-01-01,30,Climate normals computed from 1971 to 2001 (30 yr before the experiment),geosas
+versailles_la_cage,1998-01-01,2020-12-31,1968-01-01,1998-01-01,30,Climate normals computed from 1968 to 1998 (30 yr before the experiment),geosas
+grignon_sic,2014-01-01,2020-12-31,1984-01-01,2014-01-01,30,Climate normals computed from 1984 to 2014 (30 yr before the experiment),geosas
+issoudun,1962-01-01,1983-12-31,1959-01-01,1989-01-01,3,Insufficient pre-experiment data (3 yr available before the reanalysis starts). Climate normals computed from 1959 to 1989 (first 30 yr of the experiment used instead),geosas
+estrees_mons_be,2006-01-01,2019-12-31,1976-01-01,2006-01-01,30,Climate normals computed from 1976 to 2006 (30 yr before the experiment),geosas
+breteniere_res0pest,2013-01-01,2023-12-31,1983-01-01,2013-01-01,30,Climate normals computed from 1983 to 2013 (30 yr before the experiment),geosas
+estrees_mons_res0pest,2013-01-01,2023-12-31,1983-01-01,2013-01-01,30,Climate normals computed from 1983 to 2013 (30 yr before the experiment),geosas
+lusignan_res0pest,2013-01-01,2023-12-31,1983-01-01,2013-01-01,30,Climate normals computed from 1983 to 2013 (30 yr before the experiment),geosas
+nouzilly_res0pest,2013-01-01,2023-12-31,1983-01-01,2013-01-01,30,Climate normals computed from 1983 to 2013 (30 yr before the experiment),geosas
+grignon_ltbf,1959-01-01,2007-12-31,1959-01-01,1989-01-01,0,Insufficient pre-experiment data (0 yr available before the reanalysis starts). Climate normals computed from 1959 to 1989 (first 30 yr of the experiment used instead),geosas
+versailles_ltbf,1928-01-01,2008-12-31,1959-01-01,1989-01-01,-31,Insufficient pre-experiment data (-31 yr available before the reanalysis starts). Climate normals computed from 1959 to 1989 (first 30 yr of the experiment used instead),geosas
+fagnieres_ltbf,1976-01-01,2021-12-31,1959-01-01,1976-01-01,17,Climate normals computed from 1959 to 1976 (17 yr before the experiment),geosas
