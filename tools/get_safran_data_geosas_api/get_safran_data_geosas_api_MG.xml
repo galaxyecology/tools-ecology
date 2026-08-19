@@ -118,24 +118,7 @@
                type="data"
                format="csv,tabular,xlsx,shp,geojson"
                label="Coordinate / geometry file"
-               help="File describing the location(s) to query.
-                     Accepted formats: CSV, tabular (TSV), Excel (.xlsx),
-                     Shapefile (.shp), GeoJSON.
-
-                     The geometry type is detected automatically.
-
-                     Routing:
-                       POINT / MULTIPOINT → /position (exact grid cells)
-                       LINESTRING         → /position (each vertex as MULTIPOINT)
-                       POLYGON            → /cube (bounding box of the polygon)
-                       bbox column        → /cube (sent directly)
-
-                     Required columns for CSV / Excel:
-                       • POINT: 'latitude' (or 'lat') + 'longitude' (or 'lon').
-                       • POLYGON / LINESTRING: 'geometry' or 'wkt' column (WKT text).
-
-                     Optional: 'begin_date' and 'end_date' columns (YYYY-MM-DD)
-                     override the global date range for each individual row." />
+               help="File describing the location(s) to query (CSV, TSV, Excel, Shapefile, or GeoJSON). Geometry type and required columns are detected automatically — see the help below for details." />
 
         <!-- ── 4. EPSG code ────────────────────────────────────────────────── -->
         <param name="epsg"
@@ -275,6 +258,16 @@ The geometry type in your file is detected automatically:
 Per-row ``begin_date`` / ``end_date`` columns override the global date range.
 
 ----
+ 
+**Required columns for CSV / Excel input**
+ 
+* **POINT** — a ``latitude`` (or ``lat``) column and a ``longitude`` (or ``lon``) column.
+* **POLYGON / LINESTRING** — a ``geometry`` or ``wkt`` column containing WKT text.
+ 
+Optional ``begin_date`` / ``end_date`` columns (``YYYY-MM-DD``) override the global
+date range for each individual row.
+ 
+----
 
 **Available climate variables**
 
@@ -345,18 +338,6 @@ The ``parameter_names`` field of that JSON response is the authoritative source.
 
         <citation type="doi">10.1002/joc.2003</citation>
         <citation type="doi">10.1029/2007JD008548</citation>
-
-        <citation type="bibtex">
-@misc{geosas2024,
-  author       = {{INRAE / UMR SAS -- G\'{e}oSAS}},
-  title        = {{G\'{e}oSAS OGC-EDR SAFRAN-ISBA API}},
-  howpublished = {\url{https://api.geosas.fr/edr/collections/safran-isba/}},
-  year         = {2024},
-  note         = {OGC Environmental Data Retrieval v1.1 service.
-                  Original data: M\'{e}t\'{e}o-France SAFRAN reanalysis.
-                  Licence Ouverte Etalab.}
-}
-        </citation>
 
     </citations>
 
