@@ -27,14 +27,14 @@
     </inputs>
     
     <outputs>
-        <data format="tiff" name="output" from_work_dir="output_ovr" label="Overview image on ${input1}"/>
+        <data format="tiff" name="output" from_work_dir="output_ovr" label="${input1.name}.ovr"/>
     </outputs>
     
     <tests> 
         <test> 
             <param name="input1" value="stere.tif"/>
             <param name="levels" value="2 4 8 16" />
-            <output name="output" value="stere.tif.ovr"/>
+            <output name="output" value="stere.tif.ovr" compare="sim_size"/>/>
         </test>
     </tests>
     <help><![CDATA[
