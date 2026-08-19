@@ -56,22 +56,20 @@
            help="CSV file containing coordinates to be transformed. Must include columns for latitude and longitude." />
 
     <param name="lat_col"
-           type="text"
+           type="data_column"
+           data_ref="csv"
+           use_header_names="true"
            optional="true"
-           value="latitude"
            label="Latitude Column"
-           help="Name of the column in the input CSV that contains latitude values.">
-      <expand macro="column_name_validator"/>
-    </param>
-
+           help="Column in the input CSV that contains latitude values." />
+  
     <param name="lon_col"
-           type="text"
+           type="data_column"
+           data_ref="csv"
+           use_header_names="true"
            optional="true"
-           value="longitude"
            label="Longitude Column"
-           help="Name of the column in the input CSV that contains longitude values.">
-      <expand macro="column_name_validator"/>
-    </param>
+           help="Column in the input CSV that contains longitude values." />
 
     <param name="wkt_col"
            type="text"
