@@ -34,7 +34,7 @@
         <test> 
             <param name="input1" value="stere.tif"/>
             <param name="levels" value="2 4 8 16" />
-            <output name="output" value="stere.tif.ovr" compare="sim_size"/>/>
+            <output name="output" value="stere.tif.ovr" compare="sim_size"/>
         </test>
     </tests>
     <help><![CDATA[
