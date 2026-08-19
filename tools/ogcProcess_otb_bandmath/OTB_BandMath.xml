@@ -1,4 +1,4 @@
-<tool id="otb_band_math" name="OTB.BandMath" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="22.05">
+<!--<tool id="otb_band_math" name="OTB.BandMath" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="22.05">
     <description> outputs a monoband image as a result of a mathematical operation on several multi-band images</description>
 	<macros>
         <token name="@TOOL_VERSION@">1.0</token>
@@ -99,4 +99,4 @@
 	<creator>
         <organization name="EOSC AquaINFRA" url="https://aquainfra.eu/"/>
     </creator>
-</tool>
+</tool>-->
