@@ -16,8 +16,8 @@ def parse_args():
     parser.add_argument("--input-crs", required=True)
     parser.add_argument("--output-crs", required=True)
     parser.add_argument("--csv", required=True)
-    parser.add_argument("--lat-col", default="latitude")
-    parser.add_argument("--lon-col", default="longitude")
+    parser.add_argument("--lat-col", default=None)
+    parser.add_argument("--lon-col", default=None)
     parser.add_argument("--wkt-col", default=None)
     return parser.parse_args()
 
@@ -40,6 +40,12 @@ def main():
 
         df[out_col] = df[args.wkt_col].apply(reproject_geom)
     else:
+        # Galaxy's data_column parameters submit a 1-based column position,
+        # not the column name, so resolve it once here; everything below
+        # keeps working with column names exactly as before.
+        args.lat_col = df.columns[int(args.lat_col) - 1]
+        args.lon_col = df.columns[int(args.lon_col) - 1]
+
         xs, ys = transformer.transform(
             df[args.lon_col].values, df[args.lat_col].values
         )
