@@ -26,10 +26,11 @@
     --input-crs '$input_crs'
     --output-crs '$output_crs'
     --csv '$csv'
-    --lat-col '$lat_col'
-    --lon-col '$lon_col'
     #if $wkt_col
       --wkt-col '$wkt_col'
+    #else
+      --lat-col '$lat_col'
+      --lon-col '$lon_col'
     #end if
   ]]></command>
 
@@ -101,8 +102,8 @@
       <param name="input_crs" value="EPSG:4326" />
       <param name="output_crs" value="EPSG:3857" />
       <param name="csv" value="wgs84_coordinates.csv" ftype="csv" />
-      <param name="lat_col" value="latitude" />
-      <param name="lon_col" value="longitude" />
+      <param name="lat_col" value="2" />
+      <param name="lon_col" value="3" />
 
       <output name="out" ftype="csv" value="output.csv" />
     </test>
@@ -147,11 +148,11 @@ Two modes are available depending on whether a WKT column is provided:
 +---------------------+----------+------------------------------------------------------------+
 | Input CSV           | Yes      | CSV file containing the coordinates to transform.          |
 +---------------------+----------+------------------------------------------------------------+
-| Latitude Column     | Yes      | Name of the column holding latitude values. Letters,       |
-|                     |          | digits and underscores only.                               |
+| Latitude Column     | Yes      | Column holding latitude values, selected from the columns  |
+|                     |          | of the uploaded CSV. Required unless a WKT column is set.  |
 +---------------------+----------+------------------------------------------------------------+
-| Longitude Column    | Yes      | Name of the column holding longitude values. Letters,      |
-|                     |          | digits and underscores only.                               |
+| Longitude Column    | Yes      | Column holding longitude values, selected from the columns |
+|                     |          | of the uploaded CSV. Required unless a WKT column is set.  |
 +---------------------+----------+------------------------------------------------------------+
 | WKT Geometry Column | No       | Name of the column holding WKT geometries. When set,       |
 |                     |          | lat/lon columns are ignored and geometry reprojection is   |
