@@ -1,0 +1,167 @@
+<tool id="earthdata_api" name="earthdata API" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="25.1">
+    <description>Fetching EarthData (NASA environment database)</description>
+    
+    <macros>
+        <token name="@TOOL_VERSION@">0.1.0</token>
+        <token name="@VERSION_SUFFIX@">0</token>
+    </macros>
+
+    <requirements>
+        <requirement type="package" version="0.18.0">earthaccess</requirement>
+        <credentials name="earthdata_cred" version="1.0" label="EarthData Access" description="Credentials for accessing EarthData Database">
+            <variable name="username" inject_as_env="EARTHDATA_USERNAME" optional="false" 
+                label="EarthData Username" description="Your Earthdata login username" />
+            <secret name="secret_key" inject_as_env="EARTHDATA_PASSWORD" optional="false" 
+                label="EarthData Secret Access Key" description="Your Earthdata login secret access key / password" />
+        </credentials>
+    </requirements>
+    <required_files>
+        <include path="nasa_api.py" />
+    </required_files>
+
+    <command detect_errors="exit_code"><![CDATA[
+    python '$__tool_directory__/nasa_api.py'
+    --short_name '${short_name}'
+    --lat_min  '${section_bounding_box.lat_min}'
+    --lat_max  '${section_bounding_box.lat_max}'
+    --lon_min  '${section_bounding_box.lon_min}'
+    --lon_max  '${section_bounding_box.lon_max}'
+    --resolution '${section_time_frame.temporal_resolution}'
+    --start_date '${section_time_frame.start_date}'
+    --end_date '${section_time_frame.end_date}'
+    --exclude_dates '${section_time_frame.exclude_dates}'
+    --exclude_ranges '${section_time_frame.exclude_ranges}'
+    --out_file '${earthdata_output}'
+    ]]></command>
+
+    <inputs>
+        <param name="short_name" type="text" label="Dataset short name" value="ATL06">
+            <sanitizer invalid_char="">
+                <valid initial="string.letters,string.digits">
+                    <add value="_" />
+                    <add value="-" />
+                    <add value="." />
+                </valid>
+            </sanitizer>
+            <validator type="regex">^[0-9a-zA-Z_\-\. ]+$</validator>
+        </param>
+        
+        <section name="section_bounding_box" title="Bounding Box" expanded="true">
+            <param name="lat_min" type="float" label="Minimum latitude" value="-90"/>
+            <param name="lat_max" type="float" label="Maximum latitude" value="90"/>
+            <param name="lon_min" type="float" label="Minimum longitude" value="-180"/>
+            <param name="lon_max" type="float" label="Maximum longitude" value="180"/>
+        </section>
+
+        <section name="section_time_frame" title="Time Frame (YYYY-MM-DD)" expanded="true">
+            <param name="temporal_resolution" type="select">
+                <option value="daily" selected="true">Daily</option>
+                <option value="monthly">Monthly</option>
+            </param>
+
+                
+            <param name="start_date" type="text" value="2018-10-14"
+                label="Start date (YYYY-MM-DD)" help="If 'Monthly', please add the second day of the month (e.g:2001-12-02)">
+                <validator type="regex">^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$</validator>
+            </param>
+
+            <param name="end_date" type="text" value="2018-10-14"
+                label="End date (YYYY-MM-DD)" help="If 'Monthly', please add the last date of the month (e.g:2001-12-31)">
+                <validator type="regex">^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$</validator>
+            </param>
+
+            <param name="exclude_dates" type="text" optional="true"
+                label="Exclude dates (comma-separated YYYY-MM-DD)">
+                <validator type="regex">^(\s*(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])\s*)(,(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])\s*)*$</validator>
+            </param>
+
+            <param name="exclude_ranges" type="text" optional="true"
+                label="Exclude ranges (YYYY-MM-DD:YYYY-MM-DD)">
+                <validator type="regex">^(\s*(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]):(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])\s*)(,\s*(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]):(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])\s*)*$</validator>
+            </param>
+            <!-- SIMPLE XML -->
+            <!-- <validator type="regex">
+            ^\d{4}-(0[1-9]|1[0-2])(-[0-3]\d)?$
+            </validator> -->
+
+        </section>
+                
+    </inputs>
+
+    <outputs>
+        <collection type="list" name="output_net" format="netcdf">
+            <discover_datasets pattern="__name_and_ext__" directory="Data"/>
+        </collection>
+        <data format="txt" name="earthdata_output" label="NASA dataset"/>
+    </outputs>
+    
+    <tests>
+        <test expect_failure="true">
+            <param name="short_name" value="ATL06"/>
+
+            <section name="section_bounding_box">
+                <param name="lat_min" value="-70"/>
+                <param name="lat_max" value="-60"/>
+                <param name="lon_min" value="30"/>
+                <param name="lon_max" value="150"/>
+            </section>
+
+            <section name="section_time_frame">
+                <param name="temporal_resolution" value="daily"/>
+                <param name="start_date" value="2001-12-01"/>
+                <param name="end_date" value="2010-03-31"/>
+                <param name="exclude_dates" value=""/>
+                <param name="exclude_ranges" value="2002-04-01:2002-11-30,2003-04-01:2003-11-30,2004-04-01:2004-11-30,2005-04-01:2005-11-30,2006-04-01:2006-11-30,2007-04-01:2007-11-30,2008-04-01:2008-11-30,2009-04-01:2009-11-30,2010-04-01:2010-11-30"/>
+            </section>
+
+            <assert_stderr>
+                <has_text text="Either the environment variables EARTHDATA_USERNAME and EARTHDATA_PASSWORD must both be set, or EARTHDATA_TOKEN must be set for the 'environment' login strategy."/>
+            </assert_stderr>
+        </test>
+    </tests>
+
+    <help><![CDATA[
+    **What it does**
+
+    The Earthdata platform provides environmental datasets—often derived from satellite measures taken at different time steps (e.g., daily or monthly observations).
+    This tool retrieves NASA Earth science data from Earthdata using the earthaccess API.
+
+    **Requirements**
+
+    You need an Earthdata account. Create one through NASA Earthdata Login (see URLs below).
+
+    Once your credentials are set up, enter them in the credentials section:
+
+    * Galaxy Username → your Earthdata username
+    * EarthData Secret Access Key → your Earthdata password
+
+    **Features**
+
+    * Selects only **one** type of data per request, defined by its *short name*
+    * Supports filtering by spatial bounding box
+    * Supports querying across date ranges
+
+    **Temporal resolution considerations**
+
+    * This tool fetches both "monthly" and "daily" data
+    * Users are advised to check the "Temporal Resolution" information of their selected dataset using the Earthdata search interface. Use the NASA Earthdata Search interface to inspect dataset temporal resolution.
+
+    Note: The Earthdata catalog webpage is intended for human browsing only and may block automated requests (HTTP 403). This tool uses the official CMR API via the earthaccess library for data discovery and download.
+    * For datasets with a **monthly** temporal resolution, files can start at the first of the month and end on the 1st day of **the following month**. Users should therefore set the 'start date to the 2nd day of the month' to avoid unintentionally fetching measures from the previous month.
+
+    **Output**
+
+    * A collection of NASA data files matching the selected time range and geographic area (typically in .netcdf or .h5 format)
+    * A text file listing all downloaded files.
+     
+
+    **URLs**
+    * NASA Earthdata Login: urs.earthdata.nasa.gov
+    * Earthdata search interface: search.earthdata.nasa.gov
+    * Earthdata catalog webpage: earthdata.nasa.gov/data/catalog
+
+    ]]></help>
+    <citations>
+        <citation type="doi">10.5281/zenodo.8365009</citation>
+    </citations>
+</tool>

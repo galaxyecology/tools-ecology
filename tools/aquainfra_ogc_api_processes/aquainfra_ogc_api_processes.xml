@@ -1,4 +1,4 @@
-<tool id="aquainfra_ogc_api_processes" name="AquaINFRA OGC API Processes" version="0.15.0" profile="25.1">
+<tool id="aquainfra_ogc_api_processes" name="AquaINFRA OGC API Processes" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="25.1">
     <description/>
     <macros>
         <import>macros.xml</import>
@@ -17,13 +17,29 @@
     <inputs>
         <conditional name="conditional_process">
             <param name="select_process" type="select" label="Select process">
+                <option value="attach-legend-to-corineCLC">attach-legend-to-corineCLC: Attach legend to CORINE CLC raster</option>
                 <option value="barplot-trend-results">barplot-trend-results: Visualisation of statistical analysis results</option>
+                <option value="calculate-weighting">calculate-weighting: Calculate dasymetric weighting table</option>
                 <option value="check-names">check-names: Check species names in biodiversity data from separate sources</option>
                 <option value="clean-catchment-geometry">clean-catchment-geometry: Validate geometries (e.g. river catchments)</option>
                 <option value="combine-eurostat-data">combine-eurostat-data: Attach human population statistics to EU NUTS3 regions.</option>
                 <option value="corine-stats-real-areas-europe">corine-stats-real-areas-europe: Compute areas of CORINE classes within polygons (Europe version)</option>
                 <option value="corine-stats-real-areas-finland">corine-stats-real-areas-finland: Compute areas of CORINE classes within polygons (Finland version)</option>
+                <option value="create-visualisations">create-visualisations: Create evaluation visualisations for dasymetric population mapping</option>
+                <option value="crop-and-mask-raster">crop-and-mask-raster: Crop and mask raster to analysis extent</option>
+                <option value="dasymetric-refinement">dasymetric-refinement: Dasymetric refinement of LAU population to raster cells</option>
+                <option value="data-intersect">data-intersect: Intersect data with spatial analysis extent</option>
+                <option value="evaluate-refinement">evaluate-refinement: Evaluate dasymetric refinement results</option>
+                <option value="ferrybox-river-eo-plot">ferrybox-river-eo-plot: Plot EO, ferrybox and river discharge data</option>
                 <option value="filter-clip-clean-extent">filter-clip-clean-extent: Align extents of three datasets (D1=NUTS3 regions; D2=LAU regions; D3=river catchments) including validation steps.</option>
+                <option value="get-analysis-extent">get-analysis-extent: Get spatial analysis extent</option>
+                <option value="get-census-grid">get-census-grid: Get Eurostat census grid</option>
+                <option value="get-corineCLC">get-corineCLC: Get CORINE CLC raster for focus year</option>
+                <option value="get-ecrins-catchment">get-ecrins-catchment: Get ECRINS catchment</option>
+                <option value="get-eubucco-buildings">get-eubucco-buildings: Get EUBUCCO building footprints for catchment</option>
+                <option value="get-hydro90m-catchment-by-id-gisco">get-hydro90m-catchment-by-id-gisco: Get Hydrography90m basin catchment by ID (live GISCO country lookup)</option>
+                <option value="get-hydrobasins-l7-catchment">get-hydrobasins-l7-catchment: Get HydroBASINS level 07 catchment (via Ramsar WFS)</option>
+                <option value="get-lau-data">get-lau-data: Get LAU population data</option>
                 <option value="heat1">heat1: Reproducing HEAT HOLAS results: Generate the Assessment Units</option>
                 <option value="heat1advanced">heat1advanced: Assessing Eutrophication: Generate the Assessment Units</option>
                 <option value="heat2">heat2: Reproducing HEAT HOLAS results: Combine the samples</option>
@@ -34,6 +50,7 @@
                 <option value="heat4advanced">heat4advanced: Assessing Eutrophication: Compute Assessment Indicators</option>
                 <option value="heat5">heat5: Reproducing HEAT HOLAS results: Compute Assessment</option>
                 <option value="heat5advanced">heat5advanced: Assessing Eutrophication: Compute Assessment</option>
+                <option value="keep-only-valid-corineCLCclasses">keep-only-valid-corineCLCclasses: Keep only valid CORINE CLC classes</option>
                 <option value="malta-groundwater">malta-groundwater: Malta Groundwater Model (SEAWAT)</option>
                 <option value="map-shapefile-points">map-shapefile-points: Spatial visualisation of regions and data points</option>
                 <option value="map-trends-static">map-trends-static: Spatial visualisation of regions and data points</option>
@@ -61,12 +78,17 @@
                 <option value="retrieve-biodiversity-data">retrieve-biodiversity-data: Retrieve biodiversity data from the web</option>
                 <option value="riverload">riverload: Compute River Load</option>
                 <option value="riverload-plot">riverload-plot: Riverload Plot</option>
+                <option value="swat-marine-connection">swat-marine-connection: SWAT+ output to Marine Modelling System (AquaINFRA) input connection tool</option>
                 <option value="swat-simulation">swat-simulation: SWAT, Soil and Water Assessment Tool</option>
                 <option value="swatplus-lulc-change">swatplus-lulc-change: Land Use Land Cover Change for SWAT+ Models</option>
                 <option value="trend-analysis-mk">trend-analysis-mk: Man-Kendall Trend Analysis on Time Series</option>
                 <option value="ts-selection-interpolation">ts-selection-interpolation: Select and Interpolate Time Series</option>
                 <option value="weighting-functions">weighting-functions: Calculating human population density-derived weights for CORINE CLC classes.</option>
             </param>
+            <when value="attach-legend-to-corineCLC">
+                <param name="inputFile1_corineYear_rds" label="CORINE reference year" optional="false" help="Path to an .rds file containing the CORINE CLC reference year as a single value. Allowed years are 2012 and 2018. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile2_corineCLC_rds" label="CORINE CLC raster" optional="false" help="Path to an .rds file containing the CORINE Land Cover raster (SpatRaster) to which the legend should be attached. (URL must be stored in a .txt file)" type="data" format="txt"/>
+            </when>
             <when value="barplot-trend-results">
                 <param name="input_data" label="Input table" optional="false" help="URL to the input table containing statistical analysis results. The table must include columns for test values, p-values, and group identifiers. (URL must be stored in a .txt file)" type="data" format="txt"/>
                 <param name="colname_id" label="Column name for identifier" optional="false" value="" help="The name of the column containing group or sample identifiers, e.g., polygon id. Example = 'polygon_id'" type="text">
@@ -81,6 +103,17 @@
                 <param name="p_value_threshold" label="p value threshold for significance" optional="false" value="0.05" help="The threshold for distinguishing significant from insignificant values. It adjusts the transparency of bars in the plot. Example = '0.05'" type="float" min="0.01" max="0.1"/>
                 <param name="colname_group" label="Column name for subgroups" optional="false" value="" help="The name of the column that defines the subgroups or categories to be displayed on the X-axis, e.g., seasons for every polygon_id." type="text">
                     <validator type="empty_field" message="You must provide a value."/>
+                </param>
+            </when>
+            <when value="calculate-weighting">
+                <param name="inputFile1_censusgridSelected_rds" label="Census grid (selected/clipped)" optional="false" help="Path to an .rds file containing the Eurostat census grid (human population, e.g. column 'TOT_P_2021') clipped to the area of interest. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile2_corineCLCcropped_rds" label="CORINE CLC raster (cropped)" optional="false" help="Path to an .rds file containing the CORINE Land Cover raster (SpatRaster), cropped to the area of interest. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile3_corineYear_rds" label="CORINE reference year" optional="false" help="Path to an .rds file containing the CORINE CLC reference year as a single value. Only year 2018 is currently supported by this function. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile4_clcLegend_rds" label="CORINE CLC legend table" optional="false" help="Path to an .rds file containing the CORINE CLC legend table with class codes, labels, and RGB colors. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile5_corUrbanValues_rds" label="Urban CORINE CLC codes (optional)" optional="true" help="Path to an .rds file containing a vector of CORINE CLC class codes classified as urban (codes 100-199). Only required when 'additional_candidate_classes_to_consider' is 'all_artificial_surface_classes'. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="additional_candidate_classes_to_consider" label="Additional candidate classes to consider (optional)" optional="true" help="One of 'all_artificial_surface_classes' (use only the other urban CORINE classes, from inputFile5_corUrbanValues_rds) or 'all_other_classes' (use all other CORINE classes from the legend). If not supplied, this additional-classes step is skipped entirely." type="select">
+                    <option value="all_artificial_surface_classes">all_artificial_surface_classes</option>
+                    <option value="all_other_classes">all_other_classes</option>
                 </param>
             </when>
             <when value="check-names">
@@ -122,13 +155,109 @@
             <when value="corine-stats-real-areas-finland">
                 <param name="input_url_polygons" label="Input Regions" optional="false" help="URL to the file containing the polygons of interest (e.g. as a geojson file, zipped shapefile, or any file that can be read by geopandas.read_file). It has to contain the attribute areaname and a geometry. (URL must be stored in a .txt file)" type="data" format="txt"/>
             </when>
+            <when value="create-visualisations">
+                <param name="inputFile1_weightTable_rds" label="Weight table" optional="false" help="Path to an .rds file containing the dasymetric weighting table (CORINE class code, label, percent weight). (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile2_clcLegend_rds" label="CORINE CLC legend table" optional="false" help="Path to an .rds file containing the CORINE CLC legend table with class codes, labels, and RGB colors. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile3_coryear2018_rds" label="CORINE reference year" optional="false" help="Path to an .rds file containing the CORINE CLC reference year as a single value. Only year 2018 is currently supported by this function. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile4_cellStatistics_rds" label="LAU cell statistics" optional="false" help="Path to an .rds file containing per-LAU CORINE cell count statistics, used to plot the distribution of CORINE classes across LAU. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile5_censusgrid_rds" label="Census grid" optional="false" help="Path to an .rds file containing the Eurostat census grid (human population), used to derive population density class breaks. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile6_evaluateWeighted_rds" label="Weighted refinement evaluation results" optional="false" help="Path to an .rds file containing the census grid with weighted dasymetric refinement results joined (observed vs. estimated population, absolute and percentage differences). (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile7_catchment_gpkg" label="Catchment geometry" optional="false" help="Path to a GeoPackage file containing the ECRINS catchment boundary, overlaid on all maps for context. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile8_popFocusYear_rds" label="Population focus year" optional="false" help="Path to an .rds file containing the focus year for population data as a single value. Allowed years are 2011 through 2024. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile9_lauInCatchFocus_rds" label="LAU in catchment (focus year)" optional="false" help="Path to an .rds file containing LAU polygons within the catchment, with observed population for the focus year. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile10_lauInCatchReference_rds" label="LAU in catchment (reference year 2021)" optional="false" help="Path to an .rds file containing LAU polygons within the catchment, with observed population for reference year 2021. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile11_corineCLCvalid_rds" label="Valid CORINE CLC raster" optional="false" help="Path to an .rds file containing the CORINE CLC raster (SpatRaster, packed via terra::wrap) restricted to valid classes used in the refinement. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile12_corineCLConlyPositive_rds" label="CORINE CLC overlapping positive census grid" optional="false" help="Path to an .rds file containing the CORINE CLC raster (SpatRaster, packed via terra::wrap) restricted to cells overlapping census grid cells with positive observed population. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile13_refinement_rds" label="Estimated population raster (focus year)" optional="false" help="Path to an .rds file containing the dasymetric refinement output raster (band named 'pop_est') with estimated population for the focus year. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="thresholdval" label="Percentage error threshold" optional="false" value="0.0" help="Threshold value (0-100) for percentage errors to be considered acceptable ('green') in the binary percentage error map." type="float" min="0" max="100"/>
+                <param name="thresholdvalfortruth" label="Observed population truth threshold" optional="false" value="0.0" help="Threshold value (0-100) for the observed census grid population, above which a cell with 100% error is flagged as a special non-estimated case rather than plotted as a normal error." type="float" min="0" max="100"/>
+                <param name="inputFile14_metrics_rds" label="Accuracy metrics (weighted)" optional="false" help="Path to an .rds file containing accuracy metrics for the weighted dasymetric refinement. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile15_metricsSimple_rds" label="Accuracy metrics (simple/unweighted)" optional="false" help="Path to an .rds file containing accuracy metrics for the simple (unweighted) refinement, for comparison. (URL must be stored in a .txt file)" type="data" format="txt"/>
+            </when>
+            <when value="crop-and-mask-raster">
+                <param name="inputFile1_corineCLC_rds" label="CORINE CLC raster" optional="false" help="Path to an .rds file containing the CORINE Land Cover raster (SpatRaster) to be cropped and masked. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile2_analysisExtent_gpkg" label="Analysis spatial extent" optional="false" help="Path to a GeoPackage file containing the spatial extent geometry (e.g. catchment or country boundary) to crop and mask the raster to. (URL must be stored in a .txt file)" type="data" format="txt"/>
+            </when>
+            <when value="dasymetric-refinement">
+                <param name="refinement_type" label="Refinement type" optional="false" help="The dasymetric refinement strategy to use. 'weighted' distributes population across urban CORINE classes according to the weight table, and additionally treats raster cells whose building count exceeds the supplied threshold as populated when building footprints are supplied. 'simple' uses a binary distribution restricted to CORINE classes 111 and 112 only, with all weights set equal; building footprints and the building count threshold are ignored entirely in this mode." type="select">
+                    <option value="simple">simple</option>
+                    <option value="weighted">weighted</option>
+                </param>
+                <param name="inputFile1_corineCLC_rds" label="CORINE CLC raster" optional="false" help="Path to an .rds file containing the CORINE Land Cover raster (SpatRaster) used as ancillary data for the refinement. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile2_corineYear_rds" label="CORINE reference year" optional="false" help="Path to an .rds file containing the CORINE CLC reference year as a single value. Only year 2018 is currently supported by this function. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile3_lauInCatchment_rds" label="LAU polygons in catchment" optional="false" help="Path to an .rds file containing LAU (Local Administrative Unit) polygons within the catchment, with a 'LAU_ID' column and an observed population column for the focus year. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile4_popFocusYear_rds" label="Population focus year" optional="false" help="Path to an .rds file containing the focus year for population data as a single value, used to select the LAU population column (e.g. 'POP_2018'). (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile5_catchment_gpkg" label="Catchment geometry" optional="false" help="Path to a GeoPackage file containing the catchment boundary used to crop and mask the refinement output raster. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile6_weightTable_rds" label="Weight table" optional="false" help="Path to an .rds file containing the dasymetric weighting table (CORINE class code, label, percent weight). Used as-is for 'weighted' refinement; for 'simple' refinement, only classes 111 and 112 are retained and all weights are set equal. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile7_buildings_rds" label="EUBUCCO building footprints (optional)" optional="true" help="Path to an .rds file containing EUBUCCO building footprints (sf object) for the catchment, with a 'construction_year' column. Only buildings constructed in or before the focus year (or with unknown construction year) are used. Only read and used when refinement_type is 'weighted'; entirely ignored when refinement_type is 'simple'. If not supplied, the building-count step is skipped entirely and cells are determined by CORINE classes 111/112 alone. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile8_buildingCountThreshold" label="Building count threshold (optional)" optional="true" help="Single number: raster cells with a building count exceeding this threshold are treated as populated (in addition to CORINE classes 111/112). Only applied when refinement_type is 'weighted' and inputFile7_buildings_rds is supplied; ignored when refinement_type is 'simple' or no buildings are supplied. Defaults to 1 if not supplied (only relevant when inputFile7_buildings_rds is provided)." type="integer" min="1" max="30"/>
+            </when>
+            <when value="data-intersect">
+                <param name="inputFile1_focus_rds" label="Focus dataset" optional="false" help="Path to an .rds file containing the spatial dataset (sf object, e.g. LAU polygons or census grid) to be intersected with the analysis extent. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile2_analysisExtent_gpkg" label="Analysis spatial extent" optional="false" help="Path to a GeoPackage file containing the spatial extent geometry (e.g. catchment boundary) to intersect the focus dataset against. (URL must be stored in a .txt file)" type="data" format="txt"/>
+            </when>
+            <when value="evaluate-refinement">
+                <param name="inputFile1_refinementWeightedReference_rds" label="Weighted refinement raster (reference year)" optional="false" help="Path to an .rds file containing the packed (terra::wrap) dasymetric refinement output raster from the 'weighted' refinement type, for the reference year (2021). (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile2_refinementSimpleReference_rds" label="Simple refinement raster (reference year)" optional="false" help="Path to an .rds file containing the packed (terra::wrap) dasymetric refinement output raster from the 'simple' refinement type, for the reference year (2021). (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile3_censusgrid_rds" label="Census grid" help="Path to an .rds file containing the Eurostat census grid with observed population (column 'TOT_P_2021'), used as ground truth for evaluation. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile4_corineCLC_rds" label="CORINE CLC raster" help="Path to an .rds file containing the CORINE Land Cover raster (SpatRaster), used to derive the subset overlapping populated census grid cells. (URL must be stored in a .txt file)" type="data" format="txt"/>
+            </when>
+            <when value="ferrybox-river-eo-plot">
+                <param name="input1" label="Time series of river discarge data" help="URL to Time series of river discarge data. The URL needs to start with http(s). See the example and use only year 2023 or 2024. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input2" label="Aggregated Ferrybox turbidity data" help="Ferrybox data aggregated into daily values from areas along the route of the ship. The URL needs to start with http(s). Select the same year as in the discharge data (2023 or 2024). (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input3" label="Aggregated EO turbidity data" help="EO data aggregated into daily values from areas along the route of the ship. The URL needs to start with http(s). (URL must be stored in a .txt file)" type="data" format="txt"/>
+            </when>
             <when value="filter-clip-clean-extent">
-                <param name="inputFile1_gpkg" label="NUTS3 regions" optional="false" help="EU NUTS3 regions saved in geopackage. It should be in same coordinate system as the inputted river catchment dataset and overlap this - ideally it should fully contain its extent. (URL must be stored in a .txt file)" type="data" format="txt"/>
-                <param name="inputFile2_gpkg" label="LAU regions." optional="false" value="" help="EU LAU (Local Areal Unit) regions saved in geopackage. It should be in same coordinate system as the other inputted datasets and overlap these - ideally fully contained in the extent of the inputted river catchment dataset." type="text">
+                <param name="inputFile1_gpkg" label="NUTS3 regions"  help="EU NUTS3 regions saved in geopackage. It should be in same coordinate system as the inputted river catchment dataset and overlap this - ideally it should fully contain its extent. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile2_gpkg" label="LAU regions." value="" help="EU LAU (Local Areal Unit) regions saved in geopackage. It should be in same coordinate system as the other inputted datasets and overlap these - ideally fully contained in the extent of the inputted river catchment dataset." type="text">
                     <validator type="empty_field" message="You must provide a value."/>
                 </param>
                 <param name="inputFile3_gpkg" label="Validated river catchments dataset" optional="false" value="" help="River catchments dataset stored as geopackage and already validated. An example could be EU Ecrins subcatchments from 2012. It should have the same coordinate system as the inputted NUTS3 dataset and overlap this - ideally it should fully be within its extent." type="text">
                     <validator type="empty_field" message="You must provide a value."/>
+                </param>
+            </when>
+            <when value="get-analysis-extent">
+                <param name="inputFile1_lauFocusSelected_rds" label="LAU polygons in catchment (focus year)" optional="false" help="Path to an .rds file containing the LAU (Local Administrative Unit) polygons selected within the catchment for the focus year. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile2_lauReferenceSelected_rds" label="LAU polygons in catchment (reference year)" optional="false" help="Path to an .rds file containing the LAU (Local Administrative Unit) polygons selected within the catchment for the reference year, used as a fallback if no focus-year LAU polygons are found. (URL must be stored in a .txt file)" type="data" format="txt"/>
+            </when>
+            <when value="get-census-grid">
+                <param name="inputFile1_countries_rds" label="Countries for catchment" optional="false" help="Path to an .rds file containing the list of country codes (matching GISCO's CNTR_ID values) for which to fetch the census grid. (URL must be stored in a .txt file)" type="data" format="txt"/>
+            </when>
+            <when value="get-corineCLC">
+                <param name="inputFile1_focusYear_rds" label="Population focus year" optional="false" help="Path to an .rds file containing the focus year for population data as a single value, used to determine which CORINE CLC release year to fetch. Allowed years are 2011 through 2024. (URL must be stored in a .txt file)" type="data" format="txt"/>
+            </when>
+            <when value="get-ecrins-catchment">
+                <param name="catchment_id" label="Catchment ID" optional="false" value="0" help="The ECRINS functional elementary catchment ID to retrieve. Must be an integer from 1 to 118." type="integer" min="1" max="118"/>
+            </when>
+            <when value="get-eubucco-buildings">
+                <param name="inputFile1_catchment_gpkg" label="Catchment boundary" optional="false" help="Path to a .gpkg file containing the catchment (or other area of interest) polygon used to find overlapping NUTS2 regions and clip the returned buildings. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile2_countriesForCatchment_rds" label="Countries overlapping catchment" optional="false" help="Path to an .rds file containing the list of country codes overlapping the catchment, used to restrict the NUTS2 region search. (URL must be stored in a .txt file)" type="data" format="txt"/>
+            </when>
+            <when value="get-hydro90m-catchment-by-id-gisco">
+                <param name="basin_id" label="Basin ID" optional="false" value="0" help="The Hydrography90m basin_id to retrieve (e.g. 1288419). Must be a positive integer; existence is validated live against the pygeoapi service, not against a fixed list." type="integer" min="1"/>
+            </when>
+            <when value="get-hydrobasins-l7-catchment">
+                <param name="catchment_id" label="Catchment ID" optional="false" value="" help="The HydroBASINS level 07 HYBAS_ID to retrieve (10-digit Pfafstetter-based identifier, e.g. 2070104700). Must be one of the known level 07 catchment IDs with at least some EU territory; catchments entirely outside the EU are not available." type="text">
+                    <validator type="empty_field" message="You must provide a value."/>
+                </param>
+            </when>
+            <when value="get-lau-data">
+                <param name="inputFile1_countries_rds" label="Countries for catchment" optional="false" help="Path to an .rds file containing the list of country codes for which to fetch LAU population data. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="focus_year" label="Focus year" optional="false" help="The year for which to fetch LAU population data. Allowed years are 2011 through 2024." type="select">
+                    <option value="2011">2011</option>
+                    <option value="2012">2012</option>
+                    <option value="2013">2013</option>
+                    <option value="2014">2014</option>
+                    <option value="2015">2015</option>
+                    <option value="2016">2016</option>
+                    <option value="2017">2017</option>
+                    <option value="2018">2018</option>
+                    <option value="2019">2019</option>
+                    <option value="2020">2020</option>
+                    <option value="2021">2021</option>
+                    <option value="2022">2022</option>
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
                 </param>
             </when>
             <when value="heat1">
@@ -202,6 +331,11 @@
                 <param name="assessment_indicators" label="Assessment Indicators Table" optional="false" help="CSV file of calculated EQRS per assessment period per assessment unit (AssessmentIndicators.csv). (URL must be stored in a .txt file)" type="data" format="txt"/>
                 <param name="table_indicators" label="Table of Indicators" optional="true" help="A table listing the indicators. Needs the following column names: IndicatorID; CriteriaID; Name; Code; Parameters; Units; YearMin; YearMax; MonthMin; MonthMax; DepthMin; DepthMax; Metric; Response; Applied; Comments; GTC_HM; GTC_ML; STC_HM; STC_ML; SSC_HM; SSC_ML. Please ask HELCOM for details. Please provide a URL to the table as a CSV file." type="text"/>
                 <param name="table_indicator_units" label="Table of Indicator Units" optional="true" help="A table listing something about the indicators. Needs the following column names: IndicatorID; UnitID; ET; ACDEV; EQR_HG; EQR_GM; EQR_MP; EQR_PB; IW. Please ask HELCOM for details. Please provide a URL to the table as a CSV file." type="text"/>
+            </when>
+            <when value="keep-only-valid-corineCLCclasses">
+                <param name="inputFile1_corineCLC_rds" label="CORINE CLC raster" optional="false" help="Path to an .rds file containing the CORINE Land Cover raster (SpatRaster), typically already cropped to the analysis extent. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile2_corineYear_rds" label="CORINE reference year" optional="false" help="Path to an .rds file containing the CORINE CLC reference year as a single value. Only year 2018 is currently supported by this function. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile3_weightTable_rds" label="Weight table" optional="false" help="Path to an .rds file containing the dasymetric weighting table (CORINE class code, label, percent weight). Only CORINE class codes present in this table are kept. (URL must be stored in a .txt file)" type="data" format="txt"/>
             </when>
             <when value="malta-groundwater">
                 <param name="user_sealevels" label="Sea Level Projections (m)" optional="true" help="A list of sea level values (m), formatted as a single text string with brackets and commas (e.g., [-3.0, -2.0, -1.0]). This allows testing different scenarios. Higher values (simulating sea-level rise) will increase pressure on the aquifer, pushing saltwater further inland (saltwater intrusion)." type="text"/>
@@ -405,38 +539,52 @@
                 <param name="storm_date" label="Storm date" optional="true" help="Optional storm date (YYYY-MM-DD) to mark with a dashed vertical line." type="text"/>
             </when>
             <when value="owt-classification">
-                <param name="input_data_url" label="Input data" optional="false" help="URL to your input file. Find example data on https://github.com/bishun945/pyOWT/tree/main/projects/AquaINFRA. (URL must be stored in a .txt file)" type="data" format="txt"/>
-                <param name="input_option" label="Type of input" optional="false" help="csv: for text data input (first line wavelength, following lines remote-sensing reflectance). sat: for satellite product input containing reflectance (e.g., Sentinel-3 OLCI Level-2)" type="select">
-                    <option value="csv">csv</option>
-                    <option value="sat">sat</option>
-                </param>
-                <param name="sensor" label="Sensor name" optional="false" help="Spectral band configuration of satellite mission (includes adaptation to sensor spectral response functions)." type="select">
-                    <option value="HYPER">HYPER</option>
-                    <option value="AERONET_OC_1">AERONET_OC_1</option>
-                    <option value="AERONET_OC_2">AERONET_OC_2</option>
-                    <option value="CMEMS_BAL_HROC">CMEMS_BAL_HROC</option>
-                    <option value="CMEMS_BAL_NRT">CMEMS_BAL_NRT</option>
-                    <option value="CMEMS_MED_MYINT">CMEMS_MED_MYINT</option>
-                    <option value="CZCS">CZCS</option>
-                    <option value="GOCI">GOCI</option>
-                    <option value="HawkEye">HawkEye</option>
-                    <option value="MERIS">MERIS</option>
-                    <option value="ODIS_Aqua">ODIS_Aqua</option>
-                    <option value="MODIS_Terra">MODIS_Terra</option>
-                    <option value="MSI_S2A">MSI_S2A</option>
-                    <option value="MSI_S2B">MSI_S2B</option>
-                    <option value="OCTS">OCTS</option>
-                    <option value="OLCI_S3A">OLCI_S3A</option>
-                    <option value="OLCI_S3B">OLCI_S3B</option>
-                    <option value="OLI">OLI</option>
-                    <option value="SeaWiFS">SeaWiFS</option>
-                    <option value="VIIRS_JPSS1">VIIRS_JPSS1</option>
-                    <option value="VIIRS_JPSS2">VIIRS_JPSS2</option>
-                    <option value="VIIRS_SNPP">VIIRS_SNPP</option>
-                </param>
-                <param name="output_option" label="Output option" optional="false" help="1: for standard output with five variables. 2: for extensive output including memberships of all water types." type="select">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
+                <param name="input_data_url" label="Input data" help="URL to your input file. Find example data on https://github.com/bishun945/pyOWT/tree/main/projects/AquaINFRA. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_sensor_option" label="Sensor and type of input" optional="false" help="Type of input (e.g. in-situ, satellite) and spectral band configuration of satellite mission (includes adaptation to sensor spectral response functions)." type="select">
+                    <option value="SATELLITE - CMEMS_ARC_HROC">SATELLITE - CMEMS_ARC_HROC</option>
+                    <option value="SATELLITE - CMEMS_BAL_HROC">SATELLITE - CMEMS_BAL_HROC</option>
+                    <option value="SATELLITE - CMEMS_BAL_MYINT">SATELLITE - CMEMS_BAL_MYINT</option>
+                    <option value="SATELLITE - CMEMS_BAL_NRT">SATELLITE - CMEMS_BAL_NRT</option>
+                    <option value="SATELLITE - CMEMS_BLK_HROC">SATELLITE - CMEMS_BLK_HROC</option>
+                    <option value="SATELLITE - CMEMS_BLK_MYINT">SATELLITE - CMEMS_BLK_MYINT</option>
+                    <option value="SATELLITE - CMEMS_BLK_NRT">SATELLITE - CMEMS_BLK_NRT</option>
+                    <option value="SATELLITE - CMEMS_IBI_HROC">SATELLITE - CMEMS_IBI_HROC</option>
+                    <option value="SATELLITE - CMEMS_MED_HROC">SATELLITE - CMEMS_MED_HROC</option>
+                    <option value="SATELLITE - CMEMS_MED_MYINT">SATELLITE - CMEMS_MED_MYINT</option>
+                    <option value="SATELLITE - CMEMS_MED_NRT">SATELLITE - CMEMS_MED_NRT</option>
+                    <option value="SATELLITE - CMEMS_NWS_HROC">SATELLITE - CMEMS_NWS_HROC</option>
+                    <option value="SATELLITE - SENTINEL3-OLCI">SATELLITE - SENTINEL3-OLCI</option>
+                    <option value="INSITU - SEABASS">INSITU - SEABASS</option>
+                    <option value="INSITU - WATERHYPERNET">INSITU - WATERHYPERNET</option>
+                    <option value="INSITU - HYPER">INSITU - HYPER</option>
+                    <option value="INSITU - AERONET_OC_1">INSITU - AERONET_OC_1</option>
+                    <option value="INSITU - AERONET_OC_2">INSITU - AERONET_OC_2</option>
+                    <option value="INSITU - CLMS_OLCI">INSITU - CLMS_OLCI</option>
+                    <option value="INSITU - CLMS_MSI">INSITU - CLMS_MSI</option>
+                    <option value="INSITU - CMEMS_ARC_HROC">INSITU - CMEMS_ARC_HROC</option>
+                    <option value="INSITU - CMEMS_BAL_HROC">INSITU - CMEMS_BAL_HROC</option>
+                    <option value="INSITU - CMEMS_BAL_MYINT">INSITU - CMEMS_BAL_MYINT</option>
+                    <option value="INSITU - CMEMS_BAL_NRT">INSITU - CMEMS_BAL_NRT</option>
+                    <option value="INSITU - CMEMS_BLK_HROC">INSITU - CMEMS_BLK_HROC</option>
+                    <option value="INSITU - CMEMS_BLK_MYINT">INSITU - CMEMS_BLK_MYINT</option>
+                    <option value="INSITU - CMEMS_BLK_NRT">INSITU - CMEMS_BLK_NRT</option>
+                    <option value="INSITU - CMEMS_IBI_HROC">INSITU - CMEMS_IBI_HROC</option>
+                    <option value="INSITU - CMEMS_MED_HROC">INSITU - CMEMS_MED_HROC</option>
+                    <option value="INSITU - CMEMS_MED_MYINT">INSITU - CMEMS_MED_MYINT</option>
+                    <option value="INSITU - CMEMS_MED_NRT">INSITU - CMEMS_MED_NRT</option>
+                    <option value="INSITU - CMEMS_NWS_HROC">INSITU - CMEMS_NWS_HROC</option>
+                    <option value="INSITU - GOCI">INSITU - GOCI</option>
+                    <option value="INSITU - HAWKEYE">INSITU - HAWKEYE</option>
+                    <option value="INSITU - ENMAP">INSITU - ENMAP</option>
+                    <option value="INSITU - MERIS">INSITU - MERIS</option>
+                    <option value="INSITU - PACE">INSITU - PACE</option>
+                    <option value="INSITU - OCTS">INSITU - OCTS</option>
+                    <option value="INSITU - LANDSAT-8">INSITU - LANDSAT-8</option>
+                    <option value="INSITU - SeaWiFS">INSITU - SeaWiFS</option>
+                    <option value="INSITU - MODIS">INSITU - MODIS</option>
+                    <option value="INSITU - SENTINEL2-MSI">INSITU - SENTINEL2-MSI</option>
+                    <option value="INSITU - SENTINEL3-OLCI">INSITU - SENTINEL3-OLCI</option>
+                    <option value="INSITU - VIIRS">INSITU - VIIRS</option>
                 </param>
             </when>
             <when value="peri-conv">
@@ -539,12 +687,15 @@
                     <validator type="empty_field" message="You must provide a value."/>
                 </param>
             </when>
+            <when value="swat-marine-connection">
+                <param name="swat_output_file" label="SWAT+ Variable Outputs Database" optional="false" help="SQLite database (thread_1.sqlite) storing the simulated output values based on the defined time range and time step (daily, monthly, yearly, or annual average). (URL must be stored in a .txt file)" type="data" format="txt"/>
+            </when>
             <when value="swat-simulation">
                 <param name="swat_version" label="SWAT version" optional="false" value="" help="Define the SWAT model version 'swatplus' or 'swat2012'. AquaINFRA has integrated the executable version rev60.5.7_64rel_linux for SWAT+ and rev688_64rel_linux for SWAT2012. Example: 'swatplus'." type="text">
                     <validator type="empty_field" message="You must provide a value."/>
                 </param>
                 <param name="TextInOut_URL" label="URL to project folder" optional="false" help="Provide URL to zipped TxtInOut SWAT project folder. Important: Do not include the SWAT executable in that folder — AquaINFRA has integrated the executable version rev60.5.7_64rel_linux for SWAT+ and rev688_64rel_linux for SWAT2012. Example, SWAT+ La Tordera watershed (Catalonia, Spain) model calibrated for water quantity (period 2000-2022) (Batlle-Morera, et al, 2026. https://doi.org/10.23728/b2share.am3bh-05a34):  https://b2share.eudat.eu/records/am3bh-05a34/files/TxtInOut.zip?download=1 . (URL must be stored in a .txt file)" type="data" format="txt"/>
-                <param name="par_cal" label="Parameter inputs" optional="true" help="(optional) JSON file including the parameter value change as defined by SWATrunR documentation (https://chrisschuerz.github.io/SWATrunR/articles/SWATrunR.html#parameter-inputs). Example format: https://github.com/AmandaBatlle/AquaINFRA_CaseUse_MedInlandModel/blob/main/example_inputs/par_cal.json" type="text"/>
+                <param name="par_cal" label="Parameter inputs" optional="true" help="(optional) JSON file including the parameter value change as defined by SWATrunR documentation (https://chrisschuerz.github.io/SWATrunR/articles/SWATrunR.html#parameter-inputs). Example format: https://github.com/AmandaBatlle/AquaINFRA_CaseUse_MedInlandModel/blob/main/example_inputs/par_cal.json (URL must be stored in a .txt file)" type="data" format="txt"/>
                 <param name="unit" label="Output Spatial unit" optional="false" value="0" help="Specify the spatial unit for which to generate output. This corresponds to the ID of a river reach, HRU (Hydrologic Response Unit), or LSU (Landscape Unit) as defined in the SWAT+ watershed delineation. The value can be entered as a single number (e.g., 1), a range (e.g., 1:10), or a list of values (e.g., (1, 3, 25, 40)). Example unit for the La Tordera SWAT+ model (Batlle-Morera, et al, 2026) is 1." type="integer"/>
                 <param name="file" label="SWAT Output File" optional="false" value="" help="Enter output file according to SWAT version. For SWAT+, the output file name consists of three elements separated by underscores (_): spatial unit, output category, and time step. For example, 'channel_sd_day'. The spatial unit defines the scale of the output and can be basin, hru, lsunit, channel, aquifer, or reservoir. The output category specifies the type of data such as wb (water balance), nb (nutrient balance), ls (losses), pw (plant and weather), or sd (streamflow and sediment in channels). The time step indicates the temporal resolution and can be day (daily), mon (monthly), yr (yearly), or aa (annual average). Combining these elements forms the output file name. For more details, refer to the SWAT+ OUTPUT FILES section in the SWAT+ documentation (https://swatplus.gitbook.io/io-docs) and SWATrunR documentation (https://chrisschuerz.github.io/SWATrunR/reference/run_swatplus.html). For SWAT2012 output files, valid inputs are 'rch', 'sub', 'hru', and 'sed', followed by '_', and the required output interval as a character string ('d' for daily, 'm' for monthly, or 'y' for yearly), for example: rch_m.  For more details, refer to the SWAT2012 OUTPUT FILES chapter in the SWAT documentation (https://swat.tamu.edu/media/116601/ch32_output.pdf), and SWATrunR documentation (https://chrisschuerz.github.io/SWATrunR/reference/run_swat2012.html). Example for SWAT+: 'channel_sd_day'. Example for SWAT2012:'rch_d' " type="text">
                     <validator type="empty_field" message="You must provide a value."/>
