@@ -1,6 +1,6 @@
 <tool id="era5_extractor" name="ERA5 / ERA5-Land Climate Data Extractor" version="3.0.0" profile="25.1">
 
-  <description>Download daily ERA5 / ERA5-Land climate data via Open-Meteo (no account required)</description>
+  <description>Download daily ERA5 / ERA5-Land climate data via Open-Meteo</description>
 
   <!-- ═══════════════════════════════════════════════════════════════════════
        Requirements
@@ -13,6 +13,18 @@
     <requirement type="package" version="23.0.1">pyarrow</requirement>
     <requirement type="package" version="3.0.2">pandas</requirement>
   </requirements>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       Required files
+       Explicitly declares the script that must be shipped alongside this
+       tool XML when the job runs on a remote compute node (e.g. via Pulsar)
+       where the tool directory itself is not otherwise available. Without
+       this block, Galaxy falls back on implicit "find files referenced from
+       the tool directory" heuristics, which are deprecated.
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <required_files>
+    <include type="literal" path="era5_extractor.py" />
+  </required_files>
 
   <!-- ═══════════════════════════════════════════════════════════════════════
        Command
@@ -51,9 +63,6 @@ python '$__tool_directory__/era5_extractor.py'
 
 ## ── Advanced: sleep between requests ─────────────────────────────────────────
 --sleep $advanced.sleep
-
-## ── Advanced: verbose logging ────────────────────────────────────────────────
-$advanced.verbose
   ]]></command>
 
   <!-- ═══════════════════════════════════════════════════════════════════════
@@ -128,22 +137,22 @@ $advanced.verbose
         <option value="file">Per-site dates — from coordinate file columns</option>
       </param>
       <when value="global">
-        <!-- FIX: no <validator> on text date params — planemo 3 / pydantic v2
-             applies its own internal validator which conflicts with regex
-             validators in Galaxy profile 23.0.  Date format validation is
-             handled by the Python script itself. -->
         <param name="start_date"
                type="text"
                value="1990-01-01"
                label="Start date"
                help="Format: YYYY-MM-DD. Earliest allowed: 1960-01-01 (SAFRAN lower bound).
-                     Overridden per row by a 'begin_date' column in the coordinate file." />
+                     Overridden per row by a 'begin_date' column in the coordinate file.">
+          <validator type="regex" message="Date must be in YYYY-MM-DD format (e.g. 1990-01-01).">^\d{4}-\d{2}-\d{2}$</validator>
+        </param>
         <param name="end_date"
                type="text"
                value="2020-12-31"
                label="End date"
                help="Format: YYYY-MM-DD. Latest allowed: 2020-12-31 (SAFRAN upper bound).
-                     Overridden per row by an 'end_date' column in the coordinate file." />
+                     Overridden per row by an 'end_date' column in the coordinate file.">
+          <validator type="regex" message="Date must be in YYYY-MM-DD format (e.g. 2020-12-31).">^\d{4}-\d{2}-\d{2}$</validator>
+        </param>
       </when>
       <when value="file">
         <!-- dates come entirely from begin_date / end_date columns -->
@@ -204,15 +213,6 @@ $advanced.verbose
                    Increase this value if you receive repeated HTTP 429 errors.
                    Set to 0 only when using the paid API key." />
 
-      <param name="verbose"
-             type="boolean"
-             truevalue="--verbose"
-             falsevalue=""
-             checked="false"
-             label="Verbose logging"
-             help="Write per-site progress, exact API URLs, and model-routing
-                   decisions to the job log. Useful for debugging." />
-
     </section>
 
   </inputs>
@@ -236,12 +236,9 @@ $advanced.verbose
 
   <!-- ═══════════════════════════════════════════════════════════════════════
        Tests
-       NOTE: test values for text params inside conditionals must match
-             exactly what the script accepts; no validator is applied here.
-       FIX: <output name="..."> must match the name= of the <data> tag in
-            <outputs> above ("output_file"), not "output_file_1"/"output_file_2"
-            — the earlier mismatch meant planemo could never locate the output
-            to check, so both tests would fail before any assertion ran.
+       NOTE: <output name="..."> must match the name= of the <data> tag in
+             <outputs> above ("output_file") in every test — there is only
+             one declared output, so both tests reference the same name.
        ═══════════════════════════════════════════════════════════════════════ -->
   <tests>
 
@@ -256,7 +253,7 @@ $advanced.verbose
       </conditional>
       <param name="epsg"          value="4326" />
       <param name="output_format" value="csv" />
-      <output name="output_file_1"  ftype="csv">
+      <output name="output_file"  ftype="csv">
         <assert_contents>
           <has_text text="site_name" />
           <has_text text="site_id" />
@@ -276,7 +273,7 @@ $advanced.verbose
         <param name="mode"        value="file" />
       </conditional>
       <param name="output_format" value="tsv" />
-      <output name="output_2"  ftype="tabular">
+      <output name="output_file"  ftype="tabular">
         <assert_contents>
           <has_text text="site_name" />
           <has_text text="temperature_2m_mean" />
