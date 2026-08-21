@@ -68,6 +68,7 @@
         <citation type="doi">10.18129/B9.bioc.SparseArray</citation>
     </citations>
     <creator>
+        <person  givenName="Elouan" familyName="Le Mestric"  url="https://github.com/ElouanLM"/>
         <organization name="PNDB" url="https://www.pndb.fr/pages/accueil/"/>
     </creator>
 </tool>
