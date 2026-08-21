@@ -243,6 +243,7 @@
         <citation type="doi">10.32614/CRAN.package.dplyr</citation>
     </citations>
     <creator>
+        <person  givenName="Elouan" familyName="Le Mestric"  url="https://github.com/ElouanLM"/>
         <organization name="PNDB" url="https://www.pndb.fr/pages/accueil/"/>
     </creator>
 </tool>
