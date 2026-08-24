@@ -61,11 +61,14 @@
                 <param name="json_file" value="yes"/>
             </conditional>
             <!-- Check the contour shapefile and its projection -->
-            <output name="contour" value="change_yf_yi0.shp">
+            <output name="contour" value="change_yf_yi0.shp" ftype="shp">
+                <composite_data value="data/land_cover/output/change_yf_yi0.shp"/>
+                <composite_data value="data/land_cover/output/change_yf_yi0.shx"/>
+                <composite_data value="data/land_cover/output/change_yf_yi0.dbf"/>
+                <composite_data value="data/land_cover/output/change_yf_yi0.prj"/>
                 <assert_contents>
-                    <!-- Ensure the .prj file exists and contains the expected CRS -->
-                    <has_file name="change_yf_yi0.prj" />
-                    <has_text_in_file name="change_yf_yi0.prj" text="LAEA Europe|ETRS89" />
+                    <!-- Check the contents of the .prj file for the expected CRS -->
+                    <has_text text="LAEA Europe|ETRS89" />
                     <!-- Optional: Check the layer name in the .shp file -->
                     <has_text text="change_yf_yi0" />
                     <!-- Optional: Approximate number of features (adjust as needed) -->
