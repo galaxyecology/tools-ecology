@@ -4,7 +4,7 @@
 
     <macros>
         <token name="@TOOL_VERSION@">4.0.0</token>
-        <token name="@VERSION_SUFFIX@">0</token>
+        <token name="@VERSION_SUFFIX@">1</token>
     </macros>
 
     <!-- ════════════════════════════════════════════════════════════════════
@@ -206,7 +206,9 @@
                     <has_text text="T_Q" />
                     <has_text text="ETP_Q" />
                     <has_text text="montpellier" />
-                    <has_line_matching expression="^montpellier,montpellier,1990-01-0[1-9],.*" />
+                    <!-- site_id is a 0-based sequential integer (row order),
+                         followed by the normalized 'site_name' column. -->
+                    <has_line_matching expression="^0,montpellier,43\.6047,3\.8722,1990-01-0[1-9],.*" />
                 </assert_contents>
             </output>
         </test>
