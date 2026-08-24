@@ -1,0 +1,11 @@
+categories:
+    - Ecology
+owner: ecology
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/earthdata
+homepage_url: https://github.com/C0c0-C00k13/tools-ecology/tree/master/tools/earthdata
+long_description: |
+  A NASA Earth science data fetching tool, using the earthaccess API.
+type: unrestricted
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "NASA Earth science data fetching tool, using the earthaccess API: {{ tool_name }}."
