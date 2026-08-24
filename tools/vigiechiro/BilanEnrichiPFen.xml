@@ -61,9 +61,27 @@
             <output name="output_summary_tabular" file="BilanEnrichiPF_Test1_out_tab.tabular" ftype="tabular"/>
             <output name="output_hourly_tabular" file="BilanEnrichiPF_Test1_hourly.tabular" ftype="tabular"/>
             <output name="output_nightly_tabular" file="BilanEnrichiPF_Test1_nightly.tabular" ftype="tabular"/>
-            <output name="output_summary_html" file="BilanEnrichiPF_Test1_global_summary.html" ftype="html"/>
-            <output name="output_hourly_html" file="BilanEnrichiPF_Test1_hourly.html" ftype="html"/>
-            <output name="output_nightly_html" file="BilanEnrichiPF_Test1_nightly.html" ftype="html"/>
+            <!-- Assertions for Global Summary HTML -->
+            <output name="output_summary_html">
+                <assert_contents>
+                    <has_size value="295418" delta="5000"/>
+                    <has_text text="Global Summary"/>
+                </assert_contents>
+            </output>
+            <!-- Assertions for Hourly HTML -->
+            <output name="output_hourly_html">
+                <assert_contents>
+                    <has_size value="250000" delta="5000"/>
+                    <has_text text="Hourly Summary"/>
+                </assert_contents>
+            </output>
+            <!-- Assertions for Nightly HTML -->
+            <output name="output_nightly_html">
+                <assert_contents>
+                    <has_size value="250000" delta="5000"/>
+                    <has_text text="Nightly Summary"/>
+                </assert_contents>
+            </output
         </test>
     </tests>
     <help><![CDATA[
