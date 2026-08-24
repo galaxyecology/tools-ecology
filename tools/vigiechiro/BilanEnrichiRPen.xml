@@ -53,28 +53,30 @@
 	        <!-- Assertions for output_detail_tabular -->
 	        <output name="output_detail_tabular">
 	            <assert_contents>
-	                <has_line_matching expression="^Urosp.*Uromenus sp\.$"/>
-	                <has_n_columns n="17"/> <!-- Adjust based on actual column count -->
+	                <has_text text="Chauve-souris"/>
+	                <has_n_lines n="40" delta="10"/>
+	                <has_n_columns n="17"/> 
 	            </assert_contents>
 	        </output>
 	        <!-- Assertions for output_summary_tabular -->
 	        <output name="output_summary_tabular">
 	            <assert_contents>
-	                <has_line_matching expression="^Urosp.*Uromenus sp\.$"/>
-	                <has_n_columns n="12"/> <!-- Adjust based on actual column count -->
+	                <has_text text="Pipistrelle commune"/>
+	                <has_n_lines n="20" delta="5"/>
+	                <has_n_columns n="12"/> 
 	            </assert_contents>
 	        </output>
 	        <!-- Assertions for output_detail_html -->
 	        <output name="output_detail_html">
 	            <assert_contents>
-	                <has_size value="25000" delta="5000"/> <!-- Adjust based on expected file size -->
+	                <has_size value="303421" delta="5000"/> 
 	                <has_line_matching expression="Ephippigère carénée/d'Algérie"/>
 	            </assert_contents>
 	        </output>
 	        <!-- Assertions for output_summary_html -->
 	        <output name="output_summary_html">
 	            <assert_contents>
-	                <has_size value="20000" delta="5000"/> <!-- Adjust based on expected file size -->
+	                <has_size value="295418" delta="5000"/> 
 	                <has_line_matching expression="Ephippigère carénée/d'Algérie"/>
 	            </assert_contents>
 	        </output>
