@@ -77,7 +77,7 @@ You need to input an EML (Ecological Metadata Language) metadata file (xml forma
     </citations>
     <creator>
         <person givenName="Tanguy" familyName="Genthon" url="https://github.com/TanguyGen"/>
-        <person givenName="Pauline" familyName="Seguineau" url="https://github.com/PaulineSGN"/>
+        <person givenName="Pauline" familyName="Seguineau" url="https://orcid.org/0009-0009-5969-8478"/>
         <organization name="PNDB" url="https://www.pndb.fr/pages/accueil/"/>
         <organization name="Data Terra" url="https://www.data-terra.org/"/>
     </creator>
