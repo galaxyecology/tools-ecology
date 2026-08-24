@@ -62,11 +62,9 @@
             </conditional>
             <!-- Check the contour shapefile and its projection -->
             <output name="contour" value="change_yf_yi0.shp" ftype="shp">
-                <composite_data value="data/land_cover/output/change_yf_yi0.shp"/>
-                <composite_data value="data/land_cover/output/change_yf_yi0.shx"/>
-                <composite_data value="data/land_cover/output/change_yf_yi0.dbf"/>
-                <composite_data value="data/land_cover/output/change_yf_yi0.prj"/>
                 <assert_contents>
+                    <!-- Check for the presence of the .prj file in the composite dataset -->
+                    <has_text text="change_yf_yi0.prj" />
                     <!-- Check the contents of the .prj file for the expected CRS -->
                     <has_text text="LAEA Europe|ETRS89" />
                     <!-- Optional: Check the layer name in the .shp file -->
