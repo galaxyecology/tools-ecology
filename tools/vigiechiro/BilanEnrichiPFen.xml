@@ -81,7 +81,7 @@
                     <has_size value="250000" delta="5000"/>
                     <has_text text="Nightly Summary"/>
                 </assert_contents>
-            </output
+            </output>
         </test>
     </tests>
     <help><![CDATA[
