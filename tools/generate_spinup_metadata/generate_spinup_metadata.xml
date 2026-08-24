@@ -3,10 +3,9 @@
   <description>Compute spin-up period dates for SOC model initialization from site metadata</description>
 
   <requirements>
-    <requirement type="package">r-base</requirement>
-    <requirement type="package">r-optparse</requirement>
-    <requirement type="package">r-tidyverse</requirement>
-    <requirement type="package">r-lubridate</requirement>
+    <requirement type="package" version="4.3.1">r-base</requirement>
+    <requirement type="package" version="1.7.5">r-optparse</requirement>
+    <requirement type="package" version="2.0.0">r-tidyverse</requirement>
   </requirements>
 
   <command detect_errors="exit_code"><![CDATA[
