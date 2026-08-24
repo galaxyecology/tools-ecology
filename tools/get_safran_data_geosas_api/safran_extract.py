@@ -97,6 +97,10 @@ DATE_FMT = "%Y-%m-%d"
 TIME_COL_CANDIDATES = ("time", "date", "datetime", "valid_time", "t", "phenomenontime")  # noqa: E501
 LON_COL_CANDIDATES = ("longitude", "lon", "long", "x")
 LAT_COL_CANDIDATES = ("latitude", "lat", "y")
+# Input columns that identify/label a site. Whichever of these is present is
+# normalized to a single canonical 'site_name' output column, so the output
+# schema is predictable regardless of which one the input file used.
+LABEL_COL_CANDIDATES = ("site_name", "name", "id")
 # Coordinate / housekeeping columns coming from the API that we drop, because
 # the longitude/latitude written to the output come from the INPUT file.
 DROP_COORD_CANDIDATES = (
@@ -348,18 +352,26 @@ def standardize_table(
     original_row: dict,
     lon: float | None,
     lat: float | None,
+    label: str | None = None,
 ) -> pd.DataFrame:
     """
     Reshape a single API response table into the target layout:
 
-        site_id, <all columns from the original input file…>, date,
+        site_id, site_name, <other original input-file columns…>, date,
         <fetched climate variables…>[, longitude, latitude]
 
     - 'site_id' is always a 0-based sequential integer identifying the site
       (row processing order), regardless of any 'id'/'site_id' column that
       may exist in the input file.
-    - every column of the ORIGINAL coordinate/geometry file is preserved
-      as-is and repeated across every date of that site's time series.
+    - 'site_name' is always present in the output. Whichever of
+      'site_name' / 'name' / 'id' is found in the input file (in that
+      priority order) is normalized/renamed to 'site_name', so the output
+      schema is predictable no matter which one the input file used. If
+      none of them is present, the computed row label (falling back to the
+      row index) is used instead.
+    - every OTHER column of the ORIGINAL coordinate/geometry file is
+      preserved as-is and repeated across every date of that site's time
+      series.
     - the time/datetime column returned by the API is converted to a pure
       DATE (YYYY-MM-DD, no time-of-day), named 'date'.
     - the remaining columns returned by the API are the requested climate
@@ -394,11 +406,15 @@ def standardize_table(
     variable_cols = [c for c in df.columns if c != "date"]
 
     # 4. Original input-file columns, minus anything colliding with a
-    #    reserved/variable name (fetched data takes precedence on collision)
+    #    reserved/variable name (fetched data takes precedence on collision).
+    #    The first column matching LABEL_COL_CANDIDATES is renamed to the
+    #    canonical 'site_name' (not duplicated); everything else is kept as-is.  # noqa: E501
     reserved = {"site_id", "date", *[c.lower() for c in variable_cols]}
     orig_items = []
+    site_name_seen = False
     for key, value in original_row.items():
-        if key.lower() in reserved:
+        key_lower = key.lower()
+        if key_lower in reserved:
             log.warning(
                 "Input column '%s' collides with a reserved or fetched "
                 "variable name; keeping the fetched value instead.", key,
@@ -406,7 +422,16 @@ def standardize_table(
             continue
         if hasattr(value, "wkt"):  # Shapely geometry (GeoDataFrame input)
             value = value.wkt
+        if not site_name_seen and key_lower in LABEL_COL_CANDIDATES:
+            orig_items.append(("site_name", value))
+            site_name_seen = True
+            continue
         orig_items.append((key, value))
+
+    # No 'site_name'/'name'/'id' column found in the input file → fall back
+    # to the computed row label so 'site_name' is always present.
+    if not site_name_seen:
+        orig_items.insert(0, ("site_name", label if label is not None else str(sid)))  # noqa: E501
 
     # 5. Assemble: site_id, original columns, date, variables
     df["site_id"] = int(sid)
@@ -448,7 +473,7 @@ def merge_csv(chunks: list[tuple[int, str, float | None, float | None, bytes, di
     for sid, label, lon, lat, raw, original_row in chunks:
         try:
             df = pd.read_csv(io.BytesIO(raw))
-            df = standardize_table(df, sid, original_row, lon, lat)
+            df = standardize_table(df, sid, original_row, lon, lat, label=label)  # noqa: E501
             dfs.append(df)
             log.debug("  Parsed CSV for '%s': %d rows × %d cols", label, *df.shape)  # noqa: E501
         except Exception as exc:
@@ -473,7 +498,7 @@ def merge_parquet(chunks: list[tuple[int, str, float | None, float | None, bytes
     for sid, label, lon, lat, raw, original_row in chunks:
         try:
             df = pd.read_parquet(io.BytesIO(raw))
-            df = standardize_table(df, sid, original_row, lon, lat)
+            df = standardize_table(df, sid, original_row, lon, lat, label=label)  # noqa: E501
             dfs.append(df)
         except Exception as exc:
             log.warning("Could not parse parquet response for site '%s': %s", label, exc)  # noqa: E501
@@ -506,7 +531,7 @@ def merge_coveragejson(chunks: list[tuple[int, str, float | None, float | None, 
             cov["properties"]["site_id"] = int(sid)
             cov["properties"]["site_name"] = str(label)
             for key, value in original_row.items():
-                if key in cov["properties"]:
+                if key in cov["properties"] or key.lower() in LABEL_COL_CANDIDATES:  # noqa: E501
                     continue
                 if hasattr(value, "wkt"):  # Shapely geometry
                     value = value.wkt
@@ -558,7 +583,7 @@ def merge_netcdf(chunks: list[tuple[int, str, float | None, float | None, bytes,
                 # Add scalar 'site' / 'site_id' coords so concat creates the dimension  # noqa: E501
                 extra_coords = {}
                 for key, value in original_row.items():
-                    if key in ("site", "site_id"):
+                    if key in ("site", "site_id") or key.lower() in LABEL_COL_CANDIDATES:  # noqa: E501
                         continue
                     if hasattr(value, "wkt"):  # Shapely geometry
                         value = value.wkt
