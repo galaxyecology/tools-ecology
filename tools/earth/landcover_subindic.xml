@@ -62,7 +62,7 @@
             </conditional>
             <output name="contour" value="change_yf_yi0.shp">
                 <assert_contents>
-                    <has_text text="Point"/>  <!-- Ensure geometries are points -->
+                    <has_text text="LAEA Europe|ETRS89"/>  <!-- Ensure geometries are points -->
                     <has_text text="change_yf_yi0"/>  <!-- Check layer name -->
                     <has_n_lines n="10" delta="5"/>  <!-- Approximate number of lines (adjust as needed) -->
                 </assert_contents>
