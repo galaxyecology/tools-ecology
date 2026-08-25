@@ -128,13 +128,7 @@
                value="4326"
                label="EPSG code of the coordinates"
                help="Coordinate reference system of the input geometries.
-                     The GEOSAS API re-projects internally.
-
-                     Most common values:
-                       4326  — WGS84 geographic, decimal degrees (default)
-                       2154  — RGF93 / Lambert-93 (France, metric)
-                       32631 — WGS84 / UTM zone 31N (metric)
-
+                     Check the help section for more information
                      If unsure, use 4326 and provide decimal-degree coordinates." />
 
         <!-- ── 5. Output format ────────────────────────────────────────────── -->
