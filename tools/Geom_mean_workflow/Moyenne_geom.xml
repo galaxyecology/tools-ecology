@@ -18,7 +18,7 @@
          '$__tool_directory__/Moyenne_geom.r'
          '$input'
          '$separator'
-         'colnames'
+         '$colnames'
          '$output1'
          '$output2'
          '$output3'
@@ -28,13 +28,12 @@
     ]]></command>
     <inputs>
       <param name="input" type="data" format="csv,txt,tsv" label="Source file"/>
-      <param name="separator" type="select" label="What character is the seprator in your data ?">
+      <param name="separator" type="select" label="What character is the separator in your data ?">
              <option value=",">Comma</option>
              <option value="\t">Tab</option>
              <option value=";">Semicolon</option>
       </param>
       <param name="colnames" type="boolean" label="The first line of your data represents the names of columns?"/>
-     
     </inputs>
     <outputs>
       <data name="output1" from_work_dir="res2008_2012_scaled.csv" format="csv" label="res2008_2012_scaled.csv"/>
@@ -47,7 +46,7 @@
     <tests>
         <test>
             <param name='input' value="0_RESULTATS_BOIS_BIODIV_2021_V2.csv"/>
-            <param name='separator' value="&#44;"/>
+            <param name='separator' value=","/>
             <param name='colnames' value="TRUE"/>
             <output name='output1' value="res2008_2012_scaled.csv"/>
             <output name='output2' value="res2013_2017_scaled.csv"/>
