@@ -189,7 +189,7 @@
             <param name="climate_parameters" value="T_Q,ETP_Q" />
             <section name="date_range">
                 <param name="start_date" value="1990-01-01" />
-                <param name="end_date"   value="1990-01-31" />
+                <param name="end_date" value="1990-01-31" />
             </section>
             <param name="coord_file" value="test_single_point.csv" ftype="csv" />
             <param name="epsg"          value="4326" />
