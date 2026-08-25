@@ -19,7 +19,7 @@
         <requirement type="package" version="2026.4.0">xarray</requirement>
     </requirements>
     <required_files>
-        <include path="safran_extract.py/>
+        <include path="safran_extract.py"/>
     </required_files>
 
     <!-- ════════════════════════════════════════════════════════════════════
