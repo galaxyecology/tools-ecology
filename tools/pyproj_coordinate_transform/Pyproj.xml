@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tool id="pyproj_coordinate_transform" name="Pyproj coordinate transform" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
+<tool id="pyproj_coordinate_transform" name="Pyproj coordinate transform" version="@TOOL_VERSION@" profile="@PROFILE@">
 
   <description>
     Projection and coordinate transformation
@@ -17,6 +17,10 @@
     <requirement type="package" version="2.1.2">shapely</requirement>
     <requirement type="package" version="2.2.2">pandas</requirement>
   </requirements>
+
+  <required_files>
+    <include path="Pyproj.py"/>
+  </required_files>
 
   <!-- ============================================================ -->
   <!-- COMMAND                                                       -->
@@ -52,7 +56,6 @@
     <param name="csv"
            type="data"
            format="csv,tabular"
-           optional="false"
            label="Input CSV"
            help="CSV file containing coordinates to be transformed. Must include columns for latitude and longitude." />
 
@@ -98,7 +101,7 @@
   <!-- ============================================================ -->
   <tests>
     <!-- Test 1: plain lat/lon coordinate transformation -->
-    <test>
+    <test expect_num_outputs="1">
       <param name="input_crs" value="EPSG:4326" />
       <param name="output_crs" value="EPSG:3857" />
       <param name="csv" value="wgs84_coordinates.csv" ftype="csv" />
@@ -108,7 +111,7 @@
       <output name="out" ftype="csv" value="output.csv" />
     </test>
     <!-- Test 2: WKT geometry reprojection -->
-    <test>
+    <test expect_num_outputs="1">
       <param name="input_crs" value="EPSG:4326" />
       <param name="output_crs" value="EPSG:3857" />
       <param name="csv" value="wgs84_coordinates.csv" ftype="csv" />
@@ -199,4 +202,10 @@ Input CRS and Output CRS are chosen from a curated list of 300 EPSG codes (verif
   <citations>
     <citation type="doi">10.5281/zenodo.2592232</citation>
   </citations>
+
+  <!-- TODO: replace with your real name/ORCID if you have one -->
+  <creator>
+    <person givenName="Mathieu" familyName="Guimont" url="https://github.com/Mathmath34"/>
+    <organization name="ALAMOD"  url="https://www.pepr-faircarbon.fr/projets/alamod/"/>
+  </creator>
 </tool>
