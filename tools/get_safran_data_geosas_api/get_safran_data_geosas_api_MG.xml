@@ -64,7 +64,6 @@
         <param name="climate_parameters"
                type="select"
                multiple="true"
-               optional="false"
                label="Climate variables to download"
                help="Select one or more SAFRAN daily variables. The list is fetched live
                      from the GéoSAS API — it reflects the variables actually available
