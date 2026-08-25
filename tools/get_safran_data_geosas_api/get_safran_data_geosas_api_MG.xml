@@ -98,6 +98,7 @@
                          a 'begin_date' column; otherwise required.
                          Default fallback: 1960-01-01.
                          Format is validated by the tool (YYYY-MM-DD required).">
+                <validator type="regex" message="Date must be in YYYY-MM-DD format (or left blank).">^$|^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$</validator>
             </param>
 
             <param name="end_date"
@@ -111,6 +112,7 @@
                          an 'end_date' column; otherwise required.
                          Default fallback: 2020-12-31.
                          Format is validated by the tool (YYYY-MM-DD required).">
+                <validator type="regex" message="Date must be in YYYY-MM-DD format (or left blank).">^$|^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$</validator>
             </param>
 
         </section>
