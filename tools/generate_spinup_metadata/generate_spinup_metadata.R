@@ -62,21 +62,20 @@ message("\n[1/3] Reading site metadata ...")
 
 metadata_raw <- read_csv(opt$input_metadata, show_col_types = FALSE)
 
-required_cols <- c("site_name", begin_date_col, end_date_col, "longitude", "latitude")
+required_cols <- c("site_name", begin_date_col, end_date_col)
 missing_cols  <- setdiff(required_cols, colnames(metadata_raw))
 if (length(missing_cols) > 0) {
   stop("Missing required column(s) in input metadata: ",
        paste(missing_cols, collapse = ", "))
 }
 
-# Clean coordinates and parse dates
+# Clean dates (longitude/latitude, if present, are simply not used by this
+# tool and are dropped further down — they are optional, as documented).
 # truncated = 2 allows bare years (e.g. 1985 → 1985-01-01)
 locations <- metadata_raw %>%
   rename(begin_date = all_of(begin_date_col),
          end_date   = all_of(end_date_col)) %>%
   mutate(
-    longitude  = as.numeric(str_replace(as.character(longitude), "\u2212", "-")),
-    latitude   = as.numeric(str_replace(as.character(latitude),  "\u2212", "-")),
     begin_date    = ymd(begin_date,    truncated = 2L),
     end_date = ymd(end_date, truncated = 2L),
     end_date      = ceiling_date(end_date, unit = "year") - days(1)
