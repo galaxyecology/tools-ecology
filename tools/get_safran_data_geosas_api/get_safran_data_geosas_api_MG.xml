@@ -169,9 +169,9 @@
               format="csv"
               label="SAFRAN ${output_format} on ${on_string}">
             <change_format>
-                <when input="output_format" value="CoverageJSON" format="json" />
-                <when input="output_format" value="netCDF4"      format="netcdf" />
-                <when input="output_format" value="parquet"      format="parquet" />
+                <when input="output_format" value="CoverageJSON" format="json"/>
+                <when input="output_format" value="netCDF4" format="netcdf"/>
+                <when input="output_format" value="parquet" format="parquet"/>
             </change_format>
         </data>
     </outputs>
