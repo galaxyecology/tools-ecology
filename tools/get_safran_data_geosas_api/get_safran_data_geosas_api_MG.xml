@@ -338,5 +338,8 @@ The ``parameter_names`` field of that JSON response is the authoritative source.
         <citation type="doi">10.1029/2007JD008548</citation>
 
     </citations>
-
+  <creator>
+      <person givenName="Mathieu" familyName="Guimont" url="https://orcid.org/0009-0008-0622-604X"/>
+      <organization name="Data Terra"  url="https://www.data-terra.org/"/>
+  </creator>
 </tool>
