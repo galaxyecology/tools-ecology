@@ -1,4 +1,4 @@
-<tool id="sam3_semantic_segmentation" name="SAM3 Semantic Segmentation" version="1.0.1+galaxy4" profile="25.1">
+<tool id="sam3_semantic_segmentation" name="SAM3 Semantic Segmentation" version="1.0.1+galaxy6" profile="25.1">
     <description>
         SAM3 performs text-prompted semantic segmentation on images or videos. 
     </description>
@@ -13,11 +13,11 @@
     #set $name_file = '' 
     #if $input.input_kind == "image"
         #for $indata in $input.source
-            ln -s '$indata' 'data_files/${indata.element_identifier}' &&
+            ln -s '$indata' 'data_files/${indata.element_identifier}.${indata.ext}' &&
             #set $name_file += $indata.element_identifier + " "
         #end for
     #else
-        ln -s '$input.source' 'data_files/${input.source.element_identifier}' &&
+        ln -s '$input.source' 'data_files/${input.source.element_identifier}.${input.source.ext}' &&
         #set $name_file = $input.source.element_identifier + " "
     #end if
     python '$__tool_directory__/sam3_semantic_segmentation.py' 
@@ -29,19 +29,16 @@
         --name_file '$name_file'
         #if $input.input_kind == "video"
             --quality '$input.quality'
+            --output_frames '$input.output_frames'
         #end if
         #if $input.input_kind == "image"
             --outputs $input.outputs_format
         #else
-            #if $input.coco_video_mode != "no_coco"
-                --outputs 'coco, $input.outputs_format'
-                --coco_video_mode '$input.coco_video_mode'
-            #else
-                --outputs $input.outputs_format
-            #end if
+            --outputs 'coco,$input.outputs_format'
         #end if
         --do_normalization '$do_normalization'
         --show_bbox '$show_bbox'
+        --imgsz '$imgsz'
     ]]></command>
     <inputs>
         <param name="sam3_models" label="Model data" type="select" help="Contact the administrator of our Galaxy instance if you miss model data">
@@ -75,24 +72,24 @@
                 <param name="quality" type="select" label="Video quality"
                     help="Select output video bitrate,does not affect processing speed or annotations. 
                           Higher quality than the original is not useful and will only increase file size.">
-                    <option value="copy" selected="true">Original quality (copy)</option>
+                    <option value="copy" selected="true">Original quality (lossless)</option>
                     <option value="1000k">1000k - Standard (260p)</option>
                     <option value="2000k">2000k - Standard (480p~720p)</option>
                     <option value="4000k">4000k - Good (1080p)</option>
                     <option value="8000k">8000k - High quality (1080p)</option>
-                </param>
-                <param name="coco_video_mode" type="select"
-                    label="COCO output mode"
-                    help="Controls whether COCO annotations are generated, and how frames are referenced.">
-                    <option value="video" selected="true">Annotate the video — one COCO entry per frame, referencing the video file</option>
-                    <option value="frames">Annotate extracted frames — saves JPGs and one COCO entry per frame image</option>
-                    <option value="no_coco">No COCO output</option>
                 </param>
                 <param name="outputs_format" type="select" multiple="true" optional="true"
                     label="Additional output formats"
                     help="YOLO formats are optional. COCO output is controlled separately above.">
                     <option value="yolo_bbox">YOLO bounding boxes</option>
                     <option value="yolo_seg">YOLO segmentation masks</option>
+                </param>
+                <param name="output_frames" type="select" label="Export individual frames"
+                    help="Extract individual frames from the video as images (at the chosen frame stride).">
+                    <option value="none" selected="true">None</option>
+                    <option value="annotated">Annotated frames only (with segmentation overlay)</option>
+                    <option value="raw">Raw frames only (no annotations)</option>
+                    <option value="both">Both annotated and raw frames</option>
                 </param>
             </when>
         </conditional>
@@ -112,6 +109,16 @@
             help="For video input: process one frame every N frames."/>
         <param name="show_bbox" type="boolean" checked="true" truevalue="true" falsevalue="false"
             label="Show bounding boxes on annotated output"/>
+        <param name="imgsz" type="select" label="Inference image size"
+            help="Resolution at which the image is resized before segmentation.
+                A higher value preserves more detail and improves boundary accuracy,
+                especially for small objects, but increases computation time and GPU memory usage.
+                If you encounter out-of-memory errors, select a lower value.">
+            <option value="1288">1288 (highest accuracy)</option>
+            <option value="1036">1036 (high accuracy)</option>
+            <option value="644" selected="true">644 (default, balanced)</option>
+            <option value="518">518 (low memory)</option>
+        </param>
         <param name="do_normalization" type="boolean" checked="false" label="Normalize outputs?" >
             <help><![CDATA[
 This option will be applied to all selected formats above.<br/>
@@ -123,14 +130,18 @@ This option will be applied to all selected formats above.<br/>
     </inputs>
     <outputs>
         <data name="Annotations_coco" format="json" from_work_dir="./outputs/annotations.json" label="Annotation COCO">
-            <filter>input['outputs_format'] and 'coco' in input['outputs_format'] or input.get('coco_video_mode') == "video" or input.get('coco_video_mode') == "frames"</filter>
+            <filter>input['input_kind'] == "video" or (input['outputs_format'] and 'coco' in input['outputs_format'])</filter>
         </data>
-        <collection name="Coco_Frames" type="list" label="COCO Extracted Frames">
-            <filter>input['input_kind'] == "video" and input.get('coco_video_mode') == "frames"</filter>
-            <discover_datasets pattern="__name_and_ext__" directory="outputs/frames"/>
-        </collection>
         <collection name="Outputs_annotated" type="list" label="Annotated Outputs">
             <discover_datasets pattern="__name_and_ext__" directory="outputs/outputs_annotated"/>
+        </collection>
+        <collection name="Raw_Frames" type="list" label="Raw Frames">
+            <filter>input['input_kind'] == "video" and input.get('output_frames') in ('raw', 'both')</filter>
+            <discover_datasets pattern="__name_and_ext__" directory="outputs/frames_raw"/>
+        </collection>
+        <collection name="Annotated_Frames" type="list" label="Annotated Frames">
+            <filter>input['input_kind'] == "video" and input.get('output_frames') in ('annotated', 'both')</filter>
+            <discover_datasets pattern="__name_and_ext__" directory="outputs/frames_annotated"/>
         </collection>
         <collection name="Yolo_Bbox_Image" type="list" label="YOLO Bbox Images">
             <filter>input['outputs_format'] and 'yolo_bbox' in input['outputs_format']</filter>
@@ -185,6 +196,15 @@ How it works
 2. Enter a text prompt describing the object to segment
 3. SAM3 generates segmentation masks and overlays
 4. Results are returned as images or videos
+
+-------------------
+Input
+-------------------
+
+- **Images**: .jpg, .png, .tiff — multiple files accepted 
+- **Video**: .mp4, .avi, .mov, .gif — single file only
+
+.. note:: The datatype assigned by Galaxy may not be compatible with this tool: if your file does **not appear** in the tool input list, click the **pencil icon** in the history, go to the **Datatype** tab, select the correct format and click Save.
 
 -------------------
 Notes

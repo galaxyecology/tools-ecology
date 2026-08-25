@@ -15,6 +15,7 @@
 
     <command detect_errors="exit_code"><![CDATA[
         mkdir -p vcf_subsampled &&
+        mkdir -p vcf_tmp_preprocessing &&
 
         bash '$__tool_directory__/VCF_subsampled.sh'
             --input '${vcf_input}'
@@ -92,6 +93,22 @@
                 <element name="test_vcf_200snps_subsample_5">
                     <assert_contents>
                         <has_n_lines n="216" delta="2"/>
+                        <has_text text="#CHROM"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+        </test>
+
+        <test>
+            <param name="vcf_input" value="test_vcf_without_contigs.vcf"/>
+            <param name="SUBSET_SNPS_NB" value="50"/>
+            <param name="NB_REPLICATE_VCF" value="5"/>
+            <param name="MIN_SNP_NB" value="0"/>
+            <param name="polymorphic" value="true"/>
+            <output_collection name="vcf_subsampled" type="list" count="5">
+                <element name="test_vcf_without_contigs_50snps_subsample_2">
+                    <assert_contents>
+                        <has_n_lines n="69" delta="2"/>
                         <has_text text="#CHROM"/>
                     </assert_contents>
                 </element>

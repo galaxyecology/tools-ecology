@@ -45,11 +45,11 @@ jobs:
     - name: Determine latest commit in the Galaxy repo
       id: get-galaxy-sha
       run: echo "galaxy-head-sha=$(git ls-remote https://github.com/${{ steps.get-fork-branch.outputs.fork }}/galaxy refs/heads/${{ steps.get-fork-branch.outputs.branch }} | cut -f1)" >> $GITHUB_OUTPUT
-    - uses: actions/setup-python@v6
+    - uses: actions/setup-python@v7
       with:
         python-version: ${{ matrix.python-version }}
     - name: Cache .cache/pip
-      uses: actions/cache@v5
+      uses: actions/cache@v6
       id: cache-pip
       with:
         path: ~/.cache/pip
@@ -58,7 +58,7 @@ jobs:
     # are not available as wheels, pip will build a wheel for them, which can be cached.
     - name: Install wheel
       run: pip install wheel
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
       with:
         fetch-depth: 1
     - name: Fake a Planemo run to update cache and determine commit range, repositories, and chunks
@@ -86,14 +86,14 @@ jobs:
       matrix:
         python-version: ['3.11']
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
       with:
         fetch-depth: 1
-    - uses: actions/setup-python@v6
+    - uses: actions/setup-python@v7
       with:
         python-version: ${{ matrix.python-version }}
     - name: Cache .cache/pip
-      uses: actions/cache@v5
+      uses: actions/cache@v6
       id: cache-pip
       with:
         path: ~/.cache/pip
@@ -135,20 +135,20 @@ jobs:
     steps:
     # checkout the repository
     # and use it as the current working directory
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
       with:
         fetch-depth: 1
-    - uses: actions/setup-python@v6
+    - uses: actions/setup-python@v7
       with:
         python-version: ${{ matrix.python-version }}
     - name: Cache .cache/pip
-      uses: actions/cache@v5
+      uses: actions/cache@v6
       id: cache-pip
       with:
         path: ~/.cache/pip
         key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ needs.setup.outputs.galaxy-head-sha }}
     - name: Get number of CPU cores
-      uses: SimenB/github-actions-cpu-cores@v2
+      uses: SimenB/github-actions-cpu-cores@v3
       id: cpu-cores
     - name: Clean dotnet folder for space
       run: rm -Rf /usr/share/dotnet
@@ -187,11 +187,11 @@ jobs:
     - uses: actions/download-artifact@v8
       with:
         path: artifacts
-    - uses: actions/setup-python@v6
+    - uses: actions/setup-python@v7
       with:
         python-version: ${{ matrix.python-version }}
     - name: Cache .cache/pip
-      uses: actions/cache@v5
+      uses: actions/cache@v6
       id: cache-pip
       with:
         path: ~/.cache/pip
