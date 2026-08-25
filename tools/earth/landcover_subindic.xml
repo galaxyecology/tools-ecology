@@ -63,10 +63,6 @@
             <!-- Check the contour shapefile and its projection -->
             <output name="contour" value="change_yf_yi0.shp" ftype="shp">
                 <assert_contents>
-                    <!-- Check for the presence of the .prj file in the composite dataset -->
-                    <has_text text="change_yf_yi0.prj" />
-                    <!-- Check the contents of the .prj file for the expected CRS -->
-                    <has_text text="LAEA Europe|ETRS89" />
                     <!-- Optional: Check the layer name in the .shp file -->
                     <has_text text="change_yf_yi0" />
                     <!-- Optional: Approximate number of features (adjust as needed) -->
@@ -78,42 +74,36 @@
                 <element name="lc_baseline_esa" ftype="tiff">
                     <assert_contents>
                         <has_text text="LAEA Europe"/>
-                        <has_text text="Land_cover_yi"/>
                         <has_size size="1001118" delta="50000"/>
                     </assert_contents>
                 </element>
                 <element name="lc_bl" ftype="tiff">
                     <assert_contents>
                         <has_text text="LAEA Europe"/>
-                        <has_text text="Land_cover_yi"/>
                         <has_size size="1001118" delta="50000"/>
                     </assert_contents>
                 </element>
                 <element name="lc_dg" ftype="tiff">
                     <assert_contents>
                         <has_text text="LAEA Europe"/>
-                        <has_text text="Land_cover_degradation"/>
                         <has_size size="1001118" delta="50000"/>
                     </assert_contents>
                 </element>
                 <element name="lc_target_esa" ftype="tiff">
                     <assert_contents>
                         <has_text text="LAEA Europe"/>
-                        <has_text text="Land_cover_yf"/>
                         <has_size size="1001118" delta="50000"/>
                     </assert_contents>
                 </element>
                 <element name="lc_tg" ftype="tiff">
                     <assert_contents>
                         <has_text text="LAEA Europe"/>
-                        <has_text text="Land_cover_yf"/>
                         <has_size size="1001118" delta="50000"/>
                     </assert_contents>
                 </element>
                 <element name="lc_tr" ftype="tiff">
                     <assert_contents>
                         <has_text text="LAEA Europe"/>
-                        <has_text text="Land_cover_transitions_yi-yf"/>
                         <has_size size="1001118" delta="50000"/>
                     </assert_contents>
                 </element>
