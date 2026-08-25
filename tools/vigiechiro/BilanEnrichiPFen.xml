@@ -65,21 +65,21 @@
             <output name="output_summary_html">
                 <assert_contents>
                     <has_size value="295418" delta="5000"/>
-                    <has_text text="Global Summary"/>
+                    <has_text text="Chauve-souris"/>
                 </assert_contents>
             </output>
             <!-- Assertions for Hourly HTML -->
             <output name="output_hourly_html">
                 <assert_contents>
-                    <has_size value="250000" delta="5000"/>
-                    <has_text text="Hourly Summary"/>
+                    <has_size value="310637" delta="5000"/>
+                    <has_text text="Serotine commune"/>
                 </assert_contents>
             </output>
             <!-- Assertions for Nightly HTML -->
             <output name="output_nightly_html">
                 <assert_contents>
-                    <has_size value="250000" delta="5000"/>
-                    <has_text text="Nightly Summary"/>
+                    <has_size value="293322" delta="5000"/>
+                    <has_text text="Hypsugo savii"/>
                 </assert_contents>
             </output>
         </test>
