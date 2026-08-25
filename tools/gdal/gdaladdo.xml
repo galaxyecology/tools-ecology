@@ -16,8 +16,10 @@
                 -clean 
             #else
                 '$levels'
-                --config COMPRESS_OVERVIEW DEFLATE
-                && cp '$input1''.ovr' 'output_ovr'
+                --config COMPRESS_OVERVIEW DEFLATE&&
+            #end if 
+            #if str($levels).strip() != ''
+                cp "${input1}.ovr" "output_ovr"
             #end if
     ]]></command>
     
