@@ -62,7 +62,7 @@
 	        <output name="output_summary_tabular">
 	            <assert_contents>
 	                <has_text text="Pipistrelle commune"/>
-	                <has_n_lines n="20" delta="5"/>
+	                <has_n_lines n="32" delta="5"/>
 	                <has_n_columns n="12"/> 
 	            </assert_contents>
 	        </output>
@@ -70,14 +70,14 @@
 	        <output name="output_detail_html">
 	            <assert_contents>
 	                <has_size value="303421" delta="5000"/> 
-	                <has_line_matching expression="Ephippigère carénée/d'Algérie"/>
+	                <has_text text="Pipistrellus kuhlii"/>
 	            </assert_contents>
 	        </output>
 	        <!-- Assertions for output_summary_html -->
 	        <output name="output_summary_html">
 	            <assert_contents>
 	                <has_size value="295418" delta="5000"/> 
-	                <has_line_matching expression="Ephippigère carénée/d'Algérie"/>
+	                <has_text text="Nyctalus noctula"/>
 	            </assert_contents>
 	        </output>
 	    </test>
