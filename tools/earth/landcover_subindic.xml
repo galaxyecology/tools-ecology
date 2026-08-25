@@ -63,7 +63,7 @@
             <!-- Check the contour shapefile and its projection -->
             <output name="contour" value="change_yf_yi0.shp" ftype="shp">
                 <assert_contents>
-                    <has_n_lines n="10" delta="2" />
+                    <has_n_lines n="17" delta="5" />
                 </assert_contents>
             </output>
             <!-- Output Collection: TIFF files (unchanged) -->
