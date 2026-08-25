@@ -191,7 +191,7 @@
                 <param name="start_date" value="1990-01-01" />
                 <param name="end_date"   value="1990-01-31" />
             </section>
-            <param name="coord_file"    value="test_single_point.csv" ftype="csv" />
+            <param name="coord_file" value="test_single_point.csv" ftype="csv" />
             <param name="epsg"          value="4326" />
             <param name="output_format" value="CSV" />
             <output name="output" ftype="csv">
