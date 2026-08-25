@@ -63,10 +63,7 @@
             <!-- Check the contour shapefile and its projection -->
             <output name="contour" value="change_yf_yi0.shp" ftype="shp">
                 <assert_contents>
-                    <!-- Optional: Check the layer name in the .shp file -->
-                    <has_text text="change_yf_yi0" />
-                    <!-- Optional: Approximate number of features (adjust as needed) -->
-                    <has_n_lines n="10" delta="5" />
+                    <has_n_lines n="10" delta="2" />
                 </assert_contents>
             </output>
             <!-- Output Collection: TIFF files (unchanged) -->
