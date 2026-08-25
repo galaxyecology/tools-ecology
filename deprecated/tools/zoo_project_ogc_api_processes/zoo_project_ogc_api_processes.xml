@@ -1,4 +1,4 @@
-<!--<tool id="zoo_project_ogc_api_processes" name="Zoo Project OGC API Processes" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="22.05">
+<tool id="zoo_project_ogc_api_processes" name="Zoo Project OGC API Processes" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="22.05">
 	<description>executes remote OTB processes</description>
 	<macros>
 		<import>macros.xml</import>
@@ -2277,4 +2277,4 @@
 	<expand macro="help"/>
 	<expand macro="citations"/>
 	<expand macro="creator"/>
-</tool>-->
+</tool>
