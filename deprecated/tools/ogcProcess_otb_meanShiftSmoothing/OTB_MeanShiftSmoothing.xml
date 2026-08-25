@@ -1,4 +1,4 @@
-<!--<tool id="otb_mean_shift_smoothing" name="OTB.MeanShiftSmoothing" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="22.05">
+<tool id="otb_mean_shift_smoothing" name="OTB.MeanShiftSmoothing" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="22.05">
     <description> smooths an image using the MeanShift algorithm</description>
 	<macros>
         <token name="@TOOL_VERSION@">1.0</token>
@@ -122,4 +122,4 @@
 	<creator>
         <organization name="EOSC AquaINFRA" url="https://aquainfra.eu/"/>
     </creator>
-</tool>-->
+</tool>
