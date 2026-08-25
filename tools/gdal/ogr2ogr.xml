@@ -9,9 +9,6 @@
     </edam_topics>
     <expand macro="gdal_requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        #if $input.is_of_type("tabular")
-            cp '$input' '$input''.tsv' &&
-        #end if 
         ogr2ogr
             -f '$f'
             #if $f=='ESRI Shapefile'
