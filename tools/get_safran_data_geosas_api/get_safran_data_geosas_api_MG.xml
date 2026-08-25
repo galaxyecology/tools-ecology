@@ -1,4 +1,4 @@
-<tool id="get_safran_data_geosas_api" name="SAFRAN Climate Data Extractor (GEOSAS)" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="25.1">
+<tool id="get_safran_data_geosas_api" name="SAFRAN Climate Data Extractor" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="25.1">
 
     <description>Download SAFRAN daily climate reanalysis data from the GEOSAS OGC-EDR API (France, 1958–present)</description>
 
