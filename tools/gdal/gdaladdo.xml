@@ -9,17 +9,18 @@
     </edam_topics>
     <expand macro="gdal_requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        gdaladdo '$input1'
+        cp '$input1' 'input.tif' &&
+        gdaladdo
             -q
             -ro
-            #if str($levels).strip()==''
-                -clean 
-            #else
-                '$levels'
-                --config COMPRESS_OVERVIEW DEFLATE&&
-            #end if 
             #if str($levels).strip() != ''
-                cp "${input1}.ovr" "output_ovr"
+                input.tif
+                $levels
+                --config COMPRESS_OVERVIEW DEFLATE &&
+                cp 'input.tif.ovr' 'output_ovr'
+            #else
+                input.tif
+                -clean
             #end if
     ]]></command>
     
