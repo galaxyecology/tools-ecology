@@ -17,7 +17,13 @@
         Rscript
          '$__tool_directory__/Moyenne_geom.r'
          '$input'
-         '$separator'
+         #if $separator == 'comma'
+            ','
+         #elif $separator == 'tab'
+            '\t'
+         #else
+            ';'
+         #end if
          '$colnames'
          '$output1'
          '$output2'
@@ -29,9 +35,9 @@
     <inputs>
       <param name="input" type="data" format="csv,txt,tsv" label="Source file"/>
       <param name="separator" type="select" label="What character is the separator in your data ?">
-             <option value=",">Comma</option>
-             <option value="\t">Tab</option>
-             <option value=";">Semicolon</option>
+             <option value="comma">Comma</option>
+             <option value="tab">Tab</option>
+             <option value="semicolon">Semicolon</option>
       </param>
       <param name="colnames" type="boolean" label="The first line of your data represents the names of columns?"/>
     </inputs>
@@ -46,7 +52,7 @@
     <tests>
         <test>
             <param name='input' value="0_RESULTATS_BOIS_BIODIV_2021_V2.csv"/>
-            <param name='separator' value="Comma"/>
+            <param name='separator' value="comma"/>
             <param name='colnames' value="true"/>
             <output name='output1' value="res2008_2012_scaled.csv"/>
             <output name='output2' value="res2013_2017_scaled.csv"/>
