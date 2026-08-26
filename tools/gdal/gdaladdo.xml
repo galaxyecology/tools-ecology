@@ -10,18 +10,21 @@
     <expand macro="gdal_requirements" />
     <command detect_errors="exit_code"><![CDATA[
         cp '$input1' 'input.tif' &&
-        gdaladdo
-            -q
-            -ro
-            #if str($levels).strip() != ''
+        #if str($levels).strip() != ''
+            gdaladdo
+                -q
+                -ro
                 input.tif
                 $levels
                 --config COMPRESS_OVERVIEW DEFLATE &&
-                cp 'input.tif.ovr' 'output_ovr'
-            #else
+            cp 'input.tif.ovr' 'output_ovr'
+        #else
+            gdaladdo
+                -q
+                -ro
                 input.tif
                 -clean
-            #end if
+        #end if
     ]]></command>
     
     <inputs>
