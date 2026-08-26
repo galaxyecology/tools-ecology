@@ -1,4 +1,4 @@
-<tool id="wildlife_megadetector_huggingface" name="DeepForestVision" version="0.1.2+galaxy0" profile="24.2">
+<tool id="wildlife_megadetector_huggingface" name="DeepForestVision" version="0.1.2+galaxy0" profile="25.1">
     <description>
         DeepForestVision is an AI model designed to identify wildlife on camera trap images and videos from African tropical forests.
     </description>
@@ -9,8 +9,7 @@
     </requirements>
     <required_files>
         <include path="main.py"/>
-        <include path="fonction.py"/>
-        <include path="test-data/"/>
+        <include path="functions.py"/>
     </required_files>
     <command detect_errors="exit_code">
     <![CDATA[
