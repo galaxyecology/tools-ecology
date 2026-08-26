@@ -12,7 +12,7 @@
         #if $input.is_of_type("tabular")
             cp '$input' 'input.tsv' &&
         #end if
-        
+
         ogr2ogr
             -f '$f'
             #if $f=='ESRI Shapefile'
@@ -21,16 +21,16 @@
                 'output'
             #end if
             #if $input.is_of_type("shp")
-                ${os.path.join( $input.extra_files_path, 'shapefile.shp' )} 
+                ${os.path.join($input.extra_files_path, 'shapefile.shp')}
             #else if $input.is_of_type("tabular")
-                '$input''.tsv'
+                'input.tsv'
             #else
                 '$input'
             #end if
             #if $settings.advanced=='advanced'
                 #for $i in $settings.series_oo
                     #if str('${i.oo}').strip()!=''
-                       -oo ${i.oo}
+                        -oo ${i.oo}
                     #end if
                 #end for
             #end if
@@ -38,7 +38,7 @@
                 &&
                 mkdir ${shapefile.extra_files_path} &&
                 mv shapefile.* ${shapefile.extra_files_path}
-            #end if 
+            #end if
     ]]></command>
     <inputs>
         <param type="data" name="input" format="shp,xml,json,tabular,txt" label="Gdal supported input file" help="http://www.gdal.org/ogr_formats.html"/>
