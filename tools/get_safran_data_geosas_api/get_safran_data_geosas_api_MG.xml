@@ -183,7 +183,7 @@
          ════════════════════════════════════════════════════════════════════ -->
     <tests>
 
-        <!-- Test : single point, CSV output.
+        <!-- Test 1: single point, CSV coordinate file, CSV output.
              Content is checked via assertions rather than diffed against a
              frozen reference file, since the underlying data source is
              updated monthly. -->
@@ -207,6 +207,31 @@
                     <!-- site_id is a 0-based sequential integer (row order),
                          followed by the normalized 'site_name' column. -->
                     <has_line_matching expression="^0,montpellier,43\.6047,3\.8722,1990-01-0[1-9],.*" />
+                </assert_contents>
+            </output>
+        </test>
+ 
+        <!-- Test 2: single point, TABULAR (tab-separated) coordinate file,
+             CSV output. Exercises the 'tabular' branch of coordinate-file
+             parsing (a different Galaxy datatype / delimiter than test 1) -->
+        <test expect_num_outputs="1">
+            <param name="climate_parameters" value="T_Q,ETP_Q" />
+            <section name="date_range">
+                <param name="start_date" value="1990-01-01" />
+                <param name="end_date" value="1990-01-31" />
+            </section>
+            <param name="coord_file" value="test_single_point.tabular" ftype="tabular" />
+            <param name="epsg" value="4326" />
+            <param name="output_format" value="CSV" />
+            <output name="output" ftype="csv">
+                <assert_contents>
+                    <has_n_columns n="7" sep="," />
+                    <has_text text="site_id" />
+                    <has_text text="site_name" />
+                    <has_text text="T_Q" />
+                    <has_text text="ETP_Q" />
+                    <has_text text="rennes" />
+                    <has_line_matching expression="^0,rennes,48\.1173,-1\.6778,1990-01-0[1-9],.*" />
                 </assert_contents>
             </output>
         </test>
@@ -347,7 +372,7 @@ The ``parameter_names`` field of that JSON response is the authoritative source.
 
     </citations>
   <creator>
-      <person givenName="Mathieu" familyName="Guimont" url="https://orcid.org/0009-0008-0622-604X"/>
+      <person givenName="Mathieu" familyName="Guimont" url="https://github.com/Mathmath34/"/>
       <organization name="Data Terra"  url="https://www.data-terra.org/"/>
   </creator>
 </tool>
