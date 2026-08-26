@@ -24,7 +24,7 @@
     </inputs>
     <outputs>
         <collection type="list" name="output_net" format="netcdf">
-            <discover_datasets pattern="(?P&lt;designation&gt;.+)"  directory="./output/" visible="true"/>
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)" directory="./output/" visible="true"/>
         </collection>
     </outputs>
     <tests>
@@ -119,12 +119,12 @@ A concatenated and harmonized NetCDF file.
             author = {Pokapok},
             year = {2024},
             note = {https://gitlab.com/pokapok-projects/PKP8-OGI-BGC/qcv_ingester}
-        </citation>    
+        </citation>
     </citations>
     <creator>
         <person givenName="Marie" familyName="Jossé" url="https://orcid.org/0009-0008-0622-604X"/>
-        <organization name="EOSC Fair-Ease"  url="https://fairease.eu/"/>
-        <organization name="Data Terra"  url="https://www.data-terra.org/"/>
-        <organization name="POKaPOK"  url="https://www.pokapok.org/"/>
+        <organization name="EOSC Fair-Ease" url="https://fairease.eu/"/>
+        <organization name="Data Terra" url="https://www.data-terra.org/"/>
+        <organization name="POKaPOK" url="https://www.pokapok.org/"/>
     </creator>
 </tool>

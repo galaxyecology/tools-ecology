@@ -4,10 +4,10 @@
         <import>gdal_macros.xml</import>
     </macros>
     <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
+        <edam_topic>topic_0610</edam_topic>
+        <edam_topic>topic_3050</edam_topic>
     </edam_topics>
-    <expand macro="gdal_requirements" />
+    <expand macro="gdal_requirements"/>
     <command detect_errors="exit_code"><![CDATA[
         gdal_translate 
 
@@ -84,14 +84,14 @@
             </param>
             <when value="dataset">
                 <param type="data" label="Input data" format="data" help="Select a file you want to convert in GTiff, VRT or netCDF" name="input1"/>
-            </when>    
+            </when>
             <when value="subdataset">
                 <param type="data" format="data" label="Tabular of subdatasets" name="subdata_tab"/>
                 <param name="input1" type="select" label="Chose your subdata">
-                   <options from_dataset="subdata_tab">
-                       <column name="value" index="0"/>
-                   </options>
-                   <sanitizer>
+                    <options from_dataset="subdata_tab">
+                        <column name="value" index="0"/>
+                    </options>
+                    <sanitizer>
                         <valid initial="string.printable">
                             <add value="&quot;"/>
                         </valid>
@@ -100,7 +100,7 @@
             </when>
         </conditional>
         <expand macro="gdal_param_of"/>
-        <conditional name="settings">    
+        <conditional name="settings">
             <expand macro="gdal_advanced_params_select"/>
             <when value="advanced">
                 <expand macro="gdal_param_ot"/>
@@ -111,9 +111,9 @@
                 <expand macro="gdal_param_stats"/>
                 <expand macro="gdal_param_norat"/>
                 <expand macro="gdal_param_co"/>
-                <param name="mo" type="text" label="Pass a metadata key and value to set on the output dataset" help="-mo META-TAG=VALUE" value="" />
+                <param name="mo" type="text" label="Pass a metadata key and value to set on the output dataset" help="-mo META-TAG=VALUE" value=""/>
                 <conditional name="condi_expand">
-                    <param name="expand" type="select" label="Expose a dataset with 1 band with a color table" help="-expand gray|rgb|rgba" >
+                    <param name="expand" type="select" label="Expose a dataset with 1 band with a color table" help="-expand gray|rgb|rgba">
                         <option value="no_expand" selected="true">Don't use the -expand option</option>
                         <option value="expand">Use the -expand option</option>
                     </param>
@@ -128,7 +128,7 @@
                     </when>
                 </conditional>
                 <conditional name="outsize">
-                    <param name="outsize" type="select" label="Set the size of the output file" help="-outsize in % or pixel. Default is 100%." >
+                    <param name="outsize" type="select" label="Set the size of the output file" help="-outsize in % or pixel. Default is 100%.">
                         <option value="outsize_x" selected="true">xsize</option>
                         <option value="outsize_y">ysize</option>
                     </param>
@@ -142,7 +142,7 @@
                     </when>
                 </conditional>
                 <conditional name="condi_scale">
-                    <param name="scale" type="select" label="Rescale the input pixels values" help="-squale from the range src_min to src_max to the range dst_min to dst_max" >
+                    <param name="scale" type="select" label="Rescale the input pixels values" help="-squale from the range src_min to src_max to the range dst_min to dst_max">
                         <option value="no_scale" selected="true">Don't use the -scale option</option>
                         <option value="scale">Use the -scale option</option>
                     </param>
@@ -156,7 +156,7 @@
                     </when>
                 </conditional>
                 <conditional name="condi_srcwin">
-                    <param name="srcwin" type="select" label="Selects a subwindow from the source image" help="-srcwin. Copying based on pixel/line location" >
+                    <param name="srcwin" type="select" label="Selects a subwindow from the source image" help="-srcwin. Copying based on pixel/line location">
                         <option value="no_srcwin" selected="true">Don't use the -srcwin option</option>
                         <option value="srcwin">Use the -srcwin option</option>
                     </param>
@@ -170,7 +170,7 @@
                     </when>
                 </conditional>
                 <conditional name="condi_a_ullr">
-                    <param name="a_ullr" type="select" label="Assign/override the georeferenced bounds of the output file" help="-a_ullr ulx uly lrx lry. This assigns georeferenced bounds to the output file, ignoring what would have been derived from the source file. So this does not cause reprojection to the specified SRS" >
+                    <param name="a_ullr" type="select" label="Assign/override the georeferenced bounds of the output file" help="-a_ullr ulx uly lrx lry. This assigns georeferenced bounds to the output file, ignoring what would have been derived from the source file. So this does not cause reprojection to the specified SRS">
                         <option value="no_a_ullr" selected="true">Don't use the -a_ullr option</option>
                         <option value="a_ullr">Use the -a_ullr option</option>
                     </param>
@@ -188,20 +188,20 @@
                     <option value="-epo">-epo : Error when partially outside</option>
                     <option value="-eco">-eco : Error when completely outside</option>
                 </param>
-                <param name="a_srs" type="text" label="Override the projection" help="-a_srs. The srs_def may be any of the usual GDAL/OGR forms, complete WKT, PROJ.4, EPSG:n or a file containing the WKT. No reprojection is done" value="" />
+                <param name="a_srs" type="text" label="Override the projection" help="-a_srs. The srs_def may be any of the usual GDAL/OGR forms, complete WKT, PROJ.4, EPSG:n or a file containing the WKT. No reprojection is done" value=""/>
             </when>
         </conditional>
     </inputs>
     <outputs>
-        <expand macro="gdal_output_change_format"/>  
+        <expand macro="gdal_output_change_format"/>
     </outputs>
     <tests>
         <test>
             <conditional name="typeinput">
                 <param name="input1" value="tinyworld.png"/>
             </conditional>
-            <param name="of" value="GTiff" />
-            <conditional name="settings">    
+            <param name="of" value="GTiff"/>
+            <conditional name="settings">
                 <param name="advanced" value="advanced"/>
                 <conditional name="condi_a_ullr">
                     <param name="a_ullr" value="a_ullr"/>

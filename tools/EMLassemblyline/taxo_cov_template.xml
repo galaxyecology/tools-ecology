@@ -28,50 +28,50 @@
          
     ]]></command>
     <inputs>
-         <param name="inputdata" type="data" format="tabular" label="Upload table containing all unique taxa in the data" />
-         <param name="taxa_col" type="data_column"  label="What column of your table listing all unique taxa ?" data_ref="inputdata" />
-         <param name="name_type" type="select"  label="What type of taxa name are in your table ?">
-              <option value="scientific">Scientific</option>
-              <option value="common">Common</option>
-         </param>
-         <section name="authority" title="Select the taxonomic authority in wich the taxa's name will be search (you can select multiple authority). If you select several authhority, please select in order of decreasing in preference." >
-            <param name="authority_name" type="select"  label="Select your first taxonomic authority in wich the taxa's name will be search. (required)" optional="false">
-                 <option value="11">GBIF</option>
-                 <option value="9">WORMS</option>
-                 <option value="3">ITIS</option>
+        <param name="inputdata" type="data" format="tabular" label="Upload table containing all unique taxa in the data"/>
+        <param name="taxa_col" type="data_column" label="What column of your table listing all unique taxa ?" data_ref="inputdata"/>
+        <param name="name_type" type="select" label="What type of taxa name are in your table ?">
+            <option value="scientific">Scientific</option>
+            <option value="common">Common</option>
+        </param>
+        <section name="authority" title="Select the taxonomic authority in wich the taxa's name will be search (you can select multiple authority). If you select several authhority, please select in order of decreasing in preference.">
+            <param name="authority_name" type="select" label="Select your first taxonomic authority in wich the taxa's name will be search. (required)" optional="false">
+                <option value="11">GBIF</option>
+                <option value="9">WORMS</option>
+                <option value="3">ITIS</option>
             </param>
-            <param name="authority_name2" type="select"  label="Select if you want a second taxonomic authority in wich the taxa's name will be search, else select 'None'.">
-                 <option value="0">None</option>
-                 <option value="11">GBIF</option>
-                 <option value="9">WORMS</option>
-                 <option value="3">ITIS</option>
+            <param name="authority_name2" type="select" label="Select if you want a second taxonomic authority in wich the taxa's name will be search, else select 'None'.">
+                <option value="0">None</option>
+                <option value="11">GBIF</option>
+                <option value="9">WORMS</option>
+                <option value="3">ITIS</option>
             </param>
-            <param name="authority_name3" type="select"  label="Select if you want a third taxonomic authority in wich the taxa's name will be search, else select 'None'.">
-                 <option value="0">None</option>
-                 <option value="11">GBIF</option>
-                 <option value="9">WORMS</option>
-                 <option value="3">ITIS</option>
+            <param name="authority_name3" type="select" label="Select if you want a third taxonomic authority in wich the taxa's name will be search, else select 'None'.">
+                <option value="0">None</option>
+                <option value="11">GBIF</option>
+                <option value="9">WORMS</option>
+                <option value="3">ITIS</option>
             </param>
-        </section>    
-         <param name="empty" type="boolean"  label="Write an empty template file ?" />
+        </section>
+        <param name="empty" type="boolean" label="Write an empty template file ?"/>
     </inputs>
     <outputs>
-         <data name="output" from_work_dir="taxonomic_coverage.txt" format="txt" label="taxonomic_coverage.txt"/>
+        <data name="output" from_work_dir="taxonomic_coverage.txt" format="txt" label="taxonomic_coverage.txt"/>
     </outputs>
     <tests>
-          <test>
-               <param name="inputdata" value="taxa.tsv"/>
-               <param name="taxa_col" value="1"/>
-               <param name="name_type" value="scientific"/>
-               <section name="authority">
-                    <param name="authority_name" value="11"/>
-                    <param name="authority_name2" value="0"/>
-                    <param name="authority_name3" value="0"/>
-               </section>
-               <param name="empty" value="false"/>
-               <output name="output" value="taxonomic_coverage.txt"/>
-          </test>
-     </tests>
+        <test>
+            <param name="inputdata" value="taxa.tsv"/>
+            <param name="taxa_col" value="1"/>
+            <param name="name_type" value="scientific"/>
+            <section name="authority">
+                <param name="authority_name" value="11"/>
+                <param name="authority_name2" value="0"/>
+                <param name="authority_name3" value="0"/>
+            </section>
+            <param name="empty" value="false"/>
+            <output name="output" value="taxonomic_coverage.txt"/>
+        </test>
+    </tests>
     <help><![CDATA[
 **What it does?**
 --------------------

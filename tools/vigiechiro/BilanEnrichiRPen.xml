@@ -2,10 +2,10 @@
     <description>from Animal Detection on Acoustic Recordings</description>
     <macros>
         <import>vigiechiro_macros.xml</import>
-    </macros>  
+    </macros>
     <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
+        <edam_topic>topic_0610</edam_topic>
+        <edam_topic>topic_3050</edam_topic>
     </edam_topics>
     <expand macro="vigiechiro_requirements">
         <expand macro="vigiechiro_bilanenrichi_requirements"/>
@@ -30,7 +30,7 @@
         <param name="output_choice" type="select" label="Select a summarised or detailed display" multiple="true" optional="false" help="Chose whether your want a summarised or detailed display">
             <option value="detailed" selected="true">detailed output</option>
             <option value="summarised">summarised output</option>
-        </param>		
+        </param>
     </inputs>
     <outputs>
         <data name="output_summary_tabular" format="tabular" from_work_dir="output-summaryRP.tabular" label="${tool.name} on ${on_string} Summary table">
@@ -38,50 +38,50 @@
         </data>
         <data name="output_summary_html" format="html" from_work_dir="output-summaryRP.html" label="${tool.name} on ${on_string} Summary html">
             <filter>'summarised' in output_choice</filter>
-        </data>	 
+        </data>
         <data name="output_detail_tabular" format="tabular" from_work_dir="output-detailRP.tabular" label="${tool.name} on ${on_string} Detail table">
             <filter>'detailed' in output_choice</filter>
         </data>
         <data name="output_detail_html" format="html" from_work_dir="output-detailRP.html" label="${tool.name} on ${on_string} Detail html">
             <filter>'detailed' in output_choice</filter>
         </data>
-	</outputs>
-	<tests>
-	    <test expect_num_outputs="4">
-	        <param name="idc2" value="BilanEnrichiRP_Test1.tabular"/>
-	        <param name="output_choice" value="detailed,summarised"/>
-	        <!-- Assertions for output_detail_tabular -->
-	        <output name="output_detail_tabular">
-	            <assert_contents>
-	                <has_text text="Chauve-souris"/>
-	                <has_n_lines n="40" delta="10"/>
-	                <has_n_columns n="17"/> 
-	            </assert_contents>
-	        </output>
-	        <!-- Assertions for output_summary_tabular -->
-	        <output name="output_summary_tabular">
-	            <assert_contents>
-	                <has_text text="Pipistrelle commune"/>
-	                <has_n_lines n="32" delta="5"/>
-	                <has_n_columns n="12"/> 
-	            </assert_contents>
-	        </output>
-	        <!-- Assertions for output_detail_html -->
-	        <output name="output_detail_html">
-	            <assert_contents>
-	                <has_size value="303421" delta="5000"/> 
-	                <has_text text="Pipistrellus kuhlii"/>
-	            </assert_contents>
-	        </output>
-	        <!-- Assertions for output_summary_html -->
-	        <output name="output_summary_html">
-	            <assert_contents>
-	                <has_size value="295418" delta="5000"/> 
-	                <has_text text="Nyctalus noctula"/>
-	            </assert_contents>
-	        </output>
-	    </test>
-	</tests>
+    </outputs>
+    <tests>
+        <test expect_num_outputs="4">
+            <param name="idc2" value="BilanEnrichiRP_Test1.tabular"/>
+            <param name="output_choice" value="detailed,summarised"/>
+            <!-- Assertions for output_detail_tabular -->
+            <output name="output_detail_tabular">
+                <assert_contents>
+                    <has_text text="Chauve-souris"/>
+                    <has_n_lines n="40" delta="10"/>
+                    <has_n_columns n="17"/>
+                </assert_contents>
+            </output>
+            <!-- Assertions for output_summary_tabular -->
+            <output name="output_summary_tabular">
+                <assert_contents>
+                    <has_text text="Pipistrelle commune"/>
+                    <has_n_lines n="32" delta="5"/>
+                    <has_n_columns n="12"/>
+                </assert_contents>
+            </output>
+            <!-- Assertions for output_detail_html -->
+            <output name="output_detail_html">
+                <assert_contents>
+                    <has_size value="303421" delta="5000"/>
+                    <has_text text="Pipistrellus kuhlii"/>
+                </assert_contents>
+            </output>
+            <!-- Assertions for output_summary_html -->
+            <output name="output_summary_html">
+                <assert_contents>
+                    <has_size value="295418" delta="5000"/>
+                    <has_text text="Nyctalus noctula"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
     <help><![CDATA[
 **What it does**
 
@@ -92,7 +92,6 @@ The tool analyzes the observations made with the "Routier" or "Pedestre" protoco
 - Input is an observation/participation file corrected by the tools Tadarida data cleaner and Tadarida identifications integration.
 - Outputs are Summary and details raw tabulars, and html visualisations.
     ]]></help>
-    <expand macro="vigiechiro_bibref"/>    
-    <expand macro="creator"/>    
-
+    <expand macro="vigiechiro_bibref"/>
+    <expand macro="creator"/>
 </tool>

@@ -42,9 +42,9 @@
     <inputs>
         <expand macro="obis_input"/>
         <param name="separator" type="select" display="radio" label="What character is the separator in your data? (Mostlikely a comma for a csv file and t for a tabular)">
-            <option value="t">Tabulator (\t)</option>                 
-            <option value=",">Comma (,)</option>  
-        </param> 
+            <option value="t">Tabulator (\t)</option>
+            <option value=",">Comma (,)</option>
+        </param>
         <param name="longitude" label="Select column containing the decimal value of the longitude " type="data_column" data_ref="input" numerical="true" use_header_names="true"/>
         <param name="latitude" label="Select column containing the decimal value of the latitude " type="data_column" data_ref="input" numerical="true" use_header_names="true"/>
         <param name="species" label="Select column containing the species " type="data_column" data_ref="input" use_header_names="true"/>
@@ -95,7 +95,7 @@
                         <has_text text="PNG"/>
                     </assert_contents>
                 </element>
-               <element name="Simpson_index" ftype="png">
+                <element name="Simpson_index" ftype="png">
                     <assert_contents>
                         <has_text text="PNG"/>
                     </assert_contents>

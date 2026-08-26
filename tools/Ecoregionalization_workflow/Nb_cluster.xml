@@ -4,10 +4,10 @@
         <import>macros.xml</import>
     </macros>
     <requirements>
-       <requirement type="package" version="4.2.3">r-base</requirement>
-       <requirement type="package" version="2.1.4">r-cluster</requirement>
-       <requirement type="package" version="1.1.1">r-dplyr</requirement>
-       <requirement type="package" version="2.0.0">r-tidyverse</requirement>
+        <requirement type="package" version="4.2.3">r-base</requirement>
+        <requirement type="package" version="2.1.4">r-cluster</requirement>
+        <requirement type="package" version="1.1.1">r-dplyr</requirement>
+        <requirement type="package" version="2.0.0">r-tidyverse</requirement>
     </requirements>
     <required_files>
         <include path="nb_clust_G.R"/>
@@ -27,37 +27,37 @@
     ]]>
     </command>
     <inputs>
-      <param name="envfile" type="data" format="tabular" label="Environment file (tabular format only)" help="See example below"/>
-      <param name="taxafile" type="data" format="txt" label="Taxa selected file (File 'List of taxa' from TaxaSeeker tool)"/>
-      <param name="predictionfile" type="data" format="tabular" multiple="true" label="Prediction files"/>
-      <param name="max_k" type="integer" value="2" min="1" label="Number of Cluster to test"/>
-      <param name="metric" type="select" label="What metric to use to calculate dissimilarities between observations ?">
-             <option value="manhattan">manhattan</option>
-             <option value="euclidean">euclidean</option>
-             <option value="jaccard">jaccard</option>
-      </param>
-      <param name="sample" type="integer" label="The number of samples to be drawn from the dataset" min="5" value="10"/>
+        <param name="envfile" type="data" format="tabular" label="Environment file (tabular format only)" help="See example below"/>
+        <param name="taxafile" type="data" format="txt" label="Taxa selected file (File 'List of taxa' from TaxaSeeker tool)"/>
+        <param name="predictionfile" type="data" format="tabular" multiple="true" label="Prediction files"/>
+        <param name="max_k" type="integer" value="2" min="1" label="Number of Cluster to test"/>
+        <param name="metric" type="select" label="What metric to use to calculate dissimilarities between observations ?">
+            <option value="manhattan">manhattan</option>
+            <option value="euclidean">euclidean</option>
+            <option value="jaccard">jaccard</option>
+        </param>
+        <param name="sample" type="integer" label="The number of samples to be drawn from the dataset" min="5" value="10"/>
     </inputs>
     <outputs>
-      <data name="output1" from_work_dir="Indices_SIH.png" format="png" label="SIH index plot"/>
-      <data name="output2" from_work_dir="data_to_clus.tsv" format="tabular" label="Data to cluster"/>
-      <data name="output3" from_work_dir="data_bio.tsv" format="tabular" label="Data.bio table "/>
+        <data name="output1" from_work_dir="Indices_SIH.png" format="png" label="SIH index plot"/>
+        <data name="output2" from_work_dir="data_to_clus.tsv" format="tabular" label="Data to cluster"/>
+        <data name="output3" from_work_dir="data_bio.tsv" format="tabular" label="Data.bio table "/>
     </outputs>
     <tests>
         <test>
             <param name="envfile" value="ceamarc_env.tsv"/>
             <param name="taxafile" value="List_of_taxa.txt"/>
             <param name="predictionfile" value="1_brts_pred_ceamarc.tsv"/>
-            <param name='max_k' value="2"/>
-            <param name='metric' value="manhattan"/>
-            <param name='sample' value="10"/>
-            <output name='output1'>
+            <param name="max_k" value="2"/>
+            <param name="metric" value="manhattan"/>
+            <param name="sample" value="10"/>
+            <output name="output1">
                 <assert_contents>
-            	    <has_size value="4297" delta="500"/>
-            	</assert_contents>
+                    <has_size value="4297" delta="500"/>
+                </assert_contents>
             </output>
-            <output name='output2' value="Data_to_cluster.tsv"/>
-            <output name='output3' value="Data.bio_table.tsv"/>
+            <output name="output2" value="Data_to_cluster.tsv"/>
+            <output name="output3" value="Data.bio_table.tsv"/>
         </test>
     </tests>
     <help><![CDATA[
@@ -110,10 +110,9 @@ The tool will produce three outputs. The first two are files that will be used i
     ]]>
     </help>
     <citations>
-       <citation type="doi">10.32614/CRAN.package.dplyr</citation>
-       <citation type="doi">10.32614/CRAN.package.cluster</citation>
-       <citation type="doi">10.32614/CRAN.package.tidyverse</citation>
-   </citations>
+        <citation type="doi">10.32614/CRAN.package.dplyr</citation>
+        <citation type="doi">10.32614/CRAN.package.cluster</citation>
+        <citation type="doi">10.32614/CRAN.package.tidyverse</citation>
+    </citations>
     <expand macro="creator"/>
 </tool>
- 

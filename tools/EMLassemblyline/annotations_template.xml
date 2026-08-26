@@ -89,40 +89,40 @@
          
     ]]></command>
     <inputs>
-      <conditional name="input_prod">
-          <param name="input_prod_selector" type="select" label="How do you want to produce your annotations template ?">
-              <option value="fr_scratch" selected="true">Make annotations template from scratch</option>
-              <option value="fr_EML">Make annotations template from an EML file</option>
-          </param>
-          <when value="fr_scratch">
-              <conditional name="input">
-                  <param name="input_selector" type="select" label="What is the type of your data files ?">
-                       <option value="data_table">Data table</option>
-                       <option value="other_entities">Other entities</option>
-                       <option value="both" selected="true">Both data table and other entities</option>
-                  </param>
-                  <when value="data_table">
-                      <param name="inputdata" type="data" format="data" label="Upload all your data tables" multiple= "true"/>
-                      <param name="input_temp" type="data" format="data" label="Upload all metadata template files" multiple= "true" help="This tool needs to be used only after all the metadata templates tools because it needs the other metadata templates to work"/> 
-                  </when>
-                  <when value="other_entities">
-                      <param name="input_other" type="data" format="data" label="Upload all your other entities files" multiple= "true"/>
-                      <param name="input_temp" type="data" format="data" label="Upload all your metadata template files" multiple= "true" help="This tool needs to be used only after all the metadata templates tools because it needs the other metadata templates to work"/> 
-                  </when>
-                  <when value="both">
-                      <param name="inputdata" type="data" format="data" label="Upload all your data tables" multiple= "true"/>
-                      <param name="input_other" type="data" format="data" label="Upload all your other entities files" multiple= "true"/>
-                      <param name="input_temp" type="data" format="data" label="Upload all your metadata template files" multiple= "true" help="This tool needs to be used only after all the metadata templates tools because it needs the other metadata templates to work"/> 
-                  </when>
-              </conditional>
-          </when>
-          <when value="fr_EML">
-              <param name="inputEML" type="data" format="xml" label="Upload an EML file" />
-          </when>
-      </conditional>
+        <conditional name="input_prod">
+            <param name="input_prod_selector" type="select" label="How do you want to produce your annotations template ?">
+                <option value="fr_scratch" selected="true">Make annotations template from scratch</option>
+                <option value="fr_EML">Make annotations template from an EML file</option>
+            </param>
+            <when value="fr_scratch">
+                <conditional name="input">
+                    <param name="input_selector" type="select" label="What is the type of your data files ?">
+                        <option value="data_table">Data table</option>
+                        <option value="other_entities">Other entities</option>
+                        <option value="both" selected="true">Both data table and other entities</option>
+                    </param>
+                    <when value="data_table">
+                        <param name="inputdata" type="data" format="data" label="Upload all your data tables" multiple="true"/>
+                        <param name="input_temp" type="data" format="data" label="Upload all metadata template files" multiple="true" help="This tool needs to be used only after all the metadata templates tools because it needs the other metadata templates to work"/>
+                    </when>
+                    <when value="other_entities">
+                        <param name="input_other" type="data" format="data" label="Upload all your other entities files" multiple="true"/>
+                        <param name="input_temp" type="data" format="data" label="Upload all your metadata template files" multiple="true" help="This tool needs to be used only after all the metadata templates tools because it needs the other metadata templates to work"/>
+                    </when>
+                    <when value="both">
+                        <param name="inputdata" type="data" format="data" label="Upload all your data tables" multiple="true"/>
+                        <param name="input_other" type="data" format="data" label="Upload all your other entities files" multiple="true"/>
+                        <param name="input_temp" type="data" format="data" label="Upload all your metadata template files" multiple="true" help="This tool needs to be used only after all the metadata templates tools because it needs the other metadata templates to work"/>
+                    </when>
+                </conditional>
+            </when>
+            <when value="fr_EML">
+                <param name="inputEML" type="data" format="xml" label="Upload an EML file"/>
+            </when>
+        </conditional>
     </inputs>
     <outputs>
-       <data name="output" from_work_dir="data_files/annotations.txt" format="txt" label="annotations.txt"/>
+        <data name="output" from_work_dir="data_files/annotations.txt" format="txt" label="annotations.txt"/>
     </outputs>
     <tests>
         <test expect_num_outputs="1">

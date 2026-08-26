@@ -5,8 +5,8 @@
         <token name="@VERSION_SUFFIX@">1</token>
     </macros>
     <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
+        <edam_topic>topic_0610</edam_topic>
+        <edam_topic>topic_3050</edam_topic>
     </edam_topics>
     <requirements>
         <container type="docker">ylebras/geoexplorer-docker</container>
@@ -22,7 +22,7 @@
         <environment_variable name="REMOTE_HOST">$__galaxy_url__</environment_variable>
         <environment_variable name="GALAXY_WEB_PORT">8080</environment_variable>
         <environment_variable name="GALAXY_URL">$__galaxy_url__</environment_variable>
-        <environment_variable name="API_KEY" inject="api_key" />
+        <environment_variable name="API_KEY" inject="api_key"/>
     </environment_variables>
     <command><![CDATA[
 
@@ -39,7 +39,7 @@
         <param name="infile" type="data" format="tabular,csv" label="csv file"/>
     </inputs>
     <outputs>
-        <data name="outfile" format="txt" />
+        <data name="outfile" format="txt"/>
     </outputs>
     <tests>
     </tests>
@@ -71,7 +71,7 @@ Example input file (csv)::
 ]]>
     </help>
     <citations>
-           <citation type="bibtex">@misc{githubsurvey2018,
+        <citation type="bibtex">@misc{githubsurvey2018,
            author       = {davesteps},
            title        = {{dashboard to visualise geographic data}},
            publisher    = {Github},
@@ -81,6 +81,6 @@ Example input file (csv)::
     </citations>
     <creator>
         <person givenName="Yvan" familyName="Le Bras" url="https://orcid.org/0000-0002-8504-068X"/>
-        <organization name="PNDB"  url="https://www.pndb.fr/pages/accueil/"/>
-	</creator>
+        <organization name="PNDB" url="https://www.pndb.fr/pages/accueil/"/>
+    </creator>
 </tool>

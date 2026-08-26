@@ -92,7 +92,7 @@
             </param>
             <when value="collinearity">
                 <param name="species" type="data_column" data_ref="input" numerical="false" label="Select column containing species" use_header_names="true"/>
-                 <param name="columns" type="data_column" data_ref="input" numerical="true" multiple="true" label="Select columns containing numerical values" help="Select at least two columns" use_header_names="true"/>
+                <param name="columns" type="data_column" data_ref="input" numerical="true" multiple="true" label="Select columns containing numerical values" help="Select at least two columns" use_header_names="true"/>
             </when>
             <when value="vif">
                 <param name="columns" type="data_column" data_ref="input" numerical="true" multiple="true" label="Select columns containing numerical values" use_header_names="true"/>

@@ -4,10 +4,10 @@
         <import>gdal_macros.xml</import>
     </macros>
     <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
+        <edam_topic>topic_0610</edam_topic>
+        <edam_topic>topic_3050</edam_topic>
     </edam_topics>
-    <expand macro="gdal_requirements" />
+    <expand macro="gdal_requirements"/>
     <command detect_errors="exit_code"><![CDATA[
         gdalwarp 
             -q
@@ -75,9 +75,9 @@
         <conditional name="settings">
             <expand macro="gdal_advanced_params_select"/>
             <when value="advanced">
-                <expand macro="gdal_param_tr"/>    
+                <expand macro="gdal_param_tr"/>
                 <param name="to" type="text" label="Transformer option" help="-to NAME=VALUE. Set a transformer option suitable to pass to GDALCreateGenImgProjTransformer2()." value=""/>
-                <param name="wo" type="text" label="Warp option" help="-wo NAME=VALUE. Set a warp option." value="" />
+                <param name="wo" type="text" label="Warp option" help="-wo NAME=VALUE. Set a warp option." value=""/>
                 <param name="order" type="select" label="Order of polynomial" help="-order n. Order of polynomial used for warping (1 to 3). The default is to select a polynomial order based on the number of GCPs.">
                     <option value="no_value" selected="true">Select an order.</option>
                     <option value="1">1</option>
@@ -90,7 +90,7 @@
                 <param name="srcnodata" type="text" label="Set nodata masking values for input bands" help="-srcnodata value. Different values can be supplied for each band" value=""/>
                 <param name="dstalpha" type="boolean" label="Create an output alpha band to identify nodata (unset/transparent) pixels" help="-dstalpha" truevalue="-dstalpha" falsevalue="" checked="false"/>
                 <conditional name="condi_et">
-                    <param name="et" label="Error threshold for transformation approximation" help="-et" type="select"> 
+                    <param name="et" label="Error threshold for transformation approximation" help="-et" type="select">
                         <option value="et">Use an error threshold, option -et</option>
                         <option value="no_et" selected="true">Don't use an error threshold</option>
                     </param>
@@ -123,16 +123,16 @@
     <tests>
         <test>
             <param name="input" value="stere.tif"/>
-            <param name="of" value="GTiff" />
-            <param name="t_srs" value="EPSG:2154" />
+            <param name="of" value="GTiff"/>
+            <param name="t_srs" value="EPSG:2154"/>
             <conditional name="settings">
                 <param name="advanced" value="simple"/>
             </conditional>
-            <output name="output" file="stere_warp1.tiff" compare="sim_size" />
+            <output name="output" file="stere_warp1.tiff" compare="sim_size"/>
         </test>
         <test>
             <param name="input" value="tinyworld.tif"/>
-            <param name="t_srs" value="+proj=ortho +datum=WGS84" />
+            <param name="t_srs" value="+proj=ortho +datum=WGS84"/>
             <conditional name="settings">
                 <param name="advanced" value="simple"/>
             </conditional>
@@ -140,7 +140,7 @@
         </test>
         <test>
             <param name="input" value="tinyworld.tif"/>
-            <param name="t_srs" value="+proj=ortho +datum=WGS84" />
+            <param name="t_srs" value="+proj=ortho +datum=WGS84"/>
             <conditional name="settings">
                 <param name="advanced" value="advanced"/>
                 <param name="wo" value="SOURCE_EXTRA=125"/>
@@ -149,7 +149,7 @@
         </test>
         <test>
             <param name="input" value="tinyworld.tif"/>
-            <param name="t_srs" value="+proj=ortho +datum=WGS84" />
+            <param name="t_srs" value="+proj=ortho +datum=WGS84"/>
             <conditional name="settings">
                 <param name="advanced" value="advanced"/>
                 <param name="wo" value="SOURCE_EXTRA=125"/>
@@ -164,7 +164,7 @@
                 <param name="advanced" value="simple"/>
             </conditional>
             <output name="output" file="small_warpmerged.tif"/>
-        </test>     
+        </test>
     </tests>
     <help><![CDATA[
 ==========================

@@ -6,12 +6,12 @@
         <requirements>
             <requirement type="package" version="0.8.8">r-reshape</requirement>
             <requirement type="package" version="1.12.0">r-data.table</requirement>
-        </requirements>    
+        </requirements>
     </xml>
     <xml name="reshape2_requirements">
         <requirements>
             <requirement type="package" version="1.4.3">r-reshape2</requirement>
-        </requirements>    
+        </requirements>
     </xml>
     <xml name="mainglm_requirements">
         <requirements>
@@ -41,15 +41,15 @@
         </requirements>
     </xml>
     <xml name="stoceps_input_filtered">
-        <param name="input" type="data" format="tabular" label="Stoc filtered input" help="Input Stoc count file, shaped and filtered with the 'preprocess population data' and 'filter species' tools." />
+        <param name="input" type="data" format="tabular" label="Stoc filtered input" help="Input Stoc count file, shaped and filtered with the 'preprocess population data' and 'filter species' tools."/>
     </xml>
     <xml name="stoceps_advanced_params_select">
         <param name="advanced" type="select" label="Specify advanced parameters">
             <option value="simple" selected="true">No, use program defaults.</option>
             <option value="advanced">Yes, see full parameter list.</option>
-        </param>        
+        </param>
         <when value="simple">
-        </when>        
+        </when>
     </xml>
     <xml name="stoceps_compute_ic">
         <param name="compute_ic" type="boolean" truevalue="TRUE" falsevalue="FALSE" checked="yes" label="Compute confidence intervals"/>
@@ -71,12 +71,12 @@
             </citation>
         </citations>
     </xml>
-	<xml name="creator">
-		<creator>
+    <xml name="creator">
+        <creator>
             <person givenName="Yvan" familyName="Le Bras" url="https://orcid.org/0000-0002-8504-068X"/>
             <person givenName="Alan" familyName="Amossé" url="https://github.com/Alanamosse"/>
             <person givenName="Coline" familyName="Royaux" url="https://orcid.org/0000-0003-4308-5617"/>
-            <organization name="PNDB"  url="https://www.pndb.fr/pages/accueil/"/>
-		</creator>
-	</xml>
+            <organization name="PNDB" url="https://www.pndb.fr/pages/accueil/"/>
+        </creator>
+    </xml>
 </macros>

@@ -156,5 +156,4 @@ In order to get such input we advise to use the tool preprocessing sentinel 2 da
     ]]></help>
     <expand macro="SRS_BDMRref"/>
     <expand macro="creator"/>
-
 </tool>

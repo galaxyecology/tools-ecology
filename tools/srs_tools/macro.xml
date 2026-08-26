@@ -23,11 +23,11 @@
         </requirements>
     </xml>
     <xml name="SRS_input">
-       <param name="input" type="data" format="tabular,csv,txt" label="Input table"/>
-       <param name="colnames" type="boolean" label="First line is a header line" checked="true"/>
+        <param name="input" type="data" format="tabular,csv,txt" label="Input table"/>
+        <param name="colnames" type="boolean" label="First line is a header line" checked="true"/>
     </xml>
     <xml name="SRS_bibref">
-       <citations>
+        <citations>
             <citation type="bibtex">
             @Manual{,
             title = {obisindicators: Develop marine biodiversity indicators from OBIS data},
@@ -49,7 +49,7 @@
             note = {R package version 1.1.3},
             url = {https://gitlab.com/jbferet/preprocS2},
             }
-            </citation>   
+            </citation>
         </citations>
     </xml>
     <xml name="SRS_BDMRref">
@@ -62,13 +62,13 @@
             note = {R package version 1.9.4},
             url = {https://github.com/jbferet/biodivMapR},
             }
-            </citation>   
+            </citation>
         </citations>
     </xml>
     <xml name="SRS_rasterdivref">
         <citations>
-            <citation type="doi">10.1016/j.ecolind.2016.07.039</citation> 
-            <citation type="doi">10.1101/2021.01.23.427872</citation>     
+            <citation type="doi">10.1016/j.ecolind.2016.07.039</citation>
+            <citation type="doi">10.1101/2021.01.23.427872</citation>
         </citations>
     </xml>
     <xml name="SRS_prosailref">
@@ -81,7 +81,7 @@
             note = {R package version 1.1.1},
             url = {https://gitlab.com/jbferet/prosail},
             }
-            </citation>   
+            </citation>
         </citations>
     </xml>
     <xml name="SRS_metaref">
@@ -96,8 +96,8 @@
     </xml>
     <xml name="topic">
         <edam_topics>
-           <edam_topic>topic_0610</edam_topic>
-           <edam_topic>topic_3050</edam_topic>
+            <edam_topic>topic_0610</edam_topic>
+            <edam_topic>topic_3050</edam_topic>
         </edam_topics>
     </xml>
     <xml name="creator">

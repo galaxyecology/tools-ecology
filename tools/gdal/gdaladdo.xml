@@ -4,10 +4,10 @@
         <import>gdal_macros.xml</import>
     </macros>
     <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
+        <edam_topic>topic_0610</edam_topic>
+        <edam_topic>topic_3050</edam_topic>
     </edam_topics>
-    <expand macro="gdal_requirements" />
+    <expand macro="gdal_requirements"/>
     <command detect_errors="exit_code"><![CDATA[
         cp '$input1' 'input.tif' &&
         #if str($levels).strip() != ''
@@ -25,20 +25,17 @@
                 -clean
         #end if
     ]]></command>
-    
     <inputs>
-        <param type="data" name="input1" label="Gdal supported raster input file" format="tiff" help="Chose a GeoTIFF file"/>    
-        <param name="levels" type="text" label="levels" help="A list of integral overview levels to build. eg : 2 4 8 16" value=""/>        
+        <param type="data" name="input1" label="Gdal supported raster input file" format="tiff" help="Chose a GeoTIFF file"/>
+        <param name="levels" type="text" label="levels" help="A list of integral overview levels to build. eg : 2 4 8 16" value=""/>
     </inputs>
-    
     <outputs>
         <data format="tiff" name="output" from_work_dir="output_ovr" label="${input1.name}.ovr"/>
     </outputs>
-    
-    <tests> 
-        <test> 
+    <tests>
+        <test>
             <param name="input1" value="stere.tif"/>
-            <param name="levels" value="2 4 8 16" />
+            <param name="levels" value="2 4 8 16"/>
             <output name="output" value="stere.tif.ovr" compare="sim_size"/>
         </test>
     </tests>

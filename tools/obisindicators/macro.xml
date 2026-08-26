@@ -8,16 +8,15 @@
         <requirements>
             <requirement type="package" version="4.2.2">r-base</requirement>
             <requirement type="package" version="3.4.0">r-ggplot2</requirement>
-            <yield />
+            <yield/>
         </requirements>
-
     </xml>
     <xml name="obis_input">
-       <param name="input" type="data" format="tabular,csv,txt" label="Input table"/>
-       <param name="colnames" type="boolean" label="First line is a header line" checked="true"/>
+        <param name="input" type="data" format="tabular,csv,txt" label="Input table"/>
+        <param name="colnames" type="boolean" label="First line is a header line" checked="true"/>
     </xml>
     <xml name="obis_bibref">
-       <citations>
+        <citations>
             <citation type="bibtex">
             @Manual{,
             title = {obisindicators: Develop marine biodiversity indicators from OBIS data},
@@ -36,15 +35,14 @@
     </xml>
     <xml name="topic">
         <edam_topics>
-           <edam_topic>topic_0610</edam_topic>
-           <edam_topic>topic_3050</edam_topic>
+            <edam_topic>topic_0610</edam_topic>
+            <edam_topic>topic_3050</edam_topic>
         </edam_topics>
     </xml>
     <xml name="creator">
         <creator>
             <person givenName="Marie" familyName="Jossé" url="https://orcid.org/0009-0008-0622-604X"/>
-            <organization name="Data Terra"  url="https://www.data-terra.org/"/>
+            <organization name="Data Terra" url="https://www.data-terra.org/"/>
         </creator>
     </xml>
 </macros>
-

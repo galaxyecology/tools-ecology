@@ -140,6 +140,6 @@ In order to get such input we advise to use the tool preprocessing sentinel 2 da
     - PCoA#3 allows differentiating medium diversity forests from high diversity forests and low vegetation.
 
     ]]>    </help>
-        <expand macro="SRS_BDMRref"/>
-        <expand macro="creator"/>
+    <expand macro="SRS_BDMRref"/>
+    <expand macro="creator"/>
 </tool>

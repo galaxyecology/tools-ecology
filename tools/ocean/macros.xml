@@ -13,19 +13,19 @@
                 <option value="standard">🏊 standard mode simplifies the dataset, remove most of its jargon and return a priori good data</option>
                 <option value="research">🚣 research mode simplifies the dataset to its heart, preserving only data of the highest quality for research studies, including studies sensitive to small pressure and salinity bias </option>
                 <option value="expert">🏄 expert mode return all the Argo data, without any postprocessing</option>
-           </param>
-       </inputs>
+            </param>
+        </inputs>
     </xml>
     <xml name="argo_bibref">
-       <citations>
+        <citations>
             <citation type="doi">10.21105/joss.02425</citation>
         </citations>
     </xml>
     <xml name="creator">
         <creator>
             <person givenName="Marie" familyName="Jossé" url="https://orcid.org/0009-0008-0622-604X"/>
-            <organization name="EOSC Fair-Ease"  url="https://fairease.eu/"/>
-            <organization name="Data Terra"  url="https://www.data-terra.org/"/>
+            <organization name="EOSC Fair-Ease" url="https://fairease.eu/"/>
+            <organization name="Data Terra" url="https://www.data-terra.org/"/>
         </creator>
     </xml>
 </macros>

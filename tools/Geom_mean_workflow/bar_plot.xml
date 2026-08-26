@@ -4,8 +4,8 @@
         <import>macros.xml</import>
     </macros>
     <requirements>
-       <requirement type="package" version="4.3.2">r-base</requirement>
-       <requirement type="package" version="3.4.4">r-ggplot2</requirement>
+        <requirement type="package" version="4.3.2">r-base</requirement>
+        <requirement type="package" version="3.4.4">r-ggplot2</requirement>
     </requirements>
     <required_files>
         <include path="Bar_plot.R"/>
@@ -21,23 +21,23 @@
          '$output'
     ]]></command>
     <inputs>
-       <param name="input" type="data" format="tabular" label="Dataset"/>
-       <param name="title" type="text" label="Plot title"/>
-       <param name="error_bar" type="boolean" label="Does your data have a standard deviation? "/>
-       <param name="color_bar" type="text" value = "dark green" label="Choose color of bar(s)"/>
-       <param name="ylab" type="text" label="Label for y axis"/>
+        <param name="input" type="data" format="tabular" label="Dataset"/>
+        <param name="title" type="text" label="Plot title"/>
+        <param name="error_bar" type="boolean" label="Does your data have a standard deviation? "/>
+        <param name="color_bar" type="text" value="dark green" label="Choose color of bar(s)"/>
+        <param name="ylab" type="text" label="Label for y axis"/>
     </inputs>
     <outputs>
-       <data name="output" from_work_dir="bar_plot.pdf" format="pdf" label="bar_plot.pdf"/>
+        <data name="output" from_work_dir="bar_plot.pdf" format="pdf" label="bar_plot.pdf"/>
     </outputs>
     <tests>
         <test>
-            <param name='input' value="histo_data.tsv"/>
-            <param name='title' value="Evolution du volume total des tres gros arbres, bois mort debout et bois mort au sol"/>
-            <param name='error_bar' value="true"/>
-            <param name='color_bar' value="dark green"/>
-            <param name='ylab' value="Base 100"/>
-            <output name='output' value="bar_plot.pdf"/>
+            <param name="input" value="histo_data.tsv"/>
+            <param name="title" value="Evolution du volume total des tres gros arbres, bois mort debout et bois mort au sol"/>
+            <param name="error_bar" value="true"/>
+            <param name="color_bar" value="dark green"/>
+            <param name="ylab" value="Base 100"/>
+            <output name="output" value="bar_plot.pdf"/>
         </test>
     </tests>
     <help><![CDATA[
@@ -69,9 +69,8 @@ The input file must be a tabular file.
 |       ...        |    ...    |              ...                |
 +------------------+-----------+---------------------------------+
     ]]></help>
-
     <citations>
-       <citation type="doi">10.32614/CRAN.package.ggplot2</citation>
+        <citation type="doi">10.32614/CRAN.package.ggplot2</citation>
     </citations>
     <expand macro="creator"/>
 </tool>

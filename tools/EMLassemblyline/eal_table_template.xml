@@ -24,21 +24,21 @@
     
     ]]></command>
     <inputs>
-         <param name="inputdata" type="data_collection"  collection_type="list"  label="Upload all data files wich are data table" help= "Input a data collection."/>
+        <param name="inputdata" type="data_collection" collection_type="list" label="Upload all data files wich are data table" help="Input a data collection."/>
     </inputs>
     <outputs>
-       <collection name="templates" type="list" label="Data table templates">
-             <discover_datasets pattern="(?P&lt;designation&gt;.+\.txt)" format="txt"/>
-       </collection>
+        <collection name="templates" type="list" label="Data table templates">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+\.txt)" format="txt"/>
+        </collection>
     </outputs>
     <tests>
         <test>
-           <param name="inputdata">
-              <collection type="list">
-                 <element name="datafile_1.tsv" value="datafile_1.tsv" />
-              </collection>
-           </param>          
-           <output_collection name='templates' type = "list" count="2"/>
+            <param name="inputdata">
+                <collection type="list">
+                    <element name="datafile_1.tsv" value="datafile_1.tsv"/>
+                </collection>
+            </param>
+            <output_collection name="templates" type="list" count="2"/>
         </test>
     </tests>
     <help><![CDATA[

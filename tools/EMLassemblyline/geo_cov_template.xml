@@ -3,7 +3,7 @@
     <macros>
         <import>macros.xml</import>
     </macros>
-     <requirements>
+    <requirements>
         <container type="docker">ylebras/metashark:1.7.6</container>
     </requirements>
     <required_files>
@@ -26,14 +26,14 @@
          
     ]]></command>
     <inputs>
-         <param name="inputdata" type="data" format="tabular" label="Upload table containing geographic coordinates" />
-         <param name="lat_col" type="data_column"  label="What column of your table contains latitude coordinates in decimal degrees?" data_ref="inputdata" use_header_names="true"/>
-         <param name="long_col" type="data_column"  label="What column of your table contains longitude coordinates in decimal degrees ?" data_ref="inputdata" use_header_names="true"/>
-         <param name="site_col" type="data_column"  label="What column of your table contains site names ?" data_ref="inputdata" use_header_names="true"/>
-         <param name="empty" type="boolean"  label="Write an empty template file ?" />
+        <param name="inputdata" type="data" format="tabular" label="Upload table containing geographic coordinates"/>
+        <param name="lat_col" type="data_column" label="What column of your table contains latitude coordinates in decimal degrees?" data_ref="inputdata" use_header_names="true"/>
+        <param name="long_col" type="data_column" label="What column of your table contains longitude coordinates in decimal degrees ?" data_ref="inputdata" use_header_names="true"/>
+        <param name="site_col" type="data_column" label="What column of your table contains site names ?" data_ref="inputdata" use_header_names="true"/>
+        <param name="empty" type="boolean" label="Write an empty template file ?"/>
     </inputs>
     <outputs>
-         <data name="output" from_work_dir="geographic_coverage.txt" format="txt" label="geographic_coverage.txt"/>
+        <data name="output" from_work_dir="geographic_coverage.txt" format="txt" label="geographic_coverage.txt"/>
     </outputs>
     <tests>
         <test>

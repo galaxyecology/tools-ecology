@@ -78,8 +78,8 @@
             <param name="selmax" value="100"/>
             <output name="output_netcdf">
                 <assert_contents>
-            	    <has_size value="68291" delta="0"/>
-            	</assert_contents>
+                    <has_size value="68291" delta="0"/>
+                </assert_contents>
             </output>
         </test>
     </tests>
@@ -142,7 +142,7 @@ If you want more informations about the functions and parameters see also the `d
     </citations>
     <creator>
         <person givenName="Marie" familyName="Jossé" url="https://orcid.org/0009-0008-0622-604X"/>
-        <organization name="EOSC Fair-Ease"  url="https://fairease.eu/"/>
-        <organization name="Data Terra"  url="https://www.data-terra.org/"/>
+        <organization name="EOSC Fair-Ease" url="https://fairease.eu/"/>
+        <organization name="Data Terra" url="https://www.data-terra.org/"/>
     </creator>
 </tool>

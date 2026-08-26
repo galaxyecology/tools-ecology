@@ -3,7 +3,7 @@
     <macros>
         <import>gdal_macros.xml</import>
     </macros>
-    <expand macro="gdal_requirements" />
+    <expand macro="gdal_requirements"/>
     <command detect_errors="exit_code"><![CDATA[
     ogrinfo -ro
         #if $input1.is_of_type("shp") 
@@ -28,14 +28,14 @@
             <expand macro="gdal_advanced_params_select"/>
             <when value="advanced">
                 <conditional name="condi_sql">
-                    <param name="sql" type="select" label="Use a sql query on the file" help="-sql. Execute the indicated SQL statement and return the result"> 
+                    <param name="sql" type="select" label="Use a sql query on the file" help="-sql. Execute the indicated SQL statement and return the result">
                         <option value="no_sql" selected="true">Don't use the -sql option</option>
                         <option value="sql">Use the -sql option</option>
                     </param>
                     <when value="no_sql">
                     </when>
                     <when value="sql">
-                        <param name="sql_statement" type="text" label="Execute the indicated SQL"  help="-sql statement eg : SELECT * FROM layer WHERE X>10." value="">
+                        <param name="sql_statement" type="text" label="Execute the indicated SQL" help="-sql statement eg : SELECT * FROM layer WHERE X&gt;10." value="">
                             <sanitizer sanitize="False"/>
                             <validator type="regex" message="Type a valid SQL query">(?ims)^\s*select\s+.*\s+from\s+.*$</validator>
                         </param>

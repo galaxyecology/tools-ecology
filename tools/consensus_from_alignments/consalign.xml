@@ -1,5 +1,5 @@
 <tool id="aligned_to_consensus" name="Consensus sequence from aligned FASTA" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
-    <description></description>
+    <description/>
     <macros>
         <import>consalign_macros.xml</import>
     </macros>
@@ -46,9 +46,9 @@
             <param name="gaps" value="false"/>
             <param name="outog" value="false"/>
             <output name="output">
-                <assert_contents> 
+                <assert_contents>
                     <has_n_lines n="2"/>
-                </assert_contents> 
+                </assert_contents>
             </output>
         </test>
     </tests>

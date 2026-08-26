@@ -3,8 +3,8 @@
     <macros>
         <import>macro.xml</import>
     </macros>
-    <expand macro="topic"/>  
-    <requirements> 
+    <expand macro="topic"/>
+    <requirements>
         <requirement type="package" version="3.3.3">r-ggplot2</requirement>
         <requirement type="package" version="2.5_7">r-vegan</requirement>
         <requirement type="package" version="0.3_14">r-adespatial</requirement>
@@ -55,77 +55,77 @@
            #end if
         ]]>
         </command>
-        <inputs>
-            <expand macro="explo_input"/>
-            <param name="abundance" label="Select column with abundances" type="data_column" data_ref="input" numerical="true" multiple="false" use_header_names="true"/>
-            <param name="location" label="Select column with locations" type="data_column" data_ref="input" multiple="false" use_header_names="true"/>
-            <param name="species" label="Select column containing taxon" type="data_column" data_ref="input" multiple="false" use_header_names="true"/>
-            <param name="date" label="Select column containing dates" type="data_column" data_ref="input" multiple="false" use_header_names="true"/>
-            <param name="rdata" type="boolean" checked="yes" label="Beta diversity object as .Rdata output ?"/>
+    <inputs>
+        <expand macro="explo_input"/>
+        <param name="abundance" label="Select column with abundances" type="data_column" data_ref="input" numerical="true" multiple="false" use_header_names="true"/>
+        <param name="location" label="Select column with locations" type="data_column" data_ref="input" multiple="false" use_header_names="true"/>
+        <param name="species" label="Select column containing taxon" type="data_column" data_ref="input" multiple="false" use_header_names="true"/>
+        <param name="date" label="Select column containing dates" type="data_column" data_ref="input" multiple="false" use_header_names="true"/>
+        <param name="rdata" type="boolean" checked="yes" label="Beta diversity object as .Rdata output ?"/>
+        <conditional name="method">
+            <param name="type" type="select" label="Other LCBD : spatialized representation or xy plot.">
+                <option value="Nothing">Don't want to do another graph</option>
+                <option value="Graph">Spatialized representation</option>
+                <option value="Separation">Separation to construct a new lcbd graph</option>
+            </param>
+            <when value="Graph">
+                <param name="latitude" label="Select column containing latitudes in decimal degrees" type="data_column" numerical="true" data_ref="input" multiple="false" use_header_names="true"/>
+                <param name="longitude" label="Select column containing longitudes in decimal degrees" type="data_column" numerical="true" data_ref="input" multiple="false" use_header_names="true"/>
+            </when>
+            <when value="Separation">
+                <param name="variable" type="data_column" data_ref="input" label="Select a column to make another graph according to the separation of the variable you choose" use_header_names="true"/>
+            </when>
+            <when value="Nothing"/>
+        </conditional>
+    </inputs>
+    <outputs>
+        <data name="output_lcbd" from_work_dir="LCBD.txt" format="txt" label="LCBD"/>
+        <data name="output_scbd" from_work_dir="SCBD.txt" format="txt" label="Which species have a SCBD larger than the mean SCBD?"/>
+        <data name="output_beta" from_work_dir="beta_diversity.Rdata" format="rdata" label="Beta diversity, LCDB, SCBD - R object">
+            <filter>rdata</filter>
+        </data>
+        <collection type="list" name="plots">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" visible="false" format="png"/>
+        </collection>
+    </outputs>
+    <tests>
+        <test expect_num_outputs="3">
+            <param name="input" value="Reel_life_survey_fish_modif.tabular"/>
+            <param name="colnames" value="true"/>
+            <param name="abundance" value="18"/>
+            <param name="location" value="20"/>
+            <param name="species" value="15"/>
+            <param name="date" value="11"/>
+            <param name="rdata" value="false"/>
             <conditional name="method">
-                <param name="type" type="select" label="Other LCBD : spatialized representation or xy plot.">
-                    <option value="Nothing">Don't want to do another graph</option>
-                    <option value="Graph">Spatialized representation</option>
-                    <option value="Separation">Separation to construct a new lcbd graph</option>
-                </param>
-                <when value="Graph">
-                    <param name="latitude" label="Select column containing latitudes in decimal degrees" type="data_column" numerical="true" data_ref="input" multiple="false" use_header_names="true"/>
-                    <param name="longitude" label="Select column containing longitudes in decimal degrees" type="data_column" numerical="true" data_ref="input" multiple="false" use_header_names="true"/>
-                </when>
-                <when value="Separation">
-                    <param name="variable" type="data_column" data_ref="input" label="Select a column to make another graph according to the separation of the variable you choose" use_header_names="true"/>
-                </when>
-                <when value="Nothing"/>
+                <param name="type" value="Nothing"/>
             </conditional>
-        </inputs>
-        <outputs>
-            <data name="output_lcbd" from_work_dir="LCBD.txt" format="txt" label="LCBD"/>
-            <data name="output_scbd" from_work_dir="SCBD.txt" format="txt" label="Which species have a SCBD larger than the mean SCBD?"/>
-            <data name="output_beta" from_work_dir="beta_diversity.Rdata" format="rdata" label="Beta diversity, LCDB, SCBD - R object">
-                <filter>rdata</filter>
-            </data>
-            <collection type="list" name="plots">
-                <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" visible="false" format="png"/>
-            </collection>
-        </outputs>
-        <tests>
-            <test expect_num_outputs="3">
-                <param name="input" value="Reel_life_survey_fish_modif.tabular"/>
-                <param name="colnames" value="true"/>
-                <param name="abundance" value="18"/>
-                <param name="location" value="20"/>
-                <param name="species" value="15"/>
-                <param name="date" value="11"/>
-                <param name="rdata" value="false"/>
-                <conditional name="method">
-                    <param name="type" value="Nothing"/>
-                </conditional>
-                <output name="output_lcbd">
+            <output name="output_lcbd">
+                <assert_contents>
+                    <has_n_lines n="186"/>
+                </assert_contents>
+            </output>
+            <output name="output_scbd" value="SCBD.txt"/>
+            <output_collection name="plots" type="list" count="3">
+                <element name="LCBD_sites_time" ftype="png">
                     <assert_contents>
-                        <has_n_lines n="186"/>
+                        <has_text text="PNG"/>
                     </assert_contents>
-                </output>
-                <output name="output_scbd" value="SCBD.txt"/>
-                <output_collection name="plots" type="list" count="3">
-                    <element name="LCBD_sites_time" ftype="png">
-                        <assert_contents>
-                            <has_text text="PNG"/>
-                        </assert_contents>
-                    </element>
-                    <element name="Mean_LCBD_through_time" ftype="png">
-                        <assert_contents>
-                            <has_text text="PNG"/>
-                        </assert_contents>
-                    </element>
-                    <element name="SCBD_Species_Radar_plot" ftype="png">
-                        <assert_contents>
-                            <has_text text="PNG"/>
-                        </assert_contents>
-                    </element>
-                </output_collection>
-            </test>
-        </tests>
-        <help><![CDATA[
+                </element>
+                <element name="Mean_LCBD_through_time" ftype="png">
+                    <assert_contents>
+                        <has_text text="PNG"/>
+                    </assert_contents>
+                </element>
+                <element name="SCBD_Species_Radar_plot" ftype="png">
+                    <assert_contents>
+                        <has_text text="PNG"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+        </test>
+    </tests>
+    <help><![CDATA[
 =======================================================================================
 Computes measures of beta diversity : Species and Local Contributions to Beta Diversity 
 =======================================================================================

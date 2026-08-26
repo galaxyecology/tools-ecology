@@ -4,10 +4,10 @@
         <import>macros.xml</import>
     </macros>
     <requirements>
-       <requirement type="package" version="4.3.2">r-base</requirement>
-       <requirement type="package" version="1.3.1">r-tidyr</requirement>
-       <requirement type="package" version="1.0_15">r-sf</requirement>
-       <requirement type="package" version="1.1.4">r-dplyr</requirement>
+        <requirement type="package" version="4.3.2">r-base</requirement>
+        <requirement type="package" version="1.3.1">r-tidyr</requirement>
+        <requirement type="package" version="1.0_15">r-sf</requirement>
+        <requirement type="package" version="1.1.4">r-dplyr</requirement>
     </requirements>
     <required_files>
         <include path="GeoNN.R"/>
@@ -23,20 +23,20 @@
          '$occ_file.occgeolong'
     ]]></command>
     <inputs>
-      <section name="env_file" title="Your environment file (or table 1)" >
-        <param name="env" type="data" format="tabular" label="Input your environment data file (tabular format only)" help="See example below"/>
-        <param name="envgeolat" type="data_column" label="Choose columns where your latitude is in your environment data file." data_ref="env" multiple="false" use_header_names="true"/>
-        <param name="envgeolong" type="data_column" label="Choose columns where your longitude is in your environment data file." data_ref="env" multiple="false" use_header_names="true"/>
-      </section>
-      <section name="occ_file" title="Your occurrence file (or table 2)" >
-        <param name="occ" type="data" format="tabular" label="Input your occurrence data file (tabular format only)" help="See example below"/>
-        <param name="occgeolat" type="data_column" label="Choose columns where your latitude is in your occurrence data file." data_ref="occ" multiple="false" use_header_names="true"/>
-         <param name="occgeolong" type="data_column" label="Choose columns where your longitude is in your occurrence data file." data_ref="occ" multiple="false" use_header_names="true"/>
-      </section>
+        <section name="env_file" title="Your environment file (or table 1)">
+            <param name="env" type="data" format="tabular" label="Input your environment data file (tabular format only)" help="See example below"/>
+            <param name="envgeolat" type="data_column" label="Choose columns where your latitude is in your environment data file." data_ref="env" multiple="false" use_header_names="true"/>
+            <param name="envgeolong" type="data_column" label="Choose columns where your longitude is in your environment data file." data_ref="env" multiple="false" use_header_names="true"/>
+        </section>
+        <section name="occ_file" title="Your occurrence file (or table 2)">
+            <param name="occ" type="data" format="tabular" label="Input your occurrence data file (tabular format only)" help="See example below"/>
+            <param name="occgeolat" type="data_column" label="Choose columns where your latitude is in your occurrence data file." data_ref="occ" multiple="false" use_header_names="true"/>
+            <param name="occgeolong" type="data_column" label="Choose columns where your longitude is in your occurrence data file." data_ref="occ" multiple="false" use_header_names="true"/>
+        </section>
     </inputs>
     <outputs>
-      <data name="occ_env_out" from_work_dir="occurrence_env.tsv" format="tabular" label="Merged table"/>
-      <data name="info_out" from_work_dir="infos_file.tsv" format="tabular" label="Information file"/>
+        <data name="occ_env_out" from_work_dir="occurrence_env.tsv" format="tabular" label="Merged table"/>
+        <data name="info_out" from_work_dir="infos_file.tsv" format="tabular" label="Information file"/>
     </outputs>
     <tests>
         <test>
@@ -50,16 +50,16 @@
                 <param name="occgeolat" value="1"/>
                 <param name="occgeolong" value="2"/>
             </section>
-            <output name='occ_env_out'>
+            <output name="occ_env_out">
                 <assert_contents>
-            	    <has_size value="2234" delta="50"/>
-            	</assert_contents>
+                    <has_size value="2234" delta="50"/>
+                </assert_contents>
             </output>
-            <output name='info_out'>
+            <output name="info_out">
                 <assert_contents>
-                    <has_n_columns n="3"/>   
+                    <has_n_columns n="3"/>
                     <has_text text="occ_geometry"/>
-                    <has_text text="env_geometry"/> 
+                    <has_text text="env_geometry"/>
                     <has_text text="Distances (meters)"/>
                 </assert_contents>
             </output>
@@ -143,9 +143,9 @@ This tool gives in output two files:
 +----------+-----------+------------------------+-----------+---------+------+--------------+-----+
     ]]></help>
     <citations>
-       <citation type="doi">10.32614/RJ-2018-009</citation>  
-       <citation type="doi">10.32614/CRAN.package.dplyr</citation>
-       <citation type="doi">10.32614/CRAN.package.sf</citation> 
+        <citation type="doi">10.32614/RJ-2018-009</citation>
+        <citation type="doi">10.32614/CRAN.package.dplyr</citation>
+        <citation type="doi">10.32614/CRAN.package.sf</citation>
     </citations>
     <expand macro="creator"/>
 </tool>

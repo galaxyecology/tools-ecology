@@ -1,4 +1,4 @@
-<tool id="ecology_stat_presence_abs" name="Statistics on presence-absence" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile = "20.01">
+<tool id="ecology_stat_presence_abs" name="Statistics on presence-absence" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="20.01">
     <description>of a numeric variable</description>
     <macros>
         <import>macro.xml</import>
@@ -29,7 +29,7 @@
     <inputs>
         <expand macro="explo_input"/>
         <param name="variable1" label="Select a column containing numerical values (such as the abundance) " type="data_column" data_ref="input" numerical="true" use_header_names="true"/>
-        <param name="species" label="Select the column of the x-axis : most commonly species" type="data_column" data_ref="input" use_header_names="true" help= "Variable for dispersion plot and to see the correlation between zeros"/>
+        <param name="species" label="Select the column of the x-axis : most commonly species" type="data_column" data_ref="input" use_header_names="true" help="Variable for dispersion plot and to see the correlation between zeros"/>
         <param name="location" label="Select column containing locations " type="data_column" data_ref="input" use_header_names="true"/>
         <param name="time" label="Select column containing temporal data (year, date, ...) " type="data_column" data_ref="input" use_header_names="true"/>
     </inputs>

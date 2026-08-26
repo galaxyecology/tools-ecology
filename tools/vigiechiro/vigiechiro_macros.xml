@@ -19,7 +19,7 @@
             author={Bas, Yves and Escallon, Antoine and Ferre, Matthieu and Haquart, Alexandre and Rufray, Vincent and Disca, Thierry and Julien, Jean-Fran{\c{c}}ois}
 	            }
            </citation>
-           <citation type="bibtex">
+            <citation type="bibtex">
             @inproceedings{kerbiriou2010long,
             title={Long term trends monitoring of bats, from biodiversity indicator production to species specialization assessment},
             author={Kerbiriou, C and Bas, Y and Dufr{\^e}ne, L and Robert, A and Julien, JF},
@@ -27,26 +27,26 @@
             year={2010}
             }
             </citation>
-            <citation type="doi">10.5334/jors.154</citation>  
+            <citation type="doi">10.5334/jors.154</citation>
         </citations>
     </xml>
     <xml name="vigiechiro_requirements">
         <requirements>
             <requirement type="package" version="1.12.2">r-data.table</requirement>
-            <yield />
+            <yield/>
         </requirements>
     </xml>
     <xml name="vigiechiro_bilanenrichi_requirements">
-        <requirement type="package" version="1.4.3">r-reshape2</requirement> 
+        <requirement type="package" version="1.4.3">r-reshape2</requirement>
         <requirement type="package" version="0.4">r-dt</requirement>
         <requirement type="package" version="1.2">r-htmlwidgets</requirement>
         <requirement type="package" version="2.6">pandoc</requirement>
     </xml>
-	<xml name="creator">
-		<creator>
+    <xml name="creator">
+        <creator>
             <person givenName="Alan" familyName="Amossé" url="https://github.com/Alanamosse"/>
             <person givenName="Yvan" familyName="Le Bras" url="https://orcid.org/0000-0002-8504-068X"/>
-            <organization name="PNDB"  url="https://www.pndb.fr/pages/accueil/"/>
-		</creator>
-	</xml>
+            <organization name="PNDB" url="https://www.pndb.fr/pages/accueil/"/>
+        </creator>
+    </xml>
 </macros>

@@ -2,13 +2,11 @@
     <description>
         of each cell of a spatial grid
     </description>
-
     <macros>
-        <token name="@TOOL_VERSION@">0.1.1</token> 
+        <token name="@TOOL_VERSION@">0.1.1</token>
         <token name="@VERSION_SUFFIX@">1</token>
     </macros>
-    
-    <requirements> 
+    <requirements>
         <requirement type="package" version="1.0.8">r-phyloregion</requirement>
         <requirement type="package" version="1.6.5">r-matrix</requirement>
         <requirement type="package" version="5.8_1">r-ape</requirement>
@@ -16,14 +14,11 @@
         <requirement type="package" version="1.0_20">r-sf</requirement>
         <requirement type="package" version="2.2_0">r-sp</requirement>
         <requirement type="package" version="3.6_32">r-raster</requirement>
-        <requirement type="package" version="1.1.4">r-dplyr</requirement> 
+        <requirement type="package" version="1.1.4">r-dplyr</requirement>
     </requirements>
-
     <required_files>
-        <include path="EstimEndem.R" />
+        <include path="EstimEndem.R"/>
     </required_files>
-
-
     <command detect_errors="exit_code">
         <![CDATA[
         mkdir '$shapefile.extra_files_path' &&
@@ -39,14 +34,12 @@
 
         ]]>
     </command>
-
     <inputs>
-        <param name="phylogeny" type="data" format="newick" label="Phylogeny file (Newick format)" />
-        <param name="occupancy" type="data" format="tabular" label="Occupancy data (Tabular format)" />
-        <param name ="coordinates_file_input" type="data" format="shp" label="input_shapefile" help="Provide coordinates files"/>
+        <param name="phylogeny" type="data" format="newick" label="Phylogeny file (Newick format)"/>
+        <param name="occupancy" type="data" format="tabular" label="Occupancy data (Tabular format)"/>
+        <param name="coordinates_file_input" type="data" format="shp" label="input_shapefile" help="Provide coordinates files"/>
         <param name="nb_cluster" type="integer" value="10" label="the number of cluster" help="choose the number of phyloregion"/>
-        <param name ="clustering_method" type="select" checked="true" 
-               label="Choose a clustering method" help="choose">
+        <param name="clustering_method" type="select" checked="true" label="Choose a clustering method" help="choose">
             <option value="ward.D" selected="true">ward.D</option>
             <option value="ward.D2">ward.D2</option>
             <option value="single">single</option>
@@ -56,12 +49,10 @@
             <option value="median">WPGMC</option>
             <option value="centroid">UPGMC</option>
         </param>
-
     </inputs>
     <outputs>
         <data name="shapefile" format="shp" label="shapefile"/>
     </outputs>
-
     <tests>
         <test>
             <param name="phylogeny" value="tree_file"/>
@@ -74,7 +65,6 @@
             </param>
             <param name="nb_cluster" value="8"/>
             <param name="clustering_method" value="ward.D"/>
-
             <output file="shapefile_out_1/shapefile_shp_test1.html" name="shapefile">
                 <extra_files type="file" name="output.shp" value="shapefile_out_1/output.shp"/>
                 <extra_files type="file" name="output.shx" value="shapefile_out_1/output.shx"/>
@@ -82,7 +72,6 @@
                 <extra_files type="file" name="output.prj" value="shapefile_out_1/output.prj"/>
             </output>
         </test>
-
         <test>
             <param name="phylogeny" value="tree_file"/>
             <param name="occupancy" value="matrix_file"/>
@@ -94,7 +83,6 @@
             </param>
             <param name="nb_cluster" value="8"/>
             <param name="clustering_method" value="ward.D2"/>
-
             <output file="shapefile_out_2/shapefile_shp_test2.html" name="shapefile">
                 <extra_files type="file" name="output.shp" value="shapefile_out_2/output.shp"/>
                 <extra_files type="file" name="output.shx" value="shapefile_out_2/output.shx"/>
@@ -102,7 +90,6 @@
                 <extra_files type="file" name="output.prj" value="shapefile_out_2/output.prj"/>
             </output>
         </test>
-
         <test>
             <param name="phylogeny" value="tree_file"/>
             <param name="occupancy" value="matrix_file"/>
@@ -114,7 +101,6 @@
             </param>
             <param name="nb_cluster" value="8"/>
             <param name="clustering_method" value="single"/>
-
             <output file="shapefile_out_3/shapefile_shp_test3.html" name="shapefile">
                 <extra_files type="file" name="output.shp" value="shapefile_out_3/output.shp"/>
                 <extra_files type="file" name="output.shx" value="shapefile_out_3/output.shx"/>
@@ -122,7 +108,6 @@
                 <extra_files type="file" name="output.prj" value="shapefile_out_3/output.prj"/>
             </output>
         </test>
-
         <test>
             <param name="phylogeny" value="tree_file"/>
             <param name="occupancy" value="matrix_file"/>
@@ -134,7 +119,6 @@
             </param>
             <param name="nb_cluster" value="8"/>
             <param name="clustering_method" value="complete"/>
-
             <output file="shapefile_out_4/shapefile_shp_test4.html" name="shapefile">
                 <extra_files type="file" name="output.shp" value="shapefile_out_4/output.shp"/>
                 <extra_files type="file" name="output.shx" value="shapefile_out_4/output.shx"/>
@@ -142,7 +126,6 @@
                 <extra_files type="file" name="output.prj" value="shapefile_out_4/output.prj"/>
             </output>
         </test>
-
         <test>
             <param name="phylogeny" value="tree_file"/>
             <param name="occupancy" value="matrix_file"/>
@@ -154,7 +137,6 @@
             </param>
             <param name="nb_cluster" value="8"/>
             <param name="clustering_method" value="average"/>
-
             <output file="shapefile_out_5/shapefile_shp_test5.html" name="shapefile">
                 <extra_files type="file" name="output.shp" value="shapefile_out_5/output.shp"/>
                 <extra_files type="file" name="output.shx" value="shapefile_out_5/output.shx"/>
@@ -162,7 +144,6 @@
                 <extra_files type="file" name="output.prj" value="shapefile_out_5/output.prj"/>
             </output>
         </test>
-
         <test>
             <param name="phylogeny" value="tree_file"/>
             <param name="occupancy" value="matrix_file"/>
@@ -174,7 +155,6 @@
             </param>
             <param name="nb_cluster" value="8"/>
             <param name="clustering_method" value="mcquitty"/>
-
             <output file="shapefile_out_6/shapefile_shp_test6.html" name="shapefile">
                 <extra_files type="file" name="output.shp" value="shapefile_out_6/output.shp"/>
                 <extra_files type="file" name="output.shx" value="shapefile_out_6/output.shx"/>
@@ -182,7 +162,6 @@
                 <extra_files type="file" name="output.prj" value="shapefile_out_6/output.prj"/>
             </output>
         </test>
-
         <test>
             <param name="phylogeny" value="tree_file"/>
             <param name="occupancy" value="matrix_file"/>
@@ -194,7 +173,6 @@
             </param>
             <param name="nb_cluster" value="8"/>
             <param name="clustering_method" value="median"/>
-
             <output file="shapefile_out_7/shapefile_shp_test7.html" name="shapefile">
                 <extra_files type="file" name="output.shp" value="shapefile_out_7/output.shp"/>
                 <extra_files type="file" name="output.shx" value="shapefile_out_7/output.shx"/>
@@ -202,7 +180,6 @@
                 <extra_files type="file" name="output.prj" value="shapefile_out_7/output.prj"/>
             </output>
         </test>
-
         <test>
             <param name="phylogeny" value="tree_file"/>
             <param name="occupancy" value="matrix_file"/>
@@ -214,7 +191,6 @@
             </param>
             <param name="nb_cluster" value="8"/>
             <param name="clustering_method" value="centroid"/>
-
             <output file="shapefile_out_8/shapefile_shp_test8.html" name="shapefile">
                 <extra_files type="file" name="output.shp" value="shapefile_out_8/output.shp"/>
                 <extra_files type="file" name="output.shx" value="shapefile_out_8/output.shx"/>
@@ -223,17 +199,15 @@
             </output>
         </test>
     </tests>
-
     <help>
         <![CDATA[
             This tool estimates the endemism of each cell in a spatial grid using the provided phylogeny, occupancy data, and spatial coordinates. 
             Ensure that the input files are in the correct formats: Newick for phylogeny, tabular for occupancy, and shapefile for spatial data.
 
         ]]>
-    </help>       
-    
+    </help>
     <citations>
-        <citation type="doi">10.32614/CRAN.package.phyloregion</citation>    
+        <citation type="doi">10.32614/CRAN.package.phyloregion</citation>
         <citation type="doi">10.32614/CRAN.package.Matrix</citation>
         <citation type="doi">10.32614/CRAN.package.ape</citation>
         <citation type="doi">10.18129/B9.bioc.SparseArray</citation>
@@ -243,7 +217,7 @@
         <citation type="doi">10.32614/CRAN.package.dplyr</citation>
     </citations>
     <creator>
-        <person  givenName="Elouan" familyName="Le Mestric"  url="https://github.com/ElouanLM"/>
+        <person givenName="Elouan" familyName="Le Mestric" url="https://github.com/ElouanLM"/>
         <organization name="PNDB" url="https://www.pndb.fr/pages/accueil/"/>
     </creator>
 </tool>

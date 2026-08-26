@@ -97,6 +97,6 @@ TWO input files in csv format.
 
 
     ]]>    </help>
-        <expand macro="cb_bibref"/>
-        <expand macro="creator"/>
+    <expand macro="cb_bibref"/>
+    <expand macro="creator"/>
 </tool>

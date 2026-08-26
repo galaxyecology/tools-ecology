@@ -38,7 +38,7 @@
             <option value="standard">🏊 standard mode simplifies the dataset, remove most of its jargon and return a priori good data</option>
             <option value="research">🚣 research mode simplifies the dataset to its heart, preserving only data of the highest quality for research studies, including studies sensitive to small pressure and salinity bias </option>
             <option value="expert">🏄 expert mode return all the Argo data, without any postprocessing</option>
-        </param>    
+        </param>
         <conditional name="selection">
             <param name="data_selection" type="select" label="How do you want to select your data of interest ?">
                 <option value="space_time">🗺 For a space/time domain</option>
@@ -53,13 +53,13 @@
                 <param name="pressure_1" type="float" value="0" label="Input pressure min (db)"/>
                 <param name="pressure_2" type="float" value="0" label="Input pressure max (db)"/>
                 <param name="date_1" type="text" optional="true" label="Input starting date" value="yyyy-mm"/>
-                <param name="date_2" type="text" optional="true" label="Input ending date" value="yyyy-mm"/>    
+                <param name="date_2" type="text" optional="true" label="Input ending date" value="yyyy-mm"/>
             </when>
             <when value="floats">
                 <param name="wmo" type="text" label="Input WMO number" help="If you want to enter multiple ones just separate them with a comma (example : 6902746, 6902755)"/>
             </when>
             <when value="profiles">
-                <param name="wmo" type="integer" value="0" label="Input WMO number" />
+                <param name="wmo" type="integer" value="0" label="Input WMO number"/>
                 <param name="profile" type="text" multiple="true" value="0" label="Input profile cycle number" help="if you want to enter multiple ones just separate them with a comma (example : 3,12)"/>
             </when>
         </conditional>
@@ -266,13 +266,13 @@
             <param name="user" value="standard"/>
             <conditional name="selection">
                 <param name="data_selection" value="space_time"/>
-                <param name="cardinal_1" value="-75.0"/>            
+                <param name="cardinal_1" value="-75.0"/>
                 <param name="cardinal_2" value="-45.0"/>
-                <param name="cardinal_3" value="20.0"/>            
+                <param name="cardinal_3" value="20.0"/>
                 <param name="cardinal_4" value="30.0"/>
-                <param name="pressure_1" value="0.0"/>            
+                <param name="pressure_1" value="0.0"/>
                 <param name="pressure_2" value="10.0"/>
-                <param name="date_1" value="2011-01"/>            
+                <param name="date_1" value="2011-01"/>
                 <param name="date_2" value="2011-06"/>
             </conditional>
             <conditional name="dataset">

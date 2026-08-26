@@ -4,8 +4,8 @@
         <import>stoceps_macros.xml</import>
     </macros>
     <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
+        <edam_topic>topic_0610</edam_topic>
+        <edam_topic>topic_3050</edam_topic>
     </edam_topics>
     <expand macro="temp_indic_requirements"/>
     <required_files>
@@ -47,8 +47,8 @@
     </command>
     <inputs>
         <expand macro="stoceps_input_filtered"/>
-        <param name="inputtabSpecies" type="data" format="tabular" label="Species file" help="Input species tabular file, with 5 columns (species ID, species name, species scientific name, specialization status)." />
-        <param name="inputspeciesindic" type="data" format="tabular" label="indicators info file" help="Input indicator info tabular file, with a `species ID` column and at least one index column (named `ssi` or `sti` or `stri`)." />
+        <param name="inputtabSpecies" type="data" format="tabular" label="Species file" help="Input species tabular file, with 5 columns (species ID, species name, species scientific name, specialization status)."/>
+        <param name="inputspeciesindic" type="data" format="tabular" label="indicators info file" help="Input indicator info tabular file, with a `species ID` column and at least one index column (named `ssi` or `sti` or `stri`)."/>
         <param name="index" type="select" help="Available index" label="Chose the index you want to compute">
             <option selected="true" value="csi">CSI</option>
             <option value="cti">CTI</option>
@@ -60,7 +60,7 @@
                 <option selected="true" value="gam">Gam</option>
             </param>
             <when value="gam">
-                 <param name="inputcoord" type="data" format="tabular" label="Coordinates of sites" help="Input localization tabular file, with 3 columns (site ID, latitude, longitude)." />
+                <param name="inputcoord" type="data" format="tabular" label="Coordinates of sites" help="Input localization tabular file, with 3 columns (site ID, latitude, longitude)."/>
             </when>
             <when value="glmmtmb">
             </when>
@@ -89,7 +89,6 @@
         <data name="output_tab_gam_smoothed" from_work_dir="Output/csi_gammsmoothFrance.tabular" format="tabular" label="GAM - Temp trends smoothed data on ${on_string}">
             <expand macro="stoceps_filter_gam"/>
         </data>
-        
         <data name="output_plot_glmmtb_csiplot" from_work_dir="Output/csi_glmmTMB_France.png" format="png" label="GlmmTMB - Temp trends plot on ${on_string}">
             <expand macro="stoceps_filter_glmmtmb"/>
         </data>
@@ -154,7 +153,7 @@
                 <param name="smooth_plot" value="FALSE"/>
                 <param name="compute_ic" value="TRUE"/>
             </conditional>
-                <conditional name="method">
+            <conditional name="method">
                 <param name="model" value="glmmtmb"/>
             </conditional>
             <output name="output_plot_glmmtb_csiplot">
@@ -235,6 +234,6 @@ UnPublished script available at www.vigienature.fr/sites/vigienature/files/atoms
 and the first version written by Romain Lorrilliere
 
   ]]></help>
-  <expand macro="stoceps_bibref"/>
-  <expand macro="creator" />
+    <expand macro="stoceps_bibref"/>
+    <expand macro="creator"/>
 </tool>

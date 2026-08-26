@@ -123,6 +123,6 @@ In order to get such input we advise to use the tool preprocessing sentinel 2 da
 
 - One  ENVI BIL files with the one file for the bil raster and one file for the hdr header.
     ]]>    </help>
-        <expand macro="SRS_BDMRref"/>
-        <expand macro="creator"/>
+    <expand macro="SRS_BDMRref"/>
+    <expand macro="creator"/>
 </tool>

@@ -19,28 +19,27 @@
     ]]></command>
     <inputs>
         <param name="license" type="select" label="Under what license are your data?">
-              <option value="CC0">CC0</option>
-              <option value="CCBY">CCBY</option>
+            <option value="CC0">CC0</option>
+            <option value="CCBY">CCBY</option>
         </param>
         <param name="file_type" type="select" label="What type of file do you want for abstract, methods, and additional info??">
-              <option value=".txt">Text</option>
-              <option value=".docx">MS Word</option>
-              <option value=".md">Markdown</option>
+            <option value=".txt">Text</option>
+            <option value=".docx">MS Word</option>
+            <option value=".md">Markdown</option>
         </param>
-        
     </inputs>
     <outputs>
-          <collection name="output" type="list" label="Core features templates">
-              <discover_datasets pattern="(?P&lt;designation&gt;.+\.txt)" format="txt"/>
-              <discover_datasets pattern="(?P&lt;designation&gt;.+\.docx)" format="docx"/>
-              <discover_datasets pattern="(?P&lt;designation&gt;.+\.md)" format="markdown"/>
-          </collection>
+        <collection name="output" type="list" label="Core features templates">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+\.txt)" format="txt"/>
+            <discover_datasets pattern="(?P&lt;designation&gt;.+\.docx)" format="docx"/>
+            <discover_datasets pattern="(?P&lt;designation&gt;.+\.md)" format="markdown"/>
+        </collection>
     </outputs>
     <tests>
         <test>
-           <param name="license" value="CCBY"/>
-           <param name="file_type" value=".txt"/>
-           <output_collection name='output' type = "list" count="6"/>
+            <param name="license" value="CCBY"/>
+            <param name="file_type" value=".txt"/>
+            <output_collection name="output" type="list" count="6"/>
         </test>
     </tests>
     <help><![CDATA[

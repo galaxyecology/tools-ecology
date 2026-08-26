@@ -24,7 +24,6 @@ Rscript '$__tool_directory__/wormsmeasurements.R'
     '$exclude_NA'
     '$output'
     ]]></command>
-
     <inputs>
         <param name="data" type="data" format="tabular" label="occurrence data"/>
         <param name="measurement_types" type="text" format="txt" label="list of measurement types">
@@ -32,15 +31,13 @@ Rscript '$__tool_directory__/wormsmeasurements.R'
         <param name="scientic_name" type="text" format="txt" label="scientific names column name" value="scientificName" optional="false">
             <validator type="regex" message="this field can't be empty">.+</validator>
         </param>
-        <param name="include_inherited" type="boolean" label="include attributes inherited from parent taxon" checked="false"/>        
+        <param name="include_inherited" type="boolean" label="include attributes inherited from parent taxon" checked="false"/>
         <param name="pivot_wider" type="boolean" label="one hot encoding on the measurement types" checked="false"/>
         <param name="exclude_NA" type="boolean" label="exclude lines with missing values (NA)" checked="false"/>
     </inputs>
-
     <outputs>
         <data name="output" from_work_dir="enriched_data.tabular" format="tabular" label="dataset enriched with measurments"/>
     </outputs>
-
     <tests>
         <test>
             <param name="data" value="sample.tabular"/>
@@ -70,7 +67,6 @@ Rscript '$__tool_directory__/wormsmeasurements.R'
             <output name="output" file="enriched_data_inherited_ohe.tabular"/>
         </test>
     </tests>
-
     <help><![CDATA[
 ==================    
 **What it does ?**
@@ -122,7 +118,6 @@ The inputed dataset with columns of measurement types or measurements
 -70.51166667	-8.801	"Sterechinus sp"	NA	NA
 
 ]]></help>
-
     <citations>
         <citation type="doi">10.32614/CRAN.package.dplyr</citation>
         <citation type="doi">10.32614/CRAN.package.tidyverse</citation>
@@ -131,6 +126,6 @@ The inputed dataset with columns of measurement types or measurements
     </citations>
     <creator>
         <person givenName="Jean" familyName="Le Cras" url="https://github.com/jeanlecras"/>
-        <organization name="PNDB"  url="https://www.pndb.fr/pages/accueil/"/>
+        <organization name="PNDB" url="https://www.pndb.fr/pages/accueil/"/>
     </creator>
 </tool>

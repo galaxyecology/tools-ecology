@@ -4,10 +4,10 @@
         <import>macros.xml</import>
     </macros>
     <requirements>
-       <requirement type="package" version="4.2.3">r-base</requirement>
-       <requirement type="package" version="3.3">r-tmap</requirement>
-       <requirement type="package" version="1.0_12">r-sf</requirement>
-       <requirement type="package" version="1.1.1">r-dplyr</requirement>
+        <requirement type="package" version="4.2.3">r-base</requirement>
+        <requirement type="package" version="3.3">r-tmap</requirement>
+        <requirement type="package" version="1.0_12">r-sf</requirement>
+        <requirement type="package" version="1.1.1">r-dplyr</requirement>
     </requirements>
     <required_files>
         <include path="crea_carte_G.R"/>
@@ -20,15 +20,15 @@
     ]]>
     </command>
     <inputs>
-      <param name="cluster" type="data" format="tabular" label="Source file (File 'cluster points' from previous step)" help="See example below"/>
+        <param name="cluster" type="data" format="tabular" label="Source file (File 'cluster points' from previous step)" help="See example below"/>
     </inputs>
     <outputs>
-      <data name="output" from_work_dir="ecoregions.png" format="png" label="Map"/>
+        <data name="output" from_work_dir="ecoregions.png" format="png" label="Map"/>
     </outputs>
     <tests>
         <test>
-            <param name='cluster' value="points_clus.tsv"/>
-            <output name='output' value="ecoregions.png"/>
+            <param name="cluster" value="points_clus.tsv"/>
+            <output name="output" value="ecoregions.png"/>
         </test>
     </tests>
     <help><![CDATA[
@@ -56,9 +56,9 @@ This script takes as input a file containing for each environmental pixel its as
 
     ]]></help>
     <citations>
-       <citation type="doi">10.32614/CRAN.package.dplyr</citation>
-       <citation type="doi">10.32614/CRAN.package.sf</citation>
-       <citation type="doi">10.32614/CRAN.package.tmap</citation>
+        <citation type="doi">10.32614/CRAN.package.dplyr</citation>
+        <citation type="doi">10.32614/CRAN.package.sf</citation>
+        <citation type="doi">10.32614/CRAN.package.tmap</citation>
     </citations>
     <expand macro="creator"/>
 </tool>

@@ -4,8 +4,8 @@
         <import>regionalgam_macros.xml</import>
     </macros>
     <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
+        <edam_topic>topic_0610</edam_topic>
+        <edam_topic>topic_3050</edam_topic>
     </edam_topics>
     <expand macro="rg_nlme_mass_requirements"/>
     <required_files>
@@ -32,10 +32,10 @@
             <param name="gls_model" value="s_gls-adju_rda.rda"/>
             <output name="output_tsv" ftype="tabular">
                 <assert_contents>
-                    <has_line_matching expression="2003&#009;5.5699.*"/>
-                    <has_line_matching expression="2004&#009;5.6221.*"/>
-                    <has_line_matching expression="2005&#009;5.6915.*"/>
-                    <has_line line="&quot;year&quot;&#009;&quot;collated index&quot;"/>
+                    <has_line_matching expression="2003&#9;5.5699.*"/>
+                    <has_line_matching expression="2004&#9;5.6221.*"/>
+                    <has_line_matching expression="2005&#9;5.6915.*"/>
+                    <has_line line="&quot;year&quot;&#9;&quot;collated index&quot;"/>
                     <has_n_columns n="2"/>
                 </assert_contents>
             </output>

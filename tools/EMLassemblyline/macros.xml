@@ -4,7 +4,7 @@
     <token name="@VERSION_SUFFIX_2@">2</token>
     <xml name="citations">
         <citations>
-           <citation type="bibtex">@Manual{,
+            <citation type="bibtex">@Manual{,
            title = {EMLassemblyline: A tool kit for building EML metadata workflows},
            author = {Colin Smith},
            year = {2022},

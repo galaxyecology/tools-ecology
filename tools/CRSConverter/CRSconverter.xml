@@ -1,20 +1,16 @@
 <tool id="crsconverter" name="CRSconverter" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="21.05">
     <description>from environmental predictors for species distribution modeling</description>
-
     <macros>
-        <token name="@TOOL_VERSION@">1.1</token> 
+        <token name="@TOOL_VERSION@">1.1</token>
         <token name="@VERSION_SUFFIX@">1</token>
     </macros>
-
-    <requirements> 
+    <requirements>
         <requirement type="package" version="1.0_16">r-sf</requirement>
         <requirement type="package" version="1.3.1">r-tidyr</requirement>
     </requirements>
-
     <required_files>
-        <include path="CRSconverter.R" />
+        <include path="CRSconverter.R"/>
     </required_files>
-
     <command detect_errors="exit_code">
         <![CDATA[
         Rscript '$__tool_directory__/CRSconverter.R'
@@ -43,23 +39,16 @@
         ]]>
     </command>
     <inputs>
-        <param name ="coordinates_file_input" type="data" format="shp" 
-               label="shapefile" help="Provide coordinates files"/>
-        <section name="advanced_options" title= "Advanced Option" expanded="false">
-            <param name ="projection" type="select" checked="true" 
-                   label="Projection type" help="Choose a projection  .">
+        <param name="coordinates_file_input" type="data" format="shp" label="shapefile" help="Provide coordinates files"/>
+        <section name="advanced_options" title="Advanced Option" expanded="false">
+            <param name="projection" type="select" checked="true" label="Projection type" help="Choose a projection  .">
                 <option value="laea" selected="true">laea</option>
             </param>
-            <param name ="latitude" type="integer" value="0" 
-                   label="Latitude" help="Choose a projection  ."/>
-            <param name ="longitude" type="integer" value="0" 
-                   label="Longitude" help="Choose a projection  ."/>
-            <param name ="X" type="integer" value="0" 
-                   label="X" help="Choose a projection  ."/>
-            <param name ="Y" type="integer" value="0" 
-                   label="Y" help="Choose a projection  ."/>
-            <param name ="ellps_datum" type="select" checked="true"
-                   label="Ellipsoid and Datum" help="Choose a projection  .">
+            <param name="latitude" type="integer" value="0" label="Latitude" help="Choose a projection  ."/>
+            <param name="longitude" type="integer" value="0" label="Longitude" help="Choose a projection  ."/>
+            <param name="X" type="integer" value="0" label="X" help="Choose a projection  ."/>
+            <param name="Y" type="integer" value="0" label="Y" help="Choose a projection  ."/>
+            <param name="ellps_datum" type="select" checked="true" label="Ellipsoid and Datum" help="Choose a projection  .">
                 <option value="GRS80">GRS80</option>
                 <option value="airy">airy</option>
                 <option value="bessel">bessel</option>
@@ -70,16 +59,13 @@
                 <option value="WGS84" selected="true">WGS84</option>
                 <option value="sphere">sphere</option>
             </param>
-            <param name ="units" type="select" checked="true"
-                   label="Units" help="Choose a projection  .">
+            <param name="units" type="select" checked="true" label="Units" help="Choose a projection  .">
                 <option value="m" selected="true">m</option>
                 <option value="Km">Km</option>
                 <option value="Hm">Hm</option>
             </param>
         </section>
-        
-        <param name ="output_file_format" type="select" checked="true" 
-               label="Choose output format" help="choose">
+        <param name="output_file_format" type="select" checked="true" label="Choose output format" help="choose">
             <option value="shp" selected="true">shp</option>
             <option value="pdf">pdf</option>
             <option value="png">png</option>
@@ -88,7 +74,6 @@
             <option value="bmp">bmp</option>
         </param>
     </inputs>
-
     <outputs>
         <data name="output" from_work_dir="output" format="xml" label="${on_string}.${output_file_format}">
             <filter>
@@ -108,7 +93,6 @@
             </filter>
         </data>
     </outputs>
-
     <tests>
         <test expect_num_outputs="1">
             <param name="coordinates_file_input" value="composite_dataset/shapefile" ftype="shp">
@@ -126,8 +110,7 @@
                 <param name="ellps_datum" value="WGS84"/>
                 <param name="units" value="m"/>
             </section>
-            <param name ="output_file_format" value="shp"/>
-            
+            <param name="output_file_format" value="shp"/>
             <output file="shapefile/shapefile_shp.html" name="shapefile">
                 <extra_files type="file" name="shapefile.shp" value="shapefile/shapefile.shp"/>
                 <extra_files type="file" name="shapefile.shx" value="shapefile/shapefile.shx"/>
@@ -151,8 +134,7 @@
                 <param name="ellps_datum" value="WGS84"/>
                 <param name="units" value="m"/>
             </section>
-            <param name ="output_file_format" value="pdf"/>
-
+            <param name="output_file_format" value="pdf"/>
             <output file="output.pdf" name="output" ftype="pdf"/>
         </test>
         <test expect_num_outputs="1">
@@ -171,8 +153,7 @@
                 <param name="ellps_datum" value="WGS84"/>
                 <param name="units" value="m"/>
             </section>
-            <param name ="output_file_format" value="png"/>
-
+            <param name="output_file_format" value="png"/>
             <output file="output.png" name="output" ftype="png"/>
         </test>
         <test expect_num_outputs="1">
@@ -191,8 +172,7 @@
                 <param name="ellps_datum" value="WGS84"/>
                 <param name="units" value="m"/>
             </section>
-            <param name ="output_file_format" value="jpeg"/>
-
+            <param name="output_file_format" value="jpeg"/>
             <output file="output.jpeg" name="output" ftype="jpg"/>
         </test>
         <test expect_num_outputs="1">
@@ -211,8 +191,7 @@
                 <param name="ellps_datum" value="WGS84"/>
                 <param name="units" value="m"/>
             </section>
-            <param name ="output_file_format" value="tiff"/>
-
+            <param name="output_file_format" value="tiff"/>
             <output file="output.tiff" name="output" ftype="tiff"/>
         </test>
         <test expect_num_outputs="1">
@@ -231,24 +210,22 @@
                 <param name="ellps_datum" value="WGS84"/>
                 <param name="units" value="m"/>
             </section>
-            <param name ="output_file_format" value="bmp"/>
-
+            <param name="output_file_format" value="bmp"/>
             <output file="output.bmp" name="output" ftype="bmp"/>
         </test>
     </tests>
-
     <help><![CDATA[        
         This tool transforms geographical vector data (in shapefile format) to a specified coordinate reference system (CRS) 
         and allows you to export the result in various formats, including shapefile and image formats (PDF, PNG, JPEG, TIFF, BMP).
         Ensure that the input files are in the correct formats:
         - Shapefile : commposite file, shp format
     ]]></help>
-    <citations> 
+    <citations>
         <citation type="doi">10.32614/CRAN.package.sf</citation>
         <citation type="doi">10.32614/CRAN.package.tidyr</citation>
     </citations>
     <creator>
-        <person  givenName="Elouan" familyName="Le Mestric"  url="https://github.com/ElouanLM"/>
+        <person givenName="Elouan" familyName="Le Mestric" url="https://github.com/ElouanLM"/>
         <organization name="PNDB" url="https://www.pndb.fr/pages/accueil/"/>
     </creator>
 </tool>

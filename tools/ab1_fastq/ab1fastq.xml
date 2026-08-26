@@ -1,5 +1,5 @@
-<tool id="ab1_fastq_converter" name="ab1 to FASTQ converter" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@"> 
-    <description></description>
+<tool id="ab1_fastq_converter" name="ab1 to FASTQ converter" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
+    <description/>
     <macros>
         <import>ab1fastq_macros.xml</import>
     </macros>
@@ -73,5 +73,5 @@ This tool can also trim ends of your sequence based on the quality statistics.
         <citation type="doi">10.1038/nbt.3628</citation>
         <citation type="doi">10.5061/dryad.b331s</citation>
     </citations>
-  <expand macro="creator"/>
+    <expand macro="creator"/>
 </tool>

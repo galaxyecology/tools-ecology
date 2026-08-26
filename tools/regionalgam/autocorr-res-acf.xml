@@ -4,8 +4,8 @@
         <import>regionalgam_macros.xml</import>
     </macros>
     <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
+        <edam_topic>topic_0610</edam_topic>
+        <edam_topic>topic_3050</edam_topic>
     </edam_topics>
     <expand macro="rg_r_requirements"/>
     <required_files>
@@ -22,7 +22,7 @@
         <expand macro="rg_gls_model"/>
     </inputs>
     <outputs>
-        <data format="png" name="output" from_work_dir="output-acf.png" label="Visualization of ${tool.name} on ${on_string}" />
+        <data format="png" name="output" from_work_dir="output-acf.png" label="Visualization of ${tool.name} on ${on_string}"/>
         <data format="txt" name="output_res_values" from_work_dir="output-acf.txt" label="Raw values ${tool.name} on ${on_string}"/>
     </outputs>
     <tests>

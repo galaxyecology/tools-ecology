@@ -13,7 +13,7 @@
     <required_files>
         <include path="run_idw_interpolation.R"/>
     </required_files>
-    <command detect_errors='exit_code'><![CDATA[
+    <command detect_errors="exit_code"><![CDATA[
     Rscript '$__tool_directory__/run_idw_interpolation.R'
         --observationsCsv '$observations_csv'
         --latitudeColumn '$latitude_column'
@@ -73,10 +73,10 @@
             <option value="YlOrBr">YlOrBr</option>
             <option value="YlOrRd">YlOrRd</option>
         </param>
-        <param type="boolean" name="test_case" label="Should a seed be set?" truevalue="true" falsevalue="false" />
+        <param type="boolean" name="test_case" label="Should a seed be set?" truevalue="true" falsevalue="false"/>
     </inputs>
     <outputs>
-        <data name="output" format="png" />
+        <data name="output" format="png"/>
     </outputs>
     <tests>
         <!-- Run test with: planemo test - -biocontainers plotInterpolationMap.xml - -test_output=plotInterpolationMap.html -->

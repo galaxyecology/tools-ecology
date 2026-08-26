@@ -4,8 +4,8 @@
         <import>stoceps_macros.xml</import>
     </macros>
     <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
+        <edam_topic>topic_0610</edam_topic>
+        <edam_topic>topic_3050</edam_topic>
     </edam_topics>
     <expand macro="mainglm_requirements"/>
     <required_files>
@@ -36,7 +36,7 @@
     <inputs>
         <param name="input_y_var" type="data" format="tabular" label="Yearly variation dataset" help="Output from the 'Estimate temporal population evoution by species' tool."/>
         <param name="input_glob_tendencies" type="data" format="tabular" label="Global tendencies dataset" help="Output from the 'Estimate temporal population evoution by species' tool."/>
-        <param name="inputtabSpecies" type="data" format="tabular" label="Species file" help="Input species tabular file, with 5 columns (species ID, species name, species scientific name, specialization status)." />
+        <param name="inputtabSpecies" type="data" format="tabular" label="Species file" help="Input species tabular file, with 5 columns (species ID, species name, species scientific name, specialization status)."/>
         <conditional name="settings">
             <expand macro="stoceps_advanced_params_select"/>
             <when value="advanced">
@@ -64,7 +64,7 @@
         <test>
             <param name="inputtabSpecies" value="tabSpecies.csv"/>
             <param name="input_y_var" value="mainglm_tab_years.tabular"/>
-            <param name="input_glob_tendencies" value ="mainglm_tab_global.tabular"/>
+            <param name="input_glob_tendencies" value="mainglm_tab_global.tabular"/>
             <conditional name="settings">
                 <param name="advanced" value="simple"/>
             </conditional>
@@ -128,6 +128,6 @@ UnPublished script available at www.vigienature.fr/sites/vigienature/files/atoms
 the first version written by Romain Lorrilliere.
 
   ]]></help>
-  <expand macro="stoceps_bibref" />
-  <expand macro="creator" />
+    <expand macro="stoceps_bibref"/>
+    <expand macro="creator"/>
 </tool>

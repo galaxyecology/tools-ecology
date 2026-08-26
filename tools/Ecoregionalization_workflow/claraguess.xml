@@ -30,28 +30,22 @@ Rscript '$__tool_directory__/claraguess.R'
 #end if
     '$clustered_taxas_env'
     ]]></command>
-
     <inputs>
         <param name="enviro" type="data" format="tabular" label="Environmental data (tabular)"/>
         <param name="preds" type="data" format="tabular" multiple="true" label="BRT prediction files (collection of tabular)"/>
         <param name="taxas" type="data" format="txt" label="List of taxa (from TaxaSeeker)"/>
-
         <param name="type" type="select" label="k is ...">
             <option value="fixed">the number of clusters (fixed)</option>
             <option value="auto">the maximum number of clusters (automatic)</option>
         </param>
-
         <param name="k" type="integer" optional="true" label="Value of k"/>
-
         <param name="metric" type="select" label=" dissimilarity metric">
             <option value="manhattan">Manhattan</option>
             <option value="jaccard">Jaccard</option>
             <option value="euclidean" selected="true">Euclidean</option>
         </param>
-
         <param name="samples" type="integer" value="1000" label="Number of samples for CLARA"/>
     </inputs>
-
     <outputs>
         <data name="data_cluster" from_work_dir="data_cluster.tabular" format="tabular" label="Cluster assignments (lat, long, cluster)"/>
         <data name="silhouette_plot" from_work_dir="silhouette_plot.png" format="png" label="Silhouette Index Plot"/>
@@ -60,7 +54,6 @@ Rscript '$__tool_directory__/claraguess.R'
         </data>
         <data name="clustered_taxas_env" from_work_dir="clustered_taxas_env.tabular" format="tabular" label="Environment + Clustered Data"/>
     </outputs>
-
     <tests>
         <test expect_num_outputs="3">
             <param name="enviro" value="enviro.tabular"/>
@@ -70,27 +63,23 @@ Rscript '$__tool_directory__/claraguess.R'
             <param name="k" value="3"/>
             <param name="metric" value="manhattan"/>
             <param name="samples" value="10"/>
-
             <output name="data_cluster">
                 <assert_contents>
                     <has_line_matching expression="^lat\tlong\tcluster$"/>
                     <has_n_columns n="3"/>
                 </assert_contents>
             </output>
-
             <output name="silhouette_plot">
                 <assert_contents>
                     <has_size value="8400" delta="600"/>
                 </assert_contents>
             </output>
-
             <output name="clustered_taxas_env">
                 <assert_contents>
                     <has_line_matching expression="^lat\tlong\tcluster.*$"/>
                 </assert_contents>
             </output>
         </test>
-
         <test expect_num_outputs="4">
             <param name="enviro" value="enviro.tabular"/>
             <param name="preds" value="preds.tabular"/>
@@ -99,26 +88,22 @@ Rscript '$__tool_directory__/claraguess.R'
             <param name="k" value="3"/>
             <param name="metric" value="manhattan"/>
             <param name="samples" value="10"/>
-
             <output name="data_cluster">
                 <assert_contents>
                     <has_line_matching expression="^lat\tlong\tcluster$"/>
                     <has_n_columns n="3"/>
                 </assert_contents>
             </output>
-
             <output name="silhouette_plot">
                 <assert_contents>
                     <has_size value="8400" delta="600"/>
                 </assert_contents>
             </output>
-
             <output name="sih_scores">
                 <assert_contents>
                     <has_size value="6918" delta="600"/>
                 </assert_contents>
             </output>
-
             <output name="clustered_taxas_env">
                 <assert_contents>
                     <has_line_matching expression="^lat\tlong\tcluster.*$"/>
@@ -126,7 +111,6 @@ Rscript '$__tool_directory__/claraguess.R'
             </output>
         </test>
     </tests>
-
     <help><![CDATA[
 ==================    
 **What it does ?**
@@ -184,7 +168,6 @@ This tool is useful for ecological modeling and spatial analysis, particularly i
 +-----------+----------+-----------------------+-------------+
 
 ]]></help>
-
     <citations>
         <citation type="doi">10.32614/CRAN.package.dplyr</citation>
         <citation type="doi">10.32614/CRAN.package.cluster</citation>

@@ -125,6 +125,6 @@ In order to get such input we advise to use the tool preprocessing sentinel 2 da
 - Seven png graph one for each indices.
 
     ]]>    </help>
-        <expand macro="SRS_rasterdivref"/>
-        <expand macro="creator"/>
+    <expand macro="SRS_rasterdivref"/>
+    <expand macro="creator"/>
 </tool>

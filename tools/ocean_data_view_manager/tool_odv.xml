@@ -2,8 +2,8 @@
     <description>tool for qualificiation and validation</description>
     <macros>
         <token name="@VERSION@">1.3</token>
-		<import>macros.xml</import>
-	</macros>
+        <import>macros.xml</import>
+    </macros>
     <requirements>
         <container type="docker">easyqcvbgc/easy-qcv_odv-coll-manager_tool:oc@VERSION@</container>
     </requirements>
@@ -74,7 +74,7 @@
         <param name="input_raw" type="data" format="netcdf" multiple="true" label="Input raw data"/>
         <param name="input_ref" type="data" format="netcdf" multiple="true" optional="true" label="Input reference data"/>
         <conditional name="config">
-            <param name="type" type="select" label="Select if you want to write your own configuration file or not.">   
+            <param name="type" type="select" label="Select if you want to write your own configuration file or not.">
                 <option value="no">No, I don't want to, I'll use the default one</option>
                 <option value="yes">Yes, I to write my own configuration file</option>
             </param>
@@ -176,7 +176,7 @@ This tool creates a single generic ODV spreadsheet following ODV user’s guide
             author = {Pokapok},
             year = {2024},
             note = {https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-odv-tool}
-        </citation>    
+        </citation>
     </citations>
     <expand macro="creator"/>
 </tool>

@@ -4,8 +4,8 @@
         <import>stoceps_macros.xml</import>
     </macros>
     <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
+        <edam_topic>topic_0610</edam_topic>
+        <edam_topic>topic_3050</edam_topic>
     </edam_topics>
     <expand macro="mainglm_requirements"/>
     <required_files>
@@ -40,7 +40,7 @@
     </command>
     <inputs>
         <expand macro="stoceps_input_filtered"/>
-        <param name="inputtabSpecies" type="data" format="tabular" label="Species file" help="Input species tabular file, with 5 columns (species ID, species name, species scientific name, specialization status)." />
+        <param name="inputtabSpecies" type="data" format="tabular" label="Species file" help="Input species tabular file, with 5 columns (species ID, species name, species scientific name, specialization status)."/>
         <conditional name="settings">
             <expand macro="stoceps_advanced_params_select"/>
             <when value="advanced">
@@ -81,14 +81,14 @@
                     <has_n_columns n="14"/>
                     <has_size value="3247" delta="100"/>
                 </assert_contents>
-            </output> 
+            </output>
             <output name="global_tendencies">
                 <assert_contents>
                     <has_n_lines n="3"/>
                     <has_size value="468" delta="50"/>
                 </assert_contents>
             </output>
-            <output_collection name="plots"  type="list" count="2">
+            <output_collection name="plots" type="list" count="2">
                 <element name="ALAARV_mainglm">
                     <assert_contents>
                         <has_text text="PNG"/>
@@ -153,6 +153,6 @@ UnPublished script available at www.vigienature.fr/sites/vigienature/files/atoms
 the first version written by Romain Lorrilliere
 
   ]]></help>
-  <expand macro="stoceps_bibref" />
-  <expand macro="creator" />
+    <expand macro="stoceps_bibref"/>
+    <expand macro="creator"/>
 </tool>

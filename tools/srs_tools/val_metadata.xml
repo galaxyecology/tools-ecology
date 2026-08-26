@@ -36,8 +36,8 @@
     </outputs>
     <tests>
         <test expect_num_outputs="1">
-           <param name="input" value="12a0b625-9ad5-4251-a57a-305e22edef2e.xml"/>
-           <output name="output" value="Metadata_validation.txt"/>
+            <param name="input" value="12a0b625-9ad5-4251-a57a-305e22edef2e.xml"/>
+            <output name="output" value="Metadata_validation.txt"/>
         </test>
     </tests>
     <help><![CDATA[
@@ -66,6 +66,6 @@ A metadata xml file or url.
 
 A text file saying TRUE or FALSE depending on if the xml metadata are conforme according to ISO 19139. If the xml metadata is not conform it will write down where are the issues.
     ]]>    </help>
-        <expand macro="SRS_metaref"/>
-        <expand macro="creator"/>
+    <expand macro="SRS_metaref"/>
+    <expand macro="creator"/>
 </tool>

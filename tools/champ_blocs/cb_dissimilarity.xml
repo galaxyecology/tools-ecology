@@ -1,4 +1,4 @@
-<tool id="cb_dissim" name="QECB-Dissimilarity" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile = "20.01">
+<tool id="cb_dissim" name="QECB-Dissimilarity" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="20.01">
     <description>indicator</description>
     <macros>
         <import>macro.xml</import>
@@ -56,7 +56,8 @@
         </collection>
         <collection type="list" name="plots_bm" label="Bloc mobile face sup et face inf plot">
             <discover_datasets pattern="fs(?P&lt;designation&gt;.+)\.png" visible="false" format="png"/>
-        </collection><!--&lowbar; pour underscore-->
+        </collection>
+        <!--&lowbar; pour underscore-->
         <collection type="list" name="plots" label="Distance plot">
             <discover_datasets pattern="distance(?P&lt;designation&gt;.+)\.png" visible="false" format="png"/>
         </collection>
@@ -118,6 +119,6 @@ One input files in Rdata format.
 
 
     ]]>    </help>
-        <expand macro="cb_bibref"/>
-        <expand macro="creator"/>
+    <expand macro="cb_bibref"/>
+    <expand macro="creator"/>
 </tool>

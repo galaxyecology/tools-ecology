@@ -18,29 +18,21 @@
         python '$__tool_directory__/xarray_import_data.py' '$opendap_url' '$decode_times' '$decode_cf' '$output_dataset' 
     ]]></command>
     <inputs>
-        <param name="opendap_url" type="text" format="netcdf" label="OPeNDAP URL"
-            help="OPeNDAP URL to a dataset, also see https://docs.xarray.dev/en/stable/user-guide/io.html#opendap"
-            optional="false">
+        <param name="opendap_url" type="text" format="netcdf" label="OPeNDAP URL" help="OPeNDAP URL to a dataset, also see https://docs.xarray.dev/en/stable/user-guide/io.html#opendap" optional="false">
             <validator type="regex" message="Type a valid url">^(https:|http:|\.)\S*</validator>
         </param>
-        <param name="decode_times" type="boolean" label="Decode times"
-            help="If true, decode time variables to datetime objects. If false, keep them as raw data."
-            checked="true" />
-        <param name="decode_cf" type="boolean" label="Decode CF conventions"
-            help="Whether to decode according to CF conventions"
-            checked="true" />
+        <param name="decode_times" type="boolean" label="Decode times" help="If true, decode time variables to datetime objects. If false, keep them as raw data." checked="true"/>
+        <param name="decode_cf" type="boolean" label="Decode CF conventions" help="Whether to decode according to CF conventions" checked="true"/>
     </inputs>
     <outputs>
-        <data name="output_dataset" from_work_dir="xarray_imported_data" format="netcdf"
-            label="xarray dataset" />
+        <data name="output_dataset" from_work_dir="xarray_imported_data" format="netcdf" label="xarray dataset"/>
     </outputs>
     <tests>
         <test>
-            <param name="opendap_url"
-                value="http://test.opendap.org:8080/opendap/catalog/data/nc/data.nc" />
+            <param name="opendap_url" value="http://test.opendap.org:8080/opendap/catalog/data/nc/data.nc"/>
             <output name="output_dataset" ftype="netcdf">
                 <assert_contents>
-                    <has_size min="17K" max="18K" />
+                    <has_size min="17K" max="18K"/>
                 </assert_contents>
             </output>
         </test>
@@ -72,7 +64,7 @@ www.opendap.org/
     <citations>
         <citation type="doi">10.5334/jors.148</citation>
     </citations>
-        <creator>
-            <person givenName="Kim" familyName="Nes Leirvik" url="https://github.com/knl88"/>
-        </creator>
+    <creator>
+        <person givenName="Kim" familyName="Nes Leirvik" url="https://github.com/knl88"/>
+    </creator>
 </tool>

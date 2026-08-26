@@ -4,8 +4,8 @@
         <import>regionalgam_macros.xml</import>
     </macros>
     <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
+        <edam_topic>topic_0610</edam_topic>
+        <edam_topic>topic_3050</edam_topic>
     </edam_topics>
     <expand macro="rg_nlme_mass_requirements"/>
     <required_files>
@@ -52,7 +52,7 @@ It also returns a summary of this model in txt format.
 
     ]]></help>
     <citations>
-        <citation type="doi">10.1111/1365-2664.12561</citation>  
+        <citation type="doi">10.1111/1365-2664.12561</citation>
     </citations>
     <expand macro="creator"/>
 </tool>
