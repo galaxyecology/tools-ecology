@@ -226,7 +226,7 @@ Downloads daily **SAFRAN** climate reanalysis data from the **GEOSAS OGC-EDR API
 (INRAE, Rennes) for one or more locations in metropolitan France, defined via a
 coordinate or geometry file.
 
-**More details on EPSG code of the coordinates:
+**More details on EPSG code of the coordinates**
 The GEOSAS API re-projects internally. 
 Most common values:
 - 4326  — WGS84 geographic, decimal degrees (default)
