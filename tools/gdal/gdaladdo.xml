@@ -15,8 +15,7 @@
                 -q
                 -ro
                 input.tif
-                $levels
-                --config COMPRESS_OVERVIEW DEFLATE &&
+                $levels &&
             cp 'input.tif.ovr' 'output_ovr'
         #else
             gdaladdo
