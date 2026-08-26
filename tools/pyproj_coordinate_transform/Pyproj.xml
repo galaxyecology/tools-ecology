@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tool id="pyproj_coordinate_transform" name="Pyproj coordinate transform" version="@TOOL_VERSION@" profile="@PROFILE@">
+<tool id="pyproj_coordinate_transform" name="Pyproj coordinate transform" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
 
   <description>
     Projection and coordinate transformation
