@@ -160,7 +160,7 @@
             </conditional> 
             <output name="output" value="ogr2ogr_gbif_to_json.json">
                 <assert_contents>
-                    <has_n_lines n="5" delta="1"/>
+                    <has_n_lines n="11" delta="1"/>
                     <has_text text='"type": "FeatureCollection"'/>
                     <has_text text='"providedScientificName": "Canis lupus Linnaeus, 1758"'/>
                 </assert_contents>
