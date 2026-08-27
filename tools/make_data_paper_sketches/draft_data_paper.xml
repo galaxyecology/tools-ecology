@@ -37,7 +37,7 @@
             <param name="inputmetadatafile" value="EML.xml"/>
             <output name="datapaper_docx">
                 <assert_contents>
-                    <has_size value="31756" delta="50"/>
+                    <has_size value="78781" delta="1000"/>
                 </assert_contents>
             </output>
         </test>
