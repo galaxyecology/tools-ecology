@@ -1,0 +1,53 @@
+<tool id="extraction" name="Extraction" version="0.1.0+galaxy0">
+	<description> Extraction of parameters and complexity indexes computation </description>
+    <requirements>
+		<requirement type="package" version="3.11.4">python</requirement>
+	   <requirement type="package" version="3.22.3">trimesh</requirement>
+       <requirement type="package" version="3.7.1">matplotlib</requirement>
+	   <requirement type="package" version="1.25.0">numpy</requirement>
+	   <requirement type="package" version="2.0.3">pandas</requirement>
+	   <requirement type="package" version="1.11.1">scipy</requirement>
+	   <requirement type="package" version="3.1">networkx</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+	mkdir data_STL &&
+	mkdir data_point_clouds &&
+	mkdir data_normals &&
+	mkdir output &&
+		#for $input in $STL_files
+			ln -s '$input' data_STL/'${input.element_identifier}' &&
+		#end for
+	python '$__tool_directory__/Extraction_Of_Parameters & Complexity_Indexes_Computation.py'
+]]></command>
+    <inputs>
+		<param name="STL_files" type="data" format="stl" label="Upload STL files" multiple="true"/>
+    </inputs>
+    <outputs>
+		<data name="new_complexity_indexes" from_work_dir="output/df_complexity_indexes.csv" format="csv" label="df_complexity_indexes"/>
+		<collection type="list" name="point_clouds" label="Point Clouds">
+			<discover_datasets directory="data_point_clouds" pattern= "(?P&lt;designation&gt;.+)\.txt" format="txt"/>
+		</collection>
+		<data name="new_parameters" from_work_dir="output/df_parameters.csv" format="csv" label="df_parameters"/>
+		<collection type="list" name="data_normals" label="Data Normals">
+			<discover_datasets directory="data_normals" pattern= "(?P&lt;designation&gt;.+)\.csv" format="csv"/>
+		</collection>
+    </outputs>
+	    <tests>
+         <test expect_num_outputs="8"> 
+            <param name="STL_files" value="CORAL.stl"/>
+		<output name="new_complexity_indexes" file="new_complexity_indexes.csv" ftype="csv" />
+		<output name="new_parameters" file="new_parameters.csv" ftype="csv"/>
+            <output_collection name="point_clouds" type="list">
+                <element name="coral" file="CORAL.txt" />
+            </output_collection>
+            <output_collection name="data_normals" type="list">
+                <element name="coral" value="CORAL.csv" />
+            </output_collection>
+        </test>
+    </tests>
+<help><![CDATA[
+
+todo
+
+]]></help>
+</tool>
