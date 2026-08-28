@@ -4,6 +4,7 @@ on:
     paths-ignore:
       - 'deprecated/**'
       - 'docs/**'
+      - 'interactive/**'
       - '.github/**'
       - '*'
   push:
@@ -13,6 +14,7 @@ on:
     paths-ignore:
       - 'deprecated/**'
       - 'docs/**'
+      - 'interactive/**'
       - '.github/**'
       - '*'
 env:
