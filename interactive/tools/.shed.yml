@@ -1,0 +1,14 @@
+name: interactive
+owner: ecology 
+description:  Interactive tools of Ecology
+homepage_url: https://github.com/galaxyecology/tools-ecology/tree/master/interactive/tools
+long_description: |
+  Interactive tools of Ecology
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/interactive/tools
+type: unrestricted
+categories:
+- Ecology
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Interactive: {{ tool_name }}"
+
