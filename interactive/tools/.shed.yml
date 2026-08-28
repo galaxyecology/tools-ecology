@@ -1,7 +1,7 @@
 name: interactive
 owner: ecology 
 description:  Interactive tools of Ecology
-homepage_url: https://github.com/galaxyecology/tools-ecology/tree/master/interactive/tools
+homepage_url: https://github.com/galaxyproject/galaxy/tree/dev/tools/interactive
 long_description: |
   Interactive tools of Ecology
 remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/interactive/tools
