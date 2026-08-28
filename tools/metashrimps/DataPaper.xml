@@ -1,0 +1,83 @@
+<tool id="metashrimp_datapaper" name="Production of a draft of Data Paper" version="0.1.0+galaxy0" profile="22.05">
+    <description>Create a draft of Data Paper from metadata</description>
+    <requirements>
+	   <requirement type="package">r-base</requirement>
+	   <requirement type="package">r-dplyr</requirement>
+	   <requirement type="package">r-xml2</requirement>
+       	   <requirement type="package">r-xslt</requirement>
+	   <requirement type="package">r-mapview</requirement>
+	   <requirement type="package">r-leaflet</requirement>
+	   <requirement type="package">gmp</requirement>
+	   <requirement type="package" version="2.1.1">phantomjs</requirement>
+	   <requirement type="package" version="2.19.2">pandoc</requirement>
+	   <requirement type="package" version="2.23">r-rmarkdown</requirement>
+	   <requirement type="package" version="0.2_18">r-codetools</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+    Rscript
+        '$__tool_directory__/DataPaper.R'
+        '$__tool_directory__/template_emldown'
+        '$data'
+        '$editable'
+    ]]></command>
+    <inputs>
+        <param name="data" type="data" format="xml" label="Upload metadata" help="Insert only metadata using EML standard"/>
+        <param name="editable" type="boolean" checked="false" label="Would you like to include a docx editable file instead of an HTML?" help= "HTML files are better for visualisation but are more difficult to edit than a docx."/>
+    </inputs>
+    <outputs>
+        <collection name="draft_html" type="list" label="Data Paper Draft">
+            <data name="DataPaper" from_work_dir="DataPaper.html" format="html" label="Data Paper"/>
+            <data name="map" from_work_dir="map.html" format="html" label="Leaflet Map"/>
+        </collection>
+        <collection name="draft_docx" type="list" label="Editable Data Paper Draft">
+            <data name="DataPaper" from_work_dir="DataPaper.docx" format="docx" label="Data Paper docx"/>
+            <data name="map" from_work_dir="map.png" format="png" label="Leaflet Map Image"/>
+            <filter>editable</filter>
+        </collection>
+    </outputs>
+    <tests>
+         <test expect_num_outputs="6"> 
+            <param name="data" value="Assessing_the_importance_of_field_margins_for_bat_species.xml"/>
+            <param name="editable" value="true"/>
+            <output_collection name="draft_html" type="list">
+                <element name="DataPaper" file="DataPaper.html" ftype="html" />
+            </output_collection>
+            <output_collection name="draft_docx" type="list">
+                <element name="DataPaper" file="DataPaper.docx" ftype="docx" />
+                <element name="map" file="map.png" ftype="png" />
+            </output_collection>
+        </test>
+    </tests>
+<help><![CDATA[
+
+.. class:: warningmark
+
+'''TIP''' This tool requires metadata with **XML** format and using **EML** standard
+
+**What it does?**
+--------------------
+
+This tool aims to produce, from a metadata using EML standard, a draft of Data Paper.
+A Data Paper is an scientific publication describing the collect of data and thus highlighting the work of all data producers.
+This Draft of Data Paper may be used to present your metadata in a more esthetetic and comprehensible way to others or can be modified and completed to help
+the data producers redacting their publication.
+
+**How to use it?**
+--------------------
+
+To use this tool, you have to upload a metadata written in XML and using EML standard.
+You can then select whether you want an editable version of your Data Paper.
+By clicking the **Execute** button, the work will launch and you will be able to get your results in the historic on your right.
+
+
+]]></help>
+<citations>
+           <citation type="bibtex">@misc{githubsurvey2023,
+           author       = {ropensci-archive },
+           title        = {{EMLdown}},
+           publisher    = {Github},
+           url          = {https://github.com/ropensci-archive/emldown}
+           }
+          }</citation>
+    </citations>
+</tool>
