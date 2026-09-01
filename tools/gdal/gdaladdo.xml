@@ -39,7 +39,8 @@
             <param name="levels" value="2 4 8 16"/>
             <output name="output" value="stere.tif.ovr">
                   <assert_contents>
-                        <has_size size="32230" delta="100"/>
+                        <has_image_width size="133"/>
+                        <has_image_height size="137"/>
                   </assert_contents>
             </output>
         </test>
