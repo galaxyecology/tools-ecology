@@ -1,0 +1,186 @@
+<tool id="pivot_wider_ecoregion" name="Pivot Wider" version="0.1.0+galaxy0" profile="25.1">
+    <description>
+        for ecoregionalization 
+    </description>
+    <requirements>
+        <requirement type="package" version="4.5">r</requirement>
+        <requirement type="package" version="1.3.2">r-tidyr</requirement>
+    </requirements>
+    <required_files>
+        <include path="test-data/test_pivot_wider.tabular" />
+        <include path="test-data/pivot_file.tabular" />
+    </required_files>
+    
+    <command detect_errors="exit_code">
+        <![CDATA[
+    Rscript '$__tool_directory__/pivot_wider_jupytool_notebook.R' 
+            '$table'
+            '$names_from'
+            '$values_from'
+            '$values_fill'
+            '$values_fn'
+            '$replace_bin'
+   ]]>
+    </command>
+    <inputs>
+        <param name="table" type="data" format="tabular" label="Input your table here please" help="See example below"/>
+        <param argument="--names_from" type="data_column" data_ref="table" label="Which column to get the name of the output column from" multiple="false"/>
+        <param argument="--values_from" type="data_column" data_ref="table" label="which column to get the cell values from" multiple="false"/>
+        <param argument="--values_fill" type="text" value="0" label="Specifies what each value should be filled in with when missing." help="By default, it's set to 0, but you can use NA or anything to fill empty cells."/>
+        <param argument="--values_fn" type="select" label="Aggregation function" help="Choose how multiple values falling in the same cell should be combined. 'Row count' counts how many records fall into each cell, regardless of their value. Warning: if your data contains missing values (NA), the aggregation may fail or return NA — please remove or handle missing values before running this tool.">
+             <option value="sum">Sum</option>
+             <option value="mean">Mean</option>
+             <option value="median">Median</option>
+             <option value="length">Row count (number of records combined)</option>
+             <option value="n_distinct">Number of distinct values</option>
+             <option value="max">Maximum</option>
+             <option value="min">Minimum</option>
+        </param>
+        <param name="replace_bin" type="boolean" label="Convert to binary data" help="If enabled, all values greater than or equal to 1 will be replaced by 1, producing a binary (0/1) table if there is no data less than 0. This conversion is applied **after** aggregation, so it takes into account the combined values."/>
+    </inputs>
+    <outputs>
+        <data name="output" from_work_dir="pivot_file.tabular" format="tabular" label="pivot_file.tabular"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name='table' value="test_pivot_wider.tabular"/>
+            <param name='names_from' value="4"/>
+            <param name='values_from' value="1"/>
+            <param name='values_fill' value="0"/>
+            <param name='values_fn' value="sum"/>
+            <param name='replace_bin' value="true"/>
+            <output name='output' value="pivot_file.tabular"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+==================    
+**What it does ?**
+==================
+
+This tool converts a table from "long" format to "wide" format (also called "pivoting" or "reshaping"), using the ``pivot_wider`` function from the R ``tidyr`` package.
+
+In a "long" table, each row typically represents a single observation, with one column identifying a category (e.g. a species, a site, a sample) and another column holding the corresponding value (e.g. an abundance count, a measurement). This tool reshapes such a table so that each unique category becomes its own column, with one row per remaining identifier (e.g. one row per site, per sample, per date).
+
+===================         
+**How to use it ?**
+===================
+
+**Input**
+
+A tab-separated table (with a header row) containing at least:
+
+- One or more columns identifying the rows to keep (e.g. site, date, sample ID) — these are **not** selected explicitly, they are simply all the columns you don't choose for the two options below.
+- One column whose unique values will become new column names (e.g. species names, treatment names).
+- One column containing the values used to fill in those new columns (e.g. counts, abundances, measurements).
+
+**Important**: columns are selected **by their position (number)** in the input table, not by their name. The first column is column 1, the second is column 2, and so on. Make sure to check your input file's column order before setting these parameters. Also, selecting multiple columns is not supported by this tool.
+
+**Parameters**
+
+- **Column for new column names** (Which column to get the name of the output column from)
+  The single column whose distinct values will become the new column headers in the output table. See example below.
+
+- **Column for values** (which column to get the cell values from)
+  The single column containing the values used to fill in the newly created columns. This is typically a numeric column but it can be raw text.
+
+- **Fill value** (Specifies what each value should be filled in with when missing.)
+  The value used to fill cells for combinations that have no corresponding data in the input table. This is by default set to ``0``, so that missing combinations are treated as zero rather than left empty. It can also be set to NA or whatever value you need. See example below.
+
+- **Aggregation function**
+  Because several rows in the input table may share the same combination of row identifier and category, this function determines how these multiple values are combined into a single cell:
+
+  - *Sum*: adds up all values in the group.
+  - *Mean*: averages all values in the group.
+  - *Median*: the middle value of the group, less sensitive to outliers than the mean.
+  - *Row count*: counts the number of rows combined into that cell, regardless of their actual value. This is **not** the same as summing the values — it only tells you how many observations were combined, not their total or average.
+  - *Number of distinct values*: counts how many unique values appear in the group.
+  - *Maximum*: the largest value in the group.
+  - *Minimum*: the smallest value in the group.
+
+  .. warning:: If your data contains missing values (``NA``), the aggregation may fail or return ``NA`` for the affected cells. Please remove or handle missing values in your input file before running this tool if this is a concern.
+
+  .. note:: If a given row/category combination appears only **once** in the input table, all aggregation functions except "Row count" and "Number of distinct values" will simply return that single value unchanged — the choice of function only matters when duplicates exist.
+
+- **Convert to binary data**
+  If enabled, all values greater than or equal to 1 in the output table are replaced by 1, producing a binary (0/1) table if there is no data <0. This conversion is applied **after** aggregation, so it takes into account the combined values.
+
+**Output**
+
+The output table in wide format (tab-separated) is built from your input table as follows (see example below):
+
+- All columns **except** the two you selected are kept unchanged and identify each row.
+- The "Column for new column names" disappears, replaced by one new column per distinct value it contained.
+- Each new column is filled with the corresponding value(s) from "Column for values" (combined via the aggregation function if several rows match), or with the "Fill value" if no data exists for that combination.
+
+-----
+
+**Examples**
+
+*Example 1 — Simple pivot with sum aggregation*
+
+Input table (long format)::
+
+    site    species     count
+    A       crab        5
+    A       crab        3
+    A       fish        2
+    B       fish        4
+
+With:
+- Column for new column names = 2 (species)
+- Column for values = 3 (count)
+- Fill value = 0
+- Aggregation function = Sum
+- Convert to binary data = No
+
+Output::
+
+    site    crab    fish
+    A       8       2
+    B       0       4
+
+Here, the two "crab" observations at site A (5 and 3) were summed into 8. Site B has no "crab" observation, so it was filled with 0.
+
+-----
+
+*Example 2 — Same input, with presence/absence conversion enabled*
+
+With the same parameters as above but convert to binary data = Yes:
+
+Output::
+
+    site    crab    fish
+    A       1       1
+    B       0       1
+
+All values greater than or equal to 1 (8, 2, 4) become 1, while the fill value 0 stays 0 (since 0 is not greater than or equal to 1).
+
+-----
+
+*Example 3 — Using "Row count" instead of "Sum"*
+
+Same input table as Example 1, with Aggregation function = Row count:
+
+Output::
+
+    site    crab    fish
+    A       2       1
+    B       0       1
+
+Here, the value 2 for "crab" at site A does not mean "2 individuals" — it means "2 rows/observations were combined for this cell" (regardless of their count values, 5 and 3). This is different from the sum (8) shown in Example 1, and can be useful when you want to know sampling effort rather than a quantitative total.
+
+-----
+
+**Common pitfalls**
+
+- Selecting the wrong column position for "names from" or "values from" will either produce an error or silently pivot the wrong data — always double-check column order in your input file first.
+- If your "values from" column is not numeric (e.g. text categories), some aggregation functions (Sum, Mean, Median, Maximum, Minimum) are not meaningful and may produce errors; in that case "Row count" or "Number of distinct values" are more appropriate choices.
+- The "Fill value" should generally match the type of your "values from" column (e.g. use a number if your values are numeric).
+
+  ]]>
+    </help>
+    <citations>
+        <citation type="bibtex">@Manual{,title = {tidyr: Tidy Messy Data}, author = {Hadley Wickham and Davis Vaughan and Maximilian Girlich}, year = {2026}, note = {R package version 1.3.2}, url = {https://tidyr.tidyverse.org},}
+     </citation>
+    </citations>
+</tool>
