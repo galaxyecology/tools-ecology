@@ -37,9 +37,11 @@
         <test>
             <param name="input1" value="stere.tif"/>
             <param name="levels" value="2 4 8 16"/>
-            <output name="output" value="stere.tif.ovr">
+            <output name="output" >
                   <assert_contents>
                         <has_image_channels channels="3" />
+                        <has_image_height height="133" />
+                        <has_image_width height="137" />
                   </assert_contents>
             </output>
         </test>
