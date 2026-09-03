@@ -8,6 +8,7 @@
         <edam_topic>topic_3050</edam_topic>
     </edam_topics>
     <requirements>
+        <requirement type="package" version="4.6.1">r-base</requirement>
         <requirement type="package" version="1.8_28">r-mgcv</requirement>
     </requirements>
     <required_files>
