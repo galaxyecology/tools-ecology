@@ -15,6 +15,7 @@
     </xml>
     <xml name="mainglm_requirements">
         <requirements>
+			<requirement type="package" version="3.5.1">r-base</requirement>
             <requirement type="package" version="3.0.0">r-ggplot2</requirement>
             <requirement type="package" version="0.3_2">r-speedglm</requirement>
             <requirement type="package" version="1.10_1">r-arm</requirement>
