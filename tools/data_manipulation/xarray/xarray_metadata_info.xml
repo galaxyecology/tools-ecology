@@ -10,6 +10,9 @@
         <requirement type="package" version="1.6.0">netcdf4</requirement>
         <requirement type="package" version="1.4.3">pandas</requirement>
     </requirements>
+    <required_files>
+        <include path="xarray_info.py"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         python3 '$__tool_directory__/xarray_info.py' '$input' --info '$info' --summary '$output'
     ]]>    </command>
@@ -23,7 +26,6 @@
     <tests>
         <test>
             <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
-            <param name="output" value="Metadata_infos_from_dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc.Variables.tab"/>
             <output name="info" value="info_file.txt">
                 <assert_contents>
                     <has_text_matching expression="depth\s+=\s+1"/>
@@ -77,9 +79,10 @@ A summary tabular file.
 
 --------------------------------
 
-The Netcdf Info tool use the netcdf functions : https://www.unidata.ucar.edu/software/netcdf/docs/index.html
+The Netcdf Info tool use the netcdf functions : https://docs.unidata.ucar.edu/netcdf-c/current/
 
 Run this tool before considering using Netcdf Read.
     ]]>    </help>
     <expand macro="citations"/>
+    <expand macro="creator"/>
 </tool>

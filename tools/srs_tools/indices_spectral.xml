@@ -1,4 +1,4 @@
-<tool id="srs_spectral_indices" name="Compute spectral indices" version="@VERSION@" profile = "20.01">
+<tool id="srs_spectral_indices" name="Compute spectral indices" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="20.01">
     <description>as NDVI from remote sensing data</description>
     <macros>
         <import>macro.xml</import>
@@ -20,6 +20,14 @@
         <requirement type="package" version="2.2.2">r-zip</requirement>
         <requirement type="package" version="1.0.10">r-dplyr</requirement>
     </requirements>
+    <required_files>
+        <include path="indices_spectral.r"/>
+        <include path="prosail-master/R/Lib_PROSAIL.R"/>
+        <include path="indices_spectral.r"/>
+        <include path="prosail-master/R/Lib_SpectralIndices.R"/>
+        <include path="prosail-master/R/Lib_PROSAIL_HybridInversion.R"/>
+        <include path="functions.r"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[ 
          #import re 
         #if $method.type == 'envi_bil': 
@@ -120,23 +128,25 @@
         </collection>
         <collection type="list" name="output_raster" label="${input_indice} raster">
             <discover_datasets pattern="(?P&lt;designation&gt;.+)" directory="SpectralIndices/" visible="false" recurse="true" format="bil"/>
-                <filter> choice == 'Y'</filter>
+            <filter> choice == 'Y'</filter>
             <discover_datasets pattern="(?P&lt;designation&gt;.+)" directory="SpectralIndices/" visible="false" recurse="true" format="hdr"/>
-                <filter> choice == 'Y'</filter>
+            <filter> choice == 'Y'</filter>
         </collection>
     </outputs>
     <tests>
-        <test>
-            <param name="type" value="envi_bil"/>
-            <param name="input_raster" value="S2A_Subset"/>
-            <param name="input_header" value="S2A_Subset.hdr"/>
+        <test expect_num_outputs="2">
+            <conditional name="method">
+                <param name="type" value="envi_bil"/>
+                <param name="input_raster" value="S2A_Subset"/>
+                <param name="input_header" value="S2A_Subset.hdr"/>
+            </conditional>
             <param name="input_indice" value="NDVI"/>
             <param name="choice" value="N"/>
             <output name="output_indices">
                 <assert_contents>
                     <has_n_columns n="4"/>
                     <has_n_lines n="10001"/>
-                    <has_text_matching expression="237\.25\t13.72\d*\t3.17\d*\t0.80\d*" />
+                    <has_text_matching expression="237\.25\t13.72\d*\t3.17\d*\t0.80\d*"/>
                 </assert_contents>
             </output>
             <output_collection name="plots" type="list" count="1"/>
@@ -268,5 +278,6 @@ This tools allows you to compute one of GEO BON EBV 'Canopy Chlorophyll Content'
 +-------------------+---------------------------------------------------------+
 
     ]]>    </help>
-        <expand macro="SRS_prosailref"/>
+    <expand macro="SRS_prosailref"/>
+    <expand macro="creator"/>
 </tool>

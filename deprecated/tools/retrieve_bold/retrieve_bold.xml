@@ -1,13 +1,16 @@
 <tool id="retrieve_bold" name="Retrieve bold" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="21.05">
     <description>Functions to search in Bold and download the available sequences of each subtaxa (get_fasta)</description>
     <macros>
-        <token name="@TOOL_VERSION@">1.3.0</token> 
-        <token name="@VERSION_SUFFIX@">0</token>
+        <token name="@TOOL_VERSION@">1.3.0</token>
+        <token name="@VERSION_SUFFIX@">1</token>
     </macros>
-    <requirements> 
+    <requirements>
         <requirement type="package" version="4.3.3">r-base</requirement>
         <requirement type="package" version="@TOOL_VERSION@">r-bold</requirement>
     </requirements>
+    <required_files>
+        <include path="retrieve_bold.R"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         
         Rscript
@@ -21,19 +24,17 @@
          
          ]]></command>
     <inputs>
-        <param name ="taxa_list" type="data" format="txt" 
-               label="" help="Provide a taxa list from which sequences will be extracted in the BOLD database"/>
-        <section name="animal_marker" title= "Animal marker" expanded="false">
-            <param name ="marker" type="select" checked="true" multiple="true"
-                   label="" help="Provide a marker to search in the BOLD database">
+        <param name="taxa_list" type="data" format="txt" label="" help="Provide a taxa list from which sequences will be extracted in the BOLD database"/>
+        <section name="animal_marker" title="Animal marker" expanded="false">
+            <param name="marker" type="select" checked="true" multiple="true" label="" help="Provide a marker to search in the BOLD database">
                 <option value="12S">12S</option>
                 <option value="16S">16S</option>
                 <option value="18S">18S</option>
                 <option value="28S">28S</option>
-                <option value="COI-3P">CO1-3P</option>   
+                <option value="COI-3P">CO1-3P</option>
                 <option value="COI-5P">CO1-5P</option>
                 <option value="COII">COII</option>
-                <option value="COXIII">COXIII</option>                
+                <option value="COXIII">COXIII</option>
                 <option value="CYTB">Cytb</option>
                 <option value="H3">H3</option>
                 <option value="ND1">ND1</option>
@@ -44,10 +45,9 @@
                 <option value="ND5-0">ND5-0</option>
                 <option value="ND6">ND6</option>
             </param>
-        </section>    
-        <section name="vegetal_marker" title= "Vegetal marker" expanded="false">
-            <param name ="marker" type="select" checked="true" multiple="true"
-                   label="" help="Provide a marker to search in the BOLD database">
+        </section>
+        <section name="vegetal_marker" title="Vegetal marker" expanded="false">
+            <param name="marker" type="select" checked="true" multiple="true" label="" help="Provide a marker to search in the BOLD database">
                 <option value="atpF-atpH">atpF-atpH</option>
                 <option value="ITS">ITS</option>
                 <option value="ITS2">ITS2</option>
@@ -60,15 +60,13 @@
                 <option value="rbcL">rbcL</option>
                 <option value="rbcLa">rbcLa</option>
                 <option value="rpoC1">rpoC1</option>
-                <option value="rpoB">rpoB</option>                
-
+                <option value="rpoB">rpoB</option>
             </param>
-        </section> 
-        <section name="bacterial_marker" title= "Bacterial marker" expanded="false">
-            <param name ="marker" type="select" checked="true" multiple="true"
-                   label="" help="Provide a marker to search in the BOLD database"> 
+        </section>
+        <section name="bacterial_marker" title="Bacterial marker" expanded="false">
+            <param name="marker" type="select" checked="true" multiple="true" label="" help="Provide a marker to search in the BOLD database">
                 <option value="16S">16S</option>
-                <option value="COI-3P">CO1-3P</option> 
+                <option value="COI-3P">CO1-3P</option>
                 <option value="COI-5P">CO1-5P</option>
                 <option value="CPN60">cpnN60</option>
                 <option value="GND">Gnd</option>
@@ -76,10 +74,9 @@
                 <option value="RIF">RIF</option>
                 <option value="TUF">Tuf</option>
             </param>
-        </section> 
-        <section name="fungal_marker" title= "Fungal marker" expanded="false">
-            <param name ="marker" type="select" checked="true" multiple="true"
-                   label="" help="Provide a marker to search in the BOLD database">
+        </section>
+        <section name="fungal_marker" title="Fungal marker" expanded="false">
+            <param name="marker" type="select" checked="true" multiple="true" label="" help="Provide a marker to search in the BOLD database">
                 <option value="5-8S">5-8S</option>
                 <option value="18S">18S</option>
                 <option value="18S-V4">18S-V4</option>
@@ -99,10 +96,9 @@
                 <option value="RPB2">RPB2</option>
                 <option value="TEF1-alpha">TEF1 alpha</option>
             </param>
-        </section> 
-        <section name="protist_marker" title= "Protist marker" expanded="false">
-            <param name ="marker" type="select" checked="true" multiple="true"
-                   label="" help="Provide a marker to search in the BOLD database">
+        </section>
+        <section name="protist_marker" title="Protist marker" expanded="false">
+            <param name="marker" type="select" checked="true" multiple="true" label="" help="Provide a marker to search in the BOLD database">
                 <option value="18S">18S</option>
                 <option value="23S">23S</option>
                 <option value="28S">28S</option>
@@ -111,18 +107,17 @@
                 <option value="ITS">ITS</option>
                 <option value="RBCL">rbcL</option>
             </param>
-        </section> 
+        </section>
     </inputs>
     <outputs>
-        <collection name="datasets_output" type="list"
-                   label="Datasets list">
-            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.fasta" format="fasta" /> 
+        <collection name="datasets_output" type="list" label="Datasets list">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.fasta" format="fasta"/>
         </collection>
         <data name="Log" from_work_dir="Log.txt" format="txt" label="Log message"/>
     </outputs>
     <tests>
         <test>
-            <param name ="taxa_list" value="taxa.list" />
+            <param name="taxa_list" value="taxa.list"/>
             <section name="animal_marker">
                 <param name="marker" value="12S,16S,18S,28S,COI-3P,COI-5P,COII,COXIII,CYTB,H3,ND1,ND2,ND3,ND4,ND4L,ND5-0,ND6"/>
             </section>
@@ -146,42 +141,18 @@
             </output_collection>
         </test>
         <test>
-            <param name ="taxa_list" value="taxa.list" />
-            <section name="animal_marker">
-                <param name="marker" value="None"/>
-            </section>
-            <section name="vegetal_marker">
-                <param name="marker" value="None"/>
-            </section>
-            <section name="bacterial_marker">
-                <param name="marker" value="None"/>
-            </section>
-            <section name="fungal_marker">
-                <param name="marker" value="None"/>
-            </section>
-            <section name="protist_marker">
-                <param name="marker" value="None"/>
-            </section>
+            <param name="taxa_list" value="taxa.list"/>
             <output name="Log" file="Log_test2.txt" compare="diff"/>
             <output_collection name="datasets_output" type="list" count="0">
             </output_collection>
         </test>
         <test>
-            <param name ="taxa_list" value="taxa.list" />
+            <param name="taxa_list" value="taxa.list"/>
             <section name="animal_marker">
                 <param name="marker" value="CYTB"/>
             </section>
-            <section name="vegetal_marker">
-                <param name="marker" value="None"/>
-            </section>
-            <section name="bacterial_marker">
-                <param name="marker" value="None"/>
-            </section>
             <section name="fungal_marker">
                 <param name="marker" value="Beta-tubulin,RPB2"/>
-            </section>
-            <section name="protist_marker">
-                <param name="marker" value="None"/>
             </section>
             <output name="Log" file="Log_test3.txt" compare="diff"/>
             <output_collection name="datasets_output" type="list" count="1">
@@ -226,4 +197,10 @@ Each "Taxa" and "Markers" request will produce a fasta file, all files will be a
             10.1038/s41597-020-0549-9       
         </citation>
     </citations>
+    <creator>
+        <person givenName="Triskell" familyName="Cumunel" url="https://github.com/triskell-cumunel"/>
+        <person givenName="Pauline" familyName="Seguineau" url="https://orcid.org/0009-0009-5969-8478"/>
+        <organization name="PNDB" url="https://www.pndb.fr/pages/accueil/"/>
+        <organization name="Data Terra" url="https://www.data-terra.org/"/>
+    </creator>
 </tool>

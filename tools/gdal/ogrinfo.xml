@@ -1,9 +1,9 @@
-<tool id="gdal_ogrinfo" name="OGR Informations" version="@VERSION@">
+<tool id="gdal_ogrinfo" name="OGR Informations" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>lists information about an OGR supported data source</description>
     <macros>
         <import>gdal_macros.xml</import>
     </macros>
-    <expand macro="gdal_requirements" />
+    <expand macro="gdal_requirements"/>
     <command detect_errors="exit_code"><![CDATA[
     ogrinfo -ro
         #if $input1.is_of_type("shp") 
@@ -28,16 +28,16 @@
             <expand macro="gdal_advanced_params_select"/>
             <when value="advanced">
                 <conditional name="condi_sql">
-                    <param name="sql" type="select" label="Use a sql query on the file" help="-sql. Execute the indicated SQL statement and return the result"> 
+                    <param name="sql" type="select" label="Use a sql query on the file" help="-sql. Execute the indicated SQL statement and return the result">
                         <option value="no_sql" selected="true">Don't use the -sql option</option>
                         <option value="sql">Use the -sql option</option>
                     </param>
                     <when value="no_sql">
                     </when>
                     <when value="sql">
-                        <param name="sql_statement" type="text" label="Execute the indicated SQL"  help="-sql statement eg : SELECT * FROM layer WHERE X>10." value="">
+                        <param name="sql_statement" type="text" label="Execute the indicated SQL" help="-sql statement eg : SELECT * FROM layer WHERE X&gt;10." value="">
                             <sanitizer sanitize="False"/>
-                            <validator type="regex" message="Type a valid SQL query">^(?ims)\s*select\s+.*\s+from\s+.*$</validator>
+                            <validator type="regex" message="Type a valid SQL query">(?ims)^\s*select\s+.*\s+from\s+.*$</validator>
                         </param>
                     </when>
                 </conditional>
@@ -51,7 +51,9 @@
     <tests>
         <test>
             <param name="input1" value="custom.geo.json"/>
-            <param name="advanced" value="simple"/>
+            <conditional name="settings">
+                <param name="advanced" value="simple"/>
+            </conditional>
             <output name="output" file="ogrinfo_test1_out2.txt" lines_diff="85"/>
         </test>
         <test>
@@ -62,7 +64,9 @@
                 <composite_data value="shp_compositefiles/shapefile.sbn"/>
                 <composite_data value="shp_compositefiles/shapefile.sbx"/>
             </param>
-            <param name="advanced" value="simple"/>
+            <conditional name="settings">
+                <param name="advanced" value="simple"/>
+            </conditional>
             <output name="output" file="ogrinfo_shp.txt" lines_diff="2"/>
         </test>
     </tests>
@@ -94,4 +98,5 @@ https://gdal.org/programs/ogrinfo.html
 http://download.osgeo.org/gdal/workshop/foss4ge2015/workshop_gdal.pdf
     ]]></help>
     <expand macro="gdal_citation"/>
+    <expand macro="creator"/>
 </tool>

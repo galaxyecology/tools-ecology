@@ -1,8 +1,14 @@
-<tool id="vector_template" name="Make templates for vector files" version="0.1.2+galaxy0" profile="22.05">
+<tool id="vector_template" name="Make templates for vector files" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="22.05">
     <description>attributes for EML metadata creation</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
     <requirements>
         <container type="docker">ylebras/metashark:1.7.6</container>
     </requirements>
+    <required_files>
+        <include path="vector_templates.R"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
     
     #set $table = ""
@@ -20,21 +26,21 @@
     
     ]]></command>
     <inputs>
-         <param name="inputdata" type="data_collection"  collection_type="list"  label="Upload all data files wich are vector files" help= "Input a data collection."/>
+        <param name="inputdata" type="data_collection" collection_type="list" label="Upload all data files wich are vector files" help="Input a data collection."/>
     </inputs>
     <outputs>
-       <collection name="templates" type="list" label="Templates for vector data">
-             <discover_datasets pattern="(?P&lt;designation&gt;.+\.txt)" format="txt"/>
-       </collection>
+        <collection name="templates" type="list" label="Templates for vector data">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+\.txt)" format="txt"/>
+        </collection>
     </outputs>
     <tests>
         <test>
-           <param name="inputdata">
-              <collection type="list">
-                 <element name="data_7.GeoJSON" value="data_7.GeoJSON"/>
-              </collection>
-           </param>
-           <output_collection name='templates' type = "list" count="3"/>
+            <param name="inputdata">
+                <collection type="list">
+                    <element name="data_7.GeoJSON" value="data_7.GeoJSON"/>
+                </collection>
+            </param>
+            <output_collection name="templates" type="list" count="3"/>
         </test>
     </tests>
     <help><![CDATA[
@@ -60,13 +66,6 @@ To use this tool, you need to select, in your history a data collection with you
 '''TIP''' This tool dont accept as inputs composite data like shapefile at the moment. 
 
     ]]></help>
-    <citations>
-       <citation type="bibtex">@Manual{,
-       title = {EMLassemblyline: A tool kit for building EML metadata workflows},
-       author = {Colin Smith},
-       year = {2022},
-       note = {https://github.com/EDIorg/EMLassemblyline,
-       https://ediorg.github.io/EMLassemblyline/},
-       }</citation>
-    </citations>
+    <expand macro="citations"/>
+    <expand macro="creator"/>
 </tool>

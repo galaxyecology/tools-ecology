@@ -1,19 +1,20 @@
-<tool id="ssrfilter" name="Filtering SSR" version="0.1.0" profile="25.0">
+<tool id="ssrfilter" name="Filtering SSR" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="25.0">
     <description>
         for missing data (individuals and loci), and null alleles.
     </description>
-
+    <macros>
+        <token name="@TOOL_VERSION@">0.1.0</token>
+        <token name="@VERSION_SUFFIX@">1</token>
+    </macros>
     <requirements>
         <requirement type="package" version="4.3.3">r-base</requirement>
         <requirement type="package" version="2.9.8">r-poppr</requirement>
         <requirement type="package" version="2.1.11">r-adegenet</requirement>
         <requirement type="package" version="0.5_11">r-hierfstat</requirement>
     </requirements>
-
     <required_files>
-        <include path="SSR_filtering.R" />
+        <include path="SSR_filtering.R"/>
     </required_files>
-
     <command detect_errors="exit_code"><![CDATA[
         mkdir -p filter_output &&
         mkdir -p summary &&
@@ -30,53 +31,35 @@
             --multi '${filter_null_allele.multi}'
 
     ]]></command>
-    
     <inputs>
-        <param name="input_data" type="data" format="tabular" label="Upload your SSR genotype file"
-            help="Tabular file with individuals in rows and loci in columns. See format below."/>
-
-        <param name="filter_order" type="select" multiple="true" display="checkboxes"
-            label="Select and order the filters to apply"
-            help="Only the selected filters will be applied, in the exact order chosen here.">
+        <param name="input_data" type="data" format="tabular" label="Upload your SSR genotype file" help="Tabular file with individuals in rows and loci in columns. See format below."/>
+        <param name="filter_order" type="select" multiple="true" display="checkboxes" label="Select and order the filters to apply" help="Only the selected filters will be applied, in the exact order chosen here.">
             <option value="A">A: Individuals with missing data </option>
             <option value="B">B: Loci with missing data</option>
             <option value="C">C: Null alleles (paralogues) </option>
         </param>
-
-    
         <section name="filter_ind_md" title="[A] Individuals with missing data" expanded="false">
-            <param name="ind_md" type="float" value="0.30" min="0" max="1"
-                label="Maximum of missing data allowed per individual (MAX_MISSING_IND)"/>
+            <param name="ind_md" type="float" value="0.30" min="0" max="1" label="Maximum of missing data allowed per individual (MAX_MISSING_IND)"/>
         </section>
-
         <section name="filter_ssr_md" title="[B] Loci with missing data" expanded="false">
-            <param name="ssr_md" type="float" value="0.30" min="0" max="1"
-                label="Maximum of missing allowed data per locus (MAX_MISSING_LOCI)"/>
+            <param name="ssr_md" type="float" value="0.30" min="0" max="1" label="Maximum of missing allowed data per locus (MAX_MISSING_LOCI)"/>
         </section>
-
         <section name="filter_null_allele" title="[C] Null alleles (paralogues)" expanded="false">
-            <param name="low_quar" type="float" value="0.25" min="0" max="1"
-                label="Lower quartile for IQR method"/>
-            <param name="high_quar" type="float" value="0.75" min="0" max="1"
-                label="Upper quartile for IQR method"/>
-            <param name="multi" type="float" value="1.5" min="0"
-                label="IQR multiplier"/>
+            <param name="low_quar" type="float" value="0.25" min="0" max="1" label="Lower quartile for IQR method"/>
+            <param name="high_quar" type="float" value="0.75" min="0" max="1" label="Upper quartile for IQR method"/>
+            <param name="multi" type="float" value="1.5" min="0" label="IQR multiplier"/>
         </section>
     </inputs>
-
     <outputs>
         <data name="filtered_data" format="tabular" label="${tool.name}">
             <discover_datasets pattern="(?P&lt;designation&gt;.+)\.txt$" directory="filter_output" visible="true" assign_primary_output="true"/>
         </data>
-        
         <data name="filtering_summary" format="tabular" from_work_dir="summary/filtering_summary.txt" label=" Filtering: Number of loci and individuals"/>
-
         <data name="boxplot_fis" format="png" label="Fis distribution boxplot — null allele filter">
             <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png$" directory="figure_output" visible="true" assign_primary_output="true"/>
             <filter>'C' in filter_order</filter>
         </data>
     </outputs>
-
     <tests>
         <test expect_num_outputs="2">
             <param name="input_data" value="test_SSR.txt"/>
@@ -100,7 +83,6 @@
                 </assert_contents>
             </output>
         </test>
-
         <test expect_num_outputs="2">
             <param name="input_data" value="test_SSR.txt"/>
             <param name="filter_order" value="B"/>
@@ -123,7 +105,6 @@
                 </assert_contents>
             </output>
         </test>
-
         <test expect_num_outputs="3">
             <param name="input_data" value="test_SSR.txt"/>
             <param name="filter_order" value="C"/>
@@ -153,7 +134,6 @@
                 </assert_contents>
             </output>
         </test>
-
         <test expect_num_outputs="3">
             <param name="input_data" value="test_SSR.txt"/>
             <param name="filter_order" value="A,B,C"/>
@@ -190,7 +170,6 @@
             </output>
         </test>
     </tests>
-
     <help><![CDATA[
 Usage
 =====
@@ -228,7 +207,6 @@ Outputs
 - **Filtering summary report** — tabular summary of the number of individuals and loci before and after each filter step, with retention rates.
 
     ]]></help>
-
     <citations>
         <citation type="doi">10.32614/CRAN.package.adegenet</citation>
         <citation type="doi">10.1111/j.1471-8286.2004.00828.x</citation>
@@ -236,4 +214,7 @@ Outputs
         <citation type="doi">10.7717/peerj.281</citation>
         <citation type="doi">10.3389/fgene.2015.00208</citation>
     </citations>
+    <creator>
+        <organization name="PNDB" url="https://www.pndb.fr/pages/accueil/"/>
+    </creator>
 </tool>

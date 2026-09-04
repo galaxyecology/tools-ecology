@@ -1,9 +1,17 @@
-<tool id="pampa_glmcomm" name="Compute GLM on community data" version="@VERSION@">
+<tool id="pampa_glmcomm" name="Compute GLM on community data" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>Compute a GLM of your choice on community data</description>
     <macros>
         <import>pampa_macros.xml</import>
     </macros>
+    <edam_topics>
+        <edam_topic>topic_0610</edam_topic>
+        <edam_topic>topic_3050</edam_topic>
+    </edam_topics>
     <expand macro="GLM_requirements"/>
+    <required_files>
+        <include path="FunctExeCalcGLMGalaxy.r"/>
+        <include path="FunctPAMPAGalaxy.r"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript 
          '$__tool_directory__/FunctExeCalcGLMGalaxy.r' 
@@ -34,7 +42,7 @@
     </command>
     <inputs>
         <expand macro="pampa_input_GLM"/>
-        <param name="sep" type="data_column" data_ref="input_unitobs" use_header_names="true" force_select="false" label="Separation factor of your analysis from unitobs file" help= "Choose the field of the separation factor, for each level of this factor, one GLM will be computed."/>
+        <param name="sep" type="data_column" data_ref="input_unitobs" use_header_names="true" force_select="false" label="Separation factor of your analysis from unitobs file" help="Choose the field of the separation factor, for each level of this factor, one GLM will be computed."/>
         <expand macro="pampa_var_GLM"/>
         <conditional name="settings">
             <expand macro="pampa_advanced_params_select_GLM"/>
@@ -52,47 +60,45 @@
             <param name="varrep" value="year,site,habitat"/>
             <param name="varrand" value="site"/>
             <param name="sep" value="22"/>
-            <param name="advanced" value="advanced"/>
-            <param name="distrib" value="None"/>
-            <param name="rdata" value="true"/>
+            <conditional name="settings">
+                <param name="advanced" value="advanced"/>
+                <param name="distrib" value="None"/>
+                <param name="rdata" value="true"/>
+            </conditional>
             <output name="output_summary">
-                <assert_contents> 
+                <assert_contents>
                     <has_n_lines n="9"/>
-                </assert_contents> 
+                </assert_contents>
             </output>
             <output name="output_recap">
                 <assert_contents>
                     <has_n_lines n="412"/>
-                </assert_contents> 
+                </assert_contents>
             </output>
             <output name="output_rate">
-                <assert_contents> 
+                <assert_contents>
                     <has_n_lines n="50"/>
-                </assert_contents> 
+                </assert_contents>
             </output>
-            <output_collection name="output_GLM"  type="list" count="3">
-                <element name="GLM_HR" ftype="Rdata">
-                    <assert_contents> 
+            <output_collection name="output_GLM" type="list" count="3">
+                <element name="GLM_HR">
+                    <assert_contents>
                         <has_size value="185018" delta="10000"/>
-                    </assert_contents> 
+                    </assert_contents>
                 </element>
-                <element name="GLM_RE" ftype="Rdata">
-                    <assert_contents> 
+                <element name="GLM_RE">
+                    <assert_contents>
                         <has_size value="168685" delta="10000"/>
-                    </assert_contents> 
+                    </assert_contents>
                 </element>
-                <element name="global_GLM" ftype="Rdata">
-                    <assert_contents> 
+                <element name="global_GLM">
+                    <assert_contents>
                         <has_size value="195910" delta="10000"/>
-                    </assert_contents> 
+                    </assert_contents>
                 </element>
             </output_collection>
         </test>
     </tests>
-    <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
-    </edam_topics>
     <help><![CDATA[
 ==============================================================
 Compute GLM on community data with selected interest variables
@@ -170,8 +176,9 @@ Three text files :
 
 **Source**
 
-Derived from PAMPA scripts (https://wwz.ifremer.fr/pampa/Meth.-Outils/Outils) written by Yves Reecht.
+Derived from PAMPA scripts (wwz.ifremer.fr/pampa/Meth.-Outils/Outils) written by Yves Reecht.
 
   ]]></help>
-  <expand macro="pampa_bibref" />
+    <expand macro="pampa_bibref"/>
+    <expand macro="creator"/>
 </tool>

@@ -1,4 +1,4 @@
-<tool id="cb_ivr" name="IVR" version="@VERSION@" profile="20.01">
+<tool id="cb_ivr" name="IVR" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="20.01">
     <description>indicator</description>
     <macros>
         <import>macro.xml</import>
@@ -97,5 +97,6 @@ TWO input files in csv format.
 
 
     ]]>    </help>
-        <expand macro="cb_bibref"/>
+    <expand macro="cb_bibref"/>
+    <expand macro="creator"/>
 </tool>

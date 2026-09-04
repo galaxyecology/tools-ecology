@@ -1,9 +1,11 @@
 <macros>
     <token name="@VERSION@">0.0.2</token>
+    <token name="@VERSION_SUFFIX@">1</token>
+    <token name="@PROFILE@">25.1</token>
     <xml name="Pampa_requirements">
         <requirements>
             <requirement type="package" version="1.0.2">r-tidyr</requirement>
-        </requirements>    
+        </requirements>
     </xml>
     <xml name="GLM_requirements">
         <requirements>
@@ -11,13 +13,13 @@
             <requirement type="package" version="1.0.1">r-glmmtmb</requirement>
             <requirement type="package" version="1.4_13">r-multcomp</requirement>
             <requirement type="package" version="0.3.3.0">r-dharma</requirement>
-        </requirements>    
+        </requirements>
     </xml>
     <xml name="Plot_requirements">
         <requirements>
             <requirement type="package" version="3.3.3">r-ggplot2</requirement>
             <requirement type="package" version="1.3_25">r-boot</requirement>
-        </requirements>    
+        </requirements>
     </xml>
     <xml name="pampa_input_calculate">
         <param name="input" type="data" format="tabular" label="Input file" help="Observation data file, with location, year, species and abundance."/>
@@ -26,17 +28,17 @@
         <param name="advanced" type="select" label="Specify advanced parameters">
             <option value="simple" selected="true">No, use program defaults.</option>
             <option value="advanced">Yes, see full parameter list.</option>
-        </param>        
+        </param>
         <when value="simple">
-        </when>        
+        </when>
     </xml>
     <xml name="pampa_advanced_params_select_GLM">
         <param name="advanced" type="select" label="Specify advanced parameters">
             <option value="simple" selected="true">No, use program defaults.</option>
             <option value="advanced">Yes, see full parameter list.</option>
-        </param>        
+        </param>
         <when value="simple">
-        </when>        
+        </when>
         <when value="advanced">
             <param name="distrib" type="select" label="Distribution for model">
                 <option selected="true" value="None">Auto</option>
@@ -54,10 +56,10 @@
     <xml name="pampa_input_GLM">
         <param name="input_metric" type="data" format="tabular" label="Input metrics file" help="Metrics data file, with location, year, and metrics informations that can be used as interest variable."/>
         <param name="input_unitobs" type="data" format="tabular" label="Unitobs informations file" help="Unitobs file, with all informations available about unitobs."/>
-        <param name="varint" type="data_column" data_ref="input_metric" numerical="true" use_header_names="true" label="Response variable from metrics file" help= "Choose the field of the response variable."/>
+        <param name="varint" type="data_column" data_ref="input_metric" numerical="true" use_header_names="true" label="Response variable from metrics file" help="Choose the field of the response variable."/>
     </xml>
     <xml name="pampa_var_GLM">
-        <param name="varrep" type="select" label="Explanatory variables" help= "Choose the explanatory variables you want to include in your analysis." multiple="true">
+        <param name="varrep" type="select" label="Explanatory variables" help="Choose the explanatory variables you want to include in your analysis." multiple="true">
             <option selected="true" value="year">Year</option>
             <option selected="true" value="site">Site</option>
             <option selected="true" value="habitat">Habitat</option>
@@ -71,7 +73,7 @@
         <data name="output_recap" from_work_dir="GLMSummaryFull.txt" format="txt" label="Simple statistics on chosen variables on ${on_string}"/>
         <data name="output_rate" from_work_dir="RatingGLM.txt" format="txt" label="Your analysis rating file on ${on_string}"/>
         <collection type="list" name="output_GLM">
-            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.Rdata" visible="false" format="Rdata"/>
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.Rdata" visible="false" format="rdata"/>
             <filter> settings['advanced'] == 'advanced' and settings['rdata']</filter>
         </collection>
     </xml>
@@ -85,5 +87,11 @@
             }
             </citation>
         </citations>
+    </xml>
+    <xml name="creator">
+        <creator>
+            <person givenName="Coline" familyName="Royaux" url="https://orcid.org/0000-0003-4308-5617"/>
+            <organization name="PNDB" url="https://www.pndb.fr/pages/accueil/"/>
+        </creator>
     </xml>
 </macros>

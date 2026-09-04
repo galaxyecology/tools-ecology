@@ -14,6 +14,9 @@
         <requirement type="package" version="1.4">cmcrameri</requirement>
         <requirement type="package" version="2022.7.0">dask</requirement>
     </requirements>
+    <required_files>
+        <include path="xarray_mapplot.py"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
     mkdir output_dir &&
     mkdir -p `pwd`/mlp_tmpdir &&
@@ -146,7 +149,7 @@
                  <param name="time_tab" value="time.tabular"/>
                  <param name="time_values" value="0"/>
              </conditional>
-             <param name="cmap" value="vik_r"/>   
+             <param name="cmap" value="cm.vik_r"/>   
              <param name="proj" value='{"proj":"EquidistantConic", "central_longitude": 20.0, "central_latitude": 70.0 }'/>    
              <param name="land" value="0.1"/>                         
              <param name="ocean" value="0.1"/>                         
@@ -179,4 +182,5 @@ The output is a collection of plots (png format); one per selected times.
 The xarray select tool can be used after the xarray Info and xarray coord.
     ]]></help>
     <expand macro="citations"/>
+    <expand macro="creator"/>
 </tool>

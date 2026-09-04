@@ -1,18 +1,14 @@
-<tool id="population_genomics_vcf_subset" name="Subsetting SNPs at random from a VCF file" version="@TOOL_VERSION@" profile="@PROFILE@">
+<tool id="population_genomics_vcf_subset" name="Subsetting SNPs at random from a VCF file" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>
         given a chosen number of SNPs to use
     </description>
-    
     <macros>
         <import>macros.xml</import>
     </macros>
- 
     <expand macro="requirements_bcftools_vcftools"/>
-
     <required_files>
-        <include path="VCF_subsampled.sh" />
+        <include path="VCF_subsampled.sh"/>
     </required_files>
-
     <command detect_errors="exit_code"><![CDATA[
         mkdir -p vcf_subsampled &&
         mkdir -p vcf_tmp_preprocessing &&
@@ -26,30 +22,18 @@
             --poly '$polymorphic'
         
         ]]></command>
-
     <inputs>
         <expand macro="param_vcf_input"/>
-        
-        <param name="SUBSET_SNPS_NB" type="integer" value="1000" min="0" label="Number of SNPs chosen for a number of replicate VCF files per input VCF file" />
-        
-        <param name="NB_REPLICATE_VCF" type="integer" value="5" min="1" label="Number of replicate VCF files"
-            help="Number of replicate VCF files to create, each with a chosen subset of SNP."/>
-        
-        <param name="MIN_SNP_NB" type="integer" value="4000" min="0" label="Minimum number of SNPs above which SNP subsetting is performed"
-            help="To perform SNP subsampling without applying a threshold, enter 0."/>
-        
-        <param name="polymorphic" type="boolean" truevalue="true" falsevalue="false"
-            checked="true" label="Subset polymorphic SNPs only ?"
-            help="MAC=2 filter is applicate to subset only polymorphic SNPs"/>
-
+        <param name="SUBSET_SNPS_NB" type="integer" value="1000" min="0" label="Number of SNPs chosen for a number of replicate VCF files per input VCF file"/>
+        <param name="NB_REPLICATE_VCF" type="integer" value="5" min="1" label="Number of replicate VCF files" help="Number of replicate VCF files to create, each with a chosen subset of SNP."/>
+        <param name="MIN_SNP_NB" type="integer" value="4000" min="0" label="Minimum number of SNPs above which SNP subsetting is performed" help="To perform SNP subsampling without applying a threshold, enter 0."/>
+        <param name="polymorphic" type="boolean" truevalue="true" falsevalue="false" checked="true" label="Subset polymorphic SNPs only ?" help="MAC=2 filter is applicate to subset only polymorphic SNPs"/>
     </inputs>
-
     <outputs>
         <collection name="vcf_subsampled" format="vcf" type="list" label="${tool.name}">
             <discover_datasets pattern="__designation_and_ext__" directory="vcf_subsampled" format="vcf"/>
         </collection>
     </outputs>
-
     <tests>
         <test>
             <param name="vcf_input" value="test_vcf.vcf"/>
@@ -66,7 +50,6 @@
                 </element>
             </output_collection>
         </test>
-
         <test>
             <param name="vcf_input" value="test_vcf.vcf"/>
             <param name="SUBSET_SNPS_NB" value="50"/>
@@ -82,7 +65,6 @@
                 </element>
             </output_collection>
         </test>
-
         <test>
             <param name="vcf_input" value="test_vcf.vcf"/>
             <param name="SUBSET_SNPS_NB" value="200"/>
@@ -98,7 +80,6 @@
                 </element>
             </output_collection>
         </test>
-
         <test>
             <param name="vcf_input" value="test_vcf_without_contigs.vcf"/>
             <param name="SUBSET_SNPS_NB" value="50"/>
@@ -115,7 +96,6 @@
             </output_collection>
         </test>
     </tests>
-
     <help><![CDATA[
 
 Usage
@@ -141,10 +121,9 @@ According to Waples et al. 2024, using 1000 polymorphic SNPs provide sufficient 
 See also examples of VCF formats in :  https://samtools.github.io/hts-specs/VCFv4.5.pdf
 
     ]]></help>
-
     <citations>
         <expand macro="citations_base"/>
         <expand macro="citation_waples"/>
     </citations>
-    
+    <expand macro="creator"/>
 </tool>

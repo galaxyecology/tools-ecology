@@ -1,9 +1,16 @@
-<tool id="regionalgam_glmmpql" name="Expected temporal trend" version="@VERSION@">
+<tool id="regionalgam_glmmpql" name="Expected temporal trend" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>of species abundance</description>
     <macros>
         <import>regionalgam_macros.xml</import>
     </macros>
+    <edam_topics>
+        <edam_topic>topic_0610</edam_topic>
+        <edam_topic>topic_3050</edam_topic>
+    </edam_topics>
     <expand macro="rg_nlme_mass_requirements"/>
+    <required_files>
+        <include path="glmmpql.R"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript '$__tool_directory__/glmmpql.R' 
             '$ab_indices' 
@@ -14,8 +21,8 @@
         <expand macro="rg_ab_indices"/>
     </inputs>
     <outputs>
-        <data format="png" name="output" from_work_dir="output-plot.png" />
-        <data format="tabular" name="output2" from_work_dir="output-glmmpql" />
+        <data format="png" name="output" from_work_dir="output-plot.png" label="Vizualisation on ${on_string}"/>
+        <data format="tabular" name="output2" from_work_dir="output-glmmpql" label="Collated index on ${on_string}"/>
     </outputs>
     <tests>
         <test>
@@ -26,13 +33,9 @@
                     <has_line line="&quot;x&quot;"/>
                     <has_n_columns n="1"/>
                 </assert_contents>
-            </output>   
+            </output>
         </test>
     </tests>
-    <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
-    </edam_topics>
     <help><![CDATA[
 =====================================
 Temporal trends of species abundance
@@ -56,4 +59,5 @@ It also and plot it against year for visualization in an output png file.
 
     ]]></help>
     <expand macro="rg_citation"/>
+    <expand macro="creator"/>
 </tool>

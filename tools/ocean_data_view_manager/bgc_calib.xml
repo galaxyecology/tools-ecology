@@ -2,7 +2,7 @@
     <description>for sensors according to Argo recommendations</description>
     <macros>
         <token name="@VERSION@">2.1</token>
-        <token name="@VERSION_SUFFIX@">2</token>
+        <import>macros.xml</import>
     </macros>
     <requirements>
         <container type="docker">easyqcvbgc/easy-qcv_calibration-methods_tool:cm@VERSION@</container>
@@ -138,7 +138,7 @@
         <param name="param_qc_toreplaced" type="text" optional="true" value="3" label="Nitrate QC value to be replaced"/>
         <param name="param_qc_replacedby" type="text" optional="true" value="1" label="QC value of replacement"/>
         <conditional name="config">
-            <param name="type" type="select" label="Select if you want to write your own configuration file or not.">   
+            <param name="type" type="select" label="Select if you want to write your own configuration file or not.">
                 <option value="no">No, I don't want to, I'll use the default one</option>
                 <option value="yes">Yes, I to write my own configuration file</option>
             </param>
@@ -165,22 +165,22 @@
                         <param name="ml_regression" type="select" label="Enter multiple linear regression">
                             <option value="0">Automatic choice of N</option>
                             <option value="1">Single linear regression</option>
-                            <option value="N>1">N linear regressions</option>
+                            <option value="N&gt;1">N linear regressions</option>
                         </param>
                         <when value="0">
                             <param name="reg_value" type="select" label="Regression choice">
                                 <option value="0">Automatic choice of N</option>
                             </param>
-                        </when>    
+                        </when>
                         <when value="1">
                             <param name="reg_value" type="select" label="Regression choice">
                                 <option value="1">Single linear regression</option>
                             </param>
                         </when>
-                        <when value="N>1">
+                        <when value="N&gt;1">
                             <param name="reg_value" type="integer" min="2" value="2" label="Regression choice, enter the N linear regressions"/>
-                        </when> 
-                    </conditional>                  
+                        </when>
+                    </conditional>
                     <param name="favored" type="boolean" label="Enter FALSE or TRUE to favored the single linear regression"/>
                     <conditional name="method_ref">
                         <param name="method_ref_name" type="select" label="Reference method">
@@ -245,7 +245,7 @@
                     <option value="UW">University of Washington (UW)</option>
                     <option value="WH">Woods Hole Oceanographic Institution (WHOI)</option>
                 </param>
-                <param name="dm_operator_name" type="text"  optional="false" label="Enter First_name Last_name of the dm operator" help="The dm operator is the person in charge of the dmqc of the float (write the name without accent like é or è...)"/>
+                <param name="dm_operator_name" type="text" optional="false" label="Enter First_name Last_name of the dm operator" help="The dm operator is the person in charge of the dmqc of the float (write the name without accent like é or è...)"/>
                 <param name="orcid" type="text" optional="false" label="Enter its  orcid number"/>
                 <param name="institution" type="text" optional="false" label="Enter its  institution"/>
                 <param name="contact_point" type="text" optional="false" label="Enter First_name Last_name of the contact point" help="This refers to the BGC contact point for the dac (write the name without accent like é or è...)"/>
@@ -288,7 +288,7 @@
             </conditional>
             <conditional name="config">
                 <param name="type" value="yes"/>
-		<repeat name="section_config">
+                <repeat name="section_config">
                     <conditional name="bypass">
                         <param name="bypass_value" value="0"/>
                     </conditional>
@@ -300,8 +300,8 @@
                     <conditional name="method_ref">
                         <param name="method_ref_name" value="model"/>
                         <param name="reference" value="canyon_b"/>
-                    </conditional>  
-		</repeat>
+                    </conditional>
+                </repeat>
             </conditional>
             <output_collection name="nc_files" type="list" count="1"/>
             <output_collection name="png_files" type="list" count="4"/>
@@ -318,7 +318,7 @@ BioGeoChemical calibration
 
 This tool calibrates BioGeoChemical (BGC) data measured by ARGO or GLIDER network. The BGC variables managed by the tool for the moment are :
 
-NITRATE using methods published in `archimer <https://archimer.ifremer.fr/doc/00350/46121/>`
+NITRATE using methods published in archimer.ifremer.fr/doc/00350/46121/
 
 
 **Input description**
@@ -363,6 +363,7 @@ The folder where to write the ODV generic spreadsheet. the output folder is orga
             author = {Pokapok},
             year = {2024},
             note = {https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-odv-tool}
-        </citation>    
+        </citation>
     </citations>
+    <expand macro="creator"/>
 </tool>
