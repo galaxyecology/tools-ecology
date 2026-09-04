@@ -4,6 +4,16 @@
         <import>pampa_macros.xml</import>
     </macros>
     <expand macro="GLM_requirements"/>
+
+    <edam_topics>
+        <edam_topic>
+            topic_0610
+        </edam_topic>
+        <edam_topic>
+            topic_3050
+        </edam_topic>
+    </edam_topics>
+
     <command detect_errors="exit_code"><![CDATA[
         Rscript 
          '$__tool_directory__/FunctExeCalcGLMGalaxy.r' 

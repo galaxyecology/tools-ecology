@@ -11,6 +11,16 @@
        <requirement type="package" version="2.1.1">phantomjs</requirement>
        
     </requirements>
+
+    <edam_topics>
+        <edam_topic>
+            topic_0610
+        </edam_topic>
+        <edam_topic>
+            topic_3050
+        </edam_topic>
+    </edam_topics>
+ 
     <command detect_errors="exit_code"><![CDATA[
     
     Rscript '$__tool_directory__/map_geographical_coverage.R' '$inputmetadatafile' &&

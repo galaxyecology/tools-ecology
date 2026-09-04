@@ -1,8 +1,14 @@
 <tool id="eml2eal" name="EML to EAL" version="0.1.2+galaxy0" profile="22.05">
     <description> Create EAL templates from EML metadata </description>
+    <macros>
+        <import>macro.xml</import>
+    </macros>
+    <expand macro="edam">
+    </expand>
     <requirements>
       <container type="docker">ylebras/metashark:1.7.6</container>
     </requirements>
+
     <command detect_errors="exit_code"><![CDATA[
        Rscript
          '$__tool_directory__/eml2eal.R'

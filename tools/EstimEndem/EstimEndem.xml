@@ -19,6 +19,16 @@
         <requirement type="package" version="1.1.4">r-dplyr</requirement> 
     </requirements>
 
+    <edam_topics>
+        <edam_topic>
+            topic_0610
+        </edam_topic>
+        <edam_topic>
+            topic_3050
+        </edam_topic>
+    </edam_topics>
+
+
     <required_files>
         <include path="EstimEndem.R" />
     </required_files>

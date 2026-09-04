@@ -1,10 +1,16 @@
 <tool id="eml_validate" name="Eml validate:" version="0.1.2" profile="21.05">
     <description>check if your EML file is valid</description>
+    <macros>
+        <import>macro.xml</import>
+    </macros>
+    <expand macro="edam">
+    </expand>
     <requirements>
         <requirement type="package" version="4.3.3">r-base</requirement>
         <requirement type="package" version="2.0.6.1">r-eml</requirement>
         <requirement type="package" version="0.5.1">r-emld</requirement>
     </requirements>
+
     <command detect_errors="exit_code"><![CDATA[
      Rscript
          '$__tool_directory__/eml_validate.R' > report.txt

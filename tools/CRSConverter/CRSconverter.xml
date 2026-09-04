@@ -6,6 +6,15 @@
         <token name="@VERSION_SUFFIX@">0</token>
     </macros>
 
+    <edam_topics>
+        <edam_topic>
+            topic_0610
+        </edam_topic>
+        <edam_topic>
+            topic_3050
+        </edam_topic>
+    </edam_topics>
+
     <requirements> 
         <requirement type="package" version="1.0_16">r-sf</requirement>
         <requirement type="package" version="1.3.1">r-tidyr</requirement>

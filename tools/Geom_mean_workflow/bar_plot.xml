@@ -4,6 +4,16 @@
        <requirement type="package" version="4.3.2">r-base</requirement>
        <requirement type="package" version="3.4.4">r-ggplot2</requirement>
     </requirements>
+
+    <edam_topics>
+        <edam_topic>
+            topic_0610
+        </edam_topic>
+        <edam_topic>
+            topic_3050
+        </edam_topic>
+    </edam_topics>
+
     <command detect_errors="exit_code"><![CDATA[
         Rscript
          '$__tool_directory__/Bar_plot.R'

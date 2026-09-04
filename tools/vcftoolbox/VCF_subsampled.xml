@@ -9,6 +9,21 @@
  
     <expand macro="requirements_bcftools_vcftools"/>
 
+    <edam_topics>
+        <edam_topic>
+            topic_0610
+        </edam_topic>
+        <edam_topic>
+            topic_3050
+        </edam_topic>
+        <edam_topic>
+            topic_3796
+        </edam_topic>
+        <edam_topic>
+            topic_3056
+        </edam_topic>
+    </edam_topics>
+
     <required_files>
         <include path="VCF_subsampled.sh" />
     </required_files>
