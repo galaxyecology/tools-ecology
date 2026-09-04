@@ -1,0 +1,262 @@
+<tool id="generate_spinup_metadata" name="Generate Spin-up Climate Metadata" version="1.0.0" profile="22.01">
+
+  <description>Compute spin-up period dates for SOC model initialization from site metadata</description>
+
+  <requirements>
+    <requirement type="package" version="4.3.1">r-base</requirement>
+    <requirement type="package" version="1.7.5">r-optparse</requirement>
+    <requirement type="package" version="2.0.0">r-tidyverse</requirement>
+  </requirements>
+
+  <command detect_errors="exit_code"><![CDATA[
+    Rscript '$__tool_directory__/generate_spinup_metadata.R'
+      --input_metadata '$input_metadata'
+      --begin_date_col '$begin_date_col'
+      --end_date_col '$end_date_col'
+      --api_source '$api_source'
+      --spinup_min_years $spinup_min_years
+      --spinup_target_years $spinup_target_years
+      --output_metadata '$output_metadata'
+      #if $api_source == "geosas"
+        --earliest_date '1959-01-01'
+      #else
+        --earliest_date '1940-01-01'
+      #end if
+  ]]></command>
+
+  <inputs>
+
+    <param name="input_metadata"
+           type="data"
+           format="csv,tabular"
+           label="Site metadata file"
+           help="CSV file describing the experimental sites. Must contain at least the two date
+                 columns (see 'First measurement date column' and 'Last measurement date column'
+                 below). Other columns (e.g. site_name, longitude, latitude) are preserved but not
+                 required by the spin-up computation." />
+
+    <param name="begin_date_col"
+           type="text"
+           value="start_date"
+           label="First measurement date column"
+           help="Name of the column holding the date of the FIRST SOC measurement
+                 (year YYYY or date YYYYMMDD). Default: start_date.">
+      <sanitizer invalid_char="">
+        <valid initial="string.letters,string.digits">
+          <add value="_" />
+          <add value="." />
+          <add value="-" />
+          <add value=" " />
+        </valid>
+      </sanitizer>
+      <validator type="empty_field" message="The first measurement date column name cannot be empty." />
+    </param>
+
+    <param name="end_date_col"
+           type="text"
+           value="end_date"
+           label="Last measurement date column"
+           help="Name of the column holding the date of the LAST SOC measurement
+                 (year YYYY or date YYYYMMDD). Default: end_date.">
+      <sanitizer invalid_char="">
+        <valid initial="string.letters,string.digits">
+          <add value="_" />
+          <add value="." />
+          <add value="-" />
+          <add value=" " />
+        </valid>
+      </sanitizer>
+      <validator type="empty_field" message="The last measurement date column name cannot be empty." />
+    </param>
+
+    <param name="api_source"
+           type="select"
+           label="Target climate data source"
+           help="Indicates which reanalysis dataset will later be used to retrieve climate data.
+                 This controls the earliest available date used when clipping the spin-up start:
+                 1959-01-01 for GEOSAS/SAFRAN or 1940-01-01 for Open-Meteo/ERA5 (global).">
+      <option value="geosas" selected="true">GEOSAS API — SAFRAN reanalysis (from 1959)</option>
+      <option value="openmeteo">Open-Meteo API — ERA5 / ERA5-Land reanalysis (Global, from 1940)</option>
+    </param>
+
+    <param name="spinup_min_years"
+           type="integer"
+           value="15"
+           min="1"
+           max="50"
+           label="Minimum spin-up duration (years)"
+           help="Minimum number of years required before the first SOC measurement to define a
+                 pre-experiment spin-up period. Sites below this threshold will have their spin-up
+                 shifted to overlap the first N years of the experiment instead." />
+
+    <param name="spinup_target_years"
+           type="integer"
+           value="30"
+           min="5"
+           max="80"
+           label="Target spin-up duration (years)"
+           help="Ideal length of the spin-up period in years. The effective duration may be
+                 shorter if the reanalysis dataset does not extend far enough back in time." />
+
+  </inputs>
+
+  <outputs>
+
+    <data name="output_metadata"
+          format="csv"
+          label="${tool.name} — ${api_source} — on ${on_string}" />
+
+  </outputs>
+
+  <!-- ================================================================== -->
+  <!-- TESTS                                                                -->
+  <!-- ================================================================== -->
+  <tests>
+    <!-- Default column names -->
+    <test expect_num_outputs="1">
+      <param name="input_metadata" value="site_metadata_test.csv" />
+      <param name="begin_date_col" value="begin_date" />
+      <param name="end_date_col" value="end_date" />
+      <param name="api_source" value="geosas" />
+      <param name="spinup_min_years" value="15" />
+      <param name="spinup_target_years" value="30" />
+      <output name="output_metadata" file="expected_spinup_metadata_geosas.csv" ftype="csv" />
+    </test>
+    <test expect_num_outputs="1">
+      <param name="input_metadata" value="site_metadata_test.csv" />
+      <param name="begin_date_col" value="begin_date" />
+      <param name="end_date_col" value="end_date" />
+      <param name="api_source" value="openmeteo" />
+      <param name="spinup_min_years" value="15" />
+      <param name="spinup_target_years" value="30" />
+      <output name="output_metadata" file="expected_spinup_metadata_era5.csv" ftype="csv" />
+    </test>
+  </tests>
+
+  <!-- ================================================================== -->
+  <!-- HELP                                                                 -->
+  <!-- ================================================================== -->
+  <help><![CDATA[
+
+.. class:: infomark
+
+**What this tool does**
+
+This tool computes **spin-up period metadata** for long-term soil organic carbon (SOC) model
+simulations. It reads a table of experimental site descriptions and, for each site, determines
+the optimal dates for the model initialization (spin-up) phase — that is, the period of climate
+data to use to bring the carbon pools to a steady state before the forward simulation begins.
+
+The output is a metadata table listing the spin-up start and end dates, the effective duration,
+and a plain-language description of the strategy applied. This table can then be passed to a
+dedicated climate data extraction tool (GEOSAS/SAFRAN or Open-Meteo/ERA5).
+
+The **Target climate data source** parameter controls which reanalysis will be used downstream
+and therefore sets the earliest date from which data can be requested:
+
+* **GEOSAS / SAFRAN** — French meteorological reanalysis (Météo-France / INRAE GEOSAS).
+  Available from **1959-01-01**.
+* **Open-Meteo / ERA5** — Global ERA5 and ERA5-Land reanalysis. Available worldwide
+  from **1940-01-01**.
+
+-----
+
+**Input: Site metadata CSV**
+
+Comma-separated file. The tool only reads the two date columns; their names are configurable
+through the **First measurement date column** and **Last measurement date column** parameters
+(defaults: ``begin_date`` and ``end_date``). Any other columns are passed through untouched.
+
++--------------------------------+-------------------------------------------------------------+
+| Column (configurable name)     | Description                                                 |
++================================+=============================================================+
+| ``begin_date`` *(default)*     | Year (YYYY) or date (YYYYMMDD) of the first SOC measurement |
++--------------------------------+-------------------------------------------------------------+
+| ``end_date`` *(default)*       | Year (YYYY) or date (YYYYMMDD) of the last SOC measurement  |
++--------------------------------+-------------------------------------------------------------+
+
+If a column name given in the parameters is not found in the input file, the tool stops with
+an explicit error listing the missing column(s).
+
+-----
+
+**Spin-up period logic**
+
+For each site:
+
+1. **Target start** = first measurement date − ``spinup_target_years``
+2. Clip to the **earliest date** available in the chosen reanalysis
+   (``1959-01-01`` for SAFRAN, ``1940-01-01`` for ERA5).
+3. **Effective spin-up duration** (years) = first measurement date − clipped start.
+4. If effective duration ≥ ``spinup_min_years``:
+
+   * Spin-up = [clipped start → first measurement date]  *(pre-experiment period)*
+
+5. If effective duration < ``spinup_min_years``:
+
+   * Spin-up = [clipped start → clipped start + ``spinup_target_years``]
+     *(first N years of the experiment used instead)*
+
+-----
+
+**Output — Spin-up metadata CSV**
+
+One row per site:
+
++---------------------------+----------------------------------------------------------+
+| Column                    | Description                                              |
++===========================+==========================================================+
+| ``site_name``             | Site identifier                                          |
++---------------------------+----------------------------------------------------------+
+| ``begin_date``            | Date of the first SOC measurement                        |
++---------------------------+----------------------------------------------------------+
+| ``end_date``              | Date of the last SOC measurement                         |
++---------------------------+----------------------------------------------------------+
+| ``start_spinup``          | First day of the spin-up period                          |
++---------------------------+----------------------------------------------------------+
+| ``end_spinup``            | Last day of the spin-up period                           |
++---------------------------+----------------------------------------------------------+
+| ``spinup_duration_yr``    | Effective spin-up duration (years)                       |
++---------------------------+----------------------------------------------------------+
+| ``method_spinup``         | Description of the spin-up strategy applied              |
++---------------------------+----------------------------------------------------------+
+| ``api_source``            | Target reanalysis (``geosas`` or ``openmeteo``)          |
++---------------------------+----------------------------------------------------------+
+
+Note: in the output, the two date columns are written back using the canonical names
+``begin_date`` and ``end_date`` regardless of the input column names.
+
+-----
+
+**References**
+
+* Durand, Y. et al. (1993). A meteorological estimation of relevant parameters for snow models.
+  *Annals of Glaciology*, 18, 65–71. https://doi.org/10.3189/S0260305500011277
+* Hersbach, H. et al. (2020). The ERA5 global reanalysis.
+  *Quarterly Journal of the Royal Meteorological Society*, 146(730), 1999–2049.
+  https://doi.org/10.1002/qj.3803
+* Open-Meteo API documentation: https://open-meteo.com/en/docs/era5-api
+* GEOSAS API documentation: https://geosas.fr/web/?page_id=6345
+
+  ]]></help>
+
+  <!-- ================================================================== -->
+  <!-- CITATIONS                                                            -->
+  <!-- ================================================================== -->
+<citations>
+
+    <!-- SAFRAN reanalysis -->
+    <citation type="doi">10.3189/S0260305500011277</citation>
+
+    <!-- ERA5 reanalysis -->
+    <citation type="doi">10.1002/qj.3803</citation>
+
+    <!-- Open-Meteo API -->
+    <citation type="doi">10.5281/zenodo.7970649</citation>
+
+    <!-- tidyverse -->
+    <citation type="doi">10.21105/joss.01686</citation>
+
+</citations>
+
+</tool>

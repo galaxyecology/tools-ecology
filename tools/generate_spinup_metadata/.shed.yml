@@ -1,0 +1,30 @@
+name: generate_spinup_metadata
+owner: ecology
+description: Compute spin-up period dates for SOC model initialization from site metadata
+long_description: |
+  This tool computes spin-up period metadata for long-term soil organic
+  carbon (SOC) model simulations. Given a table of experimental site
+  descriptions with a first and last measurement date per site, it
+  determines the optimal spin-up window — the period of climate data
+  to use to bring the model's carbon pools to a steady state before the
+  forward simulation begins.
+
+  For each site, the tool computes a target spin-up start (the first
+  measurement date minus a configurable target duration in years),
+  clips it to the earliest date available from the intended downstream
+  climate data source — 1959-01-01 for GEOSAS/SAFRAN or 1940-01-01 for
+  Open-Meteo/ERA5 — and falls back to using the first years of the
+  experiment itself as the spin-up period when the available window is
+  shorter than a configurable minimum duration.
+
+  The output is a metadata table with one row per site, giving the
+  spin-up start and end dates, the effective duration, and a
+  plain-language description of the strategy applied. This table is
+  designed to be passed directly to a downstream climate data
+  extraction tool (GEOSAS/SAFRAN or Open-Meteo/ERA5) to drive the
+  actual data retrieval for each site's spin-up period.
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/generate_spinup_metadata
+homepage_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/generate_spinup_metadata
+type: unrestricted
+categories:
+  - Climate Analysis
