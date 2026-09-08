@@ -1,9 +1,14 @@
-<tool id="sam3_semantic_segmentation" name="SAM3 Semantic Segmentation" version="1.0.1+galaxy6" profile="25.1">
+<tool id="sam3_semantic_segmentation" name="SAM3 Semantic Segmentation" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>
         SAM3 performs text-prompted semantic segmentation on images or videos. 
     </description>
+    <macros>
+        <token name="@TOOL_VERSION@">1.0.1</token>
+        <token name="@VERSION_SUFFIX@">7</token>
+        <token name="@PROFILE@">25.1</token>
+    </macros>
     <requirements>
-        <container type="docker">quay.io/arthur_barreau/sam3_tool:1.0.1</container>
+        <container type="docker">quay.io/arthur_barreau/sam3_tool:@TOOL_VERSION@</container>
     </requirements>
     <required_files>
         <include path="sam3_semantic_segmentation.py" />
