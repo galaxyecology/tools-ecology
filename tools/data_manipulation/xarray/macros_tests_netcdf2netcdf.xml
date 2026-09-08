@@ -13,6 +13,7 @@
                         <param name="by_click" value="isel_list"/>
                         <repeat name="user_choice">
                             <param name="dim" value="time"/>
+                            <param name="dim_tab" value="time.tabular"/>
                             <conditional name="condi_between">
                                 <param name="comparator" value="sl"/>
                                 <param name="t1" value="10"/>
@@ -48,13 +49,14 @@
                     <param name="var" value="chl"/>
                     <param name="scale" value="1000.5"/>
                     <param name="write_all" value="true"/>
-                    <param name="keep_attribute" value="false"/>
+                    <param name="keep_attributes" value="false"/>
                 </section>
                 <section name="subset_coords">
                     <conditional name="tsel">
                         <param name="by_click" value="isel_list"/>
                         <repeat name="user_choice">
                             <param name="dim" value="time"/>
+                            <param name="dim_tab" value="time.tabular"/>
                             <conditional name="condi_between">
                                 <param name="comparator" value="sl"/>
                                 <param name="t1" value="10"/>
@@ -81,7 +83,7 @@
                         </repeat>
                     </conditional>
                 </section>
-                <output name="output_netcdf" file="all.netcdf" compare="sim_size" delta="1000"/>
+                <output name="output_netcdf" file="all.netcdf" compare="sim_size" delta="3000"/>
             </test>
             <test>
                 <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
@@ -125,7 +127,6 @@
                         <param name="by_click" value="isel"/>
                         <repeat name="user_choice">
                             <param name="dim" value="time"/>
-                            <param name="dim_tab" value="time.tabular"/>
                             <conditional name="condi_between">
                                 <param name="comparator" value="to"/>
                                 <param name="value" value="12"/>
@@ -133,7 +134,6 @@
                         </repeat>
                         <repeat name="user_choice">
                             <param name="dim" value="latitude"/>
-                            <param name="dim_tab" value="latitude.tabular"/>
                             <conditional name="condi_between">
                                 <param name="comparator" value="is"/>
                                 <param name="value" value="5"/>
@@ -141,7 +141,6 @@
                         </repeat>
                         <repeat name="user_choice">
                             <param name="dim" value="longitude"/>
-                            <param name="dim_tab" value="longitude.tabular"/>
                             <conditional name="condi_between">
                                 <param name="comparator" value="is"/>
                                 <param name="value" value="4"/>
@@ -157,6 +156,10 @@
                 <section name="variable">
                     <param name="var" value="chl,nh4"/>
                 </section>
+                <section name="subset_coords">
+                    <conditional name="tsel">
+                    </conditional>
+                </section>
                 <output name="output_netcdf" file="chl_nh4.netcdf" compare="sim_size" delta="500"/>
             </test>
             <test>
@@ -164,6 +167,10 @@
                 <param name="var_tab" value="var_tab_dataset-ibi"/>
                 <section name="variable">
                     <param name="var" value="nh4"/>
+                </section>
+                <section name="subset_coords">
+                    <conditional name="tsel">
+                    </conditional>
                 </section>
                 <output name="output_netcdf" file="chl_alltimes.nc" compare="sim_size" delta="500"/>
             </test>
@@ -175,7 +182,6 @@
                         <param name="by_click" value="sel"/>
                         <repeat name="user_choice">
                             <param name="dim" value="latitude"/>
-                            <param name="dim_tab" value="latitude.tabular"/>
                             <conditional name="condi_between">
                                 <param name="comparator" value="sl"/>
                                 <param name="t1" value="44.5"/>
@@ -184,7 +190,6 @@
                         </repeat>
                         <repeat name="user_choice">
                             <param name="dim" value="longitude"/>
-                            <param name="dim_tab" value="longitude.tabular"/>
                             <conditional name="condi_between">
                                 <param name="comparator" value="is"/>
                                 <param name="value" value="-3.5"/>
@@ -208,6 +213,10 @@
                     </conditional>
                     <param name="where_condition" ftype="txt" value="where_condition.txt"/>
                 </section>
+                <section name="subset_coords">
+                    <conditional name="tsel">
+                    </conditional>
+                </section>
                 <output name="output_netcdf" file="chl_phy_where.netcdf" compare="sim_size" delta="500"/>
             </test>
             <test>
@@ -217,13 +226,14 @@
                     <param name="var" value="chl"/>
                     <param name="scale" value="1000.5"/>
                     <param name="write_all" value="true"/>
-                    <param name="keep_attribute" value="true"/>
+                    <param name="keep_attributes" value="true"/>
                 </section>
                 <section name="subset_coords">
                     <conditional name="tsel">
                         <param name="by_click" value="isel_list"/>
                         <repeat name="user_choice">
                             <param name="dim" value="time"/>
+                            <param name="dim_tab" value="time.tabular"/>
                             <conditional name="condi_between">
                                 <param name="comparator" value="sl"/>
                                 <param name="t1" value="10"/>

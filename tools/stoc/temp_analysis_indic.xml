@@ -1,9 +1,17 @@
-<tool id="stoceps_trend_indic" name="Temporal trend indicator" version="@VERSION@">
+<tool id="stoceps_trend_indic" name="Temporal trend indicator" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>using GlmmTMB or GAM models</description>
     <macros>
         <import>stoceps_macros.xml</import>
     </macros>
+    <edam_topics>
+        <edam_topic>topic_0610</edam_topic>
+        <edam_topic>topic_3050</edam_topic>
+    </edam_topics>
     <expand macro="temp_indic_requirements"/>
+    <required_files>
+        <include path="FunctExeTemporalAnalysisofIndicatorTrait.r"/>
+        <include path="FunctTrendSTOCGalaxy.r"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript 
          '$__tool_directory__/FunctExeTemporalAnalysisofIndicatorTrait.r' 
@@ -39,9 +47,8 @@
     </command>
     <inputs>
         <expand macro="stoceps_input_filtered"/>
-
-        <param name="inputtabSpecies" type="data" format="tabular" label="Species file" help="Input species tabular file, with 5 columns (species ID, species name, species scientific name, specialization status)." />
-        <param name="inputspeciesindic" type="data" format="tabular" label="indicators info file" help="Input indicator info tabular file, with a `species ID` column and at least one index column (named `ssi` or `sti` or `stri`)." />
+        <param name="inputtabSpecies" type="data" format="tabular" label="Species file" help="Input species tabular file, with 5 columns (species ID, species name, species scientific name, specialization status)."/>
+        <param name="inputspeciesindic" type="data" format="tabular" label="indicators info file" help="Input indicator info tabular file, with a `species ID` column and at least one index column (named `ssi` or `sti` or `stri`)."/>
         <param name="index" type="select" help="Available index" label="Chose the index you want to compute">
             <option selected="true" value="csi">CSI</option>
             <option value="cti">CTI</option>
@@ -53,7 +60,7 @@
                 <option selected="true" value="gam">Gam</option>
             </param>
             <when value="gam">
-                 <param name="inputcoord" type="data" format="tabular" label="Coordinates of sites" help="Input localization tabular file, with 3 columns (site ID, latitude, longitude)." />
+                <param name="inputcoord" type="data" format="tabular" label="Coordinates of sites" help="Input localization tabular file, with 3 columns (site ID, latitude, longitude)."/>
             </when>
             <when value="glmmtmb">
             </when>
@@ -73,7 +80,7 @@
         <data name="output_tab_gam_annee" from_work_dir="Output/csi_gammParannee_France.tabular" format="tabular" label="GAM - Temp trends per year - on ${on_string}">
             <expand macro="stoceps_filter_gam"/>
         </data>
-        <data name="output_plot_carre" from_work_dir="Output/figcsi_carre_France.png" format="png" label="GAM - Temp trends plot on ${on_string}">
+        <data name="output_plot_carre" from_work_dir="Output/figcsi_carre_France.png" format="png" label="GAM - Temp trends square plot on ${on_string}">
             <expand macro="stoceps_filter_gam"/>
         </data>
         <data name="output_plot__gam_csiplot" from_work_dir="Output/figcsi_plotFrance.png" format="png" label="GAM - Temp trends plot on ${on_string}">
@@ -82,27 +89,32 @@
         <data name="output_tab_gam_smoothed" from_work_dir="Output/csi_gammsmoothFrance.tabular" format="tabular" label="GAM - Temp trends smoothed data on ${on_string}">
             <expand macro="stoceps_filter_gam"/>
         </data>
-        
         <data name="output_plot_glmmtb_csiplot" from_work_dir="Output/csi_glmmTMB_France.png" format="png" label="GlmmTMB - Temp trends plot on ${on_string}">
             <expand macro="stoceps_filter_glmmtmb"/>
         </data>
         <data name="output_tab_glmmtb_annee" from_work_dir="Output/ggdata_csiFrance.tabular" format="tabular" label="GlmmTMB - Temp trends per year - on ${on_string}">
             <expand macro="stoceps_filter_glmmtmb"/>
         </data>
-        <data name="output_tab_glmmtb_gammcomplet" from_work_dir="Output/GlmmTMB_coefficient_csiFrance.tabular" format="tabular" label="GlmmTMB - Temp trends per year - on ${on_string}">
+        <data name="output_tab_glmmtb_gammcomplet" from_work_dir="Output/GlmmTMB_coefficient_csiFrance.tabular" format="tabular" label="GlmmTMB - Temp trends all data - on ${on_string}">
             <expand macro="stoceps_filter_glmmtmb"/>
         </data>
     </outputs>
     <tests>
-        <test>
+        <test expect_num_outputs="5">
             <param name="input" value="data_FrenchBBS_squarre_dataSTOCallSp_France_trend_2001_2017_ALAARV-PARCAE_2001_2018.tabular"/>
-            <param name="inputcoord" value="coordCarreSTOCfaux.tabular"/>
+            <conditional name="method">
+                <param name="inputcoord" value="coordCarreSTOCfaux.tabular"/>
+            </conditional>
             <param name="inputspeciesindic" value="species_indicateur_fonctionnel.tabular"/>
             <param name="inputtabSpecies" value="tabSpecies.csv"/>
-            <param name="advanced" value="advanced"/>
-            <param name="smooth_plot" value="TRUE"/>
-            <param name="model" value="gam"/>
-            <param name="compute_ic" value="FALSE"/>
+            <conditional name="settings">
+                <param name="advanced" value="advanced"/>
+                <param name="smooth_plot" value="TRUE"/>
+                <param name="compute_ic" value="FALSE"/>
+            </conditional>
+            <conditional name="method">
+                <param name="model" value="gam"/>
+            </conditional>
             <output name="output_tab_gammcomplet">
                 <assert_contents>
                     <has_n_lines n="20"/>
@@ -132,14 +144,18 @@
                 </assert_contents>
             </output>
         </test>
-        <test>
+        <test expect_num_outputs="3">
             <param name="input" value="Datafilteredfortrendanalysis.tabular"/>
             <param name="inputspeciesindic" value="species_indicateur_fonctionnel.tabular"/>
             <param name="inputtabSpecies" value="tabSpecies.csv"/>
-            <param name="advanced" value="advanced"/>
-            <param name="smooth_plot" value="FALSE"/>
-            <param name="model" value="glmmtmb"/>
-            <param name="compute_ic" value="TRUE"/>
+            <conditional name="settings">
+                <param name="advanced" value="advanced"/>
+                <param name="smooth_plot" value="FALSE"/>
+                <param name="compute_ic" value="TRUE"/>
+            </conditional>
+            <conditional name="method">
+                <param name="model" value="glmmtmb"/>
+            </conditional>
             <output name="output_plot_glmmtb_csiplot">
                 <assert_contents>
                     <has_text text="PNG"/>
@@ -159,10 +175,6 @@
             </output>
         </test>
     </tests>
-    <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
-    </edam_topics>
     <help><![CDATA[
 =================================================
 STOC Temporal population trend indicator
@@ -218,9 +230,10 @@ GlmmTMB method ::
 
 **Source**
 
-UnPublished script available at http://www.vigienature.fr/sites/vigienature/files/atoms/files/analysestoceps_0.zip
+UnPublished script available at www.vigienature.fr/sites/vigienature/files/atoms/files/analysestoceps_0.zip
 and the first version written by Romain Lorrilliere
 
   ]]></help>
-  <expand macro="stoceps_bibref" />
+    <expand macro="stoceps_bibref"/>
+    <expand macro="creator"/>
 </tool>

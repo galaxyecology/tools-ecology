@@ -1,9 +1,16 @@
-<tool id="regionalgam_gls" name="Model temporal trend" version="@VERSION@">
+<tool id="regionalgam_gls" name="Model temporal trend" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>with a simple linear regression</description>
     <macros>
         <import>regionalgam_macros.xml</import>
     </macros>
+    <edam_topics>
+        <edam_topic>topic_0610</edam_topic>
+        <edam_topic>topic_3050</edam_topic>
+    </edam_topics>
     <expand macro="rg_nlme_mass_requirements"/>
+    <required_files>
+        <include path="gls.R"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript '$__tool_directory__/gls.R' 
             '$collated_index' '$ab_indices' 
@@ -11,25 +18,21 @@
     ]]>
     </command>
     <inputs>
-        <expand macro="rg_collated_index"/> 
-        <expand macro="rg_ab_indices"/> 
+        <expand macro="rg_collated_index"/>
+        <expand macro="rg_ab_indices"/>
     </inputs>
     <outputs>
-        <data format="txt" name="output" from_work_dir="mod-summary.txt" />
-        <data format="rdata" name="output2" from_work_dir="mod.rda" />
+        <data format="txt" name="output" from_work_dir="mod-summary.txt" label="Summary on ${on_string}"/>
+        <data format="rdata" name="output2" from_work_dir="mod.rda" label="Linear regression model on ${on_string}"/>
     </outputs>
     <tests>
-        <test> 
+        <test>
             <param name="collated_index" value="s_glmmpql.tabular"/>
             <param name="ab_indices" value="s_data_index.tabular"/>
             <output name="output" file="s_gls_sum.txt"/>
             <output name="output2" file="s_gls_rda.rda"/>
         </test>
     </tests>
-    <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
-    </edam_topics>
     <help><![CDATA[
 ==========================
 Model temporal trend
@@ -48,4 +51,5 @@ The tool returns the linear regression model in an Rdata file.
 It also returns a summary of this model in txt format.
     ]]></help>
     <expand macro="rg_citation"/>
+    <expand macro="creator"/>
 </tool>

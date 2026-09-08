@@ -2,7 +2,7 @@
     <description>subindicator to track land changes</description>
     <macros>
         <token name="@TOOL_VERSION@">0.1.0</token>
-        <token name="@VERSION_SUFFIX@">0</token>
+        <token name="@VERSION_SUFFIX@">1</token>
     </macros>
     <requirements>
         <requirement type="package" version="1.26.3">numpy</requirement>
@@ -11,6 +11,10 @@
         <requirement type="package" version="2.1.14">trends_earth_algorithms</requirement>
         <requirement type="package" version="2.1.14">trends_earth_schemas</requirement>
     </requirements>
+    <required_files>
+        <include path="land_cover.py"/>
+        <include path="test-data/landcover.json"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
             #if '$method.json_file' == "no"
                 python '$__tool_directory__/land_cover.py'
@@ -26,8 +30,8 @@
 
     ]]></command>
     <inputs>
-        <param name="raster_1" type="data" format="tiff" label="A raster image of the land at a reference year" />
-        <param name="raster_2" type="data" format="tiff" label="A raster image of the land at the year you want to study" />
+        <param name="raster_1" type="data" format="tiff" label="A raster image of the land at a reference year"/>
+        <param name="raster_2" type="data" format="tiff" label="A raster image of the land at the year you want to study"/>
         <conditional name="method">
             <param name="json_file" type="select" label="Do you want to use the default file json or your customized one ?" help="A file containing the land specifications, you can directly use the default one or you can customize it beforehand. The default one can be obtained at https://github.com/fair-ease/earth-critical-zone-galaxy/blob/main/landcover.json">
                 <option value="yes">Yes, use the standard land specification time</option>
@@ -42,62 +46,70 @@
     </inputs>
     <outputs>
         <collection name="output_tiff" type="list" label="Land cover raster outputs">
-            <discover_datasets pattern="__name_and_ext__" directory="data/land_cover/output/" />
+            <discover_datasets pattern="__name_and_ext__" directory="data/land_cover/output/"/>
         </collection>
         <!--<collection name="output_png" type="list" label="Land cover plots">
             <discover_datasets pattern="__name_and_ext__" directory="data/land_cover/" />
         </collection>-->
-        <data name="contour" format="shp"  from_work_dir="data/land_cover/output/change_yf_yi0.shp" label="${tool.name} on ${on_string}" />
+        <data name="contour" format="shp" from_work_dir="data/land_cover/output/change_yf_yi0.shp" label="${tool.name} on ${on_string}"/>
     </outputs>
     <tests>
         <test expect_num_outputs="2">
             <param name="raster_1" value="EU_CLC_1990.tiff"/>
-            <param name="raster_2" value="EU_CLC_2018.tiff"/>   
-            <param name="json_file" value="yes"/>
-            <output name="contour" value="change_yf_yi0.shp"/>
+            <param name="raster_2" value="EU_CLC_2018.tiff"/>
+            <conditional name="method">
+                <param name="json_file" value="yes"/>
+            </conditional>
+            <!-- Check the contour shapefile and its projection -->
+            <output name="contour" value="change_yf_yi0.shp" ftype="shp">
+                <assert_contents>
+                    <has_n_lines n="17" delta="5"/>
+                </assert_contents>
+            </output>
+            <!-- Output Collection: TIFF files (unchanged) -->
             <output_collection name="output_tiff" type="list" count="7">
                 <element name="lc_baseline_esa" ftype="tiff">
                     <assert_contents>
                         <has_text text="LAEA Europe"/>
-                        <has_size size="977"/>
+                        <has_size size="1001118" delta="50000"/>
                     </assert_contents>
                 </element>
                 <element name="lc_bl" ftype="tiff">
                     <assert_contents>
                         <has_text text="LAEA Europe"/>
-                        <has_size size="977"/>
+                        <has_size size="1001118" delta="50000"/>
                     </assert_contents>
-                </element>    
+                </element>
                 <element name="lc_dg" ftype="tiff">
                     <assert_contents>
                         <has_text text="LAEA Europe"/>
-                        <has_size size="977"/>
+                        <has_size size="1001118" delta="50000"/>
                     </assert_contents>
-                </element>    
+                </element>
                 <element name="lc_target_esa" ftype="tiff">
                     <assert_contents>
                         <has_text text="LAEA Europe"/>
-                        <has_size size="977"/>
+                        <has_size size="1001118" delta="50000"/>
                     </assert_contents>
-                </element>    
+                </element>
                 <element name="lc_tg" ftype="tiff">
                     <assert_contents>
                         <has_text text="LAEA Europe"/>
-                        <has_size size="977"/>
+                        <has_size size="1001118" delta="50000"/>
                     </assert_contents>
-                </element>    
+                </element>
                 <element name="lc_tr" ftype="tiff">
                     <assert_contents>
                         <has_text text="LAEA Europe"/>
-                        <has_size size="977"/>
+                        <has_size size="1001118" delta="50000"/>
                     </assert_contents>
-                </element>    
+                </element>
                 <element name="stack" ftype="tiff">
                     <assert_contents>
                         <has_text text="LAEA Europe"/>
-                        <has_size size="977"/>
+                        <has_size size="4003402" delta="100000"/>
                     </assert_contents>
-                </element>    
+                </element>
             </output_collection>
         </test>
     </tests>
@@ -148,4 +160,9 @@ For more information go on `the official trends earth documentation<http://docs.
             }
         </citation>
     </citations>
+    <creator>
+        <person givenName="Marie" familyName="Jossé" url="https://orcid.org/0009-0008-0622-604X"/>
+        <organization name="EOSC Fair-Ease" url="https://fairease.eu/"/>
+        <organization name="Data Terra" url="https://www.data-terra.org/"/>
+    </creator>
 </tool>

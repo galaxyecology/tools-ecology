@@ -1,12 +1,19 @@
-<tool id="interpolation_run_idw_interpolation" name="Run interpolation" version="1.0" profile="22.05">
+<tool id="interpolation_run_idw_interpolation" name="Run interpolation" version="@VERSION_TOOL@+galaxy@VERSION_SUFFIX@" profile="22.05">
     <description>based on Inverse Distance Weighting (IDW)</description>
+    <macros>
+        <token name="@VERSION_TOOL@">1.0</token>
+        <token name="@VERSION_SUFFIX@">1</token>
+    </macros>
     <requirements>
         <requirement type="package" version="1.20.4">r-getopt</requirement>
         <requirement type="package" version="3.3_4">r-tmap</requirement>
         <requirement type="package" version="3.6_26">r-raster</requirement>
         <requirement type="package" version="2.1_1">r-gstat</requirement>
     </requirements>
-    <command detect_errors='exit_code'><![CDATA[
+    <required_files>
+        <include path="run_idw_interpolation.R"/>
+    </required_files>
+    <command detect_errors="exit_code"><![CDATA[
     Rscript '$__tool_directory__/run_idw_interpolation.R'
         --observationsCsv '$observations_csv'
         --latitudeColumn '$latitude_column'
@@ -66,10 +73,10 @@
             <option value="YlOrBr">YlOrBr</option>
             <option value="YlOrRd">YlOrRd</option>
         </param>
-        <param type="boolean" name="test_case" label="Should a seed be set?" truevalue="true" falsevalue="false" />
+        <param type="boolean" name="test_case" label="Should a seed be set?" truevalue="true" falsevalue="false"/>
     </inputs>
     <outputs>
-        <data name="output" format="png" />
+        <data name="output" format="png"/>
     </outputs>
     <tests>
         <!-- Run test with: planemo test - -biocontainers plotInterpolationMap.xml - -test_output=plotInterpolationMap.html -->
@@ -99,4 +106,7 @@
         <citation type="doi">10.18637/jss.v084.i06</citation>
         <citation type="doi">10.32614/RJ-2016-014</citation>
     </citations>
+    <creator>
+        <organization name="EOSC AquaINFRA" url="https://aquainfra.eu/"/>
+    </creator>
 </tool>

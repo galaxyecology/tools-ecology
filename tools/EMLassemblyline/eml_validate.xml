@@ -1,10 +1,16 @@
-<tool id="eml_validate" name="Eml validate:" version="0.1.2" profile="21.05">
+<tool id="eml_validate" name="Eml validate:" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="21.05">
     <description>check if your EML file is valid</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
     <requirements>
         <requirement type="package" version="4.3.3">r-base</requirement>
         <requirement type="package" version="2.0.6.1">r-eml</requirement>
         <requirement type="package" version="0.5.1">r-emld</requirement>
     </requirements>
+    <required_files>
+        <include path="eml_validate.R"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
      Rscript
          '$__tool_directory__/eml_validate.R' > report.txt
@@ -15,12 +21,12 @@
         <param name="inputmetadatafile" type="data" format="xml" label="EML metadata file" help="Insert only metadata using EML standard."/>
     </inputs>
     <outputs>
-       <data name="output" from_work_dir="report.txt" format="txt" label="Informations report"/>
+        <data name="output" from_work_dir="report.txt" format="txt" label="Informations report"/>
     </outputs>
     <tests>
         <test>
             <param name="inputmetadatafile" value="metadataoutput.xml"/>
-            <output name='output' value="report.txt"/>
+            <output name="output" value="report.txt"/>
         </test>
     </tests>
     <help><![CDATA[
@@ -40,7 +46,8 @@ There are two different cases:
     
     ]]></help>
     <citations>
-       <citation type="doi">10.32614/CRAN.package.emld</citation>
-       <citation type="doi">10.32614/CRAN.package.EML</citation>
+        <citation type="doi">10.32614/CRAN.package.emld</citation>
+        <citation type="doi">10.32614/CRAN.package.EML</citation>
     </citations>
+    <expand macro="creator"/>
 </tool>

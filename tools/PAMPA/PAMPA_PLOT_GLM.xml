@@ -1,9 +1,17 @@
-<tool id="pampa_plotglm" name="Create a plot from GLM data" version="@VERSION@">
+<tool id="pampa_plotglm" name="Create a plot from GLM data" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>as temporal trend</description>
     <macros>
         <import>pampa_macros.xml</import>
     </macros>
+    <edam_topics>
+        <edam_topic>topic_0610</edam_topic>
+        <edam_topic>topic_3050</edam_topic>
+    </edam_topics>
     <expand macro="Plot_requirements"/>
+    <required_files>
+        <include path="FunctExePlotGLMGalaxy.r"/>
+        <include path="FunctPAMPAGalaxy.r"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript 
          '$__tool_directory__/FunctExePlotGLMGalaxy.r' 
@@ -21,13 +29,13 @@
         <param name="unitobstable" type="data" format="tabular" label="Unitobs table used for glm" help=""/>
     </inputs>
     <outputs>
-       <data name="report" from_work_dir="stdout.txt" label="Report" format="txt"/>
-       <collection type="list" name="plots">
+        <data name="report" from_work_dir="stdout.txt" label="Report" format="txt"/>
+        <collection type="list" name="plots">
             <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" visible="false" format="png"/>
-       </collection>
+        </collection>
     </outputs>
     <tests>
-        <test expect_num_outputs="2"> 
+        <test expect_num_outputs="2">
             <param name="input" value="GLM_table_population_analysis_on_Presence_absence_sansszcl_cropped.tabular"/>
             <param name="datatable" value="Presence_absence_table_sansszcl_cropped.tabular"/>
             <param name="unitobstable" value="Unitobs.tabular"/>
@@ -36,7 +44,7 @@
                     <has_size value="0"/>
                 </assert_contents>
             </output>
-            <output_collection name="plots"  type="list" count="3">
+            <output_collection name="plots" type="list" count="3">
                 <element name="Abalstel" ftype="png">
                     <assert_contents>
                         <has_text text="PNG"/>
@@ -55,10 +63,6 @@
             </output_collection>
         </test>
     </tests>
-    <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
-    </edam_topics>
     <help><![CDATA[
 =============================================
 Create plot(s) from GLM results output
@@ -139,9 +143,10 @@ Two outputs :
 
 **Source**
 
-Derived from PAMPA scripts (https://wwz.ifremer.fr/pampa/Meth.-Outils/Outils) written by Yves Reecht.
+Derived from PAMPA scripts (
+        wwz.ifremer.fr/pampa/Meth.-Outils/Outils) written by Yves Reecht.
 
   ]]></help>
-
-  <expand macro="pampa_bibref" />
+    <expand macro="pampa_bibref"/>
+    <expand macro="creator"/>
 </tool>

@@ -1,6 +1,6 @@
 <macros>
     <token name="@TOOL_VERSION@">2022.3.0</token>
-    <token name="@VERSION_SUFFIX@">0</token>
+    <token name="@VERSION_SUFFIX@">1</token>
     <token name="@PROFILE@">20.05</token>
     <xml name="edam_ontology">
         <edam_topics>
@@ -24,5 +24,10 @@
                 }
             </citation>
         </citations>
+    </xml>
+    <xml name="creator">
+        <creator>
+            <person givenName="Anne" familyName="Fouilloux" url="https://orcid.org/0000-0002-1784-2920"/>
+        </creator>
     </xml>
 </macros>

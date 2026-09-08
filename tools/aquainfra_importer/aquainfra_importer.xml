@@ -1,11 +1,21 @@
-<tool id="aquainfra_importer" name="AquaINFRA Importer" tool_type="data_source" version="1.0" profile="20.09">
+<tool id="aquainfra_importer" name="AquaINFRA Importer" tool_type="data_source" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="20.09">
     <description>downloads content via the AquaINFRA interaction platform</description>
+    <macros>
+        <token name="@TOOL_VERSION@">1.0</token>
+        <token name="@VERSION_SUFFIX@">1</token>
+    </macros>
+    <creator>
+        <organization name="EOSC AquaINFRA" url="https://aquainfra.eu/"/>
+    </creator>
+    <required_files>
+        <include path="data_source.py"/>
+    </required_files>
     <command><![CDATA[
         python '$__tool_directory__/data_source.py' '$output' $__app__.config.output_size_limit
     ]]></command>
     <inputs action="https://aquainfra.dev.52north.org/" check_values="false" method="get">
-        <param name="GALAXY_URL" type="baseurl" value="/tool_runner" />
-        <param name="tool_id" type="hidden" value="aquainfra_importer" />
+        <param name="GALAXY_URL" type="baseurl" value="/tool_runner"/>
+        <param name="tool_id" type="hidden" value="aquainfra_importer"/>
     </inputs>
     <outputs>
         <data name="output" format="auto" label="AquaINFRA Resource"/>
