@@ -1,14 +1,15 @@
 <macros>
     <token name="@VERSION@">0.0.0</token>
+    <token name="@VERSION_SUFFIX@">1</token>
     <xml name="Explo_requirements">
         <requirements>
-           <requirement type="package" version="3.3.3">r-ggplot2</requirement>
-           <yield />
+            <requirement type="package" version="3.3.3">r-ggplot2</requirement>
+            <yield/>
         </requirements>
     </xml>
     <xml name="explo_input">
-       <param name="input" type="data" format="tabular" label="Input table"/>
-       <param name="colnames" type="boolean" label="First line is a header line" checked="true"/>
+        <param name="input" type="data" format="tabular" label="Input table"/>
+        <param name="colnames" type="boolean" label="First line is a header line" checked="true"/>
     </xml>
     <xml name="explo_filter_colli">
         <filter> method['type'] == 'collinearity'</filter>
@@ -35,7 +36,7 @@
         <filter> method['type'] == 'rare'</filter>
     </xml>
     <xml name="explo_bibref">
-       <citations>
+        <citations>
             <citation type="bibtex">
             @unpublished{
             title={ A protocol for data exploration to avoid common statistical problems },
@@ -57,9 +58,15 @@
     </xml>
     <xml name="topic">
         <edam_topics>
-           <edam_topic>topic_0610</edam_topic>
-           <edam_topic>topic_3050</edam_topic>
+            <edam_topic>topic_0610</edam_topic>
+            <edam_topic>topic_3050</edam_topic>
         </edam_topics>
     </xml>
+    <xml name="creator">
+        <creator>
+            <person givenName="Marie" familyName="Jossé" url="https://orcid.org/0009-0008-0622-604X"/>
+            <organization name="PNDB" url="https://www.pndb.fr/pages/accueil/"/>
+            <organization name="Data Terra" url="https://www.data-terra.org/"/>
+        </creator>
+    </xml>
 </macros>
-

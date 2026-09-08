@@ -105,8 +105,8 @@ jobs:
         mode: lint
         repository-list: ${{ needs.setup.outputs.repository-list }}
         tool-list: ${{ needs.setup.outputs.tool-list }}
-        additional-planemo-options: --biocontainers -s tests,output,inputs,help,general,command,citations,tool_xsd,xml_order,tool_urls,shed_metadata
-    - uses: actions/upload-artifact@v7
+        additional-planemo-options: --biocontainers --skip version_bumped
+        - uses: actions/upload-artifact@v7
       if: ${{ failure() }}
       with:
         name: 'Tool linting output'

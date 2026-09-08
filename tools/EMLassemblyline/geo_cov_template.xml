@@ -1,8 +1,14 @@
-<tool id="geo_cov_template" name="Make geographic coverage template" version="0.1.2+galaxy0" profile="22.05">
+<tool id="geo_cov_template" name="Make geographic coverage template" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="22.05">
     <description>for EML metadata creation</description>
-     <requirements>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+    <requirements>
         <container type="docker">ylebras/metashark:1.7.6</container>
     </requirements>
+    <required_files>
+        <include path="geo_cov_temp.R"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
     
     mkdir data_files && 
@@ -20,14 +26,14 @@
          
     ]]></command>
     <inputs>
-         <param name="inputdata" type="data" format="tabular" label="Upload table containing geographic coordinates" />
-         <param name="lat_col" type="data_column"  label="What column of your table contains latitude coordinates in decimal degrees?" data_ref="inputdata" use_header_names="true"/>
-         <param name="long_col" type="data_column"  label="What column of your table contains longitude coordinates in decimal degrees ?" data_ref="inputdata" use_header_names="true"/>
-         <param name="site_col" type="data_column"  label="What column of your table contains site names ?" data_ref="inputdata" use_header_names="true"/>
-         <param name="empty" type="boolean"  label="Write an empty template file ?" />
+        <param name="inputdata" type="data" format="tabular" label="Upload table containing geographic coordinates"/>
+        <param name="lat_col" type="data_column" label="What column of your table contains latitude coordinates in decimal degrees?" data_ref="inputdata" use_header_names="true"/>
+        <param name="long_col" type="data_column" label="What column of your table contains longitude coordinates in decimal degrees ?" data_ref="inputdata" use_header_names="true"/>
+        <param name="site_col" type="data_column" label="What column of your table contains site names ?" data_ref="inputdata" use_header_names="true"/>
+        <param name="empty" type="boolean" label="Write an empty template file ?"/>
     </inputs>
     <outputs>
-         <data name="output" from_work_dir="geographic_coverage.txt" format="txt" label="geographic_coverage.txt"/>
+        <data name="output" from_work_dir="geographic_coverage.txt" format="txt" label="geographic_coverage.txt"/>
     </outputs>
     <tests>
         <test>
@@ -65,13 +71,6 @@ To use this tool, you need to upload a table containing geographic coordinates (
 | ...  | ...  |          ...         |
 +------+------+----------------------+
  ]]></help>
-    <citations>
-       <citation type="bibtex">@Manual{,
-       title = {EMLassemblyline: A tool kit for building EML metadata workflows},
-       author = {Colin Smith},
-       year = {2022},
-       note = {https://github.com/EDIorg/EMLassemblyline,
-       https://ediorg.github.io/EMLassemblyline/},
-       }</citation>
-    </citations>
+    <expand macro="citations"/>
+    <expand macro="creator"/>
 </tool>

@@ -2,12 +2,15 @@
     <description>Data-Interpolating Variational Analysis in n dimensions</description>
     <macros>
         <token name="@TOOL_VERSION@">0.1.0</token>
-        <token name="@VERSION_SUFFIX@">0</token>
+        <token name="@VERSION_SUFFIX@">1</token>
     </macros>
     <requirements>
         <requirement type="package" version="1.8.5">julia</requirement>
         <requirement type="package" version="2.7.9">julia-divand</requirement>
     </requirements>
+    <required_files>
+        <include type="literal" path="divandfull.jl"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
     ## The HOME .julia folder is not writable inside the Docker container, so we need to set one that is writable. 
     export JULIA_DEPOT_PATH="\$PWD:\$JULIA_DEPOT_PATH" &&
@@ -75,8 +78,8 @@
             <param name="selmax" value="100"/>
             <output name="output_netcdf">
                 <assert_contents>
-            	    <has_size value="68291" delta="0"/>
-            	</assert_contents>
+                    <has_size value="68291" delta="0"/>
+                </assert_contents>
             </output>
         </test>
     </tests>
@@ -135,6 +138,11 @@ If you want more informations about the functions and parameters see also the `d
 
     ]]></help>
     <citations>
-        <citation type="doi">doi:10.5194/gmd-7-225-2014</citation>
+        <citation type="doi">10.5194/gmd-7-225-2014</citation>
     </citations>
+    <creator>
+        <person givenName="Marie" familyName="Jossé" url="https://orcid.org/0009-0008-0622-604X"/>
+        <organization name="EOSC Fair-Ease" url="https://fairease.eu/"/>
+        <organization name="Data Terra" url="https://www.data-terra.org/"/>
+    </creator>
 </tool>

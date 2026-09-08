@@ -12,6 +12,9 @@
         <requirement type="package" version="1.6.0">netcdf4</requirement>
         <requirement type="package" version="2022.7.0">dask</requirement>
     </requirements>
+    <required_files>
+        <include path="xarray_netcdf2netcdf.py"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
     mkdir output_dir &&
     python '$__tool_directory__/xarray_netcdf2netcdf.py'
@@ -78,4 +81,5 @@ over latitudes and longitudes)
 The xarray select tool can be used after the xarray Info and xarray Coord.
     ]]>    </help>
     <expand macro="citations"/>
+    <expand macro="creator"/>
 </tool>

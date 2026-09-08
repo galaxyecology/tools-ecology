@@ -4,7 +4,7 @@ description: Search a list of sequences in BOLD (Barcode of Life Data System) fr
 homepage_url: https://anaconda.org/conda-forge/r-bold
 long_description: |
   This tool was created from the MARES Database pipeline repository. Sequences are retrieved thanks to BOLD r-package (Barcode of Life Data System). This tool provides a fasta file for each to be processed taxa. This tool allows the specification of a wide diversity of metabarcoding markers. 
-remote_repository_url: https://github.com/wpearman1996/MARES_database_pipeline/tree/master
+remote_repository_url:  https://github.com/galaxyecology/tools-ecology/tree/master/tools/retrieve_bold
 type: unrestricted
 categories:
 - Ecology

@@ -1,7 +1,8 @@
 categories:
     - Ecology
 owner: ecology
-remote_repository_url: https://github.com/Marie59/Data_explo_tools
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/data_exploration
+homepage_url: https://github.com/Marie59/Data_explo_tools
 long_description: |
   Explore data through multiple statistical tools
 type: unrestricted
@@ -11,4 +12,4 @@ auto_tool_repositories:
 suite:
   name: "data_exploration"
   description: "A suite of data exploration tools"
-  type: repository_data_exploration
+  type: unrestricted

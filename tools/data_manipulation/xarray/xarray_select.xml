@@ -12,6 +12,9 @@
         <requirement type="package" version="1.4.3">pandas</requirement>
         <requirement type="package" version="0.7.0">geopandas</requirement>
     </requirements>
+	<required_files>
+        <include path="xarray_select.py"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
     mkdir output_dir &&
     #if $condi_source_coord.coord_source=="coord_from_file"
@@ -215,16 +218,16 @@
         </repeat>
     </inputs>
     <outputs>
-        <collection type="list" name="output">
+        <collection type="list" name="output" label="${tool.name} on ${on_string}">
             <discover_datasets pattern="__designation_and_ext__" visible="false" format="tabular" directory="output_dir"/>
             <filter>condi_source_coord['coord_source'] == 'coord_from_file'</filter>
         </collection>
-        <data name="simpleoutput" from_work_dir="final.tabular" format="tabular">
+        <data name="simpleoutput" from_work_dir="final.tabular" format="tabular" label="Single tabular">
             <filter>condi_source_coord['coord_source'] == 'coord_from_stdin'</filter>
         </data>
     </outputs>
     <tests>
-        <test>
+        <test expect_num_outputs="1">
             <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
             <param name="var" value="phy"/>
             <param name="var_tab" value="var_tab_dataset-ibi"/>
@@ -245,7 +248,7 @@
                 </assert_contents>
             </output>
         </test>
-        <test>
+        <test expect_num_outputs="1">
             <param name="input" value="dataset-ibi-reanalysis-bio-005-003-monthly-regulargrid_1510914389133.nc"/>
             <param name="var_tab" value="var_tab_dataset-ibi"/>
             <param name="var" value="nh4"/>
@@ -315,4 +318,5 @@ A data collection where one file is created for every coordinate, if multiple co
 The xarray select tool can be used after the xarray Info.
     ]]>    </help>
     <expand macro="citations"/>
+    <expand macro="creator"/>
 </tool>
