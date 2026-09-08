@@ -129,33 +129,33 @@ This option will be applied to all selected formats above.<br/>
         </param>
     </inputs>
     <outputs>
-        <data name="Annotations_coco" format="json" from_work_dir="./outputs/annotations.json" label="Annotation COCO">
+        <data name="Annotations_coco" format="json" from_work_dir="./outputs/annotations.json" label="${tool.name} on ${on_string}: Annotation COCO">
             <filter>input['input_kind'] == "video" or (input['outputs_format'] and 'coco' in input['outputs_format'])</filter>
         </data>
-        <collection name="Outputs_annotated" type="list" label="Annotated Outputs">
+        <collection name="Outputs_annotated" type="list" label="${tool.name} on ${on_string}: Annotated Outputs">
             <discover_datasets pattern="__name_and_ext__" directory="outputs/outputs_annotated"/>
         </collection>
-        <collection name="Raw_Frames" type="list" label="Raw Frames">
+        <collection name="Raw_Frames" type="list" label="${tool.name} on ${on_string}: Raw Frames">
             <filter>input['input_kind'] == "video" and input.get('output_frames') in ('raw', 'both')</filter>
             <discover_datasets pattern="__name_and_ext__" directory="outputs/frames_raw"/>
         </collection>
-        <collection name="Annotated_Frames" type="list" label="Annotated Frames">
+        <collection name="Annotated_Frames" type="list" label="${tool.name} on ${on_string}: Annotated Frames">
             <filter>input['input_kind'] == "video" and input.get('output_frames') in ('annotated', 'both')</filter>
             <discover_datasets pattern="__name_and_ext__" directory="outputs/frames_annotated"/>
         </collection>
-        <collection name="Yolo_Bbox_Image" type="list" label="YOLO Bbox Images">
+        <collection name="Yolo_Bbox_Image" type="list" label="${tool.name} on ${on_string}: YOLO Bbox Images">
             <filter>input['outputs_format'] and 'yolo_bbox' in input['outputs_format']</filter>
             <discover_datasets pattern="__name_and_ext__" directory="outputs/yolo_bbox/images"/>
         </collection>
-        <collection name="Yolo_Bbox_Label" type="list" label="YOLO Bbox Labels">
+        <collection name="Yolo_Bbox_Label" type="list" label="${tool.name} on ${on_string}: YOLO Bbox Labels">
             <filter>input['outputs_format'] and 'yolo_bbox' in input['outputs_format']</filter>
             <discover_datasets pattern="__name_and_ext__" directory="outputs/yolo_bbox/labels"/>
         </collection>
-        <collection name="Yolo_Seg_Image" type="list" label="YOLO Seg Images">
+        <collection name="Yolo_Seg_Image" type="list" label="${tool.name} on ${on_string}: YOLO Seg Images">
             <filter>input['outputs_format'] and 'yolo_seg' in input['outputs_format']</filter>
             <discover_datasets pattern="__name_and_ext__" directory="outputs/yolo_seg/images"/>
         </collection>
-        <collection name="Yolo_Seg_Label" type="list" label="YOLO Seg Labels">
+        <collection name="Yolo_Seg_Label" type="list" label="${tool.name} on ${on_string}: YOLO Seg Labels">
             <filter>input['outputs_format'] and 'yolo_seg' in input['outputs_format']</filter>
             <discover_datasets pattern="__name_and_ext__" directory="outputs/yolo_seg/labels"/>
         </collection>
