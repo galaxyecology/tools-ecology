@@ -127,7 +127,7 @@
     **Output**
 
     * A collection of NASA data files matching the selected time range and geographic area (typically in .netcdf or .h5 format)
-    * A text file listing all downloaded files.
+    * A text file listing all downloaded files
      
 
     **URLs**
