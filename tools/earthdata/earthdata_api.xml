@@ -127,10 +127,11 @@
     **Output**
 
     * A collection of NASA data files matching the selected time range and geographic area (typically in .netcdf or .h5 format)
-    * A text file listing all downloaded files.
+    * A text file listing all downloaded files
      
 
     **URLs**
+
     * NASA Earthdata Login: urs.earthdata.nasa.gov
     * Earthdata search interface: search.earthdata.nasa.gov
     * Earthdata catalog webpage: earthdata.nasa.gov/data/catalog
