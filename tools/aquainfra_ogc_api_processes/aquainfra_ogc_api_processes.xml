@@ -406,12 +406,22 @@
                 </param>
             </when>
             <when value="mitgcm-prep">
-                <param name="input_url_IC_OBS" label="Zipped Copernicus Input Data (URL) input_url_IC_OBS" optional="true" help="URL that points to (zipped) Copernicus data necessary to generate initial and boundary conditions for the model. Optional: If none of the input URLs are provided, pre-downloaded data will be used. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_url_IC_OB" label="Zipped Copernicus Input Data (URL) input_url_IC_OBS" optional="true" help="URL that points to (zipped) Copernicus data necessary to generate initial and boundary conditions for the model. Optional: If none of the input URLs are provided, pre-downloaded data will be used. (URL must be stored in a .txt file)" type="data" format="txt"/>
                 <param name="input_url_AF" label="Copernicus Input Data (URL) input_url_AF" optional="true" help="URL that points to Copernicus input data that the preprocessing needs. Note that the filename has to match the pattern 'era5_{RUN_DATE}_{RUN_DATE+PREDICTION_DAYS}.zip', otherwise the preprocessing will fail. Optional: If none of the input URLs are provided, pre-downloaded data will be used. (URL must be stored in a .txt file)" type="data" format="txt"/>
-                <param name="PREDICTION_DAYS" label="PREDICTION_DAYS" optional="false" value="0" help="Number of days to run the simulation from RUN_DATE. Format: Positive integer" type="integer"/>
-                <param name="RUN_DATE" label="RUN_DATE" optional="false" value="" help="DATE from which the simulation starts. Format: yyyy-mm-dd" type="text">
-                    <validator type="empty_field" message="You must provide a value."/>
-                </param>
+                <param name="input_url_config_file" label="Config file (configure.inc)" help="URL that points to the configure.inc file to be used for preprocessing. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_url_bathymetry_binary" label="Bathymetry file (binary)" help="URL that points to the bathymetry file file to be used for preprocessing (binary format). (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_url_bathymetry_netcdf" label="Bathymetry file (NetCDF)" help="URL that points to the bathymetry file file to be used for preprocessing (NetCDF format). (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_url_depths" label="Depths file" help="URL that points to the depths file to be used for preprocessing (*.dat format). (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_url_river_config" label="River configuration file (optional)" optional="true" help="URL that points to the River configuration file to be used for preprocessing (*.csv format). Contains information of: river name, position in the model grid, side in whcih is located, number of vertical and horizontal cells, salinity value and if it is a climatology. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_url_rivers_array" label="Individual river files (optional)" optional="true" help="List of URLs that point to the (zipped or not) river input files to be used for preprocessing. If the river configuration file is specified, this has to be provided too." type="data" format="txt"/>
+                <param name="input_url_rbcs_T" label="RBCS Temperature File (optional)" optional="true" help="URL that points file with 3-D relaxation field values for T to be used for preprocessing. Please also specify the corresponding mask. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_url_rbcs_T_mask" label="RBCS Temperature Mask File (optional)" optional="true" help="URL that points to 3-D file with mask for T to be used for preprocessing. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_url_rbcs_S" label="RBCS S File (optional)" optional="true" help="URL that points file with 3-D relaxation field values for S to be used for preprocessing. Please also specify the corresponding mask. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_url_rbcs_S_mask" label="RBCS S Mask File (optional)" optional="true" help="URL that points to 3-D file with mask for S to be used for preprocessing. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_url_rbcs_U" label="RBCS U File (optional)" optional="true" help="URL that points file with 3-D relaxation field values for U to be used for preprocessing. Please also specify the corresponding mask. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_url_rbcs_U_mask" label="RBCS U Mask File (optional)" optional="true" help="URL that points to 3-D file with mask for U to be used for preprocessing. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_url_rbcs_V" label="RBCS V File (optional)" optional="true" help="URL that points file with 3-D relaxation field values for V to be used for preprocessing. Please also specify the corresponding mask. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_url_rbcs_V_mask" label="RBCS V Mask File (optional)" optional="true" help="URL that points to 3-D file with mask for V to be used for preprocessing. (URL must be stored in a .txt file)" type="data" format="txt"/>
             </when>
             <when value="mitgcm-resultplot">
                 <param name="netcdf_input_file" label="NetCDF input file" optional="false" help="The NetCDF input file that should be plotted. It must comply to some specific properties with respect to variables. (URL must be stored in a .txt file)" type="data" format="txt"/>
@@ -542,8 +552,39 @@
                 <param name="storm_date" label="Storm date" optional="true" help="Optional storm date (YYYY-MM-DD) to mark with a dashed vertical line." type="text"/>
             </when>
             <when value="owt-classification">
-                <param name="input_data_url" label="Input data" help="URL to your input file. Find example data on https://github.com/bishun945/pyOWT/tree/main/projects/AquaINFRA. (URL must be stored in a .txt file)" type="data" format="txt"/>
-                <param name="input_sensor_option" label="Sensor and type of input" optional="false" help="Type of input (e.g. in-situ, satellite) and spectral band configuration of satellite mission (includes adaptation to sensor spectral response functions)." type="select">
+                <param name="input_data_url" label="Input data" optional="false" help="URL to your input file. Find example data on https://github.com/bishun945/pyOWT/tree/main/projects/AquaINFRA. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_sensor_option" label="Type of input and sensor name" optional="false" help="Spectral band configuration of satellite mission (includes adaptation to sensor spectral response functions). SATELLITE: for NetCDF satellite product containing reflectance (Sentinel-3 OLCI Level-2, or CMEMS Level-3). INSITU: for insitu or simulated text data input (first line wavelength, following lines remote-sensing reflectance). INSITU - SEABASS: for insitu data in seabass format. INSITU - WATERHYPERNET: for PANTHYR/HYPSTAR insitu data in NetCDF format." type="select">
+                    <option value="IN SITU - HYPER">IN SITU - HYPER</option>
+                    <option value="IN SITU - SEABASS">IN SITU - SEABASS</option>
+                    <option value="IN SITU - WATERHYPERNET">IN SITU - WATERHYPERNET</option>
+                    <option value="IN SITU - AERONET_OC_1">IN SITU - AERONET_OC_1</option>
+                    <option value="IN SITU - AERONET_OC_2">IN SITU - AERONET_OC_2</option>
+                    <option value="IN SITU - CLMS_OLCI">IN SITU - CLMS_OLCI</option>
+                    <option value="IN SITU - CLMS_MSI">IN SITU - CLMS_MSI</option>
+                    <option value="IN SITU - CMEMS_ARC_HROC">IN SITU - CMEMS_ARC_HROC</option>
+                    <option value="IN SITU - CMEMS_BAL_HROC">IN SITU - CMEMS_BAL_HROC</option>
+                    <option value="IN SITU - CMEMS_BAL_MYINT">IN SITU - CMEMS_BAL_MYINT</option>
+                    <option value="IN SITU - CMEMS_BAL_NRT">IN SITU - CMEMS_BAL_NRT</option>
+                    <option value="IN SITU - CMEMS_BLK_HROC">IN SITU - CMEMS_BLK_HROC</option>
+                    <option value="IN SITU - CMEMS_BLK_MYINT">IN SITU - CMEMS_BLK_MYINT</option>
+                    <option value="IN SITU - CMEMS_BLK_NRT">IN SITU - CMEMS_BLK_NRT</option>
+                    <option value="IN SITU - CMEMS_IBI_HROC">IN SITU - CMEMS_IBI_HROC</option>
+                    <option value="IN SITU - CMEMS_MED_HROC">IN SITU - CMEMS_MED_HROC</option>
+                    <option value="IN SITU - CMEMS_MED_MYINT">IN SITU - CMEMS_MED_MYINT</option>
+                    <option value="IN SITU - CMEMS_MED_NRT">IN SITU - CMEMS_MED_NRT</option>
+                    <option value="IN SITU - CMEMS_NWS_HROC">IN SITU - CMEMS_NWS_HROC</option>
+                    <option value="IN SITU - GOCI">IN SITU - GOCI</option>
+                    <option value="IN SITU - HAWKEYE">IN SITU - HAWKEYE</option>
+                    <option value="IN SITU - ENMAP">IN SITU - ENMAP</option>
+                    <option value="IN SITU - MERIS">IN SITU - MERIS</option>
+                    <option value="IN SITU - PACE OCI">IN SITU - PACE OCI</option>
+                    <option value="IN SITU - OCTS">IN SITU - OCTS</option>
+                    <option value="IN SITU - LANDSAT-8 OLI">IN SITU - LANDSAT-8 OLI</option>
+                    <option value="IN SITU - SeaWiFS">IN SITU - SeaWiFS</option>
+                    <option value="IN SITU - MODIS">IN SITU - MODIS</option>
+                    <option value="IN SITU - SENTINEL-2 MSI">IN SITU - SENTINEL-2 MSI</option>
+                    <option value="IN SITU - SENTINEL-3 OLCI">IN SITU - SENTINEL-3 OLCI</option>
+                    <option value="IN SITU - VIIRS">IN SITU - VIIRS</option>
                     <option value="SATELLITE - CMEMS_ARC_HROC">SATELLITE - CMEMS_ARC_HROC</option>
                     <option value="SATELLITE - CMEMS_BAL_HROC">SATELLITE - CMEMS_BAL_HROC</option>
                     <option value="SATELLITE - CMEMS_BAL_MYINT">SATELLITE - CMEMS_BAL_MYINT</option>
@@ -553,41 +594,8 @@
                     <option value="SATELLITE - CMEMS_BLK_NRT">SATELLITE - CMEMS_BLK_NRT</option>
                     <option value="SATELLITE - CMEMS_IBI_HROC">SATELLITE - CMEMS_IBI_HROC</option>
                     <option value="SATELLITE - CMEMS_MED_HROC">SATELLITE - CMEMS_MED_HROC</option>
-                    <option value="SATELLITE - CMEMS_MED_MYINT">SATELLITE - CMEMS_MED_MYINT</option>
-                    <option value="SATELLITE - CMEMS_MED_NRT">SATELLITE - CMEMS_MED_NRT</option>
                     <option value="SATELLITE - CMEMS_NWS_HROC">SATELLITE - CMEMS_NWS_HROC</option>
-                    <option value="SATELLITE - SENTINEL3-OLCI">SATELLITE - SENTINEL3-OLCI</option>
-                    <option value="INSITU - SEABASS">INSITU - SEABASS</option>
-                    <option value="INSITU - WATERHYPERNET">INSITU - WATERHYPERNET</option>
-                    <option value="INSITU - HYPER">INSITU - HYPER</option>
-                    <option value="INSITU - AERONET_OC_1">INSITU - AERONET_OC_1</option>
-                    <option value="INSITU - AERONET_OC_2">INSITU - AERONET_OC_2</option>
-                    <option value="INSITU - CLMS_OLCI">INSITU - CLMS_OLCI</option>
-                    <option value="INSITU - CLMS_MSI">INSITU - CLMS_MSI</option>
-                    <option value="INSITU - CMEMS_ARC_HROC">INSITU - CMEMS_ARC_HROC</option>
-                    <option value="INSITU - CMEMS_BAL_HROC">INSITU - CMEMS_BAL_HROC</option>
-                    <option value="INSITU - CMEMS_BAL_MYINT">INSITU - CMEMS_BAL_MYINT</option>
-                    <option value="INSITU - CMEMS_BAL_NRT">INSITU - CMEMS_BAL_NRT</option>
-                    <option value="INSITU - CMEMS_BLK_HROC">INSITU - CMEMS_BLK_HROC</option>
-                    <option value="INSITU - CMEMS_BLK_MYINT">INSITU - CMEMS_BLK_MYINT</option>
-                    <option value="INSITU - CMEMS_BLK_NRT">INSITU - CMEMS_BLK_NRT</option>
-                    <option value="INSITU - CMEMS_IBI_HROC">INSITU - CMEMS_IBI_HROC</option>
-                    <option value="INSITU - CMEMS_MED_HROC">INSITU - CMEMS_MED_HROC</option>
-                    <option value="INSITU - CMEMS_MED_MYINT">INSITU - CMEMS_MED_MYINT</option>
-                    <option value="INSITU - CMEMS_MED_NRT">INSITU - CMEMS_MED_NRT</option>
-                    <option value="INSITU - CMEMS_NWS_HROC">INSITU - CMEMS_NWS_HROC</option>
-                    <option value="INSITU - GOCI">INSITU - GOCI</option>
-                    <option value="INSITU - HAWKEYE">INSITU - HAWKEYE</option>
-                    <option value="INSITU - ENMAP">INSITU - ENMAP</option>
-                    <option value="INSITU - MERIS">INSITU - MERIS</option>
-                    <option value="INSITU - PACE">INSITU - PACE</option>
-                    <option value="INSITU - OCTS">INSITU - OCTS</option>
-                    <option value="INSITU - LANDSAT-8">INSITU - LANDSAT-8</option>
-                    <option value="INSITU - SeaWiFS">INSITU - SeaWiFS</option>
-                    <option value="INSITU - MODIS">INSITU - MODIS</option>
-                    <option value="INSITU - SENTINEL2-MSI">INSITU - SENTINEL2-MSI</option>
-                    <option value="INSITU - SENTINEL3-OLCI">INSITU - SENTINEL3-OLCI</option>
-                    <option value="INSITU - VIIRS">INSITU - VIIRS</option>
+                    <option value="SATELLITE - SENTINEL-3 OLCI">SATELLITE - SENTINEL-3 OLCI</option>
                 </param>
             </when>
             <when value="peri-conv">
