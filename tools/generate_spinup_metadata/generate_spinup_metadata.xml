@@ -112,11 +112,12 @@
   <!-- TESTS                                                                -->
   <!-- ================================================================== -->
   <tests>
-    <!-- Default column names -->
+    <!-- site_metadata_test.csv's real header uses 'start_date' / 'last_soc_date',
+         not the tool's own default column names 'begin_date' / 'end_date'. -->
     <test expect_num_outputs="1">
       <param name="input_metadata" value="site_metadata_test.csv" />
-      <param name="begin_date_col" value="begin_date" />
-      <param name="end_date_col" value="end_date" />
+      <param name="begin_date_col" value="start_date" />
+      <param name="end_date_col" value="last_soc_date" />
       <param name="api_source" value="geosas" />
       <param name="spinup_min_years" value="15" />
       <param name="spinup_target_years" value="30" />
@@ -124,8 +125,8 @@
     </test>
     <test expect_num_outputs="1">
       <param name="input_metadata" value="site_metadata_test.csv" />
-      <param name="begin_date_col" value="begin_date" />
-      <param name="end_date_col" value="end_date" />
+      <param name="begin_date_col" value="start_date" />
+      <param name="end_date_col" value="last_soc_date" />
       <param name="api_source" value="openmeteo" />
       <param name="spinup_min_years" value="15" />
       <param name="spinup_target_years" value="30" />

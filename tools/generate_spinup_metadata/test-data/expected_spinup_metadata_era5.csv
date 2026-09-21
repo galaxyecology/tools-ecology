@@ -1,4 +1,4 @@
-site_name,start_date,end_date,start_spinup,end_spinup,spinup_duration_yr,method_spinup,api_source
+site_name,begin_date,end_date,start_spinup,end_spinup,spinup_duration_yr,method_spinup,api_source
 auzeville,1975-01-01,2010-12-31,1945-01-01,1975-01-01,30,Climate normals computed from 1945 to 1975 (30 yr before the experiment),openmeteo
 doazit,1977-01-01,1989-12-31,1947-01-01,1977-01-01,30,Climate normals computed from 1947 to 1977 (30 yr before the experiment),openmeteo
 folleville,1989-01-01,2008-12-31,1959-01-01,1989-01-01,30,Climate normals computed from 1959 to 1989 (30 yr before the experiment),openmeteo
