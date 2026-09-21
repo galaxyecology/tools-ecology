@@ -1,13 +1,19 @@
-<tool id="generate_spinup_metadata" name="Generate Spin-up Climate Metadata" version="1.0.0" profile="22.01">
+<tool id="generate_spinup_metadata" name="Generate Spin-up Climate Metadata" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
 
   <description>Compute spin-up period dates for SOC model initialization from site metadata</description>
-
+    <macros>
+        <token name="@TOOL_VERSION@">1.0.0</token>
+        <token name="@VERSION_SUFFIX@">0</token>
+        <token name="@PROFILE@">25.1</token>
+    </macros>
   <requirements>
     <requirement type="package" version="4.3.1">r-base</requirement>
     <requirement type="package" version="1.7.5">r-optparse</requirement>
     <requirement type="package" version="2.0.0">r-tidyverse</requirement>
   </requirements>
-
+    <required_files>
+        <include path="generate_spinup_metadata.R"/>
+    </required_files>
   <command detect_errors="exit_code"><![CDATA[
     Rscript '$__tool_directory__/generate_spinup_metadata.R'
       --input_metadata '$input_metadata'
