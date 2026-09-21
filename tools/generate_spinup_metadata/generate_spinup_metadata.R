@@ -13,6 +13,7 @@
 library(optparse)
 library(tidyverse)
 library(lubridate)
+
 # =============================================================================
 # 1. Parse command-line arguments
 # =============================================================================
@@ -25,10 +26,10 @@ option_list <- list(
               help = "Minimum spin-up duration in years [default: 15]"),
   make_option("--spinup_target_years", type = "integer",   default = 30L,
               help = "Target spin-up duration in years [default: 30]"),
-  make_option("--begin_date_col",      type = "character", default = "begin_date",
-              help = "Name of the column holding the first SOC measurement date [default: begin_date]"),
-  make_option("--end_date_col",        type = "character", default = "end_date",
-              help = "Name of the column holding the last SOC measurement date [default: end_date]"),
+  make_option("--begin_date_col",      type = "integer",   default = 1L,
+              help = "1-based index of the column holding the first SOC measurement date [default: 1]"),
+  make_option("--end_date_col",        type = "integer",   default = 2L,
+              help = "1-based index of the column holding the last SOC measurement date [default: 2]"),
   make_option("--earliest_date",       type = "character", default = "1959-01-01",
               help = "Earliest date available in the reanalysis [default: 1959-01-01]"),
   make_option("--output_metadata",     type = "character",
@@ -44,16 +45,16 @@ api_source          <- tolower(trimws(opt$api_source))
 spinup_min_years    <- as.integer(opt$spinup_min_years)
 spinup_target_years <- as.integer(opt$spinup_target_years)
 earliest_date       <- ymd(opt$earliest_date)
-begin_date_col      <- opt$begin_date_col
-end_date_col        <- opt$end_date_col
+begin_date_col      <- as.integer(opt$begin_date_col)
+end_date_col        <- as.integer(opt$end_date_col)
 
 message("=== Generate Spin-up Climate Metadata ===")
 message("API source           : ", api_source)
 message("Earliest date        : ", earliest_date)
 message("Target spinup (yr)   : ", spinup_target_years)
 message("Minimum spinup (yr)  : ", spinup_min_years)
-message("Begin date column    : ", begin_date_col)
-message("End date column      : ", end_date_col)
+message("Begin date column    : column #", begin_date_col)
+message("End date column      : column #", end_date_col)
 
 # =============================================================================
 # 2. Read and validate site metadata
@@ -61,31 +62,37 @@ message("End date column      : ", end_date_col)
 message("\n[1/3] Reading site metadata ...")
 
 metadata_raw <- read_csv(opt$input_metadata, show_col_types = FALSE)
+n_cols <- ncol(metadata_raw)
 
-required_cols <- c("site_name", begin_date_col, end_date_col)
-missing_cols  <- setdiff(required_cols, colnames(metadata_raw))
-if (length(missing_cols) > 0) {
+if (!"site_name" %in% colnames(metadata_raw)) {
   stop(
-    "Missing required column(s) in input metadata: ",
-    paste(missing_cols, collapse = ", "), "\n",
-    "Columns found in the file: ",
-    paste(colnames(metadata_raw), collapse = ", "), "\n",
-    "Check that the 'First measurement date column' / 'Last measurement date column' ",
-    "parameters match your file's header exactly (case-sensitive), and that the file ",
-    "uses a comma as column separator."
+    "Missing required column 'site_name' in input metadata.\n",
+    "Columns found in the file: ", paste(colnames(metadata_raw), collapse = ", ")
   )
 }
 
-# Clean dates (longitude/latitude, if present, are simply not used by this
-# tool and are dropped further down — they are optional, as documented).
-# truncated = 2 allows bare years (e.g. 1985 → 1985-01-01)
-locations <- metadata_raw %>%
-  rename(begin_date = all_of(begin_date_col),
-         end_date   = all_of(end_date_col)) %>%
+if (begin_date_col < 1 || begin_date_col > n_cols ||
+    end_date_col   < 1 || end_date_col   > n_cols) {
+  stop(
+    "--begin_date_col and --end_date_col must be valid column numbers ",
+    "between 1 and ", n_cols, " (the input file has ", n_cols, " column(s))."
+  )
+}
+
+# Rename the two selected date columns to their canonical names by position.
+# Galaxy's column-selector parameters pass a 1-based column index, not a
+# column name. longitude/latitude, if present, are simply not used by this
+# tool and are dropped further down -- they are optional, as documented.
+# truncated = 2 allows bare years (e.g. 1985 -> 1985-01-01)
+locations <- metadata_raw
+colnames(locations)[begin_date_col] <- "begin_date"
+colnames(locations)[end_date_col]   <- "end_date"
+
+locations <- locations %>%
   mutate(
-    begin_date    = ymd(begin_date,    truncated = 2L),
-    end_date = ymd(end_date, truncated = 2L),
-    end_date      = ceiling_date(end_date, unit = "year") - days(1)
+    begin_date = ymd(begin_date, truncated = 2L),
+    end_date   = ymd(end_date,   truncated = 2L),
+    end_date   = ceiling_date(end_date, unit = "year") - days(1)
   )
 
 message("  Sites loaded: ", nrow(locations))

@@ -17,8 +17,8 @@
   <command detect_errors="exit_code"><![CDATA[
     Rscript '$__tool_directory__/generate_spinup_metadata.R'
       --input_metadata '$input_metadata'
-      --begin_date_col '$begin_date_col'
-      --end_date_col '$end_date_col'
+      --begin_date_col $begin_date_col
+      --end_date_col $end_date_col
       --api_source '$api_source'
       --spinup_min_years $spinup_min_years
       --spinup_target_years $spinup_target_years
@@ -36,51 +36,30 @@
            type="data"
            format="csv,tabular"
            label="Site metadata file"
-           help="CSV file describing the experimental sites. Must contain at least the two date
-                 columns (see 'First measurement date column' and 'Last measurement date column'
-                 below). Other columns (e.g. site_name, longitude, latitude) are preserved but not
-                 required by the spin-up computation." />
+           help="CSV file describing the experimental sites (see Help below for the expected format)." />
 
     <param name="begin_date_col"
-           type="text"
-           value="begin_date"
+           type="data_column"
+           data_ref="input_metadata"
+           use_header_names="true"
            label="First measurement date column"
-           help="Name of the column holding the date of the FIRST SOC measurement
-                 (year YYYY or date YYYYMMDD). Default: begin_date.">
-      <sanitizer invalid_char="">
-        <valid initial="string.letters,string.digits">
-          <add value="_" />
-          <add value="." />
-          <add value="-" />
-          <add value=" " />
-        </valid>
-      </sanitizer>
-      <validator type="empty_field" message="The first measurement date column name cannot be empty." />
+           help="Column holding the date of the first SOC measurement.">
+      <validator type="no_options" message="The selected input file has no columns to choose from." />
     </param>
 
     <param name="end_date_col"
-           type="text"
-           value="end_date"
+           type="data_column"
+           data_ref="input_metadata"
+           use_header_names="true"
            label="Last measurement date column"
-           help="Name of the column holding the date of the LAST SOC measurement
-                 (year YYYY or date YYYYMMDD). Default: end_date.">
-      <sanitizer invalid_char="">
-        <valid initial="string.letters,string.digits">
-          <add value="_" />
-          <add value="." />
-          <add value="-" />
-          <add value=" " />
-        </valid>
-      </sanitizer>
-      <validator type="empty_field" message="The last measurement date column name cannot be empty." />
+           help="Column holding the date of the last SOC measurement.">
+      <validator type="no_options" message="The selected input file has no columns to choose from." />
     </param>
 
     <param name="api_source"
            type="select"
            label="Target climate data source"
-           help="Indicates which reanalysis dataset will later be used to retrieve climate data.
-                 This controls the earliest available date used when clipping the spin-up start:
-                 1959-01-01 for GEOSAS/SAFRAN or 1940-01-01 for Open-Meteo/ERA5 (global).">
+           help="Reanalysis dataset used downstream; sets the earliest usable date.">
       <option value="geosas" selected="true">GEOSAS API — SAFRAN reanalysis (from 1959)</option>
       <option value="openmeteo">Open-Meteo API — ERA5 / ERA5-Land reanalysis (Global, from 1940)</option>
     </param>
@@ -91,9 +70,7 @@
            min="1"
            max="50"
            label="Minimum spin-up duration (years)"
-           help="Minimum number of years required before the first SOC measurement to define a
-                 pre-experiment spin-up period. Sites below this threshold will have their spin-up
-                 shifted to overlap the first N years of the experiment instead." />
+           help="Minimum pre-experiment years required to use them directly as spin-up." />
 
     <param name="spinup_target_years"
            type="integer"
@@ -101,8 +78,7 @@
            min="5"
            max="80"
            label="Target spin-up duration (years)"
-           help="Ideal length of the spin-up period in years. The effective duration may be
-                 shorter if the reanalysis dataset does not extend far enough back in time." />
+           help="Ideal length of the spin-up period, in years." />
 
   </inputs>
 
@@ -118,12 +94,12 @@
   <!-- TESTS                                                                -->
   <!-- ================================================================== -->
   <tests>
-    <!-- site_metadata_test.csv's real header uses 'start_date' / 'last_soc_date',
-         not the tool's own default column names 'begin_date' / 'end_date'. -->
+    <!-- In site_metadata_test.csv, "start_date" is column 5 and
+         "last_soc_date" is column 6. -->
     <test expect_num_outputs="1">
       <param name="input_metadata" value="site_metadata_test.csv" />
-      <param name="begin_date_col" value="start_date" />
-      <param name="end_date_col" value="last_soc_date" />
+      <param name="begin_date_col" value="5" />
+      <param name="end_date_col" value="6" />
       <param name="api_source" value="geosas" />
       <param name="spinup_min_years" value="15" />
       <param name="spinup_target_years" value="30" />
@@ -131,8 +107,8 @@
     </test>
     <test expect_num_outputs="1">
       <param name="input_metadata" value="site_metadata_test.csv" />
-      <param name="begin_date_col" value="start_date" />
-      <param name="end_date_col" value="last_soc_date" />
+      <param name="begin_date_col" value="5" />
+      <param name="end_date_col" value="6" />
       <param name="api_source" value="openmeteo" />
       <param name="spinup_min_years" value="15" />
       <param name="spinup_target_years" value="30" />
@@ -170,20 +146,19 @@ and therefore sets the earliest date from which data can be requested:
 
 **Input: Site metadata CSV**
 
-Comma-separated file. The tool only reads the two date columns; their names are configurable
-through the **First measurement date column** and **Last measurement date column** parameters
-(defaults: ``begin_date`` and ``end_date``). Any other columns are passed through untouched.
+Comma-separated file. The tool only reads two date columns, picked with the
+**First measurement date column** and **Last measurement date column** dropdowns, which are
+populated from the columns of the uploaded file. Any other columns are passed through untouched.
 
-+--------------------------------+-------------------------------------------------------------+
-| Column (configurable name)     | Description                                                 |
-+================================+=============================================================+
-| ``begin_date`` *(default)*     | Year (YYYY) or date (YYYYMMDD) of the first SOC measurement |
-+--------------------------------+-------------------------------------------------------------+
-| ``end_date`` *(default)*       | Year (YYYY) or date (YYYYMMDD) of the last SOC measurement  |
-+--------------------------------+-------------------------------------------------------------+
++---------------------------------+-------------------------------------------------------------+
+| Column (selected via dropdown)  | Description                                                 |
++==================================+=============================================================+
+| First measurement date column   | Year (YYYY) or date (YYYYMMDD) of the first SOC measurement |
++---------------------------------+-------------------------------------------------------------+
+| Last measurement date column    | Year (YYYY) or date (YYYYMMDD) of the last SOC measurement  |
++---------------------------------+-------------------------------------------------------------+
 
-If a column name given in the parameters is not found in the input file, the tool stops with
-an explicit error listing the missing column(s).
+A ``site_name`` column is also required in the input file.
 
 -----
 
@@ -230,8 +205,8 @@ One row per site:
 | ``api_source``            | Target reanalysis (``geosas`` or ``openmeteo``)          |
 +---------------------------+----------------------------------------------------------+
 
-Note: in the output, the two date columns are written back using the canonical names
-``begin_date`` and ``end_date`` regardless of the input column names.
+Note: in the output, the two date columns are always written back using the canonical names
+``begin_date`` and ``end_date``, regardless of which input columns were selected.
 
 -----
 
@@ -265,5 +240,10 @@ Note: in the output, the two date columns are written back using the canonical n
     <citation type="doi">10.21105/joss.01686</citation>
 
 </citations>
+
+  <creator>
+      <person givenName="Mathieu" familyName="Guimont" url="https://github.com/Mathmath34"/>
+      <organization name="ALAMOD" url="https://www.pepr-faircarbon.fr/projets/alamod/"/>
+  </creator>
 
 </tool>
