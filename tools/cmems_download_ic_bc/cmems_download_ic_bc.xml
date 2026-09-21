@@ -93,26 +93,26 @@
 	]]></help>
     <citations>
 		<citation type="doi">
-                        @misc{reanalysis,
-                        title={Mediterranean Sea Physics Reanalysis},
-                        author={{E.U. Copernicus Marine Service Information (CMEMS). Marine Data Store (MDS)}},
-                        doi={10.48670/mds-00375},
-			url={https://doi.org/10.48670/mds-00375}
-                        }
+            @misc{reanalysis,
+                title={Mediterranean Sea Physics Reanalysis},
+                author={{E.U. Copernicus Marine Service Information (CMEMS). Marine Data Store (MDS)}},
+                doi={10.48670/mds-00375},
+			    url={https://doi.org/10.48670/mds-00375}
+            }
         </citation>
 		<citation type="doi">
-                        @misc{forecast,
-                        title={Mediterranean Sea Physics Analysis and Forecasts},
-                        author={{E.U. Copernicus Marine Service Information (CMEMS). Marine Data Store (MDS)}},
-                        doi={10.48670/mds-00359},
-			url={https://doi.org/10.48670/mds-00359}
-                        }
+            @misc{forecast,
+                title={Mediterranean Sea Physics Analysis and Forecasts},
+                author={{E.U. Copernicus Marine Service Information (CMEMS). Marine Data Store (MDS)}},
+                doi={10.48670/mds-00359},
+			    url={https://doi.org/10.48670/mds-00359}
+            }
         </citation>
 		<citation type="bibtex"> 
 			@misc{netcdf4,
-			title={netcdf4},
-			author={Jeff Whitaker},
-			url={https://pypi.org/project/netCDF4/}
+			    title={netcdf4},
+			    author={Jeff Whitaker},
+			    url={https://pypi.org/project/netCDF4/}
 			}
         </citation>
     </citations>
