@@ -37,10 +37,10 @@
 
     <param name="begin_date_col"
            type="text"
-           value="start_date"
+           value="begin_date"
            label="First measurement date column"
            help="Name of the column holding the date of the FIRST SOC measurement
-                 (year YYYY or date YYYYMMDD). Default: start_date.">
+                 (year YYYY or date YYYYMMDD). Default: begin_date.">
       <sanitizer invalid_char="">
         <valid initial="string.letters,string.digits">
           <add value="_" />
@@ -235,7 +235,7 @@ Note: in the output, the two date columns are written back using the canonical n
 * Hersbach, H. et al. (2020). The ERA5 global reanalysis.
   *Quarterly Journal of the Royal Meteorological Society*, 146(730), 1999–2049.
   https://doi.org/10.1002/qj.3803
-* Open-Meteo API documentation: https://open-meteo.com/en/docs/era5-api
+* Open-Meteo API documentation: https://open-meteo.com/en/docs/historical-weather-api
 * GEOSAS API documentation: https://geosas.fr/web/?page_id=6345
 
   ]]></help>
