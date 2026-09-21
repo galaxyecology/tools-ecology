@@ -78,15 +78,33 @@
 			- `data_stream-oper_stepType-accum.nc` — accumulated variables  
 			- `data_stream-oper_stepType-instant.nc` — instantaneous variables
 
-		These files can be used as inputs for the AquaINFRA marine model tool..
+		These files can be used as inputs for the AquaINFRA marine model tool.
 	]]></help>
-    <citations>
-        <citation type="bibtex"> 
+	<citations>
+		<citation type="bibtex"> 
+			@misc{ccds,
+			title={ERA5 hourly data on single levels from 1940 to present},
+			author={{Copernicus Climate Change Service (C3S) Climate Data Store (CDS)}},
+			year={2023},
+			url={https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview}
+			}
+		</citation>
+		<citation type="bibtex">
+                        @misc{era5,
+                        title={{ERA5} hourly data on single levels from 1940 to present},
+                        author={Hersbach, H. and Bell, B. and Berrisford, P. and Biavati, G. and Horányi, A. and Muñoz Sabater, J. and Nicolas, J. and Peubey, C. and Radu, R. and Rozum, I. and Schepers, D. and Simmons, A. and Soci, C. and Dee, D. and Thépaut, J.-N.},
+			year={2023},
+			publisher={Copernicus Climate Change Service (C3S) Climate Data Store (CDS)},
+			doi={10.24381/cds.adbb2d47},
+			url={https://doi.org/10.24381/cds.adbb2d47}
+                        }
+		</citation>
+		<citation type="bibtex"> 
 			@misc{netcdf4,
 			title={netcdf4},
 			author={Jeff Whitaker},
 			url={https://pypi.org/project/netCDF4/}
 			}
         </citation>
-    </citations>
+	</citations>
 </tool>
