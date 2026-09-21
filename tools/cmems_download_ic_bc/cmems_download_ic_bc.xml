@@ -92,7 +92,7 @@
 		Outputs are a zip file containing different NetCDF (.nc) files: IC_cm_t.nc, IC_cm_sal.nc, IC_cm_cur.nc, OB{S/N/W/E}_cm_t.nc, OB{S/N/W/E}_cm_sal.nc, OB{S/N/W/E}_cm_cur.nc 
 	]]></help>
     <citations>
-		<citation type="bibtex">
+		<citation type="doi">
                         @misc{reanalysis,
                         title={Mediterranean Sea Physics Reanalysis},
                         author={{E.U. Copernicus Marine Service Information (CMEMS). Marine Data Store (MDS)}},
@@ -100,7 +100,7 @@
 			url={https://doi.org/10.48670/mds-00375}
                         }
         </citation>
-		<citation type="bibtex">
+		<citation type="doi">
                         @misc{forecast,
                         title={Mediterranean Sea Physics Analysis and Forecasts},
                         author={{E.U. Copernicus Marine Service Information (CMEMS). Marine Data Store (MDS)}},
