@@ -65,15 +65,8 @@ metadata_raw <- read_csv(opt$input_metadata, show_col_types = FALSE)
 required_cols <- c("site_name", begin_date_col, end_date_col)
 missing_cols  <- setdiff(required_cols, colnames(metadata_raw))
 if (length(missing_cols) > 0) {
-  stop(
-    "Missing required column(s) in input metadata: ",
-    paste(missing_cols, collapse = ", "), "\n",
-    "Columns found in the file: ",
-    paste(colnames(metadata_raw), collapse = ", "), "\n",
-    "Check that the 'First measurement date column' / 'Last measurement date column' ",
-    "parameters match your file's header exactly (case-sensitive), and that the file ",
-    "uses a comma as column separator."
-  )
+  stop("Missing required column(s) in input metadata: ",
+       paste(missing_cols, collapse = ", "))
 }
 
 # Clean dates (longitude/latitude, if present, are simply not used by this
