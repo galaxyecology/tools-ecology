@@ -3,7 +3,7 @@
 		Download data from the Copernicus Marine Service to provide as input to the AquaINFRA marine model. Products: Mediterranean Sea Physics Analysis and Forecast or Mediterranean Sea Physics Reanalysis, depending on the selected temporal period.
 	</description>
     <macros>
-        <token name="@TOOL_VERSION@">2.0.0</token>
+        <token name="@TOOL_VERSION@">2.0.1</token>
         <token name="@VERSION_SUFFIX@">1</token>
     </macros>
     <creator>
@@ -17,8 +17,10 @@
         <requirement type="package" version="5.2.37">bash</requirement>
         <requirement type="package" version="1.8.1">jq</requirement>
         <requirement type="package" version="1.7.3">netcdf4</requirement>
+        <requirement type="package" version="3.0">zip</requirement>
+        <requirement type="package" version="6.0">unzip</requirement>
         <requirement type="package" version="1.7.3">bc</requirement>
-        <credentials name="cmems_credentials" version="1.0" label="CMEMS Credentials" description="Credentials for accessing Copernicus Marine Service API.">
+		<credentials name="cmems_credentials" version="1.0" label="CMEMS Credentials" description="Credentials for accessing Copernicus Marine Service API.">
             <variable name="username" inject_as_env="CMEMS_USERNAME" optional="false" label="CMEMS Username" description="Your Copernicus Marine Service Username. Get it from your Copernicus account."/>
             <secret name="password" inject_as_env="CMEMS_PASSWORD" optional="false" label="CMEMS password" description="Your Copernicus Marine Service password."/>
         </credentials>
@@ -90,11 +92,13 @@
 		Outputs are a zip file containing different NetCDF (.nc) files: IC_cm_t.nc, IC_cm_sal.nc, IC_cm_cur.nc, OB{S/N/W/E}_cm_t.nc, OB{S/N/W/E}_cm_sal.nc, OB{S/N/W/E}_cm_cur.nc 
 	]]></help>
     <citations>
-        <citation type="bibtex"> 
+		<citation type="doi">10.48670/mds-00375</citation>
+		<citation type="doi">10.48670/mds-00359</citation>
+		<citation type="bibtex"> 
 			@misc{netcdf4,
-			title={netcdf4},
-			author={Jeff Whitaker},
-			url={https://pypi.org/project/netCDF4/}
+			    title={netcdf4},
+			    author={Jeff Whitaker},
+			    url={https://pypi.org/project/netCDF4/}
 			}
         </citation>
     </citations>

@@ -3,7 +3,7 @@
 		Download ERA5 data from the Copernicus Climate Data Store to provide as input to the AquaINFRA marine model. Products: ERA5 hourly data on single levels from 1940 to present, Reanalysis.
 	</description>
     <macros>
-        <token name="@TOOL_VERSION@">2.0.0</token>
+        <token name="@TOOL_VERSION@">2.0.1</token>
         <token name="@VERSION_SUFFIX@">1</token>
     </macros>
     <creator>
@@ -78,15 +78,24 @@
 			- `data_stream-oper_stepType-accum.nc` — accumulated variables  
 			- `data_stream-oper_stepType-instant.nc` — instantaneous variables
 
-		These files can be used as inputs for the AquaINFRA marine model tool..
+		These files can be used as inputs for the AquaINFRA marine model tool.
 	]]></help>
-    <citations>
-        <citation type="bibtex"> 
+	<citations>
+		<citation type="bibtex"> 
+			@misc{ccds,
+			title={ERA5 hourly data on single levels from 1940 to present},
+			author={{Copernicus Climate Change Service (C3S) Climate Data Store (CDS)}},
+			year={2023},
+			url={https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview}
+			}
+		</citation>
+		<citation type="doi">10.24381/cds.adbb2d47</citation>
+		<citation type="bibtex"> 
 			@misc{netcdf4,
-			title={netcdf4},
-			author={Jeff Whitaker},
-			url={https://pypi.org/project/netCDF4/}
+                title={netcdf4},
+                author={Jeff Whitaker},
+                url={https://pypi.org/project/netCDF4/}
 			}
         </citation>
-    </citations>
+	</citations>
 </tool>
