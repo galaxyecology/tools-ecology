@@ -89,16 +89,7 @@
 			url={https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview}
 			}
 		</citation>
-		<citation type="doi">
-            @misc{era5,
-                title={{ERA5} hourly data on single levels from 1940 to present},
-                author={Hersbach, H. and Bell, B. and Berrisford, P. and Biavati, G. and Horányi, A. and Muñoz Sabater, J. and Nicolas, J. and Peubey, C. and Radu, R. and Rozum, I. and Schepers, D. and Simmons, A. and Soci, C. and Dee, D. and Thépaut, J.-N.},
-                year={2023},
-                publisher={Copernicus Climate Change Service (C3S) Climate Data Store (CDS)},
-                doi={10.24381/cds.adbb2d47},
-                url={https://doi.org/10.24381/cds.adbb2d47}
-            }
-		</citation>
+		<citation type="doi">10.24381/cds.adbb2d47</citation>
 		<citation type="bibtex"> 
 			@misc{netcdf4,
                 title={netcdf4},
