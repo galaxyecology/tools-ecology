@@ -1,5 +1,10 @@
-<tool id="xmlstarlet" name="xmlstarlet" version="1.6.1">
+<tool id="xmlstarlet" name="xmlstarlet" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>convert a metadata XML file in one standard to another</description>
+    <macros>
+        <token name="@TOOL_VERSION@">1.6.1</token>
+        <token name="@VERSION_SUFFIX@">1</token>
+        <token name="@PROFILE@">25.1</token>
+    </macros>
     <requirements>
         <requirement type="package" version="1.6.1">xmlstarlet</requirement>
     </requirements>
@@ -8,18 +13,18 @@ xml tr '$xsl' '$input' > '$output'
     ]]>
     </command>
     <inputs>
-        <param name="input" type="data" format="xml" label="input xml file to convert" help="A xml file corresponding to a xsd schema you want to convert in another." />
-        <param name="xsl" type="data" format="xml" label="input xsl convertion file" help="A xsl file describing the mapping between a first xsd specification to another." />
+        <param name="input" type="data" format="xml" label="input xml file to convert" help="A xml file corresponding to a xsd schema you want to convert in another."/>
+        <param name="xsl" type="data" format="xml" label="input xsl convertion file" help="A xsl file describing the mapping between a first xsd specification to another."/>
     </inputs>
     <outputs>
-        <data name="output" format="xml" label="${tool.name} on ${on_string}: Converted xml" />
+        <data name="output" format="xml" label="${tool.name} on ${on_string}: Converted xml"/>
     </outputs>
     <tests>
         <!-- Ensure conversion works -->
         <test expect_num_outputs="1">
             <param name="input" value="input_standardiso19115.xml" ftype="xml"/>
             <param name="xsl" value="iso2eml_all_in_one.xsl" ftype="xml"/>
-            <output name="output" file="output_standardEML.xml" />
+            <output name="output" file="output_standardEML.xml"/>
         </test>
     </tests>
     <help>
@@ -42,13 +47,17 @@ A xml metadata file using a standard (for exemple EML, ISO19115,...) and a xsl f
 
 A xml metadata file using a new standard (for example ISO19115, EML, ...).
    </help>
-   <citations>
-       <citation type="bibtex">@ARTICLE{Kim07aninterior-point,
+    <citations>
+        <citation type="bibtex">@ARTICLE{Kim07aninterior-point,
        author = {Mikhail Grushinskiy},
        title = {XMLStarlet Command Line XML Toolkit},
        howpublished = "\url{http://xmlstar.sourceforge.net/}",
        year = {2021},
        note = "{online; accessed 08-November-2021}"
        }</citation>
-   </citations>
+    </citations>
+    <creator>
+        <person givenName="Yvan" familyName="Le Bras" url="https://orcid.org/0000-0002-8504-068X"/>
+        <organization name="PNDB" url="https://www.pndb.fr/pages/accueil/"/>
+    </creator>
 </tool>

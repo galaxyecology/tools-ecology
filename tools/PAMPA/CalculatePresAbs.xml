@@ -1,9 +1,17 @@
-<tool id="pampa_presabs" name="Calculate presence absence table" version="@VERSION@">
+<tool id="pampa_presabs" name="Calculate presence absence table" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>calculate presence absence table from observation data</description>
     <macros>
         <import>pampa_macros.xml</import>
     </macros>
+    <edam_topics>
+        <edam_topic>topic_0610</edam_topic>
+        <edam_topic>topic_3050</edam_topic>
+    </edam_topics>
     <expand macro="Pampa_requirements"/>
+    <required_files>
+        <include path="FunctExeCalcPresAbsGalaxy.r"/>
+        <include path="FunctPAMPAGalaxy.r"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript 
          '$__tool_directory__/FunctExeCalcPresAbsGalaxy.r' 
@@ -19,15 +27,11 @@
         <data name="output_presabs" from_work_dir="TabPresAbs.tabular" format="tabular"/>
     </outputs>
     <tests>
-        <test expect_num_outputs="1"> 
+        <test expect_num_outputs="1">
             <param name="input" value="ObservationsSansszcl_cropped.tabular"/>
-            <output name="output_presabs" value="Presence_absence_table_sansszcl_cropped.tabular"/>      
+            <output name="output_presabs" value="Presence_absence_table_sansszcl_cropped.tabular"/>
         </test>
     </tests>
-    <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
-    </edam_topics>
     <help><![CDATA[
 
 ====================================================
@@ -80,8 +84,9 @@ A tabular file with presence/absence at finest aggregation available (per observ
 
 **Source**
 
-Derived from PAMPA scripts (https://wwz.ifremer.fr/pampa/Meth.-Outils/Outils) written by Yves Reecht.
+Derived from PAMPA scripts (wwz.ifremer.fr/pampa/Meth.-Outils/Outils) written by Yves Reecht.
 
   ]]></help>
-  <expand macro="pampa_bibref" />
+    <expand macro="pampa_bibref"/>
+    <expand macro="creator"/>
 </tool>

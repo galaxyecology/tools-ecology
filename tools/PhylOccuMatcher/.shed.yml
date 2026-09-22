@@ -4,7 +4,7 @@ description: Tools to matches phylogenetic data with occupancy data.
 homepage_url: https://github.com/Morphy427/phylodiversity_workflow/PhylOccuMatcher
 long_description: |
   This tool matches phylogenetic data with occupancy data using a phylogeny file and an occupancy file.
-remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/Phylodiversity_workflow
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/PhylOccuMatcher
 type: unrestricted
 categories:
 - Ecology

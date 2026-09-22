@@ -1,9 +1,13 @@
-<tool id="gdal_gdalinfo" name="GDAL Informations" version="@VERSION@">
+<tool id="gdal_gdalinfo" name="GDAL Informations" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>lists information about a raster dataset</description>
     <macros>
         <import>gdal_macros.xml</import>
     </macros>
-    <expand macro="gdal_requirements" />
+    <edam_topics>
+        <edam_topic>topic_0610</edam_topic>
+        <edam_topic>topic_3050</edam_topic>
+    </edam_topics>
+    <expand macro="gdal_requirements"/>
     <command detect_errors="exit_code"><![CDATA[
         gdalinfo '$input1'
             #if $settings.advanced=='advanced'
@@ -33,7 +37,7 @@
             #end if
     ]]></command>
     <inputs>
-        <param type="data" name="input1" label="Gdal supported raster input file" format="tif,netcdf,tiff,vrt" help="Currently supported format are GTiff,VRT and netCDF."/>
+        <param type="data" name="input1" label="Gdal supported raster input file" format="tif,netcdf,tiff" help="Currently supported format are GTiff,VRT and netCDF."/>
         <param name="format" type="select" label="Output format" multiple="False">
             <option value="default" selected="true">Text</option>
             <option value="json">Json</option>
@@ -46,7 +50,7 @@
             <expand macro="gdal_advanced_params_select"/>
             <when value="advanced">
                 <param name="mm" type="boolean" truevalue="-mm" falsevalue="" checked="false" help="-mm" label="Force computation of the actual min/max values for each band in the dataset."/>
-                <expand macro="gdal_param_stats"/>                    
+                <expand macro="gdal_param_stats"/>
                 <param name="approx_stats" type="boolean" truevalue="-approx_stats" falsevalue="" checked="false" help="-approx_stats. However, they may be computed based on overviews or a subset of all tiles. Useful if you are in a hurry and don't want precise stats." label="Read and display image statistics."/>
                 <param name="hist" type="boolean" truevalue="-hist" falsevalue="" checked="false" help="-hist" label="Report histogram information for all bands."/>
                 <param name="nogcp" type="boolean" truevalue="-nogcp" falsevalue="" checked="false" help="-nogcp" label="Suppress ground control points list printing."/>
@@ -55,10 +59,10 @@
                 <param name="noct" type="boolean" truevalue="-noct" falsevalue="" checked="false" help="-noct" label="Suppress printing of color table."/>
                 <param name="checksum" type="boolean" truevalue="-checksum" falsevalue="" checked="false" help="-checksum" label="Force computation of the checksum for each band in the dataset."/>
                 <param name="listmdd" type="boolean" truevalue="-listmdd" falsevalue="" checked="false" help="-listmdd" label="List all metadata domains available for the dataset."/>
-                <param name="proj4" type="boolean" truevalue="-proj4" falsevalue="" checked="false" help="-proj4 String corresponding to the file's coordinate system" label="Report a PROJ.4 string."/> 
+                <param name="proj4" type="boolean" truevalue="-proj4" falsevalue="" checked="false" help="-proj4 String corresponding to the file's coordinate system" label="Report a PROJ.4 string."/>
                 <param name="mdd" type="text" help="-mdd DOMAIN" label="Report metadata for the specified domain." value="all">
                     <validator type="expression" message="mdd option can't be an empty value">value.strip()</validator>
-                </param>    
+                </param>
             </when>
         </conditional>
     </inputs>
@@ -74,29 +78,29 @@
         </data>
     </outputs>
     <tests>
-        <test>
+        <test expect_num_outputs="1">
             <param name="input1" value="stere.tif"/>
-            <param name="format" value="json" />
-            <param name="subdataset" value="subd_n" />
-            <param name="advanced" value="simple"/>
+            <param name="format" value="json"/>
+            <param name="subdataset" value="subd_n"/>
+            <conditional name="settings">
+                <param name="advanced" value="simple"/>
+            </conditional>
             <output name="outputJson" file="stere_info.json" lines_diff="4"/>
         </test>
-        <test>
+        <test expect_num_outputs="1">
             <param name="input1" value="stere.tif"/>
-            <param name="format" value="default" />
-            <param name="subdataset" value="subd_n" />
-            <param name="advanced" value="advanced"/>
-            <param name="stats" value="-stats"/>
-            <param name="hist" value="-hist"/>
-            <param name="checksum" value="-checksum"/>
-            <param name="mdd" value="all"/>
+            <param name="format" value="default"/>
+            <param name="subdataset" value="subd_n"/>
+            <conditional name="settings">
+                <param name="advanced" value="advanced"/>
+                <param name="stats" value="-stats"/>
+                <param name="hist" value="-hist"/>
+                <param name="checksum" value="-checksum"/>
+                <param name="mdd" value="all"/>
+            </conditional>
             <output name="outputDefault" file="stere_advanced_info.txt" lines_diff="6"/>
         </test>
     </tests>
-    <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
-    </edam_topics>
     <help><![CDATA[
 ==========================
 Gdalinfo
@@ -148,4 +152,5 @@ Raster Processing Tutorial : https://trac.osgeo.org/gdal/wiki/UserDocs/RasterPro
 
     ]]></help>
     <expand macro="gdal_citation"/>
+    <expand macro="creator"/>
 </tool>

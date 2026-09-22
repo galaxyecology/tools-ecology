@@ -1,18 +1,20 @@
-<tool id="effective_population_size_ld_method" name="LDNe estimation" version="0.2.2" profile="25.0">
+<tool id="effective_population_size_ld_method" name="LDNe estimation" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="25.0">
     <description>
         using RLDNe package and NeEstimator.
     </description>
-    <requirements>  
+    <macros>
+        <token name="@TOOL_VERSION@">0.2.2</token>
+        <token name="@VERSION_SUFFIX@">1</token>
+    </macros>
+    <requirements>
         <requirement type="package" version="4.5">r-base</requirement>
         <requirement type="package" version="0.1.0">r-efglmh</requirement>
         <requirement type="package" version="1.0.0">r-rldne</requirement>
         <requirement type="package" version="1.1.4">r-dplyr</requirement>
     </requirements>
-
     <required_files>
-        <include path="RLDNe.R" />
+        <include path="RLDNe.R"/>
     </required_files>
-
     <command detect_errors="exit_code"><![CDATA[
         mkdir -p results_LDNe genfiles summary_file pop_order bin_local &&
         ## Give execution permissions to the RLDNe package executable
@@ -58,105 +60,55 @@
                 #end if
             #end if
     ]]> </command>
-
     <inputs>
-        <param name="input_data" type="data" format="txt" label="Upload your genepop file" multiple="true"
-            help="Each file must contain a single population. You can upload a simple file, multiple file or dataset collection."/>
-
-        <param name="indpop" type="data" format="tabular,txt" label="Upload your population file"
-            help="File containing individuals in the first column and their population in the second, separated by a tabulation character."/>
-
-        <param name="marker_type" type="select" label="Marker type"
-            help="Type of genetic marker used (SNPs, microsatellites (SSR)). This value is reported in the output table.">
+        <param name="input_data" type="data" format="txt" label="Upload your genepop file" multiple="true" help="Each file must contain a single population. You can upload a simple file, multiple file or dataset collection."/>
+        <param name="indpop" type="data" format="tabular,txt" label="Upload your population file" help="File containing individuals in the first column and their population in the second, separated by a tabulation character."/>
+        <param name="marker_type" type="select" label="Marker type" help="Type of genetic marker used (SNPs, microsatellites (SSR)). This value is reported in the output table.">
             <option value="SNP">SNP</option>
             <option value="SSR">SSR</option>
         </param>
-
-        <param name="n_critical_values" type="integer" value="3" min="1" label="Number of critical frequency thresholds"
-            help="Number of minimum allele frequency (MAF) thresholds to apply. Must match the number of values provided in the 'Critical frequencies values' field below."/>
-
-        <param name="critical_freqs" type="text" value="0.02 0.05 1" label="Critical allele frequencies (MAF)"
-            help="Space-separated list of minimum frequencies (e.g. 0.01 0.02 0.05). Alleles below these values are ignored."/>
-
+        <param name="n_critical_values" type="integer" value="3" min="1" label="Number of critical frequency thresholds" help="Number of minimum allele frequency (MAF) thresholds to apply. Must match the number of values provided in the 'Critical frequencies values' field below."/>
+        <param name="critical_freqs" type="text" value="0.02 0.05 1" label="Critical allele frequencies (MAF)" help="Space-separated list of minimum frequencies (e.g. 0.01 0.02 0.05). Alleles below these values are ignored."/>
         <param name="confidence_intervals" type="select" label="Confidence intervals">
             <option value="1">1 = Compute Jackknife confidence intervals</option>
             <option value="0">0 = Do not compute confidence intervals</option>
         </param>
-
         <param name="mating_system" type="select" label="Maiting system">
             <option value="0">0: Random mating</option>
             <option value="1">1: Monogamy</option>
         </param>
-
-        <param name="max_individuals" type="integer" value="0" min="0" label="Maximum number of individuals per population."
-            help="Maximum number of individuals to process per population. Use 0 for no limit." />
-
-        <param name="pop_range" type="text" label="Population range to run"
-            help="Specify the range of populations to process as a pair of integers (e.g., '1 5' to process populations 1 through 5). Set the first value to '0' to process all populations found in the file."/>
-        
-        <param name="loc_range" type="text" label="Loci range to run"
-            help="Specify the range of loci (genetic markers) to include in the analysis as a pair of integers (e.g., '1 100'). Setting the first value to '0' includes all loci present in the dataset."/>
-    
+        <param name="max_individuals" type="integer" value="0" min="0" label="Maximum number of individuals per population." help="Maximum number of individuals to process per population. Use 0 for no limit."/>
+        <param name="pop_range" type="text" label="Population range to run" help="Specify the range of populations to process as a pair of integers (e.g., '1 5' to process populations 1 through 5). Set the first value to '0' to process all populations found in the file."/>
+        <param name="loc_range" type="text" label="Loci range to run" help="Specify the range of loci (genetic markers) to include in the analysis as a pair of integers (e.g., '1 100'). Setting the first value to '0' includes all loci present in the dataset."/>
         <section name="correction" title="Pseudoreplication correction (optional)" expanded="false">
-            <param name="apply_correction" type="boolean" truevalue="TRUE" falsevalue="FALSE" checked="false"
-                label="Apply pseudoreplication correction?"/>
-            <param name="nb_chrom" type="integer" min="1" optional="true"
-                label="Number of chromosomes"
-                help="Required when correction is enabled"/>
+            <param name="apply_correction" type="boolean" truevalue="TRUE" falsevalue="FALSE" checked="false" label="Apply pseudoreplication correction?"/>
+            <param name="nb_chrom" type="integer" min="1" optional="true" label="Number of chromosomes" help="Required when correction is enabled"/>
         </section>
-
         <section name="cohort_sampling" title="Cohort sampling settings (optional)" expanded="false">
-            <param name="sampling_scheme" type="select"
-                label="Sampling scheme"
-                help="Specify whether sampled individuals belong to a single cohort or to a mixture of cohorts.">
-
+            <param name="sampling_scheme" type="select" label="Sampling scheme" help="Specify whether sampled individuals belong to a single cohort or to a mixture of cohorts.">
                 <option value="single_cohort">Single cohort</option>
                 <option value="mixed_cohorts">Mixed cohorts</option>
             </param>
-
-            <param name="adult_lifespan" type="integer" min="1" optional="true"
-                label="Adult lifespan"
-                help="Average adult lifespan of the species, expressed in years or generations depending on the study design."/>
-
-            <param name="age_at_maturity" type="integer" min="1" optional="true"
-                label="Single cohort : Age at maturity"
-                help="Age at sexual maturity of the species."/>
-
-            <param name="use_cvf" type="boolean"
-                truevalue="TRUE" falsevalue="FALSE" checked="false" optional="true"
-                label="Single cohort : Do you know the coefficient of variation of breeding for adult lifespan ?"
-                help="Coefficient of variation of bx (mean number of offspring produced at age x) for adult lifespan (using only ages with bx>0)."/>
-
-            <param name="variation_coefficient_bx" type="float" optional="true"
-                label="Single cohort : Coefficient of variation of breeding"
-                help="Required if the above option is checked. Coefficient of variation of bx (mean number of offspring produced at age x) for adult lifespan (using only ages with bx>0)."/>
+            <param name="adult_lifespan" type="integer" min="1" optional="true" label="Adult lifespan" help="Average adult lifespan of the species, expressed in years or generations depending on the study design."/>
+            <param name="age_at_maturity" type="integer" min="1" optional="true" label="Single cohort : Age at maturity" help="Age at sexual maturity of the species."/>
+            <param name="use_cvf" type="boolean" truevalue="TRUE" falsevalue="FALSE" checked="false" optional="true" label="Single cohort : Do you know the coefficient of variation of breeding for adult lifespan ?" help="Coefficient of variation of bx (mean number of offspring produced at age x) for adult lifespan (using only ages with bx&gt;0)."/>
+            <param name="variation_coefficient_bx" type="float" optional="true" label="Single cohort : Coefficient of variation of breeding" help="Required if the above option is checked. Coefficient of variation of bx (mean number of offspring produced at age x) for adult lifespan (using only ages with bx&gt;0)."/>
         </section>
-
         <section name="harmonic" title="Harmonic mean across subsamples (optional)" expanded="false">
- 
-            <param name="apply_harmonic" type="boolean"
-                truevalue="TRUE" falsevalue="FALSE" checked="false"
-                label="Compute harmonic mean across subsamples?"
-                help="Applied automatically to all numeric Ne columns present (ex. NeLD, confidence intervals, or NeLD_corrected)."/>
- 
-            <param name="maf_harmonic" type="text" value="1"
-                label="MAF filter(s) for harmonic mean (space-separated)"
-                help="E.g. '1' or '0.02 0.05 1'.">
+            <param name="apply_harmonic" type="boolean" truevalue="TRUE" falsevalue="FALSE" checked="false" label="Compute harmonic mean across subsamples?" help="Applied automatically to all numeric Ne columns present (ex. NeLD, confidence intervals, or NeLD_corrected)."/>
+            <param name="maf_harmonic" type="text" value="1" label="MAF filter(s) for harmonic mean (space-separated)" help="E.g. '1' or '0.02 0.05 1'.">
       </param>
-
         </section>
     </inputs>
-
     <outputs>
         <collection name="result_table" type="list" label="${tool.name}: Raw file from NeEstimator">
             <discover_datasets pattern="(?P&lt;designation&gt;.+)\.txt$" directory="results_LDNe" format="txt"/>
         </collection>
-        <data name="summary_table" from_work_dir="summary_file/LDNe_results.txt" format="tabular" label="Extract LDNe results" />
+        <data name="summary_table" from_work_dir="summary_file/LDNe_results.txt" format="tabular" label="Extract LDNe results"/>
         <data name="summ_harmonic_mean" from_work_dir="summary_file/LDNe_harmonic_mean.txt" format="tabular" label="Extract LDNe results (harmonic mean)">
             <filter>harmonic['apply_harmonic']</filter>
         </data>
     </outputs>
-
     <tests>
         <test expect_num_outputs="3">
             <param name="input_data" value="genepop_SNPs_test.txt"/>
@@ -180,8 +132,6 @@
             <section name="cohort_sampling">
                 <param name="sampling_scheme" value="mixed_cohorts"/>
             </section>
-
-            
             <output_collection name="result_table" type="list" count="1">
                 <element name="genepop_SNPs_test_LDNe_results">
                     <assert_contents>
@@ -197,7 +147,6 @@
                     <has_line_matching expression="Dataset\tPop\tMarker_type\tSubset\tloci\tPolymorphic_loci\tMAF\tNeLD\tJK_CI_down\tJK_CI_up\tOverall_LD_r2\tExpected_LD_r2\tNeLD_corrected_pseudorep\tJK_CI_down_pseudorep\tJK_CI_up_pseudorep"/>
                 </assert_contents>
             </output>
-
             <output name="summ_harmonic_mean" ftype="tabular">
                 <assert_contents>
                     <has_n_columns n="13"/>
@@ -206,7 +155,6 @@
                 </assert_contents>
             </output>
         </test>
-
         <test expect_num_outputs="3">
             <param name="input_data" value="genepop_SNPs_test.txt"/>
             <param name="indpop" value="test_pop_ldne.txt"/>
@@ -228,8 +176,6 @@
             <section name="cohort_sampling">
                 <param name="sampling_scheme" value="mixed_cohorts"/>
             </section>
-
-            
             <output_collection name="result_table" type="list" count="1">
                 <element name="genepop_SNPs_test_LDNe_results">
                     <assert_contents>
@@ -238,7 +184,6 @@
                     </assert_contents>
                 </element>
             </output_collection>
-
             <output name="summary_table" ftype="tabular">
                 <assert_contents>
                     <has_n_columns n="12"/>
@@ -246,7 +191,6 @@
                     <has_line_matching expression="Dataset\tPop\tMarker_type\tSubset\tloci\tPolymorphic_loci\tMAF\tNeLD\tJK_CI_down\tJK_CI_up\tOverall_LD_r2\tExpected_LD_r2"/>
                 </assert_contents>
             </output>
-
             <output name="summ_harmonic_mean" ftype="tabular">
                 <assert_contents>
                     <has_n_columns n="10"/>
@@ -255,7 +199,6 @@
                 </assert_contents>
             </output>
         </test>
-
         <test expect_num_outputs="2">
             <param name="input_data" value="genepop_SNPs_test.txt"/>
             <param name="indpop" value="test_pop_ldne.txt"/>
@@ -276,7 +219,6 @@
             <section name="cohort_sampling">
                 <param name="sampling_scheme" value="mixed_cohorts"/>
             </section>
-            
             <output_collection name="result_table" type="list" count="1">
                 <element name="genepop_SNPs_test_LDNe_results">
                     <assert_contents>
@@ -285,7 +227,6 @@
                     </assert_contents>
                 </element>
             </output_collection>
-
             <output name="summary_table" ftype="tabular">
                 <assert_contents>
                     <has_n_columns n="12"/>
@@ -294,7 +235,6 @@
                 </assert_contents>
             </output>
         </test>
-
         <test expect_num_outputs="2">
             <param name="input_data" value="genepop_SSR_Nb.txt"/>
             <param name="indpop" value="test_pop_SSR_nb.txt"/>
@@ -318,8 +258,7 @@
                 <param name="adult_lifespan" value="5"/>
                 <param name="age_at_maturity" value="2"/>
                 <param name="use_cvf" value="FALSE"/>
-            </section>          
-         
+            </section>
             <output_collection name="result_table" type="list" count="1">
                 <element name="genepop_SSR_Nb_LDNe_results">
                     <assert_contents>
@@ -328,7 +267,6 @@
                     </assert_contents>
                 </element>
             </output_collection>
-
             <output name="summary_table" ftype="tabular">
                 <assert_contents>
                     <has_n_columns n="18"/>
@@ -337,7 +275,6 @@
                 </assert_contents>
             </output>
         </test>
-        
     </tests>
     <help><![CDATA[
 Usage
@@ -472,9 +409,7 @@ Population file (.tabular or .txt)
 **Warning:** The values differ from those estimated in Windows.
 
     ]]></help>
-
     <citations>
-
         <citation type="bibtex">
         @misc{RLDNe,
   title        = {RLDNe: A Convenient R Interface For NeEstimator V2.1},
@@ -488,10 +423,12 @@ Population file (.tabular or .txt)
   license      = {GPL-2}
 }
         </citation>
-
         <citation type="doi">10.1111/1755-0998.12157</citation>
         <citation type="doi">10.32614/CRAN.package.dplyr</citation>
         <citation type="doi">10.1111/mec.13814</citation>
         <citation type="doi">10.1098/rspb.2013.1339</citation>
     </citations>
+    <creator>
+        <organization name="PNDB" url="https://www.pndb.fr/pages/accueil/"/>
+    </creator>
 </tool>

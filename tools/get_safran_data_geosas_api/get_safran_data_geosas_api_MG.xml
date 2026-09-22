@@ -1,0 +1,305 @@
+<tool id="get_safran_data_geosas_api" name="SAFRAN Climate Data Extractor" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="25.1">
+    <description>Download SAFRAN daily climate reanalysis data from the GEOSAS OGC-EDR API (France, 1958–present)</description>
+    <macros>
+        <token name="@TOOL_VERSION@">4.0.0</token>
+        <token name="@VERSION_SUFFIX@">1</token>
+    </macros>
+    <!-- ════════════════════════════════════════════════════════════════════
+         REQUIREMENTS
+         ════════════════════════════════════════════════════════════════════ -->
+    <requirements>
+        <requirement type="package" version="1.1.3">geopandas</requirement>
+        <requirement type="package" version="2.33.1">requests</requirement>
+        <requirement type="package" version="2.1.2">shapely</requirement>
+        <requirement type="package" version="3.1.5">openpyxl</requirement>
+        <requirement type="package" version="3.0.2">pandas</requirement>
+        <requirement type="package" version="2026.4.0">xarray</requirement>
+    </requirements>
+    <required_files>
+        <include path="safran_extract.py"/>
+    </required_files>
+    <!-- ════════════════════════════════════════════════════════════════════
+         COMMAND
+         ════════════════════════════════════════════════════════════════════ -->
+    <command detect_errors="exit_code"><![CDATA[
+        python '$__tool_directory__/safran_extract.py'
+
+        ## ── Climate parameters ─────────────────────────────────────────────
+        --parameters
+        #for $param in $climate_parameters
+            '${param}'
+        #end for
+
+        --coord-format '$coord_file.ext'
+
+        ## ── Date range ─────────────────────────────────────────────────────
+        #if str($date_range.start_date).strip() != ''
+            --start-date '${date_range.start_date}'
+        #end if
+        #if str($date_range.end_date).strip() != ''
+            --end-date '${date_range.end_date}'
+        #end if
+
+        ## ── Coordinate file ────────────────────────────────────────────────
+        --coord-file '$coord_file'
+
+        ## ── Coordinate reference system ────────────────────────────────────
+        --epsg $epsg
+
+        ## ── Output format ──────────────────────────────────────────────────
+        --format '$output_format'
+
+        ## ── Output path (managed by Galaxy) ────────────────────────────────
+        --output '$output'
+
+    ]]></command>
+    <!-- ════════════════════════════════════════════════════════════════════
+         INPUTS
+         ════════════════════════════════════════════════════════════════════ -->
+    <inputs>
+        <!-- ── 1. Climate parameters (liste chargée dynamiquement depuis l'API GéoSAS) ── -->
+        <param name="climate_parameters" type="select" multiple="true" label="Climate variables to download" help="Select one or more SAFRAN daily variables. The list is fetched live                      from the GéoSAS API — it reflects the variables actually available                      at query time. Hold Ctrl (Windows/Linux) or Cmd (macOS) to select                      multiple items.">
+            <options from_url="https://api.geosas.fr/edr/collections/safran-isba/">
+                <postprocess_expression type="ecma5.1"><![CDATA[${
+                    return Object.keys(inputs.parameter_names).map(function(k) {
+                        return [k + " — " + inputs.parameter_names[k].description, k, false];
+                    });
+                }]]></postprocess_expression>
+            </options>
+            <validator type="no_options" message="Unable to retrieve the parameter list from the GéoSAS API.                                 Please check your network connection and try again."/>
+        </param>
+        <!-- ── 2. Date range ───────────────────────────────────────────────── -->
+        <section name="date_range" title="Date range" expanded="true">
+            <param name="start_date" type="text" value="" optional="true" label="Start date (YYYY-MM-DD)" help="First day of the extraction period.                          Cannot be before 1958-08-01 (oldest SAFRAN record).                          Leave blank only if the coordinate file already contains                          a 'begin_date' column; otherwise required.                          Default fallback: 1960-01-01.                          Format is validated by the tool (YYYY-MM-DD required).">
+                <validator type="regex" message="Date must be in YYYY-MM-DD format (or left blank).">^$|^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$</validator>
+            </param>
+            <param name="end_date" type="text" value="" optional="true" label="End date (YYYY-MM-DD)" help="Last day of the extraction period (inclusive).                          SAFRAN is updated monthly; data up to near-present is available.                          Leave blank only if the coordinate file already contains                          an 'end_date' column; otherwise required.                          Default fallback: 2020-12-31.                          Format is validated by the tool (YYYY-MM-DD required).">
+                <validator type="regex" message="Date must be in YYYY-MM-DD format (or left blank).">^$|^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$</validator>
+            </param>
+        </section>
+        <!-- ── 3. Coordinate / geometry file ──────────────────────────────── -->
+        <param name="coord_file" type="data" format="csv,tabular,xlsx,shp,geojson" label="Coordinate / geometry file" help="File describing the location(s) to query (CSV, TSV, Excel, Shapefile, or GeoJSON). Geometry type and required columns are detected automatically — see the help below for details."/>
+        <!-- ── 4. EPSG code ────────────────────────────────────────────────── -->
+        <param name="epsg" type="integer" value="4326" label="EPSG code of the coordinates" help="Coordinate reference system of the input geometries.                      Check the help section for more information                      If unsure, use 4326 and provide decimal-degree coordinates."/>
+        <!-- ── 5. Output format ────────────────────────────────────────────── -->
+        <param name="output_format" type="select" value="CSV" label="Output file format" help="Format of the downloaded climate data.                       CSV          — Tabular; easy to open in R, Python, or Excel.                      CoverageJSON — OGC CoverageJSON with spatial metadata.                      netCDF4      — Gridded format. Recommended for polygon / large queries.                      parquet      — Columnar binary. Only for POINT / LINESTRING inputs.">
+            <option value="CSV" selected="true">CSV (.csv)</option>
+            <option value="CoverageJSON">CoverageJSON (.json)</option>
+            <option value="netCDF4">NetCDF-4 (.nc)</option>
+            <option value="parquet">Parquet (.parquet) — /position only</option>
+        </param>
+        <!-- DISABLED verbose param – uncomment to re-enable
+              <param name="verbose"
+                    type="boolean"
+                    checked="false"
+                    truevalue="VERBOSE"
+                    falsevalue=""
+                    label="Verbose logging"
+                    help="Enable detailed (DEBUG-level) logging in the job output log.
+                          Useful for diagnosing slow or failing requests." />
+      -->
+    </inputs>
+    <!-- ════════════════════════════════════════════════════════════════════
+         OUTPUTS
+         ════════════════════════════════════════════════════════════════════ -->
+    <outputs>
+        <data name="output" format="csv" label="SAFRAN ${output_format} on ${on_string}">
+            <change_format>
+                <when input="output_format" value="CoverageJSON" format="json"/>
+                <when input="output_format" value="netCDF4" format="netcdf"/>
+                <when input="output_format" value="parquet" format="parquet"/>
+            </change_format>
+        </data>
+    </outputs>
+    <!-- ════════════════════════════════════════════════════════════════════
+         TESTS
+         ════════════════════════════════════════════════════════════════════ -->
+    <tests>
+        <!-- Test 1: single point, CSV coordinate file, CSV output.
+             Content is checked via assertions rather than diffed against a
+             frozen reference file, since the underlying data source is
+             updated monthly. -->
+        <test expect_num_outputs="1">
+            <param name="climate_parameters" value="T_Q,ETP_Q"/>
+            <section name="date_range">
+                <param name="start_date" value="1990-01-01"/>
+                <param name="end_date" value="1990-01-31"/>
+            </section>
+            <param name="coord_file" value="test_single_point.csv" ftype="csv"/>
+            <param name="epsg" value="4326"/>
+            <param name="output_format" value="CSV"/>
+            <output name="output" ftype="csv">
+                <assert_contents>
+                    <has_n_columns n="7" sep=","/>
+                    <has_text text="site_id"/>
+                    <has_text text="site_name"/>
+                    <has_text text="T_Q"/>
+                    <has_text text="ETP_Q"/>
+                    <has_text text="montpellier"/>
+                    <!-- site_id is a 0-based sequential integer (row order),
+                         followed by the normalized 'site_name' column. -->
+                    <has_line_matching expression="^0,montpellier,43\.6047,3\.8722,1990-01-0[1-9],.*"/>
+                </assert_contents>
+            </output>
+        </test>
+        <!-- Test 2: single point, TABULAR (tab-separated) coordinate file,
+             CSV output. Exercises the 'tabular' branch of coordinate-file
+             parsing (a different Galaxy datatype / delimiter than test 1) -->
+        <test expect_num_outputs="1">
+            <param name="climate_parameters" value="T_Q,ETP_Q"/>
+            <section name="date_range">
+                <param name="start_date" value="1990-01-01"/>
+                <param name="end_date" value="1990-01-31"/>
+            </section>
+            <param name="coord_file" value="test_single_point.tabular" ftype="tabular"/>
+            <param name="epsg" value="4326"/>
+            <param name="output_format" value="CSV"/>
+            <output name="output" ftype="csv">
+                <assert_contents>
+                    <has_n_columns n="7" sep=","/>
+                    <has_text text="site_id"/>
+                    <has_text text="site_name"/>
+                    <has_text text="T_Q"/>
+                    <has_text text="ETP_Q"/>
+                    <has_text text="rennes"/>
+                    <has_line_matching expression="^0,rennes,48\.1173,-1\.6778,1990-01-0[1-9],.*"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <!-- ════════════════════════════════════════════════════════════════════
+         HELP
+         ════════════════════════════════════════════════════════════════════ -->
+    <help><![CDATA[
+
+.. class:: infomark
+
+**What this tool does**
+
+Downloads daily **SAFRAN** climate reanalysis data from the **GEOSAS OGC-EDR API**
+(INRAE, Rennes) for one or more locations in metropolitan France, defined via a
+coordinate or geometry file.
+
+**More details on EPSG code of the coordinates**
+The GEOSAS API re-projects internally. 
+Most common values:
+- 4326  — WGS84 geographic, decimal degrees (default)
+- 2154  — RGF93 / Lambert-93 (France, metric)
+- 32631 — WGS84 / UTM zone 31N (metric)
+----
+
+**The GEOSAS OGC-EDR API**
+
+The service implements the OGC **Environmental Data Retrieval** (EDR) v1.1 standard:
+
+    https://api.geosas.fr/edr/collections/safran-isba/
+
+It exposes exactly two query endpoints:
+
++------------+---------------------------------------------+---------------------+
+| Endpoint   | Used for                                    | Key parameter       |
++============+=============================================+=====================+
+| /position  | POINT, MULTIPOINT, LINESTRING               | ``coords=WKT``      |
++------------+---------------------------------------------+---------------------+
+| /cube      | Bounding box (POLYGON or bbox column)       | ``bbox=x1,y1,x2,y2``|
++------------+---------------------------------------------+---------------------+
+
+----
+
+**Geometry routing (automatic)**
+
+The geometry type in your file is detected automatically:
+
+* **POINT** (lat/lon columns) → ``/position``
+* **LINESTRING** (WKT column) → ``/position`` (vertices extracted as MULTIPOINT)
+* **POLYGON** (WKT column) → ``/cube`` (bounding box of the polygon extracted)
+* **bbox column** ("minx,miny,maxx,maxy" string) → ``/cube``
+
+Per-row ``begin_date`` / ``end_date`` columns override the global date range.
+
+----
+ 
+**Required columns for CSV / Excel input**
+ 
+* **POINT** — a ``latitude`` (or ``lat``) column and a ``longitude`` (or ``lon``) column.
+* **POLYGON / LINESTRING** — a ``geometry`` or ``wkt`` column containing WKT text.
+ 
+Optional ``begin_date`` / ``end_date`` columns (``YYYY-MM-DD``) override the global
+date range for each individual row.
+ 
+----
+
+**Available climate variables**
+
+The list of available variables is fetched live from the GéoSAS API at form-load
+time. Each variable is shown as ``CODE — description`` in the selector above.
+For the current full list with units, see:
+
+    https://api.geosas.fr/edr/collections/safran-isba/
+
+The ``parameter_names`` field of that JSON response is the authoritative source.
+
+----
+
+**Coordinate file examples**
+
+*POINT (WGS84, decimal degrees)*::
+
+    id,latitude,longitude
+    montpellier,43.6047,3.8722
+    paris,48.8566,2.3522
+
+*POLYGON (WKT column — bounding box sent to /cube)*::
+
+    id,geometry
+    watershed_A,"POLYGON((3.2 43.4, 3.9 43.4, 3.9 43.9, 3.2 43.9, 3.2 43.4))"
+
+*LINESTRING (vertices extracted as MULTIPOINT)*::
+
+    id,geometry
+    transect_NS,"LINESTRING(2.35 43.0, 2.35 44.0, 2.35 45.0, 2.35 46.0)"
+
+*Bounding box column (sent directly to /cube)*::
+
+    id,bbox,begin_date,end_date
+    bretagne,"-5,47,-1,49",1990-01-01,2000-12-31
+    alsace,"7.0,47.5,8.3,48.9",2000-01-01,2010-12-31
+
+*Per-row date override*::
+
+    id,latitude,longitude,begin_date,end_date
+    site_A,43.6047,3.8722,1970-01-01,1999-12-31
+    site_B,45.7640,4.8357,2000-01-01,2020-12-31
+    site_C,48.8566,2.3522,,
+
+``site_C`` has empty date cells → the global start / end dates are used.
+
+----
+
+.. class:: warningmark
+
+**Known limitations**
+
+* SAFRAN only covers **metropolitan France**. Queries outside this domain will
+  return an API error.
+* The ``/cube`` (polygon / bbox) endpoint returns data for the **bounding box**,
+  not the polygon shape itself.
+* ``parquet`` format is only available for ``/position`` queries (POINT /
+  LINESTRING).
+* Long date ranges or large bounding boxes may exceed the default 120 s timeout.
+  Enable **Verbose logging** to diagnose slow requests.
+
+    ]]></help>
+    <!-- ════════════════════════════════════════════════════════════════════
+         CITATIONS
+         ════════════════════════════════════════════════════════════════════ -->
+    <citations>
+        <citation type="doi">10.1002/joc.2003</citation>
+        <citation type="doi">10.1029/2007JD008548</citation>
+    </citations>
+    <creator>
+        <person givenName="Mathieu" familyName="Guimont" url="https://github.com/Mathmath34/"/>
+        <organization name="Data Terra" url="https://www.data-terra.org/"/>
+        <organization name="ALAMOD" url="https://www.pepr-faircarbon.fr/projets/alamod/"/>
+    </creator>
+</tool>

@@ -1,4 +1,4 @@
-<tool id="obisindicators" name="Ocean biodiversity indicators" version="@VERSION@" profile="20.01">
+<tool id="obisindicators" name="Ocean biodiversity indicators" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="20.01">
     <description>from OBIS</description>
     <macros>
         <import>macro.xml</import>
@@ -42,9 +42,9 @@
     <inputs>
         <expand macro="obis_input"/>
         <param name="separator" type="select" display="radio" label="What character is the separator in your data? (Mostlikely a comma for a csv file and t for a tabular)">
-            <option value="t">Tabulator (\t)</option>                 
-            <option value=",">Comma (,)</option>  
-        </param> 
+            <option value="t">Tabulator (\t)</option>
+            <option value=",">Comma (,)</option>
+        </param>
         <param name="longitude" label="Select column containing the decimal value of the longitude " type="data_column" data_ref="input" numerical="true" use_header_names="true"/>
         <param name="latitude" label="Select column containing the decimal value of the latitude " type="data_column" data_ref="input" numerical="true" use_header_names="true"/>
         <param name="species" label="Select column containing the species " type="data_column" data_ref="input" use_header_names="true"/>
@@ -67,10 +67,10 @@
             <param name="input" value="occ_at.tabular"/>
             <param name="colnames" value="true"/>
             <param name="separator" value="t"/>
-            <param name="longitude" value="c1: decimalLongitude"/>
-            <param name="latitude" value="c2: decimalLatitude"/>
-            <param name="species" value="c3: species"/>
-            <param name="records" value="c5: records"/>
+            <param name="longitude" value="1"/>
+            <param name="latitude" value="2"/>
+            <param name="species" value="3"/>
+            <param name="records" value="5"/>
             <param name="type" value="0"/>
             <param name="resolution" value="9"/>
             <output name="output_index" value="Index.csv"/>
@@ -95,7 +95,7 @@
                         <has_text text="PNG"/>
                     </assert_contents>
                 </element>
-               <element name="Simpson_index" ftype="png">
+                <element name="Simpson_index" ftype="png">
                     <assert_contents>
                         <has_text text="PNG"/>
                     </assert_contents>
@@ -133,4 +133,5 @@ A tabular file with observation data. Must at least contain four columns longitu
 - Multiple PNG files representing the indicators on a map (according to the choice of map made).
     ]]></help>
     <expand macro="obis_bibref"/>
+    <expand macro="creator"/>
 </tool>

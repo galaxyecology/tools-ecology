@@ -46,7 +46,7 @@
     <xml name="section_coords">
         <section name="subset_coords" title="Subset by coordinates">
             <conditional name="tsel">
-                <param name="by_click" type="select" optional="true" label="Coordinate values">
+                <param name="by_click" type="select" label="Coordinate values">
                     <option value="sel">Coordinate values (sel)</option>
                     <option value="isel">Coordinate indices (isel)</option>
                     <option value="isel_list" selected="true">Coordinate values from list</option>

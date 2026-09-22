@@ -124,6 +124,7 @@ check_product_availability(){
 	
 }
 
+
 select_datasets() {
 	if check_product_availability "$REANALYSIS_TEM_DATASET_ID" "$START_DATE" "$END_DATE"; then
         	cm_tem_daily_product="$REANALYSIS_TEM_DATASET_ID"
@@ -138,11 +139,12 @@ select_datasets() {
 	fi
 }
 
+
 download_ic(){
 
 	# log_print ">>"
 	# log_print ">> Downloading ocean fields for initial conditions"
-	# log_print ">> Bounding box petition: (xmin,xmax)=($cm_xmin,$cm_xmax), (ymin,ymax)=($cm_ymin,$cm_ymax)"
+	# log_print ">> Bounding box petition: (xmin,xmax)=(${MIN_LON},${MAX_LON}), (ymin,ymax)=(${MIN_LAT},${MAX_LAT})"
 
 	for VAR in thetao so cur; do
 		echo ">> Downloading variable $VAR..."
@@ -155,14 +157,15 @@ download_ic(){
 				esac
 				copernicusmarine subset \
 					--dataset-id "$DATASET" \
-					--minimum-longitude "$cm_xmin" \
-					--maximum-longitude "$cm_xmax" \
-					--minimum-latitude "$cm_ymin" \
-					--maximum-latitude "$cm_ymax" \
+					--minimum-longitude "${MIN_LON}" \
+					--maximum-longitude "${MAX_LON}" \
+					--minimum-latitude "${MIN_LAT}" \
+					--maximum-latitude "${MAX_LAT}" \
 					--start-datetime "${START_DATE}T00:00:00" \
 					--end-datetime "${END_DATE}T23:59:59" \
 					--minimum-depth "$MIN_DEPTH" \
 					--maximum-depth "$MAX_DEPTH" \
+					--coordinates-selection-method "outside" \
 					--variable "$VAR" \
 					--output-filename "$FILENAME" \
 					--overwrite  ;;
@@ -171,22 +174,50 @@ download_ic(){
 				
 				copernicusmarine subset \
 					--dataset-id "$DATASET" \
-					--minimum-longitude "$cm_xmin" \
-					--maximum-longitude "$cm_xmax" \
-					--minimum-latitude "$cm_ymin" \
-					--maximum-latitude "$cm_ymax" \
+					--minimum-longitude "${MIN_LON}" \
+					--maximum-longitude "${MAX_LON}" \
+					--minimum-latitude "${MIN_LAT}" \
+					--maximum-latitude "${MAX_LAT}" \
 					--start-datetime "${START_DATE}T00:00:00" \
 					--end-datetime "${END_DATE}T23:59:59" \
-					--minimum-depth "$MIN_DEPTH" \
-					--maximum-depth "$MAX_DEPTH" \
+					--minimum-depth "${MIN_DEPTH}" \
+					--maximum-depth "${MAX_DEPTH}" \
+					--coordinates-selection-method "outside" \
 					-v uo -v vo \
 					--output-filename "$FILENAME" \
 					--overwrite  ;;
 		esac
 
 	done
-
 }
+
+
+download_prod_4lims(){
+       # log_print ">>"
+       # log_print ">> Dowloading ocean field to search for model boundaries in Copernicus product"
+       # log_print ">> Bounding box petition: (xmin,xmax)=($cm_xmin,$cm_xmax), (ymin,ymax)=($cm_ymin,$cm_ymax)"
+
+        FILENAME="tem.find_lims.nc"
+        DATASET="$cm_tem_daily_product"
+        export min_test_depth=${MIN_DEPTH}
+        export max_test_depth=$(echo ${min_test_depth} + 2.0 | bc)
+
+        copernicusmarine subset \
+                --dataset-id "$DATASET" \
+                --minimum-longitude "$cm_xmin" \
+                --maximum-longitude "$cm_xmax" \
+                --minimum-latitude "$cm_ymin" \
+                --maximum-latitude "$cm_ymax" \
+                --start-datetime "${START_DATE}T00:00:00" \
+                --end-datetime "${START_DATE}T23:59:59" \
+                --minimum-depth "${min_test_depth}" \
+                --maximum-depth "${max_test_depth}" \
+                --coordinates-selection-method "outside" \
+                -v "thetao" \
+                --output-filename "$FILENAME" \
+                --overwrite
+}
+
 
 download_obc(){
 	echo ">>"
@@ -212,8 +243,8 @@ download_obc(){
 					--end-datetime "${END_DATE}T23:59:59" \
 					--minimum-depth "$MIN_DEPTH" \
 					--maximum-depth "$MAX_DEPTH" \
+					--coordinates-selection-method "outside" \
 					--variable "$VAR" \
-					--coordinates-selection-method "nearest" \
 					--output-filename "$FILENAME" \
 					--overwrite   ;;
 
@@ -229,8 +260,8 @@ download_obc(){
 					--end-datetime "${END_DATE}T23:59:59" \
 					--minimum-depth "$MIN_DEPTH" \
 					--maximum-depth "$MAX_DEPTH" \
+					--coordinates-selection-method "outside" \
 					-v uo -v vo \
-					--coordinates-selection-method "nearest" \
 					--output-filename "$FILENAME" \
 					--overwrite  ;;
 					
@@ -272,9 +303,13 @@ done
 
 # Find model boundaries in Copernicus MedSea Products ---------------------------------
 
+echo ">> Downloading test subset to later find medsea bc limits"
+
+download_prod_4lims
+
 echo ">> DEBUG: calling -> python3 ${TOOL_DIR}/medsea_bc_limits.py --xmin='${MIN_LON}' --xmax='${MAX_LON}' --ymin='${MIN_LAT}' --ymax='${MAX_LAT}' --infile='IC_cm_t.nc'" >> debug.log
 
-python3 "${TOOL_DIR}/medsea_bc_limits.py" --xmin="${MIN_LON}" --xmax="${MAX_LON}" --ymin="${MIN_LAT}" --ymax="${MAX_LAT}" --infile='IC_cm_t.nc'
+python3 "${TOOL_DIR}/medsea_bc_limits.py" --xmin="${MIN_LON}" --xmax="${MAX_LON}" --ymin="${MIN_LAT}" --ymax="${MAX_LAT}" --infile='tem.find_lims.nc'
 
 echo ">> copernicus_lims.inc file created"
 
