@@ -150,13 +150,8 @@ Comma-separated file. The tool only reads two date columns, picked with the
 **First measurement date column** and **Last measurement date column** dropdowns, which are
 populated from the columns of the uploaded file. Any other columns are passed through untouched.
 
-+---------------------------------+-------------------------------------------------------------+
-| Column (selected via dropdown)  | Description                                                 |
-+==================================+=============================================================+
-| First measurement date column   | Year (YYYY) or date (YYYYMMDD) of the first SOC measurement |
-+---------------------------------+-------------------------------------------------------------+
-| Last measurement date column    | Year (YYYY) or date (YYYYMMDD) of the last SOC measurement  |
-+---------------------------------+-------------------------------------------------------------+
+* **First measurement date column** — year (YYYY) or date (YYYYMMDD) of the first SOC measurement.
+* **Last measurement date column** — year (YYYY) or date (YYYYMMDD) of the last SOC measurement.
 
 A ``site_name`` column is also required in the input file.
 
