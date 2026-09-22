@@ -3,7 +3,7 @@
 		Download data from the Copernicus Marine Service to provide as input to the AquaINFRA marine model. Products: Mediterranean Sea Physics Analysis and Forecast or Mediterranean Sea Physics Reanalysis, depending on the selected temporal period.
 	</description>
     <macros>
-        <token name="@TOOL_VERSION@">2.0.1</token>
+        <token name="@TOOL_VERSION@">2.0.2</token>
         <token name="@VERSION_SUFFIX@">1</token>
     </macros>
     <creator>
