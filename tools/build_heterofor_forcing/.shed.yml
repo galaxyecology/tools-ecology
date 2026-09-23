@@ -1,0 +1,32 @@
+name: build_heterofor_forcing
+owner: ecology
+description: Build hourly HETEROFOR forcing files from SAFRAN reanalysis data regridded onto RENECOFOR plots
+long_description: |
+  This tool builds hourly meteorological forcing files for the HETEROFOR
+  forest growth model at the 26 plots of the RENECOFOR network, starting
+  from SAFRAN reanalysis data (via the ORCHIDEE land surface model output
+  format) already regridded onto the RENECOFOR plot locations. For each
+  station it writes a forcing file with radiation, air temperature, soil
+  surface temperature, rainfall, relative humidity, wind speed and
+  direction, and diffuse-to-global radiation ratio, at an hourly time step.
+
+  Two modes are available. SAFRAN-only (default) builds forcing files
+  entirely from the regridded SAFRAN/ORCHIDEE data for every station with
+  complete records. RENECOFOR + SAFRAN additionally accepts observed
+  RENECOFOR meteorological data (as an RDS file): observations are used
+  first and gaps are filled from SAFRAN, with two extra summary reports
+  on how much data was filled or is still missing per station.
+
+  The two SAFRAN/PSurf inputs accept NetCDF, CSV, Parquet, or CoverageJSON,
+  auto-detected independently per file. Because the number of stations that
+  pass the completeness check can vary, outputs are returned as Galaxy list
+  collections rather than a fixed set of datasets.
+
+  This tool wraps a cleaned-up, parameterised version of an R script
+  originally written by Annemiek I Stegehuis to prepare SAFRAN/RENECOFOR
+  forcing data for HETEROFOR runs at the ALAMOD project plots.
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/build_heterofor_forcing
+homepage_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/build_heterofor_forcing
+type: unrestricted
+categories:
+  - Climate Analysis
