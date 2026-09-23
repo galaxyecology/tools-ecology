@@ -55,8 +55,8 @@
         <param name="time_NMS" type="integer" value="10" min="1" max="1000" label="NMS processing time limit (seconds)" help="Sets the maximum processing time for Non-Maximum Suppression (NMS), which removes overlapping detections. If a 'NMS time limit exceeded' warning appears, increase this value to allow NMS to complete."/>
     </inputs>
     <outputs>
-        <data name="output_predictions" auto_format="true" from_work_dir="./outputs/output_predictions.csv" label="Predictions_CSV"/>
-        <data name="output_predictions_recap" auto_format="true" from_work_dir="./outputs/output_predictions_recap.csv" label="Predictions_recap_CSV"/>
+        <data name="output_predictions" format="csv" from_work_dir="./outputs/output_predictions.csv" label="Predictions_CSV"/>
+        <data name="output_predictions_recap" format="csv" from_work_dir="./outputs/output_predictions_recap.csv" label="Predictions_recap_CSV"/>
         <collection name="boxed_images" type="list" label="Images with bounding boxes">
             <discover_datasets directory="outputs/boxed_images" pattern="(?P&lt;designation&gt;.+)\.(?i:jpg)" format="jpg" visible="false"/>
         </collection>
