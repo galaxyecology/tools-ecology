@@ -59,6 +59,7 @@
                 <option value="map-trends-static">map-trends-static: Spatial visualisation of regions and data points</option>
                 <option value="match-data">match-data: Combine and match biodiversity data from separate sources</option>
                 <option value="mean-by-group">mean-by-group: Return group average</option>
+                <option value="mitgcm-compile-run-model">mitgcm-compile-run-model: MITgcm Model Compile and Run</option>
                 <option value="mitgcm-prep">mitgcm-prep: MITgcm Preprocessing</option>
                 <option value="mitgcm-resultplot">mitgcm-resultplot: MITgcm Plotting Tool</option>
                 <option value="mitgcm-run-model">mitgcm-run-model: MITgcm Model Run</option>
@@ -404,6 +405,9 @@
                 <param name="colname_value" label="Column name for column containing values" optional="false" value="" help="The name of the column that contains the values for which the average will be calculated. Only one column name can be included. Examples: 'transparency_m', 'mean'" type="text">
                     <validator type="empty_field" message="You must provide a value."/>
                 </param>
+            </when>
+            <when value="mitgcm-compile-run-model">
+                <param name="preprocessing_output_directory" label="preprocessing_output_directory" help="Link to the directory containing the preprocessing output to use as input for the model run (URL must be stored in a .txt file)" type="data" format="txt"/>
             </when>
             <when value="mitgcm-prep">
                 <param name="input_url_IC_OB" label="Zipped Copernicus Input Data (URL) input_url_IC_OBS" optional="true" help="URL that points to (zipped) Copernicus data necessary to generate initial and boundary conditions for the model. Optional: If none of the input URLs are provided, pre-downloaded data will be used. (URL must be stored in a .txt file)" type="data" format="txt"/>
