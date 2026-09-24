@@ -239,6 +239,7 @@ Note: in the output, the two date columns are always written back using the cano
   <creator>
       <person givenName="Mathieu" familyName="Guimont" url="https://github.com/Mathmath34"/>
       <organization name="ALAMOD" url="https://www.pepr-faircarbon.fr/projets/alamod/"/>
+        <organization name="Data Terra" url="https://www.data-terra.org/"/>
   </creator>
 
 </tool>
