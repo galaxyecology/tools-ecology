@@ -1,13 +1,18 @@
-<tool id="ecology_stat_presence_abs" name="Statistics on presence-absence" version="@VERSION@" profile = "20.01">
+<tool id="ecology_stat_presence_abs" name="Statistics on presence-absence" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="20.01">
     <description>of a numeric variable</description>
     <macros>
         <import>macro.xml</import>
     </macros>
+    <expand macro="topic"/>
     <expand macro="Explo_requirements">
         <requirement type="package" version="1.1.1">r-cowplot</requirement>
         <requirement type="package" version="0.1.3">r-ggcorrplot</requirement>
         <requirement type="package" version="1.0.5">r-dplyr</requirement>
     </expand>
+    <required_files>
+        <include path="graph_stat_presence_abs.r"/>
+        <include path="functions.r"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript
             '$__tool_directory__/graph_stat_presence_abs.r'
@@ -24,7 +29,7 @@
     <inputs>
         <expand macro="explo_input"/>
         <param name="variable1" label="Select a column containing numerical values (such as the abundance) " type="data_column" data_ref="input" numerical="true" use_header_names="true"/>
-         <param name="species" label="Select the column of the x-axis : most commonly species" type="data_column" data_ref="input" use_header_names="true" help= "Variable for dispersion plot and to see the correlation between zeros"/>
+        <param name="species" label="Select the column of the x-axis : most commonly species" type="data_column" data_ref="input" use_header_names="true" help="Variable for dispersion plot and to see the correlation between zeros"/>
         <param name="location" label="Select column containing locations " type="data_column" data_ref="input" use_header_names="true"/>
         <param name="time" label="Select column containing temporal data (year, date, ...) " type="data_column" data_ref="input" use_header_names="true"/>
     </inputs>
@@ -33,11 +38,10 @@
         <data name="output_0" from_work_dir="0_pb.png" format="png" label="Absence-correlation plot"/>
     </outputs>
     <tests>
-        <test>
+        <test expect_num_outputs="2">
             <param name="input" value="Reel_life_survey_fish_modif.tabular"/>
             <param name="colnames" value="true"/>
             <param name="variable1" value="18"/>
-            <param name="variable2" value="15"/>
             <output name="output_md" ftype="png">
                 <assert_contents>
                     <has_text text="PNG"/>
@@ -50,7 +54,6 @@
             </output>
         </test>
     </tests>
-    <expand macro="topic"/>
     <help><![CDATA[
 ===================================================================================================================
 Create a boxplot, visualize the dispersion of a numeric variable and visualize correlation between species absences
@@ -85,5 +88,5 @@ A tabular file with observation data. Must at least contain four columns a numer
 Two png files containing the three plots.
     ]]>    </help>
     <expand macro="explo_bibref"/>
-
+    <expand macro="creator"/>
 </tool>

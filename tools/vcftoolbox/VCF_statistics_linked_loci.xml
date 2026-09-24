@@ -1,18 +1,14 @@
-<tool id="vcf_statistics_linked_loci" name="Compute genotype-based R²" version="@TOOL_VERSION@" profile="@PROFILE@">
+<tool id="vcf_statistics_linked_loci" name="Compute genotype-based R²" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>
         from VCF
     </description>
-
     <macros>
         <import>macros.xml</import>
     </macros>
-
     <expand macro="requirements_bcftools_vcftools"/>
-
     <required_files>
         <include path="VCF_statistics_linked_loci.sh"/>
     </required_files>
-
     <command detect_errors="exit_code"><![CDATA[
         mkdir -p r2_results_directory &&
         mkdir -p temporary &&
@@ -23,18 +19,13 @@
             --name '${vcf_input.element_identifier}'   
             --max_SNPs '${max_SNPs}'   
         ]]></command>
-
     <inputs>
         <expand macro="param_vcf_input"/>
-        <param name="max_SNPs" type="integer" value="1000"
-            label="Maximum number of SNPs per window"
-            help="Maximum number of SNPs between the SNPs being tested for LD."/>
+        <param name="max_SNPs" type="integer" value="1000" label="Maximum number of SNPs per window" help="Maximum number of SNPs between the SNPs being tested for LD."/>
     </inputs>
-
     <outputs>
         <data name="SNP_linked" from_work_dir="r2_results_directory/r2_LD.geno.ld.txt" format="txt" label="r2 statistics table"/>
     </outputs>
-
     <tests>
         <test>
             <param name="vcf_input" value="test_vcf.vcf"/>
@@ -74,5 +65,5 @@ See also examples of VCF formats in: https://samtools.github.io/hts-specs/VCFv4.
     <citations>
         <expand macro="citations_base"/>
     </citations>
-
+    <expand macro="creator"/>
 </tool>

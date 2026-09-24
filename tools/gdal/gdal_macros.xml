@@ -1,21 +1,21 @@
 <macros>
-    <token name="@VERSION@">3.0.0</token>  
+    <token name="@VERSION@">3.0.0</token>
+    <token name="@VERSION_SUFFIX@">1</token>
+    <token name="@PROFILE@">25.1</token>
     <xml name="gdal_requirements">
         <requirements>
             <requirement type="package" version="@VERSION@">gdal</requirement>
             <requirement type="package" version="3.7.1">geos</requirement>
         </requirements>
     </xml>
-
     <xml name="gdal_advanced_params_select">
         <param name="advanced" type="select" label="Specify advanced parameters">
             <option value="simple" selected="true">No, use program defaults.</option>
             <option value="advanced">Yes, see full parameter list.</option>
-        </param>        
+        </param>
         <when value="simple">
         </when>
     </xml>
-
     <xml name="gdal_param_te">
         <conditional name="condi_te">
             <param name="te" type="select" label="Georeferenced extents of output file" help="-te xmin ymin xmax ymax">
@@ -30,9 +30,8 @@
                 <param name="xmax" type="float" label="xmax" value="0" min="0" help="In target SRS by default, or in the SRS specified with -te_srs"/>
                 <param name="ymax" type="float" label="ymax" value="0" min="0" help="In target SRS by default, or in the SRS specified with -te_srs"/>
             </when>
-        </conditional> 
+        </conditional>
     </xml>
-
     <xml name="gdal_param_r">
         <conditional name="condi_resample">
             <param label="Use a resampling method" help="-r resampling algorithm" name="resample" type="select">
@@ -40,7 +39,7 @@
                 <option value="resampling">Use a resampling method, option -r</option>
             </param>
             <when value="resampling">
-                <param name="r" type="select" label="Reseampling algorithm" >
+                <param name="r" type="select" label="Reseampling algorithm">
                     <option value="nearest" selected="true"/>
                     <option value="bilinear"/>
                     <option value="cubic"/>
@@ -59,10 +58,9 @@
             </when>
         </conditional>
     </xml>
-
     <xml name="gdal_param_tr">
         <conditional name="condi_tr">
-            <param name="tr" type="select" label="Set the ouput file resolution" help="-tr xres yres. Set output file resolution (in target georeferenced units)"> 
+            <param name="tr" type="select" label="Set the ouput file resolution" help="-tr xres yres. Set output file resolution (in target georeferenced units)">
                 <option value="no_tr" selected="true">Don't use the -tr option</option>
                 <option value="tr">Use the -tr option</option>
             </param>
@@ -74,31 +72,24 @@
             </when>
         </conditional>
     </xml>
-
     <xml name="gdal_param_b">
         <param name="b" type="text" label="Select an input band band for output" help="eg : -b band -b 1 -b 2 -b 3. Bands are numbered from 1. Multiple -b switches may be used to select a set of input bands to write to the output file, or to reorder bands." value=""/>
     </xml>
-
     <xml name="gdal_param_tap">
-        <param name="tap" label="Align the coordinates" help="-tap Target Aligned Pixel, align the coordinates of the extent of the output file to the values of the -tr, such that the aligned extent includes the minimum extent" type="boolean" truevalue="-tap" falsevalue="" checked="false" />
+        <param name="tap" label="Align the coordinates" help="-tap Target Aligned Pixel, align the coordinates of the extent of the output file to the values of the -tr, such that the aligned extent includes the minimum extent" type="boolean" truevalue="-tap" falsevalue="" checked="false"/>
     </xml>
-
     <xml name="gdal_param_separate">
-        <param name="separate" type="boolean" truevalue="-separate" falsevalue="" checked="false" label="Place each input file into a separate band" help="-separate. In that case, only the first band of each dataset will be placed into a new band. Contrary to the default mode, it is not required that all bands have the same datatype" />
+        <param name="separate" type="boolean" truevalue="-separate" falsevalue="" checked="false" label="Place each input file into a separate band" help="-separate. In that case, only the first band of each dataset will be placed into a new band. Contrary to the default mode, it is not required that all bands have the same datatype"/>
     </xml>
-
     <xml name="gdal_param_a_srs">
-        <param name="a_srs" type="text" label="Override the projection for the output file" help="-a_srs srs_def. The srs_def may be any of the usual GDAL/OGR forms, complete WKT, PROJ.4, EPSG:n or a file containing the WKT. No reprojection is done" value="" />
+        <param name="a_srs" type="text" label="Override the projection for the output file" help="-a_srs srs_def. The srs_def may be any of the usual GDAL/OGR forms, complete WKT, PROJ.4, EPSG:n or a file containing the WKT. No reprojection is done" value=""/>
     </xml>
-
     <xml name="gdal_param_stats">
-        <param name="stats" type="boolean" truevalue="-stats" falsevalue="" checked="false" label="Force (re)computation of statistics"  help="-stats. Read and display image statistics. Force computation if no statistics are sto.red in an image."/>
+        <param name="stats" type="boolean" truevalue="-stats" falsevalue="" checked="false" label="Force (re)computation of statistics" help="-stats. Read and display image statistics. Force computation if no statistics are sto.red in an image."/>
     </xml>
-    
     <xml name="gdal_param_norat">
         <param name="norat" type="boolean" truevalue="-norat" falsevalue="" checked="false" help="-norat. Do not copy source RAT into destination dataset." label="Suppress printing of raster attribute table."/>
     </xml>
-
     <xml name="gdal_param_of">
         <param name="of" type="select" label="Output format -of" value="Gtiff" help="Select the output format. The default is GeoTIFF (GTiff). A short list of raster formats is currently enable in GalaxyE : GTiff, netCDF and VRT.">
             <option value="GTiff">GTiff</option>
@@ -106,11 +97,9 @@
             <option value="VRT">GDAL Virtual - VRT</option>
         </param>
     </xml>
-
     <xml name="gdal_param_co">
-        <param name="co" type="text" label="Pass a creation option to the output format driver" help="-co NAME=VALUE. eg : COMPRESS=JPEG" value="" />
-    </xml>   
-
+        <param name="co" type="text" label="Pass a creation option to the output format driver" help="-co NAME=VALUE. eg : COMPRESS=JPEG" value=""/>
+    </xml>
     <xml name="gdal_param_ot">
         <param name="ot" type="select" label="Datatype of the output bands" help="-ot Datatype">
             <option value="byte">Byte</option>
@@ -127,19 +116,16 @@
             <option value="" selected="true">Select a datatype for the output bands (default)</option>
         </param>
     </xml>
-
     <xml name="gdal_param_oo">
         <repeat name="series_oo" title="Add an input dataset open option">
-            <param name="oo" type="text" label="Input dataset open option" help="-oo NAME=VALUE. eg : X_POSSIBLE_NAMES=longitude. Format specific, can be used multiple times." value="" />
+            <param name="oo" type="text" label="Input dataset open option" help="-oo NAME=VALUE. eg : X_POSSIBLE_NAMES=longitude. Format specific, can be used multiple times." value=""/>
         </repeat>
     </xml>
-
     <xml name="gdal_input_raster_multiple">
-        <param type="data" name="input" format="gtiff,tiff,netcdf,VRT,txt,xml" help="Formats currently supported are : GTiff, netCDF and VRT" label="Gdal supported input file" multiple="true"/>
+        <param type="data" name="input" format="tiff,netcdf,txt,xml" help="Formats currently supported are : GTiff, netCDF and VRT" label="Gdal supported input file" multiple="true"/>
     </xml>
-
     <xml name="gdal_output_change_format">
-        <data name="output" format="GTiff" label="${on_string}.${of}">
+        <data name="output" format="tiff" label="${on_string}.${of}">
             <change_format>
                 <when input="of" value="GTiff" format="tiff"/>
                 <when input="of" value="netCDF" format="netcdf"/>
@@ -147,7 +133,6 @@
             </change_format>
         </data>
     </xml>
-
     <xml name="gdal_citation">
         <citations>
             <citation type="bibtex">
@@ -159,6 +144,11 @@
                 url = {http://gdal.org},
                 }
             </citation>
-        </citations>  
+        </citations>
+    </xml>
+    <xml name="creator">
+        <creator>
+            <person givenName="Alan" familyName="Amossé" url="https://github.com/Alanamosse"/>
+        </creator>
     </xml>
 </macros>

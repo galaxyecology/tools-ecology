@@ -6,7 +6,8 @@ long_description: |
 
 name: stoceps 
 owner: ecology 
-remote_repository_url: https://github.com/Alanamosse/Galaxy-E/tree/stoctool/tools/stoc
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/stoc 
+homepage_url: https://github.com/Alanamosse/Galaxy-E/tree/stoctool/tools/stoc
 type: unrestricted
 
 repositories:

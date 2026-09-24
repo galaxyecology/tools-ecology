@@ -1,4 +1,4 @@
-<tool id="obis_data" name="OBIS occurences" version="@VERSION@" profile="20.01">
+<tool id="obis_data" name="OBIS occurences" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="20.01">
     <description>retrieve data</description>
     <macros>
         <import>macro.xml</import>
@@ -43,7 +43,7 @@
             <output name="output">
                 <assert_contents>
                     <has_text text="Scombridae"/>
-                    <has_n_columns n="167"/>
+                    <has_n_columns n="173"/>
                 </assert_contents>
             </output>
         </test>
@@ -55,7 +55,7 @@
             <output name="output">
                 <assert_contents>
                     <has_text text="basisOfRecord"/>
-                    <has_n_columns n="148"/>
+                    <has_n_columns n="165"/>
                 </assert_contents>
             </output>
         </test>
@@ -95,4 +95,5 @@ This tool use the robis R package.
 Includes functionality for retrieving species occurrence data, and combining those data.
     ]]></help>
     <expand macro="obis_doiref"/>
+    <expand macro="creator"/>
 </tool>

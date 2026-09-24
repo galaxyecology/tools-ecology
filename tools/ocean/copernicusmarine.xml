@@ -2,17 +2,17 @@
     <description>retrieve marine data</description>
     <macros>
         <token name="@TOOL_VERSION@">2.3.0</token>
-        <token name="@VERSION_SUFFIX@">0</token>
+        <token name="@VERSION_SUFFIX@">1</token>
     </macros>
     <requirements>
         <requirement type="package" version="@TOOL_VERSION@">copernicusmarine</requirement>
         <credentials name="cmems_credentials" version="1.0" label="CMEMS Credentials" description="Credentials for accessing Copernicus Marine Service API.">
             <variable name="username" inject_as_env="COPERNICUSMARINE_SERVICE_USERNAME" optional="false" label="CMEMS Username" description="Your Copernicus Marine Service Username. Get it from your Copernicus account."/>
             <secret name="password" inject_as_env="COPERNICUSMARINE_SERVICE_PASSWORD" optional="false" label="CMEMS password" description="Your Copernicus Marine Service password."/>
-         </credentials>
+        </credentials>
     </requirements>
     <required_files>
-        <include path="check.py" />
+        <include path="check.py"/>
     </required_files>
     <command detect_errors="exit_code"><![CDATA[ 
         
@@ -24,12 +24,12 @@
         <param name="input_text" label="Paste API Request" type="text" area="true">
             <sanitizer invalid_char="">
                 <valid initial="string.letters,string.digits">
-                    <add value="_" />
-                    <add value="-" />
-                    <add value=" " />
-                    <add value=":" />
-                    <add value="." />
-                    <add value=" " />
+                    <add value="_"/>
+                    <add value="-"/>
+                    <add value=" "/>
+                    <add value=":"/>
+                    <add value="."/>
+                    <add value=" "/>
                 </valid>
             </sanitizer>
             <validator type="regex">[0-9a-zA-Z_:\-\. ]+</validator>
@@ -89,4 +89,9 @@ A netcdf file containing the data chose by the user from the Copernicus Marine D
         }
         </citation>
     </citations>
+    <creator>
+        <person givenName="Marie" familyName="Jossé" url="https://orcid.org/0009-0008-0622-604X"/>
+        <organization name="EOSC Fair-Ease" url="https://fairease.eu/"/>
+        <organization name="Data Terra" url="https://www.data-terra.org/"/>
+    </creator>
 </tool>

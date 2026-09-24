@@ -1,9 +1,17 @@
-<tool id="regionalgam_ab_index" name="Abundance index" version="@VERSION@">
+<tool id="regionalgam_ab_index" name="Abundance index" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>computation across species, sites and years</description>
     <macros>
         <import>regionalgam_macros.xml</import>
     </macros>
+    <edam_topics>
+        <edam_topic>topic_0610</edam_topic>
+        <edam_topic>topic_3050</edam_topic>
+    </edam_topics>
     <expand macro="rg_r_requirements"/>
+    <required_files>
+        <include path="ab-index.R"/>
+        <include path="dennis-gam-initial-functions.R"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript '$__tool_directory__/ab-index.R'
             '$__tool_directory__/dennis-gam-initial-functions.R' 
@@ -16,7 +24,7 @@
         <param format="tabular" name="input2" type="data" label="Regional expected pattern of abundance" help="Flight curve output, tabular file."/>
     </inputs>
     <outputs>
-        <data format="tabular" name="output" from_work_dir="data.index" />
+        <data format="tabular" name="output" from_work_dir="data.index"/>
     </outputs>
     <tests>
         <test>
@@ -25,10 +33,6 @@
             <output name="output" file="s_data_index.tabular"/>
         </test>
     </tests>
-    <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
-    </edam_topics>
     <help><![CDATA[
 ==========================
 Compute abundance index
@@ -46,4 +50,5 @@ The tool returns computed abundance indices in tabular format.
 
     ]]></help>
     <expand macro="rg_citation"/>
+    <expand macro="creator"/>
 </tool>
