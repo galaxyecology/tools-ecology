@@ -1,18 +1,14 @@
-<tool id="population_genomics_split_vcf_by_pop" name="Split VCF by pop" version="@TOOL_VERSION@" profile="@PROFILE@">
+<tool id="population_genomics_split_vcf_by_pop" name="Split VCF by pop" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>
         from an individuals/population table
     </description>
-
     <macros>
         <import>macros.xml</import>
     </macros>
-
     <expand macro="requirements_bcftools"/>
-
     <required_files>
-        <include path="split_vcf_by_pop.sh" />
+        <include path="split_vcf_by_pop.sh"/>
     </required_files>
-
     <command detect_errors="exit_code"><![CDATA[
         mkdir -p vcf_split_directory &&
         mkdir -p vcf_tmp_preprocessing &&
@@ -23,20 +19,15 @@
             --indpop '$indpop'
         
     ]]></command>
-
     <inputs>
         <expand macro="param_vcf_input"/>
-
-        <param name="indpop" type="data" format="tabular,txt" label="Population file" 
-            help="File containing individuals in the first column and their population code in the second column, separated by a tabulation character."/>
+        <param name="indpop" type="data" format="tabular,txt" label="Population file" help="File containing individuals in the first column and their population code in the second column, separated by a tabulation character."/>
     </inputs>
-
     <outputs>
         <collection name="vcf_split" format="vcf" type="list" label="${tool.name}">
             <discover_datasets pattern="__designation_and_ext__" directory="vcf_split_directory" format="vcf"/>
         </collection>
     </outputs>
-
     <tests>
         <test>
             <param name="vcf_input" value="test_vcf.vcf"/>
@@ -50,7 +41,6 @@
                         <not_has_text text="GB-2_2022_CCR14-15-m22_1"/>
                     </assert_contents>
                 </element>
-
                 <element name="test_vcf_S21_2021">
                     <assert_contents>
                         <has_text text="vcf_split_directory/Ind_list_S21_2021.txt"/>
@@ -59,10 +49,8 @@
                         <not_has_text text="GB-2_2022_CCR14-15-m22_1"/>
                     </assert_contents>
                 </element>
-                    
             </output_collection>
         </test>
-
         <test>
             <param name="vcf_input" value="test_vcf_without_contigs.vcf"/>
             <param name="indpop" value="test_pop.txt"/>
@@ -75,7 +63,6 @@
                         <not_has_text text="GB-2_2022_CCR14-15-m22_1"/>
                     </assert_contents>
                 </element>
-
                 <element name="test_vcf_without_contigs_S21_2021">
                     <assert_contents>
                         <has_text text="vcf_split_directory/Ind_list_S21_2021.txt"/>
@@ -84,12 +71,10 @@
                         <not_has_text text="GB-2_2022_CCR14-15-m22_1"/>
                     </assert_contents>
                 </element>
-                    
             </output_collection>
         </test>
     </tests>
-
-<help><![CDATA[
+    <help><![CDATA[
 Usage
 =====
 
@@ -117,5 +102,5 @@ See also examples of VCF formats in :  https://samtools.github.io/hts-specs/VCFv
     <citations>
         <expand macro="citations_bcftools_only"/>
     </citations>
-  
+    <expand macro="creator"/>
 </tool>

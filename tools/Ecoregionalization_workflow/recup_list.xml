@@ -1,10 +1,16 @@
-<tool id="ecoregion_taxa_seeker" name="TaxaSeeker" version="0.1.2+galaxy0" profile="23.2">
+<tool id="ecoregion_taxa_seeker" name="TaxaSeeker" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="23.2">
     <description>for recover list of taxa</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
     <requirements>
-    <requirement type="package" version="4.2.3">r-base</requirement>
-    <requirement type="package" version="1.1.3">r-dplyr</requirement>
-    <requirement type="package" version="1.6.2">r-taxonomycleanr</requirement> 
+        <requirement type="package" version="4.2.3">r-base</requirement>
+        <requirement type="package" version="1.1.3">r-dplyr</requirement>
+        <requirement type="package" version="1.6.2">r-taxonomycleanr</requirement>
     </requirements>
+    <required_files>
+        <include path="recup_liste_taxon.R"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript
         '$__tool_directory__/recup_liste_taxon.R'
@@ -16,23 +22,23 @@
         '$output3' 
     ]]></command>
     <inputs>
-         <param name="envfile" type="data" format="tabular" label="Environement file (tabular format only)" help="See example below"/>
-         <param name="occurencefile" type="data" format="tabular" multiple="True" label="Occurences file(s) (tabular format only)" help="See example below"/>
-         <param name="predictionfile" type="data" format="tabular" multiple="True" label="Predictions file(s)" help="See example below"/>
+        <param name="envfile" type="data" format="tabular" label="Environement file (tabular format only)" help="See example below"/>
+        <param name="occurencefile" type="data" format="tabular" multiple="True" label="Occurences file(s) (tabular format only)" help="See example below"/>
+        <param name="predictionfile" type="data" format="tabular" multiple="True" label="Predictions file(s)" help="See example below"/>
     </inputs>
     <outputs>
-     <data name="output1" from_work_dir="have_model.tsv" format="tabular" label="Summary of taxa model "/>
-     <data name="output2" from_work_dir="list_taxa.txt" format="txt" label="List of taxa"/>
-     <data name="output3" from_work_dir="list_taxa_clean.txt" format="txt" label="List of taxa clean"/>
+        <data name="output1" from_work_dir="have_model.tsv" format="tabular" label="Summary of taxa model "/>
+        <data name="output2" from_work_dir="list_taxa.txt" format="txt" label="List of taxa"/>
+        <data name="output3" from_work_dir="list_taxa_clean.txt" format="txt" label="List of taxa clean"/>
     </outputs>
     <tests>
         <test>
             <param name="occurencefile" value="cnidaria_filtered.tsv"/>
             <param name="predictionfile" value="1_brts_pred_ceamarc.tsv"/>
             <param name="envfile" value="ceamarc_env.tsv"/>
-            <output name='output1' value="Summary_of_taxa_model.tsv"/>
-            <output name='output2' value="List_of_taxa.txt"/>
-            <output name='output3' value="List_of_taxa_clean.txt"/>
+            <output name="output1" value="Summary_of_taxa_model.tsv"/>
+            <output name="output2" value="List_of_taxa.txt"/>
+            <output name="output3" value="List_of_taxa_clean.txt"/>
         </test>
     </tests>
     <help><![CDATA[
@@ -95,8 +101,8 @@ This tool takes three inputs : Occurrences file(s), predictions file(s) and envi
 
     ]]></help>
     <citations>
-       <citation type="doi">10.32614/CRAN.package.dplyr</citation>
-       <citation type="bibtex">@Manual{,
+        <citation type="doi">10.32614/CRAN.package.dplyr</citation>
+        <citation type="bibtex">@Manual{,
           title = {taxonomyCleanr: A workflow and set of functions to clean taxonomy data using R},
           author = {Colin Smith},
           year = {2023},
@@ -104,5 +110,5 @@ This tool takes three inputs : Occurrences file(s), predictions file(s) and envi
           https://ediorg.github.io/taxonomyCleanr/},
       }</citation>
     </citations>
+    <expand macro="creator"/>
 </tool>
-

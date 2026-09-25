@@ -21,7 +21,7 @@ suppressMessages(library(reshape2))
 
 args = commandArgs(trailingOnly=TRUE)
 options(encoding = "UTF-8")
-source(args[6],encoding="UTF-8")### chargement des fonctions / load the functions
+source(args[6])### chargement des fonctions / load the functions
 
 if ( (length(args)<8) || (length(args)>9)) {
     stop("At least 5 arguments must be supplied :\n- An input dataset filtered (.tabular). May come from the filter rare species tool.\n- A species detail table (.tabular)\n- An id to fix output repository name.\n- A list of species to exclude, can be empty.\n- TRUE/FALSE to perform the glm with confidence intervals calculations.\n\n", call.=FALSE) #si pas d'arguments -> affiche erreur et quitte / if no args -> error and exit1

@@ -1,11 +1,17 @@
-<tool id="ecoregion_brt_analysis" name="BRT tool prediction" version="0.1.2+galaxy0" profile="23.2">
+<tool id="ecoregion_brt_analysis" name="BRT tool prediction" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="23.2">
     <description>for species distribution modelling</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
     <requirements>
-       <requirement type="package" version="4.3.3">r-base</requirement>
-       <requirement type="package" version="2.1.8">r-gbm</requirement>
-       <requirement type="package" version="3.4.2">r-ggplot2</requirement>
-       <requirement type="package" version="1.3_14">r-dismo</requirement>
+        <requirement type="package" version="4.3.3">r-base</requirement>
+        <requirement type="package" version="2.1.8">r-gbm</requirement>
+        <requirement type="package" version="3.4.2">r-ggplot2</requirement>
+        <requirement type="package" version="1.3_14">r-dismo</requirement>
     </requirements>
+    <required_files>
+        <include path="brt.R"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript
          '$__tool_directory__/brt.R'
@@ -20,31 +26,31 @@
          '$dec_species'
     ]]></command>
     <inputs>
-      <param name="enviro" type="data" format="tabular" label="Input your environment data file of your study area (tabular format only)" help="See example below"/>
-      <param name="dec_env" type="select" label="What's the decimal separator of your environement data file ?">
-              <option value="Dot">Dot</option>
-              <option value="Comma">Comma</option>
-      </param>
-      <param type="data" name="species_files" label="Input your occurrences data file(s) containing also the environemental caracteristics where the species has been observe (tabular format only)" format="tabular" multiple="True" help="See example below"/>
-      <param name="dec_species" type="select" label="What's the decimal separator of your occurrences data file(s) ?" help="It must be the same for all your occurences data files">
-              <option value="Dot">Dot</option>
-              <option value="Comma">Comma</option>
-      </param>
-      <param name="abioticname" type="data_column" label="Choose column(s) where your abiotic parameter are in your environment data file." data_ref="enviro" multiple="true" use_header_names="true"/>
+        <param name="enviro" type="data" format="tabular" label="Input your environment data file of your study area (tabular format only)" help="See example below"/>
+        <param name="dec_env" type="select" label="What's the decimal separator of your environement data file ?">
+            <option value="Dot">Dot</option>
+            <option value="Comma">Comma</option>
+        </param>
+        <param type="data" name="species_files" label="Input your occurrences data file(s) containing also the environemental caracteristics where the species has been observe (tabular format only)" format="tabular" multiple="True" help="See example below"/>
+        <param name="dec_species" type="select" label="What's the decimal separator of your occurrences data file(s) ?" help="It must be the same for all your occurences data files">
+            <option value="Dot">Dot</option>
+            <option value="Comma">Comma</option>
+        </param>
+        <param name="abioticname" type="data_column" label="Choose column(s) where your abiotic parameter are in your environment data file." data_ref="enviro" multiple="true" use_header_names="true"/>
     </inputs>
     <outputs>
-      <collection name="outputpred" type="list" label="Prediction files">
+        <collection name="outputpred" type="list" label="Prediction files">
             <discover_datasets pattern="(?P&lt;designation&gt;.+_brts_pred_ceamarc)\.tsv" format="tabular"/>
-      </collection>
-      <collection name="outputval" type="list" label="Validation files (Taxa, AUC, Tree complexity, Total deviance explained)">
-            <discover_datasets pattern="(?P&lt;designation&gt;.+_brts_validation_ceamarc)\.tsv" format="tabular" />
-      </collection>
-      <collection name="outputspdistri" type="list" label="Species distribution prediction maps" >
-            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" format="png" />
-      </collection>  
-      <collection name="outputplots" type="list" label="Partial dependence plots" >
-            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.pdf" format="pdf" />  
-      </collection>
+        </collection>
+        <collection name="outputval" type="list" label="Validation files (Taxa, AUC, Tree complexity, Total deviance explained)">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+_brts_validation_ceamarc)\.tsv" format="tabular"/>
+        </collection>
+        <collection name="outputspdistri" type="list" label="Species distribution prediction maps">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.png" format="png"/>
+        </collection>
+        <collection name="outputplots" type="list" label="Partial dependence plots">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.pdf" format="pdf"/>
+        </collection>
     </outputs>
     <tests>
         <test>
@@ -53,10 +59,10 @@
             <param name="abioticname" value="3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19"/>
             <param name="dec_env" value="Dot"/>
             <param name="dec_species" value="Comma"/>
-            <output_collection name='outputpred' type = "list" count="1"/>
-            <output_collection name='outputval' type = "list" count="1"/>
-            <output_collection name='outputspdistri' type = "list" count="2"/>
-            <output_collection name='outputplots' type = "list" count="2"/>
+            <output_collection name="outputpred" type="list" count="1"/>
+            <output_collection name="outputval" type="list" count="1"/>
+            <output_collection name="outputspdistri" type="list" count="2"/>
+            <output_collection name="outputplots" type="list" count="2"/>
         </test>
     </tests>
     <help><![CDATA[
@@ -107,8 +113,9 @@ This tool gives in output a file containing the predictions of the probability o
 
     ]]></help>
     <citations>
-       <citation type="doi">10.32614/CRAN.package.dismo</citation>
-       <citation type="doi">10.32614/CRAN.package.gbm</citation>
-       <citation type="doi">10.32614/CRAN.package.ggplot2</citation>
+        <citation type="doi">10.32614/CRAN.package.dismo</citation>
+        <citation type="doi">10.32614/CRAN.package.gbm</citation>
+        <citation type="doi">10.32614/CRAN.package.ggplot2</citation>
     </citations>
+    <expand macro="creator"/>
 </tool>

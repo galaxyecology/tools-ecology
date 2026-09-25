@@ -1,9 +1,24 @@
 <macros>
     <token name="@VERSION@">1.2.2</token>
+    <token name="@VERSION_SUFFIX@">1</token>
+    <token name="@PROFILE@">25.1</token>
     <xml name="occ_requirements">
         <requirements>
-        <requirement type="package" version="@VERSION@">r-spocc</requirement>
-           <yield/>
+            <requirement type="package" version="@VERSION@">r-spocc</requirement>
+            <yield/>
         </requirements>
+    </xml>
+    <xml name="citation">
+        <citations>
+            <citation type="doi">10.32614/CRAN.package.spocc</citation>
+        </citations>
+    </xml>
+    <xml name="creator">
+        <creator>
+            <person givenName="Alan" familyName="Amossé" url="https://github.com/Alanamosse"/>
+            <person givenName="Marie" familyName="Jossé" url="https://orcid.org/0009-0008-0622-604X"/>
+            <organization name="PNDB" url="https://www.pndb.fr/pages/accueil/"/>
+            <organization name="Data Terra" url="https://www.data-terra.org/"/>
+        </creator>
     </xml>
 </macros>

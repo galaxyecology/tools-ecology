@@ -1,0 +1,164 @@
+<tool id="pyproj_coordinate_transform" name="Pyproj coordinate transform" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
+    <description>
+    Projection and coordinate transformation
+  </description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+    <!-- ============================================================ -->
+    <!-- REQUIREMENTS                                                 -->
+    <!-- ============================================================ -->
+    <requirements>
+        <requirement type="package" version="3.7.2">pyproj</requirement>
+        <requirement type="package" version="2.1.2">shapely</requirement>
+        <requirement type="package" version="2.2.2">pandas</requirement>
+    </requirements>
+    <required_files>
+        <include path="Pyproj.py"/>
+    </required_files>
+    <!-- ============================================================ -->
+    <!-- COMMAND                                                       -->
+    <!-- ============================================================ -->
+    <command detect_errors="exit_code"><![CDATA[
+    python3 '$__tool_directory__/Pyproj.py'
+    --input-crs '$input_crs'
+    --output-crs '$output_crs'
+    --csv '$csv'
+    #if $wkt_col
+      --wkt-col '$wkt_col'
+    #else
+      --lat-col '$lat_col'
+      --lon-col '$lon_col'
+    #end if
+  ]]></command>
+    <!-- ============================================================ -->
+    <!-- INPUTS                                                        -->
+    <!-- ============================================================ -->
+    <inputs>
+        <param name="input_crs" type="select" optional="false" label="Input CRS" help="Coordinate Reference System (CRS) of the input coordinates.">
+            <expand macro="crs_options" default_4326="true"/>
+        </param>
+        <param name="output_crs" type="select" optional="false" label="Output CRS" help="Coordinate Reference System (CRS) of the output coordinates.">
+            <expand macro="crs_options" default_3857="true"/>
+        </param>
+        <param name="csv" type="data" format="csv,tabular" label="Input CSV" help="CSV file containing coordinates to be transformed. Must include columns for latitude and longitude."/>
+        <param name="lat_col" type="data_column" data_ref="csv" use_header_names="true" optional="true" label="Latitude Column" help="Column in the input CSV that contains latitude values."/>
+        <param name="lon_col" type="data_column" data_ref="csv" use_header_names="true" optional="true" label="Longitude Column" help="Column in the input CSV that contains longitude values."/>
+        <param name="wkt_col" type="text" optional="true" value="" label="WKT Geometry Column (optional)" help="Name of the column containing WKT geometries to reproject. When provided, lat/lon columns are ignored and a new reprojected WKT geometry column is added instead.">
+            <expand macro="column_name_validator"/>
+        </param>
+    </inputs>
+    <!-- ============================================================ -->
+    <!-- OUTPUTS                                                       -->
+    <!-- ============================================================ -->
+    <outputs>
+        <data name="out" format="csv" label="${tool.name} on ${on_string}: coordinates reprojected to ${output_crs}" from_work_dir="output.csv"/>
+    </outputs>
+    <!-- ============================================================ -->
+    <!-- TESTS (se run dans le dossier test-data)                     -->
+    <!-- ============================================================ -->
+    <tests>
+        <!-- Test 1: plain lat/lon coordinate transformation -->
+        <test expect_num_outputs="1">
+            <param name="input_crs" value="EPSG:4326"/>
+            <param name="output_crs" value="EPSG:3857"/>
+            <param name="csv" value="wgs84_coordinates.csv" ftype="csv"/>
+            <param name="lat_col" value="2"/>
+            <param name="lon_col" value="3"/>
+            <output name="out" ftype="csv" value="output.csv"/>
+        </test>
+        <!-- Test 2: WKT geometry reprojection -->
+        <test expect_num_outputs="1">
+            <param name="input_crs" value="EPSG:4326"/>
+            <param name="output_crs" value="EPSG:3857"/>
+            <param name="csv" value="wgs84_coordinates.csv" ftype="csv"/>
+            <param name="wkt_col" value="wkt"/>
+            <output name="out" ftype="csv" value="output_wkt.csv"/>
+        </test>
+    </tests>
+    <!-- ============================================================ -->
+    <!-- HELP                                                          -->
+    <!-- ============================================================ -->
+    <help><![CDATA[
+.. class:: infomark
+ 
+**What it does**
+ 
+Reprojects coordinates or WKT geometries from one Coordinate Reference System (CRS) to another using the `pyproj <https://pyproj4.github.io/pyproj/>`_ library.
+ 
+Two modes are available depending on whether a WKT column is provided:
+ 
+- **Lat/Lon mode** *(default)* — reads plain latitude and longitude columns and writes two new columns with the reprojected X/Y values.
+- **WKT mode** — reads a column of WKT geometries (e.g. ``POINT``, ``LINESTRING``, ``POLYGON``) and writes a new column with the reprojected geometries in WKT format.
+ 
+-----
+ 
+**Inputs**
+ 
++---------------------+----------+------------------------------------------------------------+
+| Parameter           | Required | Description                                                |
++=====================+==========+============================================================+
+| Input CRS           | Yes      | CRS of the source data, chosen from the list of supported  |
+|                     |          | EPSG codes (e.g. ``EPSG:4326`` for WGS 84).                |
++---------------------+----------+------------------------------------------------------------+
+| Output CRS          | Yes      | Target CRS, chosen from the list of supported EPSG codes   |
+|                     |          | (e.g. ``EPSG:3857`` for Web Mercator).                     |
++---------------------+----------+------------------------------------------------------------+
+| Input CSV           | Yes      | CSV file containing the coordinates to transform.          |
++---------------------+----------+------------------------------------------------------------+
+| Latitude Column     | Yes      | Column holding latitude values, selected from the columns  |
+|                     |          | of the uploaded CSV. Required unless a WKT column is set.  |
++---------------------+----------+------------------------------------------------------------+
+| Longitude Column    | Yes      | Column holding longitude values, selected from the columns |
+|                     |          | of the uploaded CSV. Required unless a WKT column is set.  |
++---------------------+----------+------------------------------------------------------------+
+| WKT Geometry Column | No       | Name of the column holding WKT geometries. When set,       |
+|                     |          | lat/lon columns are ignored and geometry reprojection is   |
+|                     |          | performed instead. Letters, digits and underscores only.   |
++---------------------+----------+------------------------------------------------------------+
+ 
+-----
+ 
+**Output**
+ 
+A CSV file containing all original columns plus:
+ 
+- **Lat/Lon mode**: two added columns named ``<lon_col>_<output_crs>`` and ``<lat_col>_<output_crs>``. The original coordinate columns are renamed to ``<col>_<input_crs>`` for traceability.
+- **WKT mode**: one added column named ``<wkt_col>_<output_crs>`` containing the reprojected WKT geometries.
+ 
+-----
+ 
+**Examples**
+ 
+*Lat/Lon mode* — reproject WGS 84 coordinates to Web Mercator::
+ 
+    Input CRS:        EPSG:4326
+    Output CRS:       EPSG:3857
+    Latitude Column:  latitude
+    Longitude Column: longitude
+ 
+*WKT mode* — reproject WGS 84 linestrings to Web Mercator::
+ 
+    Input CRS:           EPSG:4326
+    Output CRS:          EPSG:3857
+    WKT Geometry Column: wkt
+ 
+-----
+ 
+**Supported EPSG codes**
+ 
+Input CRS and Output CRS are chosen from a curated list of 300 EPSG codes (verified against the official PROJ/EPSG geodetic database), grouped by region: worldwide reference frames, world-scale projected systems, the full global UTM grid (WGS 84, NAD83, ETRS89, SIRGAS 2000), and national/regional systems for Europe, Africa, the Middle East, Asia, Oceania, and the Americas. Defaults are ``EPSG:4326`` (WGS 84, GPS latitude/longitude) for Input CRS and ``EPSG:3857`` (Web Mercator) for Output CRS. See ``macros.xml`` for the full list, organised by section comments.
+
+  ]]></help>
+    <!-- ============================================================ -->
+    <!-- CITATIONS                                                     -->
+    <!-- ============================================================ -->
+    <citations>
+        <citation type="doi">10.5281/zenodo.2592232</citation>
+    </citations>
+    <!-- TODO: replace with your real name/ORCID if you have one -->
+    <creator>
+        <person givenName="Mathieu" familyName="Guimont" url="https://github.com/Mathmath34"/>
+        <organization name="ALAMOD" url="https://www.pepr-faircarbon.fr/projets/alamod/"/>
+    </creator>
+</tool>

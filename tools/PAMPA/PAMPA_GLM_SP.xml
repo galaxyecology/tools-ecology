@@ -1,9 +1,17 @@
-<tool id="pampa_glmsp" name="Compute GLM on population data" version="@VERSION@">
+<tool id="pampa_glmsp" name="Compute GLM on population data" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>Compute a GLM of your choice on population data</description>
     <macros>
         <import>pampa_macros.xml</import>
     </macros>
+    <edam_topics>
+        <edam_topic>topic_0610</edam_topic>
+        <edam_topic>topic_3050</edam_topic>
+    </edam_topics>
     <expand macro="GLM_requirements"/>
+    <required_files>
+        <include path="FunctExeCalcGLMSpGalaxy.r"/>
+        <include path="FunctPAMPAGalaxy.r"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript 
          '$__tool_directory__/FunctExeCalcGLMSpGalaxy.r' 
@@ -43,53 +51,51 @@
         <expand macro="pampa_output_GLM"/>
     </outputs>
     <tests>
-        <test expect_num_outputs="4"> 
+        <test expect_num_outputs="4">
             <param name="input_metric" value="Presence_absence_table_sansszcl_cropped.tabular"/>
             <param name="input_unitobs" value="Unitobs.tabular"/>
             <param name="varint" value="4"/>
             <param name="varrep" value="year,site,habitat"/>
             <param name="varrand" value="site"/>
-            <param name="advanced" value="advanced"/>
-            <param name="distrib" value="None"/>
-            <param name="rdata" value="true"/>
+            <conditional name="settings">
+                <param name="advanced" value="advanced"/>
+                <param name="distrib" value="None"/>
+                <param name="rdata" value="true"/>
+            </conditional>
             <output name="output_summary">
-                <assert_contents> 
+                <assert_contents>
                     <has_n_lines n="4"/>
-                </assert_contents> 
+                </assert_contents>
             </output>
-            <output name="output_recap">  
-                <assert_contents> 
+            <output name="output_recap">
+                <assert_contents>
                     <has_n_lines n="606"/>
-                </assert_contents> 
-            </output>     
-            <output name="output_rate">
-                <assert_contents> 
-                    <has_n_lines n="45"/>
-                </assert_contents> 
+                </assert_contents>
             </output>
-            <output_collection name="output_GLM"  type="list" count="3">
-                <element name="GLM_Abalstel" ftype="Rdata">
-                    <assert_contents> 
+            <output name="output_rate">
+                <assert_contents>
+                    <has_n_lines n="45"/>
+                </assert_contents>
+            </output>
+            <output_collection name="output_GLM" type="list" count="3">
+                <element name="GLM_Abalstel">
+                    <assert_contents>
                         <has_size value="199219" delta="10000"/>
-                    </assert_contents> 
+                    </assert_contents>
                 </element>
-                <element name="GLM_Hemifasc" ftype="Rdata">
-                    <assert_contents> 
+                <element name="GLM_Hemifasc">
+                    <assert_contents>
                         <has_size value="202264" delta="10000"/>
-                    </assert_contents> 
+                    </assert_contents>
                 </element>
-                <element name="GLM_Zebrscop" ftype="Rdata">
-                    <assert_contents> 
+                <element name="GLM_Zebrscop">
+                    <assert_contents>
                         <has_size value="207311" delta="10000"/>
-                    </assert_contents> 
+                    </assert_contents>
                 </element>
             </output_collection>
         </test>
     </tests>
-    <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
-    </edam_topics>
     <help><![CDATA[
 ===============================================================
 Compute GLM on population data with selected interest variables
@@ -167,9 +173,9 @@ Three text files :
 
 **Source**
 
-Derived from PAMPA scripts (https://wwz.ifremer.fr/pampa/Meth.-Outils/Outils) written by Yves Reecht.
+Derived from PAMPA scripts (wwz.ifremer.fr/pampa/Meth.-Outils/Outils) written by Yves Reecht.
 
   ]]></help>
-
-  <expand macro="pampa_bibref" />
+    <expand macro="pampa_bibref"/>
+    <expand macro="creator"/>
 </tool>

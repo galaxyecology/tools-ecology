@@ -1,14 +1,18 @@
-<tool id="ecology_homogeneity_normality" name="Homoscedasticity and normality" version="@VERSION@" profile="20.01">
+<tool id="ecology_homogeneity_normality" name="Homoscedasticity and normality" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="20.01">
     <description>Checks the homogeneity of the variance and the normality of the distribution
     </description>
     <macros>
         <import>macro.xml</import>
     </macros>
+    <expand macro="topic"/>
     <expand macro="Explo_requirements">
         <requirement type="package" version="3.0_10">r-car</requirement>
         <requirement type="package" version="1.1.1">r-cowplot</requirement>
         <requirement type="package" version="0.4.0">r-ggpubr</requirement>
     </expand>
+    <required_files>
+        <include path="graph_homogeneity_normality.r"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript
             '$__tool_directory__/graph_homogeneity_normality.r'
@@ -36,7 +40,7 @@
         </collection>
     </outputs>
     <tests>
-        <test>
+        <test expect_num_outputs="3">
             <param name="input" value="data_frenchbbs.tabular"/>
             <param name="colnames" value="true"/>
             <param name="date" value="2"/>
@@ -62,7 +66,6 @@
             </output_collection>
         </test>
     </tests>
-    <expand macro="topic"/>
     <help><![CDATA[
 ===============================================================
 Checks homogeneity of variance (homoscedasticity) and normality
@@ -102,5 +105,5 @@ Multiple PNG files representing the homogeneity of variances for each species at
 One PNG file representing the distribution of the data.
     ]]>    </help>
     <expand macro="explo_bibref"/>
-
+    <expand macro="creator"/>
 </tool>

@@ -2,7 +2,7 @@
     <description>estimation of ocean CO2 variables and nutrient concentrations</description>
     <macros>
         <token name="@VERSION@">0.9.3</token>
-        <token name="@VERSION_SUFFIX@">0</token>
+        <token name="@VERSION_SUFFIX@">1</token>
     </macros>
     <requirements>
         <requirement type="package" version="4.3.2">r-base</requirement>
@@ -34,7 +34,7 @@
     <inputs>
         <param name="input_data" type="data" format="csv,txt" label="Input a csv or txt file"/>
         <conditional name="mapping">
-            <param name="type" type="select" label="Do you have your own mapping to make?" help="The mapping is needed for ODV collection extracted from the ODV software.">      
+            <param name="type" type="select" label="Do you have your own mapping to make?" help="The mapping is needed for ODV collection extracted from the ODV software.">
                 <option value="no">No, the mapping is already correct in my data</option>
                 <option value="yes">Yes, I have to make a mapping</option>
             </param>
@@ -143,4 +143,10 @@ For more information read https://github.com/HCBScienceProducts/CANYON-B/blob/ma
     <citations>
         <citation type="doi">10.3389/fmars.2018.00328</citation>
     </citations>
+    <creator>
+        <person givenName="Marie" familyName="Jossé" url="https://orcid.org/0009-0008-0622-604X"/>
+        <organization name="EOSC Fair-Ease" url="https://fairease.eu/"/>
+        <organization name="Data Terra" url="https://www.data-terra.org/"/>
+        <organization name="POKaPOK" url="https://www.pokapok.org/"/>
+    </creator>
 </tool>

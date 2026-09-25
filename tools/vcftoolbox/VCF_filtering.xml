@@ -1,18 +1,14 @@
-<tool id="population_genomics_vcf_filtering" name="VCF filtering" version="@TOOL_VERSION@" profile="@PROFILE@">
+<tool id="population_genomics_vcf_filtering" name="VCF filtering" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>
         of individuals and variants
     </description>
-    
     <macros>
         <import>macros.xml</import>
     </macros>
- 
     <expand macro="requirements_bcftools_vcftools"/>
-
     <required_files>
-        <include path="VCF_filtering.sh" />
+        <include path="VCF_filtering.sh"/>
     </required_files>
-
     <command detect_errors="exit_code"><![CDATA[
         mkdir -p vcf_filtered_tmp &&
         mkdir -p vcf_filtered_directory &&
@@ -30,13 +26,9 @@
             --min-mac '${filter_mac.MAC}'
             --max-ho '${filter_het.MAX_Ho}'
     ]]></command>
-
     <inputs>
         <expand macro="param_vcf_input"/>
-
-        <param name="filter_order" type="select" multiple="true" display="checkboxes"
-            label="Select your filters in the order you wish to apply them"
-            help="Only the selected filters will be applied, in the exact order chosen here.">
+        <param name="filter_order" type="select" multiple="true" display="checkboxes" label="Select your filters in the order you wish to apply them" help="Only the selected filters will be applied, in the exact order chosen here.">
             <option value="A">A: Individuals with missing data</option>
             <option value="B">B: Loci with missing data</option>
             <option value="C">C: Genotype quality (GQ)</option>
@@ -45,53 +37,31 @@
             <option value="F">F: Minor allele count (MAC)</option>
             <option value="G">G: Heterozygosity</option>
         </param>
-
         <section name="filter_ind_missing_data" title="[A] Individuals with missing data" expanded="false">
-            <param name="MAX_MISSING_IND" type="float" value="0.2" min="0.0" max="1.0"
-                   label="Maximum missing data per individual (MAX_MISSING_IND)"
-                   help="Maximum fraction of missing genotypes allowed per individual." />
+            <param name="MAX_MISSING_IND" type="float" value="0.2" min="0.0" max="1.0" label="Maximum missing data per individual (MAX_MISSING_IND)" help="Maximum fraction of missing genotypes allowed per individual."/>
         </section>
-
         <section name="filter_loci_missing" title="[B] Loci with missing data" expanded="false">
-            <param name="MAX_MISSING_LOCI" type="float" min="0" max="1" value="0.20"
-                   label="Maximum missing data per locus (MAX_MISSING_LOCI)"
-                   help="Maximum fraction of missing genotypes allowed per locus." />
+            <param name="MAX_MISSING_LOCI" type="float" min="0" max="1" value="0.20" label="Maximum missing data per locus (MAX_MISSING_LOCI)" help="Maximum fraction of missing genotypes allowed per locus."/>
         </section>
-
         <section name="filter_GQ" title="[C] Genotype quality (GQ)" expanded="false">
-            <param name="MIN_GQ" type="integer" value="20" min="0"
-                   label="GQ minimum"
-                   help="Genotypes with a GQ below this value will be set to missing." />
+            <param name="MIN_GQ" type="integer" value="20" min="0" label="GQ minimum" help="Genotypes with a GQ below this value will be set to missing."/>
         </section>
-
         <section name="filter_DP" title="[D] Depth coverage (DP)" expanded="false">
-            <param name="MIN_DP" type="integer" value="6" min="1"
-                   label="Minimum read depth (MIN_DP)"
-                   help="Minimum read depth (DP) per genotype required to retain it.
-                   Typical values depend on sequencing coverage: 1-5 for permissive filtering, 10-20 for standard filtering, and >=30 for stringent filtering." />
+            <param name="MIN_DP" type="integer" value="6" min="1" label="Minimum read depth (MIN_DP)" help="Minimum read depth (DP) per genotype required to retain it.                    Typical values depend on sequencing coverage: 1-5 for permissive filtering, 10-20 for standard filtering, and &gt;=30 for stringent filtering."/>
         </section>
-
         <section name="filter_mac" title="[F] Minor allele count (MAC)" expanded="false">
-            <param name="MAC" type="integer" value="2" min="0"
-                   label="Minimum minor allele count per SNP (MIN_MAC)"
-                   help="Minimum number of minor alleles required for a locus to be retained." />
+            <param name="MAC" type="integer" value="2" min="0" label="Minimum minor allele count per SNP (MIN_MAC)" help="Minimum number of minor alleles required for a locus to be retained."/>
         </section>
-
         <section name="filter_het" title="[G] Heterozygosity" expanded="false">
-            <param name="MAX_Ho" type="float" min="0" max="1" value="0.6"
-                   label="Maximum observed heterozygosity per SNP"
-                   help="Maximum proportion of observed heterozygotes allowed to retain a variant. Used to detect paralogues and genotyping errors." />
+            <param name="MAX_Ho" type="float" min="0" max="1" value="0.6" label="Maximum observed heterozygosity per SNP" help="Maximum proportion of observed heterozygotes allowed to retain a variant. Used to detect paralogues and genotyping errors."/>
         </section>
-
     </inputs>
-
     <outputs>
         <data name="vcf_filtered" format="vcf" label="${tool.name}">
-                <discover_datasets pattern="__designation_and_ext__" directory="vcf_filtered_directory" visible="true" assign_primary_output="true"/>
+            <discover_datasets pattern="__designation_and_ext__" directory="vcf_filtered_directory" visible="true" assign_primary_output="true"/>
         </data>
         <data name="summary" from_work_dir="summary/summary.tabular" format="tabular" label="Filtering: Number of SNPs and individuals"/>
     </outputs>
-
     <tests>
         <!-- Test : [A] Individuals with missing data -->
         <test expect_num_outputs="2">
@@ -100,21 +70,18 @@
             <section name="filter_ind_missing_data">
                 <param name="MAX_MISSING_IND" value="0.2"/>
             </section>
-
             <output name="summary" ftype="tabular">
                 <assert_contents>
                     <has_n_lines n="3"/>
                     <has_line_matching expression="test_vcf\t1\tA_ind_missing\tMAX_MISSING_IND=0.2\t196\t500"/>
                 </assert_contents>
             </output>
-
             <output name="vcf_filtered" ftype="vcf" count="1">
                 <assert_contents>
                     <has_n_lines n="516" delta="2"/>
                 </assert_contents>
             </output>
         </test>
-
         <!-- Test : [B] Loci with missing data -->
         <test expect_num_outputs="2">
             <param name="vcf_input" value="test_vcf.vcf"/>
@@ -122,21 +89,18 @@
             <section name="filter_loci_missing">
                 <param name="MAX_MISSING_LOCI" value="0.2"/>
             </section>
-
             <output name="summary" ftype="tabular">
                 <assert_contents>
                     <has_n_lines n="3"/>
                     <has_line_matching expression="test_vcf\t1\tB_loci_missing\tMAX_MISSING_LOCI=0.2\t273\t331"/>
                 </assert_contents>
             </output>
-
             <output name="vcf_filtered" ftype="vcf" count="1">
                 <assert_contents>
                     <has_n_lines n="347" delta="2"/>
                 </assert_contents>
             </output>
         </test>
-
         <!-- Test : Multiple filters -->
         <test expect_num_outputs="2">
             <param name="vcf_input" value="test_vcf.vcf"/>
@@ -159,13 +123,11 @@
             <section name="filter_het">
                 <param name="MAX_Ho" value="0.6"/>
             </section>
-
             <output name="vcf_filtered" count="1">
                 <assert_contents>
                     <has_n_lines n="411" delta="2"/>
                 </assert_contents>
             </output>
-
             <output name="summary" ftype="tabular">
                 <assert_contents>
                     <has_n_lines n="9"/>
@@ -180,8 +142,7 @@
                 </assert_contents>
             </output>
         </test>
-
-            <!-- Test : Multiple filters + add_contigs function -->
+        <!-- Test : Multiple filters + add_contigs function -->
         <test expect_num_outputs="2">
             <param name="vcf_input" value="test_vcf_without_contigs.vcf"/>
             <param name="filter_order" value="A,D,C,E,B,F,G"/>
@@ -203,13 +164,11 @@
             <section name="filter_het">
                 <param name="MAX_Ho" value="0.6"/>
             </section>
-
             <output name="vcf_filtered" count="1">
                 <assert_contents>
                     <has_n_lines n="413" delta="2"/>
                 </assert_contents>
             </output>
-
             <output name="summary" ftype="tabular">
                 <assert_contents>
                     <has_n_lines n="9"/>
@@ -225,7 +184,6 @@
             </output>
         </test>
     </tests>
-
     <help><![CDATA[
 
 Usage
@@ -355,4 +313,5 @@ Threshold values for observed heterozygosity help identify technical artifacts. 
     <citations>
         <expand macro="citations_vcf_filtering"/>
     </citations>
+    <expand macro="creator"/>
 </tool>

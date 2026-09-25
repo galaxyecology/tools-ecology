@@ -5,7 +5,8 @@ long_description: |
   Tools to compute and analyse biodiversity metrics derived from PAMPA scripts
 name: pampa 
 owner: ecology 
-remote_repository_url: https://github.com/ColineRoyaux/PAMPA-Galaxy
+homepage_url: https://github.com/ColineRoyaux/PAMPA-Galaxy
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/PAMPA
 type: unrestricted
 
 repositories:

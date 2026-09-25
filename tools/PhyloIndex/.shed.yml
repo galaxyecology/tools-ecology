@@ -4,7 +4,7 @@ description: Tools to computes the phylodiversity index.
 homepage_url: https://github.com/Morphy427/phylodiversity_workflow/PyloIndex
 long_description: |
   This tool computes the phylodiversity index based on matched phylogenetic and occupancy data.
-remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/Phylodiversity_workflow
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/PhyloIndex
 type: unrestricted
 categories:
 - Ecology

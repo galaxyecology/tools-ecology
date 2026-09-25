@@ -1,0 +1,13 @@
+name: pyproj_coordinate_transform
+owner: ecology
+description: Reproject CSV coordinates or WKT geometries between CRS using pyproj
+long_description: |
+  This tool allows one to convert coordinates from one reference coordinate
+  system to another, either as plain latitude/longitude columns or as WKT
+  geometries, using the pyproj library.
+homepage_url: https://forge.inrae.fr/vre-agroenv-gaia-data/alamod/meteo_data_extraction_formatting/-/tree/main/Pyproj
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/pyproj_coordinate_transform
+type: unrestricted
+categories:
+  - Ecology
+  - Climate Analysis

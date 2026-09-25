@@ -4,6 +4,7 @@ on:
     paths-ignore:
       - 'deprecated/**'
       - 'docs/**'
+      - 'interactive/**'
       - '.github/**'
       - '*'
   push:
@@ -13,6 +14,7 @@ on:
     paths-ignore:
       - 'deprecated/**'
       - 'docs/**'
+      - 'interactive/**'
       - '.github/**'
       - '*'
 env:
@@ -407,6 +409,7 @@ jobs:
           Deployment status: **${{ needs.deploy.result }}**
 
           https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
 
   determine-success:
     name: Check workflow success

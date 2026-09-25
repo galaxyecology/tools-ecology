@@ -7,6 +7,9 @@
         <organization name="EOSC AquaINFRA" url="https://aquainfra.eu/"/>
     </creator>
     <expand macro="requirements"/>
+    <required_files>
+        <include path="aquainfra_ogc_api_processes.R"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
     Rscript '$__tool_directory__/aquainfra_ogc_api_processes.R'
         --outputData '$output_data'
@@ -56,6 +59,8 @@
                 <option value="map-trends-static">map-trends-static: Spatial visualisation of regions and data points</option>
                 <option value="match-data">match-data: Combine and match biodiversity data from separate sources</option>
                 <option value="mean-by-group">mean-by-group: Return group average</option>
+                <option value="mitgcm-compile-run-model">mitgcm-compile-run-model: MITgcm Model Compile and Run</option>
+                <option value="mitgcm-conf">mitgcm-conf: MITgcm Config Generation</option>
                 <option value="mitgcm-prep">mitgcm-prep: MITgcm Preprocessing</option>
                 <option value="mitgcm-resultplot">mitgcm-resultplot: MITgcm Plotting Tool</option>
                 <option value="mitgcm-run-model">mitgcm-run-model: MITgcm Model Run</option>
@@ -208,7 +213,7 @@
                 <param name="input3" label="Aggregated EO turbidity data" help="EO data aggregated into daily values from areas along the route of the ship. The URL needs to start with http(s). (URL must be stored in a .txt file)" type="data" format="txt"/>
             </when>
             <when value="filter-clip-clean-extent">
-                <param name="inputFile1_gpkg" label="NUTS3 regions"  help="EU NUTS3 regions saved in geopackage. It should be in same coordinate system as the inputted river catchment dataset and overlap this - ideally it should fully contain its extent. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="inputFile1_gpkg" label="NUTS3 regions" help="EU NUTS3 regions saved in geopackage. It should be in same coordinate system as the inputted river catchment dataset and overlap this - ideally it should fully contain its extent. (URL must be stored in a .txt file)" type="data" format="txt"/>
                 <param name="inputFile2_gpkg" label="LAU regions." value="" help="EU LAU (Local Areal Unit) regions saved in geopackage. It should be in same coordinate system as the other inputted datasets and overlap these - ideally fully contained in the extent of the inputted river catchment dataset." type="text">
                     <validator type="empty_field" message="You must provide a value."/>
                 </param>
@@ -402,13 +407,81 @@
                     <validator type="empty_field" message="You must provide a value."/>
                 </param>
             </when>
-            <when value="mitgcm-prep">
-                <param name="input_url_IC_OBS" label="Zipped Copernicus Input Data (URL) input_url_IC_OBS" optional="true" help="URL that points to (zipped) Copernicus data necessary to generate initial and boundary conditions for the model. Optional: If none of the input URLs are provided, pre-downloaded data will be used. (URL must be stored in a .txt file)" type="data" format="txt"/>
-                <param name="input_url_AF" label="Copernicus Input Data (URL) input_url_AF" optional="true" help="URL that points to Copernicus input data that the preprocessing needs. Note that the filename has to match the pattern 'era5_{RUN_DATE}_{RUN_DATE+PREDICTION_DAYS}.zip', otherwise the preprocessing will fail. Optional: If none of the input URLs are provided, pre-downloaded data will be used. (URL must be stored in a .txt file)" type="data" format="txt"/>
-                <param name="PREDICTION_DAYS" label="PREDICTION_DAYS" optional="false" value="0" help="Number of days to run the simulation from RUN_DATE. Format: Positive integer" type="integer"/>
-                <param name="RUN_DATE" label="RUN_DATE" optional="false" value="" help="DATE from which the simulation starts. Format: yyyy-mm-dd" type="text">
+            <when value="mitgcm-compile-run-model">
+                <param name="preprocessing_output_directory" label="preprocessing_output_directory" help="Link to the directory containing the preprocessing output to use as input for the model run (URL must be stored in a .txt file)" type="data" format="txt"/>
+            </when>
+            <when value="mitgcm-conf">
+                <param name="RUN_DATE" label="Run date" value="" help="Simulation start date. Format 2024-01-01" type="text">
                     <validator type="empty_field" message="You must provide a value."/>
                 </param>
+                <param name="NX" label="NX" value="0" help="Dimensions of the model grid (number of node points) in the longitude direction." type="integer"/>
+                <param name="NY" label="NY" value="0" help="Dimensions of the model grid (number of node points) in the latitude direction." type="integer"/>
+                <param name="NZ" label="NZ" value="0" help="Dimensions of the model grid (number of vertical levels) in the depth direction." type="integer"/>
+                <param name="XMIN" label="XMIN" value="0.0" help="Minimum longitude. Center longitude value of the more southwestern cell." type="float"/>
+                <param name="YMIN" label="YMIN" value="0.0" help="Minimum latitude. Center latitude value of the more southwestern cell." type="float"/>
+                <param name="DX" label="DX" value="0.0" help="Resolution (in degrees) in the longitude direction." type="float"/>
+                <param name="DY" label="DY" value="0.0" help="Resolution (in degrees) in the latitude direction." type="float"/>
+                <param name="MINDEPTH" label="MINDEPTH" value="0.0" help="Minimum model depth in metres (cell center value)." type="float"/>
+                <param name="MAXDEPTH" label="MAXDEPTH" value="0.0" help="Maximum model depth in metres (cell center value)." type="float"/>
+                <param name="PREDICTION_DAYS" label="Prediction days" value="0" help="Number of days to run the simulation." type="integer"/>
+                <param name="TIME_STEP" label="Time step" optional="true" value="200" help="Time step of the MITgcm computations." type="integer"/>
+                <param name="BC_SOUTH" label="BC South" optional="true" checked="0" help="Open Boundary Condition in the southern model boundary." type="boolean" truevalue="True" falsevalue="False"/>
+                <param name="BC_NORTH" label="BC North" optional="true" checked="0" help="Open Boundary Condition in the northern model boundary." type="boolean" truevalue="True" falsevalue="False"/>
+                <param name="BC_WEST" label="BC West" optional="true" checked="0" help="Open Boundary Condition in the western model boundary." type="boolean" truevalue="True" falsevalue="False"/>
+                <param name="BC_EAST" label="BC East" optional="true" checked="0" help="Open Boundary Condition in the eastern model boundary." type="boolean" truevalue="True" falsevalue="False"/>
+                <param name="RIVER_PERIOD" label="River period" optional="true" value="86400" help="Period of the data provided for the rivers. All river data must have the same period." type="integer"/>
+                <param name="RIVER_BC_SOUTH" label="River BC South" optional="true" checked="0" help="Boolean value specifying if the southern boundary has any river." type="boolean" truevalue="True" falsevalue="False"/>
+                <param name="RIVER_BC_NORTH" label="River BC North" optional="true" checked="0" help="Boolean value specifying if the northern boundary has any river." type="boolean" truevalue="True" falsevalue="False"/>
+                <param name="RIVER_BC_WEST" label="River BC West" optional="true" checked="0" help="Boolean value specifying if the western boundary has any river." type="boolean" truevalue="True" falsevalue="False"/>
+                <param name="RIVER_BC_EAST" label="River BC East" optional="true" checked="0" help="Boolean value specifying if the eastern boundary has any river." type="boolean" truevalue="True" falsevalue="False"/>
+                <param name="useRBCStemp" label="useRBCStemp" optional="true" checked="0" help="Boolean value indicating whether to use relaxing boundary conditions (RBCS) for temperature (T)." type="boolean" truevalue="True" falsevalue="False"/>
+                <param name="useRBCSsalt" label="useRBCSsalt" optional="true" checked="0" help="Boolean value indicating whether to use relaxing boundary conditions (RBCS) for salinity (S)." type="boolean" truevalue="True" falsevalue="False"/>
+                <param name="useRBCSuVel" label="useRBCSuVel" optional="true" checked="0" help="Boolean value indicating whether to use relaxing boundary conditions (RBCS) for zonal velocity (U)." type="boolean" truevalue="True" falsevalue="False"/>
+                <param name="useRBCSvVel" label="useRBCSvVel" optional="true" checked="0" help="Boolean value indicating whether to use relaxing boundary conditions (RBCS) for meridional velocity (V)." type="boolean" truevalue="True" falsevalue="False"/>
+                <param name="tauRelaxT" label="tauRelaxT" optional="true" value="0.0" help="timescales (in seconds) for relaxing T; required if the corresponding useRBCStemp is true." type="float"/>
+                <param name="tauRelaxS" label="tauRelaxS" optional="true" value="0.0" help="timescales (in seconds) for relaxing S; required if the corresponding useRBCSsalt is true." type="float"/>
+                <param name="tauRelaxU" label="tauRelaxU" optional="true" value="0.0" help="timescales (in seconds) for relaxing U; required if the corresponding useRBCSuVel is true." type="float"/>
+                <param name="tauRelaxV" label="tauRelaxV" optional="true" value="0.0" help="timescales (in seconds) for relaxing V; required if the corresponding useRBCSvVel is true." type="float"/>
+                <param name="Urelaxobcsinner" label="Urelaxobcsinner" optional="true" value="172800.0" help="Sponge layer parameter. Relaxation time scale at the innermost sponge layer point of a meridional OB (s)." type="float"/>
+                <param name="Urelaxobcsbound" label="Urelaxobcsbound" optional="true" value="43200.0" help="Sponge layer parameter. Relaxation time scale at the outermost sponge layer point of a meridional OB (s)." type="float"/>
+                <param name="Vrelaxobcsinner" label="Vrelaxobcsinner" optional="true" value="172800.0" help="Sponge layer parameter. Relaxation time scale at the innermost sponge layer point of a zonal OB (s)." type="float"/>
+                <param name="Vrelaxobcsbound" label="Vrelaxobcsbound" optional="true" value="43200.0" help="Sponge layer parameter. Relaxation time scale at the outermost sponge layer point of a zonal OB (s)." type="float"/>
+                <param name="spongeThickness" label="spongeThickness" optional="true" value="5" help="Sponge layer parameter. Sponge layer thickness (in grid points)." type="integer"/>
+                <param name="viscAh" label="viscAh" optional="true" value="0.5" help="Viscosities and diffusivities parameters using Leith and Smagorinsky and eosType='JMD95Z'. Lateral eddy viscosity (m2/s)." type="float"/>
+                <param name="viscAz" label="viscAz" optional="true" value="1e-06" help="Viscosities and diffusivities parameters using Leith and Smagorinsky and eosType='JMD95Z'. Lateral eddy viscosity acts on vorticity part (m2/s)." type="float"/>
+                <param name="viscA4" label="viscA4" optional="true" value="0.0" help="Lateral biharmonic viscosity (m4/s)." type="float"/>
+                <param name="diffKhT" label="diffKhT" optional="true" value="0.01" help="Viscosities and diffusivities parameters using Leith and Smagorinsky and eosType='JMD95Z'. Laplacian diffusivity of heat laterally (m2/s)." type="float"/>
+                <param name="diffKzT" label="diffKzT" optional="true" value="1e-06" help="Viscosities and diffusivities parameters using Leith and Smagorinsky and eosType='JMD95Z'. Laplacian diffusivity of heat vertically (m2/s)." type="float"/>
+                <param name="diffK4T" label="diffK4T" optional="true" value="0.0" help="Viscosities and diffusivities parameters using Leith and Smagorinsky and eosType='JMD95Z'. Biharmonic diffusivity of heat laterally (m4/s)." type="float"/>
+                <param name="diffKhS" label="diffKhS" optional="true" value="0.01" help="Viscosities and diffusivities parameters using Leith and Smagorinsky and eosType='JMD95Z'. Laplacian diffusivity of salt laterally (m2/s)." type="float"/>
+                <param name="diffKzS" label="diffKzS" optional="true" value="1e-06" help="Viscosities and diffusivities parameters using Leith and Smagorinsky and eosType='JMD95Z'. Laplacian diffusivity of salt vertically (m2/s)." type="float"/>
+                <param name="diffK4S" label="diffK4S" optional="true" value="0.0" help="Viscosities and diffusivities parameters using Leith and Smagorinsky and eosType='JMD95Z'. Biharmonic diffusivity of salt laterally (m4/s)." type="float"/>
+                <param name="viscC2leith" label="viscC2leith" optional="true" value="1.0" help="Viscosities and diffusivities parameters using Leith and Smagorinsky and eosType='JMD95Z'. Leith harmonic viscosity factor (vorticity part) (non-dim.)." type="float"/>
+                <param name="viscC4leith" label="viscC4leith" optional="true" value="0.1" help="Viscosities and diffusivities parameters using Leith and Smagorinsky and eosType='JMD95Z'. Leith biharmonic viscosity factor (divergence part) (non-dim.)." type="float"/>
+                <param name="viscC2leithD" label="viscC2leithD" optional="true" value="1.0" help="Viscosities and diffusivities parameters using Leith and Smagorinsky and eosType='JMD95Z'. Leith harmonic viscosity factor (vorticity part) (non-dim.)." type="float"/>
+                <param name="viscC4leithD" label="viscC4leithD" optional="true" value="0.1" help="Viscosities and diffusivities parameters using Leith and Smagorinsky and eosType='JMD95Z'. Leith biharmonic viscosity factor (divergence part) (non-dim.)." type="float"/>
+                <param name="viscC2Smag" label="viscC2Smag" optional="true" value="1.0" help="Viscosities and diffusivities parameters using Leith and Smagorinsky and eosType='JMD95Z'. Smagorinsky harmonic viscosity factor (non-dim.)." type="float"/>
+                <param name="viscC4Smag" label="viscC4Smag" optional="true" value="0.1" help="Viscosities and diffusivities parameters using Leith and Smagorinsky and eosType='JMD95Z'. Smagorinsky biharmonic viscosity factor (non-dim.)." type="float"/>
+                <param name="viscAhGridMax" label="viscAhGridMax" optional="true" value="1.0" help="Viscosities and diffusivities parameters using Leith and Smagorinsky and eosType='JMD95Z'. Maximum lateral eddy (grid-dependent) viscosity (non-dim.)." type="float"/>
+                <param name="viscA4GridMax" label="viscA4GridMax" optional="true" value="1.0" help="Viscosities and diffusivities parameters using Leith and Smagorinsky and eosType='JMD95Z'. Maximum biharmonic (grid-dependent) viscosity (non-dim.)." type="float"/>
+            </when>
+            <when value="mitgcm-prep">
+                <param name="input_url_IC_OB" label="Initial and Boundary conditions input data (CMEMS data)" help="URL that points to (zipped) Copernicus Marine Service (CMEMS) data necessary to generate initial and boundary conditions for the model. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_url_AF" label="Atmospheric forcing input data (CCDS ERA5 data)" help="URL that points to Copernicus atmospheric input data (ERA5 reanalysis data) that the preprocessing needs. Note that the filename has to match the pattern 'era5_{RUN_DATE}_{RUN_DATE+PREDICTION_DAYS}.zip', otherwise the preprocessing will fail. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_url_config_file" label="Config file (configure.inc)" help="URL that points to the configure.inc file to be used for preprocessing. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_url_bathymetry_binary" label="Bathymetry file (binary)" help="URL that points to the bathymetry file to be used for preprocessing and in model execution (binary format). (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_url_bathymetry_netcdf" label="Bathymetry file (NetCDF)" help="URL that points to the bathymetry file to be used for preprocessing (NetCDF format). (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_url_depths" label="Depths file" help="URL that points to the depths file to be used for preprocessing (*.dat format). (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_url_river_config" label="River configuration file (optional)" optional="true" help="URL that points to the River configuration file to be used for preprocessing (*.csv format). Contains information of: river name, position in the model grid, side in whcih is located, number of vertical and horizontal cells, salinity value and if it is a climatology. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_url_rivers" label="Individual river files (optional)" optional="true" help="List of URLs that point to the (zipped or not) river input files to be used for preprocessing. If the river configuration file is specified, this has to be provided too." type="data" format="txt"/>
+                <param name="input_url_rbcs_T" label="RBCS Temperature File (optional)" optional="true" help="URL that points to the file with 3-D relaxation field values for T to be used for preprocessing. Please also specify the corresponding mask. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_url_rbcs_T_mask" label="RBCS Temperature Mask File (optional)" optional="true" help="URL that points to 3-D file with mask for T to be used for preprocessing. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_url_rbcs_S" label="RBCS Salinity File (optional)" optional="true" help="URL that points to the file with 3-D relaxation field values for S to be used for preprocessing. Please also specify the corresponding mask. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_url_rbcs_S_mask" label="RBCS Salinity Mask File (optional)" optional="true" help="URL that points to 3-D file with mask for S to be used for preprocessing. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_url_rbcs_U" label="RBCS zonal velocity (U) File (optional)" optional="true" help="URL that points to the file with 3-D relaxation field values for zonal velocity (U) to be used for preprocessing. Please also specify the corresponding mask. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_url_rbcs_U_mask" label="RBCS zonal velocity (U) Mask File (optional)" optional="true" help="URL that points to 3-D file with mask for zonal velocity (U) to be used for preprocessing. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_url_rbcs_V" label="RBCS meridional velocity (V) File (optional)" optional="true" help="URL that points to the file with 3-D relaxation field values for meridional velocity (V) to be used for preprocessing. Please also specify the corresponding mask. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_url_rbcs_V_mask" label="RBCS meridional velocity (V) Mask File (optional)" optional="true" help="URL that points to 3-D file with mask for meridional velocity (V) to be used for preprocessing. (URL must be stored in a .txt file)" type="data" format="txt"/>
             </when>
             <when value="mitgcm-resultplot">
                 <param name="netcdf_input_file" label="NetCDF input file" optional="false" help="The NetCDF input file that should be plotted. It must comply to some specific properties with respect to variables. (URL must be stored in a .txt file)" type="data" format="txt"/>
@@ -539,8 +612,39 @@
                 <param name="storm_date" label="Storm date" optional="true" help="Optional storm date (YYYY-MM-DD) to mark with a dashed vertical line." type="text"/>
             </when>
             <when value="owt-classification">
-                <param name="input_data_url" label="Input data" help="URL to your input file. Find example data on https://github.com/bishun945/pyOWT/tree/main/projects/AquaINFRA. (URL must be stored in a .txt file)" type="data" format="txt"/>
-                <param name="input_sensor_option" label="Sensor and type of input" optional="false" help="Type of input (e.g. in-situ, satellite) and spectral band configuration of satellite mission (includes adaptation to sensor spectral response functions)." type="select">
+                <param name="input_data_url" label="Input data" optional="false" help="URL to your input file. Find example data on https://github.com/bishun945/pyOWT/tree/main/projects/AquaINFRA. (URL must be stored in a .txt file)" type="data" format="txt"/>
+                <param name="input_sensor_option" label="Type of input and sensor name" optional="false" help="Spectral band configuration of satellite mission (includes adaptation to sensor spectral response functions). SATELLITE: for NetCDF satellite product containing reflectance (Sentinel-3 OLCI Level-2, or CMEMS Level-3). INSITU: for insitu or simulated text data input (first line wavelength, following lines remote-sensing reflectance). INSITU - SEABASS: for insitu data in seabass format. INSITU - WATERHYPERNET: for PANTHYR/HYPSTAR insitu data in NetCDF format." type="select">
+                    <option value="IN SITU - HYPER">IN SITU - HYPER</option>
+                    <option value="IN SITU - SEABASS">IN SITU - SEABASS</option>
+                    <option value="IN SITU - WATERHYPERNET">IN SITU - WATERHYPERNET</option>
+                    <option value="IN SITU - AERONET_OC_1">IN SITU - AERONET_OC_1</option>
+                    <option value="IN SITU - AERONET_OC_2">IN SITU - AERONET_OC_2</option>
+                    <option value="IN SITU - CLMS_OLCI">IN SITU - CLMS_OLCI</option>
+                    <option value="IN SITU - CLMS_MSI">IN SITU - CLMS_MSI</option>
+                    <option value="IN SITU - CMEMS_ARC_HROC">IN SITU - CMEMS_ARC_HROC</option>
+                    <option value="IN SITU - CMEMS_BAL_HROC">IN SITU - CMEMS_BAL_HROC</option>
+                    <option value="IN SITU - CMEMS_BAL_MYINT">IN SITU - CMEMS_BAL_MYINT</option>
+                    <option value="IN SITU - CMEMS_BAL_NRT">IN SITU - CMEMS_BAL_NRT</option>
+                    <option value="IN SITU - CMEMS_BLK_HROC">IN SITU - CMEMS_BLK_HROC</option>
+                    <option value="IN SITU - CMEMS_BLK_MYINT">IN SITU - CMEMS_BLK_MYINT</option>
+                    <option value="IN SITU - CMEMS_BLK_NRT">IN SITU - CMEMS_BLK_NRT</option>
+                    <option value="IN SITU - CMEMS_IBI_HROC">IN SITU - CMEMS_IBI_HROC</option>
+                    <option value="IN SITU - CMEMS_MED_HROC">IN SITU - CMEMS_MED_HROC</option>
+                    <option value="IN SITU - CMEMS_MED_MYINT">IN SITU - CMEMS_MED_MYINT</option>
+                    <option value="IN SITU - CMEMS_MED_NRT">IN SITU - CMEMS_MED_NRT</option>
+                    <option value="IN SITU - CMEMS_NWS_HROC">IN SITU - CMEMS_NWS_HROC</option>
+                    <option value="IN SITU - GOCI">IN SITU - GOCI</option>
+                    <option value="IN SITU - HAWKEYE">IN SITU - HAWKEYE</option>
+                    <option value="IN SITU - ENMAP">IN SITU - ENMAP</option>
+                    <option value="IN SITU - MERIS">IN SITU - MERIS</option>
+                    <option value="IN SITU - PACE OCI">IN SITU - PACE OCI</option>
+                    <option value="IN SITU - OCTS">IN SITU - OCTS</option>
+                    <option value="IN SITU - LANDSAT-8 OLI">IN SITU - LANDSAT-8 OLI</option>
+                    <option value="IN SITU - SeaWiFS">IN SITU - SeaWiFS</option>
+                    <option value="IN SITU - MODIS">IN SITU - MODIS</option>
+                    <option value="IN SITU - SENTINEL-2 MSI">IN SITU - SENTINEL-2 MSI</option>
+                    <option value="IN SITU - SENTINEL-3 OLCI">IN SITU - SENTINEL-3 OLCI</option>
+                    <option value="IN SITU - VIIRS">IN SITU - VIIRS</option>
                     <option value="SATELLITE - CMEMS_ARC_HROC">SATELLITE - CMEMS_ARC_HROC</option>
                     <option value="SATELLITE - CMEMS_BAL_HROC">SATELLITE - CMEMS_BAL_HROC</option>
                     <option value="SATELLITE - CMEMS_BAL_MYINT">SATELLITE - CMEMS_BAL_MYINT</option>
@@ -550,41 +654,8 @@
                     <option value="SATELLITE - CMEMS_BLK_NRT">SATELLITE - CMEMS_BLK_NRT</option>
                     <option value="SATELLITE - CMEMS_IBI_HROC">SATELLITE - CMEMS_IBI_HROC</option>
                     <option value="SATELLITE - CMEMS_MED_HROC">SATELLITE - CMEMS_MED_HROC</option>
-                    <option value="SATELLITE - CMEMS_MED_MYINT">SATELLITE - CMEMS_MED_MYINT</option>
-                    <option value="SATELLITE - CMEMS_MED_NRT">SATELLITE - CMEMS_MED_NRT</option>
                     <option value="SATELLITE - CMEMS_NWS_HROC">SATELLITE - CMEMS_NWS_HROC</option>
-                    <option value="SATELLITE - SENTINEL3-OLCI">SATELLITE - SENTINEL3-OLCI</option>
-                    <option value="INSITU - SEABASS">INSITU - SEABASS</option>
-                    <option value="INSITU - WATERHYPERNET">INSITU - WATERHYPERNET</option>
-                    <option value="INSITU - HYPER">INSITU - HYPER</option>
-                    <option value="INSITU - AERONET_OC_1">INSITU - AERONET_OC_1</option>
-                    <option value="INSITU - AERONET_OC_2">INSITU - AERONET_OC_2</option>
-                    <option value="INSITU - CLMS_OLCI">INSITU - CLMS_OLCI</option>
-                    <option value="INSITU - CLMS_MSI">INSITU - CLMS_MSI</option>
-                    <option value="INSITU - CMEMS_ARC_HROC">INSITU - CMEMS_ARC_HROC</option>
-                    <option value="INSITU - CMEMS_BAL_HROC">INSITU - CMEMS_BAL_HROC</option>
-                    <option value="INSITU - CMEMS_BAL_MYINT">INSITU - CMEMS_BAL_MYINT</option>
-                    <option value="INSITU - CMEMS_BAL_NRT">INSITU - CMEMS_BAL_NRT</option>
-                    <option value="INSITU - CMEMS_BLK_HROC">INSITU - CMEMS_BLK_HROC</option>
-                    <option value="INSITU - CMEMS_BLK_MYINT">INSITU - CMEMS_BLK_MYINT</option>
-                    <option value="INSITU - CMEMS_BLK_NRT">INSITU - CMEMS_BLK_NRT</option>
-                    <option value="INSITU - CMEMS_IBI_HROC">INSITU - CMEMS_IBI_HROC</option>
-                    <option value="INSITU - CMEMS_MED_HROC">INSITU - CMEMS_MED_HROC</option>
-                    <option value="INSITU - CMEMS_MED_MYINT">INSITU - CMEMS_MED_MYINT</option>
-                    <option value="INSITU - CMEMS_MED_NRT">INSITU - CMEMS_MED_NRT</option>
-                    <option value="INSITU - CMEMS_NWS_HROC">INSITU - CMEMS_NWS_HROC</option>
-                    <option value="INSITU - GOCI">INSITU - GOCI</option>
-                    <option value="INSITU - HAWKEYE">INSITU - HAWKEYE</option>
-                    <option value="INSITU - ENMAP">INSITU - ENMAP</option>
-                    <option value="INSITU - MERIS">INSITU - MERIS</option>
-                    <option value="INSITU - PACE">INSITU - PACE</option>
-                    <option value="INSITU - OCTS">INSITU - OCTS</option>
-                    <option value="INSITU - LANDSAT-8">INSITU - LANDSAT-8</option>
-                    <option value="INSITU - SeaWiFS">INSITU - SeaWiFS</option>
-                    <option value="INSITU - MODIS">INSITU - MODIS</option>
-                    <option value="INSITU - SENTINEL2-MSI">INSITU - SENTINEL2-MSI</option>
-                    <option value="INSITU - SENTINEL3-OLCI">INSITU - SENTINEL3-OLCI</option>
-                    <option value="INSITU - VIIRS">INSITU - VIIRS</option>
+                    <option value="SATELLITE - SENTINEL-3 OLCI">SATELLITE - SENTINEL-3 OLCI</option>
                 </param>
             </when>
             <when value="peri-conv">

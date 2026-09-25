@@ -1,9 +1,13 @@
-<tool id="srs_process_data" name="Compare diversity indicators" version="@VERSION@" profile="20.01">
+<tool id="srs_process_data" name="Compare diversity indicators" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="20.01">
     <description>with remote sensing data</description>
     <macros>
         <import>macro.xml</import>
     </macros>
     <expand macro="SRS_requirements"/>
+    <required_files>
+        <include path="comparison_div.r"/>
+        <include path="functions.r"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         #import re 
         #if $method.type == 'envi_bil': 
@@ -70,10 +74,12 @@
         </collection>
     </outputs>
     <tests>
-        <test>
-            <param name="type" value="envi_bil"/>
-            <param name="input_raster" value="S2A_Subset"/>
-            <param name="input_header" value="S2A_Subset.hdr"/>
+        <test expect_num_outputs="3">
+            <conditional name="method">
+                <param name="type" value="envi_bil"/>
+                <param name="input_raster" value="S2A_Subset"/>
+                <param name="input_header" value="S2A_Subset.hdr"/>
+            </conditional>
             <param name="input_plot" value="S2A_T33NUD_Plots.zip"/>
             <param name="choice" value="Y"/>
             <output name="output_div">
@@ -134,5 +140,6 @@ In order to get such input we advise to use the tool preprocessing sentinel 2 da
     - PCoA#3 allows differentiating medium diversity forests from high diversity forests and low vegetation.
 
     ]]>    </help>
-        <expand macro="SRS_BDMRref"/>
+    <expand macro="SRS_BDMRref"/>
+    <expand macro="creator"/>
 </tool>
