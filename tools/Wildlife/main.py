@@ -44,6 +44,7 @@ from yolov5.utils.general import scale_boxes, xywh2xyxy
 
 from collections import Counter, defaultdict
 
+
 def batch_image_detection2(
     self,
     data_path,
