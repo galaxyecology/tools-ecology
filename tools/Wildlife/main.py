@@ -7,6 +7,7 @@ import os
 import re
 import shutil
 import time
+from collections import Counter, defaultdict
 from datetime import datetime
 from pathlib import Path
 
@@ -41,8 +42,6 @@ from transformers import (AutoImageProcessor, AutoModelForImageClassification,
                           pipeline)
 
 from yolov5.utils.general import scale_boxes, xywh2xyxy
-
-from collections import Counter, defaultdict
 
 
 def batch_image_detection2(
