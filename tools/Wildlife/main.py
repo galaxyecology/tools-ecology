@@ -42,6 +42,7 @@ from transformers import (AutoImageProcessor, AutoModelForImageClassification,
 
 from yolov5.utils.general import scale_boxes, xywh2xyxy
 
+from collections import Counter, defaultdict
 
 def batch_image_detection2(
     self,
@@ -595,8 +596,6 @@ print(f"Summary predictions saved: {output_file_recap}")
 # ============================================================
 # RENAME BOXED IMAGES: internal Galaxy name -> original element name
 # ============================================================
-
-from collections import Counter, defaultdict
 
 safe_names = {
     p: re.sub(r"[^\w.\-]+", "_", n) for p, n in file_to_name.items()
