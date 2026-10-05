@@ -166,6 +166,39 @@ compute_div_stats <- function(gen_file, dataset_name, marker_type) {
   return(div_stats_dataset)
 }
 
+#######################################################################
+# Function: pairwise_wc_fst
+# Description : Computes pairwise Weir & Cockerham (1984) Fst between all
+# populations of a genind object. Each pair is processed separately with
+# hierfstat::genet.dist, because the function fails on pairs of populations
+# without any polymorphic locus (Fst is undefined: 0/0). Such pairs are
+# set to NA and reported in the console. Returns a "dist" object with the
+# "Labels" attribute used by the downstream functions.
+#######################################################################
+# Pairwise WC84 Fst; NA when a pair has no polymorphic locus (Fst undefined)
+pairwise_wc_fst <- function(gen_file) {
+  pops <- levels(adegenet::pop(gen_file))
+  fst_mat <- matrix(NA_real_, length(pops), length(pops),
+                    dimnames = list(pops, pops))
+
+  for (i in 2:length(pops)) {
+    for (j in 1:(i - 1)) {
+      sub <- gen_file[adegenet::pop(gen_file) %in% pops[c(i, j)]]
+      adegenet::pop(sub) <- factor(adegenet::pop(sub))   # drop unused levels
+
+      val <- tryCatch(
+        as.numeric(hierfstat::genet.dist(sub, diploid = TRUE, method = "WC84")),
+        error = function(e) {
+          cat(sprintf("NOTE: Fst set to NA for %s vs %s (no polymorphic locus in this pair)\n",
+                      pops[i], pops[j]))
+          NA_real_
+        })
+      fst_mat[i, j] <- fst_mat[j, i] <- val
+    }
+  }
+  stats::as.dist(fst_mat)   # keeps the "Labels" attribute used downstream
+}
+
 ########################################################################
 # Function : pairwise_values_Fst_DJost
 ########################################################################
@@ -173,7 +206,7 @@ pairwise_values_Fst_DJost <- function(gen_path) {
   matrix_list <- list()
 
   if (calc_fst) {
-    matrix_list$fst <- genet.dist(gen_path, diploid = TRUE, method = "WC84")
+    matrix_list$fst <- pairwise_wc_fst(gen_path)
   }
   if (calc_gst) {
     matrix_list$gst_pr_nei <- pairwise_Gst_Nei(gen_path)
@@ -295,19 +328,51 @@ save_matrices <- function(matrix_list, dataset_name) {
 # Function : compute_boot_fst
 # Description : Tests pairwise Fst significance using bootstrap
 # Returns a matrix of p-values
+# Pairs of populations without any polymorphic locus are skipped (NA in the
+# output matrices), since boot.ppfst cannot handle them.
 ###############################################################
 compute_boot_fst <- function(gen_file, nboot) {
-  hf <- hierfstat::genind2hierfstat(gen_file)
-  boot_res <- hierfstat::boot.ppfst(dat = hf,
-                                    nboot = nboot,
-                                    quant = c(0.025, 0.975),
-                                    diploid = TRUE)
-
-  ll_mat <- boot_res$ll #lower CI matrix
-  ul_mat <- boot_res$ul #upper CI matrix
-
-  pop_names <- rownames(ll_mat)
+  pop_names <- levels(adegenet::pop(gen_file))
   n <- length(pop_names)
+  ll_mat <- matrix(NA_real_, n, n, dimnames = list(pop_names, pop_names))
+  ul_mat <- ll_mat
+
+  # TRUE if at least one locus has >1 allele observed in this subset
+  has_polymorphic_locus <- function(g) {
+    counts  <- adegenet::tab(g)
+    loc_fac <- g@loc.fac
+    any(vapply(levels(loc_fac), function(l) {
+      sum(colSums(counts[, loc_fac == l, drop = FALSE], na.rm = TRUE) > 0) > 1
+    }, logical(1)))
+  }
+
+  # boot.ppfst fails on pairs without any polymorphic locus: run it pair by pair
+  for (i in 2:n) {
+    for (j in 1:(i - 1)) {
+      sub <- gen_file[adegenet::pop(gen_file) %in% pop_names[c(i, j)]]
+      adegenet::pop(sub) <- factor(adegenet::pop(sub))   # drop unused levels
+
+      if (!has_polymorphic_locus(sub)) {
+        cat(sprintf("NOTE: bootstrap skipped for %s vs %s (no polymorphic locus)\n",
+                    pop_names[i], pop_names[j]))
+        next
+      }
+
+      res <- tryCatch(
+        hierfstat::boot.ppfst(dat = hierfstat::genind2hierfstat(sub),
+                              nboot = nboot, quant = c(0.025, 0.975), diploid = TRUE),
+        error = function(e) {
+          cat(sprintf("WARNING: bootstrap failed for %s vs %s: %s\n",
+                      pop_names[i], pop_names[j], conditionMessage(e)))
+          NULL
+        })
+
+      if (!is.null(res)) {
+        ll_mat[j, i] <- res$ll[1, 2]   # upper triangle, as used downstream
+        ul_mat[j, i] <- res$ul[1, 2]
+      }
+    }
+  }
 
   # Build a significance matrix: TRUE if CI does not overlap 0
   sig_mat <- matrix(NA_character_,
@@ -576,4 +641,3 @@ write.table(summary_div_stats,
               row.names = FALSE,
               quote = FALSE,
               sep = "\t")
-
