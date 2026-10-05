@@ -384,7 +384,7 @@ compute_boot_fst <- function(gen_file, nboot) {
       lo <- ll_mat[j, i]
       hi <- ul_mat[j, i]
       if (!is.na(lo) && !is.na(hi)) {
-        is_sig <- !(lo <= 0 & hi >= 0)   # CI does not straddle 0
+        is_sig <- lo > 0   # CI does not straddle 0
         sig_val <- ifelse(is_sig, "Significant", "NS")
       } else {
         sig_val <- NA_character_
