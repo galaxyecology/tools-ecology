@@ -4,8 +4,10 @@
 
 import argparse
 import os
+import re
 import shutil
 import time
+from collections import Counter, defaultdict
 from datetime import datetime
 from pathlib import Path
 
@@ -590,3 +592,23 @@ output_file_recap = predictions_dir / "output_predictions_recap.csv"
 recap_df.to_csv(output_file_recap, index=False)
 
 print(f"Summary predictions saved: {output_file_recap}")
+
+# ============================================================
+# RENAME BOXED IMAGES: internal Galaxy name -> original element name
+# ============================================================
+
+safe_names = {
+    p: re.sub(r"[^\w.\-]+", "_", n) for p, n in file_to_name.items()
+}
+name_counts = Counter(safe_names.values())
+seen = defaultdict(int)
+
+for input_path, safe_name in safe_names.items():
+    if name_counts[safe_name] > 1:
+        seen[safe_name] += 1
+        safe_name = f"{seen[safe_name]}_{safe_name}"
+    galaxy_name = Path(input_path).name
+    for boxed in boxed_images_dir.glob(f"*{galaxy_name}*"):
+        boxed.rename(
+            boxed.with_name(boxed.name.replace(galaxy_name, safe_name))
+        )
