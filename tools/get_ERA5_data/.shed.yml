@@ -1,0 +1,42 @@
+name: get_era5_data
+owner: ecology
+description: Extract daily ERA5 / ERA5-Land climate and soil data via the Open-Meteo API
+long_description: |
+  This tool downloads daily climate and soil variables from the ERA5 and
+  ERA5-Land reanalysis datasets produced by the Copernicus Climate Change
+  Service (C3S), retrieved through the free Open-Meteo Historical Weather
+  API (no Copernicus Climate Data Store account or API key required).
+
+  Given a list of sites — either as simple latitude/longitude points or as
+  WKT geometries (points, lines, or polygons) in any coordinate reference
+  system — the tool queries Open-Meteo for one or more climate variables
+  over a user-defined date range (bounded to 1960-01-01 - 2020-12-31, the
+  SAFRAN-compatible availability window) and returns a single tidy table
+  with one row per site per day.
+
+  Available variables include daily temperature, precipitation, snowfall,
+  reference evapotranspiration (FAO-56 Penman-Monteith), wind speed and
+  gusts, solar radiation, sunshine and daylight duration, relative
+  humidity, surface pressure, cloud cover, and multi-depth soil moisture
+  and soil temperature layers. Variables are automatically routed to
+  whichever of the two datasets (ERA5, ~25 km resolution, or ERA5-Land,
+  ~9 km resolution, land-only) actually provides them, and the results are
+  merged on date so users never need to know which sub-model to pick.
+
+  The tool accepts coordinates in any EPSG-defined projection and
+  reprojects them to WGS-84 automatically, supports per-site date ranges
+  via optional columns in the input file, and can export results as CSV,
+  TSV, JSON, or Parquet. It also handles the free tier's daily request
+  quota gracefully, pausing and automatically resuming once the quota
+  resets, and supports an optional paid Open-Meteo API key for
+  quota-free, higher-throughput extraction on shared Galaxy instances.
+
+  This makes it a convenient alternative to manually querying the
+  Copernicus Climate Data Store when point- or watershed-level daily
+  climate time series are needed for ecological, hydrological, or
+  agronomic analyses.
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/get_ERA5_data
+homepage_url: https://github.com/Mathmath34/tools-ecology/edit/get_ERA5_data/tools/get_ERA5_data
+type: unrestricted
+categories:
+  - Climate Analysis
