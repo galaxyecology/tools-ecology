@@ -512,7 +512,7 @@ ldne_results <- ldne_results %>%
                   "JK_CI_up",
                   "Overall_LD_r2",
                   "Expected_LD_r2"), as.numeric),
-    Subset = ifelse(is.na(Subset), "All_snps", Subset),
+    Subset = ifelse(is.na(Subset), "All_samples", Subset),
     JK_CI_up = ifelse(is.na(JK_CI_up), 999999, JK_CI_up),
     NeLD     = ifelse(is.na(NeLD), 999999, NeLD)
   )
@@ -659,7 +659,7 @@ if (apply_harmo == TRUE) {
     ne_estim <- ne_estim %>%
       left_join(subset_counts, by = c("Dataset", "Pop", "Marker_type")) %>%
       mutate(Subset = case_when(
-        is.na(n_subsets) | n_subsets == 1 ~ "All_snps",
+        is.na(n_subsets) | n_subsets == 1 ~ "All_samples",
         TRUE ~ paste0("H_mean_btw_", n_subsets, "sub")
         ))%>%
       select(-n_subsets) %>%

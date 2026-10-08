@@ -3,7 +3,7 @@
         using RLDNe package and NeEstimator.
     </description>
     <macros>
-        <token name="@TOOL_VERSION@">0.2.2</token>
+        <token name="@TOOL_VERSION@">0.2.3</token>
         <token name="@VERSION_SUFFIX@">1</token>
     </macros>
     <requirements>
