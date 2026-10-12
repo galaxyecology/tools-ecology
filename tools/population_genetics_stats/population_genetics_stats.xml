@@ -1,4 +1,4 @@
-<tool id="population_genetics_stats" name="Population Genetics Statistics:" version="0.2.1" profile="25.0">
+<tool id="population_genetics_stats" name="Population Genetics Statistics:" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="25.0">
     <description>
         He, Hobs, Fis, allelic richness and pairwise values (Fst, DJost, Gst Nei)
     </description>
