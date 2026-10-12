@@ -2,7 +2,10 @@
     <description>
         He, Hobs, Fis, allelic richness and pairwise values (Fst, DJost, Gst Nei)
     </description>
-
+    <macros>
+        <token name="@TOOL_VERSION@">0.2.1</token>
+        <token name="@VERSION_SUFFIX@">0</token>
+    </macros>
     <requirements>
         <requirement type="package" version="1.2.0">r-dplyr</requirement>
         <requirement type="package" version="1.7_23">r-ade4</requirement>
