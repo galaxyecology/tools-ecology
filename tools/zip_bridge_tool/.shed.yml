@@ -1,0 +1,11 @@
+categories:
+    - Ecology
+owner: ecology
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/zip_bridge_tool
+homepage_url: https://github.com/AquaINFRA/galaxy
+long_description: |
+  Generates a dynamic link to a renamed and zipped file
+type: unrestricted
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Generates a dynamic link to a renamed and zipped file: {{ tool_name }}."
