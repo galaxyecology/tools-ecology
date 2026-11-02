@@ -168,6 +168,44 @@ cat("\n2: START PARSING INPUTS\n\n")
 convertedKeys <- c()
 
 for (key in names(inputParameters)) {
+
+  # Only for the river URL parameter in mitgcm-prep
+  if (key == "input_url_rivers") {
+    val <- inputParameters[[key]]
+
+    if (is.null(val) || length(val) == 0) {
+      inputParameters[[key]] <- NULL
+      next
+    }
+
+    val <- trimws(as.character(val))
+    val <- val[nzchar(val)]
+
+    if (length(val) == 0) {
+      inputParameters[[key]] <- NULL
+      next
+    }
+
+    all_lines <- c()
+    for (p in val) {
+      con <- file(p, "r")
+      lines <- readLines(con)
+      close(con)
+      all_lines <- c(all_lines, lines)
+    }
+    all_lines <- trimws(all_lines)
+    all_lines <- all_lines[nzchar(all_lines)]
+
+    if (length(all_lines) == 0) {
+      inputParameters[[key]] <- NULL
+      next
+    }
+
+    inputParameters[[key]] <- I(all_lines)
+    convertedKeys <- append(convertedKeys, "input_url_rivers")
+    next
+  }
+
   value_no_spaces <- gsub(" ", "", inputParameters[[key]])
   if (value_no_spaces == "") {
     inputParameters[[key]] <- NULL
