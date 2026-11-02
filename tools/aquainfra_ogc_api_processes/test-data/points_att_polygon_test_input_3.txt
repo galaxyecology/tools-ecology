@@ -1,1 +1,1 @@
-https://aquainfra.ogc.igb-berlin.de/download/out/points-att-polygon/job_7600fdd0-8bff-11f1-91f5-fa163e42fba0/data_merged_with_regions_7600fdd0-8bff-11f1-91f5-fa163e42fba0.csv
+https://raw.githubusercontent.com/AquaINFRA/galaxy/63d8205c4670b86b32fd9ff45991173b133c0e29/test-data/data_merged_with_regions-poits-att-polygon.csv
