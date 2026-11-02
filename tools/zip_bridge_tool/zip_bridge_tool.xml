@@ -42,13 +42,5 @@
                 year = {2024}
             }
         </citation>
-        <citation type="bibtex">
-            @misc{fflate,
-                author = {Arjun Barrett},
-                title = {fflate: High performance (de)compression in an 8kB package},
-                url = {https://github.com/101arrowz/fflate},
-                year = {2024}
-            }
-        </citation>
     </citations>
 </tool>
