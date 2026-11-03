@@ -74,6 +74,8 @@
             <br/>
             <u>Best practices:</u> Use clear, specific terms in English. Be consistent with singular/plural forms.
         ]]></help>
+            <validator type="empty_field"/>
+            <validator type="regex" message="Use comma-separated terms such as &quot;elephant, giraffe&quot;: letters, digits, spaces, dots, hyphens and commas only.">^\w[\w .,-]*\Z</validator>
         </param>
         <param name="conf" type="float" value="0.25" min="0.01" max="1.0" label="Confidence threshold"/>
         <param name="show_bbox" type="boolean" checked="true" truevalue="true" falsevalue="false" label="Show bounding boxes on annotated output"/>
