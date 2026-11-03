@@ -63,7 +63,7 @@
                     <option value="raw">Raw frames only (no annotations)</option>
                     <option value="both">Both annotated and raw frames</option>
                 </param>
-                <param name="vid_stride" type="integer" value="5" min="1" max="300" label="Video frame stride" help="Process one frame every N frames. Higher values are faster and skip motion between the sampled frames."/>
+                <param name="vid_stride" type="integer" value="5" min="1" max="300" label="Video frame stride" help="Process one frame every N frames. Higher values are faster and skip motion between the sampled frames. With a stride of N the analysed frames are 0, N, 2N, ... and the exported frame numbers are these 0-based indices in the source video."/>
             </when>
         </conditional>
         <param name="text_prompt" type="text" label="Text prompt">
@@ -207,6 +207,8 @@ This option will be applied to all selected formats above.<br/>
             <param name="imgsz" value="518"/>
             <output name="Annotations_coco">
                 <assert_contents>
+                    <has_text text="&quot;file_name&quot;: &quot;2024-09-20-PorzBreign-shrimps_frame_000000.jpg&quot;"/>
+                    <has_text text="&quot;frame_index&quot;: 0"/>
                     <has_text text="&quot;file_name&quot;: &quot;2024-09-20-PorzBreign-shrimps_frame_000060.jpg&quot;"/>
                     <has_text text="&quot;frame_index&quot;: 60"/>
                     <has_text text="&quot;file_name&quot;: &quot;2024-09-20-PorzBreign-shrimps_frame_000120.jpg&quot;"/>
@@ -214,8 +216,8 @@ This option will be applied to all selected formats above.<br/>
                     <has_text text="&quot;name&quot;: &quot;shrimp&quot;"/>
                     <has_text text="&quot;category_id&quot;: 1"/>
                     <has_text text="&quot;iscrowd&quot;: 0"/>
-                    <has_text text="&quot;image_id&quot;: 2"/>
-                    <not_has_text text="&quot;image_id&quot;: 1"/>
+                    <has_text text="&quot;image_id&quot;: 3"/>
+                    <not_has_text text="&quot;image_id&quot;: 2"/>
                     <has_text text="&quot;segmentation&quot;: ["/>
                     <has_text_matching expression="&quot;track_id&quot;: [0-9]+"/>
                 </assert_contents>
@@ -223,19 +225,27 @@ This option will be applied to all selected formats above.<br/>
             <output_collection name="Outputs_annotated" type="list" count="1">
                 <element name="2024-09-20-PorzBreign-shrimps" ftype="mp4"/>
             </output_collection>
-            <output_collection name="Raw_Frames" type="list" count="2">
+            <output_collection name="Raw_Frames" type="list" count="3">
+                <element name="2024-09-20-PorzBreign-shrimps_frame_000000" ftype="jpg"/>
                 <element name="2024-09-20-PorzBreign-shrimps_frame_000060" ftype="jpg"/>
                 <element name="2024-09-20-PorzBreign-shrimps_frame_000120" ftype="jpg"/>
             </output_collection>
-            <output_collection name="Annotated_Frames" type="list" count="2">
+            <output_collection name="Annotated_Frames" type="list" count="3">
+                <element name="2024-09-20-PorzBreign-shrimps_frame_000000" ftype="jpg"/>
                 <element name="2024-09-20-PorzBreign-shrimps_frame_000060" ftype="jpg"/>
                 <element name="2024-09-20-PorzBreign-shrimps_frame_000120" ftype="jpg"/>
             </output_collection>
-            <output_collection name="Yolo_Bbox_Image" type="list" count="2">
+            <output_collection name="Yolo_Bbox_Image" type="list" count="3">
+                <element name="2024-09-20-PorzBreign-shrimps_frame_000000" ftype="jpg"/>
                 <element name="2024-09-20-PorzBreign-shrimps_frame_000060" ftype="jpg"/>
                 <element name="2024-09-20-PorzBreign-shrimps_frame_000120" ftype="jpg"/>
             </output_collection>
-            <output_collection name="Yolo_Bbox_Label" type="list" count="2">
+            <output_collection name="Yolo_Bbox_Label" type="list" count="3">
+                <element name="2024-09-20-PorzBreign-shrimps_frame_000000" ftype="txt">
+                    <assert_contents>
+                        <has_text_matching expression="(?m)^0 [-0-9.]+ [-0-9.]+ [-0-9.]+ [-0-9.]+$"/>
+                    </assert_contents>
+                </element>
                 <element name="2024-09-20-PorzBreign-shrimps_frame_000060" ftype="txt">
                     <assert_contents>
                         <has_n_lines n="0"/>

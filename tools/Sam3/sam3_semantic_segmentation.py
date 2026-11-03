@@ -469,6 +469,7 @@ class FrameRecord:
     soon as it arrives and then dropped.
     """
 
+    # 0-based index of the frame in the source video: 0, stride, 2 * stride
     frame_index: int
     frame_stem: str
     height: int
@@ -562,6 +563,11 @@ def predict_video_frames(
     every result once the video is done (ultralytics warns about exactly that,
     see STREAM_WARNING). Peak memory is then one frame rather than the whole
     video, so the frames are exported here, while their pixels are available.
+
+    ultralytics samples the physical frames 0, stride, 2 * stride, ... (see
+    LoadImagesAndVideos.__next__) but does not expose the index on the Results
+    object, so it is counted here: frame_index is the 0-based index of the
+    frame in the source video, not the ordinal of the sampled frame.
     """
     video_name = Path(video_path).stem
     if annotated_dir is not None:
@@ -571,14 +577,12 @@ def predict_video_frames(
 
     records: List[FrameRecord] = []
     for result in predictor(source=video_path, text=text_prompts, stream=True):
-        # The pre-streaming code paired results[saved_idx] with the frame
-        # counted as (saved_idx + 1) * stride, so keep that numbering rather
-        # than switching the indices in the same change.
-        if stride > 1:
-            frame_index = (len(records) + 1) * stride
-        else:
-            frame_index = len(records)
-        record = frame_record(result, frame_index, video_name, is_normalized)
+        # The loader grabs one frame and then skips stride - 1, so the n-th
+        # yielded result is the source frame n * stride (correct for stride 1
+        # as well, where the old branch was right by accident)
+        record = frame_record(
+            result, len(records) * stride, video_name, is_normalized
+        )
 
         # orig_img is the frame the annotations were computed on, so writing it
         # here also removes the drift a second decode of the video introduced
