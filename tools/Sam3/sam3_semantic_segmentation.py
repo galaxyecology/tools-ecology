@@ -5,8 +5,9 @@ import os
 import shlex
 import subprocess
 import sys
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 import cv2
 
@@ -455,20 +456,153 @@ def create_yolo_output(
     print(f"✓ Created {len(results)} images and labels in {output_dir}")
 
 
+@dataclass
+class FrameRecord:
+    """What the exporters need from one annotated video frame.
+
+    A Results object owns the decoded frame (H x W x 3) and every instance
+    mask upsampled to the frame size (N x H x W bool), so collecting them for a
+    whole video costs gigabytes: 1080p with ten masks is several hundred MB per
+    frame, and the default stride of 5 on a five minute clip would need tens of
+    GB. The exporters read only coordinates, class ids, track ids and the frame
+    shape, a few kB per frame, so each result is projected into this record as
+    soon as it arrives and then dropped.
+    """
+
+    frame_index: int
+    frame_stem: str
+    height: int
+    width: int
+    polygons: List[np.ndarray]
+    boxes: List[np.ndarray]
+    class_ids: List[int]
+    track_ids: List[Any]
+
+    @property
+    def image_name(self) -> str:
+        """Name of the frame image inside the directories that get a copy."""
+        return f"{self.frame_stem}.jpg"
+
+
+def frame_record(
+    result: Any, frame_index: int, video_name: str, is_normalized: bool
+) -> FrameRecord:
+    """Project a video Results object into a FrameRecord."""
+    height, width = result.orig_shape
+
+    masks = result.masks
+    if masks is None:
+        polygons = []
+    else:
+        polygons = masks.xyn if is_normalized else masks.xy
+    boxes = result.boxes.xyxyn if is_normalized else result.boxes.xyxy
+    ids = result.boxes.id
+
+    return FrameRecord(
+        frame_index=frame_index,
+        frame_stem=f"{video_name}_frame_{frame_index:06d}",
+        height=height,
+        width=width,
+        # masks.xy/xyn are numpy arrays built from a temporary copy of the mask
+        # tensor, and the boxes are a handful of floats, so neither keeps the
+        # dense per-instance masks (or the frame) alive.
+        polygons=list(polygons),
+        boxes=list(boxes),
+        class_ids=[int(class_id) for class_id in result.boxes.cls],
+        track_ids=(
+            [int(track_id) for track_id in ids]
+            if ids is not None
+            else [None] * len(boxes)
+        ),
+    )
+
+
+def frame_output_directories(
+    outdir: Path,
+    want_coco: bool,
+    output_frames: str,
+    yolo_formats: List[str],
+) -> List[Path]:
+    """Directories that receive a copy of every sampled frame.
+
+    The COCO document refers to its frame images by file name, and a YOLO
+    dataset needs the images next to the labels, so both are written while the
+    pixels are still in hand rather than by decoding the video again.
+    """
+    directories = []
+    if want_coco:
+        directories.append(outdir / "frames")
+    if output_frames in ("raw", "both"):
+        directories.append(outdir / "frames_raw")
+    directories.extend(
+        outdir / f"yolo_{annotation_type}" / "images"
+        for annotation_type in yolo_formats
+    )
+
+    for directory in directories:
+        directory.mkdir(parents=True, exist_ok=True)
+
+    return directories
+
+
+def predict_video_frames(
+    predictor: Any,
+    video_path: str,
+    text_prompts: List[str],
+    stride: int,
+    raw_dirs: List[Path],
+    annotated_dir: Optional[Path],
+    show_bbox: bool,
+    is_normalized: bool,
+) -> List[FrameRecord]:
+    """Predict a video frame by frame and write the per-frame exports.
+
+    The predictor is asked to stream: with stream=True it yields one Results
+    per sampled frame and keeps none of them, instead of returning a list of
+    every result once the video is done (ultralytics warns about exactly that,
+    see STREAM_WARNING). Peak memory is then one frame rather than the whole
+    video, so the frames are exported here, while their pixels are available.
+    """
+    video_name = Path(video_path).stem
+    if annotated_dir is not None:
+        annotated_dir.mkdir(parents=True, exist_ok=True)
+
+    print(f"Processing video frames (stride={stride})...")
+
+    records: List[FrameRecord] = []
+    for result in predictor(source=video_path, text=text_prompts, stream=True):
+        # The pre-streaming code paired results[saved_idx] with the frame
+        # counted as (saved_idx + 1) * stride, so keep that numbering rather
+        # than switching the indices in the same change.
+        if stride > 1:
+            frame_index = (len(records) + 1) * stride
+        else:
+            frame_index = len(records)
+        record = frame_record(result, frame_index, video_name, is_normalized)
+
+        # orig_img is the frame the annotations were computed on, so writing it
+        # here also removes the drift a second decode of the video introduced
+        for directory in raw_dirs:
+            cv2.imwrite(str(directory / record.image_name), result.orig_img)
+
+        if annotated_dir is not None:
+            annotated = result.plot(boxes=show_bbox)
+            cv2.imwrite(str(annotated_dir / record.image_name), annotated)
+
+        records.append(record)
+        if len(records) % 10 == 0:
+            print(f"  Processed {len(records)} frames...")
+
+    print(f"✓ Processed {len(records)} frames")
+    return records
+
+
 def create_coco_video_frames_output(
-    results: List[Any],
+    records: List[FrameRecord],
     text_prompts: List[str],
     metadata: Dict[str, Any],
-    is_normalized: bool,
-    video_path: str,
-    stride: int,
-    outdir: Path,
 ) -> Dict[str, Any]:
-    """Convert SAM3 video results to COCO format with one image entry
-    per extracted frame."""
-    frames_dir = outdir / "frames"
-    frames_dir.mkdir(parents=True, exist_ok=True)
-
+    """Convert the streamed video frames to COCO, one image entry per frame."""
     coco_output = {
         "info": metadata,
         "images": [],
@@ -476,229 +610,68 @@ def create_coco_video_frames_output(
         "categories": create_coco_categories(text_prompts),
     }
 
-    cap = cv2.VideoCapture(video_path)
-    if not cap.isOpened():
-        raise RuntimeError(f"Failed to open video: {video_path}")
-
-    video_name = Path(video_path).stem
     annotation_id = 1
-    frame_idx = 1 if stride > 1 else 0
-    saved_idx = 0
+    for image_id, record in enumerate(records, start=1):
+        coco_output["images"].append(
+            {
+                "id": image_id,
+                "file_name": record.image_name,
+                "width": record.width,
+                "height": record.height,
+                "frame_index": record.frame_index,
+            }
+        )
 
-    print(
-        f"Extracting frames and building per-frame COCO annotations "
-        f"(stride={stride})..."
-    )
-
-    while cap.isOpened():
-        ret, frame = cap.read()
-        if not ret:
-            break
-
-        if frame_idx % stride == 0:
-            if saved_idx >= len(results):
-                print(f"Warning: No result available for frame {frame_idx}")
-                break
-
-            frame_name = f"{video_name}_frame_{frame_idx:06d}.jpg"
-            frame_path = frames_dir / frame_name
-            cv2.imwrite(str(frame_path), frame)
-
-            result = results[saved_idx]
-            image_id = saved_idx + 1
-            height, width = result.orig_shape
-
-            coco_output["images"].append(
+        for polygon, bbox, class_id, track_id in zip(
+            record.polygons, record.boxes, record.class_ids, record.track_ids
+        ):
+            x1, y1, x2, y2 = bbox[:4].tolist()
+            coco_output["annotations"].append(
                 {
-                    "id": image_id,
-                    "file_name": frame_name,
-                    "width": width,
-                    "height": height,
-                    "frame_index": frame_idx,
+                    "id": annotation_id,
+                    "image_id": image_id,
+                    "category_id": class_id + 1,
+                    "track_id": track_id,
+                    "segmentation": [polygon.flatten().tolist()],
+                    "area": float(cv2.contourArea(polygon.astype(np.float32))),
+                    "bbox": [x1, y1, x2 - x1, y2 - y1],
+                    "iscrowd": 0,
                 }
             )
+            annotation_id += 1
 
-            if result.masks is not None:
-                polygons = (
-                    result.masks.xyn if is_normalized else result.masks.xy
-                )
-                boxes = (
-                    result.boxes.xyxyn if is_normalized else result.boxes.xyxy
-                )
-                track_ids = (
-                    result.boxes.id.int().tolist()
-                    if result.boxes.id is not None
-                    else [None] * len(result.boxes.cls)
-                )
-
-                for polygon, bbox, class_id, track_id in zip(
-                    polygons, boxes, result.boxes.cls, track_ids
-                ):
-                    polygon_flat = polygon.flatten().tolist()
-                    x1, y1, x2, y2 = bbox[:4].tolist()
-                    bbox_w = x2 - x1
-                    bbox_h = y2 - y1
-                    area = float(cv2.contourArea(polygon.astype(np.float32)))
-
-                    coco_output["annotations"].append(
-                        {
-                            "id": annotation_id,
-                            "image_id": image_id,
-                            "category_id": int(class_id) + 1,
-                            "track_id": track_id,
-                            "segmentation": [polygon_flat],
-                            "area": area,
-                            "bbox": [x1, y1, bbox_w, bbox_h],
-                            "iscrowd": 0,
-                        }
-                    )
-                    annotation_id += 1
-
-            saved_idx += 1
-
-            if saved_idx % 10 == 0:
-                print(f"  Extracted {saved_idx} frames...")
-
-        frame_idx += 1
-
-    cap.release()
-    print(f"✓ Extracted {saved_idx} frames to {frames_dir}")
+    print(f"✓ Built COCO annotations for {len(records)} frames")
     return coco_output
 
 
 def create_yolo_video_output(
     annotation_type: str,
-    results: List[Any],
+    records: List[FrameRecord],
     output_dir: Path,
-    video_path: str,
-    stride: int,
-    is_normalized: bool,
 ) -> None:
-    """Export annotations in YOLO format for videos with frame extraction."""
-    # Create subdirectories for images and labels
-    images_dir = output_dir / "images"
+    """Write one YOLO label file per sampled frame.
+
+    The matching images are written by predict_video_frames, which is the only
+    place that still holds the frame pixels.
+    """
     labels_dir = output_dir / "labels"
-    images_dir.mkdir(exist_ok=True, parents=True)
-    labels_dir.mkdir(exist_ok=True, parents=True)
+    labels_dir.mkdir(parents=True, exist_ok=True)
 
-    # Open video file
-    cap = cv2.VideoCapture(video_path)
-    if not cap.isOpened():
-        raise RuntimeError(f"Failed to open video: {video_path}")
+    for record in records:
+        lines = []
 
-    video_name = Path(video_path).stem
+        shapes = record.boxes if annotation_type == "bbox" else record.polygons
+        for shape, class_id in zip(shapes, record.class_ids):
+            if annotation_type == "bbox":
+                lines.append(create_yolo_bbox_annotation(shape, class_id))
+            else:  # segmentation
+                lines.append(create_yolo_seg_annotation(shape, class_id))
 
-    # Initialize counters
-    frame_idx = 1 if stride > 1 else 0
-    saved_idx = 0
+        label_path = labels_dir / f"{record.frame_stem}.txt"
+        with open(label_path, "w") as f:
+            f.write("\n".join(lines))
 
-    print(f"Processing video frames (stride={stride})...")
-
-    while cap.isOpened():
-        ret, frame = cap.read()
-        if not ret:
-            break
-
-        # Process only frames according to stride
-        if frame_idx % stride == 0:
-            frame_base = f"{video_name}_frame_{frame_idx:06d}"
-
-            # Save frame as image
-            img_path = images_dir / f"{frame_base}.jpg"
-            cv2.imwrite(str(img_path), frame)
-
-            # Create corresponding label file
-            label_path = labels_dir / f"{frame_base}.txt"
-
-            # Get prediction result for this frame
-            if saved_idx >= len(results):
-                print(f"Warning: No result available for frame {frame_idx}")
-                break
-
-            result = results[saved_idx]
-            lines = []
-
-            # Process detections if available
-            boxes = result.boxes.xyxyn if is_normalized else result.boxes.xyxy
-            for i, (box, class_id) in enumerate(zip(boxes, result.boxes.cls)):
-                class_id = int(class_id)
-
-                if annotation_type == "bbox":
-                    line = create_yolo_bbox_annotation(box, class_id)
-                else:  # segmentation
-                    polygon = (
-                        result.masks.xyn if is_normalized else result.masks.xy
-                    )
-                    line = create_yolo_seg_annotation(polygon, class_id)
-
-                lines.append(line)
-
-            # Write label file
-            with open(label_path, "w") as f:
-                f.write("\n".join(lines))
-
-            saved_idx += 1
-
-            if saved_idx % 10 == 0:
-                print(f"  Processed {saved_idx} frames...")
-
-        frame_idx += 1
-
-    cap.release()
-    print(f"✓ Created {saved_idx} frames and labels in {output_dir}")
-
-
-def extract_video_frames(
-    video_path: str,
-    stride: int,
-    results: List[Any],
-    raw_dir: Path = None,
-    annotated_dir: Path = None,
-    show_bbox: bool = True,
-) -> None:
-    """Extract video frames as images, annotated and/or raw."""
-    if raw_dir:
-        raw_dir.mkdir(parents=True, exist_ok=True)
-    if annotated_dir:
-        annotated_dir.mkdir(parents=True, exist_ok=True)
-
-    cap = cv2.VideoCapture(video_path)
-    if not cap.isOpened():
-        raise RuntimeError(f"Failed to open video: {video_path}")
-
-    video_name = Path(video_path).stem
-    frame_idx = 1 if stride > 1 else 0
-    saved_idx = 0
-
-    print(f"Extracting frames (stride={stride})...")
-
-    while cap.isOpened():
-        ret, frame = cap.read()
-        if not ret:
-            break
-
-        if frame_idx % stride == 0:
-            if saved_idx >= len(results):
-                print(f"Warning: No result available for frame {frame_idx}")
-                break
-
-            frame_name = f"{video_name}_frame_{frame_idx:06d}.jpg"
-
-            if raw_dir is not None:
-                cv2.imwrite(str(raw_dir / frame_name), frame)
-
-            if annotated_dir is not None:
-                annotated_frame = results[saved_idx].plot(boxes=show_bbox)
-                cv2.imwrite(str(annotated_dir / frame_name), annotated_frame)
-
-            saved_idx += 1
-            if saved_idx % 10 == 0:
-                print(f"  Extracted {saved_idx} frames...")
-
-        frame_idx += 1
-
-    cap.release()
-    print(f"✓ Extracted {saved_idx} frames")
+    print(f"✓ Created labels for {len(records)} frames in {output_dir}")
 
 
 def create_metadata(
@@ -775,10 +748,14 @@ def main():
     outputs_annotated.mkdir(parents=True, exist_ok=True)
 
     output_formats = as_list(tool_input.get("outputs_format"))
+    video_input = is_video(file_paths[0])
     # COCO annotations are always produced for videos (see the output filter)
-    if is_video(file_paths[0]) and "coco" not in output_formats:
+    if video_input and "coco" not in output_formats:
         output_formats.insert(0, "coco")
     print(f"Output formats: {output_formats}")
+    yolo_formats = [
+        fmt for fmt in ("bbox", "seg") if f"yolo_{fmt}" in output_formats
+    ]
 
     # Configure predictor overrides
     overrides = {
@@ -795,7 +772,7 @@ def main():
     }
 
     # Determine if input is video or image and initialize appropriate predictor
-    if is_video(file_paths[0]):
+    if video_input:
         print("\nVideo input detected → using SAM3VideoSemanticPredictor")
         overrides["vid_stride"] = vid_stride
         predictor = SAM3VideoSemanticPredictor(overrides=overrides)
@@ -817,40 +794,45 @@ def main():
 
     predictor.postprocess = patched_postprocess
 
-    # Run predictions
+    # Run predictions. A video is streamed and every per-frame export is
+    # written while its frame is still in memory, see predict_video_frames.
     # print(f"\n Running prediction on {source_path}...")
-    results = predictor(source=source_path, text=text_prompts, stream=False)
-    if is_video(file_paths[0]):
-        convert_avi_to_mp4(outputs_annotated, quality)
-
-        if output_frames != "none":
-            print(
-                f"\n→ Extracting video frames "
-                f"(mode: {output_frames})..."
-            )
-            raw_dir = (
-                outdir / "frames_raw"
-                if output_frames in ("raw", "both")
-                else None
-            )
-            annotated_dir = (
+    records: List[FrameRecord] = []
+    if video_input:
+        records = predict_video_frames(
+            predictor,
+            file_paths[0],
+            text_prompts,
+            vid_stride,
+            frame_output_directories(
+                outdir,
+                want_coco="coco" in output_formats,
+                output_frames=output_frames,
+                yolo_formats=yolo_formats,
+            ),
+            annotated_dir=(
                 outdir / "frames_annotated"
                 if output_frames in ("annotated", "both")
                 else None
-            )
-            extract_video_frames(
-                file_paths[0],
-                vid_stride,
-                results,
-                raw_dir=raw_dir,
-                annotated_dir=annotated_dir,
-                show_bbox=show_bbox,
-            )
+            ),
+            show_bbox=show_bbox,
+            is_normalized=is_normalized,
+        )
 
-    if not results:
-        raise RuntimeError("SAM3 returned no results")
+        # the annotated video is only complete once the generator is exhausted
+        convert_avi_to_mp4(outputs_annotated, quality)
 
-    print(f"✓ Processed {len(results)} result(s)")
+        if not records:
+            raise RuntimeError("SAM3 returned no results")
+    else:
+        results = predictor(
+            source=source_path, text=text_prompts, stream=False
+        )
+
+        if not results:
+            raise RuntimeError("SAM3 returned no results")
+
+        print(f"✓ Processed {len(results)} result(s)")
 
     # Create metadata
     metadata = create_metadata(text_prompts, conf, model)
@@ -863,16 +845,12 @@ def main():
     if "coco" in output_formats:
         print("\n→ Converting to COCO format...")
 
-        if is_video(file_paths[0]):
-            print("  Mode: per-frame (extracting individual frames)...")
+        if video_input:
+            print("  Mode: per-frame (one image entry per sampled frame)...")
             coco_output = create_coco_video_frames_output(
-                results,
+                records,
                 text_prompts,
                 metadata,
-                is_normalized,
-                file_paths[0],
-                vid_stride,
-                outdir,
             )
         else:
             coco_output = create_coco_output(
@@ -891,15 +869,8 @@ def main():
         yolo_bbox_dir = outdir / "yolo_bbox"
         yolo_bbox_dir.mkdir(parents=True, exist_ok=True)
 
-        if is_video(file_paths[0]):
-            create_yolo_video_output(
-                "bbox",
-                results,
-                yolo_bbox_dir,
-                file_paths[0],
-                vid_stride,
-                is_normalized,
-            )
+        if video_input:
+            create_yolo_video_output("bbox", records, yolo_bbox_dir)
         else:
             create_yolo_output("bbox", results, yolo_bbox_dir, is_normalized)
             print(f"  Saved to: {yolo_bbox_dir}")
@@ -909,15 +880,8 @@ def main():
         yolo_seg_dir = outdir / "yolo_seg"
         yolo_seg_dir.mkdir(parents=True, exist_ok=True)
 
-        if is_video(file_paths[0]):
-            create_yolo_video_output(
-                "seg",
-                results,
-                yolo_seg_dir,
-                file_paths[0],
-                vid_stride,
-                is_normalized,
-            )
+        if video_input:
+            create_yolo_video_output("seg", records, yolo_seg_dir)
         else:
             create_yolo_output("seg", results, yolo_seg_dir, is_normalized)
             print(f"  Saved to: {yolo_seg_dir}")
