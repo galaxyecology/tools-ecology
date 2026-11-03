@@ -3,6 +3,7 @@ import hashlib
 import json
 import os
 import shlex
+import shutil
 import subprocess
 import sys
 from dataclasses import dataclass
@@ -426,8 +427,6 @@ def create_yolo_output(
         # Copy image to images directory
         image_src = Path(result.path)
         image_dst = images_dir / f"{image_name}{image_src.suffix}"
-
-        import shutil
 
         shutil.copy2(image_src, image_dst)
 
