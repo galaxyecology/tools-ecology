@@ -708,6 +708,7 @@ def main():
 
     is_normalized = as_bool(config.get("do_normalization"))
     show_bbox = as_bool(config.get("show_bbox"), default=True)
+    output_formats = as_list(config.get("outputs_format"))
 
     # Parse text prompts
     text_prompts = [
@@ -751,11 +752,7 @@ def main():
     outputs_annotated = outdir / "outputs_annotated"
     outputs_annotated.mkdir(parents=True, exist_ok=True)
 
-    output_formats = as_list(tool_input.get("outputs_format"))
     video_input = is_video(file_paths[0])
-    # COCO annotations are always produced for videos (see the output filter)
-    if video_input and "coco" not in output_formats:
-        output_formats.insert(0, "coco")
     print(f"Output formats: {output_formats}")
     yolo_formats = [
         fmt for fmt in ("bbox", "seg") if f"yolo_{fmt}" in output_formats

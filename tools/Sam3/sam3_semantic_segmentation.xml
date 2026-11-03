@@ -38,11 +38,6 @@
             </param>
             <when value="image">
                 <param name="source" type="data" format="jpg,png,tiff" multiple="true" label="Input images"/>
-                <param name="outputs_format" type="select" multiple="true" optional="true" label="Output formats" help="Select one or more annotation formats to generate.">
-                    <option value="coco">COCO</option>
-                    <option value="yolo_bbox">YOLO bounding boxes</option>
-                    <option value="yolo_seg">YOLO segmentation masks</option>
-                </param>
             </when>
             <when value="video">
                 <param name="source" type="data" format="mp4,avi,mov,gif" multiple="false" label="Input video file"/>
@@ -53,10 +48,6 @@
                     <option value="4000k">4000k - Good (1080p)</option>
                     <option value="8000k">8000k - High quality (1080p)</option>
                 </param>
-                <param name="outputs_format" type="select" multiple="true" optional="true" label="Additional output formats" help="YOLO formats are optional. COCO output is controlled separately above.">
-                    <option value="yolo_bbox">YOLO bounding boxes</option>
-                    <option value="yolo_seg">YOLO segmentation masks</option>
-                </param>
                 <param name="output_frames" type="select" label="Export individual frames" help="Extract individual frames from the video as images (at the chosen frame stride).">
                     <option value="none" selected="true">None</option>
                     <option value="annotated">Annotated frames only (with segmentation overlay)</option>
@@ -66,6 +57,11 @@
                 <param name="vid_stride" type="integer" value="5" min="1" max="300" label="Video frame stride" help="Process one frame every N frames. Higher values are faster and skip motion between the sampled frames. With a stride of N the analysed frames are 0, N, 2N, ... and the exported frame numbers are these 0-based indices in the source video."/>
             </when>
         </conditional>
+        <param name="outputs_format" type="select" multiple="true" optional="true" label="Output formats" help="Select one or more annotation formats to generate.">
+            <option value="coco" selected="true">COCO</option>
+            <option value="yolo_bbox">YOLO bounding boxes</option>
+            <option value="yolo_seg">YOLO segmentation masks</option>
+        </param>
         <param name="text_prompt" type="text" label="Text prompt">
             <help><![CDATA[
             Comma-separated list of objects or classes to detect and segment in your images/videos.
@@ -96,7 +92,7 @@ This option will be applied to all selected formats above.<br/>
     </inputs>
     <outputs>
         <data name="Annotations_coco" format="json" from_work_dir="./outputs/annotations.json" label="${tool.name} on ${on_string}: Annotation COCO">
-            <filter>input['input_kind'] == "video" or (input['outputs_format'] and 'coco' in input['outputs_format'])</filter>
+            <filter>'coco' in outputs_format</filter>
         </data>
         <collection name="Outputs_annotated" type="list" label="${tool.name} on ${on_string}: Annotated Outputs">
             <discover_datasets pattern="__name_and_ext__" directory="outputs/outputs_annotated"/>
@@ -110,19 +106,19 @@ This option will be applied to all selected formats above.<br/>
             <discover_datasets pattern="__name_and_ext__" directory="outputs/frames_annotated"/>
         </collection>
         <collection name="Yolo_Bbox_Image" type="list" label="${tool.name} on ${on_string}: YOLO Bbox Images">
-            <filter>input['outputs_format'] and 'yolo_bbox' in input['outputs_format']</filter>
+            <filter>'yolo_bbox' in outputs_format</filter>
             <discover_datasets pattern="__name_and_ext__" directory="outputs/yolo_bbox/images"/>
         </collection>
         <collection name="Yolo_Bbox_Label" type="list" label="${tool.name} on ${on_string}: YOLO Bbox Labels">
-            <filter>input['outputs_format'] and 'yolo_bbox' in input['outputs_format']</filter>
+            <filter>'yolo_bbox' in outputs_format</filter>
             <discover_datasets pattern="__name_and_ext__" directory="outputs/yolo_bbox/labels"/>
         </collection>
         <collection name="Yolo_Seg_Image" type="list" label="${tool.name} on ${on_string}: YOLO Seg Images">
-            <filter>input['outputs_format'] and 'yolo_seg' in input['outputs_format']</filter>
+            <filter>'yolo_seg' in outputs_format</filter>
             <discover_datasets pattern="__name_and_ext__" directory="outputs/yolo_seg/images"/>
         </collection>
         <collection name="Yolo_Seg_Label" type="list" label="${tool.name} on ${on_string}: YOLO Seg Labels">
-            <filter>input['outputs_format'] and 'yolo_seg' in input['outputs_format']</filter>
+            <filter>'yolo_seg' in outputs_format</filter>
             <discover_datasets pattern="__name_and_ext__" directory="outputs/yolo_seg/labels"/>
         </collection>
     </outputs>
@@ -132,8 +128,8 @@ This option will be applied to all selected formats above.<br/>
             <conditional name="input">
                 <param name="input_kind" value="image"/>
                 <param name="source" value="5827603936_3f1d5d715c_z.jpg,shrimp.png"/>
-                <param name="outputs_format" value="coco,yolo_bbox"/>
             </conditional>
+            <param name="outputs_format" value="coco,yolo_bbox"/>
             <param name="text_prompt" value="elephant"/>
             <param name="conf" value="0.25"/>
             <assert_stdout>
@@ -176,8 +172,8 @@ This option will be applied to all selected formats above.<br/>
             <conditional name="input">
                 <param name="input_kind" value="image"/>
                 <param name="source" value="5827603936_3f1d5d715c_z.jpg"/>
-                <param name="outputs_format" value="coco"/>
             </conditional>
+            <param name="outputs_format" value="coco"/>
             <param name="text_prompt" value="tree"/>
             <param name="conf" value="0.25"/>
             <param name="imgsz" value="644"/>
@@ -198,10 +194,10 @@ This option will be applied to all selected formats above.<br/>
                 <param name="input_kind" value="video"/>
                 <param name="source" value="2024-09-20-PorzBreign-shrimps.mp4" ftype="mp4" location="https://zenodo.org/records/19891364/files/2024-09-20-PorzBreign-shrimps.mp4"/>
                 <param name="quality" value="2000k"/>
-                <param name="outputs_format" value="yolo_bbox"/>
                 <param name="output_frames" value="both"/>
                 <param name="vid_stride" value="60"/>
             </conditional>
+            <param name="outputs_format" value="yolo_bbox,coco"/>
             <param name="text_prompt" value="shrimp"/>
             <param name="conf" value="0.25"/>
             <param name="imgsz" value="518"/>
