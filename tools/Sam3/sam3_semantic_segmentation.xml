@@ -140,23 +140,38 @@ This option will be applied to all selected formats above.<br/>
                 <has_text text="Invalid model!"/>
             </assert_stdout>
         </test>
-        <!-- Real-inference test, commented out because CI cannot satisfy it.
+        <!-- Real-inference tests, commented out because CI cannot satisfy them.
              Requirements:
              * sam3.pt registered in the `huggingface` data table under the id
                `sam3_1038lab`: see test-data/huggingface.loc and
                tool_data_table_conf.xml.test; test-data/download_reference_data.py
                fetches the file to the path listed there, and
              * a runtime with ultralytics + torch, i.e. the container image
-               (docker/singularity) or a venv on PATH.
-             It takes ~1 min on CPU and needs ~3.5 GB for the checkpoint, so it
-             stays disabled for CI, where neither is available, and where the
-             vacuous test above is all that runs. To use it locally, delete the
-             comment markers around it and run planemo test with the
-             tool_data_path option set to tools/Sam3/test-data; see TODO.md for
-             the full recipe.
+               (docker/singularity) or a venv on PATH, and
+             * for the video test, ffmpeg on PATH for the AVI to MP4 remux.
+
+             Both take minutes, not seconds, on CPU and need ~3.5 GB for the
+             checkpoint, so they stay disabled for CI, where none of that is
+             available, and where the vacuous test above is all that runs. To
+             use them locally, delete the comment markers around them and run
+             planemo test with the tool_data_path option set to
+             tools/Sam3/test-data; see TODO.md for the full recipe.
+
+             Cost: SAM3 prompts every sampled frame and needs ~2 min per
+             518x518 frame on a laptop CPU, so the video test samples the
+             ~145 frame clip only twice (vid_stride 60) and still covers both a
+             frame without detections and one with several shrimp. Raising
+             vid_stride shortens the run linearly; the YOLO and frame exports
+             add file I/O but no inference.
+
+             The video itself is not committed: its `location` attribute makes
+             Galaxy stream it from Zenodo, and the tutorial that uses it is
+             https://training.galaxyproject.org/training-material/topics/ecology/tutorials/SAM3/tutorial.html
+             (18.2 MB, md5 239798f4101a3345d88c2de5fb39cf82), so the test needs
+             the network and a Zenodo outage looks like a test failure.
         -->
-        <!--
-        <test expect_num_outputs="2">
+        
+        <!-- <test expect_num_outputs="2">
             <param name="sam3_models" value="sam3_1038lab"/>
             <conditional name="input">
                 <param name="input_kind" value="image"/>
@@ -177,7 +192,66 @@ This option will be applied to all selected formats above.<br/>
             </output>
             <output_collection name="Outputs_annotated" type="list" count="1"/>
         </test>
-        -->
+        <test expect_num_outputs="6">
+            <param name="sam3_models" value="sam3_1038lab"/>
+            <conditional name="input">
+                <param name="input_kind" value="video"/>
+                <param name="source" value="2024-09-20-PorzBreign-shrimps.mp4" ftype="mp4" location="https://zenodo.org/records/19891364/files/2024-09-20-PorzBreign-shrimps.mp4"/>
+                <param name="quality" value="2000k"/>
+                <param name="outputs_format" value="yolo_bbox"/>
+                <param name="output_frames" value="both"/>
+                <param name="vid_stride" value="60"/>
+            </conditional>
+            <param name="text_prompt" value="shrimp"/>
+            <param name="conf" value="0.25"/>
+            <param name="imgsz" value="518"/>
+            <output name="Annotations_coco">
+                <assert_contents>
+                    <has_text text="&quot;file_name&quot;: &quot;2024-09-20-PorzBreign-shrimps_frame_000060.jpg&quot;"/>
+                    <has_text text="&quot;frame_index&quot;: 60"/>
+                    <has_text text="&quot;file_name&quot;: &quot;2024-09-20-PorzBreign-shrimps_frame_000120.jpg&quot;"/>
+                    <has_text text="&quot;frame_index&quot;: 120"/>
+                    <has_text text="&quot;name&quot;: &quot;shrimp&quot;"/>
+                    <has_text text="&quot;category_id&quot;: 1"/>
+                    <has_text text="&quot;iscrowd&quot;: 0"/>
+                    <has_text text="&quot;image_id&quot;: 2"/>
+                    <not_has_text text="&quot;image_id&quot;: 1"/>
+                    <has_text text="&quot;segmentation&quot;: ["/>
+                    <has_text_matching expression="&quot;track_id&quot;: [0-9]+"/>
+                </assert_contents>
+            </output>
+            <output_collection name="Outputs_annotated" type="list" count="1">
+                <element name="2024-09-20-PorzBreign-shrimps" ftype="mp4"/>
+            </output_collection>
+            <output_collection name="Raw_Frames" type="list" count="2">
+                <element name="2024-09-20-PorzBreign-shrimps_frame_000060" ftype="jpg"/>
+                <element name="2024-09-20-PorzBreign-shrimps_frame_000120" ftype="jpg"/>
+            </output_collection>
+            <output_collection name="Annotated_Frames" type="list" count="2">
+                <element name="2024-09-20-PorzBreign-shrimps_frame_000060" ftype="jpg"/>
+                <element name="2024-09-20-PorzBreign-shrimps_frame_000120" ftype="jpg"/>
+            </output_collection>
+            <output_collection name="Yolo_Bbox_Image" type="list" count="2">
+                <element name="2024-09-20-PorzBreign-shrimps_frame_000060" ftype="jpg"/>
+                <element name="2024-09-20-PorzBreign-shrimps_frame_000120" ftype="jpg"/>
+            </output_collection>
+            <output_collection name="Yolo_Bbox_Label" type="list" count="2">
+                <element name="2024-09-20-PorzBreign-shrimps_frame_000060" ftype="txt">
+                    <assert_contents>
+                        <has_n_lines n="0"/>
+                    </assert_contents>
+                </element>
+                <element name="2024-09-20-PorzBreign-shrimps_frame_000120" ftype="txt">
+                    <assert_contents>
+                        <has_text_matching expression="(?m)^0 [-0-9.]+ [-0-9.]+ [-0-9.]+ [-0-9.]+$"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+            <assert_stdout>
+                <has_text text="Class prompts: ['shrimp']"/>
+                <has_text text="COCO file is valid"/>
+            </assert_stdout>
+        </test> -->
     </tests>
     <help><![CDATA[
 
