@@ -154,11 +154,21 @@ This option will be applied to all selected formats above.<br/>
              tools/Sam3/test-data; see TODO.md for the full recipe.
 
              Cost: SAM3 prompts every sampled frame and needs ~2 min per
-             518x518 frame on a laptop CPU, so the video test samples the
-             ~145 frame clip only twice (vid_stride 60) and still covers both a
-             frame without detections and one with several shrimp. Raising
-             vid_stride shortens the run linearly; the YOLO and frame exports
-             add file I/O but no inference.
+             518x518 frame on a laptop CPU, so the video test takes only two
+             samples of the 144 frame clip (vid_stride 60) and still covers
+             both a frame without detections and one with several shrimp.
+             Raising vid_stride shortens the run linearly; the YOLO and frame
+             exports add file I/O but no inference.
+
+             The frame numbers are the sampler's own: the container ships
+             ultralytics 8.4.33, whose LoadImagesAndVideos grabs vid_stride
+             frames and then retrieves the last one, so it samples stride - 1,
+             2 * stride - 1, ... - here 59 and 119, and frames 120-143 are
+             never analysed. Later releases retrieve first and sample 0 and 60
+             instead. The wrapper probes the installed sampler (see
+             vid_stride_offset) and prints the result, so if this test fails
+             on the frame names, read the `Frame numbering:` line of the job
+             log: it names the source frame the first sample came from.
 
              The video itself is not committed: its `location` attribute makes
              Galaxy stream it from Zenodo, and the tutorial that uses it is
@@ -203,17 +213,16 @@ This option will be applied to all selected formats above.<br/>
             <param name="imgsz" value="518"/>
             <output name="Annotations_coco">
                 <assert_contents>
-                    <has_text text="&quot;file_name&quot;: &quot;2024-09-20-PorzBreign-shrimps_frame_000000.jpg&quot;"/>
-                    <has_text text="&quot;frame_index&quot;: 0"/>
-                    <has_text text="&quot;file_name&quot;: &quot;2024-09-20-PorzBreign-shrimps_frame_000060.jpg&quot;"/>
-                    <has_text text="&quot;frame_index&quot;: 60"/>
-                    <has_text text="&quot;file_name&quot;: &quot;2024-09-20-PorzBreign-shrimps_frame_000120.jpg&quot;"/>
-                    <has_text text="&quot;frame_index&quot;: 120"/>
+                    <has_text text="&quot;file_name&quot;: &quot;2024-09-20-PorzBreign-shrimps_frame_000059.jpg&quot;"/>
+                    <has_text text="&quot;frame_index&quot;: 59"/>
+                    <has_text text="&quot;file_name&quot;: &quot;2024-09-20-PorzBreign-shrimps_frame_000119.jpg&quot;"/>
+                    <has_text text="&quot;frame_index&quot;: 119"/>
+                    <not_has_text text="&quot;frame_index&quot;: 120"/>
                     <has_text text="&quot;name&quot;: &quot;shrimp&quot;"/>
                     <has_text text="&quot;category_id&quot;: 1"/>
                     <has_text text="&quot;iscrowd&quot;: 0"/>
-                    <has_text text="&quot;image_id&quot;: 3"/>
-                    <not_has_text text="&quot;image_id&quot;: 2"/>
+                    <has_text text="&quot;image_id&quot;: 2"/>
+                    <not_has_text text="&quot;image_id&quot;: 1"/>
                     <has_text text="&quot;segmentation&quot;: ["/>
                     <has_text_matching expression="&quot;track_id&quot;: [0-9]+"/>
                 </assert_contents>
@@ -221,33 +230,25 @@ This option will be applied to all selected formats above.<br/>
             <output_collection name="Outputs_annotated" type="list" count="1">
                 <element name="2024-09-20-PorzBreign-shrimps" ftype="mp4"/>
             </output_collection>
-            <output_collection name="Raw_Frames" type="list" count="3">
-                <element name="2024-09-20-PorzBreign-shrimps_frame_000000" ftype="jpg"/>
-                <element name="2024-09-20-PorzBreign-shrimps_frame_000060" ftype="jpg"/>
-                <element name="2024-09-20-PorzBreign-shrimps_frame_000120" ftype="jpg"/>
+            <output_collection name="Raw_Frames" type="list" count="2">
+                <element name="2024-09-20-PorzBreign-shrimps_frame_000059" ftype="jpg"/>
+                <element name="2024-09-20-PorzBreign-shrimps_frame_000119" ftype="jpg"/>
             </output_collection>
-            <output_collection name="Annotated_Frames" type="list" count="3">
-                <element name="2024-09-20-PorzBreign-shrimps_frame_000000" ftype="jpg"/>
-                <element name="2024-09-20-PorzBreign-shrimps_frame_000060" ftype="jpg"/>
-                <element name="2024-09-20-PorzBreign-shrimps_frame_000120" ftype="jpg"/>
+            <output_collection name="Annotated_Frames" type="list" count="2">
+                <element name="2024-09-20-PorzBreign-shrimps_frame_000059" ftype="jpg"/>
+                <element name="2024-09-20-PorzBreign-shrimps_frame_000119" ftype="jpg"/>
             </output_collection>
-            <output_collection name="Yolo_Bbox_Image" type="list" count="3">
-                <element name="2024-09-20-PorzBreign-shrimps_frame_000000" ftype="jpg"/>
-                <element name="2024-09-20-PorzBreign-shrimps_frame_000060" ftype="jpg"/>
-                <element name="2024-09-20-PorzBreign-shrimps_frame_000120" ftype="jpg"/>
+            <output_collection name="Yolo_Bbox_Image" type="list" count="2">
+                <element name="2024-09-20-PorzBreign-shrimps_frame_000059" ftype="jpg"/>
+                <element name="2024-09-20-PorzBreign-shrimps_frame_000119" ftype="jpg"/>
             </output_collection>
-            <output_collection name="Yolo_Bbox_Label" type="list" count="3">
-                <element name="2024-09-20-PorzBreign-shrimps_frame_000000" ftype="txt">
-                    <assert_contents>
-                        <has_text_matching expression="(?m)^0 [-0-9.]+ [-0-9.]+ [-0-9.]+ [-0-9.]+$"/>
-                    </assert_contents>
-                </element>
-                <element name="2024-09-20-PorzBreign-shrimps_frame_000060" ftype="txt">
+            <output_collection name="Yolo_Bbox_Label" type="list" count="2">
+                <element name="2024-09-20-PorzBreign-shrimps_frame_000059" ftype="txt">
                     <assert_contents>
                         <has_n_lines n="0"/>
                     </assert_contents>
                 </element>
-                <element name="2024-09-20-PorzBreign-shrimps_frame_000120" ftype="txt">
+                <element name="2024-09-20-PorzBreign-shrimps_frame_000119" ftype="txt">
                     <assert_contents>
                         <has_text_matching expression="(?m)^0 [-0-9.]+ [-0-9.]+ [-0-9.]+ [-0-9.]+$"/>
                     </assert_contents>
@@ -255,6 +256,7 @@ This option will be applied to all selected formats above.<br/>
             </output_collection>
             <assert_stdout>
                 <has_text text="Class prompts: ['shrimp']"/>
+                <has_text text="Frame numbering: the first sampled frame is source frame 59"/>
                 <has_text text="COCO file is valid"/>
             </assert_stdout>
         </test> -->

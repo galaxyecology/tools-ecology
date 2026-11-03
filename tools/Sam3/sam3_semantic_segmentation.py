@@ -6,6 +6,7 @@ import shlex
 import shutil
 import subprocess
 import sys
+import tempfile
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -17,6 +18,7 @@ import numpy as np
 from pycocotools.coco import COCO
 
 import ultralytics
+from ultralytics.data.loaders import LoadImagesAndVideos
 from ultralytics.models.sam import SAM3SemanticPredictor
 from ultralytics.models.sam.predict import SAM3VideoSemanticPredictor
 
@@ -25,6 +27,9 @@ VIDEO_EXTENSIONS = {".mp4", ".avi", ".mov", ".mkv"}
 DEFAULT_CONFIDENCE = 0.25
 DEFAULT_VID_STRIDE = 5
 DEFAULT_IMGSZ = 644
+# side of the square frames of the synthetic video vid_stride_offset writes
+PROBE_SIZE = 8
+PROBE_FPS = 25.0
 INPUT_DIR = "data_files"
 OUTPUT_DIR = "outputs"
 
@@ -468,7 +473,8 @@ class FrameRecord:
     soon as it arrives and then dropped.
     """
 
-    # 0-based index of the frame in the source video: 0, stride, 2 * stride
+    # 0-based index of the frame in the source video, offset + n * stride
+    # (see vid_stride_offset for the offset)
     frame_index: int
     frame_stem: str
     height: int
@@ -545,6 +551,50 @@ def frame_output_directories(
     return directories
 
 
+def vid_stride_offset(stride: int) -> int:
+    """Source-video index of the first frame ultralytics samples.
+
+    Releases disagree about where sampling starts: the loader in ultralytics
+    8.4.33 grabs `stride` frames and then retrieves the last one, so it
+    samples stride - 1, 2 * stride - 1, ..., while later releases retrieve
+    first and skip afterwards, sampling 0, stride, 2 * stride, ... (see
+    LoadImagesAndVideos.__next__). A synthetic video whose frames carry their
+    own index tells the installed sampler apart in a few milliseconds, which
+    keeps frame_index the real position in the source video either way.
+    """
+    if stride <= 1:
+        return 0
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        probe = Path(tmpdir) / "stride_probe.avi"
+        writer = cv2.VideoWriter(
+            str(probe),
+            cv2.VideoWriter_fourcc(*"MJPG"),
+            PROBE_FPS,
+            (PROBE_SIZE, PROBE_SIZE),
+        )
+        if not writer.isOpened():
+            print("Warning: cannot write the stride probe, numbering from 0")
+            return 0
+
+        for index in range(stride + 1):
+            writer.write(np.full((PROBE_SIZE, PROBE_SIZE, 3), index, np.uint8))
+        writer.release()
+
+        loader = LoadImagesAndVideos(probe, vid_stride=stride)
+        try:
+            _, images, _ = next(iter(loader))
+        except StopIteration:
+            print("Warning: the stride probe gave no frame, numbering from 0")
+            return 0
+        finally:
+            if getattr(loader, "cap", None) is not None:
+                loader.cap.release()
+
+    # MJPG is lossy, so the flat frame value is only approximately exact
+    return int(round(float(np.asarray(images[0]).reshape(-1)[0])))
+
+
 def predict_video_frames(
     predictor: Any,
     video_path: str,
@@ -563,24 +613,27 @@ def predict_video_frames(
     see STREAM_WARNING). Peak memory is then one frame rather than the whole
     video, so the frames are exported here, while their pixels are available.
 
-    ultralytics samples the physical frames 0, stride, 2 * stride, ... (see
-    LoadImagesAndVideos.__next__) but does not expose the index on the Results
-    object, so it is counted here: frame_index is the 0-based index of the
-    frame in the source video, not the ordinal of the sampled frame.
+    ultralytics samples the source frames offset, offset + stride, ... where
+    the offset depends on the release (see vid_stride_offset), and does not
+    expose the index on the Results object, so it is counted here:
+    frame_index is the 0-based index of the frame in the source video, not the
+    ordinal of the sampled frame.
     """
     video_name = Path(video_path).stem
     if annotated_dir is not None:
         annotated_dir.mkdir(parents=True, exist_ok=True)
 
+    offset = vid_stride_offset(stride)
     print(f"Processing video frames (stride={stride})...")
+    print(f"Frame numbering: the first sampled frame is source frame {offset}")
 
     records: List[FrameRecord] = []
     for result in predictor(source=video_path, text=text_prompts, stream=True):
-        # The loader grabs one frame and then skips stride - 1, so the n-th
-        # yielded result is the source frame n * stride (correct for stride 1
-        # as well, where the old branch was right by accident)
         record = frame_record(
-            result, len(records) * stride, video_name, is_normalized
+            result,
+            offset + len(records) * stride,
+            video_name,
+            is_normalized,
         )
 
         # orig_img is the frame the annotations were computed on, so writing it
