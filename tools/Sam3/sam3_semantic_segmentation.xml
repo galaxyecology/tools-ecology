@@ -1,6 +1,6 @@
 <tool id="sam3_semantic_segmentation" name="SAM3 Semantic Segmentation" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>
-        SAM3 performs text-prompted semantic segmentation on images or videos. 
+        use text prompts to segment objects in images and videos
     </description>
     <macros>
         <token name="@TOOL_VERSION@">1.0.1</token>
