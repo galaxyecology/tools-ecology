@@ -63,6 +63,7 @@
                     <option value="raw">Raw frames only (no annotations)</option>
                     <option value="both">Both annotated and raw frames</option>
                 </param>
+                <param name="vid_stride" type="integer" value="5" min="1" max="300" label="Video frame stride" help="Process one frame every N frames. Higher values are faster and skip motion between the sampled frames."/>
             </when>
         </conditional>
         <param name="text_prompt" type="text" label="Text prompt">
@@ -75,7 +76,6 @@
         ]]></help>
         </param>
         <param name="conf" type="float" value="0.25" min="0.01" max="1.0" label="Confidence threshold"/>
-        <param name="vid_stride" type="integer" value="5" min="1" max="300" label="Video frame stride" help="For video input: process one frame every N frames."/>
         <param name="show_bbox" type="boolean" checked="true" truevalue="true" falsevalue="false" label="Show bounding boxes on annotated output"/>
         <param name="imgsz" type="select" label="Inference image size" help="Resolution at which the image is resized before segmentation.                 A higher value preserves more detail and improves boundary accuracy,                 especially for small objects, but increases computation time and GPU memory usage.                 If you encounter out-of-memory errors, select a lower value.">
             <option value="1288">1288 (highest accuracy)</option>

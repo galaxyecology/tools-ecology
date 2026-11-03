@@ -681,7 +681,8 @@ def main():
     model = args.model or config.get("sam3_models")
     conf = float(config.get("conf", DEFAULT_CONFIDENCE))
     imgsz = as_int(config.get("imgsz"), DEFAULT_IMGSZ)
-    vid_stride = as_int(config.get("vid_stride"), DEFAULT_VID_STRIDE)
+    # vid_stride lives inside the video branch of the input conditional
+    vid_stride = as_int(tool_input.get("vid_stride"), DEFAULT_VID_STRIDE)
     quality = tool_input.get("quality", "copy")
     output_frames = tool_input.get("output_frames", "none")
 
