@@ -1,8 +1,10 @@
 import argparse
-import glob
 import hashlib
 import json
 import os
+import shlex
+import subprocess
+import sys
 from pathlib import Path
 from typing import Any, Dict, List
 
@@ -178,7 +180,15 @@ def stage_input_datasets(
 
 def convert_avi_to_mp4(directory_path, quality):
     """
-    Convert AVI file to MP4.
+    Transcode the annotated video ultralytics wrote (AVI/MJPG) into MP4.
+
+    Galaxy discovers this directory as a collection, so exactly one annotated
+    video has to survive: after a successful conversion the AVI is removed and
+    the MP4 stays, after a failed one the error is logged and the AVI stays,
+    because it is the only annotated video there is.
+
+    Returns True when every AVI was converted and removed.
+
     Parameters:
         quality : "copy"  = original resolution and quality (no re-encoding)
                   "2000k" = video bitrate 2000 kbps (480p~720p)
@@ -186,29 +196,81 @@ def convert_avi_to_mp4(directory_path, quality):
                   "8000k" = video bitrate 8000 kbps (1080p high quality)
     """
     print(f"Quality : {quality}")
-    avi_file_path = glob.glob(os.path.join(directory_path, "*.avi"))[0]
-    output_path = os.path.splitext(avi_file_path)[0]
-    print(f"Converting: {avi_file_path} -> {output_path}.mp4")
-    audio_args = "-an"  # remove audio
+    directory = Path(directory_path)
+    avi_files = sorted(directory.glob("*.avi"))
+    if not avi_files:
+        contents = ", ".join(sorted(p.name for p in directory.iterdir()))
+        print(
+            f"Error: no annotated .avi in '{directory}' "
+            f"(contents: {contents or 'none'}), nothing to convert",
+            file=sys.stderr,
+        )
+        return False
+
     if quality == "copy":
-        video_args = (
-            "-c:v libx264 -crf 18 -preset slow "
-            "-profile:v high -pix_fmt yuv420p"
-        )
+        video_args = [
+            "-c:v", "libx264", "-crf", "18", "-preset", "slow",
+            "-profile:v", "high", "-pix_fmt", "yuv420p",
+        ]
     else:
-        video_args = (
-            f"-c:v libx264 -b:v {quality} "
-            "-vprofile high -bf 0"  # re-encode with H.264
-        )
-    cmd = (
-        f"ffmpeg -i '{avi_file_path}' "
-        f"{video_args} "
-        f"{audio_args} "
-        f"'{output_path}.mp4'"
-    )
-    print(f"Command : {cmd}")
-    os.popen(cmd)
-    return True
+        video_args = [
+            "-c:v", "libx264", "-b:v", quality,
+            "-vprofile", "high", "-bf", "0",
+        ]
+
+    converted = True
+    for avi_file in avi_files:
+        mp4_file = avi_file.with_suffix(".mp4")
+        # -y overwrites a stale file, -nostdin keeps ffmpeg away from stdin
+        argv = [
+            "ffmpeg",
+            "-nostdin",
+            "-y",
+            "-i",
+            str(avi_file),
+            *video_args,
+            "-an",  # remove audio
+            str(mp4_file),
+        ]
+        print(f"Converting: {avi_file} -> {mp4_file}")
+        print("Command : " + " ".join(shlex.quote(arg) for arg in argv))
+        try:
+            completed = subprocess.run(
+                argv, capture_output=True, text=True, errors="replace"
+            )
+        except FileNotFoundError:
+            print(
+                "Error: ffmpeg not found, keeping the annotated video "
+                f"'{avi_file.name}'",
+                file=sys.stderr,
+            )
+            return False
+        if completed.returncode != 0:
+            print(
+                f"Error: ffmpeg failed with exit code {completed.returncode}, "
+                f"keeping the annotated video '{avi_file.name}'",
+                file=sys.stderr,
+            )
+            print(completed.stderr.strip(), file=sys.stderr)
+            # ffmpeg leaves a truncated .mp4 behind, which Galaxy would
+            # collect as a second (broken) annotated video
+            mp4_file.unlink(missing_ok=True)
+            converted = False
+            continue
+        size = mp4_file.stat().st_size
+        if size == 0:
+            print(
+                "Error: ffmpeg produced an empty file, keeping the "
+                f"annotated video '{avi_file.name}'",
+                file=sys.stderr,
+            )
+            mp4_file.unlink(missing_ok=True)
+            converted = False
+            continue
+        avi_file.unlink()
+        print(f"Converted: {avi_file.name} -> {mp4_file.name} ({size} bytes)")
+
+    return converted
 
 
 def is_video(file_path: str) -> bool:
