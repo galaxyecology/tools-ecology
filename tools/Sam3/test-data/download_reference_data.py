@@ -10,9 +10,9 @@ configuration, so it does not need to be updated when the table changes.
 
 Usage::
 
-    python test-data/download_reference_data.py --dry-run   # show the plan
-    python test-data/download_reference_data.py             # fetch what is missing
-    python test-data/download_reference_data.py --force     # re-download
+    python test-data/download_reference_data.py --dry-run  # show the plan
+    python test-data/download_reference_data.py --force    # download again
+    python test-data/download_reference_data.py            # fetch missing
 
 Downloads are streamed to `<path>.part` with a progress report and are resumed
 from that file after a broken connection, so an interrupted 3.5 GB checkpoint
@@ -46,7 +46,7 @@ DEFAULT_CONF = HERE.parent / "tool_data_table_conf.xml.test"
 DEFAULT_TOOL_DATA_PATH = HERE
 TABLE_NAME = "huggingface"
 
-# Explicit download locations for entries that cannot be derived from the table.
+# Explicit locations for entries that cannot be derived from the table.
 SOURCES: Dict[str, str] = {
     "sam3_1038lab": "https://huggingface.co/1038lab/sam3/resolve/main/sam3.pt",
 }
@@ -163,18 +163,26 @@ def read_table(conf_path: Path, table_name: str) -> Tuple[List[str], str, str]:
     for table in root.findall("table"):
         if table.get("name") != table_name:
             continue
-        columns = [column.strip() for column in (table.findtext("columns") or "").split(",")]
+        column_text = table.findtext("columns") or ""
+        columns = [column.strip() for column in column_text.split(",")]
         columns = [column for column in columns if column]
         file_element = table.find("file")
-        loc_name = file_element.get("path") if file_element is not None else None
+        loc_name = None
+        if file_element is not None:
+            loc_name = file_element.get("path")
         if not columns or not loc_name:
-            sys.exit(f"Table '{table_name}' in {conf_path} lacks <columns> or <file>")
+            sys.exit(
+                f"Table '{table_name}' in {conf_path} lacks "
+                "<columns> or <file>"
+            )
         return columns, Path(loc_name).name, table.get("comment_char") or "#"
 
     sys.exit(f"No table named '{table_name}' in {conf_path}")
 
 
-def read_loc(loc_path: Path, columns: List[str], comment_char: str) -> List[Dict[str, str]]:
+def read_loc(
+    loc_path: Path, columns: List[str], comment_char: str
+) -> List[Dict[str, str]]:
     """Parse a tab separated .loc file into a list of row dictionaries."""
     try:
         lines = loc_path.read_text(encoding="utf-8").splitlines()
@@ -202,8 +210,8 @@ def expand_path_column(value: str, loc_path: Path) -> Path:
 
     ${__HERE__} is Galaxy's placeholder for the directory holding the .loc file
     (``here = os.path.dirname(os.path.abspath(filename))`` in
-    galaxy.tool_util.data), so it has to be expanded here in exactly the same way
-    for the "is it already downloaded?" check to look at the same file.
+    galaxy.tool_util.data), so it has to be expanded here, in exactly the same
+    way, for the "is it already downloaded?" check to look at the same file.
     """
     here = loc_path.resolve().parent
     return Path(value.replace("${__HERE__}", str(here))).expanduser()
@@ -217,14 +225,17 @@ def resolve_url(row: Dict[str, str], override: Optional[str]) -> Optional[str]:
     if value in SOURCES:
         return SOURCES[value]
     if HF_REPO_RE.match(value) and row.get("path"):
-        return HF_RESOLVE_URL.format(repo=value, filename=Path(row["path"]).name)
+        filename = Path(row["path"]).name
+        return HF_RESOLVE_URL.format(repo=value, filename=filename)
     return None
 
 
 def human_size(size: float) -> str:
     for unit in ("B", "kB", "MB", "GB"):
         if size < 1024 or unit == "GB":
-            return f"{size:.0f} {unit}" if unit == "B" else f"{size:.1f} {unit}"
+            if unit == "B":
+                return f"{size:.0f} {unit}"
+            return f"{size:.1f} {unit}"
         size /= 1024
     return f"{size:.1f} GB"
 
@@ -269,7 +280,8 @@ class Heartbeat(threading.Thread):
     def run(self) -> None:
         while not self._stop_event.wait(self.interval):
             elapsed = time.monotonic() - self._start_time
-            print(f"  {self.message} ({elapsed:.0f}s)", file=sys.stderr, flush=True)
+            line = f"  {self.message} ({elapsed:.0f}s)"
+            print(line, file=sys.stderr, flush=True)
 
     def __enter__(self) -> "Heartbeat":
         self.start()
@@ -334,9 +346,9 @@ def download(
 ) -> None:
     """One download attempt, resuming a previous .part file when possible.
 
-    The .part file is paired with a .part.json sidecar recording the URL and the
-    size the server announced, so a leftover partial file is only continued when
-    it really belongs to this download.
+    The .part file is paired with a .part.json sidecar recording the URL and
+    the size the server announced, so a leftover partial file is only
+    continued when it really belongs to this download.
     """
     partial = Path(f"{target}.part")
     meta_path = Path(f"{target}.part.json")
@@ -358,10 +370,12 @@ def download(
 
     print(f"  {url}\n  -> {target}", file=sys.stderr)
     host = urllib.parse.urlsplit(url).netloc or url
-    label = {socket.AF_INET: " over IPv4", socket.AF_INET6: " over IPv6"}.get(family, "")
+    labels = {socket.AF_INET: " over IPv4", socket.AF_INET6: " over IPv6"}
+    label = labels.get(family, "")
     request = urllib.request.Request(url, headers=headers)
+    message = f"connecting to {host}{label} - no response yet"
     with preferred_address_family(family):
-        with Heartbeat(f"connecting to {host}{label} - no response yet") as heartbeat:
+        with Heartbeat(message) as heartbeat:
             response = urllib.request.urlopen(request, timeout=timeout)
             connect_time = heartbeat.elapsed
     if connect_time >= 1.0:
@@ -370,10 +384,12 @@ def download(
     with response:
         status = getattr(response, "status", 200)
         resuming = bool(offset) and status == 206
+        range_header = response.headers.get("Content-Range")
+        range_start = content_range_start(range_header)
+        if resuming and range_start != offset:
+            resuming = False
         if offset and not resuming:
             print("  server cannot resume, starting over", file=sys.stderr)
-        if resuming and content_range_start(response.headers.get("Content-Range")) != offset:
-            resuming = False
         done = offset if resuming else 0
         length = response.headers.get("Content-Length")
         total = done + int(length) if length else 0
@@ -407,9 +423,11 @@ def download(
                 now = time.monotonic()
                 if now - last_report >= 1.0:
                     last_report = now
-                    print(report(done, total, now - started), file=sys.stderr, flush=True)
+                    line = report(done, total, now - started)
+                    print(line, file=sys.stderr, flush=True)
 
-        print(f"  {report(done, total, time.monotonic() - started)} - done", file=sys.stderr)
+        summary = report(done, total, time.monotonic() - started)
+        print(f"  {summary} - done", file=sys.stderr)
     if total and done != total:
         raise OSError(f"incomplete download: {done} of {total} bytes")
     os.replace(partial, target)
@@ -420,7 +438,9 @@ class Unreachable(Exception):
     """The URL cannot be downloaded at all - retrying will not help."""
 
 
-def preflight(url: str, token: Optional[str], timeout: float, family: int) -> None:
+def preflight(
+    url: str, token: Optional[str], timeout: float, family: int
+) -> None:
     """Check that url answers, within one overall deadline.
 
     urlopen() has no total timeout, it only bounds single socket operations, so
@@ -437,7 +457,8 @@ def preflight(url: str, token: Optional[str], timeout: float, family: int) -> No
         request = urllib.request.Request(url, headers=headers)
         try:
             with preferred_address_family(family):
-                with urllib.request.urlopen(request, timeout=timeout) as response:
+                opened = urllib.request.urlopen(request, timeout=timeout)
+                with opened as response:
                     result["status"] = getattr(response, "status", 200)
         except urllib.error.HTTPError as error:
             result["status"] = error.code
@@ -493,7 +514,10 @@ def fetch(
                 print(f"  giving up: {error}", file=sys.stderr)
                 return False
             if attempt == retries:
-                print(f"  giving up after {attempt} attempt(s): {error}", file=sys.stderr)
+                print(
+                    f"  giving up after {attempt} attempt(s): {error}",
+                    file=sys.stderr,
+                )
                 return False
             wait = min(2**attempt, 30)
             print(
@@ -509,12 +533,13 @@ def main(argv: Optional[List[str]] = None) -> int:
     args = parse_arguments(argv)
 
     columns, loc_name, comment_char = read_table(args.conf, args.table)
-    loc_path = Path(getattr(args, "loc", "") or Path(args.tool_data_path) / loc_name)
+    loc_path = getattr(args, "loc", "") or Path(args.tool_data_path) / loc_name
+    loc_path = Path(loc_path)
     if not loc_path.exists():
         sys.exit(
             f"No location file at {loc_path}.\n"
-            "Create one row for each reference file, with tab separated columns "
-            f"{', '.join(columns)}, e.g.:\n"
+            "Create one row for each reference file, with tab separated "
+            f"columns {', '.join(columns)}, e.g.:\n"
             f"  {list(SOURCES)[0]}\tsam3.pt\tmask-generation\timage\tsam3\t1\t"
             "/tmp/sam3_models/sam3.pt"
         )
@@ -551,8 +576,12 @@ def main(argv: Optional[List[str]] = None) -> int:
         if args.dry_run:
             state = ""
             if target.exists() and target.stat().st_size:
-                state = f" (already present, {human_size(target.stat().st_size)})"
-            print(f"{identifier}: would download {url}\n  -> {target}{state}", file=sys.stderr)
+                size = human_size(target.stat().st_size)
+                state = f" (already present, {size})"
+            print(
+                f"{identifier}: would download {url}\n  -> {target}{state}",
+                file=sys.stderr,
+            )
             continue
 
         if target.exists() and target.stat().st_size and not args.force:
@@ -562,11 +591,13 @@ def main(argv: Optional[List[str]] = None) -> int:
                 file=sys.stderr,
             )
             continue
-        if not args.force and target != listed and listed.is_file() and listed.stat().st_size:
+        listed_present = listed.is_file() and listed.stat().st_size
+        if not args.force and target != listed and listed_present:
             print(
                 f"{identifier}: {listed} is already there "
-                f"({human_size(listed.stat().st_size)}), as listed in {loc_path.name}; "
-                f"leaving it alone (--force would download it to {target} again)",
+                f"({human_size(listed_present)}), as listed in "
+                f"{loc_path.name}; leaving it alone (--force would download "
+                f"it to {target} again)",
                 file=sys.stderr,
             )
             continue
@@ -585,7 +616,8 @@ def main(argv: Optional[List[str]] = None) -> int:
                 failures += 1
                 continue
         if fetch(url, target, args.token, args.timeout, args.retries, family):
-            print(f"{identifier}: saved {human_size(target.stat().st_size)}", file=sys.stderr)
+            saved = human_size(target.stat().st_size)
+            print(f"{identifier}: saved {saved}", file=sys.stderr)
             downloads += 1
             misplaced += target != listed
         else:
@@ -593,9 +625,9 @@ def main(argv: Optional[List[str]] = None) -> int:
 
     if misplaced:
         print(
-            f"Downloaded {misplaced} file(s) into {Path.cwd()}: either point the path "
-            f"column of {loc_path} at them, or rerun with --use-loc-paths to write "
-            "to the paths the loc file lists",
+            f"Downloaded {misplaced} file(s) into {Path.cwd()}: either point "
+            f"the path column of {loc_path} at them, or rerun with "
+            "--use-loc-paths to write to the paths the loc file lists",
             file=sys.stderr,
         )
     if failures:
