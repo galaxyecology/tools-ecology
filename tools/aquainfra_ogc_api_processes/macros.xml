@@ -1,5 +1,5 @@
 <macros>
-    <token name="@VERSION@">0.19.1</token>
+    <token name="@VERSION@">0.19.2</token>
     <token name="@VERSION_SUFFIX@">3</token>
     <xml name="requirements">
         <requirements>
