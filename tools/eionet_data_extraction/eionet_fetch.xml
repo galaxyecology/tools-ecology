@@ -1,0 +1,379 @@
+<tool id="eionet_data_extraction" name="EIONET Species Data - Article 12 &amp; 17" version="1.0.0" profile="21.05">
+
+    <description>Extract EIONET Art. 12 and Art. 17 species status and population data</description>
+
+    <requirements>
+        <requirement type="package" version="4.5.3">r-base</requirement>
+        <requirement type="package" version="1.4.8">r-httr</requirement>
+        <requirement type="package" version="1.0.5">r-rvest</requirement>
+        <requirement type="package" version="1.5.2">r-xml2</requirement>
+        <requirement type="package" version="1.8.2">r-optparse</requirement>
+        <requirement type="package" version="1.2.1">r-dplyr</requirement>
+    </requirements>
+
+    <command detect_errors="exit_code"><![CDATA[
+        mkdir -p output_files &&
+
+        #if str($directive.choice) == "art12"
+            Rscript '$__tool_directory__/eionet_fetch.R'
+                --source 'art12'
+                --subject '$directive.subject'
+                --period '$directive.period'
+                #if str($directive.country) != ''
+                    --country '$directive.country'
+                #end if
+        #else
+            Rscript '$__tool_directory__/eionet_fetch.R'
+                --source 'art17'
+                --subject '$directive.subject'
+                --group '$directive.group'
+                --period '$directive.period'
+                #if str($directive.region) != ''
+                    --region '$directive.region'
+                #end if
+                #if str($directive.country) != ''
+                    --country '$directive.country'
+                #end if
+        #end if
+    ]]></command>
+
+    <inputs>
+
+        <conditional name="directive">
+            <param name="choice"
+                   type="select"
+                   label="Directive / taxonomic group"
+                   help="Birds are reported under Article 12 of the Birds Directive; every other species group (mammals, reptiles, plants, etc.) is reported under Article 17 of the Habitats Directive.">
+                <option value="art12" selected="true">Birds (Article 12 - Birds Directive)</option>
+                <option value="art17">Other species group (Article 17 - Habitats Directive)</option>
+            </param>
+
+            <when value="art12">
+                <param name="subject"
+                       type="text"
+                       label="Species latin name"
+                       help="Latin (scientific) name of the bird species. Example: Ciconia ciconia, Corvus corax, Branta bernicla.
+                             The name must match exactly the species list on the EIONET Article 12 portal."
+                       optional="false">
+                    <validator type="empty_field" message="Please provide a species latin name."/>
+                </param>
+
+                <param name="period"
+                       type="select"
+                       label="Reporting period"
+                       help="Select the Article 12 reporting period.">
+                    <option value="2019-2024" selected="true">2019-2024</option>
+                    <option value="2013-2018">2013-2018</option>
+                    <option value="2008-2012">2008-2012</option>
+                    <option value="2008-2012bis">2008-2012bis</option>
+                </param>
+
+                <param name="country" multiple="true"
+                       type="select"
+                       label="Country (optional)"
+                       help="Filter results for a specific EU Member State. Leave as 'All countries' to retrieve data for all Member States."
+                       optional="true">
+                    <option value="all_countries" selected="true">-- All countries --</option>
+                    <option value="EU">EU population status (EU28)</option>
+                    <option value="AT">Austria (AT)</option>
+                    <option value="BE">Belgium (BE)</option>
+                    <option value="BG">Bulgaria (BG)</option>
+                    <option value="CY">Cyprus (CY)</option>
+                    <option value="CZ">Czech Republic (CZ)</option>
+                    <option value="DE">Germany (DE)</option>
+                    <option value="DK">Denmark (DK)</option>
+                    <option value="EE">Estonia (EE)</option>
+                    <option value="ES">Spain - mainland (ES)</option>
+                    <option value="ESIC">Spain - Canary Islands (ESIC)</option>
+                    <option value="FI">Finland (FI)</option>
+                    <option value="FR">France (FR)</option>
+                    <option value="GIB">Gibraltar (GIB)</option>
+                    <option value="GR">Greece (GR)</option>
+                    <option value="HR">Croatia (HR)</option>
+                    <option value="HU">Hungary (HU)</option>
+                    <option value="IE">Ireland (IE)</option>
+                    <option value="IT">Italy (IT)</option>
+                    <option value="LT">Lithuania (LT)</option>
+                    <option value="LU">Luxembourg (LU)</option>
+                    <option value="LV">Latvia (LV)</option>
+                    <option value="MT">Malta (MT)</option>
+                    <option value="NL">Netherlands (NL)</option>
+                    <option value="PL">Poland (PL)</option>
+                    <option value="PT">Portugal - mainland (PT)</option>
+                    <option value="PTAC">Portugal - Azores (PTAC)</option>
+                    <option value="PTMA">Portugal - Madeira (PTMA)</option>
+                    <option value="RO">Romania (RO)</option>
+                    <option value="SE">Sweden (SE)</option>
+                    <option value="SI">Slovenia (SI)</option>
+                    <option value="SK">Slovakia (SK)</option>
+                    <option value="UK">United Kingdom (UK)</option>
+                </param>
+            </when>
+
+            <when value="art17">
+                <param name="group"
+                       type="select"
+                       label="Taxonomic group"
+                       help="Select the species group as listed on the EIONET Article 17 portal.">
+                    <option value="Amphibians">Amphibians</option>
+                    <option value="Arthropods">Arthropods</option>
+                    <option value="Fish">Fish</option>
+                    <option value="Mammals" selected="true">Mammals</option>
+                    <option value="Molluscs">Molluscs</option>
+                    <option value="Non-vascular plants">Non-vascular plants</option>
+                    <option value="Other invertebrates">Other invertebrates</option>
+                    <option value="Reptiles">Reptiles</option>
+                    <option value="Vascular plants">Vascular plants</option>
+                </param>
+
+                <param name="subject"
+                       type="text"
+                       label="Species latin name"
+                       help="Latin (scientific) name of the species, exactly as listed on the EIONET Article 17 portal for the chosen group. Example: Canis lupus, Lynx lynx, Rosalia alpina."
+                       optional="false">
+                    <validator type="empty_field" message="Please provide a species latin name."/>
+                </param>
+
+                <param name="period"
+                       type="select"
+                       label="Reporting period"
+                       help="Select the Article 17 reporting period.">
+                    <option value="2019-2024" selected="true">2019-2024</option>
+                    <option value="2013-2018">2013-2018</option>
+                    <option value="2007-2012bis">2007-2012bis</option>
+                    <option value="2007-2012">2007-2012</option>
+                    <option value="2001-2006">2001-2006</option>
+                </param>
+
+                <param name="region"
+                       type="select"
+                       label="Bio-geographical region (optional)"
+                       help="Restrict results to a single bio-geographical region. Leave as 'All bioregions' to retrieve data for every region the species is reported in."
+                       optional="true">
+                    <option value="" selected="true">-- All bioregions --</option>
+                    <option value="ALP">Alpine</option>
+                    <option value="ATL">Atlantic</option>
+                    <option value="BLS">Black Sea</option>
+                    <option value="BOR">Boreal</option>
+                    <option value="CON">Continental</option>
+                    <option value="MED">Mediterranean</option>
+                    <option value="PAN">Pannonian</option>
+                </param>
+
+                <param name="country" multiple="true"
+                       type="select"
+                       label="Country (optional)"
+                       help="Filter results for a specific EU Member State. Leave as 'All countries' to retrieve data for all Member States."
+                       optional="true">
+                    <option value="all_countries" selected="true">-- All countries --</option>
+                    <option value="EU">EU biogeographical assessment (not available for 2019-2024)</option>
+                    <option value="AT">Austria (AT)</option>
+                    <option value="BE">Belgium (BE)</option>
+                    <option value="BG">Bulgaria (BG)</option>
+                    <option value="CY">Cyprus (CY)</option>
+                    <option value="CZ">Czech Republic (CZ)</option>
+                    <option value="DE">Germany (DE)</option>
+                    <option value="DK">Denmark (DK)</option>
+                    <option value="EE">Estonia (EE)</option>
+                    <option value="ES">Spain - mainland (ES)</option>
+                    <option value="ESIC">Spain - Canary Islands (ESIC)</option>
+                    <option value="FI">Finland (FI)</option>
+                    <option value="FR">France (FR)</option>
+                    <option value="GIB">Gibraltar (GIB)</option>
+                    <option value="GR">Greece (GR)</option>
+                    <option value="HR">Croatia (HR)</option>
+                    <option value="HU">Hungary (HU)</option>
+                    <option value="IE">Ireland (IE)</option>
+                    <option value="IT">Italy (IT)</option>
+                    <option value="LT">Lithuania (LT)</option>
+                    <option value="LU">Luxembourg (LU)</option>
+                    <option value="LV">Latvia (LV)</option>
+                    <option value="MT">Malta (MT)</option>
+                    <option value="NL">Netherlands (NL)</option>
+                    <option value="PL">Poland (PL)</option>
+                    <option value="PT">Portugal - mainland (PT)</option>
+                    <option value="PTAC">Portugal - Azores (PTAC)</option>
+                    <option value="PTMA">Portugal - Madeira (PTMA)</option>
+                    <option value="RO">Romania (RO)</option>
+                    <option value="SE">Sweden (SE)</option>
+                    <option value="SI">Slovenia (SI)</option>
+                    <option value="SK">Slovakia (SK)</option>
+                    <option value="UK">United Kingdom (UK)</option>
+                </param>
+            </when>
+        </conditional>
+
+    </inputs>
+
+    <outputs>
+        <data name="output_ms" from_work_dir="output_files/MS_data.txt"
+              format="tabular"
+              label="EIONET Art12 - ${directive.subject} (${directive.period})">
+            <filter>directive['choice'] == 'art12' and (not directive['country'] or directive['country'] not in (['EU'], 'EU'))</filter>
+        </data>
+        <data name="output_eu" from_work_dir="output_files/EU_data.txt"
+              format="tabular"
+              label="EIONET Art12 EU - ${directive.subject} (${directive.period})">
+            <filter>directive['choice'] == 'art12' and (not directive['country'] or 'EU' in directive['country'])</filter>
+        </data>
+        <data name="output_art17" from_work_dir="output_files/ART17_data.txt"
+              format="tabular"
+              label="EIONET Art17 - ${directive.subject} (${directive.period})">
+            <filter>directive['choice'] == 'art17' and (not directive['country'] or directive['country'] not in (['EU'], 'EU'))</filter>
+        </data>
+                <data name="output_art17_eu" from_work_dir="output_files/ART17_EU_data.txt"
+              format="tabular"
+              label="EIONET Art17 EU - ${directive.subject} (${directive.period})">
+            <filter>directive['choice'] == 'art17' and directive['period'] != '2019-2024' and (not directive['country'] or 'EU' in directive['country'])</filter>
+        </data>
+
+    </outputs>
+
+
+    <tests>
+        <test expect_num_outputs="1">
+            <conditional name="directive">
+                <param name="choice" value="art12"/>
+                <param name="subject" value="Ciconia ciconia"/>
+                <param name="period" value="2013-2018"/>
+                <param name="country" value="all_countries"/>
+            </conditional>
+            <output name="output_ms">
+                <assert_contents>
+                    <has_text text="Ciconia ciconia"/>
+                    <has_n_lines n="25"/>
+                    <has_n_columns n="46"/>
+                </assert_contents>
+            </output>
+
+        </test>
+                <test expect_num_outputs="2">
+            <conditional name="directive">
+                <param name="choice" value="art12"/>
+                <param name="subject" value="Ciconia ciconia"/>
+                <param name="period" value="2013-2018"/>
+                <param name="country" value="EU,FR"/>
+            </conditional>
+            <output name="output_ms">
+                <assert_contents>
+                    <has_text text="Ciconia ciconia"/>
+                    <has_n_lines n="2"/>
+                    <has_n_columns n="46"/>
+                </assert_contents>
+            </output>
+            <output name="output_eu">
+                <assert_contents>
+                    <has_text text="Ciconia ciconia"/>
+                    <has_n_lines n="2"/>
+                    <has_n_columns n="21"/>
+                </assert_contents>
+            </output>
+        </test>
+
+                <test expect_num_outputs="2">
+            <conditional name="directive">
+                <param name="choice" value="art17"/>
+                <param name="group" value="Mammals"/>
+                <param name="subject" value="Canis lupus"/>
+                <param name="period" value="2013-2018"/>
+                <param name="country" value="EU,BG"/>
+            </conditional>
+            <output name="output_art17">
+                <assert_contents>
+                    <has_text text="Canis lupus"/>
+                    <has_n_lines n="4"/>
+                    <has_n_columns n="36"/>
+                </assert_contents>
+            </output>
+            <output name="output_art17_eu">
+                <assert_contents>
+                    <has_text text="Canis lupus"/>
+                    <has_n_lines n="10"/>
+                    <has_n_columns n="37"/>
+                </assert_contents>
+            </output>
+        </test>
+        <test expect_num_outputs="1">
+            <conditional name="directive">
+                <param name="choice" value="art17"/>
+                <param name="group" value="Mammals"/>
+                <param name="subject" value="Canis lupus"/>
+                <param name="period" value="2019-2024"/>
+                <param name="country" value="all_countries"/>
+            </conditional>
+            <output name="output_art17">
+                <assert_contents>
+                    <has_text text="Canis lupus"/>
+                    <has_n_lines n="49"/>
+                    <has_n_columns n="41"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+
+    <help><![CDATA[
+
+Usage
+=====
+
+This tool retrieves species conservation status and population data from two related EIONET reporting databases:
+
+- **Article 12** (Birds Directive 2009/147/EC) — for birds only.
+- **Article 17** (Habitats Directive 92/43/EEC) — for every other species group (amphibians, arthropods, fish, mammals, molluscs, non-vascular plants, other invertebrates, reptiles, vascular plants).
+
+Article 12 (birds)
+-------------------
+Provide the scientific (latin) species name, the reporting period, and optionally a country filter.
+
+- **Reporting period**: ``2019-2024``, ``2013-2018``, ``2008-2012``, ``2008-2012bis``
+- **Country**: all countries, a specific Member State, or the EU28 population status 
+
+Note: For the 2019–2024 period, the EU28 population status is not yet available.
+
+
+Article 17 (other groups)
+--------------------------
+Provide the taxonomic group, the scientific (latin) species name exactly as listed on the EIONET Article 17 portal for that group, the reporting period, and optionally a single bio-geographical region and the country.
+
+- **Group**: Amphibians, Arthropods, Fish, Mammals, Molluscs, Non-vascular plants, Other invertebrates, Reptiles, Vascular plants
+- **Reporting period**: ``2019-2024``, ``2013-2018``, ``2007-2012bis``, ``2007-2012``, ``2001-2006``
+- **Bio-region**: Alpine, Atlantic, Black Sea, Boreal, Continental, Mediterranean, Pannonian, or all regions
+- **Country**: all countries, or one or more specific Member States
+
+Notes
+=====
+Some species are still listed under an outdated scientific name. If you have any doubts, check the names in the Eionet databases linked just below.
+
+Data sources
+============
+- EIONET Article 12 web tool — https://nature-art12.eionet.europa.eu/article12/
+- EIONET Article 17 web tool — https://nature-art17.eionet.europa.eu/article17/
+
+Data reported by EU Member States under Directive 2009/147/EC (Birds) and Directive 92/43/EEC (Habitats).
+
+    ]]></help>
+
+    <citations>
+        <citation type="bibtex">
+            @misc{eionet_art12,
+                title        = {Article 12 web tool on population status and trends of birds},
+                author       = {EIONET},
+                howpublished = {\url{https://nature-art12.eionet.europa.eu/article12/}},
+                note         = {European Environment Information and Observation Network}
+            }
+        </citation>
+        <citation type="bibtex">
+            @misc{eionet_art17,
+                title        = {Article 17 web tool on conservation status of species and habitats},
+                author       = {EIONET},
+                howpublished = {\url{https://nature-art17.eionet.europa.eu/article17/}},
+                note         = {European Environment Information and Observation Network}
+            }
+        </citation>
+    </citations>
+
+    <creator>
+        <organization name="GINAMO"/>
+    </creator>
+
+</tool>
