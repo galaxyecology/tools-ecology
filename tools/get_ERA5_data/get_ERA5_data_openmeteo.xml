@@ -1,0 +1,399 @@
+<tool id="era5_extractor" name="ERA5 / ERA5-Land Climate Data Extractor" version="3.0.0" profile="25.1">
+
+  <description>Download daily ERA5 / ERA5-Land climate data via Open-Meteo</description>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       Requirements
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <requirements>
+    <requirement type="package" version="2.33.1">requests</requirement>
+    <requirement type="package" version="2.1.2">shapely</requirement>
+    <requirement type="package" version="1.1.3">geopandas</requirement>
+    <requirement type="package" version="3.7.2">pyproj</requirement>
+    <requirement type="package" version="23.0.1">pyarrow</requirement>
+    <requirement type="package" version="3.0.2">pandas</requirement>
+  </requirements>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       Required files
+       Explicitly declares the script that must be shipped alongside this
+       tool XML when the job runs on a remote compute node (e.g. via Pulsar)
+       where the tool directory itself is not otherwise available. Without
+       this block, Galaxy falls back on implicit "find files referenced from
+       the tool directory" heuristics, which are deprecated.
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <required_files>
+    <include type="literal" path="era5_extractor.py" />
+  </required_files>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       Command
+       NOTE: params inside <section name="advanced"> must be prefixed
+             with $advanced. in the Cheetah template.
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <command detect_errors="exit_code"><![CDATA[
+python '$__tool_directory__/era5_extractor.py'
+
+## ── Coordinate file ─────────────────────────────────────────────────────────
+--coordinates '$coord_file'
+
+## ── Climate variables (multi-select produces space-separated tokens) ─────────
+--parameters
+#for $p in $parameters
+  '$p'
+#end for
+
+## ── Date range ──────────────────────────────────────────────────────────────
+#if $dates.mode == 'global'
+  --start-date '$dates.start_date'
+  --end-date   '$dates.end_date'
+#end if
+
+## ── Coordinate reference system ─────────────────────────────────────────────
+--epsg $epsg
+
+## ── Output ───────────────────────────────────────────────────────────────────
+--output-format '$output_format'
+--output        '$output_file'
+
+## ── Advanced: API key (paid tier — optional) ─────────────────────────────────
+#if $advanced.apikey.strip()
+  --apikey '$advanced.apikey'
+#end if
+
+## ── Advanced: sleep between requests ─────────────────────────────────────────
+--sleep $advanced.sleep
+  ]]></command>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       Inputs
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <inputs>
+
+    <!-- ── Coordinate file ──────────────────────────────────────────────── -->
+    <param name="coord_file"
+           type="data"
+           format="csv,tabular,txt"
+           label="Coordinate file"
+           help="CSV or TSV with one row per site. Must contain EITHER 'latitude'
+                 + 'longitude' columns (decimal degrees in the CRS given by the
+                 EPSG code below) OR a 'geometry' column with WKT strings (POINT,
+                 LINESTRING, POLYGON …). For non-POINT geometries, all of the available points 
+                 will be used in the API query. Optional columns: 'site_name' (row
+                 label used in the output); 'begin_date' and 'end_date'
+                 (YYYY-MM-DD) for per-site date overrides." />
+
+    <!-- ── Climate variables ────────────────────────────────────────────── -->
+    <param name="parameters"
+           type="select"
+           multiple="true"
+           optional="false"
+           label="Climate variables to download"
+           help="Select one or more daily variables. ERA5-Land variables (soil
+                 moisture, soil temperature, mean 2 m temperature) are automatically
+                 routed to the ERA5-Land sub-model; all other variables use ERA5.
+                 Results for all variables are merged on the date column.">
+      <option value="temperature_2m_mean"  selected="true">Mean 2 m air temperature (°C) [ERA5-Land]</option>
+      <option value="temperature_2m_max">Max 2 m air temperature (°C) [ERA5/ERA5-Land]</option>
+      <option value="temperature_2m_min">Min 2 m air temperature (°C) [ERA5/ERA5-Land]</option>
+      <option value="precipitation_sum"   selected="true">Total precipitation (mm/day) [ERA5/ERA5-Land]</option>
+      <option value="rain_sum">Rainfall only (mm/day) [ERA5/ERA5-Land]</option>
+      <option value="snowfall_sum">Snowfall cm/day water-equivalent [ERA5/ERA5-Land]</option>
+      <option value="precipitation_hours">Precipitation duration (h/day) [ERA5/ERA5-Land]</option>
+      <option value="et0_fao_evapotranspiration">Reference ET0 FAO-56 Penman-Monteith (mm/day) [ERA5/ERA5-Land]</option>
+      <option value="wind_speed_10m_mean">Mean 10 m wind speed (km/h) [ERA5]</option>
+      <option value="wind_speed_10m_max">Max 10 m wind speed (km/h) [ERA5]</option>
+      <option value="wind_gusts_10m_mean">Mean 10 m wind gusts (km/h) [ERA5]</option>
+      <option value="wind_gusts_10m_max">Max 10 m wind gusts (km/h) [ERA5]</option>
+      <option value="wind_direction_10m_dominant">Dominant 10 m wind direction (degrees, 0=N) [ERA5]</option>
+      <option value="shortwave_radiation_sum">Solar radiation sum (MJ/m2/day) [ERA5]</option>
+      <option value="sunshine_duration">Sunshine duration (s/day) [ERA5]</option>
+      <option value="daylight_duration">Astronomical daylight duration (s/day) [ERA5]</option>
+      <option value="relative_humidity_2m_mean">Mean 2 m relative humidity (%) [ERA5]</option>
+      <option value="relative_humidity_2m_max">Max 2 m relative humidity (%) [ERA5]</option>
+      <option value="relative_humidity_2m_min">Min 2 m relative humidity (%) [ERA5]</option>
+      <option value="surface_pressure_mean">Mean surface pressure (hPa) [ERA5]</option>
+      <option value="vapor_pressure_deficit_max">Max vapour pressure deficit (kPa) [ERA5]</option>
+      <option value="cloud_cover_mean">Mean total cloud cover (%) [ERA5]</option>
+      <option value="soil_moisture_0_to_7cm_mean">Mean soil moisture 0-7 cm (m3/m3) [ERA5-Land]</option>
+      <option value="soil_moisture_7_to_28cm_mean">Mean soil moisture 7-28 cm (m3/m3) [ERA5-Land]</option>
+      <option value="soil_moisture_28_to_100cm_mean">Mean soil moisture 28-100 cm (m3/m3) [ERA5-Land]</option>
+      <option value="soil_moisture_100_to_255cm_mean">Mean soil moisture 100-255 cm (m3/m3) [ERA5-Land]</option>
+      <option value="soil_temperature_0_to_7cm_mean">Mean soil temperature 0-7 cm (deg C) [ERA5-Land]</option>
+      <option value="soil_temperature_7_to_28cm_mean">Mean soil temperature 7-28 cm (deg C) [ERA5-Land]</option>
+      <option value="soil_temperature_28_to_100cm_mean">Mean soil temperature 28-100 cm (deg C) [ERA5-Land]</option>
+      <option value="soil_temperature_100_to_255cm_mean">Mean soil temperature 100-255 cm (deg C) [ERA5-Land]</option>
+    </param>
+
+    <!-- ── Date range ────────────────────────────────────────────────────── -->
+    <conditional name="dates">
+      <param name="mode"
+             type="select"
+             label="Date range source"
+             help="Global: same start/end dates applied to every site.
+                   Per-site: dates are read from 'begin_date' and 'end_date'
+                   columns in the coordinate file (no global dates needed).">
+        <option value="global" selected="true">Global dates — same period for all sites</option>
+        <option value="file">Per-site dates — from coordinate file columns</option>
+      </param>
+      <when value="global">
+        <param name="start_date"
+               type="text"
+               value="1990-01-01"
+               label="Start date"
+               help="Format: YYYY-MM-DD. Earliest allowed: 1960-01-01 (SAFRAN lower bound).
+                     Overridden per row by a 'begin_date' column in the coordinate file.">
+          <validator type="regex" message="Date must be in YYYY-MM-DD format (e.g. 1990-01-01).">^\d{4}-\d{2}-\d{2}$</validator>
+        </param>
+        <param name="end_date"
+               type="text"
+               value="2020-12-31"
+               label="End date"
+               help="Format: YYYY-MM-DD. Latest allowed: 2020-12-31 (SAFRAN upper bound).
+                     Overridden per row by an 'end_date' column in the coordinate file.">
+          <validator type="regex" message="Date must be in YYYY-MM-DD format (e.g. 2020-12-31).">^\d{4}-\d{2}-\d{2}$</validator>
+        </param>
+      </when>
+      <when value="file">
+        <!-- dates come entirely from begin_date / end_date columns -->
+      </when>
+    </conditional>
+
+    <!-- ── Coordinate reference system ──────────────────────────────────── -->
+    <param name="epsg"
+           type="integer"
+           value="4326"
+           label="Input coordinate EPSG code"
+           help="EPSG code of the CRS used in the coordinate file
+                 (default: 4326 = WGS-84 geographic, decimal degrees).
+                 Coordinates are automatically reprojected to WGS-84 before
+                 the API call; the output always stores WGS-84 lat/lon.
+                 Examples: 2154 (RGF93/Lambert-93 France),
+                 32631 (WGS84/UTM zone 31N), 3035 (ETRS89/LAEA Europe)." />
+
+
+    <!-- ── Output format ────────────────────────────────────────────────── -->
+    <param name="output_format"
+           type="select"
+           label="Output file format"
+           help="CSV and TSV are human-readable. JSON is useful for downstream
+                 web applications. Parquet is a compact columnar binary format
+                 suitable for large datasets (requires pyarrow).">
+      <option value="csv"     selected="true">CSV — comma-separated (UTF-8)</option>
+      <option value="tsv">TSV — tab-separated</option>
+      <option value="json">JSON — array of records</option>
+      <option value="parquet">Parquet — columnar binary</option>
+    </param>
+
+    <!-- ── Advanced options ──────────────────────────────────────────────── -->
+    <section name="advanced" title="Advanced options" expanded="false">
+
+      <param name="apikey"
+             type="text"
+             optional="true"
+             value=""
+             label="Open-Meteo API key (paid tier — optional)"
+             help="Leave empty to use the free tier (archive-api.open-meteo.com),
+                   limited to 10 000 requests/day per IP address.">
+        <sanitizer invalid_char="">
+          <valid initial="string.ascii_letters">
+            <add value="0123456789-_." />
+          </valid>
+        </sanitizer>
+      </param>
+
+      <param name="sleep"
+             type="float"
+             value="1.0"
+             min="0.0"
+             max="60.0"
+             label="Sleep between API calls (seconds)"
+             help="Minimum pause between successive HTTP calls (default: 1.0 s).
+                   The free tier allows at most 600 requests/min, 5000/hour, 10000/day.
+                   Increase this value if you receive repeated HTTP 429 errors.
+                   Set to 0 only when using the paid API key." />
+
+    </section>
+
+  </inputs>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       Outputs
+       FIX: format="csv" is required as default; change_format handles the
+            other cases. Without format= planemo raises OutputsFormat warning.
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <outputs>
+    <data name="output_file"
+          format="csv"
+          label="${tool.name} on ${on_string}">
+      <change_format>
+        <when input="output_format" value="tsv"     format="tabular" />
+        <when input="output_format" value="json"    format="json"    />
+        <when input="output_format" value="parquet" format="binary"  />
+      </change_format>
+    </data>
+  </outputs>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       Tests
+       NOTE: <output name="..."> must match the name= of the <data> tag in
+             <outputs> above ("output_file") in every test — there is only
+             one declared output, so both tests reference the same name.
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <tests>
+
+    <!-- Test 1: POINT sites, global dates, two variables, CSV output -->
+    <test expect_num_outputs="1">
+      <param name="coord_file"    value="test_stations.csv" />
+      <param name="parameters"    value="temperature_2m_mean,precipitation_sum" />
+      <conditional name="dates">
+        <param name="mode"        value="global" />
+        <param name="start_date"  value="1990-01-01" />
+        <param name="end_date"    value="1990-01-07" />
+      </conditional>
+      <param name="epsg"          value="4326" />
+      <param name="output_format" value="csv" />
+      <output name="output_file"  ftype="csv">
+        <assert_contents>
+          <has_text text="site_name" />
+          <has_text text="site_id" />
+          <has_text text="latitude" />
+          <has_text text="date" />
+          <has_text text="temperature_2m_mean" />
+          <has_text text="precipitation_sum" />
+        </assert_contents>
+      </output>
+    </test>
+
+    <!-- Test 2: per-site dates from coordinate file, TSV output -->
+    <test expect_num_outputs="1">
+      <param name="coord_file"    value="test_stations_with_dates.csv" />
+      <param name="parameters"    value="temperature_2m_mean" />
+      <conditional name="dates">
+        <param name="mode"        value="file" />
+      </conditional>
+      <param name="output_format" value="tsv" />
+      <output name="output_file"  ftype="tabular">
+        <assert_contents>
+          <has_text text="site_name" />
+          <has_text text="temperature_2m_mean" />
+        </assert_contents>
+      </output>
+    </test>
+
+  </tests>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       Help
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <help><![CDATA[
+
+.. class:: infomark
+
+**ERA5 / ERA5-Land Climate Data Extractor** downloads daily climate and soil
+data from the ERA5 and ERA5-Land reanalysis datasets via the Open-Meteo
+Historical Weather API (https://open-meteo.com). No Copernicus account or API
+key is required for the free tier.
+
+-----
+
+What it does
+============
+
+For each location in the coordinate file and each selected climate variable,
+the tool queries the Open-Meteo archive API and assembles a single output table
+with **one row per site per day**.
+
+The extraction period is bounded by SAFRAN data availability:
+**1960-01-01** (earliest) to **2020-12-31** (latest).
+
+-----
+
+Coordinate file format
+======================
+
+A CSV or TSV file with **one row per site**. Must contain one of:
+
+- ``latitude`` + ``longitude`` — decimal degrees in the CRS given by the
+  *EPSG code* parameter (default: WGS-84).
+- ``geometry`` — WKT string (POINT, LINESTRING, POLYGON, …); any CRS,
+  reprojected automatically. For non-POINT geometries the **centroid** is used.
+
+Optional columns:
+
+- ``site_name`` — label in the output and logs (default: row_N).
+- ``begin_date`` / ``end_date`` — per-site date range (YYYY-MM-DD) that
+  overrides the global start/end dates for that row.
+
+**Example — simple POINT sites (WGS-84)**::
+
+    site_name,latitude,longitude
+    Montpellier,43.611,3.877
+    Paris,48.857,2.352
+    Bordeaux,44.838,-0.579
+
+**Example — per-site date ranges**::
+
+    site_name,latitude,longitude,begin_date,end_date
+    Ultuna,59.817,17.655,1970-01-01,2018-12-31
+    Pergamino,-33.920,-60.560,1985-01-01,2015-12-31
+
+**Example — polygon geometry (WGS-84)**::
+
+    site_name,geometry
+    Bassin_Herault,"POLYGON((3.5 43.4,3.9 43.4,3.9 43.8,3.5 43.8,3.5 43.4))"
+
+-----
+
+Smart model routing
+===================
+
+Variables are automatically split between ERA5 and ERA5-Land sub-calls and
+merged on the date column:
+
+- **ERA5-Land** (~9 km, land only): mean 2 m temperature, soil moisture,
+  soil temperature.
+- **ERA5** (~25 km, global): precipitation, ET0, wind, radiation, humidity,
+  pressure.
+
+This avoids the silent empty-response bug that occurs when ERA5-Land variables
+are requested directly from the seamless endpoint.
+
+-----
+
+API quota and Galaxy deployment
+================================
+
+The **free tier** is limited to **10 000 requests per day per IP address**.
+
+When the free quota is hit, the script automatically pauses until midnight
+UTC (when the quota resets) and resumes — the job does **not** fail.
+
+-----
+
+Output columns
+==============
+
+- ``site_name`` — from the coordinate file (or row_N if absent).
+- ``site_id`` — numeric identifier, one per extracted point (1, 2, 3, …).
+- ``latitude``, ``longitude`` — WGS-84 decimal degrees of the queried point.
+- ``date`` — ISO 8601 date (YYYY-MM-DD).
+- One column per requested climate variable.
+
+  ]]></help>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       Citations
+       All three references have a DOI, so each is expressed with the
+       simpler <citation type="doi"> form (Galaxy resolves the full
+       bibliographic entry from the DOI at render time) rather than embedding
+       redundant bibtex blocks. See:
+       https://docs.galaxyproject.org/en/latest/dev/schema.html#tool-citations
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <citations>
+    <citation type="doi">10.5281/zenodo.7970649</citation>
+    <citation type="doi">10.1002/qj.3803</citation>
+    <citation type="doi">10.5194/essd-13-4349-2021</citation>
+  </citations>
+
+</tool>
