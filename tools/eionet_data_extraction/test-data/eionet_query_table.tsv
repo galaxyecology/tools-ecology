@@ -1,0 +1,7 @@
+Taxon	Period	Species	Country	Note
+Birds	2013-2018	Ciconia ciconia	FR	kept
+Bird	2013-2018	Ciconia ciconia	DE	merged
+Mammals	2013-2018	Canis lupus	BG	x
+Plants	2019-2024	Foo bar		y
+Mammal	2019-2024		FR	nospecies
+	2019-2024	Baz	FR	notaxon
