@@ -30,6 +30,10 @@ option_list <- list(
               help = "1-based index of the column holding the first SOC measurement date [default: 1]"),
   make_option("--end_date_col",        type = "integer",   default = 2L,
               help = "1-based index of the column holding the last SOC measurement date [default: 2]"),
+  make_option("--longitude_col",       type = "integer",   default = 3L,
+              help = "1-based index of the column holding the site longitude (decimal degrees) [default: 3]"),
+  make_option("--latitude_col",        type = "integer",   default = 4L,
+              help = "1-based index of the column holding the site latitude (decimal degrees) [default: 4]"),
   make_option("--earliest_date",       type = "character", default = "1959-01-01",
               help = "Earliest date available in the reanalysis [default: 1959-01-01]"),
   make_option("--output_metadata",     type = "character",
@@ -47,6 +51,8 @@ spinup_target_years <- as.integer(opt$spinup_target_years)
 earliest_date       <- ymd(opt$earliest_date)
 begin_date_col      <- as.integer(opt$begin_date_col)
 end_date_col        <- as.integer(opt$end_date_col)
+longitude_col       <- as.integer(opt$longitude_col)
+latitude_col        <- as.integer(opt$latitude_col)
 
 message("=== Generate Spin-up Climate Metadata ===")
 message("API source           : ", api_source)
@@ -55,13 +61,18 @@ message("Target spinup (yr)   : ", spinup_target_years)
 message("Minimum spinup (yr)  : ", spinup_min_years)
 message("Begin date column    : column #", begin_date_col)
 message("End date column      : column #", end_date_col)
+message("Longitude column     : column #", longitude_col)
+message("Latitude column      : column #", latitude_col)
 
 # =============================================================================
 # 2. Read and validate site metadata
 # =============================================================================
 message("\n[1/3] Reading site metadata ...")
 
-metadata_raw <- read_csv(opt$input_metadata, show_col_types = FALSE)
+# All columns are read as text so that the coordinates are written to the
+# output exactly as they appear in the input file.
+metadata_raw <- read_csv(opt$input_metadata,
+                         col_types = cols(.default = col_character()))
 n_cols <- ncol(metadata_raw)
 
 if (!"site_name" %in% colnames(metadata_raw)) {
@@ -71,29 +82,78 @@ if (!"site_name" %in% colnames(metadata_raw)) {
   )
 }
 
-if (begin_date_col < 1 || begin_date_col > n_cols ||
-    end_date_col   < 1 || end_date_col   > n_cols) {
+selected_cols <- c(
+  "first measurement date" = begin_date_col,
+  "last measurement date"  = end_date_col,
+  "longitude"              = longitude_col,
+  "latitude"               = latitude_col
+)
+
+if (any(is.na(selected_cols) | selected_cols < 1 | selected_cols > n_cols)) {
   stop(
-    "--begin_date_col and --end_date_col must be valid column numbers ",
-    "between 1 and ", n_cols, " (the input file has ", n_cols, " column(s))."
+    "Column numbers must be between 1 and ", n_cols,
+    " (the input file has ", n_cols, " column(s))."
   )
 }
 
-# Rename the two selected date columns to their canonical names by position.
-# Galaxy's column-selector parameters pass a 1-based column index, not a
-# column name. longitude/latitude, if present, are simply not used by this
-# tool and are dropped further down -- they are optional, as documented.
-# truncated = 2 allows bare years (e.g. 1985 -> 1985-01-01)
-locations <- metadata_raw
-colnames(locations)[begin_date_col] <- "begin_date"
-colnames(locations)[end_date_col]   <- "end_date"
-
-locations <- locations %>%
-  mutate(
-    begin_date = ymd(begin_date, truncated = 2L),
-    end_date   = ymd(end_date,   truncated = 2L),
-    end_date   = ceiling_date(end_date, unit = "year") - days(1)
+if (anyDuplicated(selected_cols) > 0) {
+  stop(
+    "The same column was selected more than once: ",
+    paste0(names(selected_cols), " = column ", selected_cols,
+           " (", colnames(metadata_raw)[selected_cols], ")", collapse = "; "),
+    ". Please select four different columns."
   )
+}
+
+# Check that coordinates are numeric decimal degrees within valid ranges
+check_coordinate <- function(values, col_index, label, limit) {
+  col_name <- colnames(metadata_raw)[col_index]
+  numeric_values <- suppressWarnings(as.numeric(values))
+  not_numeric <- is.na(numeric_values) & !is.na(values) & trimws(values) != ""
+  if (any(not_numeric)) {
+    stop(
+      call. = FALSE,
+      "The ", label, " column (column ", col_index, ", '", col_name,
+      "') contains non-numeric values for site(s): ",
+      paste(metadata_raw$site_name[not_numeric], collapse = ", "),
+      ". Coordinates must be decimal degrees (e.g. 1.506059)."
+    )
+  }
+  missing_values <- is.na(numeric_values)
+  if (any(missing_values)) {
+    stop(
+      call. = FALSE,
+      "The ", label, " column (column ", col_index, ", '", col_name,
+      "') is empty for site(s): ",
+      paste(metadata_raw$site_name[missing_values], collapse = ", "), "."
+    )
+  }
+  out_of_range <- abs(numeric_values) > limit
+  if (any(out_of_range)) {
+    stop(
+      call. = FALSE,
+      "The ", label, " column (column ", col_index, ", '", col_name,
+      "') has values outside [-", limit, ", ", limit, "] for site(s): ",
+      paste(metadata_raw$site_name[out_of_range], collapse = ", "),
+      ". Check that the longitude and latitude columns are not swapped."
+    )
+  }
+}
+
+check_coordinate(metadata_raw[[longitude_col]], longitude_col, "longitude", 180)
+check_coordinate(metadata_raw[[latitude_col]],  latitude_col,  "latitude",   90)
+
+# Galaxy's column-selector parameters pass a 1-based column index, not a
+# column name: the selected columns are extracted by position.
+# truncated = 2 allows bare years (e.g. 1985 -> 1985-01-01)
+locations <- tibble(
+  site_name  = metadata_raw$site_name,
+  longitude  = trimws(metadata_raw[[longitude_col]]),
+  latitude   = trimws(metadata_raw[[latitude_col]]),
+  begin_date = ymd(metadata_raw[[begin_date_col]], truncated = 2L),
+  end_date   = ymd(metadata_raw[[end_date_col]],   truncated = 2L)
+) %>%
+  mutate(end_date = ceiling_date(end_date, unit = "year") - days(1))
 
 message("  Sites loaded: ", nrow(locations))
 
@@ -146,6 +206,8 @@ su_info <- locations %>%
 spinup_metadata <- su_info %>%
   dplyr::select(
     site_name,
+    longitude,
+    latitude,
     begin_date,
     end_date,
     start_spinup,
