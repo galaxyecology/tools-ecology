@@ -1,0 +1,46 @@
+<tool id="zip_bridge_tool" name="Create Zipped File Link" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="25.1">
+    <description>
+        Generates a dynamic link to a renamed and zipped file
+    </description>
+    <macros>
+        <token name="@TOOL_VERSION@">1.0.0</token>
+        <token name="@VERSION_SUFFIX@">1</token>
+    </macros>
+    <creator>
+        <organization name="EOSC AquaINFRA" url="https://aquainfra.eu/"/>
+    </creator>
+    <command><![CDATA[
+        printf '%s' "https://zip-bridge-worker.galiana.workers.dev/?url=${original_url}&name=${new_filename}" > '$output_url'
+    ]]></command>
+    <inputs>
+        <param name="original_url" type="text" optional="false" label="Original File URL" help="Paste the URL from the upstream tool." />
+        <param name="new_filename" type="text" optional="false" label="Desired Filename in ZIP" value="Tordera.txt" help="The name the file will have inside the ZIP archive." />
+    </inputs>
+    <outputs>
+        <data name="output_url" format="txt" label="Dynamic ZIP URL" />
+    </outputs>
+    <tests>
+        <!-- Run test with: planemo test - -biocontainers plotInterpolationMap.xml - -test_output=plotInterpolationMap.html -->
+        <test>
+            <param name="original_url" value="https://example.org/data/file.txt"/>
+            <param name="new_filename" value="Tordera.txt"/>
+            <output name="output_url" file="cloudfare_url.txt"/>
+        </test>
+    </tests>
+    <help>
+        <![CDATA[
+             This tool takes an original file URL and a desired filename, and constructs a new URL.
+             When this new URL is accessed, a Cloudflare Worker will fetch the original file, zip it with the specified filename, and return the archive.
+        ]]>
+    </help>
+    <citations>
+        <citation type="bibtex">
+            @misc{cloudflare_workers,
+                author = {Cloudflare},
+                title = {Cloudflare Workers},
+                url = {https://workers.cloudflare.com/},
+                year = {2024}
+            }
+        </citation>
+    </citations>
+</tool>

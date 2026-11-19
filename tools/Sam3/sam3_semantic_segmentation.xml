@@ -1,10 +1,10 @@
 <tool id="sam3_semantic_segmentation" name="SAM3 Semantic Segmentation" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>
-        SAM3 performs text-prompted semantic segmentation on images or videos. 
+        use text prompts to segment objects in images and videos
     </description>
     <macros>
         <token name="@TOOL_VERSION@">1.0.1</token>
-        <token name="@VERSION_SUFFIX@">7</token>
+        <token name="@VERSION_SUFFIX@">8</token>
         <token name="@PROFILE@">25.1</token>
     </macros>
     <requirements>
@@ -14,39 +14,17 @@
         <include path="sam3_semantic_segmentation.py"/>
     </required_files>
     <command detect_errors="exit_code"><![CDATA[
-    mkdir data_files &&
-    #set $name_file = '' 
-    #if $input.input_kind == "image"
-        #for $indata in $input.source
-            ln -s '$indata' 'data_files/${indata.element_identifier}.${indata.ext}' &&
-            #set $name_file += $indata.element_identifier + " "
-        #end for
-    #else
-        ln -s '$input.source' 'data_files/${input.source.element_identifier}.${input.source.ext}' &&
-        #set $name_file = $input.source.element_identifier + " "
-    #end if
-    python '$__tool_directory__/sam3_semantic_segmentation.py' 
-        --model '$sam3_models.fields.path'
-        --prompts '$text_prompt' 
-        --conf '$conf' 
-        --vid_stride '$vid_stride' 
-        --outdir outputs 
-        --name_file '$name_file'
-        #if $input.input_kind == "video"
-            --quality '$input.quality'
-            --output_frames '$input.output_frames'
-        #end if
-        #if $input.input_kind == "image"
-            --outputs $input.outputs_format
-        #else
-            --outputs 'coco,$input.outputs_format'
-        #end if
-        --do_normalization '$do_normalization'
-        --show_bbox '$show_bbox'
-        --imgsz '$imgsz'
+        python '$__tool_directory__/sam3_semantic_segmentation.py'
+            '$inputs'
+            ## The model path is passed on the command line because a select from a
+            ## data table is serialised with its value only, not with its fields
+            --model '$sam3_models.fields.path'
     ]]></command>
+    <configfiles>
+        <inputs name="inputs" filename="inputs.json" data_style="staging_path_and_source_path"/>
+    </configfiles>
     <inputs>
-        <param name="sam3_models" label="Model data" type="select" help="Contact the administrator of our Galaxy instance if you miss model data">
+        <param name="sam3_models" label="Model data" type="select" help="Contact the administrator of your Galaxy instance if you miss model data">
             <options from_data_table="huggingface">
                 <filter type="static_value" column="5" value="1"/>
                 <filter type="static_value" column="4" value="sam3"/>
@@ -62,24 +40,15 @@
                 <param name="source" type="data" format="jpg,png,tiff" multiple="true" label="Input images">
                     <validator type="expression" message="TIFF images must contain exactly 3 channels (RGB).">value.ext not in ('tiff') or value.metadata.channels == 3</validator>
                 </param>
-                <param name="outputs_format" type="select" multiple="true" optional="true" label="Output formats" help="Select one or more annotation formats to generate.">
-                    <option value="coco">COCO</option>
-                    <option value="yolo_bbox">YOLO bounding boxes</option>
-                    <option value="yolo_seg">YOLO segmentation masks</option>
-                </param>
             </when>
             <when value="video">
                 <param name="source" type="data" format="mp4,avi,mov,gif" multiple="false" label="Input video file"/>
-                <param name="quality" type="select" label="Video quality" help="Select output video bitrate,does not affect processing speed or annotations.                            Higher quality than the original is not useful and will only increase file size.">
+                <param name="quality" type="select" label="Video quality" help="Select output video bitrate, does not affect processing speed or annotations.                            Higher quality than the original is not useful and will only increase file size.">
                     <option value="copy" selected="true">Original quality (lossless)</option>
                     <option value="1000k">1000k - Standard (260p)</option>
                     <option value="2000k">2000k - Standard (480p~720p)</option>
                     <option value="4000k">4000k - Good (1080p)</option>
                     <option value="8000k">8000k - High quality (1080p)</option>
-                </param>
-                <param name="outputs_format" type="select" multiple="true" optional="true" label="Additional output formats" help="YOLO formats are optional. COCO output is controlled separately above.">
-                    <option value="yolo_bbox">YOLO bounding boxes</option>
-                    <option value="yolo_seg">YOLO segmentation masks</option>
                 </param>
                 <param name="output_frames" type="select" label="Export individual frames" help="Extract individual frames from the video as images (at the chosen frame stride).">
                     <option value="none" selected="true">None</option>
@@ -87,8 +56,14 @@
                     <option value="raw">Raw frames only (no annotations)</option>
                     <option value="both">Both annotated and raw frames</option>
                 </param>
+                <param name="vid_stride" type="integer" value="5" min="1" max="300" label="Video frame stride" help="Process one frame every N frames. Higher values are faster and skip motion between the sampled frames. With a stride of N the analysed frames are 0, N, 2N, ... and the exported frame numbers are these 0-based indices in the source video."/>
             </when>
         </conditional>
+        <param name="outputs_format" type="select" multiple="true" optional="true" label="Output formats" help="Select one or more annotation formats to generate.">
+            <option value="coco" selected="true">COCO</option>
+            <option value="yolo_bbox">YOLO bounding boxes</option>
+            <option value="yolo_seg">YOLO segmentation masks</option>
+        </param>
         <param name="text_prompt" type="text" label="Text prompt">
             <help><![CDATA[
             Comma-separated list of objects or classes to detect and segment in your images/videos.
@@ -97,9 +72,10 @@
             <br/>
             <u>Best practices:</u> Use clear, specific terms in English. Be consistent with singular/plural forms.
         ]]></help>
+            <validator type="empty_field"/>
+            <validator type="regex" message="Use comma-separated terms such as &quot;elephant, giraffe&quot;: letters, digits, spaces, dots, hyphens and commas only.">^\w[\w .,-]*\Z</validator>
         </param>
         <param name="conf" type="float" value="0.25" min="0.01" max="1.0" label="Confidence threshold"/>
-        <param name="vid_stride" type="integer" value="5" min="1" max="300" label="Video frame stride" help="For video input: process one frame every N frames."/>
         <param name="show_bbox" type="boolean" checked="true" truevalue="true" falsevalue="false" label="Show bounding boxes on annotated output"/>
         <param name="imgsz" type="select" label="Inference image size" help="Resolution at which the image is resized before segmentation.                 A higher value preserves more detail and improves boundary accuracy,                 especially for small objects, but increases computation time and GPU memory usage.                 If you encounter out-of-memory errors, select a lower value.">
             <option value="1288">1288 (highest accuracy)</option>
@@ -118,7 +94,7 @@ This option will be applied to all selected formats above.<br/>
     </inputs>
     <outputs>
         <data name="Annotations_coco" format="json" from_work_dir="./outputs/annotations.json" label="${tool.name} on ${on_string}: Annotation COCO">
-            <filter>input['input_kind'] == "video" or (input['outputs_format'] and 'coco' in input['outputs_format'])</filter>
+            <filter>'coco' in outputs_format</filter>
         </data>
         <collection name="Outputs_annotated" type="list" label="${tool.name} on ${on_string}: Annotated Outputs">
             <discover_datasets pattern="__name_and_ext__" directory="outputs/outputs_annotated"/>
@@ -132,19 +108,19 @@ This option will be applied to all selected formats above.<br/>
             <discover_datasets pattern="__name_and_ext__" directory="outputs/frames_annotated"/>
         </collection>
         <collection name="Yolo_Bbox_Image" type="list" label="${tool.name} on ${on_string}: YOLO Bbox Images">
-            <filter>input['outputs_format'] and 'yolo_bbox' in input['outputs_format']</filter>
+            <filter>'yolo_bbox' in outputs_format</filter>
             <discover_datasets pattern="__name_and_ext__" directory="outputs/yolo_bbox/images"/>
         </collection>
         <collection name="Yolo_Bbox_Label" type="list" label="${tool.name} on ${on_string}: YOLO Bbox Labels">
-            <filter>input['outputs_format'] and 'yolo_bbox' in input['outputs_format']</filter>
+            <filter>'yolo_bbox' in outputs_format</filter>
             <discover_datasets pattern="__name_and_ext__" directory="outputs/yolo_bbox/labels"/>
         </collection>
         <collection name="Yolo_Seg_Image" type="list" label="${tool.name} on ${on_string}: YOLO Seg Images">
-            <filter>input['outputs_format'] and 'yolo_seg' in input['outputs_format']</filter>
+            <filter>'yolo_seg' in outputs_format</filter>
             <discover_datasets pattern="__name_and_ext__" directory="outputs/yolo_seg/images"/>
         </collection>
         <collection name="Yolo_Seg_Label" type="list" label="${tool.name} on ${on_string}: YOLO Seg Labels">
-            <filter>input['outputs_format'] and 'yolo_seg' in input['outputs_format']</filter>
+            <filter>'yolo_seg' in outputs_format</filter>
             <discover_datasets pattern="__name_and_ext__" directory="outputs/yolo_seg/labels"/>
         </collection>
     </outputs>
@@ -154,14 +130,138 @@ This option will be applied to all selected formats above.<br/>
             <conditional name="input">
                 <param name="input_kind" value="image"/>
                 <param name="source" value="5827603936_3f1d5d715c_z.jpg,shrimp.png"/>
-                <param name="outputs_format" value="coco,yolo_bbox"/>
             </conditional>
+            <param name="outputs_format" value="coco,yolo_bbox"/>
             <param name="text_prompt" value="elephant"/>
             <param name="conf" value="0.25"/>
             <assert_stdout>
                 <has_text text="Invalid model!"/>
             </assert_stdout>
         </test>
+        <!-- Real-inference tests, commented out because CI cannot satisfy them.
+             Requirements:
+             * sam3.pt registered in the `huggingface` data table under the id
+               `sam3_1038lab`: see test-data/huggingface.loc and
+               tool_data_table_conf.xml.test; test-data/download_reference_data.py
+               fetches the file to the path listed there, and
+             * a runtime with ultralytics + torch, i.e. the container image
+               (docker/singularity) or a venv on PATH, and
+             * for the video test, ffmpeg on PATH for the AVI to MP4 remux.
+
+             Both take minutes, not seconds, on CPU and need ~3.5 GB for the
+             checkpoint, so they stay disabled for CI, where none of that is
+             available, and where the vacuous test above is all that runs. To
+             use them locally, delete the comment markers around them and run
+             planemo test with the tool_data_path option set to
+             tools/Sam3/test-data; see TODO.md for the full recipe.
+
+             Cost: SAM3 prompts every sampled frame and needs ~2 min per
+             518x518 frame on a laptop CPU, so the video test takes only two
+             samples of the 144 frame clip (vid_stride 60) and still covers
+             both a frame without detections and one with several shrimp.
+             Raising vid_stride shortens the run linearly; the YOLO and frame
+             exports add file I/O but no inference.
+
+             The frame numbers are the sampler's own: the container ships
+             ultralytics 8.4.33, whose LoadImagesAndVideos grabs vid_stride
+             frames and then retrieves the last one, so it samples stride - 1,
+             2 * stride - 1, ... - here 59 and 119, and frames 120-143 are
+             never analysed. Later releases retrieve first and sample 0 and 60
+             instead. The wrapper probes the installed sampler (see
+             vid_stride_offset) and prints the result, so if this test fails
+             on the frame names, read the `Frame numbering:` line of the job
+             log: it names the source frame the first sample came from.
+
+             The video itself is not committed: its `location` attribute makes
+             Galaxy stream it from Zenodo, and the tutorial that uses it is
+             https://training.galaxyproject.org/training-material/topics/ecology/tutorials/SAM3/tutorial.html
+             (18.2 MB, md5 239798f4101a3345d88c2de5fb39cf82), so the test needs
+             the network and a Zenodo outage looks like a test failure.
+        -->
+        
+        <!-- <test expect_num_outputs="2">
+            <param name="sam3_models" value="sam3_1038lab"/>
+            <conditional name="input">
+                <param name="input_kind" value="image"/>
+                <param name="source" value="5827603936_3f1d5d715c_z.jpg"/>
+            </conditional>
+            <param name="outputs_format" value="coco"/>
+            <param name="text_prompt" value="tree"/>
+            <param name="conf" value="0.25"/>
+            <param name="imgsz" value="644"/>
+            <param name="do_normalization" value="false"/>
+            <output name="Annotations_coco">
+                <assert_contents>
+                    <has_text text="&quot;file_name&quot;: &quot;5827603936_3f1d5d715c_z.jpg&quot;"/>
+                    <has_text text="&quot;width&quot;: 426"/>
+                    <has_text text="&quot;name&quot;: &quot;tree&quot;"/>
+                    <has_text text="&quot;category_id&quot;: 1"/>
+                </assert_contents>
+            </output>
+            <output_collection name="Outputs_annotated" type="list" count="1"/>
+        </test>
+        <test expect_num_outputs="6">
+            <param name="sam3_models" value="sam3_1038lab"/>
+            <conditional name="input">
+                <param name="input_kind" value="video"/>
+                <param name="source" value="2024-09-20-PorzBreign-shrimps.mp4" ftype="mp4" location="https://zenodo.org/records/19891364/files/2024-09-20-PorzBreign-shrimps.mp4"/>
+                <param name="quality" value="2000k"/>
+                <param name="output_frames" value="both"/>
+                <param name="vid_stride" value="60"/>
+            </conditional>
+            <param name="outputs_format" value="yolo_bbox,coco"/>
+            <param name="text_prompt" value="shrimp"/>
+            <param name="conf" value="0.25"/>
+            <param name="imgsz" value="518"/>
+            <output name="Annotations_coco">
+                <assert_contents>
+                    <has_text text="&quot;file_name&quot;: &quot;2024-09-20-PorzBreign-shrimps_frame_000059.jpg&quot;"/>
+                    <has_text text="&quot;frame_index&quot;: 59"/>
+                    <has_text text="&quot;file_name&quot;: &quot;2024-09-20-PorzBreign-shrimps_frame_000119.jpg&quot;"/>
+                    <has_text text="&quot;frame_index&quot;: 119"/>
+                    <not_has_text text="&quot;frame_index&quot;: 120"/>
+                    <has_text text="&quot;name&quot;: &quot;shrimp&quot;"/>
+                    <has_text text="&quot;category_id&quot;: 1"/>
+                    <has_text text="&quot;iscrowd&quot;: 0"/>
+                    <has_text text="&quot;image_id&quot;: 2"/>
+                    <not_has_text text="&quot;image_id&quot;: 1"/>
+                    <has_text text="&quot;segmentation&quot;: ["/>
+                    <has_text_matching expression="&quot;track_id&quot;: [0-9]+"/>
+                </assert_contents>
+            </output>
+            <output_collection name="Outputs_annotated" type="list" count="1">
+                <element name="2024-09-20-PorzBreign-shrimps" ftype="mp4"/>
+            </output_collection>
+            <output_collection name="Raw_Frames" type="list" count="2">
+                <element name="2024-09-20-PorzBreign-shrimps_frame_000059" ftype="jpg"/>
+                <element name="2024-09-20-PorzBreign-shrimps_frame_000119" ftype="jpg"/>
+            </output_collection>
+            <output_collection name="Annotated_Frames" type="list" count="2">
+                <element name="2024-09-20-PorzBreign-shrimps_frame_000059" ftype="jpg"/>
+                <element name="2024-09-20-PorzBreign-shrimps_frame_000119" ftype="jpg"/>
+            </output_collection>
+            <output_collection name="Yolo_Bbox_Image" type="list" count="2">
+                <element name="2024-09-20-PorzBreign-shrimps_frame_000059" ftype="jpg"/>
+                <element name="2024-09-20-PorzBreign-shrimps_frame_000119" ftype="jpg"/>
+            </output_collection>
+            <output_collection name="Yolo_Bbox_Label" type="list" count="2">
+                <element name="2024-09-20-PorzBreign-shrimps_frame_000059" ftype="txt">
+                    <assert_contents>
+                        <has_n_lines n="0"/>
+                    </assert_contents>
+                </element>
+                <element name="2024-09-20-PorzBreign-shrimps_frame_000119" ftype="txt">
+                    <assert_contents>
+                        <has_text_matching expression="(?m)^0 [-0-9.]+ [-0-9.]+ [-0-9.]+ [-0-9.]+$"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+            <assert_stdout>
+                <has_text text="Class prompts: ['shrimp']"/>
+                <has_text text="Frame numbering: the first sampled frame is source frame 59"/>
+                <has_text text="COCO file is valid"/>
+            </assert_stdout>
+        </test> -->
     </tests>
     <help><![CDATA[
 
