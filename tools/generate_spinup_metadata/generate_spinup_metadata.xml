@@ -1,20 +1,19 @@
 <tool id="generate_spinup_metadata" name="Generate Spin-up Climate Metadata" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
-
-  <description>Compute spin-up period dates for SOC model initialization from site metadata</description>
+    <description>Compute spin-up period dates for SOC model initialization from site metadata</description>
     <macros>
         <token name="@TOOL_VERSION@">1.0.0</token>
         <token name="@VERSION_SUFFIX@">1</token>
         <token name="@PROFILE@">25.1</token>
     </macros>
-  <requirements>
-    <requirement type="package" version="4.3.1">r-base</requirement>
-    <requirement type="package" version="1.7.5">r-optparse</requirement>
-    <requirement type="package" version="2.0.0">r-tidyverse</requirement>
-  </requirements>
+    <requirements>
+        <requirement type="package" version="4.3.1">r-base</requirement>
+        <requirement type="package" version="1.7.5">r-optparse</requirement>
+        <requirement type="package" version="2.0.0">r-tidyverse</requirement>
+    </requirements>
     <required_files>
         <include path="generate_spinup_metadata.R"/>
     </required_files>
-  <command detect_errors="exit_code"><![CDATA[
+    <command detect_errors="exit_code"><![CDATA[
     Rscript '$__tool_directory__/generate_spinup_metadata.R'
       --input_metadata '$input_metadata'
       --begin_date_col $begin_date_col
@@ -31,119 +30,63 @@
         --earliest_date '1940-01-01'
       #end if
   ]]></command>
-
-  <inputs>
-
-    <param name="input_metadata"
-           type="data"
-           format="csv,tabular"
-           label="Site metadata file"
-           help="CSV file describing the experimental sites (see Help below for the expected format)." />
-
-    <param name="begin_date_col"
-           type="data_column"
-           data_ref="input_metadata"
-           use_header_names="true"
-           label="First measurement date column"
-           help="Column holding the date of the first SOC measurement.">
-      <validator type="no_options" message="The selected input file has no columns to choose from." />
-    </param>
-
-    <param name="end_date_col"
-           type="data_column"
-           data_ref="input_metadata"
-           use_header_names="true"
-           label="Last measurement date column"
-           help="Column holding the date of the last SOC measurement.">
-      <validator type="no_options" message="The selected input file has no columns to choose from." />
-    </param>
-
-    <param name="longitude_col"
-           type="data_column"
-           data_ref="input_metadata"
-           use_header_names="true"
-           label="Longitude column"
-           help="Column holding the site longitude, in decimal degrees.">
-      <validator type="no_options" message="The selected input file has no columns to choose from." />
-    </param>
-
-    <param name="latitude_col"
-           type="data_column"
-           data_ref="input_metadata"
-           use_header_names="true"
-           label="Latitude column"
-           help="Column holding the site latitude, in decimal degrees.">
-      <validator type="no_options" message="The selected input file has no columns to choose from." />
-    </param>
-
-    <param name="api_source"
-           type="select"
-           label="Target climate data source"
-           help="Reanalysis dataset used downstream; sets the earliest usable date.">
-      <option value="geosas" selected="true">GEOSAS API — SAFRAN reanalysis (from 1959)</option>
-      <option value="openmeteo">Open-Meteo API — ERA5 / ERA5-Land reanalysis (Global, from 1940)</option>
-    </param>
-
-    <param name="spinup_min_years"
-           type="integer"
-           value="15"
-           min="1"
-           max="50"
-           label="Minimum spin-up duration (years)"
-           help="Minimum pre-experiment years required to use them directly as spin-up." />
-
-    <param name="spinup_target_years"
-           type="integer"
-           value="30"
-           min="5"
-           max="80"
-           label="Target spin-up duration (years)"
-           help="Ideal length of the spin-up period, in years." />
-
-  </inputs>
-
-  <outputs>
-
-    <data name="output_metadata"
-          format="csv"
-          label="${tool.name} — ${api_source} — on ${on_string}" />
-
-  </outputs>
-
-  <!-- ================================================================== -->
-  <!-- TESTS                                                                -->
-  <!-- ================================================================== -->
-  <tests>
-    <!-- In site_metadata_test.csv, "start_date" is column 5, "last_soc_date"
+    <inputs>
+        <param name="input_metadata" type="data" format="csv,tabular" label="Site metadata file" help="CSV file describing the experimental sites (see Help below for the expected format)."/>
+        <param name="begin_date_col" type="data_column" data_ref="input_metadata" use_header_names="true" label="First measurement date column" help="Column holding the date of the first SOC measurement.">
+            <validator type="no_options" message="The selected input file has no columns to choose from."/>
+        </param>
+        <param name="end_date_col" type="data_column" data_ref="input_metadata" use_header_names="true" label="Last measurement date column" help="Column holding the date of the last SOC measurement.">
+            <validator type="no_options" message="The selected input file has no columns to choose from."/>
+        </param>
+        <param name="longitude_col" type="data_column" data_ref="input_metadata" use_header_names="true" label="Longitude column" help="Column holding the site longitude, in decimal degrees.">
+            <validator type="no_options" message="The selected input file has no columns to choose from."/>
+        </param>
+        <param name="latitude_col" type="data_column" data_ref="input_metadata" use_header_names="true" label="Latitude column" help="Column holding the site latitude, in decimal degrees.">
+            <validator type="no_options" message="The selected input file has no columns to choose from."/>
+        </param>
+        <param name="api_source" type="select" label="Target climate data source" help="Reanalysis dataset used downstream; sets the earliest usable date.">
+            <option value="geosas" selected="true">GEOSAS API — SAFRAN reanalysis (from 1959)</option>
+            <option value="openmeteo">Open-Meteo API — ERA5 / ERA5-Land reanalysis (Global, from 1940)</option>
+        </param>
+        <param name="spinup_min_years" type="integer" value="15" min="1" max="50" label="Minimum spin-up duration (years)" help="Minimum pre-experiment years required to use them directly as spin-up."/>
+        <param name="spinup_target_years" type="integer" value="30" min="5" max="80" label="Target spin-up duration (years)" help="Ideal length of the spin-up period, in years."/>
+    </inputs>
+    <outputs>
+        <data name="output_metadata" format="csv" label="${tool.name} — ${api_source} — on ${on_string}"/>
+    </outputs>
+    <!-- ================================================================== -->
+    <!-- TESTS                                                                -->
+    <!-- ================================================================== -->
+    <tests>
+        <!-- In site_metadata_test.csv, "start_date" is column 5, "last_soc_date"
          is column 6, "longitude" is column 26 and "latitude" is column 27. -->
-    <test expect_num_outputs="1">
-      <param name="input_metadata" value="site_metadata_test.csv" />
-      <param name="begin_date_col" value="5" />
-      <param name="end_date_col" value="6" />
-      <param name="longitude_col" value="26" />
-      <param name="latitude_col" value="27" />
-      <param name="api_source" value="geosas" />
-      <param name="spinup_min_years" value="15" />
-      <param name="spinup_target_years" value="30" />
-      <output name="output_metadata" file="expected_spinup_metadata_geosas.csv" ftype="csv" />
-    </test>
-    <test expect_num_outputs="1">
-      <param name="input_metadata" value="site_metadata_test.csv" />
-      <param name="begin_date_col" value="5" />
-      <param name="end_date_col" value="6" />
-      <param name="longitude_col" value="26" />
-      <param name="latitude_col" value="27" />
-      <param name="api_source" value="openmeteo" />
-      <param name="spinup_min_years" value="15" />
-      <param name="spinup_target_years" value="30" />
-      <output name="output_metadata" file="expected_spinup_metadata_era5.csv" ftype="csv" />
-    </test>
-  </tests>
-
-  <!-- ================================================================== -->
-  <!-- HELP                                                                 -->
-  <!-- ================================================================== -->
-  <help><![CDATA[
+        <test expect_num_outputs="1">
+            <param name="input_metadata" value="site_metadata_test.csv"/>
+            <param name="begin_date_col" value="5"/>
+            <param name="end_date_col" value="6"/>
+            <param name="longitude_col" value="26"/>
+            <param name="latitude_col" value="27"/>
+            <param name="api_source" value="geosas"/>
+            <param name="spinup_min_years" value="15"/>
+            <param name="spinup_target_years" value="30"/>
+            <output name="output_metadata" file="expected_spinup_metadata_geosas.csv" ftype="csv"/>
+        </test>
+        <test expect_num_outputs="1">
+            <param name="input_metadata" value="site_metadata_test.csv"/>
+            <param name="begin_date_col" value="5"/>
+            <param name="end_date_col" value="6"/>
+            <param name="longitude_col" value="26"/>
+            <param name="latitude_col" value="27"/>
+            <param name="api_source" value="openmeteo"/>
+            <param name="spinup_min_years" value="15"/>
+            <param name="spinup_target_years" value="30"/>
+            <output name="output_metadata" file="expected_spinup_metadata_era5.csv" ftype="csv"/>
+        </test>
+    </tests>
+    <!-- ================================================================== -->
+    <!-- HELP                                                                 -->
+    <!-- ================================================================== -->
+    <help><![CDATA[
 
 .. class:: infomark
 
@@ -250,30 +193,22 @@ input file.
 * GEOSAS API documentation: https://geosas.fr/web/?page_id=6345
 
   ]]></help>
-
-  <!-- ================================================================== -->
-  <!-- CITATIONS                                                            -->
-  <!-- ================================================================== -->
-<citations>
-
-    <!-- SAFRAN reanalysis -->
-    <citation type="doi">10.3189/S0260305500011277</citation>
-
-    <!-- ERA5 reanalysis -->
-    <citation type="doi">10.1002/qj.3803</citation>
-
-    <!-- Open-Meteo API -->
-    <citation type="doi">10.5281/zenodo.7970649</citation>
-
-    <!-- tidyverse -->
-    <citation type="doi">10.21105/joss.01686</citation>
-
-</citations>
-
-  <creator>
-      <person givenName="Mathieu" familyName="Guimont" url="https://github.com/Mathmath34"/>
-      <organization name="ALAMOD" url="https://www.pepr-faircarbon.fr/projets/alamod/"/>
+    <!-- ================================================================== -->
+    <!-- CITATIONS                                                            -->
+    <!-- ================================================================== -->
+    <citations>
+        <!-- SAFRAN reanalysis -->
+        <citation type="doi">10.3189/S0260305500011277</citation>
+        <!-- ERA5 reanalysis -->
+        <citation type="doi">10.1002/qj.3803</citation>
+        <!-- Open-Meteo API -->
+        <citation type="doi">10.5281/zenodo.7970649</citation>
+        <!-- tidyverse -->
+        <citation type="doi">10.21105/joss.01686</citation>
+    </citations>
+    <creator>
+        <person givenName="Mathieu" familyName="Guimont" url="https://github.com/Mathmath34"/>
+        <organization name="ALAMOD" url="https://www.pepr-faircarbon.fr/projets/alamod/"/>
         <organization name="Data Terra" url="https://www.data-terra.org/"/>
-  </creator>
-
+    </creator>
 </tool>
