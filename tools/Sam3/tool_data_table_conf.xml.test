@@ -1,0 +1,9 @@
+<!-- Data table used when running planemo tests locally. The .loc file lives in
+     test-data/ so a test run only needs one extra option, tool_data_path set to
+     tools/Sam3/test-data (see the tests in sam3_semantic_segmentation.xml). -->
+<tables>
+    <table name="huggingface" comment_char="#" allow_duplicate_entries="False">
+        <columns>value, name, pipeline_tag, domain, free_tag, version, path</columns>
+        <file path="${__HERE__}/test-data/huggingface.loc" />
+    </table>
+</tables>

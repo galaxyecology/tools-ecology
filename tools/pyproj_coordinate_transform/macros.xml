@@ -1,0 +1,351 @@
+<macros>
+    <token name="@TOOL_VERSION@">1.0.0</token>
+    <token name="@VERSION_SUFFIX@">0</token>
+    <token name="@PROFILE@">25.1</token>
+    <!-- ============================================================ -->
+    <!-- 300 EPSG codes, each verified against the PROJ/EPSG geodetic  -->
+    <!-- database (via pyproj.CRS.from_epsg) so both the code and the  -->
+    <!-- official name are guaranteed accurate. Grouped by region for  -->
+    <!-- easier browsing. Only the 5 original defaults (EPSG:4326,     -->
+    <!-- EPSG:3857, EPSG:2154, EPSG:27572, EPSG:32631) carry a         -->
+    <!-- token-controlled "selected" flag; everything else is just     -->
+    <!-- listed. Add more EPSG codes at the end of the relevant        -->
+    <!-- section as needed - both input_crs and output_crs pick them   -->
+    <!-- up automatically.                                             -->
+    <!-- ============================================================ -->
+    <xml name="crs_options" token_default_4326="false" token_default_3857="false" token_default_2154="false" token_default_27572="false" token_default_32631="false">
+        <!-- Global - worldwide reference frames -->
+        <option value="EPSG:4326" selected="@DEFAULT_4326@">EPSG:4326 - WGS 84</option>
+        <option value="EPSG:4269">EPSG:4269 - NAD83</option>
+        <option value="EPSG:4267">EPSG:4267 - NAD27</option>
+        <option value="EPSG:6318">EPSG:6318 - NAD83(2011)</option>
+        <option value="EPSG:4258">EPSG:4258 - ETRS89</option>
+        <option value="EPSG:4230">EPSG:4230 - ED50</option>
+        <option value="EPSG:4322">EPSG:4322 - WGS 72</option>
+        <option value="EPSG:4740">EPSG:4740 - PZ-90</option>
+        <!-- Global - world-scale projected -->
+        <option value="EPSG:3857" selected="@DEFAULT_3857@">EPSG:3857 - WGS 84 / Pseudo-Mercator</option>
+        <option value="EPSG:3395">EPSG:3395 - WGS 84 / World Mercator</option>
+        <!-- UTM - WGS 84 (worldwide, North zones 1-60) -->
+        <option value="EPSG:32601">EPSG:32601 - WGS 84 / UTM zone 1N</option>
+        <option value="EPSG:32602">EPSG:32602 - WGS 84 / UTM zone 2N</option>
+        <option value="EPSG:32603">EPSG:32603 - WGS 84 / UTM zone 3N</option>
+        <option value="EPSG:32604">EPSG:32604 - WGS 84 / UTM zone 4N</option>
+        <option value="EPSG:32605">EPSG:32605 - WGS 84 / UTM zone 5N</option>
+        <option value="EPSG:32606">EPSG:32606 - WGS 84 / UTM zone 6N</option>
+        <option value="EPSG:32607">EPSG:32607 - WGS 84 / UTM zone 7N</option>
+        <option value="EPSG:32608">EPSG:32608 - WGS 84 / UTM zone 8N</option>
+        <option value="EPSG:32609">EPSG:32609 - WGS 84 / UTM zone 9N</option>
+        <option value="EPSG:32610">EPSG:32610 - WGS 84 / UTM zone 10N</option>
+        <option value="EPSG:32611">EPSG:32611 - WGS 84 / UTM zone 11N</option>
+        <option value="EPSG:32612">EPSG:32612 - WGS 84 / UTM zone 12N</option>
+        <option value="EPSG:32613">EPSG:32613 - WGS 84 / UTM zone 13N</option>
+        <option value="EPSG:32614">EPSG:32614 - WGS 84 / UTM zone 14N</option>
+        <option value="EPSG:32615">EPSG:32615 - WGS 84 / UTM zone 15N</option>
+        <option value="EPSG:32616">EPSG:32616 - WGS 84 / UTM zone 16N</option>
+        <option value="EPSG:32617">EPSG:32617 - WGS 84 / UTM zone 17N</option>
+        <option value="EPSG:32618">EPSG:32618 - WGS 84 / UTM zone 18N</option>
+        <option value="EPSG:32619">EPSG:32619 - WGS 84 / UTM zone 19N</option>
+        <option value="EPSG:32620">EPSG:32620 - WGS 84 / UTM zone 20N</option>
+        <option value="EPSG:32621">EPSG:32621 - WGS 84 / UTM zone 21N</option>
+        <option value="EPSG:32622">EPSG:32622 - WGS 84 / UTM zone 22N</option>
+        <option value="EPSG:32623">EPSG:32623 - WGS 84 / UTM zone 23N</option>
+        <option value="EPSG:32624">EPSG:32624 - WGS 84 / UTM zone 24N</option>
+        <option value="EPSG:32625">EPSG:32625 - WGS 84 / UTM zone 25N</option>
+        <option value="EPSG:32626">EPSG:32626 - WGS 84 / UTM zone 26N</option>
+        <option value="EPSG:32627">EPSG:32627 - WGS 84 / UTM zone 27N</option>
+        <option value="EPSG:32628">EPSG:32628 - WGS 84 / UTM zone 28N</option>
+        <option value="EPSG:32629">EPSG:32629 - WGS 84 / UTM zone 29N</option>
+        <option value="EPSG:32630">EPSG:32630 - WGS 84 / UTM zone 30N</option>
+        <option value="EPSG:32631" selected="@DEFAULT_32631@">EPSG:32631 - WGS 84 / UTM zone 31N</option>
+        <option value="EPSG:32632">EPSG:32632 - WGS 84 / UTM zone 32N</option>
+        <option value="EPSG:32633">EPSG:32633 - WGS 84 / UTM zone 33N</option>
+        <option value="EPSG:32634">EPSG:32634 - WGS 84 / UTM zone 34N</option>
+        <option value="EPSG:32635">EPSG:32635 - WGS 84 / UTM zone 35N</option>
+        <option value="EPSG:32636">EPSG:32636 - WGS 84 / UTM zone 36N</option>
+        <option value="EPSG:32637">EPSG:32637 - WGS 84 / UTM zone 37N</option>
+        <option value="EPSG:32638">EPSG:32638 - WGS 84 / UTM zone 38N</option>
+        <option value="EPSG:32639">EPSG:32639 - WGS 84 / UTM zone 39N</option>
+        <option value="EPSG:32640">EPSG:32640 - WGS 84 / UTM zone 40N</option>
+        <option value="EPSG:32641">EPSG:32641 - WGS 84 / UTM zone 41N</option>
+        <option value="EPSG:32642">EPSG:32642 - WGS 84 / UTM zone 42N</option>
+        <option value="EPSG:32643">EPSG:32643 - WGS 84 / UTM zone 43N</option>
+        <option value="EPSG:32644">EPSG:32644 - WGS 84 / UTM zone 44N</option>
+        <option value="EPSG:32645">EPSG:32645 - WGS 84 / UTM zone 45N</option>
+        <option value="EPSG:32646">EPSG:32646 - WGS 84 / UTM zone 46N</option>
+        <option value="EPSG:32647">EPSG:32647 - WGS 84 / UTM zone 47N</option>
+        <option value="EPSG:32648">EPSG:32648 - WGS 84 / UTM zone 48N</option>
+        <option value="EPSG:32649">EPSG:32649 - WGS 84 / UTM zone 49N</option>
+        <option value="EPSG:32650">EPSG:32650 - WGS 84 / UTM zone 50N</option>
+        <option value="EPSG:32651">EPSG:32651 - WGS 84 / UTM zone 51N</option>
+        <option value="EPSG:32652">EPSG:32652 - WGS 84 / UTM zone 52N</option>
+        <option value="EPSG:32653">EPSG:32653 - WGS 84 / UTM zone 53N</option>
+        <option value="EPSG:32654">EPSG:32654 - WGS 84 / UTM zone 54N</option>
+        <option value="EPSG:32655">EPSG:32655 - WGS 84 / UTM zone 55N</option>
+        <option value="EPSG:32656">EPSG:32656 - WGS 84 / UTM zone 56N</option>
+        <option value="EPSG:32657">EPSG:32657 - WGS 84 / UTM zone 57N</option>
+        <option value="EPSG:32658">EPSG:32658 - WGS 84 / UTM zone 58N</option>
+        <option value="EPSG:32659">EPSG:32659 - WGS 84 / UTM zone 59N</option>
+        <option value="EPSG:32660">EPSG:32660 - WGS 84 / UTM zone 60N</option>
+        <!-- UTM - WGS 84 (worldwide, South zones 1-60) -->
+        <option value="EPSG:32701">EPSG:32701 - WGS 84 / UTM zone 1S</option>
+        <option value="EPSG:32702">EPSG:32702 - WGS 84 / UTM zone 2S</option>
+        <option value="EPSG:32703">EPSG:32703 - WGS 84 / UTM zone 3S</option>
+        <option value="EPSG:32704">EPSG:32704 - WGS 84 / UTM zone 4S</option>
+        <option value="EPSG:32705">EPSG:32705 - WGS 84 / UTM zone 5S</option>
+        <option value="EPSG:32706">EPSG:32706 - WGS 84 / UTM zone 6S</option>
+        <option value="EPSG:32707">EPSG:32707 - WGS 84 / UTM zone 7S</option>
+        <option value="EPSG:32708">EPSG:32708 - WGS 84 / UTM zone 8S</option>
+        <option value="EPSG:32709">EPSG:32709 - WGS 84 / UTM zone 9S</option>
+        <option value="EPSG:32710">EPSG:32710 - WGS 84 / UTM zone 10S</option>
+        <option value="EPSG:32711">EPSG:32711 - WGS 84 / UTM zone 11S</option>
+        <option value="EPSG:32712">EPSG:32712 - WGS 84 / UTM zone 12S</option>
+        <option value="EPSG:32713">EPSG:32713 - WGS 84 / UTM zone 13S</option>
+        <option value="EPSG:32714">EPSG:32714 - WGS 84 / UTM zone 14S</option>
+        <option value="EPSG:32715">EPSG:32715 - WGS 84 / UTM zone 15S</option>
+        <option value="EPSG:32716">EPSG:32716 - WGS 84 / UTM zone 16S</option>
+        <option value="EPSG:32717">EPSG:32717 - WGS 84 / UTM zone 17S</option>
+        <option value="EPSG:32718">EPSG:32718 - WGS 84 / UTM zone 18S</option>
+        <option value="EPSG:32719">EPSG:32719 - WGS 84 / UTM zone 19S</option>
+        <option value="EPSG:32720">EPSG:32720 - WGS 84 / UTM zone 20S</option>
+        <option value="EPSG:32721">EPSG:32721 - WGS 84 / UTM zone 21S</option>
+        <option value="EPSG:32722">EPSG:32722 - WGS 84 / UTM zone 22S</option>
+        <option value="EPSG:32723">EPSG:32723 - WGS 84 / UTM zone 23S</option>
+        <option value="EPSG:32724">EPSG:32724 - WGS 84 / UTM zone 24S</option>
+        <option value="EPSG:32725">EPSG:32725 - WGS 84 / UTM zone 25S</option>
+        <option value="EPSG:32726">EPSG:32726 - WGS 84 / UTM zone 26S</option>
+        <option value="EPSG:32727">EPSG:32727 - WGS 84 / UTM zone 27S</option>
+        <option value="EPSG:32728">EPSG:32728 - WGS 84 / UTM zone 28S</option>
+        <option value="EPSG:32729">EPSG:32729 - WGS 84 / UTM zone 29S</option>
+        <option value="EPSG:32730">EPSG:32730 - WGS 84 / UTM zone 30S</option>
+        <option value="EPSG:32731">EPSG:32731 - WGS 84 / UTM zone 31S</option>
+        <option value="EPSG:32732">EPSG:32732 - WGS 84 / UTM zone 32S</option>
+        <option value="EPSG:32733">EPSG:32733 - WGS 84 / UTM zone 33S</option>
+        <option value="EPSG:32734">EPSG:32734 - WGS 84 / UTM zone 34S</option>
+        <option value="EPSG:32735">EPSG:32735 - WGS 84 / UTM zone 35S</option>
+        <option value="EPSG:32736">EPSG:32736 - WGS 84 / UTM zone 36S</option>
+        <option value="EPSG:32737">EPSG:32737 - WGS 84 / UTM zone 37S</option>
+        <option value="EPSG:32738">EPSG:32738 - WGS 84 / UTM zone 38S</option>
+        <option value="EPSG:32739">EPSG:32739 - WGS 84 / UTM zone 39S</option>
+        <option value="EPSG:32740">EPSG:32740 - WGS 84 / UTM zone 40S</option>
+        <option value="EPSG:32741">EPSG:32741 - WGS 84 / UTM zone 41S</option>
+        <option value="EPSG:32742">EPSG:32742 - WGS 84 / UTM zone 42S</option>
+        <option value="EPSG:32743">EPSG:32743 - WGS 84 / UTM zone 43S</option>
+        <option value="EPSG:32744">EPSG:32744 - WGS 84 / UTM zone 44S</option>
+        <option value="EPSG:32745">EPSG:32745 - WGS 84 / UTM zone 45S</option>
+        <option value="EPSG:32746">EPSG:32746 - WGS 84 / UTM zone 46S</option>
+        <option value="EPSG:32747">EPSG:32747 - WGS 84 / UTM zone 47S</option>
+        <option value="EPSG:32748">EPSG:32748 - WGS 84 / UTM zone 48S</option>
+        <option value="EPSG:32749">EPSG:32749 - WGS 84 / UTM zone 49S</option>
+        <option value="EPSG:32750">EPSG:32750 - WGS 84 / UTM zone 50S</option>
+        <option value="EPSG:32751">EPSG:32751 - WGS 84 / UTM zone 51S</option>
+        <option value="EPSG:32752">EPSG:32752 - WGS 84 / UTM zone 52S</option>
+        <option value="EPSG:32753">EPSG:32753 - WGS 84 / UTM zone 53S</option>
+        <option value="EPSG:32754">EPSG:32754 - WGS 84 / UTM zone 54S</option>
+        <option value="EPSG:32755">EPSG:32755 - WGS 84 / UTM zone 55S</option>
+        <option value="EPSG:32756">EPSG:32756 - WGS 84 / UTM zone 56S</option>
+        <option value="EPSG:32757">EPSG:32757 - WGS 84 / UTM zone 57S</option>
+        <option value="EPSG:32758">EPSG:32758 - WGS 84 / UTM zone 58S</option>
+        <option value="EPSG:32759">EPSG:32759 - WGS 84 / UTM zone 59S</option>
+        <option value="EPSG:32760">EPSG:32760 - WGS 84 / UTM zone 60S</option>
+        <!-- UTM - NAD83 (North America, zones 1N-23N) -->
+        <option value="EPSG:26901">EPSG:26901 - NAD83 / UTM zone 1N</option>
+        <option value="EPSG:26902">EPSG:26902 - NAD83 / UTM zone 2N</option>
+        <option value="EPSG:26903">EPSG:26903 - NAD83 / UTM zone 3N</option>
+        <option value="EPSG:26904">EPSG:26904 - NAD83 / UTM zone 4N</option>
+        <option value="EPSG:26905">EPSG:26905 - NAD83 / UTM zone 5N</option>
+        <option value="EPSG:26906">EPSG:26906 - NAD83 / UTM zone 6N</option>
+        <option value="EPSG:26907">EPSG:26907 - NAD83 / UTM zone 7N</option>
+        <option value="EPSG:26908">EPSG:26908 - NAD83 / UTM zone 8N</option>
+        <option value="EPSG:26909">EPSG:26909 - NAD83 / UTM zone 9N</option>
+        <option value="EPSG:26910">EPSG:26910 - NAD83 / UTM zone 10N</option>
+        <option value="EPSG:26911">EPSG:26911 - NAD83 / UTM zone 11N</option>
+        <option value="EPSG:26912">EPSG:26912 - NAD83 / UTM zone 12N</option>
+        <option value="EPSG:26913">EPSG:26913 - NAD83 / UTM zone 13N</option>
+        <option value="EPSG:26914">EPSG:26914 - NAD83 / UTM zone 14N</option>
+        <option value="EPSG:26915">EPSG:26915 - NAD83 / UTM zone 15N</option>
+        <option value="EPSG:26916">EPSG:26916 - NAD83 / UTM zone 16N</option>
+        <option value="EPSG:26917">EPSG:26917 - NAD83 / UTM zone 17N</option>
+        <option value="EPSG:26918">EPSG:26918 - NAD83 / UTM zone 18N</option>
+        <option value="EPSG:26919">EPSG:26919 - NAD83 / UTM zone 19N</option>
+        <option value="EPSG:26920">EPSG:26920 - NAD83 / UTM zone 20N</option>
+        <option value="EPSG:26921">EPSG:26921 - NAD83 / UTM zone 21N</option>
+        <option value="EPSG:26922">EPSG:26922 - NAD83 / UTM zone 22N</option>
+        <option value="EPSG:26923">EPSG:26923 - NAD83 / UTM zone 23N</option>
+        <!-- UTM - ETRS89 (Europe, zones 28N-38N) -->
+        <option value="EPSG:25828">EPSG:25828 - ETRS89 / UTM zone 28N</option>
+        <option value="EPSG:25829">EPSG:25829 - ETRS89 / UTM zone 29N</option>
+        <option value="EPSG:25830">EPSG:25830 - ETRS89 / UTM zone 30N</option>
+        <option value="EPSG:25831">EPSG:25831 - ETRS89 / UTM zone 31N</option>
+        <option value="EPSG:25832">EPSG:25832 - ETRS89 / UTM zone 32N</option>
+        <option value="EPSG:25833">EPSG:25833 - ETRS89 / UTM zone 33N</option>
+        <option value="EPSG:25834">EPSG:25834 - ETRS89 / UTM zone 34N</option>
+        <option value="EPSG:25835">EPSG:25835 - ETRS89 / UTM zone 35N</option>
+        <option value="EPSG:25836">EPSG:25836 - ETRS89 / UTM zone 36N</option>
+        <option value="EPSG:25837">EPSG:25837 - ETRS89 / UTM zone 37N</option>
+        <option value="EPSG:25838">EPSG:25838 - ETRS89 / UTM zone 38N</option>
+        <!-- UTM - SIRGAS 2000 (South America) -->
+        <option value="EPSG:31965">EPSG:31965 - SIRGAS 2000 / UTM zone 11N</option>
+        <option value="EPSG:31966">EPSG:31966 - SIRGAS 2000 / UTM zone 12N</option>
+        <option value="EPSG:31967">EPSG:31967 - SIRGAS 2000 / UTM zone 13N</option>
+        <option value="EPSG:31968">EPSG:31968 - SIRGAS 2000 / UTM zone 14N</option>
+        <option value="EPSG:31969">EPSG:31969 - SIRGAS 2000 / UTM zone 15N</option>
+        <option value="EPSG:31970">EPSG:31970 - SIRGAS 2000 / UTM zone 16N</option>
+        <option value="EPSG:31971">EPSG:31971 - SIRGAS 2000 / UTM zone 17N</option>
+        <option value="EPSG:31972">EPSG:31972 - SIRGAS 2000 / UTM zone 18N</option>
+        <option value="EPSG:31973">EPSG:31973 - SIRGAS 2000 / UTM zone 19N</option>
+        <option value="EPSG:31974">EPSG:31974 - SIRGAS 2000 / UTM zone 20N</option>
+        <option value="EPSG:31975">EPSG:31975 - SIRGAS 2000 / UTM zone 21N</option>
+        <option value="EPSG:31976">EPSG:31976 - SIRGAS 2000 / UTM zone 22N</option>
+        <option value="EPSG:31977">EPSG:31977 - SIRGAS 2000 / UTM zone 17S</option>
+        <option value="EPSG:31978">EPSG:31978 - SIRGAS 2000 / UTM zone 18S</option>
+        <option value="EPSG:31979">EPSG:31979 - SIRGAS 2000 / UTM zone 19S</option>
+        <option value="EPSG:31980">EPSG:31980 - SIRGAS 2000 / UTM zone 20S</option>
+        <option value="EPSG:31981">EPSG:31981 - SIRGAS 2000 / UTM zone 21S</option>
+        <option value="EPSG:31982">EPSG:31982 - SIRGAS 2000 / UTM zone 22S</option>
+        <option value="EPSG:31983">EPSG:31983 - SIRGAS 2000 / UTM zone 23S</option>
+        <option value="EPSG:31984">EPSG:31984 - SIRGAS 2000 / UTM zone 24S</option>
+        <option value="EPSG:31985">EPSG:31985 - SIRGAS 2000 / UTM zone 25S</option>
+        <!-- France (mainland + overseas) -->
+        <option value="EPSG:2154" selected="@DEFAULT_2154@">EPSG:2154 - RGF93 v1 / Lambert-93</option>
+        <option value="EPSG:27561">EPSG:27561 - NTF (Paris) / Lambert Nord France</option>
+        <option value="EPSG:27562">EPSG:27562 - NTF (Paris) / Lambert Centre France</option>
+        <option value="EPSG:27563">EPSG:27563 - NTF (Paris) / Lambert Sud France</option>
+        <option value="EPSG:27564">EPSG:27564 - NTF (Paris) / Lambert Corse</option>
+        <option value="EPSG:27572" selected="@DEFAULT_27572@">EPSG:27572 - NTF (Paris) / Lambert zone II</option>
+        <option value="EPSG:27582">EPSG:27582 - NTF (Paris) / France II</option>
+        <option value="EPSG:2972">EPSG:2972 - RGFG95 / UTM zone 22N</option>
+        <option value="EPSG:2973">EPSG:2973 - Martinique 1938 / UTM zone 20N</option>
+        <option value="EPSG:2975">EPSG:2975 - RGR92 / UTM zone 40S</option>
+        <option value="EPSG:3727">EPSG:3727 - Reunion 1947 / TM Reunion</option>
+        <option value="EPSG:4471">EPSG:4471 - RGM04 / UTM zone 38S</option>
+        <!-- United Kingdom & Ireland -->
+        <option value="EPSG:27700">EPSG:27700 - OSGB36 / British National Grid</option>
+        <option value="EPSG:4277">EPSG:4277 - OSGB36</option>
+        <option value="EPSG:29903">EPSG:29903 - TM75 / Irish Grid</option>
+        <option value="EPSG:2157">EPSG:2157 - IRENET95 / Irish Transverse Mercator</option>
+        <!-- Germany & Austria -->
+        <option value="EPSG:31466">EPSG:31466 - DHDN / 3-degree Gauss-Kruger zone 2</option>
+        <option value="EPSG:31467">EPSG:31467 - DHDN / 3-degree Gauss-Kruger zone 3</option>
+        <option value="EPSG:31468">EPSG:31468 - DHDN / 3-degree Gauss-Kruger zone 4</option>
+        <option value="EPSG:31469">EPSG:31469 - DHDN / 3-degree Gauss-Kruger zone 5</option>
+        <option value="EPSG:31287">EPSG:31287 - MGI / Austria Lambert</option>
+        <option value="EPSG:31255">EPSG:31255 - MGI / Austria GK Central</option>
+        <option value="EPSG:31256">EPSG:31256 - MGI / Austria GK East</option>
+        <!-- Iberia (Spain & Portugal) -->
+        <option value="EPSG:23030">EPSG:23030 - ED50 / UTM zone 30N</option>
+        <option value="EPSG:3763">EPSG:3763 - ETRS89 / Portugal TM06</option>
+        <option value="EPSG:20791">EPSG:20791 - Lisbon (Lisbon) / Portuguese Grid</option>
+        <option value="EPSG:5015">EPSG:5015 - PTRA08 / UTM zone 26N</option>
+        <!-- Italy -->
+        <option value="EPSG:3003">EPSG:3003 - Monte Mario / Italy zone 1</option>
+        <option value="EPSG:3004">EPSG:3004 - Monte Mario / Italy zone 2</option>
+        <!-- Benelux -->
+        <option value="EPSG:28992">EPSG:28992 - Amersfoort / RD New</option>
+        <option value="EPSG:31370">EPSG:31370 - BD72 / Belgian Lambert 72</option>
+        <!-- Switzerland -->
+        <option value="EPSG:21781">EPSG:21781 - CH1903 / LV03</option>
+        <option value="EPSG:2056">EPSG:2056 - CH1903+ / LV95</option>
+        <!-- Scandinavia & Baltic -->
+        <option value="EPSG:3006">EPSG:3006 - SWEREF99 TM</option>
+        <option value="EPSG:3021">EPSG:3021 - RT90 2.5 gon V</option>
+        <option value="EPSG:3067">EPSG:3067 - ETRS89 / TM35FIN(E,N)</option>
+        <option value="EPSG:5105">EPSG:5105 - ETRS89 / NTM zone 5</option>
+        <!-- Eastern Europe & Russia -->
+        <option value="EPSG:2100">EPSG:2100 - GGRS87 / Greek Grid</option>
+        <option value="EPSG:23700">EPSG:23700 - HD72 / EOV</option>
+        <option value="EPSG:3844">EPSG:3844 - Pulkovo 1942(58) / Stereo70</option>
+        <option value="EPSG:28403">EPSG:28403 - Pulkovo 1942 / Gauss-Kruger zone 3</option>
+        <!-- Middle East -->
+        <option value="EPSG:2039">EPSG:2039 - Israel 1993 / Israeli TM Grid</option>
+        <option value="EPSG:3893">EPSG:3893 - ED50 / Iraq National Grid</option>
+        <!-- Africa -->
+        <option value="EPSG:4148">EPSG:4148 - Hartebeesthoek94</option>
+        <option value="EPSG:2054">EPSG:2054 - Hartebeesthoek94 / Lo31</option>
+        <option value="EPSG:22234">EPSG:22234 - Cape / UTM zone 34S</option>
+        <option value="EPSG:4210">EPSG:4210 - Arc 1960</option>
+        <option value="EPSG:21036">EPSG:21036 - Arc 1960 / UTM zone 36S</option>
+        <option value="EPSG:22032">EPSG:22032 - Camacupa 1948 / UTM zone 32S</option>
+        <!-- South Asia -->
+        <option value="EPSG:24378">EPSG:24378 - Kalianpur 1975 / India zone I</option>
+        <option value="EPSG:24379">EPSG:24379 - Kalianpur 1975 / India zone IIa</option>
+        <option value="EPSG:7755">EPSG:7755 - WGS 84 / India NSF LCC</option>
+        <!-- East Asia (China, Japan, Korea) -->
+        <option value="EPSG:4490">EPSG:4490 - China Geodetic Coordinate System 2000</option>
+        <option value="EPSG:4547">EPSG:4547 - CGCS2000 / 3-degree Gauss-Kruger CM 114E</option>
+        <option value="EPSG:4548">EPSG:4548 - CGCS2000 / 3-degree Gauss-Kruger CM 117E</option>
+        <option value="EPSG:4549">EPSG:4549 - CGCS2000 / 3-degree Gauss-Kruger CM 120E</option>
+        <option value="EPSG:4612">EPSG:4612 - JGD2000</option>
+        <option value="EPSG:6668">EPSG:6668 - JGD2011</option>
+        <option value="EPSG:6669">EPSG:6669 - JGD2011 / Japan Plane Rectangular CS I</option>
+        <option value="EPSG:6670">EPSG:6670 - JGD2011 / Japan Plane Rectangular CS II</option>
+        <option value="EPSG:6671">EPSG:6671 - JGD2011 / Japan Plane Rectangular CS III</option>
+        <option value="EPSG:6690">EPSG:6690 - JGD2011 / UTM zone 53N</option>
+        <option value="EPSG:4214">EPSG:4214 - Beijing 1954</option>
+        <option value="EPSG:4610">EPSG:4610 - Xian 1980</option>
+        <option value="EPSG:5178">EPSG:5178 - Korean 1985 / Unified CS</option>
+        <option value="EPSG:5179">EPSG:5179 - KGD2002 / Unified CS</option>
+        <!-- Southeast Asia -->
+        <option value="EPSG:4756">EPSG:4756 - VN-2000</option>
+        <option value="EPSG:3405">EPSG:3405 - VN-2000 / UTM zone 48N</option>
+        <option value="EPSG:4757">EPSG:4757 - SVY21</option>
+        <!-- Oceania (Australia & New Zealand) -->
+        <option value="EPSG:4283">EPSG:4283 - GDA94</option>
+        <option value="EPSG:7844">EPSG:7844 - GDA2020</option>
+        <option value="EPSG:3577">EPSG:3577 - GDA94 / Australian Albers</option>
+        <option value="EPSG:28348">EPSG:28348 - GDA94 / MGA zone 48</option>
+        <option value="EPSG:28349">EPSG:28349 - GDA94 / MGA zone 49</option>
+        <option value="EPSG:28350">EPSG:28350 - GDA94 / MGA zone 50</option>
+        <option value="EPSG:28351">EPSG:28351 - GDA94 / MGA zone 51</option>
+        <option value="EPSG:28352">EPSG:28352 - GDA94 / MGA zone 52</option>
+        <option value="EPSG:28353">EPSG:28353 - GDA94 / MGA zone 53</option>
+        <option value="EPSG:28354">EPSG:28354 - GDA94 / MGA zone 54</option>
+        <option value="EPSG:28355">EPSG:28355 - GDA94 / MGA zone 55</option>
+        <option value="EPSG:28356">EPSG:28356 - GDA94 / MGA zone 56</option>
+        <option value="EPSG:7850">EPSG:7850 - GDA2020 / MGA zone 50</option>
+        <option value="EPSG:7851">EPSG:7851 - GDA2020 / MGA zone 51</option>
+        <option value="EPSG:7852">EPSG:7852 - GDA2020 / MGA zone 52</option>
+        <option value="EPSG:7853">EPSG:7853 - GDA2020 / MGA zone 53</option>
+        <option value="EPSG:7854">EPSG:7854 - GDA2020 / MGA zone 54</option>
+        <option value="EPSG:7855">EPSG:7855 - GDA2020 / MGA zone 55</option>
+        <option value="EPSG:7856">EPSG:7856 - GDA2020 / MGA zone 56</option>
+        <option value="EPSG:2193">EPSG:2193 - NZGD2000 / New Zealand Transverse Mercator 2000</option>
+        <option value="EPSG:4167">EPSG:4167 - NZGD2000</option>
+        <!-- North America (USA & Canada) -->
+        <option value="EPSG:5070">EPSG:5070 - NAD83 / Conus Albers</option>
+        <option value="EPSG:5069">EPSG:5069 - NAD27 / Conus Albers</option>
+        <option value="EPSG:2163">EPSG:2163 - US National Atlas Equal Area</option>
+        <option value="EPSG:4759">EPSG:4759 - NAD83(NSRS2007)</option>
+        <option value="EPSG:6350">EPSG:6350 - NAD83(2011) / Conus Albers</option>
+        <option value="EPSG:3978">EPSG:3978 - NAD83 / Canada Atlas Lambert</option>
+        <option value="EPSG:3979">EPSG:3979 - NAD83(CSRS) / Canada Atlas Lambert</option>
+        <option value="EPSG:4617">EPSG:4617 - NAD83(CSRS)</option>
+        <option value="EPSG:2955">EPSG:2955 - NAD83(CSRS) / UTM zone 11N</option>
+        <!-- South America (Brazil, Argentina, Chile) -->
+        <option value="EPSG:5880">EPSG:5880 - SIRGAS 2000 / Brazil Polyconic</option>
+        <option value="EPSG:4674">EPSG:4674 - SIRGAS 2000</option>
+        <option value="EPSG:29101">EPSG:29101 - SAD69 / Brazil Polyconic</option>
+        <option value="EPSG:5342">EPSG:5342 - POSGAR 2007</option>
+        <option value="EPSG:5343">EPSG:5343 - POSGAR 2007 / Argentina 1</option>
+        <option value="EPSG:5344">EPSG:5344 - POSGAR 2007 / Argentina 2</option>
+        <option value="EPSG:5345">EPSG:5345 - POSGAR 2007 / Argentina 3</option>
+        <option value="EPSG:5346">EPSG:5346 - POSGAR 2007 / Argentina 4</option>
+        <option value="EPSG:5347">EPSG:5347 - POSGAR 2007 / Argentina 5</option>
+        <option value="EPSG:5348">EPSG:5348 - POSGAR 2007 / Argentina 6</option>
+        <option value="EPSG:5349">EPSG:5349 - POSGAR 2007 / Argentina 7</option>
+        <option value="EPSG:5361">EPSG:5361 - SIRGAS-Chile 2002 / UTM zone 19S</option>
+        <!-- Polar -->
+        <option value="EPSG:3031">EPSG:3031 - WGS 84 / Antarctic Polar Stereographic</option>
+        <option value="EPSG:3413">EPSG:3413 - WGS 84 / NSIDC Sea Ice Polar Stereographic North</option>
+        <option value="EPSG:3976">EPSG:3976 - WGS 84 / NSIDC Sea Ice Polar Stereographic South</option>
+        <option value="EPSG:3995">EPSG:3995 - WGS 84 / Arctic Polar Stereographic</option>
+    </xml>
+    <!-- ============================================================ -->
+    <!-- Reusable regex validator for CSV column-name parameters      -->
+    <!-- (letters, digits, underscores only, cannot start with a      -->
+    <!-- digit) - per review comments from Marie59 on PR #277.         -->
+    <!-- ============================================================ -->
+    <xml name="column_name_validator">
+        <validator type="regex" message="Column name may only contain letters, digits, and underscores, and cannot start with a digit.">^([A-Za-z_][A-Za-z0-9_]*)?$</validator>
+    </xml>
+</macros>

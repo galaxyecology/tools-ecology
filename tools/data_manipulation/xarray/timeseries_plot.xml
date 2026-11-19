@@ -14,7 +14,10 @@
         <requirement type="package" version="1.4.3">pandas</requirement>
         <requirement type="package" version="1.6.1">cftime</requirement>
     </requirements>
-    <command detect_errors="exit_code"><![CDATA[
+    <required_files>
+        <include path="timeseries.py"/>
+    </required_files>
+	<command detect_errors="exit_code"><![CDATA[
     mkdir output_dir &&
     mkdir -p `pwd`/mlp_tmpdir &&
     MPLCONFIGDIR=`pwd`/mlp_tmpdir &&
@@ -117,4 +120,5 @@
     </tests>
     <help><![CDATA[ Extracts time series for a given variable in a .csv format file. This file can be used to plot the timeseries easily. ]]></help> 
     <expand macro="citations"/>
+    <expand macro="creator"/>
 </tool> 

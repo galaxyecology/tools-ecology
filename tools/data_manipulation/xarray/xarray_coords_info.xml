@@ -10,6 +10,9 @@
         <requirement type="package" version="1.6.0">netcdf4</requirement>
         <requirement type="package" version="1.4.3">pandas</requirement>
     </requirements>
+    <required_files>
+        <include path="xarray_info.py"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         mkdir output_dir &&
         echo "Galaxy xarray version @TOOL_VERSION@"> output_dir/version.tabular &&
@@ -56,4 +59,5 @@ An output file is generated for each coordinate and each file contains the value
 Run this tool before considering using Netcdf Xarray operation.
     ]]>    </help>
     <expand macro="citations"/>
+    <expand macro="creator"/>
 </tool>

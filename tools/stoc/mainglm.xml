@@ -1,9 +1,17 @@
-<tool id="stoceps_glm" name="Estimate temporal population variation" version="@VERSION@">
+<tool id="stoceps_glm" name="Estimate temporal population variation" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>by species</description>
     <macros>
         <import>stoceps_macros.xml</import>
     </macros>
+    <edam_topics>
+        <edam_topic>topic_0610</edam_topic>
+        <edam_topic>topic_3050</edam_topic>
+    </edam_topics>
     <expand macro="mainglm_requirements"/>
+    <required_files>
+        <include path="ExeMainGlmGalaxy.r"/>
+        <include path="FunctTrendSTOCGalaxy.r"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript
          '$__tool_directory__/ExeMainGlmGalaxy.r'
@@ -32,14 +40,14 @@
     </command>
     <inputs>
         <expand macro="stoceps_input_filtered"/>
-        <param name="inputtabSpecies" type="data" format="tabular" label="Species file" help="Input species tabular file, with 5 columns (species ID, species name, species scientific name, specialization status)." />
+        <param name="inputtabSpecies" type="data" format="tabular" label="Species file" help="Input species tabular file, with 5 columns (species ID, species name, species scientific name, specialization status)."/>
         <conditional name="settings">
             <expand macro="stoceps_advanced_params_select"/>
             <when value="advanced">
                 <param name="sp_code" type="select" label="Filter species to exclude" help="Create a subsample by selecting species codes you don't want to use." multiple="true" optional="true">
                     <options from_dataset="input">
                         <column name="value" index="2"/>
-                        <filter type="unique_value" name="espece" column="2"/>
+                        <filter type="unique_value" column="2"/>
                     </options>
                     <sanitizer>
                         <valid initial="string.printable">
@@ -61,24 +69,26 @@
         </collection>
     </outputs>
     <tests>
-        <test>
+        <test expect_num_outputs="3">
             <param name="inputtabSpecies" value="tabSpecies.csv"/>
             <param name="input" value="Datafilteredfortrendanalysis.tabular"/>
-            <param name="advanced" value="simple"/>
+            <conditional name="settings">
+                <param name="advanced" value="simple"/>
+            </conditional>
             <output name="yearly_variations">
                 <assert_contents>
                     <has_n_lines n="37"/>
                     <has_n_columns n="14"/>
                     <has_size value="3247" delta="100"/>
                 </assert_contents>
-            </output> 
+            </output>
             <output name="global_tendencies">
                 <assert_contents>
                     <has_n_lines n="3"/>
                     <has_size value="468" delta="50"/>
                 </assert_contents>
             </output>
-            <output_collection name="plots"  type="list" count="2">
+            <output_collection name="plots" type="list" count="2">
                 <element name="ALAARV_mainglm">
                     <assert_contents>
                         <has_text text="PNG"/>
@@ -92,10 +102,6 @@
             </output_collection>
         </test>
     </tests>
-    <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
-    </edam_topics>
     <help><![CDATA[
 =================================================
 STOC Estimate species population variation
@@ -143,9 +149,10 @@ Two tabular files are created, they describe global tendencies and yearly variat
 
 **Source**
 
-UnPublished script available at http://www.vigienature.fr/sites/vigienature/files/atoms/files/analysestoceps_0.zip
+UnPublished script available at www.vigienature.fr/sites/vigienature/files/atoms/files/analysestoceps_0.zip
 the first version written by Romain Lorrilliere
 
   ]]></help>
-  <expand macro="stoceps_bibref" />
+    <expand macro="stoceps_bibref"/>
+    <expand macro="creator"/>
 </tool>

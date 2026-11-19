@@ -1,11 +1,20 @@
-<tool id="vigiechiro_bilanenrichipf" name="Advanced restitution: 'Point fixe' protocol" version="@VERSION@">
+<tool id="vigiechiro_bilanenrichipf" name="Advanced restitution: 'Point fixe' protocol" version="@VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
     <description>from Animal Detection on Acoustic Recordings</description>
     <macros>
         <import>vigiechiro_macros.xml</import>
-    </macros>   
+    </macros>
+    <edam_topics>
+        <edam_topic>topic_0610</edam_topic>
+        <edam_topic>topic_3050</edam_topic>
+    </edam_topics>
     <expand macro="vigiechiro_requirements">
         <expand macro="vigiechiro_bilanenrichi_requirements"/>
     </expand>
+    <required_files>
+        <include path="BilanEnrichiPF.R"/>
+        <include path="refPF.csv"/>
+        <include path="SpeciesList.csv"/>
+    </required_files>
     <command detect_errors="exit_code"><![CDATA[
         Rscript '$__tool_directory__/BilanEnrichiPF.R' 
             '$idc2' 
@@ -23,41 +32,58 @@
             <option value="nightly">nigthly summary</option>
             <option value="hourly">hourly summary</option>
             <option value="global" selected="true">global summary</option>
-        </param>		
+        </param>
     </inputs>
     <outputs>
-        <data name="output_summary_tabular" format="tabular" from_work_dir="output-summary.tabular" label="${tool.name} on ${on_string} Global Summary">
-            <filter>'global' in output_choice</filter>
-        </data>    
-        <data name="output_summary_html" format="html" from_work_dir="output-summary.html" label="${tool.name} on ${on_string} Global Summary">
+        <data name="output_summary_tabular" format="tabular" from_work_dir="output-summary.tabular" label="${tool.name} on ${on_string} Global Summary tabular">
             <filter>'global' in output_choice</filter>
         </data>
-        <data name="output_nightly_tabular" format="tabular" from_work_dir="output-nightly.tabular" label="${tool.name} on ${on_string} Nightly">
+        <data name="output_summary_html" format="html" from_work_dir="output-summary.html" label="${tool.name} on ${on_string} Global Summary html">
+            <filter>'global' in output_choice</filter>
+        </data>
+        <data name="output_nightly_tabular" format="tabular" from_work_dir="output-nightly.tabular" label="${tool.name} on ${on_string} Nightly tabular">
             <filter>'nightly' in output_choice</filter>
         </data>
-        <data name="output_nightly_html" format="html" from_work_dir="output-nightly.html" label="${tool.name} on ${on_string} Nightly">
+        <data name="output_nightly_html" format="html" from_work_dir="output-nightly.html" label="${tool.name} on ${on_string} Nightly html">
             <filter>'nightly' in output_choice</filter>
         </data>
-        <data name="output_hourly_tabular" format="tabular" from_work_dir="output-hourly.tabular" label="${tool.name} on ${on_string} Hourly">
-           <filter>'hourly' in output_choice</filter>
-       </data> 
-       <data name="output_hourly_html" format="html" from_work_dir="output-hourly.html" label="${tool.name} on ${on_string} Hourly">
-           <filter>'hourly' in output_choice</filter>
-       </data>    
+        <data name="output_hourly_tabular" format="tabular" from_work_dir="output-hourly.tabular" label="${tool.name} on ${on_string} Hourly tabular">
+            <filter>'hourly' in output_choice</filter>
+        </data>
+        <data name="output_hourly_html" format="html" from_work_dir="output-hourly.html" label="${tool.name} on ${on_string} Hourly html">
+            <filter>'hourly' in output_choice</filter>
+        </data>
     </outputs>
     <tests>
-        <test>
+        <test expect_num_outputs="6">
             <param name="idc2" value="BilanEnrichiPF_Test1.tabular"/>
-            <param name="output_choice" value="global,nightly,hourly"/> 
+            <param name="output_choice" value="global,nightly,hourly"/>
             <output name="output_summary_tabular" file="BilanEnrichiPF_Test1_out_tab.tabular" ftype="tabular"/>
             <output name="output_hourly_tabular" file="BilanEnrichiPF_Test1_hourly.tabular" ftype="tabular"/>
             <output name="output_nightly_tabular" file="BilanEnrichiPF_Test1_nightly.tabular" ftype="tabular"/>
+            <!-- Assertions for Global Summary HTML -->
+            <output name="output_summary_html">
+                <assert_contents>
+                    <has_size value="295418" delta="5000"/>
+                    <has_text text="Chauve-souris"/>
+                </assert_contents>
+            </output>
+            <!-- Assertions for Hourly HTML -->
+            <output name="output_hourly_html">
+                <assert_contents>
+                    <has_size value="310637" delta="5000"/>
+                    <has_text text="Serotine commune"/>
+                </assert_contents>
+            </output>
+            <!-- Assertions for Nightly HTML -->
+            <output name="output_nightly_html">
+                <assert_contents>
+                    <has_size value="293322" delta="5000"/>
+                    <has_text text="Hypsugo savii"/>
+                </assert_contents>
+            </output>
         </test>
     </tests>
-    <edam_topics>
-       <edam_topic>topic_0610</edam_topic>
-       <edam_topic>topic_3050</edam_topic>
-    </edam_topics>
     <help><![CDATA[
 .. class:: infomark 
 
@@ -74,5 +100,6 @@ The tool treats observations made with the "Point fixe" protocol:
 - Input is an observation/participation file corrected by the tools Tadarida data cleaner and Tadarida identifications integration.
 - Outputs are Summary/Nightly/Hourly raw tabulars, and html visualisations.
     ]]></help>
-    <expand macro="vigiechiro_bibref" />
+    <expand macro="vigiechiro_bibref"/>
+    <expand macro="creator"/>
 </tool>

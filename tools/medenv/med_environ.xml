@@ -1,7 +1,11 @@
-<tool id="iabiodiv_smartbiodiv_med_environ" name="Adds environment variables" version="0.1.2" profile="25.1">
+<tool id="iabiodiv_smartbiodiv_med_environ" name="Adds environment variables" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="25.1">
     <description>
         From Copernicus and etopo given geolocalized and timestamped observations
     </description>
+    <macros>
+        <token name="@TOOL_VERSION@">0.1.2</token>
+        <token name="@VERSION_SUFFIX@">1</token>
+    </macros>
     <requirements>
         <requirement type="package" version="2.1.3">pandas</requirement>
         <requirement type="package" version="4.9.3">lxml</requirement>
@@ -9,8 +13,11 @@
         <credentials name="cmems_credentials" version="1.0" label="CMEMS Credentials" description="Credentials for accessing Copernicus Marine Service API.">
             <variable name="username" inject_as_env="CMEMS_USERNAME" optional="false" label="CMEMS Username" description="Your Copernicus Marine Service Username. Get it from your Copernicus account."/>
             <secret name="password" inject_as_env="CMEMS_PASSWORD" optional="false" label="CMEMS password" description="Your Copernicus Marine Service password."/>
-         </credentials>
+        </credentials>
     </requirements>
+    <required_files>
+        <include path="med_environ.py"/>
+    </required_files>
     <creator>
         <person givenName="Jérémy" familyName="Fix" url="http://www.github.com/jeremyfix/" email="jeremy.fix@centralesupelec.fr"/>
     </creator>
@@ -65,7 +72,8 @@ python '$__tool_directory__/med_environ.py'
     <tests>
         <test expect_num_outputs="1">
             <param name="input" value="reef_life_subset.tsv"/>
-            <param name="env_variables" value="bathymetry"/> <!-- This test is requesting etopo only -->
+            <param name="env_variables" value="bathymetry"/>
+            <!-- This test is requesting etopo only -->
             <param name="lat_key" value="9"/>
             <param name="long_key" value="10"/>
             <param name="tol_spatial_coordinates" value="0.2"/>
@@ -90,7 +98,7 @@ python '$__tool_directory__/med_environ.py'
 
         We expect the dataset you provide to contain the coordinates of the observation: latitude, longitude, depth, and time. The time is expected in ISO 8601: YYYY-MM-DDTHH:MM:SSZ
 
-        The `cmems_username` and `cmems_password` are required only if you want to add variables provided by CMEMS. These must be defined in "User -> Preferences -> Manage Information"
+        The `cmems_username` and `cmems_password` are required only if you want to add variables provided by CMEMS. These must be defined in "User -&gt; Preferences -&gt; Manage Information"
 
         The CMEMS data are collected from the following products:
 

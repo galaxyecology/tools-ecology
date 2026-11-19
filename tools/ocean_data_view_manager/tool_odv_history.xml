@@ -2,7 +2,7 @@
     <description>reports user action performed with ODV</description>
     <macros>
         <token name="@VERSION@">1.2</token>
-        <token name="@VERSION_SUFFIX@">2</token>
+        <import>macros.xml</import>
     </macros>
     <requirements>
         <container type="docker">easyqcvbgc/easy-qcv_odv-history-manager_tool:oh@VERSION@</container>
@@ -79,7 +79,7 @@
         <param name="input_hist" type="data" format="txt" multiple="true" label="Input history text file" help="This text file should be the history extracted from the Ocean Data View (ODV) tool"/>
         <param name="input_odv" type="data" format="txt" multiple="true" optional="true" label="Input odv file" help="This ODV file should be the odv_collection.txt from the ODV collection manager tool."/>
         <conditional name="config">
-            <param name="type" type="select" label="Select if you want to write your own configuration file or not.">   
+            <param name="type" type="select" label="Select if you want to write your own configuration file or not.">
                 <option value="no">No, I don't want to, I'll use the default one</option>
                 <option value="yes">Yes, I to write my own configuration file</option>
             </param>
@@ -185,6 +185,7 @@ This tool creates a single generic ODV spreadsheet following ODV user’s guide
             author = {Pokapok},
             year = {2024},
             note = {https://gitlab.com/pokapok-projects/easy-qcv-bgc/qcv-odv-tool}
-        </citation>    
+        </citation>
     </citations>
+    <expand macro="creator"/>
 </tool>
