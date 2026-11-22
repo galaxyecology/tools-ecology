@@ -1,0 +1,18 @@
+<tool id="moover_seg" name="Moover-Segmentor" version="0.1.0">
+  <description> --- </description>
+  <command> python '${__tool_directory__}/segmentation/segmentation.py' '$input_image' ./out.png '$conf' '${__tool_directory__}/segmentation/best.pt' '$use_gpu' </command>
+  <inputs>
+    <param format="png" name="input_image" type="data" label="Input image"/>
+    <param name="conf" value="50.0" type="float" min="0" max="100" label="Percentage" help="Between 0 and 100, e.g. 50%"/>
+    <param name="use_gpu" type="boolean" label="use gpu" help=""/>
+  </inputs>
+  <outputs>
+    <data format="png" name="output" from_work_dir="out.png"/>
+  </outputs>
+  <tests>
+    <!-- -->
+  </tests>
+  <help>
+     hellp 
+  </help>
+</tool>
