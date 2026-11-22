@@ -1,0 +1,53 @@
+<tool id="rdata_reader" name="Rdata binary file reader" version="@VERSION@">
+    <macros>
+        <import>rdata_macros.xml</import>
+    </macros>
+    <expand macro="rdata_requirements" />
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript '$__tool_directory__/rdata_reader.R' '$input1' '$rdata_list_attr' ]]>
+    </command>
+    <inputs>
+        <expand macro="rdata_input1"/>
+    </inputs>
+    <outputs>
+        <data format="tabular" name="rdata_list_attr" from_work_dir="rdata_list_attr" label="List of attributes from ${input1.name}"/>
+        <data name="summary" from_work_dir="summary.tabular" format="tabular" label="Summary of ${input1.name} attributes"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="input1" value="rdata_test.Rdata"/>
+            <output name="rdata_list_attr" file="attributes.tabular"/>
+            <output name="summary" file="summary.tabular"/>
+        </test>
+    </tests>
+    <help>
+==========================
+Rdata binary file reader
+==========================
+**What it does**
+
+The Rdata reader tool gives informations on the content of a binary Rdata file.
+
+|
+
+**How to use it**
+
+Select a file in Rdata format and execute the tool.
+
+Use this tool before considering to use "Rdata binary file parser".
+
+|
+
+**Outputs**
+
+A list of the available dimensions in the Rdata (tabular output file).
+
+Summary file of the inner attributes and their values.
+
+|
+
+**More informations**
+
+More informations concerning R Data format and save / load functions can be found here: http://www.sthda.com/english/wiki/saving-data-into-r-data-format-rds-and-rdata.
+    </help>
+</tool>
