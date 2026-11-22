@@ -1,0 +1,15 @@
+name: eionet_fetch
+owner: ecology
+description: Fetch EIONET Art. 12 and Art. 17 species status and population data
+homepage_url: https://github.com/GINAMO-EBVs/ginamo-workflows/eionet_data_extraction
+long_description: |
+  This tool retrieves species conservation status and population data from two related EIONET reporting databases:
+  **Article 12** (Birds Directive 2009/147/EC) — for birds only.
+  **Article 17** (Habitats Directive 92/43/EEC) — for every other species group (amphibians, arthropods, fish, mammals, molluscs, non-vascular plants, other invertebrates, reptiles, vascular plants).
+remote_repository_url: https://github.com/galaxyecology/tools-ecology/tree/master/tools/eionet_data_extraction
+type: unrestricted
+categories:
+- Ecology
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "{{ tool_name }}"

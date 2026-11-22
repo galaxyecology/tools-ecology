@@ -1,0 +1,462 @@
+<tool id="eionet_data_extraction" name="EIONET Species Data - Article 12 &amp; 17" version="1.1.0" profile="21.05">
+
+    <description>Extract EIONET Art. 12 and Art. 17 species status and population data</description>
+
+    <requirements>
+        <requirement type="package" version="4.5.3">r-base</requirement>
+        <requirement type="package" version="1.4.8">r-httr</requirement>
+        <requirement type="package" version="1.0.5">r-rvest</requirement>
+        <requirement type="package" version="1.5.2">r-xml2</requirement>
+        <requirement type="package" version="1.8.2">r-optparse</requirement>
+        <requirement type="package" version="1.2.1">r-dplyr</requirement>
+    </requirements>
+
+    <required_files>
+        <include path="eionet_fetch.R"/>
+    </required_files>
+
+    <command detect_errors="exit_code"><![CDATA[
+        mkdir -p output_files &&
+
+        #if str($mode.choice) == "table"
+            Rscript '$__tool_directory__/eionet_fetch.R'
+                --mode 'table'
+                --table '$mode.query_table'
+                $mode.include_eu
+        #else
+            Rscript '$__tool_directory__/eionet_fetch.R'
+                --mode 'manual'
+                --taxon '$mode.taxon'
+                --subject '$mode.subject'
+                --period '$mode.period'
+                #if str($mode.region) != '' and str($mode.region) != 'None'
+                    --region '$mode.region'
+                #end if
+                #if str($mode.country) != '' and str($mode.country) != 'None'
+                    --country '$mode.country'
+                #end if
+        #end if
+    ]]></command>
+
+    <inputs>
+
+        <conditional name="mode">
+            <param name="choice"
+                   type="select"
+                   label="Input mode"
+                   help="Manual entry: choose the taxon and type the species in the form. Table: load a table describing one query per row (taxa can be mixed). In both cases the EIONET article is deduced from the taxon: Birds use Article 12, every other taxon uses Article 17.">
+                <option value="manual" selected="true">Manual entry</option>
+                <option value="table">Load a table of queries</option>
+            </param>
+
+            <when value="manual">
+                <param name="taxon"
+                       type="select"
+                       label="Taxon"
+                       help="Birds are retrieved from Article 12 (Birds Directive); every other taxon from Article 17 (Habitats Directive). All species of one run must belong to the chosen taxon.">
+                    <option value="Birds" selected="true">Birds (Article 12)</option>
+                    <option value="Amphibians">Amphibians (Article 17)</option>
+                    <option value="Arthropods">Arthropods (Article 17)</option>
+                    <option value="Fish">Fish (Article 17)</option>
+                    <option value="Mammals">Mammals (Article 17)</option>
+                    <option value="Molluscs">Molluscs (Article 17)</option>
+                    <option value="Non-vascular plants">Non-vascular plants (Article 17)</option>
+                    <option value="Other invertebrates">Other invertebrates (Article 17)</option>
+                    <option value="Reptiles">Reptiles (Article 17)</option>
+                    <option value="Vascular plants">Vascular plants (Article 17)</option>
+                </param>
+
+                <param name="subject"
+                       type="text"
+                       label="Species latin name(s)"
+                       help="Latin (scientific) name(s), separated by commas. Example: Ciconia ciconia, Corvus corax (birds) or Canis lupus, Lynx lynx (mammals). Each name must match exactly the species list of the EIONET portal for the chosen taxon."
+                       optional="false">
+                    <validator type="empty_field" message="Please provide at least one species latin name."/>
+                </param>
+
+                <param name="period"
+                       type="select"
+                       multiple="true"
+                       optional="false"
+                       label="Reporting period(s)"
+                       help="Select one or several periods; each species is retrieved for each period. Article 12 (birds) has 2019-2024, 2013-2018, 2008-2012 and 2008-2012bis. Article 17 (other taxa) has 2019-2024, 2013-2018, 2007-2012bis, 2007-2012 and 2001-2006. A period that does not exist for the chosen taxon is reported as FAILED in the query log.">
+                    <option value="2019-2024" selected="true">2019-2024</option>
+                    <option value="2013-2018">2013-2018</option>
+                    <option value="2008-2012">2008-2012 (birds only)</option>
+                    <option value="2008-2012bis">2008-2012bis (birds only)</option>
+                    <option value="2007-2012bis">2007-2012bis (non-birds only)</option>
+                    <option value="2007-2012">2007-2012 (non-birds only)</option>
+                    <option value="2001-2006">2001-2006 (non-birds only)</option>
+                </param>
+
+                <param name="region"
+                       type="select"
+                       label="Bio-geographical region (optional, non-bird taxa only)"
+                       help="Restrict results to a single bio-geographical region. Leave as 'All bioregions' to retrieve data for every region the species is reported in."
+                       optional="true">
+                    <option value="" selected="true">-- All bioregions --</option>
+                    <option value="ALP">Alpine</option>
+                    <option value="ATL">Atlantic</option>
+                    <option value="BLS">Black Sea</option>
+                    <option value="BOR">Boreal</option>
+                    <option value="CON">Continental</option>
+                    <option value="MED">Mediterranean</option>
+                    <option value="PAN">Pannonian</option>
+                </param>
+
+                <param name="country" multiple="true"
+                       type="select"
+                       label="Country (optional)"
+                       help="Filter results for one or more EU Member States (Eionet codes). Leave as 'All countries' to retrieve data for all Member States."
+                       optional="true">
+                    <option value="all_countries" selected="true">-- All countries --</option>
+                    <option value="EU">EU-level assessment (not available for 2019-2024)</option>
+                    <option value="AT">Austria (AT)</option>
+                    <option value="BE">Belgium (BE)</option>
+                    <option value="BG">Bulgaria (BG)</option>
+                    <option value="CY">Cyprus (CY)</option>
+                    <option value="CZ">Czech Republic (CZ)</option>
+                    <option value="DE">Germany (DE)</option>
+                    <option value="DK">Denmark (DK)</option>
+                    <option value="EE">Estonia (EE)</option>
+                    <option value="ES">Spain - mainland (ES)</option>
+                    <option value="ESIC">Spain - Canary Islands (ESIC)</option>
+                    <option value="FI">Finland (FI)</option>
+                    <option value="FR">France (FR)</option>
+                    <option value="GIB">Gibraltar (GIB)</option>
+                    <option value="GR">Greece (GR)</option>
+                    <option value="HR">Croatia (HR)</option>
+                    <option value="HU">Hungary (HU)</option>
+                    <option value="IE">Ireland (IE)</option>
+                    <option value="IT">Italy (IT)</option>
+                    <option value="LT">Lithuania (LT)</option>
+                    <option value="LU">Luxembourg (LU)</option>
+                    <option value="LV">Latvia (LV)</option>
+                    <option value="MT">Malta (MT)</option>
+                    <option value="NL">Netherlands (NL)</option>
+                    <option value="PL">Poland (PL)</option>
+                    <option value="PT">Portugal - mainland (PT)</option>
+                    <option value="PTAC">Portugal - Azores (PTAC)</option>
+                    <option value="PTMA">Portugal - Madeira (PTMA)</option>
+                    <option value="RO">Romania (RO)</option>
+                    <option value="SE">Sweden (SE)</option>
+                    <option value="SI">Slovenia (SI)</option>
+                    <option value="SK">Slovakia (SK)</option>
+                    <option value="UK">United Kingdom (UK)</option>
+                </param>
+            </when>
+
+            <when value="table">
+                <param name="query_table"
+                       type="data"
+                       format="tabular,csv"
+                       label="Table of queries"
+                       help="One query per row. Required columns (header names): Taxon (Birds, Amphibians, Arthropods, Fish, Mammals, Molluscs, Non-vascular plants, Other invertebrates, Reptiles or Vascular plants), Period (e.g. 2019-2024), Species (latin name) and Country (Member State code(s); empty = all countries). The article is deduced from the Taxon. Other columns are ignored. The EU-level assessment is controlled by the option below, not by the Country column."/>
+                <param name="include_eu"
+                       type="boolean"
+                       truevalue="--include_eu"
+                       falsevalue=""
+                       checked="false"
+                       label="Also retrieve the EU-level assessment"
+                       help="If checked, the EU-level assessment is retrieved for every query and the EU tables are produced. If unchecked (default), no EU table is produced and 'EU' in the Country column is ignored. The EU assessment is not available for the 2019-2024 period."/>
+            </when>
+        </conditional>
+
+    </inputs>
+
+    <outputs>
+        <data name="output_ms" from_work_dir="output_files/MS_data.txt"
+              format="tabular"
+              label="EIONET Art12 - Member State data">
+            <filter>mode['choice'] == 'table' or mode['taxon'] == 'Birds'</filter>
+        </data>
+        <data name="output_eu" from_work_dir="output_files/EU_data.txt"
+              format="tabular"
+              label="EIONET Art12 - EU data">
+            <filter>(mode['choice'] == 'table' and mode['include_eu']) or (mode['choice'] == 'manual' and mode['taxon'] == 'Birds' and str(mode['country']).find('EU') != -1 and str(mode['period']).replace("'", '').replace('[', '').replace(']', '').replace(' ', '') != '2019-2024')</filter>
+        </data>
+        <data name="output_art17" from_work_dir="output_files/ART17_data.txt"
+              format="tabular"
+              label="EIONET Art17 - Member State data">
+            <filter>mode['choice'] == 'table' or mode['taxon'] != 'Birds'</filter>
+        </data>
+        <data name="output_art17_eu" from_work_dir="output_files/ART17_EU_data.txt"
+              format="tabular"
+              label="EIONET Art17 - EU data">
+            <filter>(mode['choice'] == 'table' and mode['include_eu']) or (mode['choice'] == 'manual' and mode['taxon'] != 'Birds' and str(mode['country']).find('EU') != -1 and str(mode['period']).replace("'", '').replace('[', '').replace(']', '').replace(' ', '') != '2019-2024')</filter>
+        </data>
+        <data name="output_log" from_work_dir="output_files/QUERY_LOG.txt"
+              format="tabular"
+              label="EIONET query log">
+        </data>
+    </outputs>
+
+    <tests>
+        <test expect_num_outputs="2">
+            <conditional name="mode">
+                <param name="choice" value="manual"/>
+                <param name="taxon" value="Birds"/>
+                <param name="subject" value="Ciconia ciconia"/>
+                <param name="period" value="2013-2018"/>
+                <param name="country" value="all_countries"/>
+            </conditional>
+            <output name="output_ms">
+                <assert_contents>
+                    <has_text text="Ciconia ciconia"/>
+                    <has_n_lines n="25"/>
+                    <has_n_columns n="47"/>
+                </assert_contents>
+            </output>
+            <output name="output_log">
+                <assert_contents>
+                    <has_text text="OK"/>
+                    <has_n_lines n="2"/>
+                    <has_n_columns n="10"/>
+                </assert_contents>
+            </output>
+        </test>
+
+        <test expect_num_outputs="3">
+            <conditional name="mode">
+                <param name="choice" value="manual"/>
+                <param name="taxon" value="Birds"/>
+                <param name="subject" value="Ciconia ciconia"/>
+                <param name="period" value="2013-2018"/>
+                <param name="country" value="EU,FR"/>
+            </conditional>
+            <output name="output_ms">
+                <assert_contents>
+                    <has_text text="Ciconia ciconia"/>
+                    <has_n_lines n="2"/>
+                    <has_n_columns n="47"/>
+                </assert_contents>
+            </output>
+            <output name="output_eu">
+                <assert_contents>
+                    <has_text text="Ciconia ciconia"/>
+                    <has_n_lines n="2"/>
+                    <has_n_columns n="22"/>
+                </assert_contents>
+            </output>
+            <output name="output_log">
+                <assert_contents>
+                    <has_text text="OK"/>
+                    <has_n_lines n="2"/>
+                    <has_n_columns n="10"/>
+                </assert_contents>
+            </output>
+        </test>
+
+        <test expect_num_outputs="2">
+            <conditional name="mode">
+                <param name="choice" value="manual"/>
+                <param name="taxon" value="Birds"/>
+                <param name="subject" value="Ciconia ciconia,Corvus corax"/>
+                <param name="period" value="2013-2018,2019-2024"/>
+                <param name="country" value="FR"/>
+            </conditional>
+            <output name="output_ms">
+                <assert_contents>
+                    <has_text text="Ciconia ciconia"/>
+                    <has_text text="Corvus corax"/>
+                    <has_text text="2013-2018"/>
+                    <has_text text="2019-2024"/>
+                    <has_n_lines n="5"/>
+                </assert_contents>
+            </output>
+            <output name="output_log">
+                <assert_contents>
+                    <has_n_lines n="5"/>
+                </assert_contents>
+            </output>
+        </test>
+
+        <test expect_num_outputs="3">
+            <conditional name="mode">
+                <param name="choice" value="manual"/>
+                <param name="taxon" value="Mammals"/>
+                <param name="subject" value="Canis lupus"/>
+                <param name="period" value="2013-2018"/>
+                <param name="country" value="EU,BG"/>
+            </conditional>
+            <output name="output_art17">
+                <assert_contents>
+                    <has_text text="Canis lupus"/>
+                    <has_n_lines n="4"/>
+                    <has_n_columns n="36"/>
+                </assert_contents>
+            </output>
+            <output name="output_art17_eu">
+                <assert_contents>
+                    <has_text text="Canis lupus"/>
+                    <has_n_lines n="10"/>
+                    <has_n_columns n="37"/>
+                </assert_contents>
+            </output>
+            <output name="output_log">
+                <assert_contents>
+                    <has_n_lines n="2"/>
+                </assert_contents>
+            </output>
+        </test>
+
+        <test expect_num_outputs="3">
+            <conditional name="mode">
+                <param name="choice" value="table"/>
+                <param name="query_table" value="eionet_query_table.tsv"/>
+            </conditional>
+            <output name="output_ms">
+                <assert_contents>
+                    <has_text text="Ciconia ciconia"/>
+                    <has_n_lines n="4"/>
+                    <has_n_columns n="47"/>
+                </assert_contents>
+            </output>
+            <output name="output_art17">
+                <assert_contents>
+                    <has_text text="Canis lupus"/>
+                    <has_n_lines n="4"/>
+                    <has_n_columns n="36"/>
+                </assert_contents>
+            </output>
+            <output name="output_log">
+                <assert_contents>
+                    <has_n_lines n="6"/>
+                </assert_contents>
+            </output>
+        </test>
+
+        <test expect_num_outputs="5">
+            <conditional name="mode">
+                <param name="choice" value="table"/>
+                <param name="query_table" value="eionet_query_table.tsv"/>
+                <param name="include_eu" value="true"/>
+            </conditional>
+            <output name="output_eu">
+                <assert_contents>
+                    <has_text text="Ciconia ciconia"/>
+                    <has_n_lines n="2"/>
+                    <has_n_columns n="22"/>
+                </assert_contents>
+            </output>
+            <output name="output_ms">
+                <assert_contents>
+                    <has_text text="Ciconia ciconia"/>
+                    <has_n_lines n="4"/>
+                    <has_n_columns n="47"/>
+                </assert_contents>
+            </output>
+             <output name="output_art17">
+                <assert_contents>
+                    <has_text text="Canis lupus"/>
+                    <has_n_lines n="4"/>
+                    <has_n_columns n="36"/>
+                </assert_contents>
+            </output>
+            <output name="output_art17_eu">
+                <assert_contents>
+                    <has_text text="Canis lupus"/>
+                    <has_n_lines n="10"/>
+                    <has_n_columns n="37"/>
+                </assert_contents>
+            </output>
+            <output name="output_log">
+                <assert_contents>
+                    <has_n_lines n="6"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+
+    <help><![CDATA[
+
+Usage
+=====
+
+This tool retrieves species conservation status and population data from two related EIONET reporting databases:
+
+- **Article 12** (Birds Directive 2009/147/EC) - for birds only.
+- **Article 17** (Habitats Directive 92/43/EEC) - for every other species group (amphibians, arthropods, fish, mammals, molluscs, non-vascular plants, other invertebrates, reptiles, vascular plants).
+
+Input modes
+===========
+
+In both modes the EIONET article is **deduced from the taxon**: ``Birds`` are retrieved from Article 12, every other taxon from Article 17.
+
+Manual entry
+------------
+Choose the taxon, then fill in the form. You can give **several species** (comma-separated latin names) and select **several reporting periods**: every species is retrieved for every period.
+
+- **Article 12 periods (birds)**: ``2019-2024``, ``2013-2018``, ``2008-2012``, ``2008-2012bis``
+- **Article 17 periods (other taxa)**: ``2019-2024``, ``2013-2018``, ``2007-2012bis``, ``2007-2012``, ``2001-2006``
+- **Taxa**: Birds, Amphibians, Arthropods, Fish, Mammals, Molluscs, Non-vascular plants, Other invertebrates, Reptiles, Vascular plants (one taxon per run; the species must belong to it)
+- **Bio-region** (non-bird taxa only): Alpine, Atlantic, Black Sea, Boreal, Continental, Mediterranean, Pannonian, or all regions
+- **Country**: all countries, one or more Member States, or the EU-level assessment
+
+Table of queries
+----------------
+Load a tabular (or CSV) file with one query per row. Required columns (matched by header name, case-insensitive):
+
+====================  =======================================================================
+Column                Content
+====================  =======================================================================
+Taxon                 ``Birds`` or one of the other taxa listed above (singular forms such as ``Mammal`` are accepted). Determines the article.
+Period                Reporting period, e.g. ``2019-2024``
+Species               Species latin name
+Country               Member State code(s), e.g. ``FR`` or ``FR,DE``; empty = all countries. ``EU`` is controlled by the "Also retrieve the EU-level assessment" option instead.
+====================  =======================================================================
+
+Any other column is ignored. Taxa can be mixed in the same table. Rows that share the same Taxon, Period and Species are merged into a single request, and their countries are combined.
+
+Outputs
+=======
+
+- **Art12 Member State data / Art12 EU data**: Article 12 results (all queries and periods stacked, with a ``Period`` column).
+- **Art17 Member State data / Art17 EU data**: Article 17 results (with ``Group`` and ``Period`` columns).
+- **Query log**: one line per query with its status (``OK``, ``NO_DATA``, ``FAILED`` or ``SKIPPED``) and the error message if any. A failing query (e.g. misspelled species name or a period that does not exist for the taxon) does not stop the other queries; the job only fails when no query succeeds.
+
+Only the tables that can contain data are created:
+
+- **Manual entry**: the Article 12 tables for Birds, the Article 17 tables for the other taxa. The EU table appears only if "EU" is selected in the countries and at least one selected period is not 2019-2024 (the EU assessment is not available for that period).
+- **Table of queries**: the Member State tables of both articles are always created (the one that does not apply, e.g. Article 17 for a table of birds only, contains just a header). The EU tables are created only if "Also retrieve the EU-level assessment" is checked.
+
+When several periods are combined, columns that exist in one reporting period only are filled with empty values for the other periods. The Article 12 layouts before 2019 have more cells per row than named columns: the extra columns are named ``Unnamed_<position>``.
+
+Notes
+=====
+- The EU-level assessment is not available for Article 17 in the 2019-2024 period, nor yet for Article 12 in that period.
+- Some species are still listed under an outdated scientific name. If you have any doubts, check the names in the Eionet databases linked just below.
+
+Data sources
+============
+- EIONET Article 12 web tool - https://nature-art12.eionet.europa.eu/article12/
+- EIONET Article 17 web tool - https://nature-art17.eionet.europa.eu/article17/
+
+Data reported by EU Member States under Directive 2009/147/EC (Birds) and Directive 92/43/EEC (Habitats).
+
+    ]]></help>
+
+    <citations>
+        <citation type="bibtex">
+            @misc{eionet_art12,
+                title        = {Article 12 web tool on population status and trends of birds},
+                author       = {EIONET},
+                howpublished = {\url{https://nature-art12.eionet.europa.eu/article12/}},
+                note         = {European Environment Information and Observation Network}
+            }
+        </citation>
+        <citation type="bibtex">
+            @misc{eionet_art17,
+                title        = {Article 17 web tool on conservation status of species and habitats},
+                author       = {EIONET},
+                howpublished = {\url{https://nature-art17.eionet.europa.eu/article17/}},
+                note         = {European Environment Information and Observation Network}
+            }
+        </citation>
+    </citations>
+
+    <creator>
+        <organization name="GINAMO"/>
+    </creator>
+
+</tool>
