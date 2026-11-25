@@ -266,7 +266,7 @@
         </output>
     </test>
 
-    <!-- Test 2: SNP - Fst + bootstrap -->
+    <!-- Test 5: SNP - Fst + bootstrap -->
     <test expect_num_outputs="5">
         <conditional name="data_conditional">
             <param name="marker_type" value="SNP"/>
@@ -318,7 +318,124 @@
         </output>
 
     </test>
+        
+    <!-- Test 6: SNP one pop - Fst + Gst + DJost + bootstrap -->
+    <test expect_num_outputs="9">
+        <conditional name="data_conditional">
+            <param name="marker_type" value="SNP"/>
+            <param name="input_data" value="test_vcf.vcf" ftype="vcf"/>
+            <param name="indpop" value="test_pop_unique.txt" ftype="txt"/>
+        </conditional>
+        <param name="stats" value="fst,gst,djost"/>
+        <section name="fst_options">
+            <param name="calc_boot_fst" value="true"/>
+            <param name="nboot" value="100"/>
+        </section>
+ 
+        <output name="summary_div_stats" ftype="tabular">
+            <assert_contents>
+                <has_n_lines n="4"/>
+                <has_n_columns n="7"/>
+                <has_line_matching expression="Dataset\tPop\tMarker_type\tn_ind\taverage_pairwise_Fst\taverage_Gst_Nei\taverage_Jost_D"/>
+                <has_line_matching expression="test_vcf\tpop_unique\tSNP\t273\tNA\tNA\tNA"/>
+            </assert_contents>
+        </output>
+        <output name="fst_matrix" ftype="tabular">
+            <assert_contents>
+                <has_n_lines n="2" delta="1"/>
+                <has_n_columns n="2"/>
+                <has_line_matching expression="pop_unique\tpopulation_unique"/>
+            </assert_contents>
+        </output>
+        <output name="gst_matrix" ftype="tabular">
+            <assert_contents>
+                <has_n_lines n="2" delta="1"/>
+                <has_n_columns n="2"/>
+                <has_line_matching expression="pop_unique\tpopulation_unique"/>
+            </assert_contents>
+        </output>
+        <output name="djost_matrix" ftype="tabular">
+            <assert_contents>
+                <has_n_lines n="2" delta="1"/>
+                <has_n_columns n="2"/>
+                <has_line_matching expression="pop_unique\tpopulation_unique"/>
+            </assert_contents>
+        </output>
+        <output name="boot_fst_sig_matrix" ftype="tabular">
+            <assert_contents>
+                <has_n_lines n="2" delta="1"/>
+                <has_n_columns n="2"/>
+                <has_line_matching expression="pop_unique\tpopulation_unique"/>
+            </assert_contents>
+        </output>
 
+        <output name="boot_fst_CI_matrix" ftype="tabular">
+            <assert_contents>
+                <has_n_lines n="2" delta="1"/>
+                <has_n_columns n="2"/>
+                <has_line_matching expression="pop_unique\tpopulation_unique"/>
+            </assert_contents>
+        </output>
+    </test>
+
+    <!-- Test 7: SSR one pop - Fst + Gst + DJost + bootstrap -->
+    <test expect_num_outputs="9">
+        <conditional name="data_conditional">
+            <param name="marker_type" value="SSR"/>
+            <param name="input_data" value="test_SSR_pop_unique.txt" ftype="txt"/>
+        </conditional>
+        <param name="stats" value="fst,gst,djost"/>
+        <section name="fst_options">
+            <param name="calc_boot_fst" value="true"/>
+            <param name="nboot" value="100"/>
+        </section>
+ 
+        <output name="summary_div_stats" ftype="tabular">
+            <assert_contents>
+                <has_n_lines n="4"/>
+                <has_n_columns n="7"/>
+                <has_line_matching expression="Dataset\tPop\tMarker_type\tn_ind\taverage_pairwise_Fst\taverage_Gst_Nei\taverage_Jost_D"/>
+                <has_line_matching expression="test_SSR_pop_unique\tpop_unique\tSSR\t218\tNA\tNa\tNA"/>
+            </assert_contents>
+        </output>
+        <output name="fst_matrix" ftype="tabular">
+            <assert_contents>
+                <has_n_lines n="2" delta="1"/>
+                <has_n_columns n="2"/>
+                <has_line_matching expression="pop_unique\tpopulation_unique"/>
+            </assert_contents>
+        </output>
+        <output name="gst_matrix" ftype="tabular">
+            <assert_contents>
+                <has_n_lines n="2" delta="1"/>
+                <has_n_columns n="2"/>
+                <has_line_matching expression="pop_unique\tpopulation_unique"/>
+            </assert_contents>
+        </output>
+        <output name="djost_matrix" ftype="tabular">
+            <assert_contents>
+                <has_n_lines n="2" delta="1"/>
+                <has_n_columns n="2"/>
+                <has_line_matching expression="pop_unique\tpopulation_unique"/>
+            </assert_contents>
+        </output>
+        <output name="boot_fst_sig_matrix" ftype="tabular">
+            <assert_contents>
+                <has_n_lines n="2" delta="1"/>
+                <has_n_columns n="2"/>
+                <has_line_matching expression="pop_unique\tpopulation_unique"/>
+            </assert_contents>
+        </output>
+
+        <output name="boot_fst_CI_matrix" ftype="tabular">
+            <assert_contents>
+                <has_n_lines n="2" delta="1"/>
+                <has_n_columns n="2"/>
+                <has_line_matching expression="pop_unique\tpopulation_unique"/>
+            </assert_contents>
+        </output>
+    </test>
+ 
 </tests>
 
 <help><![CDATA[
