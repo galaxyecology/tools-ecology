@@ -395,7 +395,7 @@
                 <has_n_lines n="4"/>
                 <has_n_columns n="7"/>
                 <has_line_matching expression="Dataset\tPop\tMarker_type\tn_ind\taverage_pairwise_Fst\taverage_Gst_Nei\taverage_Jost_D"/>
-                <has_line_matching expression="test_SSR_pop_unique\tpop_unique\tSSR\t218\tNA\tNa\tNA"/>
+                <has_line_matching expression="test_SSR_pop_unique\tpop_unique\tSSR\t218\tNA\tNA\tNA"/>
             </assert_contents>
         </output>
         <output name="fst_matrix" ftype="tabular">
