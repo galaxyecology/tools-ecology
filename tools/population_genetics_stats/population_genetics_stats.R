@@ -37,7 +37,8 @@ calc_gst            <- "gst"            %in% selected_stats
 calc_djost          <- "djost"          %in% selected_stats
 calc_boot_fst       <- "boot_fst"       %in% selected_stats
 
-# Differentiation stats: at least one must be selected to compute pairwise matrices
+# Differentiation stats: at least one must be selected 
+# to compute pairwise matrices
 calc_diff <- calc_fst || calc_gst || calc_djost
 
 #Create output file with dynamic columns based on selected stats
@@ -493,24 +494,24 @@ save_single_pop_placeholders <- function(pop_name) {
  
     plot_file <- paste0("matrices_output/", measure, "_heatmap.png")
     ggsave(filename = plot_file, plot = p, width = 8, height = 7, dpi = 300)
-  }
- 
+    }
+    
   # boot.ppfst placeholders if requested
   if (calc_boot_fst) {
-      mat_df <- data.frame(population_unique = "population_unique",
-                           row.names = pop_name, check.names = FALSE)
-      colnames(mat_df) <- pop_name
-      mat_df[1, 1] <- "population_unique"
-      filename <- paste0("matrices_output/boot_fst_sig_matrix.txt")
+    mat_df <- data.frame(population_unique = "population_unique",
+                         row.names = pop_name, check.names = FALSE)
+    colnames(mat_df) <- pop_name
+
+    for (f in c("boot_fst_sig_matrix.txt", "boot_fst_CI_matrix.txt")) {
       write.table(mat_df,
-                  file      = filename,
+                  file      = file.path("matrices_output", f),
                   quote     = FALSE,
                   sep       = "\t",
                   row.names = TRUE,
                   col.names = NA)
+    }
   }
 }
-
 
 #######################################
 # Main execution 
@@ -545,9 +546,9 @@ if (calc_diff) {
  
     solo_pop_name <- levels(pop(gen_file))[1]
  
-    if (calc_fst)   result$average_pairwise_Fst <- "population_unique"
-    if (calc_gst)   result$average_Gst_Nei      <- "population_unique"
-    if (calc_djost) result$average_Jost_D        <- "population_unique"
+    if (calc_fst)   result$average_pairwise_Fst <- NA
+    if (calc_gst)   result$average_Gst_Nei      <- NA
+    if (calc_djost) result$average_Jost_D        <- NA
  
     # Generate placeholder files so Galaxy outputs are always satisfied
     save_single_pop_placeholders(solo_pop_name)
@@ -634,10 +635,16 @@ summary_div_stats <- rbind(summary_div_stats, summary_means)
 all_numeric_cols <- c("Hobs", "Hexp", "Ar", "Fis",
                       "average_pairwise_Fst", "average_Gst_Nei", "average_Jost_D")
 cols_to_round <- intersect(all_numeric_cols, colnames(summary_div_stats))
-summary_div_stats[cols_to_round] <- lapply(summary_div_stats[cols_to_round], round, 5)
+summary_div_stats[cols_to_round] <- lapply(summary_div_stats[cols_to_round], function(x) {
+  if (!is.numeric(x)) return(x)
+  x <- round(x, 5)
+  x[is.nan(x)] <- NA   # mean() of an all-NA column returns NaN
+  x
+})
 
 write.table(summary_div_stats,
               file = "summary_file/summary_div_stats.txt",
               row.names = FALSE,
               quote = FALSE,
               sep = "\t")
+
