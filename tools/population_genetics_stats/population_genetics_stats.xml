@@ -126,7 +126,7 @@
     </outputs>
 
     <tests>
-    <!-- Test 1: SNP - basics stats (He, Ho, Fis and Ar) -->
+    <!-- Test 1: SNP - basics stats (Heterozygosity (Ho and Hexp), Fis and Ar) -->
         <test expect_num_outputs="1">
         <conditional name="data_conditional">       
             <param name="marker_type" value="SNP"/>
